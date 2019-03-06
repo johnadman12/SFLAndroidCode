@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/tools"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="@dimen/_6sdp"
+        card_view:cardElevation="@dimen/_1sdp"
+        card_view:cardPreventCornerOverlap="false"
+        android:padding="@dimen/_2sdp"
+        card_view:cardUseCompatPadding="true" app:ignore="NamespaceTypo">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:padding="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:id="@+id/ll_contest_details"
+                android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      card_view:layout_constraintStart_toStartOf="parent"
+                      card_view:layout_constraintEnd_toEndOf="parent"
+                      card_view:layout_constraintTop_toTopOf="parent"
+                      android:layout_marginTop="@dimen/_5sdp" app:ignore="MissingConstraints">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+                <LinearLayout
+                        android:id="@+id/ll_contest_details_page"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_weight="1">
+
+                    <ImageView android:layout_width="@dimen/_30sdp"
+                               android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/hotcontest"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txt_ContestName"
+                                style="@style/TextStyleSemiBold"
+                                android:textSize="@dimen/_12sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/colorbutton"
+                                android:text="@string/hot_contest"
+
+                        />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleSemiBold"
+                                android:textSize="@dimen/_11sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textColorGray"
+                                android:text="@string/get_ready_for_big_winnings"
+
+                        />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Join"
+                        style="@style/TextStyleMedium"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:background="@drawable/button_round_background_green"
+                        android:textSize="@dimen/_9sdp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:text="@string/join"
+                />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@string/time_left"
+
+                />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:drawableStart="@mipmap/timewhite"
+                        android:background="@drawable/button_rounded_background"
+                        android:textColor="@color/white"
+                        android:text="06h 36m 52s"
+
+                />
+
+            </LinearLayout>
+
+
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:layout_marginTop="@dimen/_5sdp"
+                  android:layout_marginBottom="@dimen/_5sdp"
+                  android:background="@color/browser_actions_bg_grey"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_scoreBoard"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ll_contest_details"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:id="@+id/ll_totalWinnings"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="@string/total_winnings"
+
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_TotalWinnings"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorBlack"
+                        android:text="@string/Rs1000"
+
+                />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/ll_totalWinners"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_9sdp"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="@string/winners"
+
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Winners"
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center"
+                        android:drawableTint="@color/colorbutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@mipmap/arrowdown"
+                        android:textColor="@color/colorbutton"
+                        android:text="35000"
+
+                />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/ll_entryFee"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_9sdp"
+                        android:gravity="end"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="@string/entry_fee"
+
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_EntryFee"
+                        android:gravity="end"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorBlack"
+                        android:text="@string/Rs20"
+                />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/ll_scoreBoard"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1" android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/crs_Progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_26sdp"
+                        card_view:bar_color="@color/textColorGray"
+                        card_view:bar_highlight_color="@color/tabColor"
+                        card_view:left_thumb_color="@color/colorTransparent"
+                        card_view:left_thumb_color_pressed="@color/colorTransparent"
+                        card_view:max_value="100"
+                        app:progress="87"
+                        card_view:min_value="1"
+                        card_view:steps="87"
+                        card_view:corner_radius="5"
+                        card_view:right_thumb_color="@color/colorTransparent"
+                        card_view:right_thumb_color_pressed="@color/colorTransparent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/crs_Progress"
+                        android:id="@+id/txt_StartValue"
+                        android:gravity="end"
+                        android:paddingStart="@dimen/_8sdp"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorBlack"
+                        android:text="Only 8,631 spots left"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/crs_Progress"
+                        android:id="@+id/txt_EndValue"
+                        android:gravity="end"
+                        android:paddingEnd="@dimen/_8sdp"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorLightBlack"
+                        android:text="50,000 Teams"
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+

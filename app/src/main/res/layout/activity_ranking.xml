@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg"
+        android:layout_height="match_parent">
+    <include layout="@layout/app_toolbar"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+            <LinearLayout
+                    android:id="@+id/ll_match"
+                    android:background="@color/colorSecondaryLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/txt_matchVS"
+                        style="@style/TextStyleNormal"
+                        android:gravity="start"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/textColorLightBlack"
+                        android:text="Select Match"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/txt_CountDownTimer"
+                        android:drawableEnd="@mipmap/arrowdown"
+                        style="@style/TextStyleNormal"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_9sdp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/textColorBlack"
+                        android:text="Averest Premier League"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View
+                    android:id="@+id/view1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_match"
+                    android:background="@color/colorItemBackgroundLightGray"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+            <LinearLayout
+                    android:id="@+id/ll_AllContest"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:paddingBottom="@dimen/_6sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1"
+                    android:orientation="horizontal"
+                    android:background="@color/colorSecondary" android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_team"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="start"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:textColor="@color/colorMatchUnSelected"
+                        android:text="@string/sort"
+                        android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Rank"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="end"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/sort_allcontest_color_selector"
+                        android:text="@string/entry"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Contest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/item_ranking"
+                    android:layout_height="0dp">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

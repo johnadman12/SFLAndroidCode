@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--&gt;-->
+<com.amar.library.ui.StickyScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:stickyHeader="@+id/cl_main"
+>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:descendantFocusability="blocksDescendants"
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/homeBannerRecyclerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_160sdp"-->
+        <!--/>-->
+        <RelativeLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/rl_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_136sdp"
+        >
+            <com.github.demono.AutoScrollViewPager
+                    android:id="@+id/viewPager_Banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:slideDirection="right"
+                    android:clipToPadding="false"
+                    app:slideDuration="3000"
+                    app:slideInterval="3000"
+                    app:stopWhenTouch="true"/>
+            <!-- <android.support.v4.view.ViewPager
+             android:id="@+id/productImagePager"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />-->
+
+            <!--<com.rd.PageIndicatorView-->
+            <!--android:id="@+id/pageIndicatorView"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:padding="@dimen/_8sdp"-->
+            <!--app:piv_radius="@dimen/_4sdp"-->
+            <!--app:piv_selectedColor="@color/colorASPrimary"-->
+            <!--app:piv_unselectedColor="@color/button_gray_background" />-->
+
+            <!--<com.yuyakaido.android.cardstackview.CardStackView-->
+            <!--android:id="@+id/activity_main_card_stack_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:clipToPadding="false"-->
+            <!--app:visibleCount="5"-->
+            <!--app:swipeThreshold="0.75"-->
+            <!--app:translationDiff="12"-->
+            <!--app:scaleDiff="0.02"-->
+            <!--app:stackFrom="top"-->
+            <!--app:elevationEnabled="true"-->
+            <!--app:swipeEnabled="true"-->
+            <!--app:swipeDirection="freedom_no_bottom"-->
+            <!--/>-->
+
+        </RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_main"
+                app:layout_constraintTop_toBottomOf="@+id/rl_banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+                    android:id="@+id/ll_matchSelector"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/button_rounded_background"
+                    android:layout_height="@dimen/_28sdp"
+                    android:visibility="visible" tools:layout_editor_absoluteY="13dp"
+                    tools:layout_editor_absoluteX="26dp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Fixtures"
+                        style="@style/TextStyleMedium"
+                        android:background="@drawable/match_selector"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_width="0dp"
+                        android:textColor="@color/home_color_selector"
+                        android:text="@string/fixtures"
+                        android:layout_height="match_parent"/>
+
+                <View
+                        android:id="@+id/view1"
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/white"
+                        android:layout_height="match_parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Live"
+                        android:layout_weight="1"
+                        style="@style/TextStyleMedium"
+                        android:background="@drawable/match_selector"
+                        android:gravity="center"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_width="0dp"
+                        android:textColor="@color/home_color_selector"
+                        android:text="@string/live"
+                        android:layout_height="match_parent"/>
+
+
+                <View
+                        android:id="@+id/view2"
+                        android:layout_width="@dimen/_1sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:background="@color/white"
+                        android:layout_height="match_parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Results"
+                        android:layout_weight="1"
+                        style="@style/TextStyleMedium"
+                        android:background="@drawable/match_selector"
+                        android:gravity="center"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_width="0dp"
+                        android:textColor="@color/home_color_selector"
+                        android:text="@string/results"
+                        android:layout_height="match_parent"/>
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_title"
+                style="@style/TextStyleSemiBold"
+                android:gravity="left"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_main"
+                android:layout_width="match_parent"
+                android:textColor="@color/textColorBlack"
+                android:text="@string/enter_contest"
+                android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:paddingTop="@dimen/_5sdp"
+                android:id="@+id/entry_fee"
+                style="@style/TextStyleSemiBold"
+                android:gravity="right"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorBackgroundTermsAndConditions"
+                android:text="@string/doller_entry_fee"
+                android:visibility="gone"
+                android:layout_height="wrap_content" tools:layout_editor_absoluteY="239dp"/>
+
+
+        <LinearLayout
+                android:id="@+id/ll_expandable_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/_2sdp"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title">
+
+            <!--<include layout="@layout/home_expandable_layout"/>-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="@dimen/_6sdp"
+                    android:id="@+id/recyclerView_features"
+                    android:layout_width="match_parent"
+                    android:layout_height="748dp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
+                    android:fillViewport="true"
+                    tools:listitem="@layout/item_match"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="@dimen/_6sdp"
+                android:id="@+id/recyclerView_Match"
+                android:layout_width="match_parent"
+                android:layout_height="748dp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:visibility="gone"
+                android:nestedScrollingEnabled="false"
+                android:fillViewport="true"
+                tools:listitem="@layout/item_match"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_no_category_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="2dp"
+                android:background="#dfdfdf"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerView_Match"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" android:id="@+id/view6"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--</androidx.core.widget.NestedScrollView>-->
+</com.amar.library.ui.StickyScrollView>

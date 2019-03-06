@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_margin="@dimen/_5sdp"
+                  android:background="@drawable/button_background_white_black">
+
+        <LinearLayout
+                android:id="@+id/ll_header_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/home_icon"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/entry_fee"
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/black"
+                        android:text="NSE"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/colorbutton"
+                        android:text="420"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:id="@+id/nse_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/arrowright"
+                        android:layout_gravity="center_vertical"
+                        android:backgroundTint="@color/colorbutton"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/first_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:visibility="gone"
+                android:background="@color/GrayColor"/>
+
+        <LinearLayout
+                android:id="@+id/ll_child_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:padding="@dimen/_10sdp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorGray"
+                        android:text="Sunday 9/7 1PM ET"
+                        android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorbutton"
+                        android:text="Open"
+                        android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:gravity="center_vertical"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorbutton"
+                    android:drawableRight="@mipmap/arrowright"
+                    android:drawableTint="@color/colorbutton"
+                    android:text="420"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_margin="@dimen/_5sdp"
+                  android:background="@drawable/button_background_white_black">
+
+        <LinearLayout
+                android:id="@+id/ll_header_nsadaq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/home_icon"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/black"
+                        android:text="NSADAQ"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/colorbutton"
+                        android:text="350"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:id="@+id/nsadaq_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/arrowright"
+                        android:layout_gravity="center_vertical"
+                        android:backgroundTint="@color/colorbutton"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+                android:id="@+id/view_second"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:visibility="gone"
+                android:background="@color/GrayColor"/>
+
+        <LinearLayout
+                android:id="@+id/ll_child_lay_nas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:padding="@dimen/_10sdp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorGray"
+                        android:text="Sunday 9/7 1PM ET"
+                        android:layout_height="wrap_content"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/colorbutton"
+                        android:text="Open"
+                        android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:gravity="center_vertical"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorbutton"
+                    android:drawableRight="@mipmap/arrowright"
+                    android:drawableTint="@color/colorbutton"
+                    android:text="350"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

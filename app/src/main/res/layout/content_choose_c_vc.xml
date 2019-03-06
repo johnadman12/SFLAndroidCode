@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_choose_c_vc"
+        android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/ll_match"
+            android:background="@color/colorbutton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Info"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="Info"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Player"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="Volume"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Points"
+                style="@style/TextStyleSemiBold"
+                android:gravity="center"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="Price"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <include layout="@layout/search_view_layout"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Players"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_match"
+            app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            tools:listitem="@layout/item_player"
+            android:layout_height="0dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_CreateTeam"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            style="@style/ButtonStyle"
+            android:text="@string/save_team"
+            android:visibility="gone"
+            android:background="@color/colorASPrimary"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

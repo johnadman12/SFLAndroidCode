@@ -1,0 +1,285 @@
+package stock.com.ui.signup.activity
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import kotlinx.android.synthetic.main.app_toolbar.*
+import kotlinx.android.synthetic.main.content_login.*
+import kotlinx.android.synthetic.main.content_signup.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import stock.com.AppBase.BaseActivity
+import stock.com.R
+import stock.com.application.FantasyApplication
+import stock.com.constant.IntentConstant
+import stock.com.model.SocialModel
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiInterface
+import stock.com.ui.login.activity.LoginActivity
+import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.SignupPojo
+import stock.com.ui.signup.apiRequest.SignUpRequest
+import stock.com.ui.signup.pojo.CountryDataPojo
+import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
+import stock.com.utils.ValidationUtil
+import stock.com.utils.networkUtils.NetworkUtils
+
+
+class SignUpActivity : BaseActivity(), View.OnClickListener {
+
+    lateinit var countrycodeList: ArrayList<CountryDataPojo>
+    private var term_condition_accept: Int = 0
+    private var notification_accept: Int = 0
+    override fun onClick(view: View?) {
+        when (view!!.id) {
+            R.id.btn_Register -> {
+                if (userData != null)
+                // checkValidationSocial()
+                else
+                    checkValidation()
+
+            }
+            R.id.txt_Login -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
+
+            R.id.txt_TC -> {
+                startActivity(Intent(this, WebUrlActivity::class.java))
+
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_signup)
+        StockConstant.ACTIVITIES.add(this)
+        initViews()
+        // getCountryList()
+    }
+
+    var userData: SocialModel? = null
+
+    private fun initViews() {
+        countrycodeList = ArrayList()
+        toolbarTitleTv.setText(R.string.sign_up)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        btn_Register.setOnClickListener(this)
+        txt_Login.setOnClickListener(this)
+        txt_TC.setOnClickListener(this)
+        try {
+            userData = intent.getParcelableExtra(IntentConstant.DATA)
+        } catch (e: Exception) {
+
+        }
+
+        if (userData != null) {
+            et_Email.setText(userData!!.email)
+            et_Password.visibility = View.GONE
+        }
+
+        accept_term_condition.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                term_condition_accept = 1
+            }
+        }
+        notification_check.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                notification_accept = 1
+            }
+        }
+
+    }
+
+    /*private fun checkValidationSocial() {
+        if (et_Mobile.text.toString().isEmpty())
+            AppDelegate.showToast(this, getString(R.string.enter_phone_number))
+        else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+        else if (et_Email.text.toString().isEmpty())
+            AppDelegate.showToast(this, getString(R.string.enter_email))
+        else if (!ValidationUtil.isEmailValid(et_Email.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.valid_email))
+        else {
+            AppDelegate.hideKeyBoard(this)
+            if (NetworkUtils.isConnected()) {
+                prepareData(true)
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+        }
+    }*/
+
+
+    private fun checkValidation() {
+        println("Term and condition" + term_condition_accept)
+        if (et_UserName.text.toString().trim().isEmpty()) {
+            AppDelegate.showToast(this, "Please enter user name")
+        } else if (et_Mobile.text.toString().isEmpty())
+            AppDelegate.showToast(this, getString(R.string.enter_phone_number))
+        else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+        else if (et_Email.text.toString().isEmpty())
+            AppDelegate.showToast(this, getString(R.string.enter_email))
+        else if (!ValidationUtil.isEmailValid(et_Email.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.valid_email))
+        else if (et_Password.text.toString().length < 6)
+            AppDelegate.showToast(this, getString(R.string.short_password))
+        else if (!(et_Password.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_Password.text.toString().matches(
+                ".*[0-9]+.*[A-Za-z]+.*".toRegex()
+            ))
+        )
+            AppDelegate.showToast(this, getString(R.string.invalid_password))
+        else if (term_condition_accept == 0) {
+            AppDelegate.showToast(this, "Please accept term and condition")
+        } else {
+            if (NetworkUtils.isConnected()) {
+                register()
+            } else {
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun register() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.register(
+            et_Email.text.toString().trim(),
+            et_Password.text.toString(), et_EnviteCode.text.toString().trim(),
+            et_Mobile.text.toString().trim(), et_UserName.text.toString().trim(), "1",
+            "123456789", notification_accept.toString(), term_condition_accept.toString()
+        )
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
+                d.dismiss()
+                if (response?.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        startActivity(Intent(this@SignUpActivity, OTPActivity::class.java)
+                            .putExtra("phoneNumber", et_Mobile.text.toString().trim()))
+                        finish()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getCountryList() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<BasePojo> = apiService.getCountry()
+        call.enqueue(object : Callback<BasePojo> {
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>?) {
+                d.dismiss()
+                if (response?.body() != null) {
+
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>?, t: Throwable?) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    /* private fun prepareData(isSocial: Boolean) {
+         val signUpRequest = SignUpRequest()
+         signUpRequest.invite_code = et_EnviteCode.text.toString()
+         signUpRequest.name = ""
+         signUpRequest.mobile_number = et_Mobile.text.toString()
+         signUpRequest.email = et_Email.text.toString()
+         signUpRequest.password = et_Password.text.toString()
+         signUpRequest.language = FantasyApplication.getInstance().getLanguage()
+         if (isSocial) {
+             signUpRequest.fb_id = userData!!.fb_id
+             signUpRequest.google_id = userData!!.google_id
+             signUpRequest.name = userData!!.first_name
+             callSocialSignUpApi(signUpRequest)
+         } else
+             callSignUpApi(signUpRequest)
+     }*/
+
+    /*private fun callSignUpApi(signUpRequest: SignUpRequest) {
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@SignUpActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .signup(signUpRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@SignUpActivity)
+                if (response.response!!.status) {
+                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
+                    startActivity(
+                        Intent(this@SignUpActivity, OTPActivity::class.java)
+                            .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                    )
+                    finish()
+                } else {
+                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@SignUpActivity)
+            }
+        }
+    }
+
+    private fun callSocialSignUpApi(signUpRequest: SignUpRequest) {
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@SignUpActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .social_signup(signUpRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@SignUpActivity)
+                if (response.response!!.status) {
+                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
+                    startActivity(
+                        Intent(this@SignUpActivity, OTPActivity::class.java)
+                            .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                    )
+                    finish()
+                } else {
+                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@SignUpActivity)
+            }
+        }
+    }*/
+}

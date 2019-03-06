@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_main"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/ll_stock_detial"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/rewards"
+                    android:layout_gravity="center_vertical"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Axis Bank"
+                          android:textSize="@dimen/_12sdp"
+                          style="@style/TextStyleSemiBold"
+                          android:textColor="@color/black"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="NSE: Dec13, 12:52"
+                          android:textSize="@dimen/_11sdp"
+                          style="@style/TextStyleSemiBold"
+                          android:textColor="@color/GrayColor"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Vol: 48.2 m"
+                          android:drawableRight="@mipmap/heartblue"
+                          android:drawablePadding="@dimen/_5sdp"
+                          android:textSize="@dimen/_11sdp"
+                          style="@style/TextStyleSemiBold"
+                          android:textColor="@color/colorbutton"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
+                android:gravity="center"
+                android:orientation="vertical">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:orientation="horizontal">
+
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@mipmap/up"/>
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="188.80"
+
+                          android:textSize="@dimen/_11sdp"
+                          style="@style/TextStyleSemiBold"
+                          android:gravity="right"
+                          android:textColor="@color/black"
+                />
+            </LinearLayout>
+
+            <ToggleButton
+                    android:id="@+id/toggleButton1"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/bgtoggle"
+                    android:button="@null"
+                    android:textOff=""
+                    android:textOn=""/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="sell"
+                          android:textSize="@dimen/_11sdp"
+                          android:layout_marginStart="@dimen/_20sdp"
+                          android:layout_alignParentLeft="true"
+                          style="@style/TextStyleSemiBold"
+                          android:textColor="@color/black"
+                />
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="buy"
+                          android:layout_marginEnd="@dimen/_20sdp"
+                          android:textSize="@dimen/_11sdp"
+                          android:layout_alignParentRight="true"
+                          style="@style/TextStyleSemiBold"
+                          android:textColor="@color/black"
+                />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:gravity="center_vertical"
+                android:background="@color/colorItemBackgroundGray"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:clickable="true"
+                    android:id="@+id/img_add"
+                    style="@style/TextStyleMedium"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:src="@drawable/player_add_selector"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/GrayColor"/>
+
+
+</LinearLayout>
+        <!-- <LinearLayout
+                 xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="match_parent"
+                 android:padding="@dimen/_2sdp"
+
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+             <androidx.appcompat.widget.AppCompatTextView
+                     android:id="@+id/txt_playerType"
+                     style="@style/TextStyleSemiBold"
+                     android:gravity="center_vertical"
+                     android:paddingStart="@dimen/_10sdp"
+                     android:paddingEnd="@dimen/_10sdp"
+                     android:paddingBottom="@dimen/_5sdp"
+                     android:paddingTop="@dimen/_5sdp"
+                     android:textSize="@dimen/_11sdp"
+                     android:layout_width="match_parent"
+                     android:background="@color/colorTransparent"
+                     android:textColor="@color/colorASPrimary"
+                     android:text="Wicket-Keeper"
+                     android:layout_height="match_parent"/>
+             <View android:layout_width="match_parent" android:layout_height="0.5dp"
+                   android:background="@color/colorContestItemBackground"/>
+             <LinearLayout
+                     android:paddingStart="@dimen/_5sdp"
+                     android:paddingEnd="@dimen/_5sdp"
+                     android:background="@color/white"
+                     xmlns:android="http://schemas.android.com/apk/res/android"
+                     android:layout_width="match_parent"
+                     android:orientation="horizontal"
+                     android:layout_height="wrap_content">
+
+                 <androidx.appcompat.widget.LinearLayoutCompat
+                         android:paddingTop="@dimen/_5sdp"
+                         android:paddingBottom="@dimen/_5sdp"
+                         android:paddingStart="@dimen/_5sdp"
+                         android:paddingEnd="@dimen/_5sdp"
+                         android:id="@+id/ll_Info"
+                         style="@style/TextStyleSemiBold"
+                         android:gravity="start"
+                         android:textSize="@dimen/_11sdp"
+                         android:layout_width="wrap_content"
+                         android:textColor="@color/textColorOffWhite"
+                         android:text="@string/info"
+                         android:layout_height="wrap_content">
+                     <de.hdodenhof.circleimageview.CircleImageView
+                             android:id="@+id/cimg_player"
+                             android:src="@mipmap/cricketer"
+                             android:layout_width="@dimen/_35sdp"
+                             android:layout_height="@dimen/_35sdp"/>
+                 </androidx.appcompat.widget.LinearLayoutCompat>
+                 <androidx.appcompat.widget.LinearLayoutCompat
+                         android:paddingTop="@dimen/_5sdp"
+                         android:paddingBottom="@dimen/_5sdp"
+                         android:id="@+id/ll_Player"
+                         style="@style/TextStyleSemiBold"
+                         android:gravity="start"
+                         android:textSize="@dimen/_11sdp"
+                         android:layout_width="0dp"
+                         android:layout_weight="1.5"
+                         android:paddingStart="@dimen/_3sdp"
+                         android:orientation="vertical"
+                         android:textColor="@color/textColorOffWhite"
+                         android:text="@string/player"
+                         android:layout_height="wrap_content">
+                     <androidx.appcompat.widget.AppCompatTextView
+                             android:id="@+id/txt_PlayerName"
+                             style="@style/TextStyleSemiBold"
+                             android:gravity="center_vertical"
+                             android:textSize="@dimen/_12sdp"
+                             android:layout_width="match_parent"
+                             android:textColor="@color/textColorBlack"
+                             android:text="Hardik Pandya"
+                             android:layout_height="match_parent"/>
+                     <LinearLayout android:layout_width="match_parent"
+                                   android:layout_height="wrap_content">
+                         <androidx.appcompat.widget.AppCompatTextView
+                                 android:id="@+id/txt_Country"
+                                 style="@style/TextStyleMedium"
+                                 android:textSize="@dimen/_10sdp"
+                                 android:layout_width="wrap_content"
+                                 android:layout_gravity="center_vertical"
+                                 android:textColor="@color/textColorBlack"
+                                 android:text="India"
+                                 android:layout_height="wrap_content"/>
+                         &lt;!&ndash;<View&ndash;&gt;
+                         &lt;!&ndash;android:layout_marginEnd="@dimen/_3sdp"&ndash;&gt;
+                         &lt;!&ndash;android:layout_marginStart="@dimen/_3sdp"&ndash;&gt;
+                         &lt;!&ndash;android:layout_gravity="center_vertical" android:layout_width="0.5dp"&ndash;&gt;
+                         &lt;!&ndash;android:background="@color/GrayColor" android:layout_height="@dimen/_15sdp"&ndash;&gt;
+                         &lt;!&ndash;/>&ndash;&gt;
+                         &lt;!&ndash;<androidx.appcompat.widget.AppCompatTextView&ndash;&gt;
+                         &lt;!&ndash;android:id="@+id/txt_Avg"&ndash;&gt;
+                         &lt;!&ndash;style="@style/TextStyleMedium"&ndash;&gt;
+                         &lt;!&ndash;android:layout_gravity="center_vertical"&ndash;&gt;
+                         &lt;!&ndash;android:textSize="@dimen/_9sdp"&ndash;&gt;
+                         &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+                         &lt;!&ndash;android:textColor="@color/textColorGray"&ndash;&gt;
+                         &lt;!&ndash;android:text="Avg.: 48.52"&ndash;&gt;
+                         &lt;!&ndash;android:layout_height="wrap_content"/>&ndash;&gt;
+                     </LinearLayout>
+                     <androidx.appcompat.widget.AppCompatTextView
+                             android:id="@+id/txt_points"
+                             style="@style/TextStyleMedium"
+                             android:layout_gravity="center_vertical"
+                             android:textSize="@dimen/_10sdp"
+                             android:layout_width="wrap_content"
+                             android:textColor="@color/textColorGray"
+                             android:text="236 Points"
+                             android:layout_height="wrap_content"/>
+                 </androidx.appcompat.widget.LinearLayoutCompat>
+                 <androidx.appcompat.widget.LinearLayoutCompat
+                         android:paddingTop="@dimen/_5sdp"
+                         android:paddingBottom="@dimen/_5sdp"
+                         android:paddingStart="@dimen/_5sdp"
+                         android:id="@+id/ll_Points"
+                         style="@style/TextStyleSemiBold"
+                         android:gravity="center"
+                         android:textSize="@dimen/_11sdp"
+                         android:layout_width="0dp"
+                         android:layout_weight="1"
+                         android:textColor="@color/textColorOffWhite"
+                         android:text="@string/points"
+                         android:layout_height="match_parent">
+                     <androidx.appcompat.widget.AppCompatTextView
+                             android:id="@+id/txt_pointsRunning"
+                             style="@style/TextStyleMedium"
+                             android:layout_gravity="center_vertical"
+                             android:textSize="@dimen/_9sdp"
+                             android:layout_width="wrap_content"
+                             android:textColor="@color/textColorGray"
+                             android:layout_height="wrap_content"/>
+                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                 <androidx.appcompat.widget.LinearLayoutCompat
+                         android:paddingTop="@dimen/_5sdp"
+                         android:paddingBottom="@dimen/_5sdp"
+                         android:paddingStart="@dimen/_8sdp"
+                         android:id="@+id/ll_ADD"
+                         style="@style/TextStyleSemiBold"
+                         android:paddingEnd="@dimen/_8sdp"
+                         android:gravity="center"
+                         android:textSize="@dimen/_11sdp"
+                         android:layout_width="wrap_content"
+                         android:textColor="@color/textColorOffWhite"
+                         android:text="@string/credits"
+                         android:layout_height="match_parent">
+                     <androidx.appcompat.widget.AppCompatTextView
+                             android:background="@drawable/captain_selector"
+                             android:id="@+id/img_captain"
+                             style="@style/TextStyleSemiBold"
+                             android:paddingTop="@dimen/_2sdp"
+                             android:layout_gravity="center_vertical"
+                             android:textSize="@dimen/_11sdp"
+                             android:layout_width="@dimen/_28sdp"
+                             android:gravity="center"
+                             android:textColor="@color/c_vc_color_selector"
+                             android:text="C"
+                             android:layout_height="@dimen/_28sdp"/>
+                     <androidx.appcompat.widget.AppCompatTextView
+                             android:background="@drawable/vc_selector"
+                             android:layout_marginStart="@dimen/_10sdp"
+                             android:id="@+id/img_vc"
+                             android:paddingTop="@dimen/_2sdp"
+                             style="@style/TextStyleSemiBold"
+                             android:layout_gravity="center_vertical"
+                             android:gravity="center"
+                             android:textSize="@dimen/_11sdp"
+                             android:layout_width="@dimen/_28sdp"
+                             android:textColor="@color/c_vc_color_selector"
+                             android:text="VC"
+                             android:layout_height="@dimen/_28sdp"/>
+                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+             </LinearLayout>
+         <View android:layout_width="match_parent" android:layout_height="0.5dp"
+               android:background="@color/colorContestItemBackground"/>
+         </LinearLayout>-->
+        <!--</androidx.cardview.widget.CardView>-->

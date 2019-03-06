@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/colorItemBackgroundWhite"
+
+        android:id="@+id/ll_main"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    <LinearLayout
+            android:padding="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:src="@mipmap/cricketer" android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical" android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:text="Virat Kohli"
+                    android:layout_height="match_parent"/>
+            <LinearLayout
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:orientation="horizontal" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="@dimen/_2sdp"
+                        android:id="@+id/img_playerSelected"
+                        android:src="@drawable/player_selector"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:padding="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:id="@+id/img_starPlayer"
+                        android:src="@drawable/starplayer_selector"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"/>
+
+            </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_TeamName"
+                style="@style/TextStyleMedium"
+                android:gravity="center"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColorGray"
+                android:text="81.5%"
+                android:layout_height="match_parent"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_rank"
+                style="@style/TextStyleMedium"
+                android:gravity="center"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorSecondary"
+                android:text="49.31"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@color/GrayColorMain"/>
+</LinearLayout>
+

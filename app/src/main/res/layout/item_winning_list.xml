@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/colorContestItemBackground"
+        android:id="@+id/ll_main"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_TeamName"
+            style="@style/TextStyleNormal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/textColorBlack"
+            android:text="Rank 1"
+            android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_rank"
+            style="@style/TextStyleSemiBold"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/colorbutton"
+            android:text="@string/Rs1000"
+            android:layout_height="match_parent"/>
+</LinearLayout>

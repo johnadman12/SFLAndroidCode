@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent" xmlns:rsb="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSecondaryLight"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/_11sdp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:textColor="@color/black"
+            android:text="Select Entry Price"/>
+
+    <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            rsb:absoluteMinValue="$20"
+            rsb:absoluteMaxValue="$150"
+    />
+
+</LinearLayout>

@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_joined_completedcontest_leadership">
+    <LinearLayout
+            android:id="@+id/ll_match"
+            android:background="@color/colorSecondaryLight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/_9sdp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/txt_matchVS"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_15sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/textColorBlack"
+                android:text="IND vs PAK"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/txt_CountDownTimer"
+                style="@style/TextStyleSemiBold"
+                android:gravity="end"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/colorSecondary"
+                android:text="@string/completed"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <!--<androidx.core.widget.NestedScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintBottom_toTopOf="@+id/ll_bottom"-->
+    <!--&gt;-->
+    <com.amar.library.ui.StickyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/ll_match"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+            app:stickyHeader="@+id/ll_AllContest"
+    >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:descendantFocusability="blocksDescendants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/card_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="0sp"
+                    card_view:cardElevation="@dimen/_1sdp"
+                    card_view:cardPreventCornerOverlap="false"
+                    card_view:cardUseCompatPadding="false">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            android:id="@+id/txt_scoreBoard"
+                            android:gravity="start"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="Score Card"
+                    />
+                    <LinearLayout
+                            android:id="@+id/ll_score"
+                            card_view:layout_constraintTop_toBottomOf="@+id/txt_scoreBoard"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <LinearLayout
+                                android:layout_weight="1"
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorBlack"
+                                    android:text="BAN  211-4 (20.0)"
+
+                            />
+
+                        </LinearLayout>
+                        <View android:layout_width="0.5dp" android:layout_height="match_parent"
+                              android:background="@color/textColorBlack"/>
+                        <LinearLayout
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorBlack"
+                                    android:text="WI  211-4 (20.0)"
+
+                            />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toBottomOf="@+id/ll_score"
+                            android:id="@+id/txt_WinBy"
+                            android:gravity="start"
+                            android:paddingTop="@dimen/_8sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="BAN wins by 36 runs"
+                    />
+                    <View
+                            card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
+                            android:layout_width="match_parent" android:layout_height="0.5dp"
+                            android:background="@color/GrayColorOTP"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
+                            android:id="@+id/txt_ViewPlayerStats"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_3sdp"
+                            android:paddingEnd="@dimen/_2sdp"
+                            android:paddingBottom="@dimen/_1sdp"
+                            android:drawableEnd="@mipmap/arrow_setting"
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_10sdp"
+                            android:gravity="center_vertical"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            android:drawableStart="@mipmap/rules"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorASPrimary"
+                            android:text="View Player Stats"
+                    />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/cv_score"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="@dimen/_6sdp"
+                    card_view:cardElevation="@dimen/_3sdp" card_view:cardPreventCornerOverlap="false"
+                    card_view:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:id="@+id/ll_scoreBoard"
+                            android:padding="@dimen/_8sdp"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <LinearLayout
+                                android:id="@+id/ll_totalWinnings"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="@string/prize_pool"
+
+                            />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txt_TotalWinnings"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorBlack"
+                                    android:text="@string/Rs1000"
+
+                            />
+
+                        </LinearLayout>
+                        <LinearLayout
+                                android:id="@+id/ll_totalWinners"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="@string/winners"
+
+                            />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txt_Winners"
+                                    android:drawablePadding="@dimen/_5sdp"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawableEnd="@mipmap/arrowdown"
+                                    android:textColor="@color/colorSecondary"
+                                    android:text="5 "
+
+                            />
+
+                        </LinearLayout>
+                        <LinearLayout
+                                android:id="@+id/ll_entryFee"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:gravity="end"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="@string/entry_fee"
+
+                            />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txt_EntryFee"
+                                    android:gravity="end"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/textColorBlack"
+                                    android:text="@string/Rs20"
+                            />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+            <View
+                    android:id="@+id/view2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cv_score"
+                    android:background="@color/colorTransparent"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:id="@+id/cl_teams"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/btn_Lock"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_width="wrap_content"
+                        style="@style/TextStyleMedium"
+                        android:text="Teams \n Locked"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@color/textColorBlack"
+                        android:textSize="@dimen/_8sdp"
+                        android:background="@drawable/button_background_white_black"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Teams"
+                        app:layout_constraintStart_toEndOf="@id/btn_Lock"
+                        app:layout_constraintEnd_toStartOf="@id/btn_ViewTeams"
+                        style="@style/TextStyleNormal"
+                        android:gravity="start"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/textColorGray"
+                        android:text="Now view the selected Players of all teams."
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:clickable="true"
+                        android:focusable="true"
+
+                        android:layout_alignParentEnd="true"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/btn_ViewTeams"
+                        android:layout_width="wrap_content"
+                        style="@style/TextStyleMedium"
+                        android:text="@string/view_teams"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_10sdp"
+                        android:background="@color/colorSecondary"
+                        android:layout_height="wrap_content"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/ll_AllContest"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_teams"
+                    android:orientation="horizontal"
+                    android:background="@color/colorSecondary" android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_TeamCount"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="start"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:textColor="@color/textColorOffWhite"
+                        android:text="4 Teams"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Rank"
+                        style="@style/TextStyleSemiBold"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:gravity="start"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/textColorOffWhite"
+                        android:text="Rank"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Contest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/item_completed_leadershipteams"
+                    android:layout_height="0dp">
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--</androidx.core.widget.NestedScrollView>-->
+    </com.amar.library.ui.StickyScrollView>
+    <LinearLayout
+            android:id="@+id/ll_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_dreamTeam"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/ButtonStyle"
+                android:text="@string/dream_team"
+                android:background="@color/colorASPrimary"
+                android:layout_height="wrap_content"/>
+        <View android:layout_width="0.5dp" android:layout_height="match_parent"
+              android:background="@color/GrayColorOTP"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_InviteFriends"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/ButtonStyle"
+                android:text="Tell Your Friends"
+                android:background="@color/colorASPrimary"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

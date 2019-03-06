@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@drawable/bg"
+        android:layout_height="match_parent">
+    <include layout="@layout/app_toolbar"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:id="@+id/ll_match"
+                    android:background="@color/colorSecondaryLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_9sdp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/txt_matchVS"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="start"
+                        android:textSize="@dimen/_15sdp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/textColorBlack"
+                        android:text="IND vs PAK"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/txt_CountDownTimer"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="end"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/colorSecondary"
+                        android:text="@string/completed"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+        <androidx.cardview.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_match"
+                android:id="@+id/card_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardCornerRadius="0sp"
+                card_view:cardElevation="@dimen/_1sdp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        card_view:layout_constraintTop_toTopOf="parent"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/txt_scoreBoard"
+                        android:gravity="start"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_11sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="Score Card"
+                />
+                <LinearLayout
+                        android:id="@+id/ll_score"
+                        card_view:layout_constraintTop_toBottomOf="@+id/txt_scoreBoard"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleMedium"
+                                android:textSize="@dimen/_9sdp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textColorBlack"
+                                android:text="BAN  211-4 (20.0)"
+
+                        />
+
+                    </LinearLayout>
+                    <View android:layout_width="0.5dp" android:layout_height="match_parent"
+                          android:background="@color/textColorBlack"/>
+                    <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleMedium"
+                                android:textSize="@dimen/_9sdp"
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/textColorBlack"
+                                android:text="WI  211-4 (20.0)"
+
+                        />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/ll_score"
+                        android:id="@+id/txt_WinBy"
+                        android:gravity="start"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="BAN wins by 36 runs"
+                />
+                <View
+                        card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
+                        android:layout_width="match_parent" android:layout_height="0.5dp"
+                        android:background="@color/GrayColorOTP"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
+                        android:id="@+id/txt_ViewPlayerStats"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_1sdp"
+                        android:drawableEnd="@mipmap/arrow_setting"
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        card_view:layout_constraintBottom_toBottomOf="parent"
+                        android:drawableStart="@mipmap/rules"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorASPrimary"
+                        android:text="View Player Stats"
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Contest"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view1"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/item_joined_completed_list"
+                    android:layout_height="0dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

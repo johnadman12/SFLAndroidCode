@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="@dimen/_6sdp"
+        card_view:cardElevation="@dimen/_3sdp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cl1"
+                android:paddingStart="@dimen/_11sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_11sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_2sdp"
+                    tools:ignore="MissingConstraints"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/hotcontest"
+                        android:layout_marginTop="@dimen/_10sdp"/>
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/_5sdp">
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txt_Title"
+                                style="@style/TextStyleSemiBold"
+                                android:gravity="center"
+                                android:textSize="@dimen/_11sdp"
+                                card_view:layout_constraintTop_toTopOf="parent"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/colorBackgroundTermsAndConditions"
+                                android:text="Hot Contest"
+                                android:layout_height="wrap_content"
+                                card_view:layout_constraintStart_toStartOf="parent"
+                                card_view:layout_constraintEnd_toEndOf="parent"/>
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_ContestDescription"
+                            style="@style/TextStyleNormal"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorLightBlack"
+                            android:text="Get ready for big winning"
+                            android:layout_height="wrap_content"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_ContestDay"
+                            style="@style/TextStyleSemiBold"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorLightBlack"
+                            android:text="One Day Contest"
+                            android:layout_height="wrap_content"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_ContestDayTime"
+                            style="@style/TextStyleLight"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorLightBlack"
+                            android:text="One Day Contest"
+                            android:layout_height="wrap_content"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--<RelativeLayout
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:id="@+id/ll_Team1"
+                    android:orientation="vertical"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_50sdp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:id="@+id/cimg_Match1"
+                        android:layout_width="@dimen/_38sdp"
+                        android:layout_height="@dimen/_38sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/india_flag"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        card_view:layout_constraintTop_toBottomOf="@+id/cimg_Match1"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/txt_Team1"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:maxLength="20"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        android:textSize="@dimen/_7sdp"
+                        android:background="@mipmap/ticket"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="India"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Title"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:textSize="@dimen/_11sdp"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="ICC Women's World T20 2018"
+                    android:layout_height="wrap_content"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    card_view:layout_constraintTop_toBottomOf="@+id/txt_Title"
+                    card_view:layout_constraintBottom_toTopOf="@+id/txt_Countdown"
+                    android:id="@+id/txt_VS"
+                    style="@style/TextStyleNormal"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="center"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="VS"
+                    android:layout_height="wrap_content"/>
+            <RelativeLayout
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:id="@+id/ll_Team2"
+                    android:orientation="vertical"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_50sdp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/cimg_Match2"
+                        android:layout_width="@dimen/_38sdp"
+                        android:layout_height="@dimen/_38sdp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/aus_flag"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        card_view:layout_constraintTop_toBottomOf="@+id/cimg_Match2"
+                        android:id="@+id/txt_Team2"
+                        style="@style/TextStyleSemiBold"
+                        android:maxLength="20"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:textSize="@dimen/_7sdp"
+                        android:textAllCaps="true"
+                        android:background="@mipmap/ticket"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingStart="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Aus"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    card_view:layout_constraintStart_toEndOf="@id/ll_Team1"
+                    card_view:layout_constraintEnd_toStartOf="@id/ll_Team2"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/txt_Countdown"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:drawableLeft="@mipmap/time"
+                    android:textSize="@dimen/_11sdp"
+                    android:drawableTint="@color/colorSecondary"
+                    android:drawablePadding="@dimen/_11sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="06h 36m 52s"
+                    android:layout_height="wrap_content"
+            />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+                android:id="@+id/view2" android:layout_width="match_parent" android:layout_height="0.5sp"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/cl1"
+                android:background="@color/GrayColorOTP"
+                card_view:layout_constraintEnd_toEndOf="parent"
+        />
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_contestJoined"
+                style="@style/TextStyleNormal"
+                android:gravity="start"
+                android:textSize="@dimen/_11sdp"
+                card_view:layout_constraintTop_toBottomOf="@+id/view2"
+                android:layout_width="match_parent"
+                android:drawablePadding="@dimen/_15sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingTop="@dimen/_5sdp"
+
+                android:paddingEnd="@dimen/_15sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:textColor="@color/colorBackgroundTermsAndConditions"
+                android:text="2 Contest Joined"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+
+
+

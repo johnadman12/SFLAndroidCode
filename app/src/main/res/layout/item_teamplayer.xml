@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:id="@+id/ll_main"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:id="@+id/ll_Info"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/info"
+                android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/cimg_player"
+                    android:src="@mipmap/cricketer"
+                    android:layout_width="@dimen/_35sdp"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/_35sdp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_gravity="center_vertical"
+
+                android:id="@+id/ll_Player"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:padding="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/player"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_PlayerName"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:text="Select Stock"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_height="match_parent"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Country"
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/textColorBlack"
+                        android:text="India"
+                        android:layout_height="wrap_content"/>
+                <View
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_gravity="center_vertical" android:layout_width="0.5dp"
+                        android:background="@color/GrayColor" android:layout_height="@dimen/_15sdp"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Avg"
+                        style="@style/TextStyleMedium"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:text="236 Points"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_points"
+                    android:visibility="gone"
+                    style="@style/TextStyleMedium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorGray"
+                    android:text="236 Points"
+                    android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:id="@+id/ll_Points"
+                style="@style/TextStyleSemiBold"
+                android:gravity="center"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/points"
+                android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_pointsRunning"
+                    style="@style/TextStyleMedium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_9sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorGray"
+                    android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_Credits"
+                style="@style/TextStyleSemiBold"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/credits"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Credits"
+                    style="@style/TextStyleMedium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:text="8.0"
+                    android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_3sdp"
+                android:id="@+id/ll_ADD"
+                style="@style/TextStyleSemiBold"
+                android:paddingEnd="@dimen/_3sdp"
+                android:gravity="center"
+                android:background="@color/colorItemBackgroundGray"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/credits"
+                android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:clickable="true"
+                    android:id="@+id/img_add"
+                    android:padding="@dimen/_4sdp"
+                    style="@style/TextStyleMedium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:src="@drawable/player_add_selector"
+                    android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+  <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/GrayColor"/>
+
+
+</LinearLayout>

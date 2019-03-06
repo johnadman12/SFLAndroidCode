@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+                                                     android:background="@drawable/bg"
+              android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:theme="@style/ToolbarTheme"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/toolbarTitleTv"
+                    style="@style/ToolbarTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/login"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/toolbarClearAll"
+                    style="@style/ToolbarTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_gravity="end"
+                    android:paddingEnd="@dimen/_14sdp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="@string/clear_all"/>
+            <!--<androidx.appcompat.widget.AppCompatImageView-->
+            <!--android:padding="@dimen/_5sdp"-->
+            <!--android:id="@+id/img_Notification"-->
+            <!--app:srcCompat="@layout/action_bar_notification_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"/>-->
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+<!--<include layout="@layout/app_toolbar"/>-->
+    <include layout="@layout/content_notifications"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

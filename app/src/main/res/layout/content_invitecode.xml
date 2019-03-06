@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@color/white"
+        tools:showIn="@layout/activity_invitecode"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_label"
+            style="@style/TextStyleNormal"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/_12sdp"
+            android:layout_width="0dp"
+            android:textColor="@color/textColorGray"
+            android:text="If you have a contest invite code, enter it and join"
+            android:layout_height="wrap_content"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_label"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/til_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/EditTextLabel">
+        <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/invite_code"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"
+                android:textSize="@dimen/_13sdp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/btn_join"
+            app:layout_constraintTop_toBottomOf="@+id/til_email"
+            style="@style/ButtonStyle"
+            android:text="@string/join_this_contest"
+            android:backgroundTint="@color/colorASPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

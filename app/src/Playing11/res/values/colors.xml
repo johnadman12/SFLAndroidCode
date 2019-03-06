@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0190C8</color>
+    <color name="colorPrimaryDark">#0190C8</color>
+    <color name="colorAccent">#020202</color>
+    <color name="tabColor">#0190C8</color>
+    <!---->
+    <color name="colorASPrimary">#050505</color>
+    <!--TextColor-->
+    <color name="textColorWelcome">#ffffff</color>
+    <color name="textColorBlack">#000000</color>
+    <color name="textColorLightBlack">#3c3c3c</color>
+    <color name="textColorGray">#7f7f7f</color>
+    <color name="textColorOffWhite">#f5fdf9</color>
+    <color name="textColorPrimaryDark">#dc2927</color>
+    <color name="textColorPrimarylight">#de8a72</color>
+    <color name="textColorName">#d41724</color>
+    <color name="textColorWhite">#ffffff</color>
+
+    <!--UI color-->
+    <color name="GrayColor">#bbbbbb</color>
+    <color name="GrayColorOTP">#d9d9d9</color>
+    <color name="colorSecondary">#1c7d03</color>
+    <color name="colorSecondaryLight">#e5f4f9</color>
+    <color name="colorPitchImageCaption">#12496a</color>
+    <color name="colorPitchImageCircle">#21834d</color>
+    <color name="colorbutton">#005B9A</color>
+    <color name="join_button_color">#09905D</color>
+
+    <!--MatchselectorColor-->
+    <color name="colorMatchUnSelected">#89c279</color>
+
+    <!--PlayerDetailColor-->
+    <color name="colorBackground">#ffffff</color>
+    <color name="colorBackgroundGray">#eeeeee</color>
+    <color name="colorItemBackgroundWhite">#f8f8f8</color>
+
+    <!--ChooseTeamColor-->
+    <color name="colorItemBackgroundLightGray">#e8e8e8</color>
+    <color name="colorItemBackgroundGray">#DADADA</color>
+    <color name="colorItemBackgroundDarkGray">#6a6f75</color>
+    <color name="colorItemPlayerBackground">#ffffff</color>
+
+    <!--ChooseContestColor-->
+    <color name="colorContestBackground">#f1f1f1</color>
+    <color name="colorContestItemBackground">#f3f3f3</color>
+
+    <!--LoginColors-->
+    <color name="colorBackgroundLogin">#ffffff</color>
+    <color name="colorBackgroundLoginInput">#ededed</color>
+    <color name="colorBackgroundLoginFacebook">#254cae</color>
+    <color name="colorBackgroundLoginGoogle">#ea4336</color>
+    <color name="colorBackgroundTermsAndConditions">#46A8D3</color>
+
+    <!--ChooseCaptainBackgroundColorTop-->
+    <color name="colorChooseCaptain">#268c0b</color>
+    <color name="colorChooseViceCaptain">#58c1d9</color>
+</resources>

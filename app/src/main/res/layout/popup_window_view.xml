@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_70sdp"
+    android:orientation="vertical"
+    android:elevation="@dimen/_5sdp"
+    android:paddingHorizontal="@dimen/_10sdp"
+    android:background="@drawable/text_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/_11sdp"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/black"
+        android:text="Training Type(114)"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/_11sdp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:text="Service Charges"/>
+
+</LinearLayout>

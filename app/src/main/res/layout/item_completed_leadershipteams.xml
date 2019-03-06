@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/colorContestItemBackground"
+        android:padding="@dimen/_8sdp"
+        android:id="@+id/ll_main"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cimg_player"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:src="@mipmap/cricketer"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"/>
+    <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" android:layout_width="0dp"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_TeamName"
+            style="@style/TextStyleMedium"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:textColor="@color/colorASPrimary"
+            android:text="GYRGFH(T1)"
+            android:layout_height="match_parent"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_Points"
+            style="@style/TextStyleMedium"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:textColor="@color/textColorGray"
+            android:text="367.5 Points"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_rank"
+            style="@style/TextStyleMedium"
+            android:gravity="center"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_11sdp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/textColorBlack"
+            android:text="#1"
+            android:layout_height="match_parent"/>
+</LinearLayout>
+

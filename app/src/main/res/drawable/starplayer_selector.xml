@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <bitmap android:src="@mipmap/top_player_selected"
+                android:tint="@color/colorASPrimary"/>
+    </item>
+    <!--<item android:drawable="@mipmap/player_selected" android:state_selected="true" />-->
+    <item android:drawable="@mipmap/top_player_unselected"/>
+</selector>

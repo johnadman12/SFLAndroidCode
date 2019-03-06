@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:padding="@dimen/_16sdp"
+        tools:showIn="@layout/activity_login"
+        android:layout_height="match_parent">
+    <com.google.android.material.textfield.TextInputLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:id="@+id/til_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/EditTextLabel">
+        <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextStyle"
+                android:id="@+id/et_email"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_address_or_mobile_number"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"
+                android:textSize="@dimen/_13sdp"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_Next"
+            app:layout_constraintTop_toBottomOf="@+id/til_email"
+            style="@style/ButtonStyle"
+            android:text="@string/next"
+            android:background="@drawable/button_round_signup"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_SignInWith"
+            style="@style/TextStyleNormal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Next"
+            android:layout_width="0dp"
+            android:textColor="@color/textColorBlack"
+            android:text="@string/or_sign_in_with"
+            android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_SocialLogin"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_SignInWith"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/facebookLoginButton"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:text="@string/facebook"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:padding="@dimen/_10sdp"
+                android:drawableStart="@mipmap/fb"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/button_round_facebook"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/googleLoginButton"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:padding="@dimen/_10sdp"
+                android:drawableStart="@mipmap/google"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/google"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/button_round_google"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:id="@+id/facebookLoginLayout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorBackgroundLoginFacebook"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+
+        <!--<androidx.appcompat.widget.AppCompatButton-->
+        <!--android:id="@+id/facebookLoginButton"-->
+        <!--style="@style/ButtonStyle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/_45sdp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:foreground="?android:attr/selectableItemBackground"-->
+        <!--android:paddingEnd="@dimen/_20sdp"-->
+        <!--android:paddingStart="@dimen/_20sdp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"/>-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/fb"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/facebookLoginButton"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/facebookLoginButton"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/facebookLoginButton"/>-->
+
+
+        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:id="@+id/googleLoginLayout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorBackgroundLoginGoogle"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+
+        <!--<androidx.appcompat.widget.AppCompatButton-->
+        <!--android:id="@+id/googleLoginButton"-->
+        <!--style="@style/ButtonStyle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/_45sdp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:foreground="?android:attr/selectableItemBackground"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"/>-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/google"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/googleLoginButton"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/googleLoginButton"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/googleLoginButton"/>-->
+
+
+        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_Signup"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/ll_SocialLogin"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:textColor="@color/textColorBlack"
+                android:layout_width="wrap_content"
+                android:text="@string/don_t_have_an_account_yet"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorBackgroundLoginFacebook"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Signup"
+                style="@style/TextStyleMedium"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBackgroundTermsAndConditions"
+                android:layout_width="wrap_content"
+                android:text="@string/sign_up_now"
+                android:padding="@dimen/_5sdp"
+                android:backgroundTint="@color/colorBackgroundLoginGoogle"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:id="@+id/facebookLoginLayout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorBackgroundLoginFacebook"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+
+        <!--<androidx.appcompat.widget.AppCompatButton-->
+        <!--android:id="@+id/facebookLoginButton"-->
+        <!--style="@style/ButtonStyle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/_45sdp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:foreground="?android:attr/selectableItemBackground"-->
+        <!--android:paddingEnd="@dimen/_20sdp"-->
+        <!--android:paddingStart="@dimen/_20sdp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"/>-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/fb"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/facebookLoginButton"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/facebookLoginButton"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/facebookLoginButton"/>-->
+
+
+        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:id="@+id/googleLoginLayout"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@color/colorBackgroundLoginGoogle"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
+
+        <!--<androidx.appcompat.widget.AppCompatButton-->
+        <!--android:id="@+id/googleLoginButton"-->
+        <!--style="@style/ButtonStyle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/_45sdp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:foreground="?android:attr/selectableItemBackground"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"/>-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/google"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/googleLoginButton"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/googleLoginButton"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/googleLoginButton"/>-->
+
+
+        <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

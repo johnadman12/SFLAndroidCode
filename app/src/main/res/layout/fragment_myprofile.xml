@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/coordinator"
+        android:background="@drawable/bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:toolbarId="@+id/toolbar"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:contentScrim="@color/colorTransparent">
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/profile_background"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7"
+            />
+            <LinearLayout
+                    android:id="@+id/ll_main"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+            >
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:src="@mipmap/cricketer"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"/>
+                <TextView
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:id="@+id/txt_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="bottom|center"
+                        android:text="Team Name"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_13sdp"
+                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_30sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            app:layout_constraintTop_toBottomOf="@+id/txt_StartValue"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/crs_Progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_24sdp"
+
+                            app:bar_color="@color/textColorGray"
+                            app:bar_highlight_color="@color/colorbutton"
+                            app:left_thumb_color="@color/colorTransparent"
+                            app:left_thumb_color_pressed="@color/colorTransparent"
+                            app:max_value="100"
+                            android:progress="87"
+                            app:min_value="1"
+                            app:steps="87"
+                            app:corner_radius="5"
+                            app:right_thumb_color="@color/colorTransparent"
+                            app:right_thumb_color_pressed="@color/colorTransparent"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:id="@+id/txt_StartValuelabel"
+                            android:gravity="end"
+                            android:paddingStart="@dimen/_8sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="Level"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            app:layout_constraintTop_toBottomOf="@+id/txt_StartValuelabel"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:id="@+id/txt_StartValue"
+                            android:gravity="end"
+                            android:paddingStart="@dimen/_8sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_15sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="4"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/txt_EndValuelabel"
+                            android:gravity="end"
+                            android:paddingEnd="@dimen/_8sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="Level"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            app:layout_constraintTop_toBottomOf="@+id/txt_EndValuelabel"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:id="@+id/txt_EndValue"
+                            android:gravity="end"
+                            android:text="5"
+                            android:paddingEnd="@dimen/_8sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_15sdp"
+                    />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_width="match_parent"
+                    app:layout_collapseMode="pin"
+                    android:visibility="gone"
+                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                <RelativeLayout android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/cimg_user"
+                            android:src="@mipmap/cricketer"
+                            android:layout_gravity="center"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"/>
+
+                    <LinearLayout
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:background="#11000000"
+                            android:layout_toEndOf="@+id/cimg_user" android:layout_width="match_parent"
+                            android:orientation="vertical" android:layout_height="wrap_content">
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="bottom|center"
+                                android:text="Team Name"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/_13sdp"
+                        />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="bottom|center"
+                                android:text="Level 4"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/_12sdp"
+                        />
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_myprofile"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

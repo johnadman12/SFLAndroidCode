@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_choose_team"
+        android:layout_height="match_parent">
+    <LinearLayout
+            android:id="@+id/ll_match"
+            android:background="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        android:background="@drawable/button_backgroun_light_blue"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleMedium"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="sunday9/7 PM ET"
+                    android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleMedium"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:text="1hr 45m 5s"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableLeft="@mipmap/timewhite"
+                    android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <View
+            android:id="@+id/view1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_match"
+            android:background="@color/colorItemBackgroundLightGray"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="@dimen/_1sdp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:visibility="gone"
+            android:paddingBottom="@dimen/_5sdp"
+            android:background="@color/colorItemPlayerBackground"
+            android:id="@+id/ll_ContestType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+                android:id="@+id/rl_wk"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:id="@+id/txt_WK"
+                    style="@style/TextStyleMedium"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/player_color_selector"
+                    android:text="WK"
+                    android:layout_height="wrap_content"/>
+            <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txt_WK"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_wk"
+                        android:src="@drawable/wk_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/txt_WKCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/img_wk"
+                        android:background="@drawable/rounded_square_count"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_15sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_bat"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/txt_BAT"
+                    android:paddingBottom="@dimen/_5sdp"
+                    style="@style/TextStyleMedium"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/player_color_selector"
+                    android:text="BAT"
+                    android:layout_height="wrap_content"/>
+            <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txt_BAT"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+
+                        android:id="@+id/img_bat"
+                        android:src="@drawable/batsmen_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/txt_BATCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/img_bat"
+                        android:background="@drawable/rounded_square_count"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_15sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_ar"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/txt_AR"
+                    style="@style/TextStyleMedium"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/player_color_selector"
+                    android:text="AR"
+                    android:layout_height="wrap_content"/>
+            <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txt_AR"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+
+                        android:id="@+id/img_ar"
+                        android:src="@drawable/ar_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/txt_ARCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/img_ar"
+                        android:background="@drawable/rounded_square_count"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_15sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+                android:id="@+id/rl_bowler"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/txt_BOWLER"
+                    style="@style/TextStyleMedium"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/player_color_selector"
+                    android:text="Bowler"
+                    android:layout_height="wrap_content"/>
+            <RelativeLayout
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txt_BOWLER"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatImageView
+
+                        android:id="@+id/img_bowler"
+                        android:src="@drawable/bowler_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/txt_BOWLERCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/img_bowler"
+                        android:background="@drawable/rounded_square_count"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_15sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:text="0"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_8sdp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/_5sdp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/ll_ContestType"
+            android:id="@+id/ll_PickPlayer" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_PickPlayer"
+                android:layout_weight="1"
+                style="@style/TextStyleMedium"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="0dp"
+                android:textColor="@color/textColorBlack"
+                android:text="@string/pick_1_wicket_keeper"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_substitute"
+                android:visibility="gone"
+                style="@style/TextStyleMedium"
+                android:paddingStart="@dimen/_11sdp"
+                android:paddingEnd="@dimen/_11sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:background="@drawable/button_rounded_background"
+                android:textSize="@dimen/_9sdp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/substitute"
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/ll_AllContest"
+            android:paddingStart="@dimen/_9sdp"
+            android:paddingEnd="@dimen/_9sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_PickPlayer"
+            android:orientation="horizontal"
+            android:background="@color/colorbutton" android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Info"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="Your Entry"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Player"
+                style="@style/TextStyleSemiBold"
+                android:gravity="start"
+                android:visibility="gone"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="unlimited"
+                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Points"
+                style="@style/TextStyleSemiBold"
+                android:gravity="center"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/_8sdp"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/points"
+                android:visibility="gone"
+                android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_Credits"
+                style="@style/TextStyleSemiBold"
+                android:paddingEnd="@dimen/_8sdp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:textColor="@color/textColorOffWhite"
+                android:text="@string/credits"
+                android:visibility="gone"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Player"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+            app:layout_constraintBottom_toTopOf="@+id/rl_CreateTeam"
+            android:layout_width="match_parent"
+            tools:listitem="@layout/item_teamplayer"
+            android:layout_height="0dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <RelativeLayout
+            android:id="@+id/rl_CreateTeam"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:background="@color/colorbutton"
+            android:padding="@dimen/_2sdp"
+            android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                style="@style/TextStyleMedium"
+                android:text="Team wizard"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+
+                android:background="@drawable/button_round_white"
+                android:layout_height="wrap_content"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="wrap_content"
+                    style="@style/TextStyleMedium"
+                    android:text="1/11"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_15sdp"
+                    android:textColor="@color/white"
+
+                    android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="wrap_content"
+                    style="@style/TextStyleMedium"
+                    android:text="stock"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btn_Next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                style="@style/TextStyleMedium"
+                android:layout_centerVertical="true"
+                android:text="@string/next"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingStart="@dimen/_15sdp"
+                android:paddingEnd="@dimen/_15sdp"
+                android:textColor="@color/colorPrimary"
+
+                android:background="@drawable/button_round_white"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+    <!--<androidx.appcompat.widget.AppCompatButton-->
+    <!--android:id="@+id/btn_CreateTeam"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--android:layout_width="match_parent"-->
+    <!--style="@style/ButtonStyle"-->
+    <!--android:text="@string/create_team1"-->
+    <!--android:background="@color/colorASPrimary"-->
+    <!--android:layout_height="wrap_content"/>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

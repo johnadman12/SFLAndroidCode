@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorTransparentBlack">#33000000</color>
+    <color name="createTeamColor">#343434</color>
+    <color name="GrayColorMain">#f4f4f4</color>
+    <color name="colorRed">#df2826</color>
+    <color name="light_blue_color">#26A3D5</color>
+
+</resources>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_all_contest">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" >
+        <LinearLayout
+                android:id="@+id/ll_match"
+                android:background="@color/colorSecondaryLight"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/_9sdp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/txt_matchVS"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="start"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/textColorBlack"
+                    android:text="IND vs PAK"
+                    android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/txt_CountDownTimer"
+                    style="@style/TextStyleNormal"
+                    android:gravity="end"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:drawableStart="@mipmap/time"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="06h 23m 45s"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <View
+                android:id="@+id/view1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_match"
+                android:background="@color/colorItemBackgroundLightGray"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"/>
+
+        <include android:id="@+id/tab_layout"
+                 app:layout_constraintTop_toBottomOf="@+id/view1"
+                 layout="@layout/four_tab_layout"/>
+        <LinearLayout
+                android:id="@+id/ll_AllContest"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tab_layout"
+                android:orientation="horizontal"
+                android:background="@color/colorbutton" android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                    android:id="@+id/content_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+            android:layout_weight="1"
+                    android:gravity="center"
+            android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Info"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_width="wrap_content"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:textColor="@color/white"
+                        android:text="@string/contest_type"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                android:src="@mipmap/filtertop"
+                android:layout_marginStart="@dimen/_2sdp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/ll_fees"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_winning"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textSize="@dimen/_12sdp"
+                        android:layout_width="wrap_content"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:textColor="@color/white"
+                        android:text="@string/fees"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/filtertop"
+                        android:layout_marginStart="@dimen/_2sdp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Team"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/prizes"
+                        android:layout_height="wrap_content"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/sort"
+                        android:layout_marginStart="@dimen/_2sdp"/>
+            </LinearLayout>
+
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Winners"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/sort_allcontest_color_selector"
+                    android:text="@string/winners"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_EntryFee"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center"
+                    android:layout_weight="0.5"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/sort_allcontest_color_selector"
+                    android:text="@string/entry"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!--<androidx.viewpager.widget.ViewPager
+                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/contestPager"
+                app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+                app:layout_constraintHorizontal_bias="0.0">
+        </androidx.viewpager.widget.ViewPager>-->
+        <androidx.recyclerview.widget.RecyclerView
+                android:padding="@dimen/_5sdp"
+                android:id="@+id/rv_Contest"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/item_all_contest"
+                android:layout_height="0dp" app:layout_constraintHorizontal_bias="0.0">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:id="@+id/ll_bottom" android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:id="@+id/ll_myteam"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_MyTeams"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorBlack"
+                    android:text="1"
+                    android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="My Teams"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <View android:layout_width="0.5dp" android:layout_height="match_parent"
+              android:background="@color/GrayColorOTP"/>
+        <LinearLayout
+                android:id="@+id/ll_joinedContests"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_joined_contest"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="@color/textColorBlack"
+                    android:text="5"
+                    android:layout_height="match_parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="Joined Contests"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

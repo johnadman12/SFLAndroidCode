@@ -1,0 +1,313 @@
+<resources>
+    <!--<string name="app_name">Dream11</string>-->
+    <string name="facebook_app_id">314582115819242</string>
+    <string name="default_notification_channel_id">32000</string>
+    <string name="default_notification_channel_name">Default Notification Channel</string>
+    <string name="default_notification_channel_description">It will deliver all notification above Android Oreo. It should be enabled to receive notification.</string>
+
+    <string name="login">Login</string>
+    <string name="let_s_play">Let\'s Play</string>
+    <string name="enter_code">Sign up</string>
+    <string name="have_a_referral_code">Don\'t have an account?</string>
+    <string name="already_a_user">Already a user?</string>
+    <string name="email_address_or_mobile_number">Email or Mobile Number</string>
+    <string name="next">Next</string>
+    <string name="or_sign_in_with">Or Sign in with</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="verify_your_number">Verify Your Number</string>
+    <string name="otp_has_been_sent_to_your_mobile_number">OTP has been sent to your Mobile Number</string>
+    <string name="submit">Submit</string>
+    <string name="_100_just_a_step_away">5 just a step away</string>
+    <string name="claim_your_bonus_on_registration">Claim your bonus on registration</string>
+    <string name="enter_invite_code">Enter Invite Code(optional)</string>
+    <string name="user_name">Username</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="login_now">Login Now</string>
+    <string name="by_registering_i_agree_to_playing_11_s_t_amp_cs">
+        <![CDATA[By registering, I agree to SFL]]></string>
+    <string name="t_amp_cs"><![CDATA[T&Cs and Privacy Policy]]></string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">Home</string>
+    <string name="my_contest">My Contest</string>
+    <string name="profile">Profile</string>
+    <string name="more">More</string>
+    <string name="fixtures">Upcomming</string>
+    <string name="live">Live</string>
+    <string name="results">Results</string>
+    <string name="select_a_match">Select a Match</string>
+    <string name="enter_contest">Enter Contest</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="notification">Notifications</string>
+    <string name="filter">Filter</string>
+    <string name="wallet">Walllet</string>
+    <string name="enter_contest_code">Enter Contest Code</string>
+    <string name="create_contest">Create Contest</string>
+    <string name="create_team">Create Team</string>
+    <string name="join">Join</string>
+    <string name="hot_contest">Hot Contest</string>
+    <string name="get_ready_for_big_winnings">Get ready for big winnings</string>
+    <string name="total_winnings">Total Winnings</string>
+    <string name="Rs">\u20B9</string>
+    <string name="Rs1000">$ 100000</string>
+    <string name="Rs20">$ 20</string>
+    <string name="create_team1">Create Team 1</string>
+    <string name="contest">Contests</string>
+    <string name="winners">Winners</string>
+    <string name="entry_fee">Entry Fee</string>
+    <string name="doller_entry_fee">$5 Entry Fee</string>
+    <string name="join_the_contest">Join the Contest</string>
+    <string name="mega_contest">Mega Contest</string>
+    <string name="info">Info</string>
+    <string name="player">Player</string>
+    <string name="points">Points</string>
+    <string name="credits">Credits</string>
+    <string name="choose_team">Choose Team</string>
+    <string name="pick_1_wicket_keeper">Pick 1 Wicket-Keeper</string>
+    <string name="pick_3_5_batsmen">Pick 3–5 Batsmen</string>
+    <string name="pick_1_3_allrounder">Pick 1–3 All-Rounders</string>
+    <string name="pick_3_5_bowler">Pick 3–5 Bowlers</string>
+    <string name="dot">\u2022</string>
+    <string name="dot_value">\u2022 7</string>
+    <string name="c_will_get_2x_points_amp_vc_will_get_1_5x_points">
+        <![CDATA[(C)will get 2x Points & (VC) will get 1.5x Points]]></string>
+    <string name="choose_c_vc_title"><![CDATA[Choose C & VC]]></string>
+    <string name="save_team">Save Team</string>
+    <string name="completed">Completed</string>
+    <string name="in_progress">In Progress</string>
+    <string name="live_in">Live</string>
+    <string name="your_rewards">Your Rewards</string>
+    <string name="account">Account</string>
+    <string name="add_cash">Add Cash</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="add_funds">Add Funds</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="how_to_play">How to Play</string>
+    <string name="about">About</string>
+    <string name="time_left">Time Left</string>
+    <string name="rules">Rules</string>
+    <string name="support">Support</string>
+    <string name="logout">Logout</string>
+    <string name="playing_history">Playing History</string>
+    <string name="batsman">Batsmen</string>
+    <string name="totalPoints">Total Points</string>
+    <string name="allrounder">All-Rounder</string>
+    <string name="bowler">Bowler</string>
+    <string name="wicket_keeper">Wicket-Keeper</string>
+    <string name="substitute">Substitute</string>
+    <string name="contest_invite_code">Contest Invite Code</string>
+    <string name="fantasy_point_system">Fantasy Point System</string>
+    <string name="helpdesk">Helpdesk</string>
+    <string name="about_us">About Us</string>
+    <string name="wk">WK</string>
+    <string name="bat">BAT</string>
+    <string name="all">ALL</string>
+    <string name="bowl">BOWL</string>
+    <string name="edit">Edit</string>
+    <string name="preview">Preview</string>
+    <string name="clone">Clone</string>
+    <string name="capatain">CAPATAIN</string>
+    <string name="vice_caotain">VICE CAOTAIN</string>
+    <string name="vice_captain">VICE CAPTAIN</string>
+    <string name="my_team">My Team</string>
+    <string name="join_this_contest">Join This Contest</string>
+    <string name="invite_code">Invite Code</string>
+    <string name="enter_contest_name">Enter Contest Name</string>
+    <string name="winning_amount">Enter total winning amount (Rs)</string>
+    <string name="contest_size">Contest Size</string>
+    <string name="allow_friends_to_join_with_multiple_team">Allow friends to join with multiple teams</string>
+    <string name="entry_per_team">Entry Per Team:-</string>
+    <string name="entry_is_calculated_based_on_total_prize_amount_contest_size">
+        <![CDATA[Entry is calculated based on total prize amount & contest size]]></string>
+    <string name="prize_pool">Prize Pool</string>
+    <string name="sort">Sort</string>
+    <string name="winnings">Winnings</string>
+    <string name="fees">Fees</string>
+    <string name="prizes">Prizes</string>
+    <string name="entry">Entry</string>
+    <string name="teams">Teams</string>
+    <string name="all_contest">All Contest</string>
+    <string name="winning_list">Winning List</string>
+    <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions">
+        <b>Note:-</b>
+        The actual prize money may be different than the prize money mentioned above if there is a tie for any of
+        the winning positions.
+    </string>
+    <string name="view_teams">View Teams</string>
+    <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="legality">Legality</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
+    <string name="action_settings">Settings</string>
+    <string name="Rs10_cash"><b>\u20B9 20 \n</b>Cash Bonus
+    </string>
+    <string name="offers">Offers</string>
+    <string name="apply_code">Apply Code</string>
+    <string name="enter_coupon_code">Enter Coupon Code</string>
+    <string name="ranking">Ranking</string>
+    <string name="change_password">Change Password</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="close">Close</string>
+    <string name="reset">Reset</string>
+
+
+    <string name="rs1_100">\u20B9 1 to \u20B9 100</string>
+    <string name="rs101_1000">\u20B9 101 to \u20B9 1000</string>
+    <string name="rs1001_5000">\u20B9 1001 to \u20B9 5000</string>
+    <string name="rs5000_more">\u20B9 5000 &amp; more</string>
+
+
+    <string name="rs1_10000">\u20B9 1 to \u20B9 10000</string>
+    <string name="rs10001_50000">\u20B9 10,001 to \u20B9 50,000</string>
+    <string name="rs50001_1lac">\u20B9 50,001 to \u20B9 1 Lakh</string>
+    <string name="rs1lac_10lac">\u20B9 1 Lakh to \u20B9 10 Lakh</string>
+    <string name="rs10lac_25lac">\u20B9 10 Lakh to \u20B9 25 Lakh</string>
+    <string name="rs25lac_more">\u20B9 25 Lakh &amp; more</string>
+
+
+    <string name="multi_entry">Multi Entry</string>
+    <string name="multi_winner">Multi Winner</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="contest_type">Contest Type</string>
+    <string name="_50_001_more"><![CDATA[50,001 & more]]></string>
+    <string name="apply">Apply</string>
+    <string name="unutilized_balance_winnings_rs_0">Unutilized balance + Winnings= \u20B9 0</string>
+    <string name="confirmation">CONFIRMATION</string>
+    <string name="usable_cash_bonus">Usable Cash Bonus</string>
+    <string name="Rs_0">\u20B9 0</string>
+    <string name="to_pay">To Pay</string>
+    <string name="by_joining_this_contest_you_accept_t_c_and_confirm_that_you_are_not_a_resident_of_assam_odisha_talngana_or_sikkim">
+        <![CDATA[By joining this contest you accept T & C and confirm that you are not a resident of Assam, Odisha, Talngana or Sikkim.]]></string>
+    <string name="clear_all">Clear All</string>
+    <string name="invite">Invite</string>
+    <string name="joined_Contest">Joined Contest</string>
+    <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get \u20B9 100 for free</string>
+    <string name="fantasy_status">Fantasy Status</string>
+    <string name="match">Match</string>
+    <string name="selected_by">Selected By</string>
+    <string name="player_detail">Player Detail</string>
+    <string name="rank">Rank</string>
+    <string name="joined_with">Joined With</string>
+    <string name="dream_team">Dream Team</string>
+    <string name="player_points">Player Points</string>
+    <string name="my_account">My Account</string>
+    <string name="ok">OK</string>
+    <string name="error_network_connection">You are not connected with an active internet connection.</string>
+    <string name="enter_phone_number">Please enter phone number.</string>
+    <string name="valid_phone_number">Please enter valid phone number.</string>
+    <string name="enter_email">Please enter email address.</string>
+    <string name="valid_email">Please enter valid email address.</string>
+    <string name="enter_password">Please enter password.</string>
+    <string name="short_password">Password must be 6 characters long.</string>
+    <string name="invalid_password">Password must contain atleast one alphabet and numeric character</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="resend_in">Resend in</string>
+    <string name="sec">seconds</string>
+    <string name="nse">NSE</string>
+    <string name="nasdaq">NASDAQ</string>
+    <string name="donjones">Donjones</string>
+    <string name="ftse">FTSE</string>
+    <string name="invalid_otp">Please enter valid OTP.</string>
+    <string name="internal_server_error">Internal server error.</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="back_exit">Please click BACK again to exit</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="receive_offers_and_notification">Receive Offers &amp; Notification</string>
+</resources>

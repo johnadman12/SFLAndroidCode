@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="@dimen/_6sdp"
+        card_view:cardElevation="@dimen/_3sdp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:padding="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:id="@+id/ll_scoreBoard"
+                    android:padding="@dimen/_5sdp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:id="@+id/ll_totalWinnings"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/prize_pool"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_TotalWinnings"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="@string/Rs1000"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_totalWinners"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/winners"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_Winners"
+                            android:drawablePadding="@dimen/_5sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="5 Winners"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_entryFee"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:gravity="end"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/entry_fee"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_EntryFee"
+                            android:gravity="end"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="@string/Rs20"
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                    card_view:layout_constraintTop_toBottomOf="@+id/ll_scoreBoard"
+                    android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="@color/GrayColorOTP"/>
+            <LinearLayout
+                    android:id="@+id/ll_teamDetail"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ll_scoreBoard"
+                    android:padding="@dimen/_5sdp"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:id="@+id/ll_JoinedWith"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/joined_with"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_joinedwith"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="Team 1"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_points"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/points"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_points"
+                            android:drawablePadding="@dimen/_5sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="167.5"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_rank"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:textSize="@dimen/_9sdp"
+                            android:gravity="end"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/rank"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_rank"
+                            android:gravity="end"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="#11"
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                    card_view:layout_constraintTop_toBottomOf="@+id/ll_teamDetail"
+                    android:layout_width="match_parent" android:layout_height="0.5dp"
+                    android:background="@color/GrayColorOTP"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ll_teamDetail"
+                    android:id="@+id/txt_ViewLeaderShipBoard"
+                    android:gravity="start"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:drawableEnd="@mipmap/arrow_setting"
+                    style="@style/TextStyleMedium"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:text="View Leadership Board"
+            />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+

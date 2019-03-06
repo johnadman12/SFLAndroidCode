@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/tabs_layout_root"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/_35sdp"
+              android:background="#00658D"
+              android:orientation="horizontal">
+
+    <LinearLayout
+            android:id="@+id/ll_nasdaq"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="NASDAQ"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                    android:id="@+id/nasdaqSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorbutton"
+                    android:orientation="horizontal"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width=".5dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:background="@color/GrayColor"
+            android:orientation="horizontal"/>
+
+    <LinearLayout
+            android:id="@+id/ll_nse"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="NSE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                    android:id="@+id/nseSelecto"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:orientation="horizontal"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width=".5dp"
+            android:layout_height="match_parent"
+            android:background="@color/GrayColor"
+            android:visibility="gone"
+            android:orientation="horizontal"/>
+
+    <LinearLayout
+            android:id="@+id/ll_dowjones"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Dowjones"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                    android:id="@+id/dowjonesSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:orientation="horizontal"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width=".5dp"
+            android:layout_height="match_parent"
+            android:background="@color/GrayColor"
+            android:visibility="gone"
+            android:orientation="horizontal"/>
+
+    <LinearLayout
+            android:id="@+id/ll_ftse"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="FTSE"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+            <LinearLayout
+                    android:id="@+id/ftseSelector"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:orientation="horizontal"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

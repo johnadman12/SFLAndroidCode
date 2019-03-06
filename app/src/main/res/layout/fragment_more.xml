@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+       >
+    <LinearLayout
+            android:descendantFocusability="blocksDescendants"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_invite_friends"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/addfriend"
+                android:drawablePadding="@dimen/_10sdp"
+                android:textColor="@color/textColorLightBlack"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/invite_friends"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_contest_invite_code"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/invitecode"
+                android:drawablePadding="@dimen/_10sdp"
+                android:textColor="@color/textColorLightBlack"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/contest_invite_code"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_fantasy_point_system"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/points"
+                android:drawablePadding="@dimen/_10sdp"
+                android:textColor="@color/textColorLightBlack"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/fantasy_point_system"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tv_add_funds"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/addfunds"
+                android:drawablePadding="@dimen/_10sdp"
+                android:textColor="@color/textColorLightBlack"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/add_funds"/>
+        <View android:layout_width="match_parent"
+              android:visibility="gone"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tv_withdraw"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/_12sdp"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/withdraw"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/withdraw"/>
+        <View android:layout_width="match_parent"
+              android:visibility="gone"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tv_transactionHistory"
+                android:textColor="@color/textColorLightBlack"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/transactionhostory"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/transaction_history"/>
+        <View android:layout_width="match_parent"
+              android:visibility="gone"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_how_to_play"
+                style="@style/TextStyleNormal"
+                android:textSize="@dimen/_12sdp"
+                android:layout_width="match_parent"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/howto"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/how_to_play"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_helpDesk"
+                style="@style/TextStyleNormal"
+                android:textSize="@dimen/_12sdp"
+                android:layout_width="match_parent"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/helpdesk"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/helpdesk"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_about"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/_12sdp"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/about"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/about_us"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rules"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/legality"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/legality"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
+                android:id="@+id/tv_support"
+                android:textSize="@dimen/_12sdp"
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColorLightBlack"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/support"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/support"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_logout"
+                style="@style/TextStyleNormal"
+                android:textSize="@dimen/_12sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorLightBlack"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:drawableEnd="@mipmap/arrow_setting"
+                android:drawableStart="@mipmap/logout"
+                android:drawablePadding="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_12sdp"
+                android:text="@string/logout"/>
+        <View android:layout_width="match_parent"
+              android:background="@color/GrayColorOTP" android:layout_height="0.5dp"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

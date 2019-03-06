@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="#50000000"
+        android:gravity="center"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+
+    android:layout_margin="@dimen/_15sdp"
+    android:background="@color/white">
+
+        <TextView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        android:text="Current balance: $181.50"
+        android:textColor="@color/black"
+                android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_11sdp"
+        android:gravity="center"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height=".50dp"
+                android:background="@color/GrayColor"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Entry($5)"
+                android:textColor="@color/colorChooseViceCaptain"
+                android:padding="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="center"/>
+
+        <View android:layout_width="match_parent" android:layout_height="5dp"
+              android:background="@color/GrayColor"/>
+
+        <Button
+                android:id="@+id/cancle_btn"
+                style="@style/ButtonStyle"
+                android:text="Cancel"
+                android:textColor="@color/colorChooseViceCaptain"
+            android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
