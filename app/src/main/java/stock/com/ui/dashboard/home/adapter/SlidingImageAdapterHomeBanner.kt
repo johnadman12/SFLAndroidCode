@@ -11,6 +11,10 @@ import androidx.viewpager.widget.PagerAdapter
 import com.nostra13.universalimageloader.core.ImageLoader
 import stock.com.R
 import stock.com.application.FantasyApplication
+import stock.com.ui.addfunds.activity.AddFundsActivity
+import stock.com.ui.contest.activity.AllContestActivity
+import stock.com.ui.invite.activity.InviteCodeActivity
+import stock.com.ui.invite.activity.InviteFriendsActivity
 import stock.com.ui.pojo.HomePojo
 import stock.com.utils.AppDelegate
 
@@ -39,15 +43,36 @@ class SlidingImageAdapterHomeBanner(private val context: FragmentActivity, priva
         )
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
 
+       /* type 1: Excahnge
+        type 2 : Invite
+        type 3: offer*/
+
         view.addView(imageLayout, position-1)
-        /*imageView.setOnClickListener {
-            context.startActivity(
-                Intent(context, ZoomActivity::class.java).putExtra(
-                    "URL",
-                    IMAGES[position].image
+        imageView.setOnClickListener {
+            if (IMAGES[position].type==1){
+                context.startActivity(
+                    Intent(context, AllContestActivity::class.java).putExtra(
+                        "URL",
+                        IMAGES[position].image
+                    )
                 )
-            )
-        }*/
+            }else if (IMAGES[position].type==2){
+                context.startActivity(
+                    Intent(context, InviteCodeActivity::class.java).putExtra(
+                        "URL",
+                        IMAGES[position].image
+                    )
+                )
+            }else if (IMAGES[position].type==3){
+                context.startActivity(
+                    Intent(context, AddFundsActivity::class.java).putExtra(
+                        "URL",
+                        IMAGES[position].image
+                    )
+                )
+            }
+
+        }
         return imageLayout
     }
 

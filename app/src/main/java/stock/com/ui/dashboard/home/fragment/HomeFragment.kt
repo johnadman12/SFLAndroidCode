@@ -123,7 +123,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_features!!.layoutManager = llm
-        recyclerView_features!!.adapter = FeatureContestAdapter(context!!, listItem)
+        recyclerView_features.visibility= View.VISIBLE
+        recyclerView_features!!.adapter = FeatureContestAdapter(context!!/*, listItem*/)
     }
 
     @SuppressLint("WrongConstant")

@@ -89,6 +89,10 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             et_Password.visibility = View.GONE
         }
 
+        if (userData!!.isSocial.equals("0")){
+            et_Password.visibility = View.GONE
+        }
+
         accept_term_condition.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 term_condition_accept = 1
@@ -159,16 +163,18 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             et_Email.text.toString().trim(),
             et_Password.text.toString(), et_EnviteCode.text.toString().trim(),
             et_Mobile.text.toString().trim(), et_UserName.text.toString().trim(), "1",
-            "123456789", notification_accept.toString(), term_condition_accept.toString()
-        )
+            "123456789", notification_accept.toString(), term_condition_accept.toString(),
+            " ", " ", "")
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        startActivity(Intent(this@SignUpActivity, OTPActivity::class.java)
-                            .putExtra("phoneNumber", et_Mobile.text.toString().trim()))
+                        startActivity(
+                            Intent(this@SignUpActivity, OTPActivity::class.java)
+                                .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                        )
                         finish()
                     }
                     displayToast(response.body()!!.message)

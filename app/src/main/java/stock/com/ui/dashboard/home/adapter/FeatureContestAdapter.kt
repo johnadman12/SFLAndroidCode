@@ -16,7 +16,7 @@ import stock.com.ui.pojo.HomePojo
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
 
-class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.FeatureContest>) :
+class FeatureContestAdapter(val mContext: Context/*, val mContest: List<HomePojo.FeatureContest>*/) :
     RecyclerView.Adapter<FeatureContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -32,7 +32,7 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
             holder.itemView.first_view.visibility = View.VISIBLE
             clickPlusIcon(holder.itemView.ll_child_lay, holder.itemView.nse_image)
         }
-        holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
+       /* holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
         holder.itemView.entry_lable.setText(mContest.get(position).exchangename)
 
 //        Glide.with(mContext).load(mContest.get(position)).into(holder.itemView.nse_image)
@@ -40,14 +40,14 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
 
         holder.itemView.txtcreated.setText(DateUtils.changeDate(mContest.get(position).scheduleStart))
         holder.itemView.txtStatus.setText(mContest.get(position).contestType)
-        holder.itemView.txtCurrentFee.setText(mContest.get(position).entryFees)
-
+        holder.itemView.txtCurrentFee.setText(mContest.get(position).entryFees)*/
 
     }
 
 
     override fun getItemCount(): Int {
-        return mContest.size;
+//        return mContest.size
+        return 2
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

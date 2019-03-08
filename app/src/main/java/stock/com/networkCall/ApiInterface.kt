@@ -26,7 +26,10 @@ interface ApiInterface {
         @Field("device_type") device_type: String,
         @Field("device_token") device_token: String,
         @Field("notification") notification: String,
-        @Field("termAcceptance") termAcceptance: String
+        @Field("termAcceptance") termAcceptance: String,
+        @Field("social_id") social_id: String,
+        @Field("social_type") social_type: String,
+        @Field("type") type: String
     ): Call<SignupPojo>
 
     @FormUrlEncoded
@@ -90,8 +93,8 @@ interface ApiInterface {
      @Headers("Content-Type: application/json")
      @POST(ApiConstant.login)
      fun login(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
- */
-    @Headers("Content-Type: application/json")
+ */ @FormUrlEncoded
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST("users/social_login")
     fun socialLogin(
         @Field("type") type: String,

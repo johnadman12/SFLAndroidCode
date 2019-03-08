@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.phoneLogin(
-            et_email.text.toString().trim(), "1",getFromPrefsString(Tags.FCMtoken).toString()
+            et_email.text.toString().trim(), "1", getFromPrefsString(Tags.FCMtoken).toString()
 
         )
         call.enqueue(object : Callback<SignupPojo> {
@@ -192,12 +192,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                                 // Application code
                                 if (response != null) {
                                     socialModel = SocialModel()
-                                    socialModel.type = "1";
+                                    socialModel.isSocial = "0"
                                     socialModel = FbDetails().getFacebookDetail(response.jsonObject.toString())
                                     AppDelegate.LogT("Facebook details==" + socialModel + "")
                                     AppDelegate.hideProgressDialog(this@LoginActivity)
                                     Prefs(this@LoginActivity).putStringValueinTemp(Tags.social_id, socialModel.fb_id)
-                                    checkUserVerify(socialModel)
+                                    checkUserVerify(socialModel,"1")
                                 }
                             }
                         })
@@ -252,11 +252,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     val user = mAuth!!.currentUser
                     socialModel = SocialModel()
                     socialModel.email = user?.email!!
-                    socialModel.type = "2"
+                    socialModel.isSocial = "0"
                     socialModel.social_id = user.uid
                     socialModel.first_name = user.displayName!!
                     socialModel.image = user.photoUrl.toString()
-                    checkUserVerify(socialModel)
+                    checkUserVerify(socialModel,"2")
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
@@ -269,14 +269,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     }
 
 
-    private fun checkUserVerify(socialModel: SocialModel) {
+    private fun checkUserVerify(socialModel: SocialModel, type:String) {
 //      {"fb_id":"124587","google_id":"","language":"en","mobile_number":"9955214155","name":"Nidhi","email":"nidhimittal@m_mailinator.com"}
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.socialLogin(
-            socialModel.type,
-            socialModel.social_id, socialModel.email, socialModel.name, "1", getFromPrefsString(Tags.FCMtoken).toString()
+            type,
+            socialModel.social_id,
+            socialModel.email,
+            socialModel.name,
+            "1",
+            getFromPrefsString(Tags.FCMtoken).toString()
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
@@ -285,10 +289,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     if (response.body()!!.status == "1") {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                        startActivity(
-                            Intent(this@LoginActivity, DashBoardActivity::class.java)
-                                .putExtra(IntentConstant.DATA, socialModel)
-                        )
+
+                        if(response.body()!!.firstTimeRegister.equals("0")){
+                            startActivity(
+                                Intent(this@LoginActivity, DashBoardActivity::class.java)
+                                    .putExtra(IntentConstant.DATA, socialModel)
+                            )
+                        }else{
+                            startActivity(
+                                Intent(this@LoginActivity, SignUpActivity::class.java)
+                                    .putExtra(IntentConstant.DATA, socialModel)
+                            )
+                        }
+
 
                     }
                     displayToast(response.body()!!.message)
@@ -311,9 +324,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     private fun googlePlusLogin() {
 //        AppDelegate.LogT("getString(R.string.default_web_client_id==?"+getString(R.string.default_web_client_id))
-        //            .requestIdToken(getString(R.string.default_web_client_id))
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         if (mGoogleApiClient == null || !mGoogleApiClient!!.isConnected) {
@@ -403,7 +416,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 } else {
                     startActivity(
                         Intent(this@LoginActivity, SignUpActivity::class.java)
-                            .putExtra(IntentConstant.DATA, socialModel)
+                            .putExtra(IntentConstant.DATA, socialModel)GoogleSignInOptions
 //                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
 //                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                     )

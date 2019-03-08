@@ -15,6 +15,7 @@ class SocialModel() : Parcelable {
     internal var device_type: String = ""
     internal var device_token: String = ""
     internal var email: String = ""
+    internal var isSocial: String = ""
     internal var birthday: String = ""
 
     constructor(parcel: Parcel) : this() {
