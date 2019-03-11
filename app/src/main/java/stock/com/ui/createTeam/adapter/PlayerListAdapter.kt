@@ -48,12 +48,12 @@ class PlayerListAdapter(val mContext: Context) : RecyclerView.Adapter<PlayerList
         } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }*/
-        /*holder.itemView.img_add.setOnClickListener {
+        holder.itemView.img_add.setOnClickListener {
             holder.itemView.img_add.isSelected = !holder.itemView.img_add.isSelected
         }
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
-        }*/
+        }
 
         holder.itemView.setOnClickListener {
             mContext.startActivity(Intent(mContext, Choose_C_VC_Activity::class.java))

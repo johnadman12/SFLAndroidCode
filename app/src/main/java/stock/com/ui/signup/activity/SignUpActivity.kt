@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.content_signup.*
@@ -32,9 +33,11 @@ import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
 
 
-class SignUpActivity : BaseActivity(), View.OnClickListener {
+class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.OnCountryChangeListener {
+
 
     lateinit var countrycodeList: ArrayList<CountryDataPojo>
+    var countryCodePicker: CountryCodePicker? = null;
     private var term_condition_accept: Int = 0
     private var notification_accept: Int = 0
     private var socialId: String = "";
@@ -57,6 +60,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, WebUrlActivity::class.java))
 
             }
+
         }
     }
 
@@ -65,21 +69,25 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_signup)
         StockConstant.ACTIVITIES.add(this)
         initViews()
-        // getCountryList()
+//         getCountryList()
     }
 
     var userData: SocialModel? = null
+//    var ccp: CountryCodePicker? = null
 
     private fun initViews() {
         countrycodeList = ArrayList()
+        countryCodePicker = findViewById(R.id.countryCodeHolder)
         toolbarTitleTv.setText(R.string.sign_up)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
         txt_TC.setOnClickListener(this)
+        countryCodePicker!!.setOnCountryChangeListener(this)
         try {
             userData = intent.getParcelableExtra(IntentConstant.DATA)
         } catch (e: Exception) {
@@ -88,12 +96,12 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
 
         if (userData != null) {
             et_Email.setText(userData!!.email)
-            et_Password.visibility = View.GONE
+            if (userData!!.isSocial.equals("0")) {
+                et_Password.visibility = View.GONE
+            }
         }
 
-        if (userData!!.isSocial.equals("0")) {
-            et_Password.visibility = View.GONE
-        }
+
 
         accept_term_condition.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -217,6 +225,10 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+
+    override fun onCountrySelected() {
+        Toast.makeText(this, "Country Code " + countryCodePicker!!.selectedCountryCode, Toast.LENGTH_SHORT).show()
     }
 
     /* private fun prepareData(isSocial: Boolean) {

@@ -89,12 +89,12 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-    android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:id="@+id/til_Mobile"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintTop_toBottomOf="@+id/til_UserName">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_UserName">
 
         <Spinner
                 android:id="@+id/et_countrycode"
@@ -105,7 +105,23 @@
                 android:background="@color/colorPrimary"
                 android:dropDownVerticalOffset="35dp"
                 android:textColor="@color/GrayColor"
-                android:textSize="@dimen/_13sdp" />
+                android:textSize="@dimen/_13sdp"/>
+        <com.hbb20.CountryCodePicker
+                android:id="@+id/countryCodeHolder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:ccp_defaultNameCode="US"
+                app:ccp_textSize="@dimen/_13sdp"
+                app:ccp_arrowSize="20dp"
+                android:visibility="visible"
+                android:layout_weight=".35"
+                app:ccp_textGravity="RIGHT"
+                app:ccp_showNameCode="true"
+                app:ccp_showFlag="false"
+                app:ccpDialog_showFlag="true"
+                app:ccp_showFullName="false"
+                app:ccp_clickable="true"
+                app:ccp_showPhoneCode="true"/>
 
         <com.google.android.material.textfield.TextInputLayout
                 android:layout_marginTop="@dimen/_5sdp"
@@ -249,17 +265,17 @@
             android:layout_height="@dimen/_40sdp"/>
 
     <!--<androidx.appcompat.widget.AppCompatTextView-->
-            <!--android:id="@+id/txt_SignInWith"-->
-            <!--style="@style/TextStyleNormal"-->
-            <!--android:layout_marginTop="@dimen/_5sdp"-->
-            <!--android:gravity="center"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/btn_Next"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:textColor="@color/textColorBlack"-->
-            <!--android:text="@string/by_registering_i_agree_to_playing_11_s_t_amp_cs"-->
-            <!--android:layout_height="wrap_content"/>-->
+    <!--android:id="@+id/txt_SignInWith"-->
+    <!--style="@style/TextStyleNormal"-->
+    <!--android:layout_marginTop="@dimen/_5sdp"-->
+    <!--android:gravity="center"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/btn_Next"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:textColor="@color/textColorBlack"-->
+    <!--android:text="@string/by_registering_i_agree_to_playing_11_s_t_amp_cs"-->
+    <!--android:layout_height="wrap_content"/>-->
     <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_Signup"
             android:layout_marginTop="@dimen/_20sdp"
