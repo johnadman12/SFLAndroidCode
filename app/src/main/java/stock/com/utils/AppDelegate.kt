@@ -162,7 +162,22 @@ object AppDelegate {
         return myDir.toString() + "/" + name
     }
 
+    fun printHashKey(pContext: Context) {
+        try {
+            val info = pContext.packageManager.getPackageInfo(pContext.packageName, PackageManager.GET_SIGNATURES)
+            for (signature in info.signatures) {
+                val md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val hashKey = String(Base64.encode(md.digest(), 0))
+                Log.i("hash", "printHashKey() Hash Key: $hashKey")
+            }
+        } catch (e: NoSuchAlgorithmException) {
+            Log.e("hash", "printHashKey()", e)
+        } catch (e: Exception) {
+            Log.e("hash", "printHashKey()", e)
+        }
 
+    }
     fun changeTimeToRelativeTime(timeStamp: Long): String {
 
         // it comes out like this 2013-08-31 15:55:22 so adjust the date format

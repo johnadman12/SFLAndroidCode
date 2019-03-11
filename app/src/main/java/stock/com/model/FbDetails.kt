@@ -21,7 +21,7 @@ class FbDetails {
                 //                }
             }
             AppDelegate.LogT("profilePicUrl===" + profilePicUrl!!)
-            fb_detail_getSet.fb_id = (`object`.getString(Tags.id))
+            fb_detail_getSet.social_id = (`object`.getString(Tags.id))
             fb_detail_getSet.first_name = (`object`.getString(Tags.first_name))
             fb_detail_getSet.last_name = (`object`.getString(Tags.last_name))
             if (`object`.has(Tags.birthday)) {

@@ -37,12 +37,14 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
     lateinit var countrycodeList: ArrayList<CountryDataPojo>
     private var term_condition_accept: Int = 0
     private var notification_accept: Int = 0
+    private var socialId: String = "";
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Register -> {
-                if (userData != null)
-                // checkValidationSocial()
-                else
+                if (userData != null) {
+                    socialId = userData!!.social_id;
+                    checkValidationSocial()
+                } else
                     checkValidation()
 
             }
@@ -89,7 +91,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             et_Password.visibility = View.GONE
         }
 
-        if (userData!!.isSocial.equals("0")){
+        if (userData!!.isSocial.equals("0")) {
             et_Password.visibility = View.GONE
         }
 
@@ -106,7 +108,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
 
     }
 
-    /*private fun checkValidationSocial() {
+    private fun checkValidationSocial() {
         if (et_Mobile.text.toString().isEmpty())
             AppDelegate.showToast(this, getString(R.string.enter_phone_number))
         else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString()))
@@ -118,11 +120,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         else {
             AppDelegate.hideKeyBoard(this)
             if (NetworkUtils.isConnected()) {
-                prepareData(true)
+                register("social", "1")
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
         }
-    }*/
+    }
 
 
     private fun checkValidation() {
@@ -148,14 +150,14 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             AppDelegate.showToast(this, "Please accept term and condition")
         } else {
             if (NetworkUtils.isConnected()) {
-                register()
+                register("normal", "2")
             } else {
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun register() {
+    fun register(type: String, socialType: String) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -164,7 +166,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             et_Password.text.toString(), et_EnviteCode.text.toString().trim(),
             et_Mobile.text.toString().trim(), et_UserName.text.toString().trim(), "1",
             "123456789", notification_accept.toString(), term_condition_accept.toString(),
-            " ", " ", "")
+            socialId, socialType, type
+        )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
                 d.dismiss()

@@ -1,7 +1,11 @@
 package stock.com.ui.login.activity
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -45,6 +49,8 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.*
 
 class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -99,13 +105,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.phoneLogin(
             et_email.text.toString().trim(), "1", getFromPrefsString(Tags.FCMtoken).toString()
-
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
+                        socialModel = SocialModel()
+                        socialModel.isSocial = "1"
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         startActivity(
@@ -142,6 +149,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.login)
+        AppDelegate.printHashKey(this@LoginActivity)
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
         facebookLoginButton.setOnClickListener(this)
@@ -177,7 +185,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     fun faceBookLogin() {
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance()
-            .logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "user_birthday", "email"))
+            .logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
@@ -197,7 +205,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                                     AppDelegate.LogT("Facebook details==" + socialModel + "")
                                     AppDelegate.hideProgressDialog(this@LoginActivity)
                                     Prefs(this@LoginActivity).putStringValueinTemp(Tags.social_id, socialModel.fb_id)
-                                    checkUserVerify(socialModel,"1")
+                                    checkUserVerify(socialModel, "1")
                                 }
                             }
                         })
@@ -256,7 +264,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     socialModel.social_id = user.uid
                     socialModel.first_name = user.displayName!!
                     socialModel.image = user.photoUrl.toString()
-                    checkUserVerify(socialModel,"2")
+                    checkUserVerify(socialModel, "2")
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
@@ -269,7 +277,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     }
 
 
-    private fun checkUserVerify(socialModel: SocialModel, type:String) {
+    private fun checkUserVerify(socialModel: SocialModel, type: String) {
 //      {"fb_id":"124587","google_id":"","language":"en","mobile_number":"9955214155","name":"Nidhi","email":"nidhimittal@m_mailinator.com"}
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -287,15 +295,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-
-                        if(response.body()!!.firstTimeRegister.equals("0")){
+                        if (response.body()!!.firstTimeRegister.equals("0")) {
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                             startActivity(
                                 Intent(this@LoginActivity, DashBoardActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
                             )
-                        }else{
+                        } else {
                             startActivity(
                                 Intent(this@LoginActivity, SignUpActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
@@ -324,7 +331,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     private fun googlePlusLogin() {
 //        AppDelegate.LogT("getString(R.string.default_web_client_id==?"+getString(R.string.default_web_client_id))
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -372,7 +378,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == RC_SIGN_IN) {
             AppDelegate.LogT("resultCode==>" + resultCode)
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
@@ -385,6 +390,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         }
 
     }
+
 
 }
 
