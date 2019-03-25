@@ -28,7 +28,7 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="register">Register</string>
+    <string name="register">Register Now</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="login_now">Login Now</string>
     <string name="by_registering_i_agree_to_playing_11_s_t_amp_cs">
@@ -46,7 +46,7 @@
     <string name="select_a_match">Select a Match</string>
     <string name="enter_contest">Enter Contest</string>
     <string name="enter_otp">Enter OTP</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">SignUp</string>
     <string name="notification">Notifications</string>
     <string name="filter">Filter</string>
     <string name="wallet">Walllet</string>
@@ -311,4 +311,17 @@
     <string name="back_exit">Please click BACK again to exit</string>
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="receive_offers_and_notification">Receive Offers &amp; Notification</string>
+    <string name="legal_first_name">Legal First Name</string>
+    <string name="legal_last_name">Legal Last Name</string>
+    <string name="DoB">Date of Birth</string>
+    <string name="emailID">Email Address</string>
+    <string name="conf_password">Confirm Password</string>
+    <string name="otp_message">We have send you an SMS and Email with the OTP to enter in below fields.</string>
+    <string name="mobile_no">Mobile Number</string>
+    <string name="email_txt">E-mail</string>
+    <string name="password_txt">Password</string>
+    <string name="already_account">already have an account yet?</string>
+    <string name="recieve_noti">Receive Offers &amp; Notification</string>
+    <string name="tc_agree_txt">By registring, I agree to SFL T&amp;C and Privacy Policy</string>
+
 </resources>

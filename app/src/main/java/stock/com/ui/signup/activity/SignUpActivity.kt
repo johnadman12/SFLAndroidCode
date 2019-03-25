@@ -8,6 +8,7 @@ import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.content_signup.*
+import kotlinx.android.synthetic.main.outside_toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -56,11 +57,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 finish()
             }
 
-            R.id.txt_TC -> {
-                startActivity(Intent(this, WebUrlActivity::class.java))
+            /* R.id.txt_TC -> {
+                 startActivity(Intent(this, WebUrlActivity::class.java))
 
-            }
-
+             }
+ */
         }
     }
 
@@ -78,15 +79,12 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     private fun initViews() {
         countrycodeList = ArrayList()
         countryCodePicker = findViewById(R.id.countryCodeHolder)
-        toolbarTitleTv.setText(R.string.sign_up)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-
+        img_back.setOnClickListener { this }
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
-        txt_TC.setOnClickListener(this)
+//        txt_TC.setOnClickListener(this)
         countryCodePicker!!.setOnCountryChangeListener(this)
         try {
             userData = intent.getParcelableExtra(IntentConstant.DATA)

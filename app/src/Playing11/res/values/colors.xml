@@ -50,9 +50,12 @@
     <color name="colorBackgroundLoginInput">#ededed</color>
     <color name="colorBackgroundLoginFacebook">#254cae</color>
     <color name="colorBackgroundLoginGoogle">#ea4336</color>
-    <color name="colorBackgroundTermsAndConditions">#46A8D3</color>
+    <color name="colorBackgroundTermsAndConditions">#52DF45</color>
 
     <!--ChooseCaptainBackgroundColorTop-->
     <color name="colorChooseCaptain">#268c0b</color>
     <color name="colorChooseViceCaptain">#58c1d9</color>
+
+    //login
+    <color name="green">#52DF45</color>
 </resources>

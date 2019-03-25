@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <androidx.appcompat.widget.Toolbar
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar_outside"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            app:theme="@style/ToolbarTheme"
+            android:layout_gravity="center"
+            android:layout_marginLeft="-10dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_back"
+                android:src="@drawable/ic_arrow_back"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"/>
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>
+
