@@ -43,6 +43,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.SignupPojo
+import stock.com.ui.signup.activity.ForgotPasswordActivity
 import stock.com.ui.signup.activity.OTPActivity
 import stock.com.ui.signup.activity.PasswordActivity
 import stock.com.ui.signup.activity.SignUpActivity
@@ -88,6 +89,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.txt_Signup -> {
                 startActivity(Intent(this, SignUpActivity::class.java))
+                finish()
+            }
+            R.id.img_back -> {
+                finish()
+            }
+            R.id.text_forgot -> {
+                startActivity(Intent(this, ForgotPasswordActivity::class.java))
                 finish()
             }
 
@@ -142,8 +150,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     private fun initViews() {
         setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        img_back.setOnClickListener(this)
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
+        text_forgot.setOnClickListener(this)
 
     }
 

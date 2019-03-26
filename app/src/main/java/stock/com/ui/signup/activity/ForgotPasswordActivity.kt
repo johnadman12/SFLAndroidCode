@@ -6,6 +6,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.activity_password.*
 import kotlinx.android.synthetic.main.app_toolbar.*
+import kotlinx.android.synthetic.main.outside_toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +21,7 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
 
-class ForgotPasswordActivity : BaseActivity(){
+class ForgotPasswordActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,32 +31,32 @@ class ForgotPasswordActivity : BaseActivity(){
     }
 
     private fun initViews() {
-        toolbarTitleTv.setText("Forgot Password")
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        btn_submit_.setOnClickListener {
+        img_back.setOnClickListener {
+            finish()
+        }
+        btn_submit_ . setOnClickListener {
             checkValidation()
         }
     }
 
     private fun checkValidation() {
-         if (et_Email_.text.toString().isEmpty())
+        if (et_Email_.text.toString().isEmpty())
             AppDelegate.showToast(this, getString(R.string.enter_email))
         else if (!ValidationUtil.isEmailValid(et_Email_.text.toString()))
             AppDelegate.showToast(this, getString(R.string.valid_email))
         else {
             AppDelegate.hideKeyBoard(this)
-            if(NetworkUtils.isConnected()){
+            if (NetworkUtils.isConnected()) {
                 forgotPass()
-            }else{
+            } else {
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    fun forgotPass(){
+    fun forgotPass() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -65,7 +66,7 @@ class ForgotPasswordActivity : BaseActivity(){
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
-                       finish()
+                        finish()
                     }
                     displayToast(response.body()!!.message)
                 } else {

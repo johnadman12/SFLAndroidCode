@@ -192,9 +192,7 @@
                             android:src="@mipmap/dob"/>
 
                     <com.google.android.material.textfield.TextInputLayout
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:id="@+id/til_dob"
+                             android:id="@+id/til_dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/iv_Dob"
@@ -206,11 +204,17 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/DoB"
                                 android:inputType="text"
-                                android:drawablePadding="5dp"
-                                android:drawableRight="@mipmap/calculator"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
-
+                    <ImageView
+                            android:id="@+id/iv_calendar"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/calculator"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -421,6 +425,7 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:padding="@dimen/_3sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:layout_below="@id/btn_Next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

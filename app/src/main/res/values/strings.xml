@@ -4,7 +4,9 @@
     <string name="facebook_app_id">320398858824133</string>
     <string name="default_notification_channel_id">32000</string>
     <string name="default_notification_channel_name">Default Notification Channel</string>
-    <string name="default_notification_channel_description">It will deliver all notification above Android Oreo. It should be enabled to receive notification.</string>
+    <string name="default_notification_channel_description">It will deliver all notification above Android Oreo. It
+        should be enabled to receive notification.
+    </string>
 
     <string name="login">Login</string>
     <string name="let_s_play">Let\'s Play</string>
@@ -279,7 +281,9 @@
     <string name="clear_all">Clear All</string>
     <string name="invite">Invite</string>
     <string name="joined_Contest">Joined Contest</string>
-    <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get \u20B9 100 for free</string>
+    <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get
+        \u20B9 100 for free
+    </string>
     <string name="fantasy_status">Fantasy Status</string>
     <string name="match">Match</string>
     <string name="selected_by">Selected By</string>
@@ -323,5 +327,15 @@
     <string name="already_account">already have an account yet?</string>
     <string name="recieve_noti">Receive Offers &amp; Notification</string>
     <string name="tc_agree_txt">By registring, I agree to SFL T&amp;C and Privacy Policy</string>
+    <string name="start">Start</string>
+    <string name="cancel">Cancle</string>
+
+    <string name="forget_pass">Forgot Password ?</string>
+    <string name="enter_userEmail_message">Enter your Username or Email or Mobile Number.</string>
+    <string name="enter_email_mobile_username">Enter your Username, Mobile number or Email</string>
+
+    <string name="enter_codeHere">Enter code here</string>
+    <string name="resend">Resend</string>
+    <string name="enterOTP">Enter OTP</string>
 
 </resources>

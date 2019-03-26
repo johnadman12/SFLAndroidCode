@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.content_otp.*
+import kotlinx.android.synthetic.main.outside_toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -34,18 +35,18 @@ import stock.com.utils.networkUtils.NetworkUtils
 
 class OTPActivity : BaseActivity(), View.OnClickListener {
 
-    var phoneNumber : String = ""
+    var phoneNumber: String = ""
 
-    override fun onClick(view : View?) {
-        when(view!!.id){
+    override fun onClick(view: View?) {
+        when (view!!.id) {
             R.id.btn_Submit -> {
-                println("otp is  "+otp_view.text.toString())
-                if(otp_view.text.toString().isEmpty()){
+                println("otp is  " + otp_view.text.toString())
+                if (otp_view.text.toString().isEmpty()) {
                     AppDelegate.showToast(this, "Please enter OTP")
-                }else{
-                    if(NetworkUtils.isConnected()){
+                } else {
+                    if (NetworkUtils.isConnected()) {
                         verifyOTPApi()
-                    }else{
+                    } else {
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
 
@@ -57,11 +58,13 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 startActivity(intent*//*, options.toBundle()*//*)
                 finish()*/
             }
-
+            R.id.img_back -> {
+                finish()
+            }
             R.id.resendOTPTv -> {
-                if(NetworkUtils.isConnected()){
+                if (NetworkUtils.isConnected()) {
                     resendOTP()
-                }else{
+                } else {
                     Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                 }
 
@@ -74,16 +77,14 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_otp)
         StockConstant.ACTIVITIES.add(this)
         phoneNumber = intent.getStringExtra("phoneNumber")
-        println("Phone number is   "+phoneNumber)
+        println("Phone number is   " + phoneNumber)
         initViews()
     }
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.enter_otp)
+        img_back.setOnClickListener(this)
         btn_Submit.setOnClickListener(this)
         resendOTPTv.setOnClickListener(this)
         /*btn_Submit.setOnClickListener(this)
@@ -99,12 +100,14 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         }*/
     }
 
-    fun verifyOTPApi(){
+    fun verifyOTPApi() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<SignupPojo> = apiService.otpVerify(getFromPrefsString(StockConstant.USERID).toString(),
-            otp_view.text.toString())
+        val call: Call<SignupPojo> = apiService.otpVerify(
+            getFromPrefsString(StockConstant.USERID).toString(),
+            otp_view.text.toString()
+        )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
                 d.dismiss()
@@ -129,7 +132,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
-    fun resendOTP(){
+    fun resendOTP() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)

@@ -70,9 +70,10 @@
     </style>
     <style name="EditTextStyle" parent="Theme.AppCompat.Light">
         <item name="android:fontFamily">@font/faktpro_normal</item>
-        <item name="android:paddingStart">@dimen/_15sdp</item>
         <item name="android:paddingEnd">@dimen/_15sdp</item>
-        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:paddingBottom">@dimen/_15sdp</item>
+        <item name="android:textSize">@dimen/_13ssp</item>
+        <item name="android:padding">@dimen/_5sdp</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/textColorLightBlack</item>
         <item name="colorControlNormal">@color/GrayColor</item>
