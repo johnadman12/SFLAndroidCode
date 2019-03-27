@@ -150,6 +150,34 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough1"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough2"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough3"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough4"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough5"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name="stock.com.ui.GoThroughScreens.ActivityGoThrough6"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.Reset.ActivityResetPassword"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
 
         <!--<meta-data-->

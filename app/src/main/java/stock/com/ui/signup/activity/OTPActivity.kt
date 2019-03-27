@@ -59,7 +59,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 finish()*/
             }
             R.id.img_back -> {
-                finish()
+                onBackPressed()
             }
             R.id.resendOTPTv -> {
                 if (NetworkUtils.isConnected()) {

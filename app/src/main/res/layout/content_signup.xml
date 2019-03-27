@@ -34,25 +34,24 @@
 
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_410sdp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="-3dp"
                 android:padding="@dimen/_8sdp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="8dp"
-                app:cardPreventCornerOverlap="false"
-                app:contentPadding="@dimen/_2sdp">
+                app:cardPreventCornerOverlap="false">
 
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp">
 
                 <RelativeLayout
                         android:id="@+id/rl_invite"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp">
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_height="wrap_content">
 
                     <ImageView
                             android:id="@+id/iv_invite_code"
@@ -83,14 +82,22 @@
                 <RelativeLayout
                         android:id="@+id/rl_firstName"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/rl_invite">
+
+                    <View
+                            android:id="@+id/view"
+                            android:layout_width="@dimen/_3sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:background="@color/green"/>
 
                     <ImageView
                             android:id="@+id/iv_first_name"
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_18sdp"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/_7sdp"
+                            android:layout_toRightOf="@+id/view"
                             android:src="@mipmap/name"/>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -116,7 +123,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_lastName"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_firstName">
 
                     <ImageView
@@ -149,7 +157,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_userName"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_lastName">
 
                     <ImageView
@@ -181,7 +190,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_DoB"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_userName">
 
                     <ImageView
@@ -192,10 +202,11 @@
                             android:src="@mipmap/dob"/>
 
                     <com.google.android.material.textfield.TextInputLayout
-                             android:id="@+id/til_dob"
+                            android:id="@+id/til_dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/iv_Dob"
+                            android:focusable="false"
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText
                                 style="@style/EditTextStyle"
@@ -203,6 +214,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/DoB"
+                                android:focusable="false"
                                 android:inputType="text"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
@@ -220,7 +232,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_mobile"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_DoB">
 
                     <ImageView
@@ -235,14 +248,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:ccp_defaultNameCode="US"
-                            app:ccp_textSize="@dimen/_13sdp"
+                            app:ccp_textSize="@dimen/_13ssp"
                             app:ccp_arrowSize="20dp"
                             android:visibility="visible"
                             app:ccp_textGravity="RIGHT"
                             android:layout_toRightOf="@+id/iv_mobile"
                             app:ccp_showNameCode="false"
                             app:ccp_showFlag="true"
-                            android:gravity="center"
+                            android:layout_centerVertical="true"
                             app:ccpDialog_showFlag="true"
                             app:ccp_showFullName="false"
                             app:ccp_clickable="true"
@@ -271,7 +284,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_Email"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_mobile">
 
                     <ImageView
@@ -282,29 +296,27 @@
                             android:src="@mipmap/email"/>
 
                     <com.google.android.material.textfield.TextInputLayout
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:id="@+id/til_Email"
+                            android:id="@+id/til_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/iv_Email"
+                            android:layout_toRightOf="@id/iv_Email"
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText
                                 style="@style/EditTextStyle"
                                 android:id="@+id/et_Email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/email"
+                                android:hint="@string/email_address_or_mobile_number"
                                 android:inputType="textEmailAddress"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
-
                 </RelativeLayout>
 
                 <RelativeLayout
                         android:id="@+id/rl_password"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_Email">
 
                     <ImageView
@@ -337,7 +349,8 @@
                 <RelativeLayout
                         android:id="@+id/rl_Con_pass"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_below="@+id/rl_password">
 
                     <ImageView
@@ -369,9 +382,9 @@
                 <RelativeLayout
                         android:id="@+id/rl_condition1"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_25sdp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/rl_Con_pass"
-                        android:layout_marginLeft="@dimen/_20sdp">
+                        android:layout_marginLeft="@dimen/_25sdp">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/accept_term_condition"
@@ -388,9 +401,10 @@
                 <RelativeLayout
                         android:id="@+id/rl_condition2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_25sdp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/rl_condition1"
-                        android:layout_marginLeft="@dimen/_20sdp">
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_25sdp">
 
                     <CheckBox
                             android:id="@+id/notification_check"

@@ -14,6 +14,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.Reset.ActivityResetPassword
 import stock.com.ui.pojo.BasePojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -34,9 +35,9 @@ class ForgotPasswordActivity : BaseActivity() {
         setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         img_back.setOnClickListener {
-            finish()
+           onBackPressed()
         }
-        btn_submit_ . setOnClickListener {
+        btn_submit_.setOnClickListener {
             checkValidation()
         }
     }
@@ -66,6 +67,9 @@ class ForgotPasswordActivity : BaseActivity() {
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
+                        startActivity(
+                            Intent(this@ForgotPasswordActivity, ActivityResetPassword::class.java)
+                        )
                         finish()
                     }
                     displayToast(response.body()!!.message)

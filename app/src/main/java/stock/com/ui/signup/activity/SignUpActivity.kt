@@ -1,5 +1,6 @@
 package stock.com.ui.signup.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -32,19 +33,57 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
+import android.app.DatePickerDialog
+import android.widget.DatePicker
+import androidx.core.content.ContextCompat
+import java.util.*
+import java.text.SimpleDateFormat
 
 
 class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.OnCountryChangeListener {
-
-
     lateinit var countrycodeList: ArrayList<CountryDataPojo>
     var countryCodePicker: CountryCodePicker? = null;
+    val myCalendar = Calendar.getInstance()
     private var term_condition_accept: Int = 0
     private var notification_accept: Int = 0
     private var socialId: String = "";
+
+
+    @SuppressLint("ResourceAsColor")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(stock.com.R.layout.activity_signup)
+        StockConstant.ACTIVITIES.add(this)
+        initViews()
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
+                myCalendar.set(Calendar.YEAR, year)
+                myCalendar.set(Calendar.MONTH, monthOfYear)
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateLabel()
+            }
+
+        }
+        iv_calendar.setOnClickListener {
+
+            val dialog = DatePickerDialog(
+                this@SignUpActivity, dateSetListener, myCalendar
+                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+            dialog.datePicker.maxDate = System.currentTimeMillis()
+            dialog.show()
+        }
+
+//         getCountryList()
+    }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
-            R.id.btn_Register -> {
+            stock.com.R.id.btn_Register -> {
                 if (userData != null) {
                     socialId = userData!!.social_id;
                     checkValidationSocial()
@@ -56,6 +95,10 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
+            R.id.img_back -> {
+                onBackPressed()
+            }
+
 
             /* R.id.txt_TC -> {
                  startActivity(Intent(this, WebUrlActivity::class.java))
@@ -65,25 +108,30 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
-        StockConstant.ACTIVITIES.add(this)
-        initViews()
-//         getCountryList()
-    }
-
     var userData: SocialModel? = null
 //    var ccp: CountryCodePicker? = null
+
+    private fun openDatePicker() {
+
+
+    }
+
+    private fun updateLabel() {
+        val myFormat = "MM/dd/yy" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+
+        et_dob.setText(sdf.format(myCalendar.time))
+    }
 
     private fun initViews() {
         countrycodeList = ArrayList()
         countryCodePicker = findViewById(R.id.countryCodeHolder)
         setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        img_back.setOnClickListener { this }
+        img_back.setOnClickListener(this)
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
+        iv_calendar.setOnClickListener(this)
 //        txt_TC.setOnClickListener(this)
         countryCodePicker!!.setOnCountryChangeListener(this)
         try {

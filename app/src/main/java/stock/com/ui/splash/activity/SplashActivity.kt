@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.ui.GoThroughScreens.ActivityGoThrough1
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.utils.StockConstant
 
@@ -17,13 +18,19 @@ class SplashActivity : BaseActivity() {
 
         Handler().postDelayed({
             try {
-                if(getFromPrefsString(StockConstant.USERID).toString() != ""){
-                    startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
-                    finish()
-                }else{
-                    startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+                if (getFromPrefsString(StockConstant.USERFIRSTTIME).toString().equals("no")) {
+                    if (getFromPrefsString(StockConstant.USERID).toString() != "") {
+                        startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
+                        finish()
+                    } else {
+                        startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+                        finish()
+                    }
+                } else {
+                    startActivity(Intent(this@SplashActivity, ActivityGoThrough1::class.java))
                     finish()
                 }
+
 
             } catch (e: Exception) {
             }

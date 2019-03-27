@@ -56,27 +56,30 @@ import java.security.NoSuchAlgorithmException
 import java.util.*
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
+    private var pass_remembered: Int = 0
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Next -> {
                 if (et_email.text.toString().isEmpty())
                     AppDelegate.showToast(this, getString(R.string.enter_phone_number))
+                else if (et_pass.text.toString().isEmpty())
+                    AppDelegate.showToast(this, getString(R.string.enter_password))
                 else {
-                    if (et_email.text.toString().contains("@")) {
-                        startActivity(
-                            Intent(this, PasswordActivity::class.java)
-                                .putExtra("email", et_email.text.toString().trim())
-                        )
+                    /* if (et_email.text.toString().contains("@")) {
+                         startActivity(
+                             Intent(this, PasswordActivity::class.java)
+                                 .putExtra("email", et_email.text.toString().trim())
+                         )
+                     } else {*/
+                    if (NetworkUtils.isConnected()) {
+                        phoneLoginApi()
                     } else {
-                        if (NetworkUtils.isConnected()) {
-                            phoneLoginApi()
-                        } else {
-                            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-                        }
-
+                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
 
                 }
+
+
                 /*else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
                     AppDelegate.showToast(this, getString(R.string.valid_email))
                 } else if (ValidationUtil.isPhoneValid(et_email.text.toString())) {
@@ -108,7 +111,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.phoneLogin(
-            et_email.text.toString().trim(), "1", getFromPrefsString(Tags.FCMtoken).toString()
+            et_email.text.toString().trim(),
+            et_pass.text.toString().trim(),
+            "1",
+            getFromPrefsString(Tags.FCMtoken).toString()
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
@@ -119,8 +125,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         socialModel.isSocial = "1"
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        if (pass_remembered == 1)
+                            saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         startActivity(
-                            Intent(this@LoginActivity, OTPActivity::class.java)
+                            Intent(this@LoginActivity, DashBoardActivity::class.java)
                                 .putExtra("phoneNumber", et_email.text.toString().trim())
                         )
                     }
@@ -154,7 +162,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
         text_forgot.setOnClickListener(this)
-
+        checkRemebered.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                pass_remembered = 1
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

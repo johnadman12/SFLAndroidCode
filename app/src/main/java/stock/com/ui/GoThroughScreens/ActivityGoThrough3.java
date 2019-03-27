@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import org.jetbrains.annotations.Nullable;
 import stock.com.AppBase.BaseActivity;
 import stock.com.R;
+import stock.com.utils.StockConstant;
 
 public class ActivityGoThrough3 extends BaseActivity {
     AppCompatButton btn_Next;
@@ -15,6 +16,7 @@ public class ActivityGoThrough3 extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_go_through3);
+        StockConstant.getACTIVITIES().add(this);
         btn_Next = findViewById(R.id.btn_Next);
         btn_Next.setOnClickListener(new View.OnClickListener() {
             @Override

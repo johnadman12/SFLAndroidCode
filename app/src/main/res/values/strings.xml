@@ -338,4 +338,8 @@
     <string name="resend">Resend</string>
     <string name="enterOTP">Enter OTP</string>
 
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="enter_confirm_password">Confirm Password</string>
+    <string name="reset_password">Reset Password</string>
+
 </resources>

@@ -65,6 +65,7 @@ interface ApiInterface {
     @POST("users/phone_login")
     fun phoneLogin(
         @Field("phone_number") email: String,
+        @Field("password") password: String,
         @Field("device_type") device_type: String,
         @Field("device_token") device_token: String
     ): Call<SignupPojo>
