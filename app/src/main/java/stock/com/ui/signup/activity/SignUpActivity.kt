@@ -117,7 +117,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     }
 
     private fun updateLabel() {
-        val myFormat = "MM/dd/yy" //In which you need put here
+        val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
 
         et_dob.setText(sdf.format(myCalendar.time))
@@ -183,8 +183,14 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
 
     private fun checkValidation() {
         println("Term and condition" + term_condition_accept)
-        if (et_UserName.text.toString().trim().isEmpty()) {
+        if (et_UserNamefirst.text.toString().trim().isEmpty()) {
+            AppDelegate.showToast(this, "Please enter first name");
+        } else if (et_UserNamelast.text.toString().trim().isEmpty()) {
+            AppDelegate.showToast(this, "Please enter last name");
+        } else if (et_UserName.text.toString().trim().isEmpty()) {
             AppDelegate.showToast(this, "Please enter user name")
+        } else if (et_dob.text.toString().trim().isEmpty()) {
+            AppDelegate.showToast(this, "Please enter date of birth")
         } else if (et_Mobile.text.toString().isEmpty())
             AppDelegate.showToast(this, getString(R.string.enter_phone_number))
         else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString()))
@@ -200,6 +206,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             ))
         )
             AppDelegate.showToast(this, getString(R.string.invalid_password))
+        else if (!et_conf_Password.text.toString().equals(et_Password.text.toString()))
+            AppDelegate.showToast(this, "password does not match")
         else if (term_condition_accept == 0) {
             AppDelegate.showToast(this, "Please accept term and condition")
         } else {
@@ -217,10 +225,21 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.register(
             et_Email.text.toString().trim(),
-            et_Password.text.toString(), et_EnviteCode.text.toString().trim(),
-            et_Mobile.text.toString().trim(), et_UserName.text.toString().trim(), "1",
-            "123456789", notification_accept.toString(), term_condition_accept.toString(),
-            socialId, socialType, type
+            et_Password.text.toString(),
+            et_EnviteCode.text.toString().trim(),
+            countryCodeHolder.selectedCountryCode +
+                    et_Mobile.text.toString().trim(),
+            et_dob.text.toString(),
+            et_UserName.text.toString().trim(),
+            et_UserNamefirst.text.toString(),
+            et_UserNamelast.text.toString(),
+            "1",
+            "123456789",
+            notification_accept.toString(),
+            term_condition_accept.toString(),
+            socialId,
+            socialType,
+            type
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {

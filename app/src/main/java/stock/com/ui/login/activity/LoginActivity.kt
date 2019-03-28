@@ -65,30 +65,28 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 else if (et_pass.text.toString().isEmpty())
                     AppDelegate.showToast(this, getString(R.string.enter_password))
                 else {
-                    /* if (et_email.text.toString().contains("@")) {
-                         startActivity(
-                             Intent(this, PasswordActivity::class.java)
-                                 .putExtra("email", et_email.text.toString().trim())
-                         )
-                     } else {*/
                     if (NetworkUtils.isConnected()) {
-                        phoneLoginApi()
+                        if (et_email.text.toString().contains("@")) {
+                            emailLogin()
+                        } else {
+                            phoneLoginApi()
+                        }
+
                     } else {
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
 
-                }
 
-
-                /*else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
-                    AppDelegate.showToast(this, getString(R.string.valid_email))
-                } else if (ValidationUtil.isPhoneValid(et_email.text.toString())) {
-                    AppDelegate.showToast(this, getString(R.string.valid_phone_number))
-                } else
-                    if (NetworkUtils.isConnected()) {
-                        callLoginApi()
+                    /*else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
+                        AppDelegate.showToast(this, getString(R.string.valid_email))
+                    } else if (ValidationUtil.isPhoneValid(et_email.text.toString())) {
+                        AppDelegate.showToast(this, getString(R.string.valid_phone_number))
                     } else
-                        AppDelegate.showToast(this, getString(R.string.error_network_connection))*/
+                        if (NetworkUtils.isConnected()) {
+                            callLoginApi()
+                        } else
+                            AppDelegate.showToast(this, getString(R.string.error_network_connection))*/
+                }
             }
             R.id.txt_Signup -> {
                 startActivity(Intent(this, SignUpActivity::class.java))
@@ -129,9 +127,49 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
-                                .putExtra("phoneNumber", et_email.text.toString().trim())
                         )
                     }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun emailLogin() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.login(
+            et_email.text.toString(),
+            et_pass.text.toString().trim(), "1", "123456"
+        )
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
+                d.dismiss()
+                if (response?.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        socialModel = SocialModel()
+                        socialModel.isSocial = "1"
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        if (pass_remembered == 1)
+                            saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
+                        startActivity(
+                            Intent(this@LoginActivity, DashBoardActivity::class.java)
+                        )
+                    } /*else if (response.body()!!.status == "0") {
+                        startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
+                        finish()
+                    }*/
                     displayToast(response.body()!!.message)
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -167,6 +205,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 pass_remembered = 1
             }
         }
+        if (checkRemebered.isChecked) {
+            et_email.setText(pref!!.userdata!!.email)
+            et_pass.setText(pref!!.userdata!!.password)
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

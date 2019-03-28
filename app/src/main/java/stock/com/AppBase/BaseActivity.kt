@@ -29,7 +29,6 @@ open class BaseActivity : AppCompatActivity() {
     private lateinit var notificationView: View
     private var progressDialog: ProgressDialog? = null
     var pref: Prefs? = null
-
     var notif = false
     var wallet = false
     var filter = false
@@ -241,7 +240,7 @@ open class BaseActivity : AppCompatActivity() {
 
         yes.setOnClickListener {
             dialog.dismiss()
-            saveIntoPrefsString(StockConstant.USERID, "")
+            saveIntoPrefsString(StockConstant.USERID, " ")
             startActivity(Intent(this, WelcomeActivity::class.java))
             (0 until StockConstant.ACTIVITIES.size)
                 .filter { StockConstant.ACTIVITIES[it] != null }

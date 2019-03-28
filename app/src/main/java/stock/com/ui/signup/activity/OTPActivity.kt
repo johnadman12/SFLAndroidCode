@@ -158,6 +158,35 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             }
         })
     }
+
+    fun forgotVerifyOtp() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.forgot_verify_otp("", "")
+        call.enqueue(object : Callback<SignupPojo> {
+
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
+                d.dismiss()
+                if (response?.body() != null) {
+                    if (response.body()!!.status == "1") {
+
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+
+        })
+    }
     /*override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Submit -> {

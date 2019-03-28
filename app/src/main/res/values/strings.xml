@@ -272,7 +272,7 @@
     <string name="_50_001_more"><![CDATA[50,001 & more]]></string>
     <string name="apply">Apply</string>
     <string name="unutilized_balance_winnings_rs_0">Unutilized balance + Winnings= \u20B9 0</string>
-    <string name="confirmation">CONFIRMATION</string>
+    <string name="confirmation">Confirmation</string>
     <string name="usable_cash_bonus">Usable Cash Bonus</string>
     <string name="Rs_0">\u20B9 0</string>
     <string name="to_pay">To Pay</string>
@@ -330,6 +330,9 @@
     <string name="start">Start</string>
     <string name="cancel">Cancle</string>
 
+    <string name="forget_password">
+        <u>Forgot Password ?</u>
+    </string>
     <string name="forget_pass">Forgot Password ?</string>
     <string name="enter_userEmail_message">Enter your Username or Email or Mobile Number.</string>
     <string name="enter_email_mobile_username">Enter your Username, Mobile number or Email</string>
@@ -342,4 +345,10 @@
     <string name="enter_confirm_password">Confirm Password</string>
     <string name="reset_password">Reset Password</string>
 
+    <string name="enter_date_of_birth_message">Enter your Date of Birth to confirm your identity.</string>
+    <string name="enter_dob">Enter Date of Birth</string>
+    <string name="or">Or</string>
+    <string name="request_otp">
+        <u>Request Otp</u>
+    </string>
 </resources>

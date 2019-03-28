@@ -104,19 +104,38 @@
                                     android:inputType="textPassword"
                                     android:imeOptions="actionDone"/>
                         </com.google.android.material.textfield.TextInputLayout>
-                        <androidx.appcompat.widget.AppCompatCheckBox
-                                android:id="@+id/checkRemebered"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/_3sdp"
-                                android:buttonTint="@color/light_blue_color"
-                                android:textSize="@dimen/_10ssp"
-                                android:layout_marginLeft="@dimen/_3sdp"
-                                android:text="Remember Me"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:layout_gravity="left"
-                                android:textColor="@color/light_blue_color"/>
 
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+
+                                android:orientation="horizontal">
+                            <androidx.appcompat.widget.AppCompatCheckBox
+                                    android:id="@+id/checkRemebered"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_3sdp"
+                                    android:buttonTint="@color/light_blue_color"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:layout_marginLeft="@dimen/_3sdp"
+                                    android:text="Remember Me"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_gravity="left"
+                                    android:textColor="@color/light_blue_color"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/text_forgot"
+                                    style="@style/TextStyleNormal"
+                                    android:text="@string/forget_password"
+                                    android:layout_below="@+id/btn_Next"
+                                    android:textColor="@color/black"
+                                    android:gravity="right"
+                                    android:textSize="@dimen/_13ssp"
+                                    android:padding="@dimen/_5sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                        </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </LinearLayout>
 
@@ -145,24 +164,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_35sdp"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_forgot"
-            style="@style/TextStyleSemiBold"
-            android:text="@string/forget_pass"
-            android:layout_below="@+id/btn_Next"
-            android:textColor="@color/green"
-            android:gravity="right"
-            android:textSize="@dimen/_13ssp"
-            android:padding="@dimen/_5sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_Signup"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_below="@id/text_forgot"
+            android:layout_below="@id/btn_Next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
