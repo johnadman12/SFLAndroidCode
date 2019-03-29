@@ -30,6 +30,25 @@ interface ApiInterface {
         @Field("device_token") device_token: String,
         @Field("notification") notification: String,
         @Field("termAcceptance") termAcceptance: String,
+        @Field("type") type: String
+    ): Call<SignupPojo>
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("users/register")
+    fun registerSocial(
+        @Field("email") email: String,
+        @Field("password") password: String,
+        @Field("invite_code") invite_code: String,
+        @Field("phone_number") phone_number: String,
+        @Field("dob") dob: String,
+        @Field("username") name: String,
+        @Field("first_name") first_name: String,
+        @Field("last_name") last_name: String,
+        @Field("device_type") device_type: String,
+        @Field("device_token") device_token: String,
+        @Field("notification") notification: String,
+        @Field("termAcceptance") termAcceptance: String,
         @Field("social_id") social_id: String,
         @Field("social_type") social_type: String,
         @Field("type") type: String
@@ -46,7 +65,17 @@ interface ApiInterface {
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/resend_otp")
-    fun resendOtp(@Field("phone_number") phone_number: String): Call<BasePojo>
+    fun resendOtp(@Field("phone_number") phone_number: String): Call<SignupPojo>
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("users/resend_request_otp")
+    fun resendRequestOtp(
+        @Field("phone_number") phone_number: String,
+        @Field("username") username: String,
+        @Field("email") email: String,
+        @Field("user_id") userid: String
+    ): Call<SignupPojo>
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
@@ -65,12 +94,22 @@ interface ApiInterface {
         @Field("dob") dob: String
     ): Call<SignupPojo>
 
- @FormUrlEncoded
+    @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/forgot_verify_otp")
     fun forgot_verify_otp(
         @Field("user_id") userid: String,
         @Field("otp") otp: String
+    ): Call<SignupPojo>
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("users/request_otp")
+    fun requestOtp(
+        @Field("user_id") userid: String,
+        @Field("username") username: String,
+        @Field("email") email: String,
+        @Field("phone_number") phone_number: String
     ): Call<SignupPojo>
 
     @FormUrlEncoded

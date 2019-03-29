@@ -29,6 +29,9 @@ import java.util.*
 
 class ConfirmationActivity : BaseActivity() {
     val myCalendar = Calendar.getInstance()
+    var phoneNumber: String = ""
+    var username: String = ""
+    var email: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
@@ -39,14 +42,16 @@ class ConfirmationActivity : BaseActivity() {
     private fun initViews() {
         setSupportActionBar(toolbar_outside)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        if (intent != null) {
+            phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
+            username = intent.getStringExtra(StockConstant.USERNAME);
+            email = intent.getStringExtra(StockConstant.USEREMAIL);
+        }
         img_back.setOnClickListener {
             onBackPressed()
         }
         tv_requestOtp.setOnClickListener {
-            startActivity(
-                Intent(this@ConfirmationActivity, OTPActivity::class.java)
-                    .putExtra("phoneNumber", et_dob.text.toString())
-            )
+            requestOTP()
         }
         bt_next.setOnClickListener {
             checkValidation()
@@ -67,7 +72,6 @@ class ConfirmationActivity : BaseActivity() {
 
         }
         iv_calendar.setOnClickListener {
-
             val dialog = DatePickerDialog(
                 this@ConfirmationActivity, dateSetListener, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -103,13 +107,15 @@ class ConfirmationActivity : BaseActivity() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<SignupPojo> = apiService.dob_verify("", et_dob.text.toString().trim())
+        val call: Call<SignupPojo> =
+            apiService.dob_verify(getFromPrefsString(StockConstant.USERID).toString(), et_dob.text.toString().trim())
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
-                if (response?.body() != null) {
+                if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(
                             Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
                         )
@@ -128,6 +134,42 @@ class ConfirmationActivity : BaseActivity() {
                 d.dismiss()
             }
 
+        })
+    }
+
+    fun requestOTP() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.requestOtp(
+            getFromPrefsString(StockConstant.USERID).toString(), username, email, phoneNumber)
+        call.enqueue(object : Callback<SignupPojo> {
+
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        startActivity(Intent(this@ConfirmationActivity, OTPActivity::class.java)
+                            .putExtra("isReset","reset")
+                            .putExtra(StockConstant.USEREMAIL, email)
+                            .putExtra(StockConstant.USERNAME, username)
+                            .putExtra(StockConstant.USERPHONE, phoneNumber)
+                        )
+                        finish()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
 
         })
     }

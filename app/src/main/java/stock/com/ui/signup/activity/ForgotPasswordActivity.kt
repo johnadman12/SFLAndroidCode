@@ -23,6 +23,8 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 
 
 class ForgotPasswordActivity : BaseActivity() {
@@ -53,10 +55,12 @@ class ForgotPasswordActivity : BaseActivity() {
             override fun afterTextChanged(s: Editable) {
                 if (s.length != 0)
                     if (isNumeric(s.toString())) {
-                        countryCode.visibility == View.VISIBLE
+                        countryCode.visibility = VISIBLE
                     } else {
-                        countryCode.visibility = View.GONE;
+                        countryCode.visibility = GONE;
                     }
+                else
+                countryCode.visibility = GONE
             }
 
             override fun beforeTextChanged(
@@ -109,8 +113,12 @@ class ForgotPasswordActivity : BaseActivity() {
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_id)
                         startActivity(
                             Intent(this@ForgotPasswordActivity, ConfirmationActivity::class.java)
+                                .putExtra(StockConstant.USEREMAIL, email)
+                                .putExtra(StockConstant.USERNAME, username)
+                                .putExtra(StockConstant.USERPHONE, phone)
                         )
                         finish()
                     }

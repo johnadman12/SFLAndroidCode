@@ -22,6 +22,7 @@ import stock.com.data.Prefs
 import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.createTeam.activity.ChooseTeamActivity
 import stock.com.ui.notification.activity.NotificationActivity
+import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
 
@@ -70,7 +71,7 @@ open class BaseActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun displayToast(message : String){
+    fun displayToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
@@ -99,8 +100,10 @@ open class BaseActivity : AppCompatActivity() {
         return true
     }
 
-    fun setMenu(notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment : Boolean,
-                info_icon : Boolean, sor_icon : Boolean) {
+    fun setMenu(
+        notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
+        info_icon: Boolean, sor_icon: Boolean
+    ) {
         this.notif = notif
         this.wallet = wallet
         this.filter = filter
@@ -260,7 +263,17 @@ open class BaseActivity : AppCompatActivity() {
         edit.apply()
     }
 
+    fun saveUserData(key: String, userdata: SignupDataPojo?) {
+        val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(key, userdata.toString())
+        edit.apply()
+    }
 
+    fun getUserData(key: String): String? {
+        val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
+        return prefs.getString(key, StockConstant.DEFAULT_VALUE_STRING)
+    }
 
     /*
         This method for use to get string in preference class

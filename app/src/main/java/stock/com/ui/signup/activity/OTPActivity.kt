@@ -32,10 +32,17 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
+import android.os.CountDownTimer
+
 
 class OTPActivity : BaseActivity(), View.OnClickListener {
 
     var phoneNumber: String = ""
+    var username: String = ""
+    var email: String = ""
+    var comingFromActivity: String = ""
+    var flag: Boolean = false
+
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -45,7 +52,11 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.showToast(this, "Please enter OTP")
                 } else {
                     if (NetworkUtils.isConnected()) {
-                        verifyOTPApi()
+                        if (flag)
+                            forgotVerifyOtp()
+                        else
+                            verifyOTPApi()
+
                     } else {
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
@@ -63,7 +74,11 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.resendOTPTv -> {
                 if (NetworkUtils.isConnected()) {
-                    resendOTP()
+                    if (flag)
+                        resendRequestOTP()
+                    else
+                        resendOTP()
+
                 } else {
                     Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                 }
@@ -76,7 +91,19 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
         StockConstant.ACTIVITIES.add(this)
-        phoneNumber = intent.getStringExtra("phoneNumber")
+        if (intent != null) {
+            comingFromActivity = intent.getStringExtra("isReset")
+            if (comingFromActivity.equals("reset")) {
+                flag = true
+                phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
+                username = intent.getStringExtra(StockConstant.USERNAME);
+                email = intent.getStringExtra(StockConstant.USEREMAIL);
+            } else {
+                flag = false
+                phoneNumber = intent.getStringExtra("phoneNumber")
+            }
+        }
+
         println("Phone number is   " + phoneNumber)
         initViews()
     }
@@ -100,6 +127,86 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         }*/
     }
 
+
+    fun resendOTP() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.resendOtp(phoneNumber)
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        object : CountDownTimer(30000, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
+                                //here you can have your logic to set text to edittext
+                            }
+
+                            override fun onFinish() {
+                                resendOTPTv.setText("done!")
+                            }
+
+                        }.start()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun resendRequestOTP() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.resendRequestOtp(
+            phoneNumber,
+            username, email,
+            getFromPrefsString(StockConstant.USERID).toString()
+        )
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        object : CountDownTimer(30000, 1000) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
+                                //here you can have your logic to set text to edittext
+                            }
+
+                            override fun onFinish() {
+                                resendOTPTv.setText("done!")
+                            }
+
+                        }.start()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+
+    }
+
     fun verifyOTPApi() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -114,6 +221,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
                         finish()
                     }
@@ -132,45 +240,21 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
-    fun resendOTP() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<BasePojo> = apiService.resendOtp(phoneNumber)
-        call.enqueue(object : Callback<BasePojo> {
-            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>?) {
-                d.dismiss()
-                if (response?.body() != null) {
-                    if (response.body()!!.status == "1") {
-
-                    }
-                    displayToast(response.body()!!.message)
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<BasePojo>?, t: Throwable?) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
-        })
-    }
-
     fun forgotVerifyOtp() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<SignupPojo> = apiService.forgot_verify_otp("", "")
+        val call: Call<SignupPojo> =
+            apiService.forgot_verify_otp(getFromPrefsString(StockConstant.USERID).toString(), otp_view.text.toString())
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
-                if (response?.body() != null) {
+                if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                        finish()
                     }
                     displayToast(response.body()!!.message)
                 } else {
@@ -187,6 +271,33 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
 
         })
     }
+
+    private suspend fun setTimerForOTP() {
+        for (i in 90 downTo 0) {
+            val remainingTime = i
+            if (i == 0) {
+                resendOTPTv.text = getString(R.string.resend_otp)
+                resendOTPTv.isEnabled = true
+            } else {
+                val resendTxt =
+                    getString(R.string.resend_in) + " " + remainingTime.toString() + " " + getString(R.string.sec)
+                resendOTPTv.text = resendTxt
+            }
+            delay(1000)
+        }
+    }
+
+    /*private fun showOTPDialog(Otp: String) {
+        val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
+        logoutAlertDialog.setTitle(getString(R.string.app_name))
+        logoutAlertDialog.setMessage(Html.fromHtml("Use <B>" + Otp + "</B> as your login OTP."))
+
+        logoutAlertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok)) { dialog, id ->
+            logoutAlertDialog.dismiss()
+        }
+        logoutAlertDialog.show()
+    }*/
+
     /*override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Submit -> {

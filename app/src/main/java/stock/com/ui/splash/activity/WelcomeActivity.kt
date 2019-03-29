@@ -35,6 +35,7 @@ import stock.com.ui.pojo.SignupPojo
 import stock.com.ui.signup.activity.OTPActivity
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.utils.AppDelegate
+import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.util.*
@@ -100,6 +101,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
         }
         return super.onOptionsItemSelected(item)
     }
+
     lateinit var socialModel: SocialModel
     var callbackManager: CallbackManager? = null
     var isCalledOnce: Boolean? = false
@@ -213,7 +215,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
             socialModel.email,
             socialModel.name,
             "1",
-            getFromPrefsString(Tags.FCMtoken).toString()
+            SessionManager.getInstance(this@WelcomeActivity).token
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
@@ -223,6 +225,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                         if (response.body()!!.firstTimeRegister.equals("0")) {
                             saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                             saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                             startActivity(
                                 Intent(this@WelcomeActivity, DashBoardActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
@@ -263,7 +266,10 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
         if (mGoogleApiClient == null || !mGoogleApiClient!!.isConnected) {
             try {
                 mGoogleApiClient = GoogleApiClient.Builder(this)
-                    .enableAutoManage(this /* FragmentActivity */, this@WelcomeActivity /* OnConnectionFailedListener */)
+                    .enableAutoManage(
+                        this /* FragmentActivity */,
+                        this@WelcomeActivity /* OnConnectionFailedListener */
+                    )
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build()
             } catch (e: Exception) {

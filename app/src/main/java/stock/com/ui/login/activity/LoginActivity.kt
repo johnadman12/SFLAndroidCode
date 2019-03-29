@@ -4,10 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -19,6 +23,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.content_signup.*
@@ -47,7 +52,9 @@ import stock.com.ui.signup.activity.ForgotPasswordActivity
 import stock.com.ui.signup.activity.OTPActivity
 import stock.com.ui.signup.activity.PasswordActivity
 import stock.com.ui.signup.activity.SignUpActivity
+import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.AppDelegate
+import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
@@ -71,10 +78,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         } else {
                             phoneLoginApi()
                         }
-
                     } else {
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
+
 
 
                     /*else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
@@ -93,7 +100,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.img_back -> {
-                finish()
+                onBackPressed()
             }
             R.id.text_forgot -> {
                 startActivity(Intent(this, ForgotPasswordActivity::class.java))
@@ -103,16 +110,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun isNumeric(str: String): Boolean {
+        return str.matches("-?\\d+(.\\d+)?".toRegex())
+    }
+
     lateinit var socialModel: SocialModel
     fun phoneLoginApi() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.phoneLogin(
-            et_email.text.toString().trim(),
+            countryCodelogin.selectedCountryCode + et_email.text.toString().trim(),
             et_pass.text.toString().trim(),
             "1",
-            getFromPrefsString(Tags.FCMtoken).toString()
+            SessionManager.getInstance(this@LoginActivity).token
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
@@ -123,6 +134,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         socialModel.isSocial = "1"
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         startActivity(
@@ -150,7 +162,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.login(
             et_email.text.toString(),
-            et_pass.text.toString().trim(), "1", "123456"
+            et_pass.text.toString().trim(), "1", SessionManager.getInstance(this@LoginActivity).token
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
@@ -161,6 +173,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         socialModel.isSocial = "1"
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         startActivity(
@@ -210,6 +223,32 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             et_pass.setText(pref!!.userdata!!.password)
         }
 
+        et_email.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (s.length != 0)
+                    if (isNumeric(s.toString())) {
+                        countryCodelogin.visibility = VISIBLE
+                    } else {
+                        countryCodelogin.visibility = GONE;
+                    }
+                else
+                    countryCodelogin.visibility = GONE
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                val regexStr = "^[0-9]*$"
+            }
+        })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -222,7 +261,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-
+    override fun onBackPressed() {
+        startActivity(Intent(this@LoginActivity, WelcomeActivity::class.java))
+        finish()
+    }
 }
 
 /*  private fun checkUserVerify(socialModel: SocialModel) {

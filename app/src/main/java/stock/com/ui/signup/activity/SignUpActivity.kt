@@ -28,14 +28,13 @@ import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.SignupPojo
 import stock.com.ui.signup.apiRequest.SignUpRequest
 import stock.com.ui.signup.pojo.CountryDataPojo
-import stock.com.utils.AppDelegate
-import stock.com.utils.StockConstant
-import stock.com.utils.StockDialog
-import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
+import stock.com.constant.Tags
+import stock.com.ui.splash.activity.WelcomeActivity
+import stock.com.utils.*
 import java.util.*
 import java.text.SimpleDateFormat
 
@@ -44,7 +43,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     lateinit var countrycodeList: ArrayList<CountryDataPojo>
     var countryCodePicker: CountryCodePicker? = null;
     val myCalendar = Calendar.getInstance()
-    private var term_condition_accept: Int = 0
+    private var term_condition_accept: Int = 1
     private var notification_accept: Int = 0
     private var socialId: String = "";
 
@@ -111,10 +110,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     var userData: SocialModel? = null
 //    var ccp: CountryCodePicker? = null
 
-    private fun openDatePicker() {
-
-
-    }
 
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
@@ -139,20 +134,17 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         } catch (e: Exception) {
 
         }
-
         if (userData != null) {
             et_Email.setText(userData!!.email)
             if (userData!!.isSocial.equals("0")) {
                 et_Password.visibility = View.GONE
             }
         }
-
-
-
         accept_term_condition.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
+            if (isChecked)
                 term_condition_accept = 1
-            }
+            else
+                term_condition_accept = 0
         }
         notification_check.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
@@ -174,7 +166,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         else {
             AppDelegate.hideKeyBoard(this)
             if (NetworkUtils.isConnected()) {
-                register("social", "1")
+                registerSocial("social", "1")
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
         }
@@ -204,6 +196,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         else if (!(et_Password.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_Password.text.toString().matches(
                 ".*[0-9]+.*[A-Za-z]+.*".toRegex()
             ))
+
         )
             AppDelegate.showToast(this, getString(R.string.invalid_password))
         else if (!et_conf_Password.text.toString().equals(et_Password.text.toString()))
@@ -234,7 +227,56 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             et_UserNamefirst.text.toString(),
             et_UserNamelast.text.toString(),
             "1",
-            "123456789",
+            SessionManager.getInstance(this@SignUpActivity).token,
+            notification_accept.toString(),
+            term_condition_accept.toString(),
+            type
+        )
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
+                d.dismiss()
+                if (response?.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        startActivity(
+                            Intent(this@SignUpActivity, OTPActivity::class.java)
+                                .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                                .putExtra("isReset", "signup")
+                        )
+                        finish()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun registerSocial(type: String, socialType: String) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.registerSocial(
+            et_Email.text.toString().trim(),
+            et_Password.text.toString(),
+            et_EnviteCode.text.toString().trim(),
+            countryCodeHolder.selectedCountryCode +
+                    et_Mobile.text.toString().trim(),
+            et_dob.text.toString(),
+            et_UserName.text.toString().trim(),
+            et_UserNamefirst.text.toString(),
+            et_UserNamelast.text.toString(),
+            "1",
+            SessionManager.getInstance(this@SignUpActivity).token,
             notification_accept.toString(),
             term_condition_accept.toString(),
             socialId,
@@ -247,9 +289,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                                .putExtra("isReset", "signup")
                         )
                         finish()
                     }
@@ -294,6 +338,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
 
     override fun onCountrySelected() {
         Toast.makeText(this, "Country Code " + countryCodePicker!!.selectedCountryCode, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@SignUpActivity, WelcomeActivity::class.java))
+        finish()
     }
 
     /* private fun prepareData(isSocial: Boolean) {

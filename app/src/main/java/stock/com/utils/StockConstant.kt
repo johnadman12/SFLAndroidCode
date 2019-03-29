@@ -5,8 +5,13 @@ import android.app.Activity
 object StockConstant{
     @JvmStatic
     val PREF_NAME = "com.stock.app"
+    val DEVICE_TOKEN = ""
 
     val USERID = ""
+    val USERNAME = "username"
+    val USERPHONE = "userphone"
+    val USEREMAIL = "useremail"
+    val USERDATA = ""
     val USERFIRSTTIME = "user_first_time"
     val ACCESSTOKEN = "x_access_token"
     val PASSWORD = "password"
