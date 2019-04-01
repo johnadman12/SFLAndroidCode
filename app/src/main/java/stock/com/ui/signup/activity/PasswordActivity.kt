@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.content_otp.*
-import kotlinx.android.synthetic.main.content_signup.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +17,6 @@ import stock.com.ui.pojo.SignupPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
 
 class PasswordActivity : BaseActivity() {

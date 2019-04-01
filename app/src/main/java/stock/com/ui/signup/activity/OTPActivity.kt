@@ -2,37 +2,25 @@ package stock.com.ui.signup.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.content_otp.*
 import kotlinx.android.synthetic.main.outside_toolbar.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.application.FantasyApplication
-import stock.com.constant.IntentConstant
-import stock.com.constant.Tags
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.DashBoardActivity
-import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.SignupPojo
-import stock.com.ui.signup.apiRequest.VerifyOtpRequest
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
 import android.os.CountDownTimer
+import stock.com.ui.dashboard.DashBoardActivity
 
 
 class OTPActivity : BaseActivity(), View.OnClickListener {

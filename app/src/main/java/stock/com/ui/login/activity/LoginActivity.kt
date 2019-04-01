@@ -1,56 +1,27 @@
 package stock.com.ui.login.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Base64
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import com.facebook.*
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_forgot_password.*
-import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_login.*
-import kotlinx.android.synthetic.main.content_signup.*
 import kotlinx.android.synthetic.main.outside_toolbar.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.application.FantasyApplication
-import stock.com.constant.IntentConstant
-import stock.com.constant.PrefConstant
-import stock.com.constant.Tags
-import stock.com.data.Prefs
-import stock.com.model.FbDetails
 import stock.com.model.SocialModel
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.SignupPojo
 import stock.com.ui.signup.activity.ForgotPasswordActivity
-import stock.com.ui.signup.activity.OTPActivity
-import stock.com.ui.signup.activity.PasswordActivity
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.AppDelegate
@@ -58,9 +29,6 @@ import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.util.*
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
     private var pass_remembered: Int = 0

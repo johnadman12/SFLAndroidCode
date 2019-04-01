@@ -32,7 +32,6 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.login.activity.LoginActivity
 import stock.com.ui.pojo.SignupPojo
-import stock.com.ui.signup.activity.OTPActivity
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.utils.AppDelegate
 import stock.com.utils.SessionManager

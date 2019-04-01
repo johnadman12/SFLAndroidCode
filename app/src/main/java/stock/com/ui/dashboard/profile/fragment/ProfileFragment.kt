@@ -1,6 +1,5 @@
 package stock.com.ui.dashboard.profile.fragment
 
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,8 +8,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
@@ -19,8 +16,6 @@ import stock.com.R
 import stock.com.ui.addfunds.activity.AddFundsActivity
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.profile.activity.MyAccountActivity
-import stock.com.ui.splash.activity.WelcomeActivity
-import stock.com.utils.StockConstant
 
 class ProfileFragment : BaseFragment(), View.OnClickListener {
 
