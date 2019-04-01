@@ -30,6 +30,7 @@ import stock.com.ui.signup.apiRequest.SignUpRequest
 import stock.com.ui.signup.pojo.CountryDataPojo
 import stock.com.utils.networkUtils.NetworkUtils
 import android.app.DatePickerDialog
+import android.view.View.GONE
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import stock.com.constant.Tags
@@ -46,7 +47,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     private var term_condition_accept: Int = 1
     private var notification_accept: Int = 0
     private var socialId: String = "";
-
+    lateinit var socialmodel: SocialModel
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +55,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         setContentView(stock.com.R.layout.activity_signup)
         StockConstant.ACTIVITIES.add(this)
         initViews()
+
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
             override fun onDateSet(
                 view: DatePicker, year: Int, monthOfYear: Int,
@@ -114,7 +116,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     private fun updateLabel() {
         val myFormat = "yyyy-MM-dd" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-
         et_dob.setText(sdf.format(myCalendar.time))
     }
 
@@ -136,9 +137,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         }
         if (userData != null) {
             et_Email.setText(userData!!.email)
-            if (userData!!.isSocial.equals("0")) {
-                et_Password.visibility = View.GONE
-            }
+            et_Email.isEnabled = false
+//            if (userData!!.isSocial.equals("0")) {
+            rl_password.visibility = GONE
+            rl_Con_pass.visibility = GONE
+//            }
         }
         accept_term_condition.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
@@ -345,76 +348,5 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         finish()
     }
 
-    /* private fun prepareData(isSocial: Boolean) {
-         val signUpRequest = SignUpRequest()
-         signUpRequest.invite_code = et_EnviteCode.text.toString()
-         signUpRequest.name = ""
-         signUpRequest.mobile_number = et_Mobile.text.toString()
-         signUpRequest.email = et_Email.text.toString()
-         signUpRequest.password = et_Password.text.toString()
-         signUpRequest.language = FantasyApplication.getInstance().getLanguage()
-         if (isSocial) {
-             signUpRequest.fb_id = userData!!.fb_id
-             signUpRequest.google_id = userData!!.google_id
-             signUpRequest.name = userData!!.first_name
-             callSocialSignUpApi(signUpRequest)
-         } else
-             callSignUpApi(signUpRequest)
-     }*/
 
-    /*private fun callSignUpApi(signUpRequest: SignUpRequest) {
-        GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@SignUpActivity)
-            try {
-                val request = ApiClient.client
-                    .getRetrofitService()
-                    .signup(signUpRequest)
-                val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
-                AppDelegate.hideProgressDialog(this@SignUpActivity)
-                if (response.response!!.status) {
-                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                    startActivity(
-                        Intent(this@SignUpActivity, OTPActivity::class.java)
-                            .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
-                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
-                    )
-                    finish()
-                } else {
-                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                }
-            } catch (exception: Exception) {
-                AppDelegate.hideProgressDialog(this@SignUpActivity)
-            }
-        }
-    }
-
-    private fun callSocialSignUpApi(signUpRequest: SignUpRequest) {
-        GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@SignUpActivity)
-            try {
-                val request = ApiClient.client
-                    .getRetrofitService()
-                    .social_signup(signUpRequest)
-                val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
-                AppDelegate.hideProgressDialog(this@SignUpActivity)
-                if (response.response!!.status) {
-                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                    startActivity(
-                        Intent(this@SignUpActivity, OTPActivity::class.java)
-                            .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
-                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
-                    )
-                    finish()
-                } else {
-                    AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                }
-            } catch (exception: Exception) {
-                AppDelegate.hideProgressDialog(this@SignUpActivity)
-            }
-        }
-    }*/
 }

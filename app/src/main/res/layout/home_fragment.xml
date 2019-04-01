@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:stickyHeader="@+id/cl_main"
->
+        android:background="@mipmap/bg">
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -26,23 +26,53 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/_160sdp"-->
         <!--/>-->
-        <RelativeLayout
+       <!-- <RelativeLayout
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/rl_banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_136sdp"
-        >
+        >-->
+        <LinearLayout
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/rl_banner"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <com.github.demono.AutoScrollViewPager
                     android:id="@+id/viewPager_Banner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_136sdp"
                     app:slideDirection="right"
                     android:clipToPadding="false"
                     app:slideDuration="3000"
                     app:slideInterval="3000"
-                    app:stopWhenTouch="true"/>
+                    app:stopWhenTouch="true"
+                    android:layout_weight="1"/>
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewPager_Banner"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="@dimen/_6sdp"
+                    android:id="@+id/recyclerView_stock_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
+                    android:fillViewport="true"
+                    tools:listitem="@layout/item_match"
+                    android:paddingBottom="@dimen/_5sdp"/>
+
             <!-- <android.support.v4.view.ViewPager
              android:id="@+id/productImagePager"
              android:layout_width="match_parent"
@@ -74,7 +104,7 @@
             <!--app:swipeDirection="freedom_no_bottom"-->
             <!--/>-->
 
-        </RelativeLayout>
+        </LinearLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_main"
                 app:layout_constraintTop_toBottomOf="@+id/rl_banner"
@@ -93,6 +123,8 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/button_rounded_background"
                     android:layout_height="@dimen/_28sdp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     android:visibility="visible" tools:layout_editor_absoluteY="13dp"
                     tools:layout_editor_absoluteX="26dp">
                 <androidx.appcompat.widget.AppCompatTextView
@@ -149,7 +181,6 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title"
                 style="@style/TextStyleSemiBold"
@@ -161,10 +192,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_main"
                 android:layout_width="match_parent"
-                android:textColor="@color/textColorBlack"
+                android:textColor="@color/white"
                 android:text="@string/enter_contest"
-                android:layout_height="wrap_content"/>
-
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:paddingTop="@dimen/_5sdp"
                 android:id="@+id/entry_fee"
@@ -175,25 +206,23 @@
                 android:textColor="@color/colorBackgroundTermsAndConditions"
                 android:text="@string/doller_entry_fee"
                 android:visibility="gone"
-                android:layout_height="wrap_content" tools:layout_editor_absoluteY="239dp"/>
-
-
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteY="239dp"/>
         <LinearLayout
                 android:id="@+id/ll_expandable_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_2sdp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title">
-
             <!--<include layout="@layout/home_expandable_layout"/>-->
-
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_features"
                     android:layout_width="match_parent"
-                    android:layout_height="748dp"
+                    android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
                     android:visibility="gone"
@@ -203,10 +232,54 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
-
-
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="left"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/white"
+                    android:text="@string/tranning_contest"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/tv_tranning_contest"
+            android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="@dimen/_6sdp"
+                    android:id="@+id/recyclerView_tranning_contest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
+                    android:fillViewport="true"
+                    tools:listitem="@layout/item_match"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="left"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/white"
+                    android:text="@string/latest_new"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/tv_latest_new"
+            android:visibility="gone"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="@dimen/_6sdp"
+                    android:id="@+id/recyclerView_latest_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
+                    android:fillViewport="true"
+                    tools:listitem="@layout/item_match"
+                    android:layout_marginBottom="@dimen/_10sdp"/>
         </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
                 android:paddingTop="@dimen/_6sdp"
                 android:id="@+id/recyclerView_Match"
@@ -221,8 +294,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
-
-
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_no_category_found"
                 android:layout_width="wrap_content"
@@ -233,16 +304,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
-
         <View
                 android:layout_width="1dp"
                 android:layout_height="2dp"
                 android:background="#dfdfdf"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerView_Match"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" android:id="@+id/view6"/>
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/view6"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
     <!--</androidx.core.widget.NestedScrollView>-->
 </com.amar.library.ui.StickyScrollView>

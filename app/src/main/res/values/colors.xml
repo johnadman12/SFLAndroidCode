@@ -11,5 +11,5 @@
     <color name="GrayColorMain">#f4f4f4</color>
     <color name="colorRed">#df2826</color>
     <color name="light_blue_color">#26A3D5</color>
-
+    <color name="dot_color">#16D3FD</color>
 </resources>

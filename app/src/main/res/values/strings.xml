@@ -351,4 +351,10 @@
     <string name="request_otp">
         <u>Request Otp</u>
     </string>
+
+    <string name="spot_left">Spots left</string>
+    <string name="market">Market</string>
+    <string name="tranning_contest">Training Contests</string>
+    <string name="featured_contest">Featured Contests</string>
+    <string name="latest_new">Latest News</string>
 </resources>

@@ -11,7 +11,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.home_expandable_layout.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Call
@@ -28,8 +30,12 @@ import stock.com.ui.pojo.HomePojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
+import stock.com.utils.custom.CirclePagerIndicatorDecoration
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
+
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
+
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -37,11 +43,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             R.id.txt_Live -> matchSelector(LIVE)
             R.id.txt_Results -> matchSelector(RESULTS)
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
@@ -57,7 +61,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
-        getFeatureContentlist()
+        getFeatureContentlist();
+
+        txt_title.visibility = GONE;
+
     }
 
     private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
@@ -70,6 +77,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 //        pageIndicatorView.setViewPager(viewPager_Banner)
         viewPager_Banner.startAutoScroll()
         viewPager_Banner.isCycle = true
+
+        tab_layout.setupWithViewPager(viewPager_Banner);
+
     }
 
     private fun clickPlusIcon(lin_child_title: LinearLayout, header_plus_icon: ImageView) {
@@ -102,7 +112,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
             FIXTURES -> {
                 txt_title.visibility = VISIBLE
-                txt_title.setText(R.string.enter_contest)
+                txt_title.setText(R.string.featured_contest)
                 txt_Fixtures.isSelected = true
                 view1.visibility = View.GONE
                 setFixturesAdapter()
@@ -115,16 +125,50 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 setCompletedAdapter()
             }
         }
-
     }
 
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
         val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
+        llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_features!!.layoutManager = llm
-        recyclerView_features.visibility= View.VISIBLE
+        recyclerView_features.visibility = View.VISIBLE
         recyclerView_features!!.adapter = FeatureContestAdapter(context!!/*, listItem*/)
+        recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));
+
+        setStockNameAdapter();
+        setContestAdapter();
+        setLatestNewAdapter();
+    }
+
+    private fun setStockNameAdapter() {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView_stock_name!!.layoutManager = llm
+        recyclerView_stock_name.visibility = View.VISIBLE
+        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!/*, listItem*/)
+        //recyclerView_stock_name.addItemDecoration(CirclePagerIndicatorDecoration(activity))
+
+
+    }
+
+    private fun setContestAdapter() {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView_tranning_contest!!.layoutManager = llm
+        recyclerView_tranning_contest.visibility = View.VISIBLE
+        recyclerView_tranning_contest!!.adapter = TranningContestAdapter(context!!/*, listItem*/)
+        recyclerView_tranning_contest.addItemDecoration(CirclePagerIndicatorDecoration(activity))
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun setLatestNewAdapter() {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recyclerView_latest_new!!.layoutManager = llm
+        recyclerView_latest_new.visibility = View.VISIBLE
+        recyclerView_latest_new!!.adapter = LatestNewsAdapter(context!!/*, listItem*/);
+        //recyclerView_latest_new.addItemDecoration(CirclePagerIndicatorDecoration(activity));
     }
 
     @SuppressLint("WrongConstant")
@@ -166,7 +210,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                             setHomeBannerAdapter(response.body()!!.banner!!)
                         }, 100)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
-                        displayToast(response.body()!!.message)
+                        setVisibility()
+                        //  displayToast(response.body()!!.message)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -181,5 +226,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
         })
     }
+
+    private fun setVisibility() {
+        tv_tranning_contest.visibility = VISIBLE;
+        tv_latest_new.visibility = VISIBLE;
+        txt_title.visibility = VISIBLE;
+    }
+
 
 }

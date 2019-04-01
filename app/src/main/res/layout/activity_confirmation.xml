@@ -106,7 +106,7 @@
                 android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_80sdp"
-                android:src="@mipmap/faceid"/>
+                android:src="@mipmap/birthday"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/ll_buttons"

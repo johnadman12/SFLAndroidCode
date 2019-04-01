@@ -12,16 +12,16 @@
 
     <ImageView
         android:id="@+id/notif_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/notification" />
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:src="@mipmap/notification_gray" />
 
     <TextView
         android:id="@+id/notifItemCountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-5dp"
+        android:layout_marginStart="-8dp"
         android:layout_marginTop="-5dp"
         android:layout_toEndOf="@+id/notif_icon"
         android:background="@drawable/rounded_square_count"
@@ -29,6 +29,6 @@
         android:minWidth="@dimen/_10sdp"
         android:padding="@dimen/_2sdp"
         android:text="1"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_8sdp" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp" />
 </RelativeLayout>

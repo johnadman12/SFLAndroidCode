@@ -8,11 +8,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import kotlinx.android.synthetic.main.bottom_navigation.*
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import stock.com.AppBase.BaseActivity
@@ -24,18 +28,65 @@ import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.utils.StockConstant
 
 
-class DashBoardActivity : BaseActivity(), View.OnClickListener,
-    BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
+class DashBoardActivity : BaseActivity(), View.OnClickListener, BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
+
     private var doubleBackToExitPressedOnce = false
     override fun onClick(p0: View?) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dashboard_activity)
-        initView()
-    }
+        setContentView(R.layout.dashboard_activity);
 
+        initView();
+
+        ll_home.setOnClickListener {
+            toolbar.visibility = View.VISIBLE
+            setTitleVisibility(false, true)
+            setMenu(true, false, false, false, false, false, false)
+            setTitleText(getString(R.string.home))
+
+            changetTextViewBackground(tv_home,R.color.colorPrimary);
+            changetTextViewBackground(tv_market,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_contest,R.color.textColorLightBlack);
+
+            setFragment(HomeFragment())
+
+        }
+
+        ll_contest.setOnClickListener {
+            toolbar.visibility = View.VISIBLE
+            //setMenu(true, false, false, false, false, false, false)
+            setTitleVisibility(true, false)
+            setTitleText(getString(R.string.my_contest))
+            setFragment(MyContestFragment());
+
+            changetTextViewBackground(tv_contest,R.color.colorPrimary);
+            changetTextViewBackground(tv_market,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home,R.color.textColorLightBlack);
+
+        }
+        ll_profile.setOnClickListener {
+            toolbar.visibility = View.GONE
+            setTitleVisibility(true, false)
+           // setMenu(false, false, false, true, false, false, false)
+            setTitleText(getString(R.string.profile))
+            setFragment(ProfileFragment())
+
+            changetTextViewBackground(tv_profile,R.color.colorPrimary);
+            changetTextViewBackground(tv_market,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_contest,R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home,R.color.textColorLightBlack);
+
+
+        }
+
+    }
+    private fun changetTextViewBackground(tv:TextView,color:Int){
+        tv.setTextColor(ContextCompat.getColor(applicationContext, color));
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -46,7 +97,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 setFragment(HomeFragment())
                 return true
             }
-
             R.id.navigation_mycontest -> {
                 toolbar.visibility = View.VISIBLE
                 setMenu(true, false, false, false, false, false, false)
@@ -55,7 +105,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 setFragment(MyContestFragment())
                 return true
             }
-
             R.id.navigation_profile -> {
                 toolbar.visibility = View.GONE
                 setTitleVisibility(true, false)
@@ -102,18 +151,35 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         supportActionBar!!.setDisplayShowHomeEnabled(false)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
+        supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu);
+
+
+        toolbar.visibility = View.VISIBLE
         setTitleVisibility(false, true)
+        setMenu(true, false, false, false, false, false, false)
+        setTitleText(getString(R.string.home))
+
+        changetTextViewBackground(tv_home,R.color.colorPrimary);
+        changetTextViewBackground(tv_market,R.color.textColorLightBlack);
+        changetTextViewBackground(tv_profile,R.color.textColorLightBlack);
+        changetTextViewBackground(tv_contest,R.color.textColorLightBlack);
+
+        setFragment(HomeFragment())
+
+        /*setTitleVisibility(false, true)
         setMenu(true, false, false, false, false, false, false)
         bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         removeShiftMode(bottomNavigationView)
-        setFragment(HomeFragment())
+        setFragment(HomeFragment());
+        */
+
         if(getFromPrefsString(StockConstant.USERID).toString() == ""){
-            bottomNavigationView.visibility = View.GONE
+            ll_bottom.visibility = View.GONE
         }else{
-            bottomNavigationView.visibility = View.VISIBLE
+            ll_bottom.visibility = View.VISIBLE
         }
+
     }
 
 //    fun updateNavigationView() {

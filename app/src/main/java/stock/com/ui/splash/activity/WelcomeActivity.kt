@@ -189,7 +189,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                     socialModel.email = user?.email!!
                     socialModel.isSocial = "0"
                     socialModel.social_id = user.uid
-                    socialModel.first_name = user.displayName!!
+                    socialModel.name = user.displayName!!
                     socialModel.image = user.photoUrl.toString()
                     checkUserVerify(socialModel, "2")
                     signOut()
