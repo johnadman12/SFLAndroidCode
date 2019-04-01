@@ -328,7 +328,7 @@
     <string name="recieve_noti">Receive Offers &amp; Notification</string>
     <string name="tc_agree_txt">By registring, I agree to SFL T&amp;C and Privacy Policy</string>
     <string name="start">Start</string>
-    <string name="cancel">Cancle</string>
+    <string name="cancel">Cancel</string>
 
     <string name="forget_password">
         <u>Forgot Password ?</u>
@@ -351,4 +351,26 @@
     <string name="request_otp">
         <u>Request Otp</u>
     </string>
+
+
+    <string name="level">Level :</string>
+
+    <string name="fair_play_commitment">Fair play Commitment</string>
+
+    <string name="trust">Trust</string>
+    <string name="saifty">Saifty &amp; Security</string>
+    <string name="licenses">Licenses</string>
+    <string name="rules_winning">Rules and winings</string>
+    <string name="new_and_press">News and Press</string>
+    <string name="careers">Careers</string>
+    <string name="membership">Membership</string>
+    <string name="feedback">Feedback</string>
+    <string name="company">Company</string>
+
+    <string name="deposit_funds">DEPOSIT FUNDS</string>
+
+    <string name="logout_msg">Are you sure you want to Logout?</string>
+    <string name="yes">Yes</string>
+
+
 </resources>

@@ -20,7 +20,7 @@ android {
     }
     flavorDimensions "api"
     productFlavors {
-       
+
         Playing11 {
             versionCode 1
             versionName '1.0'
@@ -29,7 +29,7 @@ android {
             applicationId "stock.com"
 
         }
-              
+
     }
 
     repositories {
@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
-   //graph library
+    //graph library
 
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
@@ -106,6 +106,9 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
+
+    //side menu
+    implementation project(':residemenu')
 
 
 }

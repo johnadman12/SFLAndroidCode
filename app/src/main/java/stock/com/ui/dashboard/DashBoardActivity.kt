@@ -1,22 +1,33 @@
 package stock.com.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.specyci.residemenu.ResideMenu
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
+import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.left_menu.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.ui.dashboard.home.adapter.MatchLiveAdapter
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
@@ -24,15 +35,20 @@ import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.utils.StockConstant
 
 
-class DashBoardActivity : BaseActivity(), View.OnClickListener,
-    BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
+class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
+
+
     private var doubleBackToExitPressedOnce = false
+
+    private var resideMenu: ResideMenu? = null
+
     override fun onClick(p0: View?) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
+        setUpMenu();
         initView()
     }
 
@@ -114,6 +130,58 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         }else{
             bottomNavigationView.visibility = View.VISIBLE
         }
+
+
+        img_btn_menu.setOnClickListener {
+            resideMenu!!.openMenu(ResideMenu.DIRECTION_LEFT);
+
+        }
+
+
+
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun  setUpMenu() {
+
+        resideMenu = ResideMenu(this, R.layout.left_menu, R.layout.left_menu);
+        resideMenu?.setBackground(R.color.menu_bg);
+        resideMenu!!.attachToActivity(this);
+        resideMenu!!.setMenuListener(this);
+        //resideMenu.setScaleValue(0.5f);
+        resideMenu!!.setScaleValue(0.45f);
+
+        resideMenu!!.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu!!.setSwipeDirectionDisable(ResideMenu.DIRECTION_LEFT);
+
+
+        var parentLayout:LinearLayout;
+        parentLayout = resideMenu!!.getLeftMenuView().findViewById(R.id.ll_left_menu_parent) as LinearLayout
+
+
+        val arrayList = ArrayList<String>()//Creating an empty arraylist
+        arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
+        arrayList.add(resources.getString(R.string.how_to_play))
+        arrayList.add(resources.getString(R.string.legality))
+        arrayList.add(resources.getString(R.string.fair_play_commitment))
+        arrayList.add(resources.getString(R.string.trust))
+        arrayList.add(resources.getString(R.string.saifty))
+        arrayList.add(resources.getString(R.string.licenses))
+        arrayList.add(resources.getString(R.string.rules_winning))
+        arrayList.add(resources.getString(R.string.new_and_press))
+        arrayList.add(resources.getString(R.string.careers))
+        arrayList.add(resources.getString(R.string.membership))
+        arrayList.add(resources.getString(R.string.feedback))
+        arrayList.add(resources.getString(R.string.company))
+        arrayList.add(resources.getString(R.string.logout))
+
+        var recyclerView_slide=parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
+        val llm = LinearLayoutManager(applicationContext);
+        llm.orientation = LinearLayoutManager.VERTICAL;
+        recyclerView_slide!!.layoutManager = llm;
+        recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!,arrayList,this);
+
+
     }
 
 //    fun updateNavigationView() {
@@ -165,5 +233,38 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         this.doubleBackToExitPressedOnce = true
         displayToast(resources.getString(R.string.back_exit))
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun openMenu() {
+    }
+
+    override fun closeMenu() {
+    }
+    public fun showDialog(){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_logout)
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setGravity(Gravity.CENTER)
+        dialog.setCancelable(true)
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window!!.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window.attributes = lp
+        dialog.setCanceledOnTouchOutside(true);
+
+        val tv_yes = dialog.findViewById(R.id.tv_yes) as TextView
+        val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
+
+        tv_yes.setOnClickListener {
+            dialog.dismiss();
+        }
+        tv_cancel.setOnClickListener {
+            dialog.dismiss();
+        }
+        dialog.show();
+
     }
 }
