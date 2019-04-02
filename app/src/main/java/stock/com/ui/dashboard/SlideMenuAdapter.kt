@@ -21,7 +21,7 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>,var act
 
         holder.itemView. tv_title_menu.setText(mContest.get(position));
         holder.itemView.tv_title_menu.setOnClickListener {
-            if(activity!=null&&holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.logout))) {
+            if(activity!=null &&holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.logout))) {
                 activity.showDialog1();
             }
         }
@@ -33,8 +33,6 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>,var act
     inner class SlideMenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
-
-
 
 }
 

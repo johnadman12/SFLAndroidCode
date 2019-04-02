@@ -18,8 +18,8 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
 
-class TranningContestAdapter(val mContext: Context, val mContest: List<HomePojo.TraniningContest>) :
-    RecyclerView.Adapter<TranningContestAdapter.FeatureListHolder>() {
+class LobbyContestAdapter(val mContext: Context) :
+    RecyclerView.Adapter<LobbyContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_featured_contest, parent, false)
@@ -27,13 +27,6 @@ class TranningContestAdapter(val mContext: Context, val mContest: List<HomePojo.
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
-        holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
-        holder.itemView.tvTime.setText(mContest.get(position).exchangename)
-        holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
-        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage)
-            .into(holder.itemView.ivStock)
-        holder.itemView.tvTime.setText(mContest.get(position).scheduleStart)
         holder.itemView.circular_progress.isAnimationEnabled
         holder.itemView.circular_progress.setProgress(500.00, 1000.00)
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
@@ -42,26 +35,17 @@ class TranningContestAdapter(val mContext: Context, val mContest: List<HomePojo.
 
 
     override fun getItemCount(): Int {
-        return mContest.size
+        return 5
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-    private fun clickPlusIcon(lin_child_title: LinearLayout, header_plus_icon: ImageView) {
-        if (lin_child_title.visibility == View.GONE) {
-            ViewAnimationUtils.expand(lin_child_title)
-            header_plus_icon.setImageResource(R.mipmap.arrowdown)
-        } else {
-            ViewAnimationUtils.collapse(lin_child_title)
-            header_plus_icon.setImageResource(R.mipmap.arrowright)
-        }
-    }
-
     private val TIME_TEXT_ADAPTER =
         CircularProgressIndicator.ProgressTextAdapter { time ->
-            val sb = "Join Now"
+            val sb = "Join" +
+                    " Now"
             sb
         }
 }

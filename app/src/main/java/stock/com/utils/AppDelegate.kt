@@ -73,6 +73,7 @@ object AppDelegate {
     val LIKE = 1
     val DISLIKE = 2
     var BANNER_URL = "http://18.188.34.216/webadmin/uploads/banner/"
+    var EXCHANGE_URL = "http://18.188.34.216/webadmin/uploads/exchange/"
     private var builder: Dialog? = null
     private var mInstance: AppDelegate? = null
 

@@ -26,14 +26,14 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/_160sdp"-->
         <!--/>-->
-       <!-- <RelativeLayout
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/rl_banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_136sdp"
-        >-->
+        <!-- <RelativeLayout
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:id="@+id/rl_banner"
+                 android:layout_width="match_parent"
+                 android:layout_height="@dimen/_136sdp"
+         >-->
         <LinearLayout
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    android:background="@color/white"
                     android:nestedScrollingEnabled="false"
                     android:fillViewport="true"
                     tools:listitem="@layout/item_match"
@@ -244,7 +245,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tv_tranning_contest"
-            android:visibility="gone"/>
+                    android:visibility="gone"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_tranning_contest"
@@ -268,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tv_latest_new"
-            android:visibility="gone"/>
+                    android:visibility="gone"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_latest_new"

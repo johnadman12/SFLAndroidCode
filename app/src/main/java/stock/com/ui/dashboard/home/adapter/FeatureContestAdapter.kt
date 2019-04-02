@@ -10,15 +10,19 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_expendable_layout.view.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.AllContestActivity
 import stock.com.ui.pojo.HomePojo
+import stock.com.utils.AppDelegate
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
+import java.text.SimpleDateFormat
+import java.util.*
+import java.text.ParseException
 
-class FeatureContestAdapter(val mContext: Context/*, val mContest: List<HomePojo.FeatureContest>*/) :
+
+class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.FeatureContest>) :
     RecyclerView.Adapter<FeatureContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -27,22 +31,21 @@ class FeatureContestAdapter(val mContext: Context/*, val mContest: List<HomePojo
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        /* holder.itemView.ll_child_lay.setOnClickListener {
-             mContext.startActivity(Intent(mContext, AllContestActivity::class.java))
-         }
-         holder.itemView.ll_header_lay.setOnClickListener {
-             holder.itemView.first_view.visibility = View.VISIBLE
-             clickPlusIcon(holder.itemView.ll_child_lay, holder.itemView.nse_image)
-         }*/
-        /* holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
-         holder.itemView.entry_lable.setText(mContest.get(position).exchangename)
+        holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
+        holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
+        holder.itemView.tvTime.setText(mContest.get(position).exchangename)
+        holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
+        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
+            .into(holder.itemView.ivStock)
+        var sports: Double =
+            (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt()).toDouble()
+        holder.itemView.tvSprortsLeft.setText(
+            mContest.get(position).contestSize + "/" +
+                    mContest.get(position).contestSize
+        )
 
- //        Glide.with(mContext).load(mContest.get(position)).into(holder.itemView.nse_image)
+        holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
 
-
-         holder.itemView.txtcreated.setText(DateUtils.changeDate(mContest.get(position).scheduleStart))
-         holder.itemView.txtStatus.setText(mContest.get(position).contestType)
-         holder.itemView.txtCurrentFee.setText(mContest.get(position).entryFees)*/
         holder.itemView.circular_progress.isAnimationEnabled
         holder.itemView.circular_progress.setProgress(500.00, 1000.00)
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
@@ -51,22 +54,11 @@ class FeatureContestAdapter(val mContext: Context/*, val mContest: List<HomePojo
 
 
     override fun getItemCount(): Int {
-//        return mContest.size
-        return 5
+        return mContest.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    }
-
-    private fun clickPlusIcon(lin_child_title: LinearLayout, header_plus_icon: ImageView) {
-        if (lin_child_title.visibility == View.GONE) {
-            ViewAnimationUtils.expand(lin_child_title)
-            header_plus_icon.setImageResource(R.mipmap.arrowdown)
-        } else {
-            ViewAnimationUtils.collapse(lin_child_title)
-            header_plus_icon.setImageResource(R.mipmap.arrowright)
-        }
     }
 
     private val TIME_TEXT_ADAPTER =
@@ -75,5 +67,24 @@ class FeatureContestAdapter(val mContext: Context/*, val mContest: List<HomePojo
                     " Now"
             sb
         }
+
+    fun parseDateToddMMyyyy(time: String): String? {
+        val inputPattern = "yyyy-MM-dd HH:mm:ss"
+        val outputPattern = "dd MMM h:mm a"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+
+        var date: Date? = null
+        var str: String? = null
+
+        try {
+            date = inputFormat.parse(time)
+            str = outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return str
+    }
 }
 

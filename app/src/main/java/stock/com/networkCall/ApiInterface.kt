@@ -3,9 +3,7 @@ package stock.com.networkCall
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.*
-import stock.com.ui.pojo.BasePojo
-import stock.com.ui.pojo.HomePojo
-import stock.com.ui.pojo.SignupPojo
+import stock.com.ui.pojo.*
 import stock.com.ui.signup.apiRequest.SignUpRequest
 import stock.com.ui.signup.apiRequest.VerifyOtpRequest
 import stock.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -147,7 +145,16 @@ interface ApiInterface {
         "content-type: application/x-www-form-urlencoded"
     )
     @GET("contest/GetFeaturedContestsList")
-    fun getFeatureContentlist(@Header("x-access-token") token: String): Call<HomePojo>
+    fun getFeatureContentlist(): Call<HomePojo>
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/news")
+    fun getLatestNewslist(@Header("x-access-token") token: String): Call<NewsPojo>
+
+
+ @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/exchange_list")
+    fun getExchangelist(): Call<ExchangeList>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)
