@@ -112,6 +112,6 @@ dependencies {
     //side menu
     implementation project(':residemenu')
 
-
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'

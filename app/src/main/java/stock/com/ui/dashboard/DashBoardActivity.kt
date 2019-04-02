@@ -2,6 +2,7 @@ package stock.com.ui.dashboard
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +37,7 @@ import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
+import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 
     class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,
@@ -209,6 +212,9 @@ import stock.com.utils.StockConstant
             parentLayout = resideMenu!!.getLeftMenuView().findViewById(R.id.ll_left_menu_parent) as LinearLayout
 
 
+
+
+
             val arrayList = ArrayList<String>()//Creating an empty arraylist
             arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
             arrayList.add(resources.getString(R.string.how_to_play))
@@ -226,11 +232,22 @@ import stock.com.utils.StockConstant
             arrayList.add(resources.getString(R.string.logout))
 
             var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
+            var img_btn_close = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_close);
+            var img_btn_eye = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_eye);
             val llm = LinearLayoutManager(applicationContext);
             llm.orientation = LinearLayoutManager.VERTICAL;
             recyclerView_slide!!.layoutManager = llm;
             recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!, arrayList,this );
 
+
+            img_btn_close.setOnClickListener {
+                resideMenu!!.closeMenu();
+            }
+
+            img_btn_eye.setOnClickListener {
+                 startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
+                 resideMenu!!.closeMenu();
+            }
 
         }
 
@@ -311,6 +328,8 @@ import stock.com.utils.StockConstant
 
             tv_yes.setOnClickListener {
                 dialog.dismiss();
+
+
             }
             tv_cancel.setOnClickListener {
                 dialog.dismiss();
