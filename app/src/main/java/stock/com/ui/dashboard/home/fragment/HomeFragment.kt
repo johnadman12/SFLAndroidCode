@@ -24,6 +24,7 @@ import stock.com.ui.dashboard.home.adapter.*
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.NewsPojo
+import stock.com.ui.pojo.TrainingPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
@@ -129,7 +130,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         //recyclerView_stock_name.addItemDecoration(CirclePagerIndicatorDecoration(activity))
     }
 
-    private fun setTrainingContestAdapter(traniningContest: List<HomePojo.TraniningContest>) {
+    private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_tranning_contest!!.layoutManager = llm
@@ -187,9 +188,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                             setHomeBannerAdapter(response.body()!!.banner!!)
                         }, 100)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
-                        setTrainingContestAdapter(response.body()!!.traniningContest!!)
+                        getTrainingContentlist()
                         setVisibility()
-                        getLatestNewslist();
                         //  displayToast(response.body()!!.message)
                     }
                 } else {
@@ -199,6 +199,36 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<HomePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getTrainingContentlist() {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<TrainingPojo> =
+            apiService.getTrainingContest()
+        call.enqueue(object : Callback<TrainingPojo> {
+
+            override fun onResponse(call: Call<TrainingPojo>, response: Response<TrainingPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        setTrainingContestAdapter(response.body()!!.traniningContest!!)
+                        tv_tranning_contest.visibility = VISIBLE;
+                        getLatestNewslist();
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<TrainingPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
@@ -267,7 +297,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setVisibility() {
-        tv_tranning_contest.visibility = VISIBLE;
+
         txt_title.visibility = VISIBLE;
     }
 }

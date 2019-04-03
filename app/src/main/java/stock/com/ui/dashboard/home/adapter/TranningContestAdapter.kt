@@ -14,11 +14,12 @@ import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.AllContestActivity
 import stock.com.ui.pojo.HomePojo
+import stock.com.ui.pojo.TrainingPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
 
-class TranningContestAdapter(val mContext: Context, val mContest: List<HomePojo.TraniningContest>) :
+class TranningContestAdapter(val mContext: Context, val mContest: List<TrainingPojo.TraniningContest>) :
     RecyclerView.Adapter<TranningContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {

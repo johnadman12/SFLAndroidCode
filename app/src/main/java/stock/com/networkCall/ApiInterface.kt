@@ -152,9 +152,13 @@ interface ApiInterface {
     fun getLatestNewslist(@Header("x-access-token") token: String): Call<NewsPojo>
 
 
- @Headers("content-type: application/x-www-form-urlencoded")
+    @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/exchange_list")
     fun getExchangelist(): Call<ExchangeList>
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/GetTrainingContestsList")
+    fun getTrainingContest(): Call<TrainingPojo>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)
