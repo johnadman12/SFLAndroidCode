@@ -9,8 +9,9 @@
     <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
-            app:srcCompat="@mipmap/close"
+            app:srcCompat="@mipmap/cros"
             android:background="@null"
+            android:id="@+id/img_btn_close"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"/>
     <LinearLayout
@@ -22,10 +23,14 @@
         <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp"
-                app:srcCompat="@mipmap/close"
+                app:srcCompat="@mipmap/watchlist"
                 android:layout_gravity="center"
+                android:scaleType="fitCenter"
                 android:background="@null"
-                android:layout_marginBottom="@dimen/_10sdp"/>
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+        android:id="@+id/img_btn_eye"/>
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +85,7 @@
             </LinearLayout>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatImageView
-                android:src="@mipmap/logo"
+                android:src="@mipmap/lobbyy_"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_gravity="center"
@@ -99,7 +104,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    app:srcCompat="@mipmap/wallet"
+                    app:srcCompat="@mipmap/wallet_"
                     android:background="@null"/>
         </LinearLayout>
         <LinearLayout android:layout_width="0dp"
@@ -109,7 +114,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    app:srcCompat="@mipmap/wallet"
+                    app:srcCompat="@mipmap/messages"
                     android:background="@null"/>
         </LinearLayout>
         <LinearLayout android:layout_width="0dp"
@@ -119,7 +124,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    app:srcCompat="@mipmap/wallet"
+                    app:srcCompat="@mipmap/mycontests"
                     android:background="@null"/>
         </LinearLayout>
         <LinearLayout android:layout_width="0dp"
@@ -128,7 +133,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
-                    app:srcCompat="@mipmap/wallet"
+                    app:srcCompat="@mipmap/invite_"
                     android:background="@null"/>
         </LinearLayout>
     </LinearLayout>
@@ -141,27 +146,28 @@
             android:fillViewport="true"
             tools:listitem="@layout/item_match"
             android:layout_weight="1"/>
-    <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextStyleNormal"
+    <!-- <androidx.appcompat.widget.AppCompatTextView
+             style="@style/TextStyleNormal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/deposit_funds"
+             android:layout_gravity="center"
+             android:gravity="center"
+             android:padding="@dimen/_10sdp"
+             android:layout_marginTop="@dimen/_10sdp"
+             android:layout_marginLeft="@dimen/_15sdp"
+             android:layout_marginRight="@dimen/_15sdp"
+             android:textColor="@color/colorPrimary"
+             android:background="@drawable/bg_deposit_fund"
+             android:textSize="@dimen/_12sdp"/>-->
+
+    <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/deposit_funds"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_15sdp"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/bg_deposit_fund"
-            android:textSize="@dimen/_12sdp"/>
+            android:background="@null"
+            app:srcCompat="@mipmap/depositfunds"/>
 
-    <View android:layout_width="match_parent"
-          android:layout_height="2dp"
-          android:layout_marginTop="@dimen/_4sdp"
-          android:layout_marginBottom="@dimen/_8sdp"
-          android:layout_marginLeft="@dimen/_40sdp"
-          android:layout_marginRight="@dimen/_40sdp"
-          android:background="@color/white"
-    />
 </LinearLayout>

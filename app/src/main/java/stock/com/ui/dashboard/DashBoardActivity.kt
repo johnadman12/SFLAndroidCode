@@ -2,6 +2,7 @@ package stock.com.ui.dashboard
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +36,7 @@ import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
+import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 
 class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,
@@ -153,27 +156,27 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         return false
     }
 
-    @SuppressLint("RestrictedApi")
-    private fun removeShiftMode(view: BottomNavigationView) {
-        val menuView = view.getChildAt(0) as BottomNavigationMenuView
-        try {
-            val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
-            shiftingMode.isAccessible = true
-            shiftingMode.setBoolean(menuView, false)
-            shiftingMode.isAccessible = false
-            for (i in 0 until menuView.childCount) {
-                val item = menuView.getChildAt(i) as BottomNavigationItemView
-                item.setShifting(false)
-                // set once again checked value, so view will be updated
-                item.setChecked(item.itemData.isChecked)
+        @SuppressLint("RestrictedApi")
+        private fun removeShiftMode(view: BottomNavigationView) {
+            val menuView = view.getChildAt(0) as BottomNavigationMenuView
+            try {
+                val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
+                shiftingMode.isAccessible = true
+                shiftingMode.setBoolean(menuView, false)
+                shiftingMode.isAccessible = false
+                for (i in 0 until menuView.childCount) {
+                    val item = menuView.getChildAt(i) as BottomNavigationItemView
+                    item.setShifting(false)
+                    // set once again checked value, so view will be updated
+                    item.setChecked(item.itemData.isChecked)
+                }
+            } catch (e: NoSuchFieldException) {
+                Log.e("ERROR NO SUCH FIELD", "Unable to get shift mode field")
+            } catch (e: IllegalAccessException) {
+                Log.e("ERROR ILLEGAL ALG", "Unable to change value of shift mode")
             }
-        } catch (e: NoSuchFieldException) {
-            Log.e("ERROR NO SUCH FIELD", "Unable to get shift mode field")
-        } catch (e: IllegalAccessException) {
-            Log.e("ERROR ILLEGAL ALG", "Unable to change value of shift mode")
-        }
 
-    }
+        }
 
     private fun initView() {
         setSupportActionBar(toolbar)
@@ -236,30 +239,45 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         parentLayout = resideMenu!!.getLeftMenuView().findViewById(R.id.ll_left_menu_parent) as LinearLayout
 
 
-        val arrayList = ArrayList<String>()//Creating an empty arraylist
-        arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
-        arrayList.add(resources.getString(R.string.how_to_play))
-        arrayList.add(resources.getString(R.string.legality))
-        arrayList.add(resources.getString(R.string.fair_play_commitment))
-        arrayList.add(resources.getString(R.string.trust))
-        arrayList.add(resources.getString(R.string.saifty))
-        arrayList.add(resources.getString(R.string.licenses))
-        arrayList.add(resources.getString(R.string.rules_winning))
-        arrayList.add(resources.getString(R.string.new_and_press))
-        arrayList.add(resources.getString(R.string.careers))
-        arrayList.add(resources.getString(R.string.membership))
-        arrayList.add(resources.getString(R.string.feedback))
-        arrayList.add(resources.getString(R.string.company))
-        arrayList.add(resources.getString(R.string.logout))
-
-        var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
-        val llm = LinearLayoutManager(applicationContext);
-        llm.orientation = LinearLayoutManager.VERTICAL;
-        recyclerView_slide!!.layoutManager = llm;
-        recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!, arrayList, this);
 
 
-    }
+
+            val arrayList = ArrayList<String>()//Creating an empty arraylist
+            arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
+            arrayList.add(resources.getString(R.string.how_to_play))
+            arrayList.add(resources.getString(R.string.legality))
+            arrayList.add(resources.getString(R.string.fair_play_commitment))
+            arrayList.add(resources.getString(R.string.trust))
+            arrayList.add(resources.getString(R.string.saifty))
+            arrayList.add(resources.getString(R.string.licenses))
+            arrayList.add(resources.getString(R.string.rules_winning))
+            arrayList.add(resources.getString(R.string.new_and_press))
+            arrayList.add(resources.getString(R.string.careers))
+            arrayList.add(resources.getString(R.string.membership))
+            arrayList.add(resources.getString(R.string.feedback))
+            arrayList.add(resources.getString(R.string.company))
+            arrayList.add(resources.getString(R.string.logout))
+
+            var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
+            var img_btn_close = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_close);
+            var img_btn_eye = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_eye);
+            val llm = LinearLayoutManager(applicationContext);
+            llm.orientation = LinearLayoutManager.VERTICAL;
+            recyclerView_slide!!.layoutManager = llm;
+            recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!, arrayList,this );
+
+
+
+            img_btn_close.setOnClickListener {
+                resideMenu!!.closeMenu();
+            }
+
+            img_btn_eye.setOnClickListener {
+                 startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
+                 resideMenu!!.closeMenu();
+            }
+
+        }
 
 //    fun updateNavigationView() {
 //        nav_view.getHeaderView(0).txt_username.setText(Prefs.getInstance(this).userdata!!.first_name + " " + Prefs.getInstance(this).userdata!!.last_name)
@@ -318,32 +336,32 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     override fun closeMenu() {
     }
 
-    fun showDialog1() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_logout)
-        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setGravity(Gravity.CENTER)
-        dialog.setCancelable(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window!!.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window.attributes = lp
-        dialog.setCanceledOnTouchOutside(true);
+        public fun showDialog1() {
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.dialog_logout)
+            dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window!!.setGravity(Gravity.CENTER)
+            dialog.setCancelable(true)
+            val lp = WindowManager.LayoutParams()
+            val window = dialog.window
+            lp.copyFrom(window!!.attributes)
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+            window.attributes = lp
+            dialog.setCanceledOnTouchOutside(true);
 
-        val tv_yes = dialog.findViewById(R.id.tv_yes) as TextView
-        val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
+            val tv_yes = dialog.findViewById(R.id.tv_yes) as TextView
+            val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
 
-        tv_yes.setOnClickListener {
-            dialog.dismiss();
+            tv_yes.setOnClickListener {
+                dialog.dismiss();
+            }
+            tv_cancel.setOnClickListener {
+                dialog.dismiss();
+            }
+            dialog.show();
+
         }
-        tv_cancel.setOnClickListener {
-            dialog.dismiss();
-        }
-        dialog.show();
-
     }
-}
 
