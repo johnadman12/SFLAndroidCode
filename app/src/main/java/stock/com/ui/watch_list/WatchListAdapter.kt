@@ -14,12 +14,17 @@ import stock.com.ui.watch_list.WatchListActivity
 import com.chauthai.swipereveallayout.ViewBinderHelper
 
 import android.os.Bundle
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.row_latest_news.view.*
+import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 
 import kotlinx.android.synthetic.main.row_view_watch_list.view.*
 import stock.com.R
+import stock.com.ui.pojo.StockPojo
+import stock.com.utils.AppDelegate
 
 
-class WatchListAdapter(val mContext: Context/*, val mContest: List<String>*/):
+class WatchListAdapter(val mContext: Context, val mContest: List<StockPojo.Stock>):
     RecyclerView.Adapter<WatchListAdapter.SlideMenuHolder>() {
     // This object helps you save/restore the open/close state of each view
     private val viewBinderHelper = ViewBinderHelper()
@@ -30,28 +35,26 @@ class WatchListAdapter(val mContext: Context/*, val mContest: List<String>*/):
     }
     override fun onBindViewHolder(holder: SlideMenuHolder, position: Int) {
        // holder.itemView. tv_title_menu.setText(mContest.get(position));
+         viewBinderHelper.bind(holder.itemView.swipeRevealLayout, ""+position);
+         holder.itemView.tv_company_name.setText(mContest.get(position).symbol);
+         holder.itemView.tv_sector.setText(mContest.get(position).sector);
+         holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent);
+         holder.itemView.tv_market_open.setText(mContest.get(position).marketopen);
 
-        viewBinderHelper.bind(holder.itemView.swipeRevealLayout, ""+position);
 
-    }
+        if(!mContest.get(position).image.equals("")){
+            Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.imageView)
+        }
+
+     }
     override fun getItemCount(): Int {
-        //return mContest.size;
-        return 20;
+        return mContest.size;
     }
     inner class SlideMenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+
     }
 
-    fun saveStates(outState: Bundle) {
-        viewBinderHelper.saveStates(outState)
-    }
 
-    /**
-     * Only if you need to restore open/close state when the orientation is changed.
-     * Call this method in [android.app.Activity.onRestoreInstanceState]
-     */
-    fun restoreStates(inState: Bundle) {
-        viewBinderHelper.restoreStates(inState)
-    }
 }
 

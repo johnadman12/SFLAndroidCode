@@ -17,7 +17,7 @@
             style="@style/TextStyleSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/support"
+            android:text="@string/social_network"
             android:textColor="@color/white"
             android:textSize="@dimen/_22ssp"
             android:padding="@dimen/_10sdp"/>

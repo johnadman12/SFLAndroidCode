@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg">
+
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    android:scrollbars="none">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_Email"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/email"/>
+
+            <RelativeLayout
+                    android:id="@+id/rl_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_email"
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/emailID"
+                        android:textColor="@color/white"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_email"
+                        android:background="@drawable/ll_search"
+                        android:hint="12321"
+                        android:padding="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_mobile"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/mobile"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_moblie"
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/mobile_no"
+                        android:textColor="@color/white"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/rl_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_moblie"
+                        android:background="@drawable/ll_search"
+                        android:orientation="horizontal">
+
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                        <com.hbb20.CountryCodePicker
+                                android:id="@+id/countryCodeHolder"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:ccp_defaultNameCode="US"
+                                app:ccp_textSize="@dimen/_13ssp"
+                                app:ccp_arrowSize="20dp"
+                                android:visibility="visible"
+                                app:ccp_textGravity="RIGHT"
+                                app:ccp_showNameCode="false"
+                                app:ccp_showFlag="true"
+                                android:layout_centerVertical="true"
+                                app:ccpDialog_showFlag="true"
+                                app:ccp_showFullName="false"
+                                app:ccp_clickable="true"
+                                app:ccp_showPhoneCode="true"
+                                app:ccp_contentColor="@color/white"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                                style="@style/EditTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorTransparent"
+                                android:enabled="false"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="@string/mobile_number"
+                                android:inputType="phone"
+                                android:singleLine="true"
+                                android:imeOptions="actionNext"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_address"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/mobile"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_address"
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/address"
+                        android:textColor="@color/white"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_address"
+                        android:background="@drawable/ll_search"
+                        android:hint="@string/address"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:singleLine="true"
+                />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_country"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/mobile"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_country"
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/country"
+                        android:textColor="@color/white"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_country"
+                        android:background="@drawable/ll_search"
+                        android:drawableRight="@mipmap/dropdown"
+                        android:hint="@string/country"
+                        android:textColor="@color/white"
+                        android:padding="@dimen/_10sdp"
+                        android:textColorHint="@color/white"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_zipCode"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="bottom"
+                    android:src="@mipmap/mobile"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_zipCode"
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_8sdp"
+                        android:text="@string/zip_code"
+                        android:textColor="@color/white"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_zipCode"
+                        android:background="@drawable/ll_search"
+                        android:hint="@string/zip_code"
+                        android:padding="@dimen/_10sdp"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:singleLine="true"/>
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:padding="@dimen/_10sdp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_apply"
+                    style="@style/TextStyleSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radiuse"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/apply"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_cancel"
+                    style="@style/TextStyleSemiBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_apply"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/button_rounded_background_pitch"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="@string/cancel"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

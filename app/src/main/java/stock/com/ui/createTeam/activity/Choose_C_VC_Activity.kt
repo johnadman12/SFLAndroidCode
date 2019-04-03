@@ -56,7 +56,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText("Choose Stock")
+        toolbarTitleTv.setText("Choose StockPojo")
         setMenu(false, false, true, false, false,
             false, true)
         addData()

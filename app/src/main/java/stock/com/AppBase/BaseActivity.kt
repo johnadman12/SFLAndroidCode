@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -230,7 +231,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun appLogout() {
-        val dialog = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar)
+        /*val dialog = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_yes_no)
         val dialogTitle: TextView = dialog.findViewById(R.id.dialogTitle)
@@ -250,7 +251,14 @@ open class BaseActivity : AppCompatActivity() {
                 .forEach { StockConstant.ACTIVITIES[it]?.finish() }
             finish()
         }
-        dialog.show()
+        dialog.show()*/
+
+        saveIntoPrefsString(StockConstant.USERID,"")
+        startActivity(Intent(this, WelcomeActivity::class.java))
+        (0 until StockConstant.ACTIVITIES.size)
+            .filter { StockConstant.ACTIVITIES[it] != null }
+            .forEach { StockConstant.ACTIVITIES[it]?.finish() }
+        finish()
     }
 
     /*
@@ -265,14 +273,24 @@ open class BaseActivity : AppCompatActivity() {
 
     fun saveUserData(key: String, userdata: SignupDataPojo?) {
         val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
-        val edit = prefs.edit()
-        edit.putString(key, userdata.toString())
+        val edit = prefs.edit();
+        //edit.putString(key, userdata.toString())
+        edit.putString(StockConstant.USERNAME, userdata!!.username)
+        edit.putString(StockConstant.USERPHONE, userdata!!.phone_number);
         edit.apply()
     }
 
-    fun getUserData(key: String): String? {
+    fun getUserData():SignupDataPojo{
         val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
-        return prefs.getString(key, StockConstant.DEFAULT_VALUE_STRING)
+        var signupDataPojo=SignupDataPojo()
+        signupDataPojo.username=prefs.getString(StockConstant.USERNAME,"");
+        signupDataPojo.phone_number=prefs.getString(StockConstant.USERPHONE,"");
+        return signupDataPojo;
+    }
+
+    fun getUserData(key: String): SharedPreferences? {
+        val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
+        return prefs/*.getString(*//*key, StockConstant.DEFAULT_VALUE_STRING*//*)*/
     }
 
     /*

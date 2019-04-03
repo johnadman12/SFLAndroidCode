@@ -94,7 +94,8 @@
     <string name="invite_friends">Invite Friends</string>
     <string name="add_funds">Add Funds</string>
     <string name="transaction_history">Transaction History</string>
-    <string name="how_to_play">How to Play</string>
+    <string name="how_to_play">How to \n Play</string>
+    <string name="how_to_play_">How to Play</string>
     <string name="about">About</string>
     <string name="time_left">Time Left</string>
     <string name="rules">Rules</string>
@@ -386,6 +387,21 @@
     <string name="watch_list">Watchlist</string>
 
     <string name="search_by_market">Search by market symbol or name</string>
+
+    <string name="social_network">Social Network</string>
+    
+    <string name="edit_profile">Edit Profile</string>
+    <string name="contact_info">Contact Info</string>
+    <string name="credentials">Credentials</string>
+
+    <string name="biography">Biography</string>
+
+    <string name="country">Country</string>
+
+    <string name="zip_code">Zip Code/Postal Code</string>
+    <string name="address">Address</string>
+
+    <string name="no_data">No data</string>
 
 
 </resources>

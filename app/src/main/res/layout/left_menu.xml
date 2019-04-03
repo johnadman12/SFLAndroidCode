@@ -30,7 +30,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
-        android:id="@+id/img_btn_eye"/>
+                android:id="@+id/img_btn_eye"/>
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,9 +53,10 @@
                     android:textSize="@dimen/_13sdp"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:id="@+id/tv_username"/>
             <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/_70sdp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -66,7 +67,8 @@
                         android:text="@string/level"
                         android:textSize="@dimen/_10sdp"
                         android:textColor="@color/white"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:id="@+id/tv_level"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -81,7 +83,8 @@
                         android:paddingTop="@dimen/_2sdp"
                         android:paddingBottom="@dimen/_2sdp"
                         android:layout_gravity="center"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:id="@+id/tv_pro"/>
             </LinearLayout>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatImageView
@@ -105,8 +108,13 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     app:srcCompat="@mipmap/wallet_"
-                    android:background="@null"/>
+                    android:background="@null"
+                    android:clickable="false"/>
         </LinearLayout>
+        <View android:layout_width="0.1dp"
+              android:layout_height="match_parent"
+              android:background="@color/colorbutton"/>
+
         <LinearLayout android:layout_width="0dp"
                       android:layout_weight="1"
                       android:layout_height="wrap_content"
@@ -115,8 +123,13 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     app:srcCompat="@mipmap/messages"
+                    android:clickable="false"
                     android:background="@null"/>
         </LinearLayout>
+
+        <View android:layout_width="0.1dp"
+              android:layout_height="match_parent"
+              android:background="@color/colorbutton"/>
         <LinearLayout android:layout_width="0dp"
                       android:layout_weight="1"
                       android:gravity="center"
@@ -125,15 +138,21 @@
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     app:srcCompat="@mipmap/mycontests"
+                    android:clickable="false"
                     android:background="@null"/>
         </LinearLayout>
+        <View android:layout_width="0.1dp"
+              android:layout_height="match_parent"
+              android:background="@color/colorbutton"/>
         <LinearLayout android:layout_width="0dp"
                       android:layout_weight="1"
-                      android:layout_height="wrap_content">
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ll_invite">
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
                     app:srcCompat="@mipmap/invite_"
+                    android:clickable="false"
                     android:background="@null"/>
         </LinearLayout>
     </LinearLayout>
