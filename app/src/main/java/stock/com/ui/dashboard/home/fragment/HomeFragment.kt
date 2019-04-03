@@ -59,6 +59,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
         getFeatureContentlist();
+        getTrainingContentlist()
         getExchangeNamelist()
         txt_title.visibility = GONE;
     }
@@ -188,7 +189,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                             setHomeBannerAdapter(response.body()!!.banner!!)
                         }, 100)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
-                        getTrainingContentlist()
+
                         setVisibility()
                         //  displayToast(response.body()!!.message)
                     }

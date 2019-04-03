@@ -151,6 +151,10 @@ interface ApiInterface {
     @GET("contest/news")
     fun getLatestNewslist(@Header("x-access-token") token: String): Call<NewsPojo>
 
+  @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/GetContestsList")
+    fun getContestList(@Header("x-access-token") token: String): Call<LobbyContestPojo>
+
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/exchange_list")
@@ -159,6 +163,11 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/GetTrainingContestsList")
     fun getTrainingContest(): Call<TrainingPojo>
+
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/get_filter")
+    fun getFilterList(): Call<FilterPojo>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)

@@ -11,10 +11,8 @@ import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
@@ -23,15 +21,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import kotlinx.android.synthetic.main.bottom_navigation.*
 import com.specyci.residemenu.ResideMenu
 import kotlinx.android.synthetic.main.dashboard_activity.*
-import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.left_menu.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.ui.dashboard.home.adapter.MatchLiveAdapter
+import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
@@ -111,6 +106,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             setTitleVisibility(true, false)
             // setMenu(false, false, false, true, false, false, false)
             setFragment(LobbyFragment())
+            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
         }
 
     }

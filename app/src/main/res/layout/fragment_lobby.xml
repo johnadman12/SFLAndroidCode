@@ -51,7 +51,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:src="@mipmap/time_"/>
+                    android:src="@mipmap/codejoin"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,17 +87,19 @@
             />
 
         </LinearLayout>
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:padding="@dimen/_5sdp"
-                      android:gravity="center"
-                      android:layout_weight="1"
-                      android:layout_gravity="top"
-                      android:orientation="vertical">
+        <LinearLayout
+                android:id="@+id/ll_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="top"
+                android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:src="@mipmap/filter"/>
+                    android:src="@mipmap/filter_"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,7 +122,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:src="@mipmap/sort"/>
+                    android:src="@mipmap/sort_"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

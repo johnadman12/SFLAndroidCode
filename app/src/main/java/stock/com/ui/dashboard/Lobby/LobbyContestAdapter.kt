@@ -1,38 +1,31 @@
-package stock.com.ui.dashboard.home.adapter
+package stock.com.ui.dashboard.Lobby
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
-import stock.com.ui.contest.activity.AllContestActivity
-import stock.com.ui.pojo.HomePojo
+import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
-import stock.com.utils.DateUtils
-import stock.com.utils.ViewAnimationUtils
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.text.ParseException
 import java.util.concurrent.TimeUnit
 
-
-class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.FeatureContest>) :
-    RecyclerView.Adapter<FeatureContestAdapter.FeatureListHolder>() {
+class LobbyContestAdapter(
+    val mContext: Context,
+    val mContest: List<LobbyContestPojo.Contest>) :
+    RecyclerView.Adapter<LobbyContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_featured_contest, parent, false)
         return FeatureListHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
         holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
@@ -107,6 +100,5 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
         }
         return str
     }
-
 }
 

@@ -129,6 +129,7 @@
                                 android:textColor="@color/white"
                                 android:layout_height="0dp"
                                 android:text="$50"
+                                android:id="@+id/tvTimeLeft"
                                 android:layout_weight=".5"
                                 android:textStyle="bold"/>
                         <androidx.appcompat.widget.AppCompatTextView

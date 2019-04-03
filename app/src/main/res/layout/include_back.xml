@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageButton
             android:layout_width="@dimen/_45sdp"
             android:layout_height="@dimen/_45sdp"
             app:srcCompat="@drawable/ic_left_arrow"
             android:background="@null"
+            android:layout_alignParentLeft="true"
             android:scaleType="fitCenter"
             android:padding="@dimen/_12sdp"
             android:id="@+id/img_btn_back"/>
 
+    <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            app:srcCompat="@drawable/ic_close_black_24dp"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitCenter"
+            android:padding="@dimen/_12sdp"
+            android:visibility="gone"
+            android:id="@+id/img_btn_close"/>
 
-</LinearLayout>
+
+</RelativeLayout>

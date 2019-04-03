@@ -18,6 +18,9 @@ import stock.com.ui.pojo.TrainingPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class TranningContestAdapter(val mContext: Context, val mContest: List<TrainingPojo.TraniningContest>) :
     RecyclerView.Adapter<TranningContestAdapter.FeatureListHolder>() {
@@ -35,6 +38,26 @@ class TranningContestAdapter(val mContext: Context, val mContest: List<TrainingP
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage)
             .into(holder.itemView.ivStock)
         holder.itemView.tvTime.setText(mContest.get(position).scheduleStart)
+
+        if (!mContest.get(position).scheduleStart.equals(" ")) {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val inputFormat = SimpleDateFormat(inputPattern)
+            var date: Date? = null
+            date = inputFormat.parse(mContest.get(position).scheduleStart)
+            val thatDay = Calendar.getInstance()
+            thatDay.setTime(date);
+            val today = Calendar.getInstance()
+            val diff = thatDay.timeInMillis - today.timeInMillis
+//            val days = diff / (24 * 60 * 60 * 1000)
+            val day = TimeUnit.SECONDS.toDays(diff).toInt()
+            val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
+            val minute = TimeUnit.SECONDS.toMinutes(diff) -
+                    TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(diff));
+            val seconds = TimeUnit.SECONDS.toSeconds(diff) -
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(diff));
+
+            holder.itemView.tvTimeLeft.setText(hour.toString() + " : " + minute.toString() + " : " + seconds.toString())
+        }
         holder.itemView.circular_progress.isAnimationEnabled
         holder.itemView.circular_progress.setProgress(500.00, 1000.00)
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
