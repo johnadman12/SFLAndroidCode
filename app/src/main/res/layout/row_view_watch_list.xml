@@ -46,7 +46,8 @@
                             app:srcCompat="@mipmap/close"
                             android:background="@null"
                             android:scaleType="fitCenter"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                    android:id="@+id/img_btn_remove"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

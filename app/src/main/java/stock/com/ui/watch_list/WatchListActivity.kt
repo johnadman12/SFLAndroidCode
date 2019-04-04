@@ -16,6 +16,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.StockPojo
 import stock.com.utils.StockConstant
@@ -27,14 +28,12 @@ class WatchListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_list)
-       // setWatchListAdapter();
 
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
 
         getWatchList();
-
     }
 
     private fun setWatchListAdapter(list:List<StockPojo.Stock>) {
@@ -42,10 +41,10 @@ class WatchListActivity : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_watch_list!!.layoutManager = llm
         recyclerView_watch_list.visibility = View.VISIBLE
-        recyclerView_watch_list!!.adapter = WatchListAdapter(applicationContext!!,list);
+        recyclerView_watch_list!!.adapter = WatchListAdapter(applicationContext!!,list,this);
     }
 
-    fun getWatchList() {
+   private fun getWatchList() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -71,6 +70,38 @@ class WatchListActivity : BaseActivity() {
                 }
             }
             override fun onFailure(call: Call<StockPojo>, t: Throwable) {
+                println(t.toString())
+                Log.d("WatchList--",""+t.localizedMessage)
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun callApiRemoveWatch(id:String){
+        Log.d("Remove ","--"+id);
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<BasePojo> = apiService.removeWatch(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),getFromPrefsString(StockConstant.USERID).toString(),id)
+        call.enqueue(object : Callback<BasePojo> {
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if(response.body()!!.status.equals("1")){
+                        displayToast("Remove "+""+response.body()!!.message);
+                        getWatchList()
+                    }else if(response.body()!!.status.equals("2")){
+                        appLogout();
+                    }else{
+                        displayToast(response.body()!!.message)
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--",""+t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong))

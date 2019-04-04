@@ -24,16 +24,16 @@ import stock.com.ui.pojo.StockPojo
 import stock.com.utils.AppDelegate
 
 
-class WatchListAdapter(val mContext: Context, val mContest: List<StockPojo.Stock>):
-    RecyclerView.Adapter<WatchListAdapter.SlideMenuHolder>() {
+class WatchListAdapter(val mContext: Context, val mContest: List<StockPojo.Stock>,val activity: WatchListActivity):
+    RecyclerView.Adapter<WatchListAdapter.WatchListHolder>() {
     // This object helps you save/restore the open/close state of each view
     private val viewBinderHelper = ViewBinderHelper()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideMenuHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_watch_list, parent, false)
-        return SlideMenuHolder(view)
+        return WatchListHolder(view)
     }
-    override fun onBindViewHolder(holder: SlideMenuHolder, position: Int) {
+    override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
        // holder.itemView. tv_title_menu.setText(mContest.get(position));
          viewBinderHelper.bind(holder.itemView.swipeRevealLayout, ""+position);
          holder.itemView.tv_company_name.setText(mContest.get(position).symbol);
@@ -41,6 +41,12 @@ class WatchListAdapter(val mContext: Context, val mContest: List<StockPojo.Stock
          holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent);
          holder.itemView.tv_market_open.setText(mContest.get(position).marketopen);
 
+
+        holder.itemView.img_btn_remove.setOnClickListener {
+            if(activity!= null){
+                activity.callApiRemoveWatch(mContest.get(position).id)
+            }
+        }
 
         if(!mContest.get(position).image.equals("")){
             Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.imageView)
@@ -50,7 +56,7 @@ class WatchListAdapter(val mContext: Context, val mContest: List<StockPojo.Stock
     override fun getItemCount(): Int {
         return mContest.size;
     }
-    inner class SlideMenuHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class WatchListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
     }

@@ -12,14 +12,13 @@
 
     <item
             android:id="@+id/menu_sort"
-            android:icon="@mipmap/sort"
+            android:icon="@mipmap/sort_filter"
             android:title="@string/wallet"
             android:visible="false"
             app:showAsAction="always"/>
-
     <item
             android:id="@+id/menu_filter"
-            android:icon="@mipmap/filter"
+            android:icon="@mipmap/filter_new"
             android:title="@string/filter"
             android:visible="false"
             app:showAsAction="always"/>
@@ -35,7 +34,6 @@
             android:title="@string/wallet"
             android:visible="false"
             app:showAsAction="always"/>
-
     <item
             android:id="@+id/menu_comment"
             android:icon="@mipmap/comment"
@@ -43,13 +41,10 @@
             android:title="@string/wallet"
             android:visible="false"
             app:showAsAction="always"/>
-
     <item
             android:id="@+id/menu_info"
             android:icon="@mipmap/infowhite"
             android:title="@string/wallet"
             android:visible="false"
             app:showAsAction="always"/>
-
-
 </menu>

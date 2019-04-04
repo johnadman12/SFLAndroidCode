@@ -17,8 +17,6 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        //Toast.makeText(applicationContext,getFromPrefsString(StockConstant.USERID).toString(),1000).show();
-
         Handler().postDelayed({
             try {
                 if (getFromPrefsString(StockConstant.USERFIRSTTIME).toString().equals("no")) {
