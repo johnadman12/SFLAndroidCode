@@ -196,6 +196,12 @@ interface ApiInterface {
         @Field("device_token") device_token: String
     ): Call<SignupPojo>
 
+
+    @FormUrlEncoded
+   // @Header("Content-Type: application/x-www-form-urlencoded")
+    @POST("stock/feature_stock")
+    fun getWatchList(@Header("x-access-token")token: String,@Field("user_id")userid: String):Call<StockPojo>
+
     /* @Headers("Content-Type: application/json")
 
      @POST(ApiConstant.social_signup)

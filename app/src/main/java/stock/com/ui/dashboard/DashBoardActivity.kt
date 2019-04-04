@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
+import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 
@@ -240,10 +242,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
 
 
-
             val arrayList = ArrayList<String>()//Creating an empty arraylist
             arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
-            arrayList.add(resources.getString(R.string.how_to_play))
+            arrayList.add(resources.getString(R.string.how_to_play_))
             arrayList.add(resources.getString(R.string.legality))
             arrayList.add(resources.getString(R.string.fair_play_commitment))
             arrayList.add(resources.getString(R.string.trust))
@@ -260,22 +261,26 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
             var img_btn_close = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_close);
             var img_btn_eye = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_eye);
+            var tv_username = parentLayout.findViewById<AppCompatTextView>(R.id.tv_username);
+            var tv_level = parentLayout.findViewById<AppCompatTextView>(R.id.tv_level);
+            var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
+
+
+            tv_username.setText(getUserData().username);
+
             val llm = LinearLayoutManager(applicationContext);
             llm.orientation = LinearLayoutManager.VERTICAL;
             recyclerView_slide!!.layoutManager = llm;
-            recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!, arrayList,this );
-
+            recyclerView_slide!!.adapter = SlideMenuAdapter(applicationContext!!, arrayList,this);
 
 
             img_btn_close.setOnClickListener {
                 resideMenu!!.closeMenu();
             }
-
             img_btn_eye.setOnClickListener {
                  startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
                  resideMenu!!.closeMenu();
             }
-
         }
 
 //    fun updateNavigationView() {
@@ -314,7 +319,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     fun setTitleText(title: String) {
         toolbarTitle.text = title
     }
-
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed()
@@ -328,13 +332,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         displayToast(resources.getString(R.string.back_exit))
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
-
     override fun openMenu() {
     }
-
     override fun closeMenu() {
     }
-
         public fun showDialog1() {
             val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -354,13 +355,12 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
 
             tv_yes.setOnClickListener {
+                appLogout();
                 dialog.dismiss();
             }
             tv_cancel.setOnClickListener {
                 dialog.dismiss();
             }
             dialog.show();
-
         }
     }
-

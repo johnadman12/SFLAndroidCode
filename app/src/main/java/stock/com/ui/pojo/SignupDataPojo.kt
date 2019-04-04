@@ -24,4 +24,5 @@ class SignupDataPojo {
     var created: String = ""
     var notification: String = ""
     var modified: String = ""
+    var username: String = ""
 }

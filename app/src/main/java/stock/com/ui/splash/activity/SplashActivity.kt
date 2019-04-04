@@ -3,6 +3,7 @@ package stock.com.ui.splash.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.GoThroughScreens.ActivityGoThrough1
@@ -16,10 +17,13 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        //Toast.makeText(applicationContext,getFromPrefsString(StockConstant.USERID).toString(),1000).show();
+
         Handler().postDelayed({
             try {
                 if (getFromPrefsString(StockConstant.USERFIRSTTIME).toString().equals("no")) {
-                    if (getFromPrefsString(StockConstant.USERID).toString() != "") {
+                    // if (getFromPrefsString(StockConstant.USERID).toString() != "") {
+                    if (!getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                         startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
                         finish()
                     } else {
