@@ -2,15 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:clickable="false">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
+                  android:clickable="false"
                   android:padding="@dimen/_5sdp">
         <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkboxContest"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
+                android:checked="false"
                 android:buttonTint="@color/colorPrimary"
                 android:padding="@dimen/_2sdp"/>
 
@@ -20,8 +23,10 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:id="@+id/tvContestName"
                 style="@style/TextStyleNormal"
+                android:clickable="false"
                 android:textColor="@color/textColorGray"/>
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
-          android:background="@color/GrayColor"/>
+    <View android:layout_width="match_parent"
+          android:layout_height="@dimen/_1ssp"
+          android:background="@color/colorSecondaryLight"/>
 </LinearLayout>

@@ -2,6 +2,7 @@ package stock.com.ui.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import stock.com.ui.pojo.FilterPojo.EntryFee
 
 
 class FilterPojo : BasePojo() {
@@ -14,6 +15,9 @@ class FilterPojo : BasePojo() {
     @SerializedName("country")
     @Expose
     var country: List<Country>? = null
+    @SerializedName("entry_fees")
+    @Expose
+    var entryFees: List<EntryFee>? = null
 
     inner class Market {
 
@@ -33,6 +37,8 @@ class FilterPojo : BasePojo() {
     }
 
     inner class Country {
+
+
 
         @SerializedName("id")
         @Expose
@@ -60,6 +66,17 @@ class FilterPojo : BasePojo() {
         @SerializedName("name")
         @Expose
         var name: String? = null
+
+    }
+
+    inner class EntryFee {
+
+        @SerializedName("min_value")
+        @Expose
+        var minValue: Int? = null
+        @SerializedName("max_value")
+        @Expose
+        var maxValue: Int? = null
 
     }
 }

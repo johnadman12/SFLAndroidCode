@@ -3,25 +3,37 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
->
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="@dimen/_5sdp"
-                  android:orientation="horizontal">
+              android:clickable="false">
+    <LinearLayout
+            android:id="@+id/llCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:clickable="false"
+            android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:id="@+id/ivFlag"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:id="@+id/tvFlagName"
+                android:clickable="false"
                 style="@style/TextStyleNormal"
                 android:textColor="@color/textColorGray"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrimary"
+                android:id="@+id/checkCountry"
+        />
     </LinearLayout>
     <View android:layout_width="match_parent"
-          android:layout_height="@dimen/_1sdp"
-          android:background="@color/GrayColor"/>
+          android:layout_height="@dimen/_1ssp"
+          android:background="@color/colorSecondaryLight"/>
 </LinearLayout>

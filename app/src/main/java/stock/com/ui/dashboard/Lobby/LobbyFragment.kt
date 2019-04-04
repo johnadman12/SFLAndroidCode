@@ -22,12 +22,13 @@ import stock.com.utils.StockDialog
 class LobbyFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         initViews()
+        initViews()
     }
 
     private fun initViews() {
         getTrainingContentlist()
         ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
+        ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,7 +42,6 @@ class LobbyFragment : BaseFragment() {
         val call: Call<LobbyContestPojo> =
             apiService.getContestList(getFromPrefsString(StockConstant.ACCESSTOKEN).toString())
         call.enqueue(object : Callback<LobbyContestPojo> {
-
 
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
                 d.dismiss()

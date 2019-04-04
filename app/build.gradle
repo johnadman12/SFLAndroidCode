@@ -109,6 +109,9 @@ dependencies {
 
     //progress bar
     implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0'
+
+    //rangebar
+    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
     //side menu
     implementation project(':residemenu')
 

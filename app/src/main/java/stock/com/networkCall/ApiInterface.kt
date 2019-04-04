@@ -151,7 +151,7 @@ interface ApiInterface {
     @GET("contest/news")
     fun getLatestNewslist(@Header("x-access-token") token: String): Call<NewsPojo>
 
-  @Headers("content-type: application/x-www-form-urlencoded")
+    @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/GetContestsList")
     fun getContestList(@Header("x-access-token") token: String): Call<LobbyContestPojo>
 
@@ -168,6 +168,19 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/get_filter")
     fun getFilterList(): Call<FilterPojo>
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("contest/filter_contest")
+    fun setContestFilter(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") categoryId: String,
+        @Field("exchange_id") exchange_id: String,
+        @Field("country_id") country_id: String,
+        @Field("min_value") min_value: String,
+        @Field("max_value") max_value: String
+    ): Call<LobbyContestPojo>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)
@@ -198,9 +211,9 @@ interface ApiInterface {
 
 
     @FormUrlEncoded
-   // @Header("Content-Type: application/x-www-form-urlencoded")
+    // @Header("Content-Type: application/x-www-form-urlencoded")
     @POST("stock/feature_stock")
-    fun getWatchList(@Header("x-access-token")token: String,@Field("user_id")userid: String):Call<StockPojo>
+    fun getWatchList(@Header("x-access-token") token: String, @Field("user_id") userid: String): Call<StockPojo>
 
     /* @Headers("Content-Type: application/json")
 
