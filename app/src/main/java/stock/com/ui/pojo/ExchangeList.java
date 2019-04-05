@@ -11,7 +11,6 @@ public class ExchangeList extends BasePojo {
     public List<Exchange> exchange = null;
 
     public class Exchange {
-
         @SerializedName("id")
         @Expose
         public Integer id;

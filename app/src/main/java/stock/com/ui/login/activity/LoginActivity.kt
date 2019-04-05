@@ -105,9 +105,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
-                        startActivity(
-                            Intent(this@LoginActivity, DashBoardActivity::class.java)
-                        )
+                        startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java))
+                        finish()
                     }
 //                    displayToast(response.body()!!.message)
                 } else {

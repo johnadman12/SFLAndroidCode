@@ -52,7 +52,6 @@
                     app:slideInterval="3000"
                     app:stopWhenTouch="true"
                     android:layout_weight="1"/>
-
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
@@ -60,8 +59,8 @@
                     android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"/>
-
+                    app:tabIndicatorHeight="0dp"
+                    android:visibility="gone"/>
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_stock_name"
@@ -73,7 +72,6 @@
                     android:fillViewport="true"
                     tools:listitem="@layout/item_match"
                     android:paddingBottom="@dimen/_5sdp"/>
-
             <!-- <android.support.v4.view.ViewPager
              android:id="@+id/productImagePager"
              android:layout_width="match_parent"
@@ -219,20 +217,54 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 app:layout_constraintTop_toBottomOf="@+id/txt_title">
             <!--<include layout="@layout/home_expandable_layout"/>-->
-            <androidx.recyclerview.widget.RecyclerView
-                    android:paddingTop="@dimen/_6sdp"
-                    android:id="@+id/recyclerView_features"
+            <!-- <androidx.recyclerview.widget.RecyclerView
+                     android:paddingTop="@dimen/_6sdp"
+                     android:id="@+id/recyclerView_features"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:paddingStart="@dimen/_6sdp"
+                     android:paddingEnd="@dimen/_6sdp"
+                     android:visibility="gone"
+                     android:nestedScrollingEnabled="false"
+                     android:fillViewport="true"
+                     tools:listitem="@layout/item_match"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/txt_title"/>-->
+            <!-- <androidx.recyclerview.widget.RecyclerView
+                     android:paddingTop="@dimen/_6sdp"
+                     android:id="@+id/recyclerView_features"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:paddingStart="@dimen/_6sdp"
+                     android:paddingEnd="@dimen/_6sdp"
+                     android:visibility="gone"
+                     android:nestedScrollingEnabled="false"
+                     android:fillViewport="true"
+                     tools:listitem="@layout/item_match"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/txt_title"/>-->
+
+            <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:visibility="gone"
-                    android:nestedScrollingEnabled="false"
-                    android:fillViewport="true"
-                    tools:listitem="@layout/item_match"
+                    android:layout_height="@dimen/_300sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_title"
+                    android:visibility="gone"
+                    android:id="@+id/viewPager_features"/>
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout_features"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewPager_Banner"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    android:visibility="gone"/>
+
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"
                     android:gravity="left"
@@ -246,7 +278,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tv_tranning_contest"
                     android:visibility="gone"/>
-            <androidx.recyclerview.widget.RecyclerView
+            <!--<androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_tranning_contest"
                     android:layout_width="match_parent"
@@ -256,7 +288,25 @@
                     android:visibility="gone"
                     android:nestedScrollingEnabled="false"
                     android:fillViewport="true"
-                    tools:listitem="@layout/item_match"/>
+                    tools:listitem="@layout/item_match"/>-->
+
+            <androidx.viewpager.widget.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_300sdp"
+                    android:visibility="gone"
+                    android:id="@+id/viewPager_training"/>
+
+            <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout_training"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewPager_Banner"
+                    app:tabBackground="@drawable/tab_selector"
+                    app:tabGravity="center"
+                    app:tabIndicatorHeight="0dp"
+                    android:visibility="gone"/>
+
+
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"
                     android:gravity="left"

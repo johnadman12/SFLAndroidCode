@@ -21,9 +21,13 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.util.*
 
 
 class LobbyFragment : BaseFragment() {
+
+    var list: List<LobbyContestPojo.Contest>?=null;
+
     val RESULT_DATA = 101
 
 
@@ -31,13 +35,13 @@ class LobbyFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
+        initViews();
     }
-
     private fun initViews() {
 
         contest=ArrayList();
 
+        list=ArrayList();
         getTrainingContentlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
@@ -46,6 +50,11 @@ class LobbyFragment : BaseFragment() {
         }
 
         ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
+        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
+        ll_sort.setOnClickListener {
+            startActivityForResult(Intent(context, ActivitySort::class.java),StockConstant.RESULT_CODE_SORT)
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,6 +79,9 @@ class LobbyFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
+                        list=response.body()!!.contest!!;
+                    }else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -93,10 +105,28 @@ class LobbyFragment : BaseFragment() {
         recyclerView_contest!!.layoutManager = llm
         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==101) {
+        if(requestCode==StockConstant.RESULT_CODE_SORT){
+            if(resultCode== Activity.RESULT_OK&&data!=null){
+                if(data.getStringExtra("flag").equals("Entry")) {
+                    var sortedList = list!!.sortedWith(compareBy({ it.fees }))
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.fees)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                }
+                /*else if(data.getStringExtra("flag").equals("time")){
+                    var sortedList = list!!.sortedWith(compareBy { it.scheduleStart!! })
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.fees)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                }*/
+            }
+        }else if(requestCode==101) {
             if(data!=null&&resultCode==RESULT_OK) {
                 var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
@@ -104,5 +134,21 @@ class LobbyFragment : BaseFragment() {
                 displayToast(testing.size.toString())
             }
         }
+
+
+        /*fun convertTime(time:String ): Long {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val inputFormat = SimpleDateFormat(inputPattern)
+            var date: Date? = null
+            date = inputFormat.parse(time)
+            val thatDay = Calendar.getInstance()
+            thatDay.setTime(date);
+            val today = Calendar.getInstance()
+            val diff =  thatDay.timeInMillis -today.timeInMillis
+            val days = diff / (24 * 60 * 60 * 1000)
+            val day = TimeUnit.SECONDS.toDays(diff).toInt()
+            val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
+            return hour
+        }*/
     }
 }

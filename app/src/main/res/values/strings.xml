@@ -367,7 +367,7 @@
     <string name="trust">Trust</string>
     <string name="saifty">Saifty &amp; Security</string>
     <string name="licenses">Licenses</string>
-    <string name="rules_winning">Rules and winings</string>
+    <string name="rules_winning">Rules and scoring </string>
     <string name="new_and_press">News and Press</string>
     <string name="careers">Careers</string>
     <string name="membership">Membership</string>
@@ -389,7 +389,7 @@
     <string name="search_by_market">Search by market symbol or name</string>
 
     <string name="social_network">Social Network</string>
-    
+
     <string name="edit_profile">Edit Profile</string>
     <string name="contact_info">Contact Info</string>
     <string name="credentials">Credentials</string>

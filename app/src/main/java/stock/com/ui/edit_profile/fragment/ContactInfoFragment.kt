@@ -25,6 +25,7 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ContactInfoFragment : BaseFragment(), View.OnClickListener {
+
     private var countrySelectedItems: ArrayList<String>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_contact_info, container, false)
@@ -53,8 +54,6 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         showCountryListDialog(response.body()!!.country)
                         // setMarketAdapter(response.body()!!.market)
                         //setContestAdapter(response.body()!!.category!!)

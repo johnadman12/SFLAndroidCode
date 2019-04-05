@@ -24,13 +24,21 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.text.ParseException
 import java.util.concurrent.TimeUnit
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 
 class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.FeatureContest>) :
     RecyclerView.Adapter<FeatureContestAdapter.FeatureListHolder>() {
 
+
+    private val VIEW_TYPE_PADDING = 1
+    private val VIEW_TYPE_ITEM = 2
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_featured_contest, parent, false)
+
+
+
         return FeatureListHolder(view)
     }
 
@@ -89,6 +97,13 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
     override fun getItemCount(): Int {
         return mContest.size
     }
+
+   /* override fun getItemViewType(position: Int): Int {
+        return if (position == 0 || position == itemCount - 1) {
+            VIEW_TYPE_PADDING
+        } else VIEW_TYPE_ITEM
+    }*/
+
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

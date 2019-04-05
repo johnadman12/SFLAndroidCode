@@ -61,7 +61,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             }
             R.id.btn_apply -> {
                 setFilters()
-
             }
         }
     }
@@ -107,6 +106,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
 //                        resultIntent.putExtras(bundle)
                             setResult(Activity.RESULT_OK, resultIntent)
                             finish()
+                        } else if (response.body()!!.status == "2") {
+                            appLogout();
                         } else {
                             displayToast("no data exist")
                             finish()
@@ -188,11 +189,49 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
             }
         })
     }
 
+    /*fun setFilters() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<LobbyContestPojo> =
+            apiService.setContestFilter(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                android.text.TextUtils.join(",", currentSelectedItems),
+                android.text.TextUtils.join(",", marketSelectedItems),
+                android.text.TextUtils.join(",", countrySelectedItems),
+                tvMin.text.toString(),
+                tvMax.text.toString()
+            )
+        call.enqueue(object : Callback<LobbyContestPojo> {
+
+            override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }*/
 
     fun setRangebar(entryFees: List<FilterPojo.EntryFee>?) {
         if (entryFees != null) {
@@ -214,6 +253,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
                 }
+
                 override fun onItemCheck(item: String) {
                     countrySelectedItems!!.add(item);
                     Log.e("value", item)

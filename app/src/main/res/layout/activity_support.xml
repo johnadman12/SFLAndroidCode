@@ -42,14 +42,16 @@
                     android:orientation="vertical"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/white_circle">
+                    android:background="@drawable/white_circle"
+                    android:id="@+id/ll_faq">
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:scaleType="fitCenter"
                         app:srcCompat="@mipmap/faq"
                         android:layout_gravity="center"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:clickable="false"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleSemiBold"
                         android:layout_width="wrap_content"
@@ -72,13 +74,15 @@
                     android:layout_height="@dimen/_105sdp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:background="@drawable/white_circle">
+                    android:background="@drawable/white_circle"
+                    android:id="@+id/ll_how_to_play">
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         app:srcCompat="@mipmap/howtoplay_"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
+                        android:clickable="false"
                         android:background="@null"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleSemiBold"
@@ -111,14 +115,16 @@
                     android:orientation="vertical"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:background="@drawable/white_circle">
+                    android:background="@drawable/white_circle"
+                    android:id="@+id/tv_rules_scoring">
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         app:srcCompat="@mipmap/rulesandwinningsupport"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:clickable="false"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleSemiBold"
                         android:layout_width="wrap_content"
@@ -150,7 +156,8 @@
                         app:srcCompat="@mipmap/contactsupport"
                         android:scaleType="fitCenter"
                         android:layout_gravity="center"
-                        android:background="@null"/>
+                        android:background="@null"
+                        android:clickable="false"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleSemiBold"
                         android:layout_width="wrap_content"

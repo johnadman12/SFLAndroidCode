@@ -7,6 +7,9 @@ object StockConstant{
     val PREF_NAME = "com.stock.app"
     val DEVICE_TOKEN = ""
 
+
+    val RESULT_CODE_SORT=102;
+
     val USERID = ""
     val USERNAME = "username"
     val USERPHONE = "userphone"
