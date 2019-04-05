@@ -31,11 +31,11 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>,var act
                 var intent= Intent(mContext, SupportActivity::class.java);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-            }else{
+            }/*else{
                 var intent= Intent(mContext, EditProfileActivity::class.java);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-            }
+            }*/
         }
     }
     override fun getItemCount(): Int {

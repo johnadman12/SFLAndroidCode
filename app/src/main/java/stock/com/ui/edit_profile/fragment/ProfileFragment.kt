@@ -18,7 +18,6 @@ class ProfileFragment: BaseFragment(), View.OnClickListener {
         //initViews()
     }
 
-
     override fun onClick(v: View?) {
     }
 }

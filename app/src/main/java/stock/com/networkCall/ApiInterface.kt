@@ -215,6 +215,10 @@ interface ApiInterface {
     @POST("stock/feature_stock")
     fun getWatchList(@Header("x-access-token") token: String, @Field("user_id") userid: String): Call<StockPojo>
 
+    @FormUrlEncoded
+    @POST("stock/remove_watch")
+    fun removeWatch(@Header("x-access-token")token: String,@Field("user_id")user_id:String,@Field("id")id:String):Call<BasePojo>;
+
     /* @Headers("Content-Type: application/json")
 
      @POST(ApiConstant.social_signup)
