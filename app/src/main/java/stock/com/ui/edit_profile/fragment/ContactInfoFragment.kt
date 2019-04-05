@@ -21,6 +21,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
 import stock.com.ui.pojo.FilterPojo
+import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ContactInfoFragment : BaseFragment(), View.OnClickListener {
@@ -45,7 +46,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<FilterPojo> =
-            apiService.getFilterList()
+            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString())
         call.enqueue(object : Callback<FilterPojo> {
 
             override fun onResponse(call: Call<FilterPojo>, response: Response<FilterPojo>) {
@@ -92,8 +93,8 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
         val llm = LinearLayoutManager(context);
         llm.orientation = LinearLayoutManager.VERTICAL;
-        recyclerView_country_list!!.layoutManager = llm;
-        recyclerView_country_list!!.adapter =
+        recyclerView_country_list.layoutManager = llm;
+        recyclerView_country_list.adapter =
             CountryListAdapter(context!!, country!!, object : CountryListAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);

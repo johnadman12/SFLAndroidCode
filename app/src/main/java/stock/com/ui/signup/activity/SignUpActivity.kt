@@ -240,8 +240,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+//                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
@@ -291,8 +291,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+//                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())

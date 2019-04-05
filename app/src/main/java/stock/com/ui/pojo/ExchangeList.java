@@ -18,9 +18,15 @@ public class ExchangeList extends BasePojo {
         @SerializedName("name")
         @Expose
         public String name;
-        @SerializedName("today_change")
+        @SerializedName("changePercent")
         @Expose
-        public String todayChange;
+        public String changePercent;
+        @SerializedName("latestPrice")
+        @Expose
+        public String latestPrice;
+        @SerializedName("image_url")
+        @Expose
+        public String image_url;
 
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_winning_list.view.*
 import stock.com.R
@@ -19,9 +20,9 @@ class WinningsListAdapter(val mContext: Context) : RecyclerView.Adapter<Winnings
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
             if (position%2==0){
-                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
+                holder.itemView.ll_main.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorContestItemBackground))
             }else{
-                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
+                holder.itemView.ll_main.setBackgroundColor(ContextCompat.getColor(mContext,R.color.white))
             }
         }catch (e:Exception){
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))

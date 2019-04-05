@@ -12,6 +12,7 @@ object StockConstant{
     val USERPHONE = "userphone"
     val USEREMAIL = "useremail"
     val USERDATA = ""
+    val CONTEST = ""
     val USERFIRSTTIME = "user_first_time"
     val ACCESSTOKEN = "x_access_token"
     val PASSWORD = "password"

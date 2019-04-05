@@ -68,9 +68,9 @@ class ActivityResetPassword : BaseActivity() {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
-                if (response?.body() != null) {
+                if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
                     }
                     displayToast(response.body()!!.message)

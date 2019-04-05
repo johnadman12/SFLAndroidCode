@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit
 
 class LobbyContestAdapter(
     val mContext: Context,
-    val mContest: List<LobbyContestPojo.Contest>) :
+    val mContest: List<LobbyContestPojo.Contest>
+) :
     RecyclerView.Adapter<LobbyContestAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -49,7 +50,7 @@ class LobbyContestAdapter(
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
-            val diff =  thatDay.timeInMillis -today.timeInMillis
+            val diff = thatDay.timeInMillis - today.timeInMillis
             val days = diff / (24 * 60 * 60 * 1000)
             val day = TimeUnit.SECONDS.toDays(diff).toInt()
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)

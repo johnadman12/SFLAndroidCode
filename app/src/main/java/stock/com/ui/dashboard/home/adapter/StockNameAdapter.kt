@@ -29,12 +29,12 @@ class StockNameAdapter(val mContext: Context, val mContest: List<ExchangeList.Ex
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.tvExchangeName.setText(mContest.get(position).name)
-        if (mContest.get(position).todayChange.substring(0, 1).equals("-")) {
+        if (mContest.get(position).changePercent.substring(0, 1).equals("-")) {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed))
         } else {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
         }
-        holder.itemView.tvExchangePercentage.setText(mContest.get(position).todayChange)
+        holder.itemView.tvExchangePercentage.setText(mContest.get(position).latestPrice + " (" + mContest.get(position).changePercent+")")
     }
 
 

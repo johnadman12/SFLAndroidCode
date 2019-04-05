@@ -24,7 +24,7 @@
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:padding="@dimen/_2sdp"
-                          android:layout_marginLeft="@dimen/_2sdp"
+                          android:layout_marginLeft="@dimen/_3sdp"
                           android:orientation="vertical">
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -40,8 +40,6 @@
                             android:layout_width="0dp"
                             android:textColor="@color/textColorBlack"
                             android:layout_height="wrap_content"
-                            android:maxLines="3"
-                             android:minLines="2"
                             android:layout_weight="1"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleSemiBold"
@@ -93,8 +91,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                         <androidx.appcompat.widget.AppCompatImageButton
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_15sdp"
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_18sdp"
                                 android:src="@mipmap/timegrey"
                                 android:background="@null"/>
 
@@ -103,12 +101,12 @@
                                 android:textSize="@dimen/_10ssp"
                                 android:id="@+id/tvNewsTime"
                                 android:layout_width="wrap_content"
+                                android:layout_marginLeft="@dimen/_2sdp"
                                 android:textColor="@color/textColorLightBlack"
                                 android:layout_height="wrap_content"
                                 android:text="17 Hour Ago"
                                 android:padding="@dimen/_2sdp"
                                 android:layout_gravity="center"/>
-
 
                     </LinearLayout>
 

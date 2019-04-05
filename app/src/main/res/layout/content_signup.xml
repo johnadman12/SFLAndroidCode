@@ -332,6 +332,7 @@
                             android:id="@+id/til_Password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:passwordToggleEnabled="true"
                             android:layout_toRightOf="@+id/iv_password"
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText
@@ -366,6 +367,7 @@
                             android:id="@+id/til_conf_Password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:passwordToggleEnabled="true"
                             android:layout_toRightOf="@+id/iv_conf_password"
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.item_expendable_layout.view.*
 import kotlinx.android.synthetic.main.row_latest_news.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.AllContestActivity
+import stock.com.ui.news.activity.ActivityNewsDetail
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.NewsPojo
 import stock.com.utils.DateUtils
@@ -33,6 +34,10 @@ class LatestNewsAdapter(val mContext: Context, val mContest: List<NewsPojo.News>
         holder.itemView.tvNewsAuthor.setText(mContest.get(position).channel)
         holder.itemView.tvDescription.setText(mContest.get(position).description)
         holder.itemView.tvNewsTime.setText(mContest.get(position).timeleft)
+        holder.itemView.setOnClickListener{
+
+            mContext.startActivity(Intent(mContext, ActivityNewsDetail::class.java).putExtra("newsId",mContest.get(position).id))
+        }
 
     }
 

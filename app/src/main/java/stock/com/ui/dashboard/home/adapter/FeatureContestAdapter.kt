@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.AllContestActivity
 import stock.com.ui.pojo.HomePojo
+import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
@@ -56,7 +58,7 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
-            val diff =  thatDay.timeInMillis -today.timeInMillis
+            val diff = thatDay.timeInMillis - today.timeInMillis
             val days = diff / (24 * 60 * 60 * 1000)
             val day = TimeUnit.SECONDS.toDays(diff).toInt()
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
@@ -69,9 +71,18 @@ class FeatureContestAdapter(val mContext: Context, val mContest: List<HomePojo.F
 
         }
         holder.itemView.circular_progress.isAnimationEnabled
-        holder.itemView.circular_progress.setProgress(500.00, 1000.00)
+        holder.itemView.circular_progress.setProgress(
+            mContest.get(position).teamsJoined.toDouble(),
+            mContest.get(position).contestSize.toDouble()
+        )
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
         holder.itemView.circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
+
+        holder.itemView.llWinners.setOnClickListener {
+            val manager = (mContext as AppCompatActivity).supportFragmentManager
+            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+            bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
     }
 
 

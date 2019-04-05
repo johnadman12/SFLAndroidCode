@@ -113,12 +113,13 @@ class ForgotPasswordActivity : BaseActivity() {
                 d.dismiss()
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_id)
+//                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_id)
                         startActivity(
                             Intent(this@ForgotPasswordActivity, ConfirmationActivity::class.java)
                                 .putExtra(StockConstant.USEREMAIL, email)
                                 .putExtra(StockConstant.USERNAME, username)
                                 .putExtra(StockConstant.USERPHONE, phone)
+                                .putExtra(StockConstant.USERID,  response.body()!!.user_id)
                         )
                         finish()
                     }

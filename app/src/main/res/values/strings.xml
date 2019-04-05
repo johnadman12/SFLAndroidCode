@@ -339,7 +339,7 @@
     <string name="enter_email_mobile_username">Enter your Username, Mobile number or Email</string>
 
     <string name="enter_codeHere">Enter code here</string>
-    <string name="resend">Resend</string>
+    <string name="resend">RESEND</string>
     <string name="enterOTP">Enter OTP</string>
 
     <string name="enter_new_password">Enter New Password</string>
@@ -403,6 +403,7 @@
 
     <string name="no_data">No data</string>
     <string name="country_list">Country List</string>
+    <string name="send_to">Sent To</string>
 
 
 </resources>

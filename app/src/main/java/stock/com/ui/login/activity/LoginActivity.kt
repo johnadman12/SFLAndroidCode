@@ -109,7 +109,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
                     }
-                    displayToast(response.body()!!.message)
+//                    displayToast(response.body()!!.message)
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()
@@ -151,7 +151,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
                         finish()
                     }*/
-                    displayToast(response.body()!!.message)
+//                    displayToast(response.body()!!.message)
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()

@@ -32,6 +32,7 @@ class ConfirmationActivity : BaseActivity() {
     var phoneNumber: String = ""
     var username: String = ""
     var email: String = ""
+    var userId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
@@ -46,6 +47,7 @@ class ConfirmationActivity : BaseActivity() {
             phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
             username = intent.getStringExtra(StockConstant.USERNAME);
             email = intent.getStringExtra(StockConstant.USEREMAIL);
+            userId = intent.getStringExtra(StockConstant.USERID);
         }
         img_back.setOnClickListener {
             onBackPressed()
@@ -115,7 +117,7 @@ class ConfirmationActivity : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(
                             Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
                         )
@@ -142,19 +144,20 @@ class ConfirmationActivity : BaseActivity() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.requestOtp(
-            getFromPrefsString(StockConstant.USERID).toString(), username, email, phoneNumber)
+            userId, username, email, phoneNumber)
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@ConfirmationActivity, OTPActivity::class.java)
                             .putExtra("isReset","reset")
                             .putExtra(StockConstant.USEREMAIL, email)
                             .putExtra(StockConstant.USERNAME, username)
                             .putExtra(StockConstant.USERPHONE, phoneNumber)
+                            .putExtra(StockConstant.USERID, userId)
                         )
                         finish()
                     }

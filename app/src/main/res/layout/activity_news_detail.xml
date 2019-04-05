@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include
+            android:id="@+id/include_cross"
+            layout="@layout/include_back"/>
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center"
+                          android:gravity="center"
+                          android:background="@color/colorPrimary"
+                          android:padding="@dimen/_10sdp"
+                          android:orientation="horizontal">
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvNewsText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleSemiBold"
+                            android:textColor="@color/white"
+                            android:text="Ideas For Profit"
+                            android:ellipsize="marquee"
+                            android:singleLine="true"
+                            android:textSize="@dimen/_18ssp"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvNewsEditor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:textColor="@color/white"
+                            android:text="Ideas For Profit"
+                    />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivShare"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@drawable/ic_share"
+                            android:layout_marginRight="@dimen/_10sdp"/>
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Share"
+                              style="@style/TextStyleNormal"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivNews"
+                    android:layout_width="match_parent"
+                    android:scaleType="fitXY"
+                    android:layout_height="@dimen/_200sdp"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="@dimen/_10sdp"
+                          android:orientation="horizontal">
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@mipmap/timegrey"
+                            android:background="@null"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:id="@+id/tvTime"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_height="wrap_content"
+                            android:text="25 Feb 05:00 PM"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_gravity="center"/>
+
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivEditor"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:src="@drawable/ic_share"
+                        android:layout_marginRight="@dimen/_10sdp"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_4sdp"
+                  android:background="@color/colorPrimary"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleNormal"
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorGray"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:lineSpacingExtra="@dimen/_2sdp"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_gravity="center"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

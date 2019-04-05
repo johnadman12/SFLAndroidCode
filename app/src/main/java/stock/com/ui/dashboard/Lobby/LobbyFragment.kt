@@ -1,8 +1,11 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,20 +22,39 @@ import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
+
 class LobbyFragment : BaseFragment() {
+    val RESULT_DATA = 101
+
+
+   var contest: List<LobbyContestPojo.Contest>?=null;
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
 
     private fun initViews() {
+
+        contest=ArrayList();
+
         getTrainingContentlist()
-        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
+        ll_filter.setOnClickListener {
+            //            startActivity(Intent(context, ActivityFilter::class.java))
+            val intent = Intent(context, ActivityFilter::class.java)
+            startActivityForResult(intent, RESULT_DATA)
+        }
+
         ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lobby, container, false)
+    }
+
+    inline fun <reified T : Activity> Activity.myStartActivityForResult(requestCode: Int) {
+        val intent = Intent(this, T::class.java)
+        startActivityForResult(intent, requestCode)
     }
 
     fun getTrainingContentlist() {
@@ -72,4 +94,15 @@ class LobbyFragment : BaseFragment() {
         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==101) {
+            if(data!=null&&resultCode==RESULT_OK) {
+                var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
+                recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
+                recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+                displayToast(testing.size.toString())
+            }
+        }
+    }
 }

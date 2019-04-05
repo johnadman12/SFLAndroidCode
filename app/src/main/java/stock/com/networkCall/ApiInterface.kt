@@ -164,10 +164,10 @@ interface ApiInterface {
     @GET("contest/GetTrainingContestsList")
     fun getTrainingContest(): Call<TrainingPojo>
 
-
+    @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
-    @GET("contest/get_filter")
-    fun getFilterList(): Call<FilterPojo>
+    @POST("contest/get_filter")
+    fun getFilterList(@Field("user_id") user_id: String): Call<FilterPojo>
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
@@ -181,6 +181,10 @@ interface ApiInterface {
         @Field("min_value") min_value: String,
         @Field("max_value") max_value: String
     ): Call<LobbyContestPojo>
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/news_detail/{id}")
+    fun getNewsDetail(@Path("id") newsId: String): Call<NewsDetailPojo>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)
@@ -217,7 +221,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("stock/remove_watch")
-    fun removeWatch(@Header("x-access-token")token: String,@Field("user_id")user_id:String,@Field("id")id:String):Call<BasePojo>;
+    fun removeWatch(@Header("x-access-token") token: String, @Field("user_id") user_id: String, @Field("id") id: String): Call<BasePojo>;
 
     /* @Headers("Content-Type: application/json")
 

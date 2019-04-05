@@ -28,7 +28,7 @@
             android:paddingBottom="@dimen/_10sdp"
             android:textSize="@dimen/_11sdp"
             android:layout_width="wrap_content"
-            android:textColor="@color/colorbutton"
+            android:textColor="@color/green"
             android:text="@string/Rs1000"
             android:layout_height="match_parent"/>
 </LinearLayout>

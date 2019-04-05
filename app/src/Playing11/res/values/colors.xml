@@ -42,8 +42,8 @@
     <color name="colorItemPlayerBackground">#ffffff</color>
 
     <!--ChooseContestColor-->
-    <color name="colorContestBackground">#f1f1f1</color>
-    <color name="colorContestItemBackground">#f3f3f3</color>
+    <color name="colorContestBackground">#FFFFFF</color>
+    <color name="colorContestItemBackground">#F8F8F8</color>
 
     <!--LoginColors-->
     <color name="colorBackgroundLogin">#ffffff</color>

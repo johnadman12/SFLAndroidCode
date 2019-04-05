@@ -1,6 +1,8 @@
 package stock.com.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -35,6 +37,7 @@ import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
@@ -181,6 +184,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
 
     }
+
 
     private fun initView() {
         setSupportActionBar(toolbar)

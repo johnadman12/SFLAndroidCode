@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -24,17 +25,18 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener
 import android.widget.RelativeLayout
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarFinalValueListener
 import android.util.Log
-import android.content.ClipData.Item
-import stock.com.ui.pojo.LobbyContestPojo
+import android.widget.Toast
 import kotlin.collections.ArrayList
+import android.content.Intent
+import stock.com.ui.pojo.LobbyContestPojo
 
 
 class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var currentSelectedItems: ArrayList<String>? = null
     private var marketSelectedItems: ArrayList<String>? = null
     private var countrySelectedItems: ArrayList<String>? = null
+    var contestList: List<LobbyContestPojo.Contest>? = null
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -59,6 +61,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             }
             R.id.btn_apply -> {
                 setFilters()
+
             }
         }
     }
@@ -68,6 +71,59 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_filter)
         StockConstant.ACTIVITIES.add(this)
         initViews()
+    }
+
+    fun setFilters(
+    ) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<LobbyContestPojo> =
+            apiService.setContestFilter(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                android.text.TextUtils.join(",", currentSelectedItems),
+                android.text.TextUtils.join(",", marketSelectedItems),
+                android.text.TextUtils.join(",", countrySelectedItems),
+                tvMin.text.toString(),
+                tvMax.text.toString()
+            )
+        call.enqueue(object : Callback<LobbyContestPojo> {
+
+            override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        var testing = ArrayList<LobbyContestPojo.Contest>()
+                        testing = response.body()!!.contest
+
+                        Log.e("nckshbj", testing.size.toString())
+
+                        if (testing != null && testing.size != 0) {
+                            val resultIntent = Intent()
+                            resultIntent.putExtra(StockConstant.CONTEST, testing)
+//                        resultIntent.putExtras(bundle)
+                            setResult(Activity.RESULT_OK, resultIntent)
+                            finish()
+                        } else {
+                            displayToast("no data exist")
+                            finish()
+                        }
+                    }
+                } else {
+                    displayToast(resources.getString(stock.com.R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
     }
 
     private fun initViews() {
@@ -101,7 +157,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<FilterPojo> =
-            apiService.getFilterList()
+            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString())
         call.enqueue(object : Callback<FilterPojo> {
 
             override fun onResponse(call: Call<FilterPojo>, response: Response<FilterPojo>) {
@@ -116,56 +172,27 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         setRangebar(response.body()!!.entryFees)
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    Toast.makeText(
+                        this@ActivityFilter,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<FilterPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                Toast.makeText(
+                    this@ActivityFilter,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
                 d.dismiss()
             }
         })
     }
 
-    fun setFilters() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<LobbyContestPojo> =
-            apiService.setContestFilter(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                android.text.TextUtils.join(",", currentSelectedItems),
-                android.text.TextUtils.join(",", marketSelectedItems),
-                android.text.TextUtils.join(",", countrySelectedItems),
-                tvMin.text.toString(),
-                tvMax.text.toString()
-            )
-        call.enqueue(object : Callback<LobbyContestPojo> {
-
-            override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
-        })
-    }
 
     fun setRangebar(entryFees: List<FilterPojo.EntryFee>?) {
         if (entryFees != null) {
@@ -187,7 +214,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
                 }
-
                 override fun onItemCheck(item: String) {
                     countrySelectedItems!!.add(item);
                     Log.e("value", item)

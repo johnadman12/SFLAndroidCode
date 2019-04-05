@@ -20,6 +20,8 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
 import android.os.CountDownTimer
+import android.util.TypedValue
+import androidx.core.content.ContextCompat
 import stock.com.ui.dashboard.DashBoardActivity
 
 
@@ -28,8 +30,10 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
     var phoneNumber: String = ""
     var username: String = ""
     var email: String = ""
+    var userId: String = ""
     var comingFromActivity: String = ""
     var flag: Boolean = false
+    var flagResend: Boolean = false
 
 
     override fun onClick(view: View?) {
@@ -86,6 +90,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
                 username = intent.getStringExtra(StockConstant.USERNAME);
                 email = intent.getStringExtra(StockConstant.USEREMAIL);
+                userId = intent.getStringExtra(StockConstant.USERID);
             } else {
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
@@ -129,11 +134,18 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         object : CountDownTimer(30000, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
+                                resendOTPTv.isEnabled = false
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
+                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.red_fill_button))
                                 //here you can have your logic to set text to edittext
                             }
 
                             override fun onFinish() {
-                                resendOTPTv.setText("done!")
+                                resendOTPTv.setText("RESEND")
+                                resendOTPTv.isEnabled=true
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18f)
+                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.blue_fill_button))
+
                             }
 
                         }.start()
@@ -160,7 +172,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         val call: Call<SignupPojo> = apiService.resendRequestOtp(
             phoneNumber,
             username, email,
-            getFromPrefsString(StockConstant.USERID).toString()
+            userId
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
@@ -170,11 +182,18 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         object : CountDownTimer(30000, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
+                                resendOTPTv.isEnabled = false
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
+                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.red_fill_button))
+
                                 //here you can have your logic to set text to edittext
                             }
 
                             override fun onFinish() {
-                                resendOTPTv.setText("done!")
+                                resendOTPTv.setText("RESEND")
+                                resendOTPTv.isEnabled=true
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18f)
+                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.blue_fill_button))
                             }
 
                         }.start()
@@ -209,6 +228,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 if (response?.body() != null) {
                     if (response.body()!!.status == "1") {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
                         finish()
@@ -240,6 +260,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
                         finish()

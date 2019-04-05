@@ -126,8 +126,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/blue_fill_button"
                 android:gravity="center"
-                android:text="@string/resend"
-                android:textAllCaps="true"/>
+                android:text="@string/resend"/>
 
         <androidx.appcompat.widget.AppCompatButton
                 style="@style/ButtonStyle"
