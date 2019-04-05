@@ -8,11 +8,9 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.android.synthetic.main.item_my_team.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +25,6 @@ import stock.com.ui.pojo.NewsPojo
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import stock.com.utils.ViewAnimationUtils
 import stock.com.utils.custom.CirclePagerIndicatorDecoration
 
 
@@ -72,6 +69,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_Banner.setPageMargin(10);
         viewPager_Banner.startAutoScroll()
         viewPager_Banner.isCycle = true
+
+        viewPager_Banner.setClipToPadding(false);
+        viewPager_Banner.setPadding(40, 0, 40, 0);
+        viewPager_Banner.setPageMargin(20);
+
+        tab_layout.visibility= VISIBLE;
         tab_layout.setupWithViewPager(viewPager_Banner);
 
     }
@@ -114,12 +117,27 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
-        val llm = LinearLayoutManager(context)
+       /* val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_features!!.layoutManager = llm
         recyclerView_features.visibility = View.VISIBLE
         recyclerView_features!!.adapter = FeatureContestAdapter(context!!, listItem)
-        recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));
+        recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));*/
+
+        viewPager_features.visibility = View.VISIBLE
+        viewPager_features.setClipToPadding(false);
+        viewPager_features.setPadding(30, 0, 30, 0);
+        viewPager_features.setPageMargin(10);
+
+
+        val adapter = ViewPagerFeature(context!!, listItem)
+        viewPager_features.setAdapter(adapter)
+
+        tab_layout_features.visibility= VISIBLE;
+        tab_layout_features.setupWithViewPager(viewPager_features);
+
+
+
     }
 
     private fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
@@ -132,12 +150,25 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
-        val llm = LinearLayoutManager(context)
+        /*val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_tranning_contest!!.layoutManager = llm
         recyclerView_tranning_contest.visibility = View.VISIBLE
         recyclerView_tranning_contest!!.adapter = TranningContestAdapter(context!!, traniningContest)
-        recyclerView_tranning_contest.addItemDecoration(CirclePagerIndicatorDecoration(activity))
+        recyclerView_tranning_contest.addItemDecoration(CirclePagerIndicatorDecoration(activity))*/
+
+
+        viewPager_training.visibility = View.VISIBLE
+        viewPager_training.setClipToPadding(false);
+        viewPager_training.setPadding(30, 0, 30, 0);
+        viewPager_training.setPageMargin(10);
+
+        val adapter = ViewPagerTraining(context!!,traniningContest)
+        viewPager_training.setAdapter(adapter)
+
+        tab_layout_training.visibility= VISIBLE;
+        tab_layout_training.setupWithViewPager(viewPager_training);
+
     }
 
     @SuppressLint("WrongConstant")
@@ -251,7 +282,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         tv_latest_new.visibility = VISIBLE;
                         setLatestNewAdapter(response.body()!!.news)
-                    } else {
+                    }else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                    else {
                         displayToast(resources.getString(R.string.internal_server_error))
                         d.dismiss()
                     }

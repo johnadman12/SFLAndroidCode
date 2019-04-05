@@ -152,6 +152,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
 
+                    }else if (response.body()!!.status == "2"){
+                        appLogout();
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))

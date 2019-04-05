@@ -13,7 +13,11 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.edit_profile.EditProfileActivity">
+        <activity android:name=".ui.support.SupportSectionActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ui.edit_profile.EditProfileActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".ui.social_network.SocialNetworkActivity"
@@ -245,8 +249,7 @@
                 android:name=".ui.dashboard.Lobby.ActivitySort"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <!-- <meta-data -->
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" /> -->
         <meta-data

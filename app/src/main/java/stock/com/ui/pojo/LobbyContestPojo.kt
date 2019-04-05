@@ -46,13 +46,16 @@ class LobbyContestPojo : BasePojo() {
         var categoryId: String? = null
         @SerializedName("contest_size")
         @Expose
-        var contestSize: String= ""
+        var contestSize: String = ""
         @SerializedName("contest_type")
         @Expose
         var contestType: String? = null
         @SerializedName("entry_fees")
         @Expose
         var entryFees: String? = null
+        @SerializedName("fees")
+        @Expose
+        var fees: Int? = 0
         @SerializedName("catname")
         @Expose
         var catname: String? = null
@@ -68,6 +71,7 @@ class LobbyContestPojo : BasePojo() {
         @SerializedName("total_winners")
         @Expose
         var totalWinners: String? = null
+
 
     }
 
