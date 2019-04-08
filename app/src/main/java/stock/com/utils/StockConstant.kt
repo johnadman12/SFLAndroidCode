@@ -9,6 +9,8 @@ object StockConstant{
 
 
     val RESULT_CODE_SORT=102;
+    val RESULT_CODE_FILTER_WATCH=1001;
+    val RESULT_CODE_SORT_WATCH=1002;
 
     val USERID = ""
     val USERNAME = "username"

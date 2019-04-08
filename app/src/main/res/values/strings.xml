@@ -359,6 +359,7 @@
     <string name="featured_contest">Featured Contests</string>
     <string name="latest_new">Latest News</string>
 
+    <string name="number">180011112222</string>
 
     <string name="level">Level :</string>
 
@@ -367,7 +368,7 @@
     <string name="trust">Trust</string>
     <string name="saifty">Saifty &amp; Security</string>
     <string name="licenses">Licenses</string>
-    <string name="rules_winning">Rules and scoring </string>
+    <string name="rules_winning">Rules and scoring</string>
     <string name="new_and_press">News and Press</string>
     <string name="careers">Careers</string>
     <string name="membership">Membership</string>
@@ -404,6 +405,18 @@
     <string name="no_data">No data</string>
     <string name="country_list">Country List</string>
     <string name="send_to">Sent To</string>
+    <string name="filter_by">Filter By</string>
+    
+    <string name="asset_type">Asset Type</string>
+
+    <string name="sector">Sector</string>
+
+    <string name="daily_changes">Daily Change</string>
+    <string name="weekly_changes">Weekly Change</string>
+    <string name="monthly_changes">Monthly Change</string>
+    <string name="price_low">Price(Low to High)</string>
+    <string name="price_high">Price(High to Low)</string>
+
 
     <string name="dummy_name">Sarathomas02</string>
     <string name="dummy_rank">Rank:</string>

@@ -27,6 +27,7 @@ import stock.com.utils.StockDialog
 class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
     private var countrySelectedItems: ArrayList<String>? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_contact_info, container, false)
     }
@@ -35,7 +36,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         //initViews()
         countrySelectedItems = ArrayList();
-        getCountryList();
+        //getCountryList();
     }
 
     override fun onClick(v: View?) {

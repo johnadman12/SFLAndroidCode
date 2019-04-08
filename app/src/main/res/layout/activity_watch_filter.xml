@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/bg">
+    <include
+            android:id="@+id/include_cross"
+            layout="@layout/include_back"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextStyleSemiBold"
+                android:text="@string/filter_by"
+                android:textSize="@dimen/_25ssp"
+                android:padding="@dimen/_10sdp"/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_10sdp"
+                      android:orientation="vertical"
+                      android:layout_gravity="center"
+                      android:background="@color/white">
+            <LinearLayout
+                    android:id="@+id/llContest" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="@string/asset_type"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+
+                <ImageView
+                        android:id="@+id/ivContest"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@mipmap/arrowright"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_250sdp"
+                    android:id="@+id/recycle_contest"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_5sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_10sdp"
+                      android:layout_gravity="center"
+                      android:orientation="vertical"
+                      android:background="@color/white"
+                      android:layout_marginTop="@dimen/_1sdp">
+            <LinearLayout
+                    android:id="@+id/llEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="@string/sector"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                <ImageView
+                        android:id="@+id/ivEntry" android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@mipmap/arrowright"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relative_range" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:visibility="gone"
+                    android:padding="@dimen/_2sdp">
+                <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                        android:id="@+id/rangeSeekbar1"
+                        android:layout_width="match_parent"
+                        app:bar_highlight_color="@color/colorPrimary"
+                        app:corner_radius="10"
+                        android:padding="@dimen/_5sdp"
+                        app:bar_color="#03D2FA"
+                        android:visibility="visible"
+                        app:left_thumb_color="@color/textColorOffWhite"
+                        app:right_thumb_color="@color/textColorOffWhite"
+                        app:left_thumb_color_pressed="@color/white"
+                        app:right_thumb_color_pressed="@color/white"
+                        app:data_type="_integer"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:layout_below="@+id/rangeSeekbar1"
+                        android:layout_alignParentLeft="true"
+                        android:padding="@dimen/_3sdp"
+                        android:text="1"
+                        android:id="@+id/tvMin"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:id="@+id/tvMax"
+                        android:layout_below="@+id/rangeSeekbar1"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/_3sdp"
+                        android:text="10"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_10sdp"
+                      android:layout_gravity="center"
+                      android:orientation="vertical"
+                      android:background="@color/white"
+                      android:layout_marginTop="@dimen/_1sdp">
+            <LinearLayout
+                    android:id="@+id/llMarket" android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="@string/market"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                <ImageView
+                        android:id="@+id/ivMarket"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@mipmap/arrowright"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_250sdp"
+                    android:id="@+id/recycle_market"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_5sdp">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_10sdp"
+                      android:layout_gravity="center"
+                      android:orientation="vertical"
+                      android:layout_marginTop="@dimen/_1sdp"
+                      android:background="@color/white">
+            <LinearLayout
+                    android:id="@+id/llCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Country/Region"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_15ssp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"/>
+                <ImageView
+                        android:id="@+id/ivCountry" android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:src="@mipmap/arrowright"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_250sdp"
+                    android:id="@+id/recycle_country"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_5sdp">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_apply"
+                style="@style/ButtonStylelogin"
+                android:text="Apply"
+                android:background="@drawable/green_fill_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"/>
+
+    </LinearLayout>
+</LinearLayout>

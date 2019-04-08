@@ -223,6 +223,15 @@ interface ApiInterface {
     @POST("stock/remove_watch")
     fun removeWatch(@Header("x-access-token") token: String, @Field("user_id") user_id: String, @Field("id") id: String): Call<BasePojo>;
 
+    @FormUrlEncoded
+    @POST("users/logout")
+    fun logOut(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<BasePojo>
+
+
+    @FormUrlEncoded
+    @POST("users/get_profile")
+    fun getProfile(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<UserPojo>
+
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/faq")
     fun faq():Call<WebViewPojo>
@@ -234,6 +243,8 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/how-to-play")
     fun howToPlay():Call<WebViewPojo>
+
+
 
 
 

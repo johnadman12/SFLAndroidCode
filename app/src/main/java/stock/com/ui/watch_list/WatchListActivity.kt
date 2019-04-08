@@ -1,11 +1,12 @@
 package stock.com.ui.watch_list
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_watch_list.*
 import kotlinx.android.synthetic.main.include_back.*
@@ -16,34 +17,60 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Lobby.ActivitySort
 import stock.com.ui.pojo.BasePojo
-import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.StockPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class WatchListActivity : BaseActivity() {
+class WatchListActivity : BaseActivity(){
 
 
+    private var watchListAdapter:WatchListAdapter_?=null;
+    private var list:ArrayList<StockPojo.Stock>?=null;
+
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_list)
+
+        list=ArrayList();
+        watchListAdapter= WatchListAdapter_(applicationContext!!,list as ArrayList,this)
+        val llm = LinearLayoutManager(applicationContext)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recyclerView_watch_list!!.layoutManager = llm
+        recyclerView_watch_list!!.adapter=watchListAdapter;
+
 
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
 
         getWatchList();
-    }
 
-    private fun setWatchListAdapter(list:List<StockPojo.Stock>) {
-        val llm = LinearLayoutManager(applicationContext)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_watch_list!!.layoutManager = llm
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                watchListAdapter!!.getFilter().filter(s);
+            }
+        })
+
+        ll_filter.setOnClickListener {
+            startActivityForResult(Intent(this@WatchListActivity, WatchFilterActivity::class.java),StockConstant.RESULT_CODE_FILTER_WATCH);
+        }
+        ll_sort.setOnClickListener {
+            startActivityForResult(Intent(this@WatchListActivity, WatchSortActivity::class.java),StockConstant.RESULT_CODE_SORT_WATCH);
+        }
+
+    }
+    private fun setWatchListAdapter() {
         recyclerView_watch_list.visibility = View.VISIBLE
-        recyclerView_watch_list!!.adapter = WatchListAdapter(applicationContext!!,list,this);
+        recyclerView_watch_list.adapter!!.notifyDataSetChanged();
     }
-
    private fun getWatchList() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -57,7 +84,12 @@ class WatchListActivity : BaseActivity() {
                     if(response.body()!!.status.equals("1")){
                        // displayToast("dsdadadadada"+""+response.body()!!.stockList!!.size);
                        if(response.body()!!.stockList!!.size!=0){
-                           setWatchListAdapter(response.body()!!.stockList!!);
+                           //setWatchListAdapter(response.body()!!.stockList!!);
+                           list!!.addAll(response.body()!!.stockList!!);
+                           setWatchListAdapter();
+                           ll_search.visibility=View.VISIBLE;
+                           ll_filter.visibility=View.VISIBLE;
+                           ll_sort.visibility=View.VISIBLE;
                        }else{
                            displayToast(resources.getString(R.string.no_data));
                        }
@@ -77,7 +109,6 @@ class WatchListActivity : BaseActivity() {
             }
         })
     }
-
     fun callApiRemoveWatch(id:String){
         Log.d("Remove ","--"+id);
         val d = StockDialog.showLoading(this)
@@ -89,7 +120,7 @@ class WatchListActivity : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if(response.body()!!.status.equals("1")){
-                        displayToast("Remove "+""+response.body()!!.message);
+                       // displayToast("Remove "+""+response.body()!!.message);
                         getWatchList()
                     }else if(response.body()!!.status.equals("2")){
                         appLogout();
@@ -109,5 +140,12 @@ class WatchListActivity : BaseActivity() {
             }
         })
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==StockConstant.RESULT_CODE_FILTER_WATCH){
+           // displayToast("filter");
+        }else if(requestCode==StockConstant.RESULT_CODE_SORT_WATCH){
+           // displayToast("sort");
+        }
+    }
 }

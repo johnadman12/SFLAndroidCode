@@ -64,7 +64,6 @@ class WebViewActivity : BaseActivity() {
                     d.dismiss()
                 }
             }
-
             override fun onFailure(call: Call<WebViewPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))

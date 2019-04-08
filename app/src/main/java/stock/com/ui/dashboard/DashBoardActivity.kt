@@ -26,16 +26,23 @@ import kotlinx.android.synthetic.main.bottom_navigation.*
 import com.specyci.residemenu.ResideMenu
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.dashboard_activity.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.pojo.BasePojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
 
 class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,
     BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
@@ -195,7 +202,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         toolbar.visibility = View.VISIBLE
         setTitleVisibility(false, true)
-        setMenu(true, false, false, false, false, false, false)
+       // setMenu(true, false, false, false, false, false, false)
         setTitleText(getString(R.string.home))
 
         changetTextViewBackground(tv_home, R.color.colorPrimary);
@@ -217,10 +224,14 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             ll_bottom.visibility = View.GONE;
             img_btn_menu.visibility = GONE;
 
+            img_btn_menu.visibility = GONE;
+            setMenu(false, false, false, false, false, false, false)
         } else {
             ll_bottom.visibility = View.VISIBLE;
             img_btn_menu.visibility = VISIBLE;
         }
+            img_btn_menu.visibility = VISIBLE;
+            setMenu(true, false, false, false, false, false, false)
 
 
 
@@ -376,12 +387,48 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
 
         tv_yes.setOnClickListener {
-            appLogout();
+            //appLogout();
+            logOut();
             dialog.dismiss();
         }
         tv_cancel.setOnClickListener {
             dialog.dismiss();
         }
         dialog.show();
+    }
+
+    private fun logOut() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<BasePojo> = apiService.logOut(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+            getFromPrefsString(StockConstant.USERID).toString()
+        )
+        call.enqueue(object : Callback<BasePojo> {
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals("1")) {
+                        appLogout();
+                        displayToast(response.body()!!.message);
+                    } else if (response.body()!!.status.equals("2")) {
+                        appLogout();
+                    } else {
+                        displayToast(response.body()!!.message)
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                Log.d("WatchList--", "" + t.localizedMessage)
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+
     }
 }

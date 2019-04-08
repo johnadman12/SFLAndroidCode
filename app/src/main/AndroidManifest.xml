@@ -173,6 +173,11 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
+                android:name=".ui.watch_list.WatchFilterActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
                 android:name=".ui.createTeam.activity.PlayerDetailActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"

@@ -149,7 +149,8 @@
                     android:layout_height="@dimen/_105sdp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:background="@drawable/white_circle">
+                    android:background="@drawable/white_circle"
+                    android:id="@+id/ll_support">
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"

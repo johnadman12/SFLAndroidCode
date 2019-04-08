@@ -28,7 +28,7 @@ class LobbyFragment : BaseFragment() {
 
     var list: List<LobbyContestPojo.Contest>? = null;
 
-    val RESULT_DATA = 101
+    val RESULT_DATA = 1001
 
 
     var contest: List<LobbyContestPojo.Contest>? = null;
@@ -50,6 +50,8 @@ class LobbyFragment : BaseFragment() {
             startActivityForResult(intent, RESULT_DATA)
         }
 
+        ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
+        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
         }
@@ -131,7 +133,7 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("position")) {
-                    val sortedList = list!!.sortedWith(compareBy({ it.getCalculatePosition()}))
+                    val sortedList = list!!.sortedWith(compareBy({ it.getCalculatePosition() }))
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.calculatePosition)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
@@ -139,15 +141,14 @@ class LobbyFragment : BaseFragment() {
                     }
                 }
             }
-        } else if (requestCode == 101) {
+
+        } else if (requestCode == 1001) {
             if (data != null && resultCode == RESULT_OK) {
-                var testing = data.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
+                var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-                displayToast(testing.size.toString())
             }
         }
-
 
         /*fun convertTime(time:String ): Long {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"

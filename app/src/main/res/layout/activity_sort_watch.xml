@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@mipmap/bg"
+              android:layout_height="match_parent">
+    <include
+            android:id="@+id/include_cross"
+            layout="@layout/include_back"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextStyleSemiBold"
+                android:text="Sort by"
+                android:textSize="@dimen/_25ssp"
+                android:padding="@dimen/_10sdp"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:padding="@dimen/_10sdp"
+                      android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxDailyChanges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/daily_changes"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:padding="@dimen/_10sdp"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="@dimen/_1sdp">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_weekly" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/weekly_changes"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:layout_marginTop="@dimen/_1sdp"
+                      android:padding="@dimen/_10sdp"
+                      android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_monthly" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/monthly_changes"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:padding="@dimen/_10sdp"
+                      android:orientation="horizontal"
+                      android:layout_marginTop="@dimen/_1sdp">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_price_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/price_low"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:padding="@dimen/_10sdp"
+                      android:layout_marginTop="@dimen/_1sdp"
+                      android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cb_price_high"
+                    android:buttonTint="@color/colorPrimary"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/price_high"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sortApply"
+            style="@style/ButtonStylelogin"
+            android:text="Apply"
+            android:background="@drawable/green_fill_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"/>
+</LinearLayout>
