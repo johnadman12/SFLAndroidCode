@@ -150,7 +150,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
                         finish()
                     }*/
-//                    displayToast(response.body()!!.message)
+                    else
+                       displayToast(response.body()!!.message)
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()

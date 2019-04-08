@@ -6,10 +6,9 @@
               android:layout_height="match_parent"
               android:background="@mipmap/bg"
               android:layout_margin="@dimen/_5sdp">
-
-    <ScrollView android:layout_width="match_parent"
-                android:fillViewport="true"
-                android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
@@ -17,8 +16,7 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
-                          android:padding="@dimen/_2sdp"
-            >
+                          android:padding="@dimen/_2sdp">
 
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -32,21 +30,15 @@
                             android:text="Lobby"
                             android:textColor="@color/white"
                             style="@style/TextStyleSemiBold"
-                            android:textSize="@dimen/_22ssp"
-
-                    />
+                            android:textSize="@dimen/_22ssp"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Browse Contest"
                             android:padding="@dimen/_2sdp"
                             android:textColor="@color/textColorOffWhite"
-                            style="@style/TextStyleNormal"
-                    />
-
+                            style="@style/TextStyleNormal"/>
                 </LinearLayout>
-
-
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:padding="@dimen/_5sdp"
@@ -179,6 +171,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

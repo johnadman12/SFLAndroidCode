@@ -33,7 +33,9 @@
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/_10sdp"
                 android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp">
+                android:paddingBottom="@dimen/_8sdp"
+                android:id="@+id/ll_filter"
+                android:visibility="invisible">
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
@@ -61,7 +63,8 @@
                 android:id="@+id/ll_sort"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                android:paddingLeft="@dimen/_10sdp">
+                android:paddingLeft="@dimen/_10sdp"
+                android:visibility="invisible">
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_35sdp"
                     android:layout_height="@dimen/_35sdp"
@@ -93,7 +96,9 @@
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/ll_search">
+            android:background="@drawable/ll_search"
+            android:visibility="gone"
+            android:id="@+id/ll_search">
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -101,10 +106,12 @@
                 android:layout_marginLeft="@dimen/_12sdp"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_weight="1"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
                 android:hint="@string/search_by_market"
                 android:textColorHint="@color/white"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:id="@+id/et_search"/>
         <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"

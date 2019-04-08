@@ -28,7 +28,7 @@ class LobbyFragment : BaseFragment() {
 
     var list: List<LobbyContestPojo.Contest>?=null;
 
-    val RESULT_DATA = 101
+    val RESULT_DATA = 1001
 
 
    var contest: List<LobbyContestPojo.Contest>?=null;
@@ -49,8 +49,8 @@ class LobbyFragment : BaseFragment() {
             startActivityForResult(intent, RESULT_DATA)
         }
 
-        ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
-        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
+        //ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
+        //ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java),StockConstant.RESULT_CODE_SORT)
         }
@@ -80,6 +80,7 @@ class LobbyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
                         list=response.body()!!.contest!!;
+                       // displayToast(""+ (list as ArrayList<LobbyContestPojo.Contest>).size.toString())
                     }else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -117,24 +118,14 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 }
-                /*else if(data.getStringExtra("flag").equals("time")){
-                    var sortedList = list!!.sortedWith(compareBy { it.scheduleStart!! })
-                    for (obj in sortedList) {
-                        Log.d("sdadada---", "--" + obj.fees)
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                    }
-                }*/
             }
-        }else if(requestCode==101) {
+        }else if(requestCode==1001) {
             if(data!=null&&resultCode==RESULT_OK) {
                 var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-                displayToast(testing.size.toString())
             }
         }
-
 
         /*fun convertTime(time:String ): Long {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"

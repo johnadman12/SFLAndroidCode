@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,14 +25,15 @@
                         android:src="@drawable/ic_launcher"
                         app:civ_border_width="3dp"
                         app:civ_border_color="#007FB0"/>
-                <androidx.appcompat.widget.AppCompatImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
-                        android:layout_alignTop="@+id/profile_image"
                         android:layout_alignRight="@+id/profile_image"
                         android:layout_alignBottom="@+id/profile_image"
-                        android:layout_marginTop="80dp"
-                        android:src="@mipmap/mobile"/>
+                        app:civ_border_width="1dp"
+                        android:src="@mipmap/mobile"
+                        app:civ_border_color="#007FB0"
+                        android:clickable="false"/>
             </RelativeLayout>
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -76,7 +77,8 @@
                                 android:hint="@string/user_name"
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"
-                                android:inputType="phone"
+                                android:inputType="text"
+                                android:id="@+id/et_user_name"
                                 android:singleLine="true"
                                 android:imeOptions="actionNext"/>
                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -130,7 +132,8 @@
                                 android:textColor="@color/white"
                                 android:inputType="textMultiLine"
                                 android:gravity="top"
-                                android:textColorHint="@color/white"/>
+                                android:textColorHint="@color/white"
+                        android:id="@+id/et_biography"/>
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
