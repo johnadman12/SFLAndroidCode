@@ -74,7 +74,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/enter_invite_code"
-                                android:inputType="textEmailAddress"
+                                android:inputType="textCapSentences"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
@@ -114,7 +114,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Legal First Name"
-                                android:inputType="textEmailAddress"
+                                android:inputType="textCapSentences"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +148,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Legal last Name"
-                                android:inputType="text"
+                                android:inputType="textCapSentences"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,6 +199,7 @@
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_18sdp"
                             android:layout_centerVertical="true"
+                            android:clickable="false"
                             android:src="@mipmap/dob"/>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -207,6 +208,8 @@
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/iv_Dob"
                             android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:clickable="false"
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText
                                 style="@style/EditTextStyle"
@@ -214,8 +217,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/DoB"
-                                android:focusable="false"
-                                android:inputType="text"
+                                android:focusableInTouchMode="false"
+                                android:focusable="true"
+                                android:clickable="false"
+                                android:inputType="textPhonetic"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <ImageView
@@ -226,6 +231,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
+                            android:clickable="false"
                             android:src="@mipmap/calculator"/>
                 </RelativeLayout>
 
@@ -275,6 +281,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/mobile_number"
+                                android:ems="10"
+                                android:maxLength="10"
                                 android:inputType="phone"
                                 android:imeOptions="actionNext"/>
                     </com.google.android.material.textfield.TextInputLayout>

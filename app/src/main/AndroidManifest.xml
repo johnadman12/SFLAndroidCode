@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="stock.com">
+          xmlns:tools="http://schemas.android.com/tools" package="stock.com">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
@@ -12,10 +12,10 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".ui.support.SupportSectionActivity"
-                  android:screenOrientation="portrait">
-        </activity>
+            android:theme="@style/AppTheme"
+            tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.support.SupportActivity"
+                  android:screenOrientation="portrait"/>
         <activity android:name=".ui.edit_profile.EditProfileActivity"
                   android:screenOrientation="portrait">
         </activity>
@@ -28,10 +28,7 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
-        <activity
-                android:name=".ui.support.SupportActivity"
-                android:screenOrientation="portrait">
-        </activity>
+
         <activity android:name=".ui.splash.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -255,8 +252,7 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <!-- <meta-data -->
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
+        <!-- <meta-data --> <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" /> -->
         <meta-data

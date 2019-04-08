@@ -405,5 +405,10 @@
     <string name="country_list">Country List</string>
     <string name="send_to">Sent To</string>
 
+    <string name="dummy_name">Sarathomas02</string>
+    <string name="dummy_rank">Rank:</string>
+    <string name="total">Total</string>
+    <string name="change">Change</string>
+    <string name="percentage">+11.3%</string>
 
 </resources>

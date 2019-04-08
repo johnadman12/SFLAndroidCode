@@ -45,7 +45,7 @@
             <com.github.demono.AutoScrollViewPager
                     android:id="@+id/viewPager_Banner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_136sdp"
+                    android:layout_height="@dimen/_120sdp"
                     app:slideDirection="right"
                     android:clipToPadding="false"
                     app:slideDuration="3000"
@@ -248,7 +248,7 @@
 
             <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_300sdp"
+                    android:layout_height="@dimen/_290sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title"
@@ -292,7 +292,7 @@
 
             <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_300sdp"
+                    android:layout_height="@dimen/_290sdp"
                     android:visibility="gone"
                     android:id="@+id/viewPager_training"/>
 

@@ -84,6 +84,7 @@ public class ActivityGoThrough1 extends BaseActivity {
                 }
                 if (position == 5) {
                     b = true;
+                    btn_Next.setText("Finish");
                 } else {
                     b = false;
                 }
@@ -99,7 +100,7 @@ public class ActivityGoThrough1 extends BaseActivity {
         btn_Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //  saveIntoPrefsString(StockConstant.INSTANCE.getUSERFIRSTTIME(), "no");
+                //  saveIntoPrefsString(StockConstant.INSTANCE.getUSERFIRSTTIME(), "no");
                 /*startActivity(new Intent(ActivityGoThrough1.this, ActivityGoThrough2.class));
                 finish();*/
                 if (b) {

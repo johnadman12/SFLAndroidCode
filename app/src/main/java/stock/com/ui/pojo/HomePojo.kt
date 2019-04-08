@@ -14,20 +14,27 @@ class HomePojo : BasePojo() {
     @Expose
     var banner: List<Banner>? = null
 
+    @SerializedName("news")
+    @Expose
+    var news: List<News>? = null
+    @SerializedName("exchange")
+    @Expose
+    var exchange: List<Exchange>? = null
+
     inner class Banner {
 
         @SerializedName("id")
         @Expose
-        var id: String =""
+        var id: String = ""
         @SerializedName("type")
         @Expose
-        var type: Int =0
+        var type: Int = 0
         @SerializedName("name")
         @Expose
-        var name: String =""
+        var name: String = ""
         @SerializedName("image")
         @Expose
-        var image: String =""
+        var image: String = ""
 
     }
 
@@ -35,49 +42,49 @@ class HomePojo : BasePojo() {
 
         @SerializedName("contestid")
         @Expose
-        var contestid: String =""
+        var contestid: String = ""
         @SerializedName("category_id")
         @Expose
-        var categoryId: String =""
+        var categoryId: String = ""
         @SerializedName("winning_amount")
         @Expose
-        var winningAmount: String =""
+        var winningAmount: String = ""
         @SerializedName("contest_size")
         @Expose
-        var contestSize: String =""
+        var contestSize: String = ""
         @SerializedName("contest_type")
         @Expose
-        var contestType: String =""
+        var contestType: String = ""
         @SerializedName("entry_fees")
         @Expose
-        var entryFees: String =""
+        var entryFees: String = ""
         @SerializedName("scheduleid")
         @Expose
-        var scheduleid: String =""
+        var scheduleid: String = ""
         @SerializedName("schedule_name")
         @Expose
-        var scheduleName: String =""
+        var scheduleName: String = ""
         @SerializedName("schedule_start")
         @Expose
-        var scheduleStart: String =""
+        var scheduleStart: String = ""
         @SerializedName("catname")
         @Expose
-        var catname: String =""
+        var catname: String = ""
         @SerializedName("description")
         @Expose
-        var description: String =""
+        var description: String = ""
         @SerializedName("exchangeid")
         @Expose
-        var exchangeid: String =""
+        var exchangeid: String = ""
         @SerializedName("exchangename")
         @Expose
-        var exchangename: String =""
+        var exchangename: String = ""
         @SerializedName("exchangeimage")
         @Expose
-        var exchangeimage: String=""
+        var exchangeimage: String = ""
         @SerializedName("teams_joined")
         @Expose
-        var teamsJoined: String =""
+        var teamsJoined: String = ""
         @SerializedName("price_break")
         @Expose
         var priceBreak: List<PriceBreak>? = null
@@ -88,18 +95,63 @@ class HomePojo : BasePojo() {
 
         @SerializedName("name")
         @Expose
-        var name: String =""
+        var name: String = ""
         @SerializedName("start_num")
         @Expose
-        var startNum: String =""
+        var startNum: String = ""
         @SerializedName("end_num")
         @Expose
-        var endNum: String =""
+        var endNum: String = ""
         @SerializedName("price_each")
         @Expose
-        var priceEach: String =""
+        var priceEach: String = ""
 
     }
 
+    inner class News {
+        @SerializedName("id")
+        @Expose
+        var id: Int? = null
+        @SerializedName("title")
+        @Expose
+        var title: String? = null
+        @SerializedName("channel")
+        @Expose
+        var channel: String? = null
+        @SerializedName("description")
+        @Expose
+        var description: String? = null
+        @SerializedName("image")
+        @Expose
+        var image: String? = null
+        @SerializedName("newstime")
+        @Expose
+        var newstime: String? = null
+        @SerializedName("newspercentage")
+        @Expose
+        var newspercentage: String? = null
+        @SerializedName("timeleft")
+        @Expose
+        var timeleft: String? = null
+    }
+
+    inner class Exchange {
+        @SerializedName("id")
+        @Expose
+        var id: Int? = null
+        @SerializedName("name")
+        @Expose
+        var name: String? = null
+        @SerializedName("changePercent")
+        @Expose
+        var changePercent: String? = null
+        @SerializedName("latestPrice")
+        @Expose
+        var latestPrice: String? = null
+        @SerializedName("image_url")
+        @Expose
+        var image_url: String? = null
+
+    }
 
 }

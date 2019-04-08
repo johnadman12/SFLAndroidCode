@@ -11,7 +11,6 @@ import stock.com.R
 
 class ActivitySort : BaseActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sort)

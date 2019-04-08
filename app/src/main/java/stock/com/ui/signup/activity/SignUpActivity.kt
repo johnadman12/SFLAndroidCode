@@ -64,12 +64,17 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 myCalendar.set(Calendar.YEAR, year)
                 myCalendar.set(Calendar.MONTH, monthOfYear)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateLabel()
+                val userAge = GregorianCalendar(year, monthOfYear, dayOfMonth)
+                val minAdultAge = GregorianCalendar()
+                minAdultAge.add(Calendar.YEAR, -18)
+                if (minAdultAge.before(userAge)) {
+                    AppDelegate.showToast(this@SignUpActivity, "Age should be above 18")
+                } else
+                    updateLabel()
             }
 
         }
-        iv_calendar.setOnClickListener {
-
+        et_dob.setOnClickListener {
             val dialog = DatePickerDialog(
                 this@SignUpActivity, dateSetListener, myCalendar
                     .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -127,7 +132,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         img_back.setOnClickListener(this)
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
-        iv_calendar.setOnClickListener(this)
+        et_dob.setOnClickListener(this)
 //        txt_TC.setOnClickListener(this)
         countryCodePicker!!.setOnCountryChangeListener(this)
         try {

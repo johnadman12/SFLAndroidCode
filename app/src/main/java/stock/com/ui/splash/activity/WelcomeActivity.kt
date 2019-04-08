@@ -146,7 +146,6 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
                 override fun onCancel() {
                     AppDelegate.LogDB("login cancel")
-
                     if (AccessToken.getCurrentAccessToken() != null)
                         LoginManager.getInstance().logOut()
                     if (!isCalledOnce!!) {

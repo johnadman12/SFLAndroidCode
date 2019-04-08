@@ -1,19 +1,25 @@
 package stock.com.ui.dashboard.home.adapter
 
+import android.app.Dialog
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.dialog_information.*
+import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
+import stock.com.ui.createTeam.activity.ChooseTeamActivity
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
@@ -23,8 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.TraniningContest>) :PagerAdapter() {
-
+class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.TraniningContest>) : PagerAdapter() {
 
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -34,12 +39,12 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
     override fun getCount(): Int {
 
         return list.size;
-       // return 5;
+        // return 5;
     }
 
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {
         // Get the view from pager page layout
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_view_featured_contest,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_featured_contest, parent, false)
 
         val entry_fee: TextView = view.findViewById(R.id.entry_fee)
         val tvStockName: TextView = view.findViewById(R.id.tvStockName)
@@ -47,6 +52,7 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
         val tvTotalWinnings: TextView = view.findViewById(R.id.tvTotalWinnings)
         val tvSprortsLeft: TextView = view.findViewById(R.id.tvSprortsLeft)
         val tvTimeLeft: TextView = view.findViewById(R.id.tvTimeLeft)
+        val iv_info: AppCompatImageButton = view.findViewById(R.id.iv_info)
 
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
@@ -77,7 +83,7 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
-            val diff =  thatDay.timeInMillis -today.timeInMillis
+            val diff = thatDay.timeInMillis - today.timeInMillis
             val days = diff / (24 * 60 * 60 * 1000)
             val day = TimeUnit.SECONDS.toDays(diff).toInt()
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
@@ -95,12 +101,14 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 
 
-
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
-        llWinners.setOnClickListener{
+        llWinners.setOnClickListener {
             val manager = (context as AppCompatActivity).supportFragmentManager
             val bottomSheetDialogFragment = BottomSheetWinningListFragment()
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
+        iv_info.setOnClickListener {
+            showInfoDialogue(list.get(position).description);
         }
 
 
@@ -115,6 +123,7 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
         // Remove the view from view group specified position
         parent.removeView(`object` as View)
     }
+
     private val TIME_TEXT_ADAPTER =
         CircularProgressIndicator.ProgressTextAdapter { time ->
             val sb = "Join" +
@@ -139,4 +148,21 @@ class ViewPagerTraining(val context:Context, val list:List<TrainingPojo.Traninin
         }
         return str
     }
+
+    fun showInfoDialogue(textView: String) {
+        var dialogue = Dialog(context)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_information)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.tvInfo.setText(textView)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
+
 }

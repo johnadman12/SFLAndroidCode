@@ -26,22 +26,23 @@ import java.util.*
 
 class LobbyFragment : BaseFragment() {
 
-    var list: List<LobbyContestPojo.Contest>?=null;
+    var list: List<LobbyContestPojo.Contest>? = null;
 
     val RESULT_DATA = 101
 
 
-   var contest: List<LobbyContestPojo.Contest>?=null;
+    var contest: List<LobbyContestPojo.Contest>? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews();
     }
+
     private fun initViews() {
 
-        contest=ArrayList();
+        contest = ArrayList();
 
-        list=ArrayList();
+        list = ArrayList();
         getTrainingContentlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
@@ -49,10 +50,8 @@ class LobbyFragment : BaseFragment() {
             startActivityForResult(intent, RESULT_DATA)
         }
 
-        ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
-        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
         ll_sort.setOnClickListener {
-            startActivityForResult(Intent(context, ActivitySort::class.java),StockConstant.RESULT_CODE_SORT)
+            startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
         }
 
     }
@@ -79,8 +78,8 @@ class LobbyFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
-                        list=response.body()!!.contest!!;
-                    }else if (response.body()!!.status == "2") {
+                        list = response.body()!!.contest!!;
+                    } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
                 } else {
@@ -105,30 +104,44 @@ class LobbyFragment : BaseFragment() {
         recyclerView_contest!!.layoutManager = llm
         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==StockConstant.RESULT_CODE_SORT){
-            if(resultCode== Activity.RESULT_OK&&data!=null){
-                if(data.getStringExtra("flag").equals("Entry")) {
+        if (requestCode == StockConstant.RESULT_CODE_SORT) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("Entry")) {
                     var sortedList = list!!.sortedWith(compareBy({ it.fees }))
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
-                }
-                /*else if(data.getStringExtra("flag").equals("time")){
-                    var sortedList = list!!.sortedWith(compareBy { it.scheduleStart!! })
+                } else if (data.getStringExtra("flag").equals("time")) {
+                    var sortedList = list!!.sortedWith(compareBy { it.getDate() })
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
-                }*/
+                } else if (data.getStringExtra("flag").equals("price")) {
+                    val sortedList = list!!.sortedWith(compareBy({ it.winningAmount }))
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.winningAmount)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                } else if (data.getStringExtra("flag").equals("position")) {
+                    val sortedList = list!!.sortedWith(compareBy({ it.getCalculatePosition()}))
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.calculatePosition)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                }
             }
-        }else if(requestCode==101) {
-            if(data!=null&&resultCode==RESULT_OK) {
-                var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
+        } else if (requestCode == 101) {
+            if (data != null && resultCode == RESULT_OK) {
+                var testing = data.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();
                 displayToast(testing.size.toString())

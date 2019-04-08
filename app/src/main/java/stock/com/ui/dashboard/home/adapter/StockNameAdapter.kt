@@ -19,7 +19,7 @@ import stock.com.ui.pojo.HomePojo
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
 
-class StockNameAdapter(val mContext: Context, val mContest: List<ExchangeList.Exchange>) :
+class StockNameAdapter(val mContext: Context, val mContest: List<HomePojo.Exchange>) :
     RecyclerView.Adapter<StockNameAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -29,7 +29,7 @@ class StockNameAdapter(val mContext: Context, val mContest: List<ExchangeList.Ex
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.tvExchangeName.setText(mContest.get(position).name)
-        if (mContest.get(position).changePercent.substring(0, 1).equals("-")) {
+        if (mContest.get(position).changePercent!!.substring(0, 1).equals("-")) {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed))
         } else {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))

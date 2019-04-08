@@ -140,11 +140,11 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         btn_apply.setOnClickListener(this)
         img_btn_close.visibility = VISIBLE
         getFilterlist()
+        llContest.performClick()
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
             tvMin.setText(minValue.toString())
             tvMax.setText(maxValue.toString())
         })
-
         rangeSeekbar1.setOnRangeSeekbarFinalValueListener({ minValue, maxValue ->
             Log.d(
                 "CRS=>",

@@ -19,7 +19,7 @@ import stock.com.ui.pojo.NewsPojo
 import stock.com.utils.DateUtils
 import stock.com.utils.ViewAnimationUtils
 
-class LatestNewsAdapter(val mContext: Context, val mContest: List<NewsPojo.News>) :
+class LatestNewsAdapter(val mContext: Context, val mContest: List<HomePojo.News>) :
     RecyclerView.Adapter<LatestNewsAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {

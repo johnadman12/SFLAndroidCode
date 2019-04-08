@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class LobbyContestPojo extends BasePojo  {
+public class LobbyContestPojo extends BasePojo {
     @SerializedName("contest")
     @Expose
     public ArrayList<Contest> contest = null;
@@ -70,12 +71,31 @@ public class LobbyContestPojo extends BasePojo  {
         @SerializedName("teams_joined")
         @Expose
         public Integer teamsJoined;
+
+        public int calculatePosition;
+        public int date;
         @SerializedName("price_break")
         @Expose
         public List<PriceBreak> priceBreak = null;
         @SerializedName("total_winners")
         @Expose
         public Integer totalWinners;
+
+        public void setCalculatePosition(int calculatePosition) {
+            this.calculatePosition = calculatePosition;
+        }
+
+        public int getCalculatePosition() {
+            return calculatePosition;
+        }
+
+        public void setDate(int date) {
+            this.date = date;
+        }
+
+        public int getDate() {
+            return date;
+        }
 
         protected Contest(Parcel in) {
             if (in.readByte() == 0) {

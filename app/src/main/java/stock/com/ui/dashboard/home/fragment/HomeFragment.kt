@@ -59,8 +59,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
         getFeatureContentlist();
-        getTrainingContentlist()
-        getExchangeNamelist()
         txt_title.visibility = GONE;
     }
 
@@ -77,9 +75,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_Banner.setPadding(40, 0, 40, 0);
         viewPager_Banner.setPageMargin(20);
 
-        tab_layout.visibility= VISIBLE;
+        tab_layout.visibility = VISIBLE;
         tab_layout.setupWithViewPager(viewPager_Banner);
-
     }
 
 
@@ -120,12 +117,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
-       /* val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView_features!!.layoutManager = llm
-        recyclerView_features.visibility = View.VISIBLE
-        recyclerView_features!!.adapter = FeatureContestAdapter(context!!, listItem)
-        recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));*/
+        /* val llm = LinearLayoutManager(context)
+         llm.orientation = LinearLayoutManager.HORIZONTAL
+         recyclerView_features!!.layoutManager = llm
+         recyclerView_features.visibility = View.VISIBLE
+         recyclerView_features!!.adapter = FeatureContestAdapter(context!!, listItem)
+         recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));*/
 
         viewPager_features.visibility = View.VISIBLE
         viewPager_features.setClipToPadding(false);
@@ -136,14 +133,13 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val adapter = ViewPagerFeature(context!!, listItem)
         viewPager_features.setAdapter(adapter)
 
-        tab_layout_features.visibility= VISIBLE;
+        tab_layout_features.visibility = VISIBLE;
         tab_layout_features.setupWithViewPager(viewPager_features);
-
 
 
     }
 
-    private fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
+    private fun setStockNameAdapter(exchangeList: List<HomePojo.Exchange>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_stock_name!!.layoutManager = llm
@@ -166,16 +162,16 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_training.setPadding(30, 0, 30, 0);
         viewPager_training.setPageMargin(10);
 
-        val adapter = ViewPagerTraining(context!!,traniningContest)
+        val adapter = ViewPagerTraining(context!!, traniningContest)
         viewPager_training.setAdapter(adapter)
 
-        tab_layout_training.visibility= VISIBLE;
+        tab_layout_training.visibility = VISIBLE;
         tab_layout_training.setupWithViewPager(viewPager_training);
 
     }
 
     @SuppressLint("WrongConstant")
-    private fun setLatestNewAdapter(news: List<NewsPojo.News>) {
+    private fun setLatestNewAdapter(news: List<HomePojo.News>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_latest_new!!.layoutManager = llm
@@ -223,9 +219,13 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                             setHomeBannerAdapter(response.body()!!.banner!!)
                         }, 100)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
-
+                        setStockNameAdapter(response.body()!!.exchange!!)
+                        getTrainingContentlist()
+                        setLatestNewAdapter(response.body()!!.news!!)
                         setVisibility()
                         //  displayToast(response.body()!!.message)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -254,8 +254,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setTrainingContestAdapter(response.body()!!.traniningContest!!)
-                        tv_tranning_contest.visibility = VISIBLE;
-                        getLatestNewslist();
+//                        getLatestNewslist();
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -283,12 +284,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        tv_latest_new.visibility = VISIBLE;
-                        setLatestNewAdapter(response.body()!!.news)
-                    }else if (response.body()!!.status == "2") {
+
+
+                    } else if (response.body()!!.status == "2") {
                         appLogout()
-                    }
-                    else {
+                    } else {
                         displayToast(resources.getString(R.string.internal_server_error))
                         d.dismiss()
                     }
@@ -318,7 +318,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setStockNameAdapter(response.body()!!.exchange)
+//                        setStockNameAdapter(response.body()!!.exchange)
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error))
                         d.dismiss()
@@ -335,7 +335,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setVisibility() {
-
+        tv_tranning_contest.visibility = VISIBLE;
         txt_title.visibility = VISIBLE;
+        tv_latest_new.visibility = VISIBLE;
     }
 }

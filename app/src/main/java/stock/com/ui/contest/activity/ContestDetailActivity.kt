@@ -9,75 +9,48 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_megacontest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
+import kotlinx.android.synthetic.main.contest_detail_activity.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.createTeam.activity.ChooseTeamActivity
 import stock.com.ui.contest.adapter.TeamsAdapter
+import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
+import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
 
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
-            R.id.btn_CreateTeam -> {
-                startActivity(Intent(this, ChooseTeamActivity::class.java))
-            }
-            R.id.ll_winners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
-            }
-            R.id.txt_Join -> {
-                startActivity(Intent(this, ChooseTeamActivity::class.java))
-                //showJoinContestDialogue(this)
-            }
+
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_megacontest)
+        setContentView(R.layout.contest_detail_activity)
         initViews()
     }
 
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.mega_contest)
-        setMenu(false, false, false, false, false, false, false)
         setAdapter()
-        val  mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
-        //By default set BottomSheet Behavior as Collapsed and Height 0
-        mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        mBottomSheetBehavior.peekHeight = 0
-
-        //If you want to handle callback of Sheet Behavior you can use below code
-        mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-//                    BottomSheetBehavior.STATE_COLLAPSED -> Log.d(FragmentActivity.TAG, "State Collapsed")
-//                    BottomSheetBehavior.STATE_DRAGGING -> Log.d(FragmentActivity.TAG, "State Dragging")
-//                    BottomSheetBehavior.STATE_EXPANDED -> Log.d(FragmentActivity.TAG, "State Expanded")
-//                    BottomSheetBehavior.STATE_HIDDEN -> Log.d(FragmentActivity.TAG, "State Hidden")
-//                    BottomSheetBehavior.STATE_SETTLING -> Log.d(FragmentActivity.TAG, "State Settling")
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-
-        ll_winners.setOnClickListener(this)
-        btn_CreateTeam.setOnClickListener(this)
-        txt_Join.setOnClickListener(this)
+        setScoreAdapter()
     }
 
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = TeamsAdapter(this)
+        rv_rules!!.layoutManager = llm
+        rv_rules!!.adapter = RulesAdapter(this)
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun setScoreAdapter() {
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_score!!.layoutManager = llm
+        rv_score!!.adapter = ScoresAdapter(this)
     }
 }

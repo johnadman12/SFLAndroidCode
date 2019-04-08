@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center">
+    <LinearLayout
+            android:id="@+id/rl_rowImage"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="@dimen/_5sdp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+    >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_user"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/cricketer"/>
+
+        <LinearLayout
+                android:id="@+id/ll_n_r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_name"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/blue"
+                    android:padding="@dimen/_2sdp"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dummy_rank"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:padding="@dimen/_2sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/textColorBlack"
+                        android:padding="@dimen/_2sdp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/ll_totalChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight=".5"
+                android:padding="@dimen/_2sdp"
+                android:gravity="center">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/total"
+                    android:textSize="@dimen/_12ssp"
+                    android:textColor="@color/textColorLightBlack"
+            />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="@string/change"
+                    android:textColor="@color/textColorLightBlack"
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_change_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/ll_totalChange">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    style="@style/TextStyleNormal"
+                    android:textColor="@color/textColorLightBlack"
+                    android:textSize="@dimen/_9sdp"
+                    android:background="@drawable/green_empty_round"
+                    android:text="@string/percentage"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:padding="@dimen/_5sdp">
+
+            <RelativeLayout
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/gray_circle"
+                    android:gravity="center">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/contestselect"/>
+
+            </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:text="@string/Rs20"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <View android:layout_width="match_parent"
+          android:layout_height="@dimen/_2sdp"
+          android:background="@android:color/transparent"/>
+
+</LinearLayout>

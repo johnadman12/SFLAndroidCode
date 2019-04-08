@@ -28,7 +28,7 @@ import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
 
 open class BaseActivity : AppCompatActivity() {
-    private lateinit var notificationView: View
+    lateinit var notificationView: View
     private var progressDialog: ProgressDialog? = null
     var pref: Prefs? = null
     var notif = false
@@ -42,6 +42,7 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0);
         pref = Prefs(this)
+
     }
 
     /* */
@@ -98,6 +99,8 @@ open class BaseActivity : AppCompatActivity() {
             //            startActivity(Intent(this,ContestDetailActivity::class.java))
             startActivity(Intent(this, NotificationActivity::class.java))
         }
+
+
         return true
     }
 
@@ -253,7 +256,7 @@ open class BaseActivity : AppCompatActivity() {
         }
         dialog.show()*/
 
-        saveIntoPrefsString(StockConstant.USERID,"")
+        saveIntoPrefsString(StockConstant.USERID, "")
         startActivity(Intent(this, WelcomeActivity::class.java))
         (0 until StockConstant.ACTIVITIES.size)
             .filter { StockConstant.ACTIVITIES[it] != null }
@@ -280,11 +283,11 @@ open class BaseActivity : AppCompatActivity() {
         edit.apply()
     }
 
-    fun getUserData():SignupDataPojo{
+    fun getUserData(): SignupDataPojo {
         val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
-        var signupDataPojo=SignupDataPojo()
-        signupDataPojo.username=prefs.getString(StockConstant.USERNAME,"");
-        signupDataPojo.phone_number=prefs.getString(StockConstant.USERPHONE,"");
+        var signupDataPojo = SignupDataPojo()
+        signupDataPojo.username = prefs.getString(StockConstant.USERNAME, "");
+        signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");
         return signupDataPojo;
     }
 

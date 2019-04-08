@@ -23,11 +23,11 @@ public class ViewAnimationUtils {
             }
 
             @Override
-            public boolean willChangeBounds() {
+            public boolean willChangeBounds()
+            {
                 return true;
             }
         };
-
         a.setDuration((int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }

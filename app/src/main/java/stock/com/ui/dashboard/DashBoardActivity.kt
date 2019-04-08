@@ -45,7 +45,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
     private var resideMenu: ResideMenu? = null
 
-    private var fragment:Fragment?=null;
+    private var fragment: Fragment? = null;
     override fun onClick(p0: View?) {
     }
 
@@ -54,8 +54,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         setContentView(R.layout.dashboard_activity)
         setUpMenu();
         initView()
-
-
 
         ll_contest.setOnClickListener {
             toolbar.visibility = View.VISIBLE
@@ -113,7 +111,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             setTitleVisibility(true, false)
             // setMenu(false, false, false, true, false, false, false)
             val bundle = Bundle()
-            bundle.putString("flag","")
+            bundle.putString("flag", "")
             setFragment(LobbyFragment(), bundle)
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
@@ -217,10 +215,11 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         if (getFromPrefsString(StockConstant.USERID).toString() == "") {
             ll_bottom.visibility = View.GONE;
-            img_btn_menu.visibility= GONE;
+            img_btn_menu.visibility = GONE;
+
         } else {
             ll_bottom.visibility = View.VISIBLE;
-            img_btn_menu.visibility= VISIBLE;
+            img_btn_menu.visibility = VISIBLE;
         }
 
 
@@ -316,9 +315,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             toolbarTitle.visibility = GONE
     }
 
-    private fun setFragment(fragment: Fragment,bundle:Bundle) {
-        this.fragment=fragment;
-       fragment.arguments=bundle;
+    private fun setFragment(fragment: Fragment, bundle: Bundle) {
+        this.fragment = fragment;
+        fragment.arguments = bundle;
         val fragmentManager = supportFragmentManager
         fragmentManager
             .beginTransaction()
