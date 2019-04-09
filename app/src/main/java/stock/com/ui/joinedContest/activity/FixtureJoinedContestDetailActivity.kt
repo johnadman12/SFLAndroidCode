@@ -21,9 +21,9 @@ class FixtureJoinedContestDetailActivity : BaseActivity(), View.OnClickListener 
 //                startActivity(Intent(this, ChooseTeamActivity::class.java))
             }
             R.id.ll_winners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+                /*val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak)
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
-            }
+           */ }
 //            R.id.txt_Join -> {
 //                showJoinContestDialogue(this)
 //            }

@@ -29,6 +29,7 @@ import android.util.Log
 import android.widget.Toast
 import kotlin.collections.ArrayList
 import android.content.Intent
+import stock.com.ui.pojo.Country
 import stock.com.ui.pojo.LobbyContestPojo
 
 
@@ -133,12 +134,12 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         marketSelectedItems = ArrayList();
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
+        img_btn_close.visibility = VISIBLE
         llMarket.setOnClickListener(this)
         llCountry.setOnClickListener(this)
         llContest.setOnClickListener(this)
         llEntry.setOnClickListener(this)
         btn_apply.setOnClickListener(this)
-        img_btn_close.visibility = VISIBLE
         getFilterlist()
         llContest.performClick()
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
@@ -167,10 +168,19 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        setCountryAdapter(response.body()!!.country)
                         setMarketAdapter(response.body()!!.market)
                         setContestAdapter(response.body()!!.category!!)
                         setRangebar(response.body()!!.entryFees)
+                       /* val mPrefs: SharedPreferences = getPreferences(MODE_PRIVATE);
+                        val gson = Gson()
+                        val type: Type = object : TypeToken<ArrayList<Country.CountryPojo>>() {
+                        }.type
+                        val json = mPrefs.getString(StockConstant.COUNTRYLIST, "")
+                        Log.e("jsonstribngtype", json.toString())
+                        val topic: ArrayList<Country.CountryPojo> = gson.fromJson(json, type)
+                        Log.e("jsonstribng", topic.toString())
+                        setCountryAdapter(topic)*/
+                        setCountryAdapter(response.body()!!.country)
                     }
                 } else {
                     Toast.makeText(
@@ -244,12 +254,12 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setCountryAdapter(country: List<FilterPojo.Country>?) {
+    private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
         recycle_country!!.adapter =
-            CountryListAdapter(this, country!!, object : CountryListAdapter.OnItemCheckListener {
+            CountryListAdapter(this, country, object : CountryListAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
                 }

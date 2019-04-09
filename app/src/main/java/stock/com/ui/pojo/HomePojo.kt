@@ -85,26 +85,12 @@ class HomePojo : BasePojo() {
         @SerializedName("teams_joined")
         @Expose
         var teamsJoined: String = ""
+        @SerializedName("total_winners")
+        @Expose
+        var totalwinners: String = ""
         @SerializedName("price_break")
         @Expose
-        var priceBreak: List<PriceBreak>? = null
-
-    }
-
-    inner class PriceBreak {
-
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("start_num")
-        @Expose
-        var startNum: String = ""
-        @SerializedName("end_num")
-        @Expose
-        var endNum: String = ""
-        @SerializedName("price_each")
-        @Expose
-        var priceEach: String = ""
+        var priceBreak: ArrayList<PriceBreak>? = null
 
     }
 

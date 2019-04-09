@@ -28,9 +28,9 @@ class ContestAdapter(val mContext: AppCompatActivity) : RecyclerView.Adapter<Con
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
         holder.itemView.ll_totalWinners.setOnClickListener {
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+          /*  val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak)
             bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
-            //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
+         */   //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))

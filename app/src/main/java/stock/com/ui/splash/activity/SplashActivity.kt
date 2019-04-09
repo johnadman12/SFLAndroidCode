@@ -25,6 +25,7 @@ class SplashActivity : BaseActivity() {
                         startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
                         finish()
                     } else {
+
                         startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
                         finish()
                     }
@@ -56,4 +57,6 @@ class SplashActivity : BaseActivity() {
 //        }
 
     }
+
+
 }

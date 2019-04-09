@@ -2,27 +2,22 @@ package stock.com.ui.edit_profile.fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.*
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_filter.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import stock.com.AppBase.BaseFragment
 import stock.com.R
-import stock.com.networkCall.ApiClient
-import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
-import stock.com.ui.pojo.FilterPojo
+import stock.com.ui.pojo.Country
 import stock.com.utils.StockConstant
-import stock.com.utils.StockDialog
 
 class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
@@ -36,6 +31,14 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         //initViews()
         countrySelectedItems = ArrayList();
+        val mPrefs: SharedPreferences = activity!!.getPreferences(AppCompatActivity.MODE_PRIVATE);
+        val gson = Gson()
+        val json = mPrefs.getString(StockConstant.COUNTRYLIST, "false")
+        val type = object : TypeToken<ArrayList<Country.CountryPojo>>() {
+        }.type
+        val topic: ArrayList<Country.CountryPojo> = gson.fromJson(json, type)
+//        showCountryListDialog(topic)
+
         //getCountryList();
     }
 
@@ -43,38 +46,10 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
     }
 
 
-    fun getCountryList() {
-        val d = StockDialog.showLoading(activity!!)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<FilterPojo> =
-            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString())
-        call.enqueue(object : Callback<FilterPojo> {
 
-            override fun onResponse(call: Call<FilterPojo>, response: Response<FilterPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        showCountryListDialog(response.body()!!.country)
-                        // setMarketAdapter(response.body()!!.market)
-                        //setContestAdapter(response.body()!!.category!!)
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
-                    d.dismiss()
-                }
-            }
 
-            override fun onFailure(call: Call<FilterPojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
-        })
-    }
-
-    @SuppressLint("WrongConstant")
-    public fun showCountryListDialog(country: List<FilterPojo.Country>?) {
+    /*@SuppressLint("WrongConstant")
+    public fun showCountryListDialog(country:ArrayList<Country.CountryPojo>) {
         val dialog = Dialog(context)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_country_list)
@@ -95,7 +70,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL;
         recyclerView_country_list.layoutManager = llm;
         recyclerView_country_list.adapter =
-            CountryListAdapter(context!!, country!!, object : CountryListAdapter.OnItemCheckListener {
+            CountryListAdapter(context!!, country, object : CountryListAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
                 }
@@ -108,5 +83,5 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
         dialog.show();
     }
-
+*/
 }

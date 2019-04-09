@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_megacontest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
 import kotlinx.android.synthetic.main.contest_detail_activity.*
+import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.createTeam.activity.ChooseTeamActivity
@@ -22,7 +23,12 @@ import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
-
+            R.id.img_btn_close -> {
+                finish()
+            }
+            R.id.img_btn_back -> {
+                finish()
+            }
         }
     }
 
@@ -34,6 +40,9 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun initViews() {
+        img_btn_back.setOnClickListener(this)
+        img_btn_close.setOnClickListener(this)
+        img_btn_close.visibility = View.VISIBLE
         setAdapter()
         setScoreAdapter()
     }

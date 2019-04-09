@@ -1,6 +1,7 @@
 package stock.com.ui.splash.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +16,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login_welcome.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -31,6 +33,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.login.activity.LoginActivity
+import stock.com.ui.pojo.Country
 import stock.com.ui.pojo.SignupPojo
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.utils.AppDelegate
@@ -79,6 +82,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
         btn_LetsPlay.setOnClickListener(this)
         facebookLoginButton.setOnClickListener(this)
         googleLoginButton.setOnClickListener(this)
+        getCountrylist()
     }
 
     override fun onDestroy() {
@@ -318,6 +322,40 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }
 
+    }
+
+    fun getCountrylist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<Country> =
+            apiService.getCountryList()
+        call.enqueue(object : Callback<Country> {
+
+            override fun onResponse(call: Call<Country>, response: Response<Country>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        val mPrefs: SharedPreferences = getPreferences(MODE_PRIVATE);
+                        val prefsEditor: SharedPreferences.Editor = mPrefs.edit();
+                        val gson = Gson()
+                        val json = gson.toJson(response.body()!!.country); // myObject - instance of MyObject
+                        prefsEditor.putString(StockConstant.COUNTRYLIST, json);
+                        prefsEditor.commit();
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<Country>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+
+        })
     }
 
 

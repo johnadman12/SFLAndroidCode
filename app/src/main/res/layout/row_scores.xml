@@ -107,7 +107,7 @@
                     style="@style/TextStyleNormal"
                     android:textColor="@color/textColorLightBlack"
                     android:textSize="@dimen/_9sdp"
-                    android:background="@drawable/green_empty_round"
+                    android:background="@mipmap/greencircle"
                     android:text="@string/percentage"/>
 
         </LinearLayout>

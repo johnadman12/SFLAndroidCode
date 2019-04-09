@@ -29,9 +29,16 @@ import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
+import androidx.annotation.StyleRes
+import com.jesusm.kfingerprintmanager.KFingerprintManager
+
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
     private var pass_remembered: Int = 0
+    private val KEY = "my_Finger"
+    @StyleRes
+    private var dialogTheme: Int = 0
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Next -> {
@@ -49,7 +56,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     } else {
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
-
 
 
                     /*else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
@@ -74,8 +80,41 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, ForgotPasswordActivity::class.java))
                 finish()
             }
+            R.id.faceimg -> {
+                createFingerprintManagerInstance().authenticate(object : KFingerprintManager.AuthenticationCallback {
+                    override fun onAuthenticationFailedWithHelp(help: String?) {
+                    }
+
+                    override fun onAuthenticationSuccess() {
+                        AppDelegate.showToast(this@LoginActivity,"Successfully authenticated")
+                    }
+
+                    override fun onSuccessWithManualPassword(password: String) {
+//                        messageTextView.value.text = "Manual password: " + password
+                    }
+
+                    override fun onFingerprintNotRecognized() {
+                        AppDelegate.showToast(this@LoginActivity,"Fingerprint not recognized")
+                    }
+
+                    override fun onFingerprintNotAvailable() {
+                        AppDelegate.showToast(this@LoginActivity,"Fingerprint not available")
+                    }
+
+                    override fun onCancelled() {
+                    }
+                }, supportFragmentManager)
+
+            }
 
         }
+    }
+
+
+    private fun createFingerprintManagerInstance(): KFingerprintManager {
+        val fingerprintManager = KFingerprintManager(this, KEY)
+        fingerprintManager.setAuthenticationDialogStyle(dialogTheme)
+        return fingerprintManager
     }
 
     fun isNumeric(str: String): Boolean {
@@ -151,7 +190,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         finish()
                     }*/
                     else
-                       displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message)
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()
@@ -181,6 +220,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
         text_forgot.setOnClickListener(this)
+        faceimg.setOnClickListener(this)
         checkRemebered.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 pass_remembered = 1

@@ -22,6 +22,23 @@
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnOK"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:background="@color/green"
+                android:textColor="@color/white"
+                android:text="OK"
+                style="@style/TextStyleSemiBold"
+                android:textSize="@dimen/_15ssp"
+                card_view:layout_constraintTop_toBottomOf="@+id/tvInfo"
+
+        />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

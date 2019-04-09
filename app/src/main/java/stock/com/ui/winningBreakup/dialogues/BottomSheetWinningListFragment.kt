@@ -9,9 +9,17 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_winninglist.*
 import stock.com.R
+import stock.com.ui.pojo.HomePojo
+import stock.com.ui.pojo.PriceBreak
 import stock.com.ui.winningBreakup.adapter.WinningsListAdapter
 
-class BottomSheetWinningListFragment : BottomSheetDialogFragment() {
+@SuppressLint("ValidFragment")
+class BottomSheetWinningListFragment(
+    priceBreak: ArrayList<PriceBreak>?,
+    var winningAmount: String
+) :
+    BottomSheetDialogFragment() {
+    var list: ArrayList<PriceBreak> = priceBreak!!
     //Bottom Sheet Callback
     private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -37,7 +45,10 @@ class BottomSheetWinningListFragment : BottomSheetDialogFragment() {
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
         }
-        setAdapter()
+        dialog.txt_prizeMoney.setText(winningAmount)
+        if (list != null) {
+            setAdapter()
+        }
         dialog.img_Close.setOnClickListener { dismiss() }
     }
 
@@ -45,7 +56,7 @@ class BottomSheetWinningListFragment : BottomSheetDialogFragment() {
     private fun setAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
-        dialog. rv_Prize!!.layoutManager = llm
-        dialog.rv_Prize!!.adapter = WinningsListAdapter(context!!)
+        dialog.rv_Prize!!.layoutManager = llm
+        dialog.rv_Prize!!.adapter = WinningsListAdapter(context!!, list)
     }
 }

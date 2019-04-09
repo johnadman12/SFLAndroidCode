@@ -1,21 +1,27 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
+import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.LobbyContestPojo
+import stock.com.ui.pojo.PriceBreak
+import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class LobbyContestAdapter(
@@ -35,6 +41,7 @@ class LobbyContestAdapter(
         holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
         holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
         holder.itemView.tvTime.setText(mContest.get(position).exchangename)
+//        holder.itemView.tvWinnersTotal.setText(mContest.get(position).totalWinners)
         holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
@@ -68,10 +75,22 @@ class LobbyContestAdapter(
                 holder.itemView.tvTimeLeft.setText(days.toString() + " : " + hours.toString() + " : " + minutes.toString() + " : " + seconds.toString())
             }
         }
+
+        holder.itemView.iv_info.setOnClickListener {
+            showInfoDialogue(mContest.get(position).description);
+        }
         holder.itemView.circular_progress.isAnimationEnabled
-        holder.itemView.circular_progress.setProgress(500.00, 1000.00)
-//        holder.itemView.circular_progress.setMaxProgress(10000.0);
+        holder.itemView.circular_progress.setProgress(
+            mContest.get(position).teamsJoined.toDouble(),
+            mContest.get(position).contestSize.toDouble()
+        )
         holder.itemView.circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
+
+        holder.itemView.llWinners.setOnClickListener {
+            val manager = (mContext as AppCompatActivity).supportFragmentManager
+            val bottomSheetDialogFragment = BottomSheetWinningListFragment(mContest.get(position).priceBreak as ArrayList<PriceBreak>, mContest.get(position).winningAmount)
+            bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
     }
 
 
@@ -107,6 +126,25 @@ class LobbyContestAdapter(
             e.printStackTrace()
         }
         return str
+    }
+
+    fun showInfoDialogue(textView: String) {
+        var dialogue = Dialog(mContext)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_information)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.tvInfo.setText(textView)
+        dialogue.btnOK.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+        }
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
     }
 }
 

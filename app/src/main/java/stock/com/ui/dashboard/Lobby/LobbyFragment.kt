@@ -43,7 +43,7 @@ class LobbyFragment : BaseFragment() {
         contest = ArrayList();
 
         list = ArrayList();
-        getTrainingContentlist()
+        getContestlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
             val intent = Intent(context, ActivityFilter::class.java)
@@ -67,7 +67,7 @@ class LobbyFragment : BaseFragment() {
         startActivityForResult(intent, requestCode)
     }
 
-    fun getTrainingContentlist() {
+    fun getContestlist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -144,7 +144,7 @@ class LobbyFragment : BaseFragment() {
 
         } else if (requestCode == 1001) {
             if (data != null && resultCode == RESULT_OK) {
-                var testing = data!!.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
+                var testing = data.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();
             }

@@ -2,7 +2,6 @@ package stock.com.ui.dashboard.home.adapter
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
@@ -10,27 +9,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
-import kotlinx.android.synthetic.main.dialogue_join_contest.*
-import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
-import stock.com.ui.createTeam.activity.ChooseTeamActivity
-import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.TraniningContest>) : PagerAdapter() {
-
+    var SECONDS_IN_A_DAY = 24 * 60 * 60
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view === `object` as LinearLayout
@@ -52,6 +44,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val tvTotalWinnings: TextView = view.findViewById(R.id.tvTotalWinnings)
         val tvSprortsLeft: TextView = view.findViewById(R.id.tvSprortsLeft)
         val tvTimeLeft: TextView = view.findViewById(R.id.tvTimeLeft)
+        val tvWinnersTotal: TextView = view.findViewById(R.id.tvWinnersTotal)
         val iv_info: AppCompatImageButton = view.findViewById(R.id.iv_info)
 
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
@@ -61,6 +54,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvTime.setText(list.get(position).exchangename)
+        tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
 
         Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
@@ -84,19 +78,23 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             thatDay.setTime(date);
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
-            val days = diff / (24 * 60 * 60 * 1000)
-            val day = TimeUnit.SECONDS.toDays(diff).toInt()
-            val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
-            val minute = TimeUnit.SECONDS.toMinutes(diff) -
-                    TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(diff));
-            val seconds = TimeUnit.SECONDS.toSeconds(diff) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(diff));
-
-            tvTimeLeft.setText(hour.toString() + " : " + minute.toString() + " : " + seconds.toString())
-
+            if (diff.toString().contains("-")) {
+                tvTimeLeft.setText("0:0:0: Left")
+            } else {
+                val diffSec = diff / 1000
+                val days = diffSec / SECONDS_IN_A_DAY
+                val secondsDay = diffSec % SECONDS_IN_A_DAY
+                val seconds = secondsDay % 60
+                val minutes = secondsDay / 60 % 60
+                val hours = secondsDay / 3600
+                tvTimeLeft.setText(days.toString() + " : " + hours.toString() + " : " + minutes.toString() + " : " + seconds.toString())
+            }
         }
         circular_progress.isAnimationEnabled
-        circular_progress.setProgress(500.00, 1000.00)
+        circular_progress.setProgress(
+            list.get(position).teamsJoined.toDouble(),
+            list.get(position).contestSize.toDouble()
+        )
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 
@@ -104,7 +102,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
         llWinners.setOnClickListener {
             val manager = (context as AppCompatActivity).supportFragmentManager
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+            val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
         iv_info.setOnClickListener {
@@ -157,6 +155,10 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogue.setCancelable(true)
         dialogue.tvInfo.setText(textView)
+        dialogue.btnOK.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+        }
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)
         if (dialogue.isShowing)

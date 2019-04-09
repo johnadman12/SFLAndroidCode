@@ -1,13 +1,8 @@
 package stock.com.networkCall
 
-import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
-import stock.com.ui.signup.apiRequest.SignUpRequest
-import stock.com.ui.signup.apiRequest.VerifyOtpRequest
-import stock.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
-import stock.com.ui.signup.apiResponse.signup.SignUpResponse
 
 
 interface ApiInterface {
@@ -243,6 +238,10 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/how-to-play")
     fun howToPlay():Call<WebViewPojo>
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("contest/country_list")
+    fun getCountryList():Call<Country>
 
 
 

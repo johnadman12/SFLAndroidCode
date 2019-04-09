@@ -5,6 +5,7 @@ import android.app.Activity
 object StockConstant{
     @JvmStatic
     val PREF_NAME = "com.stock.app"
+    val COUNTRYLIST = ""
     val DEVICE_TOKEN = ""
 
 

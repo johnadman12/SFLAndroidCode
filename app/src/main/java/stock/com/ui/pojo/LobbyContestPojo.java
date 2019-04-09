@@ -76,7 +76,7 @@ public class LobbyContestPojo extends BasePojo {
         public int date;
         @SerializedName("price_break")
         @Expose
-        public List<PriceBreak> priceBreak = null;
+        public ArrayList<PriceBreak> priceBreak = null;
         @SerializedName("total_winners")
         @Expose
         public Integer totalWinners;
@@ -155,38 +155,5 @@ public class LobbyContestPojo extends BasePojo {
         }
     }
 
-    public class PriceBreak implements Serializable {
 
-        @SerializedName("contest_id")
-        @Expose
-        public Integer contestId;
-        @SerializedName("start_num")
-        @Expose
-        public Integer startNum;
-        @SerializedName("end_num")
-        @Expose
-        public Integer endNum;
-        @SerializedName("price_each")
-        @Expose
-        public String priceEach;
-
-        protected PriceBreak(Parcel in) {
-            if (in.readByte() == 0) {
-                contestId = null;
-            } else {
-                contestId = in.readInt();
-            }
-            if (in.readByte() == 0) {
-                startNum = null;
-            } else {
-                startNum = in.readInt();
-            }
-            if (in.readByte() == 0) {
-                endNum = null;
-            } else {
-                endNum = in.readInt();
-            }
-            priceEach = in.readString();
-        }
-    }
 }
