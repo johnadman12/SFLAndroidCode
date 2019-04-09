@@ -11,12 +11,13 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/ll_main"
+                android:visibility="gone">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
-
                 <de.hdodenhof.circleimageview.CircleImageView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/profile_image"
@@ -25,15 +26,14 @@
                         android:src="@drawable/ic_launcher"
                         app:civ_border_width="3dp"
                         app:civ_border_color="#007FB0"/>
-                <de.hdodenhof.circleimageview.CircleImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:layout_alignRight="@+id/profile_image"
                         android:layout_alignBottom="@+id/profile_image"
-                        app:civ_border_width="1dp"
-                        android:src="@mipmap/mobile"
-                        app:civ_border_color="#007FB0"
-                        android:clickable="false"/>
+                        app:srcCompat="@mipmap/camera"
+                        android:clickable="false"
+                        android:background="@null"/>
             </RelativeLayout>
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginTop="-15dp"
-                        android:src="@mipmap/username"/>
+                        android:src="@mipmap/biography"/>
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                                 android:inputType="textMultiLine"
                                 android:gravity="top"
                                 android:textColorHint="@color/white"
-                        android:id="@+id/et_biography"/>
+                                android:id="@+id/et_biography"/>
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>

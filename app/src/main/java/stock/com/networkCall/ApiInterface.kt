@@ -1,6 +1,8 @@
 package stock.com.networkCall
 
 import kotlinx.coroutines.Deferred
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
@@ -224,6 +226,11 @@ interface ApiInterface {
     fun removeWatch(@Header("x-access-token") token: String, @Field("user_id") user_id: String, @Field("id") id: String): Call<BasePojo>;
 
     @FormUrlEncoded
+    @POST("stock/get_filter")
+    fun getWatchListFilter(@Header("x-access-token") token: String, @Field("user_id") user_id: String): Call<WatchListFilterPojo>;
+
+
+    @FormUrlEncoded
     @POST("users/logout")
     fun logOut(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<BasePojo>
 
@@ -243,6 +250,10 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/how-to-play")
     fun howToPlay():Call<WebViewPojo>
+
+    @Multipart
+    @POST("users/update_profile")
+    fun updateProfile(@Header("x-access-token")token: String, @Part("user_id") user_id: RequestBody,@Part("biography") biography: RequestBody,@Part file: MultipartBody.Part?):Call<BasePojo>
 
 
 

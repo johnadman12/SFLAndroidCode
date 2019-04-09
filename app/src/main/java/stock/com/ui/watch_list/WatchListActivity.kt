@@ -17,16 +17,16 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.Lobby.ActivitySort
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.StockPojo
+import stock.com.ui.watch_list.adapter.WatchListAdapter_
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class WatchListActivity : BaseActivity(){
 
 
-    private var watchListAdapter:WatchListAdapter_?=null;
+    private var watchListAdapter: WatchListAdapter_?=null;
     private var list:ArrayList<StockPojo.Stock>?=null;
 
     @SuppressLint("WrongConstant")
@@ -35,7 +35,8 @@ class WatchListActivity : BaseActivity(){
         setContentView(R.layout.activity_watch_list)
 
         list=ArrayList();
-        watchListAdapter= WatchListAdapter_(applicationContext!!,list as ArrayList,this)
+        watchListAdapter=
+            WatchListAdapter_(applicationContext!!, list as ArrayList, this)
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_watch_list!!.layoutManager = llm

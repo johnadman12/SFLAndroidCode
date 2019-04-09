@@ -72,8 +72,7 @@
                         android:gravity="center"
                         android:src="@mipmap/fb"
                         android:background="@drawable/button_round_facebook"
-                        android:foreground="?android:attr/selectableItemBackground"
-                />
+                        android:foreground="?android:attr/selectableItemBackground"/>
 
                 <ImageView
                         android:id="@+id/googleLoginButton"

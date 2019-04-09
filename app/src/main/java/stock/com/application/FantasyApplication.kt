@@ -38,6 +38,7 @@ class FantasyApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
         fantasyApplication = this
 
         /* initialize joda Time*/

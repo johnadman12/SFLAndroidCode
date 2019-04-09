@@ -12,6 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.fragment_contact_info.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +23,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
 import stock.com.ui.pojo.FilterPojo
+import stock.com.ui.pojo.UserPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
@@ -37,76 +40,43 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         //initViews()
         countrySelectedItems = ArrayList();
         //getCountryList();
+        getProfile()
     }
 
     override fun onClick(v: View?) {
     }
-
-
-    fun getCountryList() {
+    fun getProfile() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<FilterPojo> =
-            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString())
-        call.enqueue(object : Callback<FilterPojo> {
-
-            override fun onResponse(call: Call<FilterPojo>, response: Response<FilterPojo>) {
+        val call: Call<UserPojo> = apiService.getProfile(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), getFromPrefsString(StockConstant.USERID).toString())
+        call.enqueue(object : Callback<UserPojo> {
+            override fun onResponse(call: Call<UserPojo>, response: Response<UserPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        showCountryListDialog(response.body()!!.country)
-                        // setMarketAdapter(response.body()!!.market)
-                        //setContestAdapter(response.body()!!.category!!)
+                    if (response.body()!!.status.equals("1")) {
+                        setData(response.body()!!.user!!)
+                        ll_main_contact.visibility=View.VISIBLE;
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()
                 }
             }
-
-            override fun onFailure(call: Call<FilterPojo>, t: Throwable) {
+            override fun onFailure(call: Call<UserPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
             }
         })
     }
-
-    @SuppressLint("WrongConstant")
-    public fun showCountryListDialog(country: List<FilterPojo.Country>?) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_country_list)
-        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setGravity(Gravity.CENTER)
-        dialog.setCancelable(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window!!.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window.attributes = lp
-        dialog.setCanceledOnTouchOutside(true);
-
-        val recyclerView_country_list = dialog.findViewById(R.id.recyclerView_country_list) as RecyclerView
-
-        val llm = LinearLayoutManager(context);
-        llm.orientation = LinearLayoutManager.VERTICAL;
-        recyclerView_country_list.layoutManager = llm;
-        recyclerView_country_list.adapter =
-            CountryListAdapter(context!!, country!!, object : CountryListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    countrySelectedItems!!.remove(item);
-                }
-
-                override fun onItemCheck(item: String) {
-                    countrySelectedItems!!.add(item);
-                    Log.e("value", item)
-                }
-            })
-
-        dialog.show();
+    private fun setData(user: UserPojo.User) {
+        et_email.setText(user.email);
+        et_number.setText(user.phone_number);
+        et_address.setText(user.address);
+        et_country.setText(user.country_id);
+        et_zip_code.setText(user.zipcode);
     }
+
 
 }
