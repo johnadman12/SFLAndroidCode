@@ -3,6 +3,7 @@ package stock.com.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 public class SessionManager {
 
@@ -63,6 +64,16 @@ public class SessionManager {
         return file.getString(PRINT_COPIES,"");
     }
 
+    public void putString(String key, String val) {
+        if (TextUtils.isEmpty(val))
+            file.edit().putString(key, "").apply();
+        else {
+            file.edit().putString(key, val).apply();
+        }
+    }
 
+    public String getString(String key) {
+        return file.getString(key, "");
+    }
 
 }

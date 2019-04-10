@@ -142,6 +142,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         btn_apply.setOnClickListener(this)
         getFilterlist()
         llContest.performClick()
+
+
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
             tvMin.setText(minValue.toString())
             tvMax.setText(maxValue.toString())
@@ -180,7 +182,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         val topic: ArrayList<Country.CountryPojo> = gson.fromJson(json, type)
                         Log.e("jsonstribng", topic.toString())
                         setCountryAdapter(topic)*/
-                        setCountryAdapter(response.body()!!.country)
+
                     }
                 } else {
                     Toast.makeText(
@@ -254,7 +256,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
+    private fun setCountryAdapter(country: Country) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm

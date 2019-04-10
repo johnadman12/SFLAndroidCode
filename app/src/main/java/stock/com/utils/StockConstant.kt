@@ -5,9 +5,9 @@ import android.app.Activity
 object StockConstant{
     @JvmStatic
     val PREF_NAME = "com.stock.app"
-    val COUNTRYLIST = ""
-    val DEVICE_TOKEN = ""
 
+    val DEVICE_TOKEN = ""
+    val COUNTRYLIST = "country"
 
     val RESULT_CODE_SORT=102;
     val RESULT_CODE_FILTER_WATCH=1001;

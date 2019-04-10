@@ -430,4 +430,9 @@
 
     <string name="please_enter_bio">Please enter biography</string>
 
+    <string name="mob_error">Please enter mobile no</string>
+    <string name="address_error">Please enter address</string>
+    <string name="zip_coder_error">Please enter zipcode</string>
+    <string name="country_error">Please select country</string>
+
 </resources>

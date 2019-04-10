@@ -13,7 +13,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:id="@+id/ll_main"
-                android:visibility="gone">
+                android:visibility="visible">
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +94,6 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginTop="-15dp"
                         android:src="@mipmap/biography"/>
                 <RelativeLayout
                         android:layout_width="match_parent"
