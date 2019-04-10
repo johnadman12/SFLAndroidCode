@@ -35,7 +35,11 @@ import androidx.core.content.FileProvider.getUriForFile
 import android.app.Activity
 import android.graphics.BitmapFactory
 import android.os.Environment
+import android.util.Base64
+import android.util.Base64OutputStream
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.row_country_list.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -44,6 +48,8 @@ import stock.com.interfaces.SelectDialogInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.utils.Utility
 import stock.com.utils.custom.AllImagePathUtil
+import stock.com.utils.networkUtils.NetworkUtils
+import java.io.ByteArrayOutputStream
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.lang.Exception
@@ -88,13 +94,21 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
             }
         }
 
-
         tv_apply.setOnClickListener {
             if (et_biography.equals("")) {
-                 displayToast(resources.getString(R.string.please_enter_bio))
-            }else{
-                updateDetails()
+                displayToast(resources.getString(R.string.please_enter_bio))
+            } else {
+                if (NetworkUtils.isConnected()) {
+                    updateDetails()
+                } else {
+                    displayToast(resources.getString(R.string.error_network_connection))
+                }
+
             }
+        }
+
+        tv_cancel.setOnClickListener {
+            activity!!.finish();
         }
 
     }
@@ -111,31 +125,29 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
         }
 
         var token = RequestBody.create(MediaType.parse("text/plain"), getFromPrefsString(StockConstant.ACCESSTOKEN));
-        var userId = RequestBody.create(MediaType.parse("text/plain"), getFromPrefsString(StockConstant.USERID).toString());
+        var userId =
+            RequestBody.create(MediaType.parse("text/plain"), getFromPrefsString(StockConstant.USERID).toString());
         var biography = RequestBody.create(MediaType.parse("text/plain"), et_biography.getText().toString());
         RequestBody.create(MediaType.parse("multipart/form- data"), token.toString());
-
-
-        Log.d("User_id","--"+getFromPrefsString(StockConstant.USERID).toString());
-        Log.d("User_id","--"+userId);
-        Log.d("User_id","--"+biography);
 
 
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<BasePojo> = apiService.updateProfile(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), userId, biography, body)
+        val call: Call<BasePojo> =
+            apiService.updateProfile(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), userId, biography, body)
+        // val call: Call<BasePojo> = apiService.updateProfile(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), getFromPrefsString(StockConstant.USERID).toString(), et_biography.text.toString(),file)
         call.enqueue(object : Callback<BasePojo> {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-                Log.d("Update profile","---"+response.body().toString())
+                Log.d("Update profile", "---" + response.body().toString())
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         //setData(response.body()!!.user!!)
-                        displayToast(response.body()!!.status)
-                    }else if(response.body()!!.status.equals("2")){
+                        displayToast(response.body()!!.message)
+                    } else if (response.body()!!.status.equals("2")) {
                         appLogout()
-                    }else{
+                    } else {
                         displayToast(response.body()!!.message)
                     }
                 } else {
@@ -143,14 +155,14 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                //  Log.d("profileupdate","---"+t.localizedMessage)
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
             }
         })
-
-
     }
 
     override fun onClick(v: View?) {
@@ -170,13 +182,14 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         setData(response.body()!!.user!!)
-                        ll_main.visibility=View.VISIBLE;
+                        ll_main.visibility = View.VISIBLE;
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<UserPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
@@ -189,6 +202,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
         et_user_name.setText(user.username);
         et_user_name.isEnabled = false;
         et_biography.setText(user.biography);
+        Glide.with(context!!).load(user.profile_image).into(profile_image)
+
     }
 
     private fun captureImageCamera() {

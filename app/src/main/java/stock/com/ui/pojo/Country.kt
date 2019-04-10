@@ -10,7 +10,7 @@ import java.io.Serializable
 class Country : BasePojo()  {
     @SerializedName("country")
     @Expose
-    var country: ArrayList<CountryPojo>? = null
+   public var country: ArrayList<CountryPojo>? = null
 
     @SuppressLint("ParcelCreator")
     inner class CountryPojo protected constructor(`in`: Parcel) : Parcelable {

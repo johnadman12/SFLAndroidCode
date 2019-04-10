@@ -41,7 +41,6 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/emailID"
                             android:textColor="@color/white"/>
-
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -53,31 +52,25 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
-                            android:id="@+id/et_email"/>
-
+                            android:id="@+id/et_email_address"/>
                 </RelativeLayout>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
-
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_mobile"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="bottom"
                         android:src="@mipmap/mobile"/>
-
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="@dimen/_10sdp">
-
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_moblie"
                             style="@style/TextStyleNormal"
@@ -87,7 +80,6 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/mobile_no"
                             android:textColor="@color/white"/>
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/rl_mobile"
                             android:layout_width="match_parent"
@@ -95,13 +87,10 @@
                             android:layout_below="@+id/tv_moblie"
                             android:background="@drawable/ll_search"
                             android:orientation="horizontal">
-
-
                         <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical">
-
                             <com.hbb20.CountryCodePicker
                                     android:id="@+id/countryCodeHolder"
                                     android:layout_width="wrap_content"
@@ -119,13 +108,11 @@
                                     app:ccp_clickable="true"
                                     app:ccp_showPhoneCode="true"
                                     app:ccp_contentColor="@color/white"/>
-
                             <androidx.appcompat.widget.AppCompatEditText
                                     style="@style/EditTextStyle"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@color/colorTransparent"
-                                    android:enabled="false"
                                     android:padding="@dimen/_10sdp"
                                     android:hint="@string/mobile_number"
                                     android:inputType="phone"
@@ -134,35 +121,26 @@
                                     android:textColor="@color/white"
                                     android:textColorHint="@color/white"
                                     android:id="@+id/et_number"/>
-
                         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
                 </RelativeLayout>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
-
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_address"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/mobile"/>
-
+                        android:src="@mipmap/address"/>
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="@dimen/_10sdp">
-
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_address"
                             style="@style/TextStyleNormal"
@@ -172,7 +150,6 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/address"
                             android:textColor="@color/white"/>
-
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -184,32 +161,25 @@
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
                             android:singleLine="true"
-                            android:id="@+id/et_address"
-                    />
-
+                            android:id="@+id/et_address"/>
                 </RelativeLayout>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
-
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_country"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/mobile"/>
-
+                        android:src="@mipmap/country"/>
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="@dimen/_10sdp">
-
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_country"
                             style="@style/TextStyleNormal"
@@ -219,18 +189,16 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/country"
                             android:textColor="@color/white"/>
-
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <androidx.appcompat.widget.AppCompatTextView
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_country"
                             android:background="@drawable/ll_search"
                             android:drawableRight="@mipmap/dropdown"
-                            android:hint="@string/country"
+                            android:text="@string/country"
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
-                            android:textColorHint="@color/white"
                             android:id="@+id/et_country"/>
                 </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -244,14 +212,12 @@
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/mobile"/>
-
+                        android:src="@mipmap/zipcode"/>
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="@dimen/_10sdp">
-
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_zipCode"
                             style="@style/TextStyleNormal"
@@ -281,7 +247,6 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:padding="@dimen/_10sdp">
-
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_apply"
                         style="@style/TextStyleSemiBold"
@@ -291,7 +256,6 @@
                         android:gravity="center"
                         android:padding="@dimen/_10sdp"
                         android:text="@string/apply"/>
-
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_cancel"
                         style="@style/TextStyleSemiBold"
@@ -303,10 +267,7 @@
                         android:gravity="center"
                         android:padding="@dimen/_10sdp"
                         android:text="@string/cancel"/>
-
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

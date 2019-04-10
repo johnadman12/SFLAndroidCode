@@ -325,6 +325,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
     }
 
+
     fun getCountrylist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -357,6 +358,5 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
         })
     }
-
 
 }

@@ -235,6 +235,12 @@ interface ApiInterface {
     @POST("users/get_profile")
     fun getProfile(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<UserPojo>
 
+
+    @FormUrlEncoded
+    @POST("users/update_profile_details")
+    fun  updateProfileDetails(@Header("x-access-token")token: String,@Field("user_id")user_id:String,@Field("address")address:String,@Field("zipcode")zipcode:String,@Field("phone_number")phone_number:String,@Field("country_id")country_id:String?):Call<BasePojo>
+
+
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/faq")
     fun faq():Call<WebViewPojo>
@@ -251,10 +257,9 @@ interface ApiInterface {
     @GET("contest/country_list")
     fun getCountryList():Call<Country>
 
-    @Multipart
-    @POST("users/update_profile")
-    fun updateProfile(@Header("x-access-token")token: String, @Part("user_id") user_id: RequestBody,@Part("biography") biography: RequestBody,@Part file: MultipartBody.Part?):Call<BasePojo>
-
+   @Multipart
+   @POST("users/update_profile")
+   fun updateProfile(@Header("x-access-token")token: String, @Part("user_id") user_id: RequestBody,@Part("biography") biography: RequestBody,@Part file: MultipartBody.Part?):Call<BasePojo>
 
 
 
@@ -263,4 +268,5 @@ interface ApiInterface {
 
      @POST(ApiConstant.social_signup)
      fun social_signup(@Body signupRequest: SignUpRequest): Deferred<SignUpResponse>*/
+
 }
