@@ -11,13 +11,14 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/ll_main_contact">
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
-
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_Email"
                         android:layout_width="@dimen/_30sdp"
@@ -25,14 +26,12 @@
                         android:layout_gravity="bottom"
                         app:srcCompat="@mipmap/email"
                         android:background="@null"/>
-
                 <RelativeLayout
                         android:id="@+id/rl_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingLeft="@dimen/_10sdp">
-
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_email"
                             style="@style/TextStyleNormal"
@@ -53,7 +52,8 @@
                             android:padding="@dimen/_10sdp"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:textColorHint="@color/white"/>
+                            android:textColorHint="@color/white"
+                            android:id="@+id/et_email"/>
 
                 </RelativeLayout>
 
@@ -132,7 +132,8 @@
                                     android:singleLine="true"
                                     android:imeOptions="actionNext"
                                     android:textColor="@color/white"
-                                    android:textColorHint="@color/white"/>
+                                    android:textColorHint="@color/white"
+                                    android:id="@+id/et_number"/>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -183,6 +184,7 @@
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
                             android:singleLine="true"
+                            android:id="@+id/et_address"
                     />
 
                 </RelativeLayout>
@@ -228,7 +230,8 @@
                             android:hint="@string/country"
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
-                            android:textColorHint="@color/white"/>
+                            android:textColorHint="@color/white"
+                            android:id="@+id/et_country"/>
                 </RelativeLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -258,7 +261,6 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/zip_code"
                             android:textColor="@color/white"/>
-
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -269,12 +271,10 @@
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
                             android:textColor="@color/white"
-                            android:singleLine="true"/>
-
+                            android:singleLine="true"
+                            android:id="@+id/et_zip_code"/>
                 </RelativeLayout>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
-
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

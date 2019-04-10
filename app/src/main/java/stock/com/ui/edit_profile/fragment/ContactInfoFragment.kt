@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +14,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.fragment_contact_info.*
+import kotlinx.android.synthetic.main.fragment_profile.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import stock.com.AppBase.BaseFragment
 import stock.com.R
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
 import stock.com.ui.pojo.Country
+import stock.com.ui.pojo.FilterPojo
+import stock.com.ui.pojo.UserPojo
 import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
 
 class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
@@ -40,48 +52,43 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 //        showCountryListDialog(topic)
 
         //getCountryList();
+        getProfile()
     }
 
     override fun onClick(v: View?) {
     }
-
-
-
-
-    /*@SuppressLint("WrongConstant")
-    public fun showCountryListDialog(country:ArrayList<Country.CountryPojo>) {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_country_list)
-        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.setGravity(Gravity.CENTER)
-        dialog.setCancelable(true)
-        val lp = WindowManager.LayoutParams()
-        val window = dialog.window
-        lp.copyFrom(window!!.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-        window.attributes = lp
-        dialog.setCanceledOnTouchOutside(true);
-
-        val recyclerView_country_list = dialog.findViewById(R.id.recyclerView_country_list) as RecyclerView
-
-        val llm = LinearLayoutManager(context);
-        llm.orientation = LinearLayoutManager.VERTICAL;
-        recyclerView_country_list.layoutManager = llm;
-        recyclerView_country_list.adapter =
-            CountryListAdapter(context!!, country, object : CountryListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    countrySelectedItems!!.remove(item);
+    fun getProfile() {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<UserPojo> = apiService.getProfile(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), getFromPrefsString(StockConstant.USERID).toString())
+        call.enqueue(object : Callback<UserPojo> {
+            override fun onResponse(call: Call<UserPojo>, response: Response<UserPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals("1")) {
+                        setData(response.body()!!.user!!)
+                        ll_main_contact.visibility=View.VISIBLE;
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
                 }
-
-                override fun onItemCheck(item: String) {
-                    countrySelectedItems!!.add(item);
-                    Log.e("value", item)
-                }
-            })
-
-        dialog.show();
+            }
+            override fun onFailure(call: Call<UserPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
     }
-*/
+    private fun setData(user: UserPojo.User) {
+        et_email.setText(user.email);
+        et_number.setText(user.phone_number);
+        et_address.setText(user.address);
+        et_country.setText(user.country_id);
+        et_zip_code.setText(user.zipcode);
+    }
+
+
 }

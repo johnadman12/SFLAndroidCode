@@ -1,4 +1,4 @@
-package stock.com.ui.watch_list
+package stock.com.ui.watch_list.adapter
 
 import android.content.Context
 import android.util.Log
@@ -13,11 +13,10 @@ import stock.com.R
 import stock.com.ui.pojo.StockPojo
 import android.widget.Filter
 import android.widget.Filterable
+import stock.com.ui.watch_list.WatchListActivity
 
 class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPojo.Stock>, val activity: WatchListActivity):
     RecyclerView.Adapter<WatchListAdapter_.WatchListHolder>(), Filterable {
-
-
 
     private var searchList: List<StockPojo.Stock>? = null
 

@@ -106,7 +106,7 @@
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    app:srcCompat="@mipmap/profile"
+                    app:srcCompat="@mipmap/credentials"
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:clickable="false"

@@ -151,8 +151,6 @@
     <string name="legality">Legality</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
-        "Material is the metaphor.\n\n"
-
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
         "technologically advanced and open to imagination and magic.\n"
@@ -406,7 +404,7 @@
     <string name="country_list">Country List</string>
     <string name="send_to">Sent To</string>
     <string name="filter_by">Filter By</string>
-    
+
     <string name="asset_type">Asset Type</string>
 
     <string name="sector">Sector</string>
@@ -423,5 +421,13 @@
     <string name="total">Total</string>
     <string name="change">Change</string>
     <string name="percentage">+11.3%</string>
+
+
+    <string name="take_photo">Take Photo</string>
+    <string name="choose_existing_photo">Choose Existing Photo</string>
+
+    <string name="select_option">Select Option</string>
+
+    <string name="please_enter_bio">Please enter biography</string>
 
 </resources>

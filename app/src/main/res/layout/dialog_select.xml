@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#C0C0C0" >
+
+    <RelativeLayout
+        android:id="@+id/varification_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/ciiqer_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/white"
+            android:text="Select a Option"/>
+
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ciiqer_text"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:scrollbars="none"
+            android:dividerHeight="1dp"
+            android:divider="@color/colorPrimary"/>
+    </RelativeLayout>
+
+</RelativeLayout>

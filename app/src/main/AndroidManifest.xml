@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="stock.com">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="stock.com">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:name=".application.FantasyApplication"
@@ -14,10 +17,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.support.SupportActivity"
-                  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.edit_profile.EditProfileActivity"
-                  android:screenOrientation="portrait">
+        <activity android:name=".ui.offer_list.OfferListActivity">
+        </activity>
+        <activity
+                android:name=".ui.support.SupportActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".ui.edit_profile.EditProfileActivity"
+                android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".ui.social_network.SocialNetworkActivity"
@@ -28,7 +35,6 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
-
         <activity android:name=".ui.splash.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -256,8 +262,8 @@
                 android:name=".ui.news.activity.ActivityNewsDetail"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <!-- <meta-data --> <!-- <meta-data -->
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
+        <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" /> -->
         <meta-data
@@ -278,6 +284,18 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"
+                android:grantUriPermissions="true"
+                tools:replace="android:authorities">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/fileprovider"
+                    tools:replace="android:resource"/>
+        </provider>
     </application>
 
 </manifest>

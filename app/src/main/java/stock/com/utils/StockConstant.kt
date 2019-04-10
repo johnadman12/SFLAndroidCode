@@ -12,6 +12,9 @@ object StockConstant{
     val RESULT_CODE_SORT=102;
     val RESULT_CODE_FILTER_WATCH=1001;
     val RESULT_CODE_SORT_WATCH=1002;
+    val REQUEST_WRITE_STORAGE = 112
+    val REQUEST_CAMERA = 113
+    val REQUEST_GALLARY = 114
 
     val USERID = ""
     val USERNAME = "username"
