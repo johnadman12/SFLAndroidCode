@@ -29,8 +29,13 @@ import android.util.Log
 import android.widget.Toast
 import kotlin.collections.ArrayList
 import android.content.Intent
+import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import stock.com.ui.pojo.Country
 import stock.com.ui.pojo.LobbyContestPojo
+import stock.com.utils.SessionManager
+import java.lang.reflect.Type
 
 
 class ActivityFilter : BaseActivity(), View.OnClickListener {
@@ -141,6 +146,14 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         llEntry.setOnClickListener(this)
         btn_apply.setOnClickListener(this)
         getFilterlist()
+        val country: Country =
+            Gson().fromJson(
+                SessionManager.getInstance(this@ActivityFilter).getString(StockConstant.COUNTRYLIST),
+                Country::class.java
+            )
+        Log.e("json", country.country.toString())
+        if (country != null)
+            setCountryAdapter(country)
         llContest.performClick()
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
             tvMin.setText(minValue.toString())
@@ -171,16 +184,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         setMarketAdapter(response.body()!!.market)
                         setContestAdapter(response.body()!!.category!!)
                         setRangebar(response.body()!!.entryFees)
-                       /* val mPrefs: SharedPreferences = getPreferences(MODE_PRIVATE);
-                        val gson = Gson()
-                        val type: Type = object : TypeToken<ArrayList<Country.CountryPojo>>() {
-                        }.type
-                        val json = mPrefs.getString(StockConstant.COUNTRYLIST, "")
-                        Log.e("jsonstribngtype", json.toString())
-                        val topic: ArrayList<Country.CountryPojo> = gson.fromJson(json, type)
-                        Log.e("jsonstribng", topic.toString())
-                        setCountryAdapter(topic)*/
-                        setCountryAdapter(response.body()!!.country)
+//                        setCountryAdapter(topic)
+//                        setCountryAdapter(response.body()!!.country)
                     }
                 } else {
                     Toast.makeText(
@@ -253,8 +258,26 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /*  @SuppressLint("WrongConstant")
+      private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
+          val llm = LinearLayoutManager(this)
+          llm.orientation = LinearLayoutManager.VERTICAL
+          recycle_country!!.layoutManager = llm
+          recycle_country!!.adapter =
+              CountryListAdapter(this, country, object : CountryListAdapter.OnItemCheckListener {
+                  override fun onItemUncheck(item: String) {
+                      countrySelectedItems!!.remove(item);
+                  }
+
+                  override fun onItemCheck(item: String) {
+                      countrySelectedItems!!.add(item);
+                      Log.e("value", item)
+                  }
+              })
+      }
+  */
     @SuppressLint("WrongConstant")
-    private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
+    private fun setCountryAdapter(country: Country) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm

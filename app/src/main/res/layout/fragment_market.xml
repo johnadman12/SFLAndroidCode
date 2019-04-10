@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@mipmap/bg"
+              android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:weightSum="1"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_2sdp">
+
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:layout_weight="1"
+                              android:layout_marginRight="@dimen/_5sdp"
+                              android:layout_marginTop="@dimen/_5sdp"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Create Team "
+                            android:textColor="@color/white"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_22ssp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="use in +/- to choose 12 team members "
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:layout_gravity="top"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@mipmap/watchlist_team"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/watch_list"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/ll_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@mipmap/filter_"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Filter"
+                            android:padding="@dimen/_2sdp"
+                            android:textSize="@dimen/_10ssp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@mipmap/sort_"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sort"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvstock"
+                    android:layout_width="match_parent"
+                    tools:listitem="@layout/row_view_stock_name"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/ll_search"
+                    android:visibility="visible"
+                    android:id="@+id/ll_search">
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_11sdp"
+                        android:hint="@string/search_by_market"
+                        android:textColorHint="@color/white"
+                        android:textColor="@color/white"
+                        android:singleLine="true"
+                        android:id="@+id/et_search"/>
+                <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        app:srcCompat="@mipmap/search"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:tint="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:background="@color/white"
+                          android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Currencies"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/black"/>
+                <View android:layout_width="@dimen/_1ssp"
+                      android:layout_height="match_parent"
+                      android:background="@color/GrayColor"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Currencies" android:textSize="@dimen/_12ssp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/black"/>
+                <View android:layout_width="@dimen/_1ssp"
+                      android:layout_height="match_parent"
+                      android:background="@color/GrayColor"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Currencies"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/black"/>
+                <View android:layout_width="@dimen/_1ssp"
+                      android:layout_height="match_parent"
+                      android:background="@color/GrayColor"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Currencies"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/black"/>
+                <View android:layout_width="@dimen/_1ssp"
+                      android:layout_height="match_parent"
+                      android:background="@color/GrayColor"/>
+
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleSemiBold"
+                    android:text="Market Movers"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/white"/>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Players"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_match"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    tools:listitem="@layout/row_team"
+                    android:layout_height="0dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

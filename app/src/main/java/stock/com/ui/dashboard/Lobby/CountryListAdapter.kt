@@ -14,7 +14,7 @@ import stock.com.ui.pojo.FilterPojo
 
 class CountryListAdapter(
     val mContext: Context,
-    val mContest: List<FilterPojo.CountryPojo>?,
+    val mContest: Country,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<CountryListAdapter.Countryclass>() {
@@ -22,7 +22,7 @@ class CountryListAdapter(
     var checkedHolder: BooleanArray?=null;
 
     private fun createCheckedHolder() {
-        checkedHolder = BooleanArray(mContest!!.size)
+        checkedHolder = BooleanArray(mContest.country!!.size)
     }
 
     init {
@@ -40,7 +40,7 @@ class CountryListAdapter(
     }
 
     override fun onBindViewHolder(holder: Countryclass, position: Int) {
-        val currentItem: FilterPojo.CountryPojo= mContest!!.get(position);
+        val currentItem: Country.CountryPojo = mContest.country!!.get(position);
         holder.itemView.tvFlagName.setText(currentItem.name)
         Glide.with(mContext).load(currentItem.flagUrl6464).into(holder.itemView.ivFlag)
 
@@ -58,7 +58,7 @@ class CountryListAdapter(
 
     }
     override fun getItemCount(): Int {
-        return mContest!!.size
+        return mContest.country!!.size
     }
 
     inner class Countryclass(itemView: View) : RecyclerView.ViewHolder(itemView) {

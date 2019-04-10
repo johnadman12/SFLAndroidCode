@@ -7,6 +7,6 @@
     <item android:drawable="@drawable/buy" android:state_checked="true"/>
 
     <item android:drawable="@drawable/sell" android:state_checked="false"/>
-    <item android:drawable="@drawable/sell"></item>
+    <item android:drawable="@drawable/buy"/>
 
 </selector>

@@ -3,6 +3,7 @@ package stock.com.ui.splash.activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -336,12 +337,11 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        val mPrefs: SharedPreferences = getPreferences(MODE_PRIVATE);
-                        val prefsEditor: SharedPreferences.Editor = mPrefs.edit();
+                        var country: Country = response.body()!!
                         val gson = Gson()
-                        val json = gson.toJson(response.body()!!.country); // myObject - instance of MyObject
-                        prefsEditor.putString(StockConstant.COUNTRYLIST, json);
-                        prefsEditor.commit();
+                        val json = gson.toJson(country); // myObject - instance of MyObject
+                        SessionManager.getInstance(this@WelcomeActivity).putString(StockConstant.COUNTRYLIST, json);
+                        Log.e("list", json.toString())
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))

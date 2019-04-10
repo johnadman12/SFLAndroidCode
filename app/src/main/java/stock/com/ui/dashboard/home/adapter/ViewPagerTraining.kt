@@ -87,7 +87,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                tvTimeLeft.setText(days.toString() + " : " + hours.toString() + " : " + minutes.toString() + " : " + seconds.toString())
+                tvTimeLeft.setText(/*days.toString() + "D: " + */hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString()+"S")
             }
         }
         circular_progress.isAnimationEnabled

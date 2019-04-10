@@ -1,6 +1,8 @@
 package stock.com.ui.pojo
 
+import android.annotation.SuppressLint
 import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -10,7 +12,8 @@ class Country : BasePojo()  {
     @Expose
     var country: ArrayList<CountryPojo>? = null
 
-    inner class CountryPojo protected constructor(`in`: Parcel) : Serializable {
+    @SuppressLint("ParcelCreator")
+    inner class CountryPojo protected constructor(`in`: Parcel) : Parcelable {
         @SerializedName("id")
         @Expose
         var id: Int? = null
@@ -45,5 +48,21 @@ class Country : BasePojo()  {
                 flagUrl6464 = `in`.readString()
             }
         }
+
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeValue(id)
+            parcel.writeString(name)
+            parcel.writeString(alpha2)
+            parcel.writeString(flagUrl1616)
+            parcel.writeString(flagUrl6464)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+
+
     }
 }

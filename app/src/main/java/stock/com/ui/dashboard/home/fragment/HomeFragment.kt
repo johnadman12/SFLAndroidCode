@@ -312,8 +312,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val call: Call<ExchangeList> =
             apiService.getExchangelist()
         call.enqueue(object : Callback<ExchangeList> {
-
-
             override fun onResponse(call: Call<ExchangeList>, response: Response<ExchangeList>) {
                 d.dismiss()
                 if (response.body() != null) {
