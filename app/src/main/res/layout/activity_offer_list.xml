@@ -22,10 +22,18 @@
             android:text="@string/offers"
             style="@style/TextStyleSemiBold"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_height="match_parent"
+    <LinearLayout
             android:layout_width="match_parent"
-            tools:listitem="@layout/row_view_offers"
-            android:id="@+id/rv_offer"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_main"
+            android:visibility="gone">
 
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/row_view_offers"
+                android:id="@+id/rv_offer"/>
+
+    </LinearLayout>
 </LinearLayout>

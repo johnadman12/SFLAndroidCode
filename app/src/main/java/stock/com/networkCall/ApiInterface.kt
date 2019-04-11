@@ -58,6 +58,7 @@ interface ApiInterface {
         @Field("otp") otp: String
     ): Call<SignupPojo>
 
+
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/resend_otp")
@@ -100,6 +101,13 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("users/new_verify_phone_otp")
+    fun verify_otp_new(@Field("user_id") userid: String, @Field("otp") otp: String,@Field("phone_number")phone_number:String): Call<SignupPojo>
+
+
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/request_otp")
     fun requestOtp(
         @Field("user_id") userid: String,
@@ -115,6 +123,18 @@ interface ApiInterface {
         @Field("user_id") userid: String,
         @Field("password") password: String
     ): Call<SignupPojo>
+
+
+    @FormUrlEncoded
+    @POST("users/change_password")
+    fun changePassword(@Header("x-access-token") token: String,@Field("user_id") userid: String,@Field("old_password") old_password: String,@Field("new_password")new_password:String): Call<BasePojo>
+
+
+
+
+
+
+
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
@@ -161,6 +181,18 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/GetTrainingContestsList")
     fun getTrainingContest(): Call<TrainingPojo>
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("users/getsociallinks")
+    fun getSocialLink(): Call<SocialLinkPojo>
+
+
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @GET("offers/index")
+    fun getOfferList(): Call<OffersPojo>
+
+
+
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")

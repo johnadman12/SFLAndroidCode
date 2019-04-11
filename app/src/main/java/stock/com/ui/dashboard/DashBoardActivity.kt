@@ -19,6 +19,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.bottom_navigation.*
 import com.specyci.residemenu.ResideMenu
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.dashboard_activity.*
+import kotlinx.android.synthetic.main.row_view_offers.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -266,6 +268,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         val arrayList = ArrayList<String>()//Creating an empty arraylist
         arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
         arrayList.add(resources.getString(R.string.how_to_play_))
+        arrayList.add(resources.getString(R.string.offers))
+        arrayList.add(resources.getString(R.string.social_network))
         arrayList.add(resources.getString(R.string.legality))
         arrayList.add(resources.getString(R.string.fair_play_commitment))
         arrayList.add(resources.getString(R.string.trust))
@@ -286,7 +290,11 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var tv_level = parentLayout.findViewById<AppCompatTextView>(R.id.tv_level);
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
+       
 
+        Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH+"/"+getUserData().profile_image).into(profile_image)
+
+        //Log.d("profile_image","*----"+getUserData().profile_image);
 
         tv_username.setText(getUserData().username);
 

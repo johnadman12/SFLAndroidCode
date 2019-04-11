@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_confirmation.*
@@ -33,6 +34,7 @@ class ConfirmationActivity : BaseActivity() {
     var username: String = ""
     var email: String = ""
     var userId: String = ""
+    var flag: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
@@ -48,7 +50,17 @@ class ConfirmationActivity : BaseActivity() {
             username = intent.getStringExtra(StockConstant.USERNAME);
             email = intent.getStringExtra(StockConstant.USEREMAIL);
             userId = intent.getStringExtra(StockConstant.USERID);
+            flag = intent.getStringExtra(StockConstant.FLAG);
         }
+        //displayToast(flag)
+
+        if(flag.equals("true")){
+            txtor.visibility=View.GONE
+            tv_requestOtp.visibility=View.GONE
+        }
+
+
+
         img_back.setOnClickListener {
             onBackPressed()
         }
@@ -118,8 +130,8 @@ class ConfirmationActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(
-                            Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
+                        startActivity(Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
+                            .putExtra(StockConstant.FLAG,  flag)
                         )
                         finish()
                     }

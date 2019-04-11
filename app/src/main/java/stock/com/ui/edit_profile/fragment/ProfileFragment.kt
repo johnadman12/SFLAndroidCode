@@ -183,6 +183,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
                     if (response.body()!!.status.equals("1")) {
                         setData(response.body()!!.user!!)
                         ll_main.visibility = View.VISIBLE;
+                    } else if (response.body()!!.status.equals("2")) {
+                        appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))

@@ -27,7 +27,7 @@
                 android:orientation="vertical"
                 android:gravity="center">
             <TextView
-                    android:id="@+id/tv_companyName"
+                    android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Emirates Airways"
@@ -36,7 +36,7 @@
                     android:textSize="@dimen/_14sdp"
                     android:textColor="@color/textColorLightBlack"/>
             <TextView
-                    android:id="@+id/tv_expire_offer"
+                    android:id="@+id/tv_expire_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Expire 16 jan 2018"
@@ -75,9 +75,9 @@
                     android:padding="@dimen/_5sdp"
                     android:textSize="@dimen/_11sdp"
                     android:text="04 December, 2018"
-                    android:textColorHint="@color/blue"
-                    android:textColor="@color/blue"
-                    android:gravity="center|left"/>
+                    android:textColor="@color/menu_bg"
+                    android:gravity="center|left"
+                    android:id="@+id/tv_created"/>
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

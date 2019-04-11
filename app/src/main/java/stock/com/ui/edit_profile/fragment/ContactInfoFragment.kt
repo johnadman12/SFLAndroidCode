@@ -2,6 +2,7 @@ package stock.com.ui.edit_profile.fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_filter.*
 import kotlinx.android.synthetic.main.content_login.*
+import kotlinx.android.synthetic.main.content_otp.*
 import kotlinx.android.synthetic.main.fragment_contact_info.*
 import kotlinx.android.synthetic.main.fragment_contact_info.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -33,6 +35,7 @@ import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.Country
 import stock.com.ui.pojo.FilterPojo
 import stock.com.ui.pojo.UserPojo
+import stock.com.ui.signup.activity.OTPActivity
 import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -116,7 +119,18 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                     if (response.body()!!.status.equals("1")) {
                         //setData(response.body()!!.user!!)
                         //ll_main_contact.visibility = View.VISIBLE;
-                        displayToast(response.body()!!.message)
+                        if (!response.body()!!.otp.equals("")) {
+                            var intent = Intent(context, OTPActivity::class.java);
+                           // intent.putExtra("otp", response.body()!!.otp);
+                            intent.putExtra("isReset", "profile");
+                            intent.putExtra("phoneNumber", et_number.text.toString().trim());
+                            context!!.startActivity(intent)
+                            activity!!.finish();
+                        } else {
+                            displayToast(response.body()!!.message)
+                        }
+                    }else if(response.body()!!.status.equals("2")){
+                        appLogout();
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
@@ -148,6 +162,8 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                     if (response.body()!!.status.equals("1")) {
                         setData(response.body()!!.user!!)
                         ll_main_contact.visibility = View.VISIBLE;
+                    }else if (response.body()!!.status.equals("2")){
+                        appLogout();
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))

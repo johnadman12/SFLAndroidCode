@@ -26,181 +26,152 @@
             android:layout_height="0.1dp"
             android:background="@color/colorPitchImageCaption"/>
 
-    <LinearLayout
+
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:layout_margin="@dimen/_10sdp">
-
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
+            android:scrollbars="none">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_main"
+                android:visibility="gone">
             <LinearLayout
-                    android:id="@+id/ll_fb"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_margin="@dimen/_10sdp">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/fb_icon"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/fb_icon"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:id="@+id/img_fb"/>
+
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/twitter"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:id="@+id/img_twitter"/>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
             <LinearLayout
-                    android:id="@+id/ll_twitter"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_margin="@dimen/_10sdp">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/twitter"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/youtube"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:id="@+id/img_yt"
+                    />
+
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/instagram"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:id="@+id/img_inst"/>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:layout_margin="@dimen/_10sdp">
-
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
             <LinearLayout
-                    android:id="@+id/ll_youtube"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_margin="@dimen/_10sdp">
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/youtube"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
 
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/snapchat"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                            android:id="@+id/img_snapcht"/>
+
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:layout_gravity="center"
+                              android:gravity="center">
+
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_105sdp"
+                            android:layout_height="@dimen/_105sdp"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@mipmap/website"
+                            android:layout_gravity="center"
+                            android:background="@null"
+                           android:id="@+id/img_website" />
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
-            <LinearLayout
-                    android:id="@+id/ll_instagram"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/instagram"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2"
-            android:layout_margin="@dimen/_10sdp">
-
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
-            <LinearLayout
-                    android:id="@+id/ll_snapchat"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/snapchat"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_gravity="center"
-                      android:gravity="center">
-            <LinearLayout
-                    android:id="@+id/ll_website"
-                    android:layout_width="@dimen/_105sdp"
-                    android:layout_height="@dimen/_105sdp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@mipmap/website"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:clickable="false"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
