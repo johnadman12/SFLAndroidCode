@@ -5,9 +5,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <include
+            android:id="@+id/include"
             layout="@layout/include_back"/>
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:layout_below="@+id/include"
             android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -172,7 +174,8 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:padding="@dimen/_10sdp"
+                  android:padding="@dimen/_8sdp"
+                  android:gravity="center"
                   android:background="#32A5DE"
                   android:layout_alignParentBottom="true">
 
@@ -200,12 +203,13 @@
 
 
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvViewteam"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
                 android:text="   View Team   "
                 android:gravity="center"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_gravity="right"
+                android:layout_gravity="right|center_vertical"
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_14ssp"
                 android:background="@drawable/white_fill_button"
@@ -215,8 +219,9 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatImageButton
-            android:layout_width="@dimen/_85sdp"
-            android:layout_height="@dimen/_85sdp"
+            android:id="@+id/imgButtonWizard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/_60sdp"
             android:background="@null"

@@ -1,10 +1,12 @@
 package stock.com.ui.dashboard.Market
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_market.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,12 +22,14 @@ import stock.com.utils.StockDialog
 
 class MarketFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_lobby, container, false)
+        return inflater.inflate(R.layout.fragment_market, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getExchangeNamelist()
+        setMarketAdapter()
+        setTechnologyAdapter()
     }
 
     fun getExchangeNamelist() {
@@ -39,29 +43,47 @@ class MarketFragment : BaseFragment() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-//                        setStockNameAdapter(5)
+                        setStockNameAdapter(response.body()!!.exchange)
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error))
                         d.dismiss()
                     }
                 }
             }
-                override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
-            println(t.toString())
-            displayToast(resources.getString(R.string.something_went_wrong))
-            d.dismiss()
-        }
-    })
+
+            override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
 
 
-}
+    }
 
-    fun setStockNameAdapter(exchangeList: List<HomePojo.Exchange>) {
+    fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView_stock_name!!.layoutManager = llm
-        recyclerView_stock_name.visibility = View.VISIBLE
-        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList)
-        //recyclerView_stock_name.addItemDecoration(CirclePagerIndicatorDecoration(activity))
+        rvstock!!.layoutManager = llm
+        rvstock.visibility = View.VISIBLE
+        rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList)
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setMarketAdapter() {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_market_movers!!.layoutManager = llm
+        rv_market_movers.visibility = View.VISIBLE
+        rv_market_movers!!.adapter = MarketAdapter(context!!)
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setTechnologyAdapter() {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Technology!!.layoutManager = llm
+        rv_Technology.visibility = View.VISIBLE
+        rv_Technology!!.adapter = MarketAdapter(context!!)
     }
 }

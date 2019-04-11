@@ -70,7 +70,6 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         resendRequestOTP()
                     else
                         resendOTP()
-
                 } else {
                     Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                 }

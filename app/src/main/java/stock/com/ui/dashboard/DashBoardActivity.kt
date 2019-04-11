@@ -34,6 +34,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.LobbyFragment
+import stock.com.ui.dashboard.Market.MarketFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
@@ -101,10 +102,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         }
         ll_market.setOnClickListener {
-            toolbar.visibility = View.GONE
-            setTitleVisibility(false, true)
+            toolbar.visibility = View.VISIBLE
+            setTitleVisibility(true, false)
             // setMenu(false, false, false, true, false, false, false)
-            setFragment(ProfileFragment(), Bundle())
+            setFragment(MarketFragment(), Bundle())
 
             changetTextViewBackground(tv_market, R.color.colorPrimary);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
