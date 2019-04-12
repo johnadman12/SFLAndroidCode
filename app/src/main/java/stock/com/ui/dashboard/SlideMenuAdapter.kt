@@ -43,6 +43,7 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
                   mContext.startActivity(intent);
               */
 
+
             }
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.social_network))) {
                 var intent = Intent(mContext, SocialNetworkActivity::class.java);
