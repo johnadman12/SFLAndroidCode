@@ -205,7 +205,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         toolbar.visibility = View.VISIBLE
         setTitleVisibility(false, true)
-       // setMenu(true, false, false, false, false, false, false)
+        // setMenu(true, false, false, false, false, false, false)
         setTitleText(getString(R.string.home))
 
         changetTextViewBackground(tv_home, R.color.colorPrimary);
@@ -216,25 +216,26 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         setFragment(HomeFragment(), Bundle())
 
         /*setTitleVisibility(false, true)
-    setMenu(true, false, false, false, false, false, false)
-    bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
-    bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
-    removeShiftMode(bottomNavigationView)
-    setFragment(HomeFragment());
+        setMenu(true, false, false, false, false, false, false)
+        bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
+        bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        removeShiftMode(bottomNavigationView)
+        setFragment(HomeFragment());
     */
 
-        if (getFromPrefsString(StockConstant.USERID).toString() == "") {
+
+        if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
             ll_bottom.visibility = View.GONE;
             img_btn_menu.visibility = GONE;
-
             img_btn_menu.visibility = GONE;
             setMenu(false, false, false, false, false, false, false)
         } else {
             ll_bottom.visibility = View.VISIBLE;
             img_btn_menu.visibility = VISIBLE;
-        }
+
             img_btn_menu.visibility = VISIBLE;
             setMenu(true, false, false, false, false, false, false)
+        }
 
 
 
@@ -242,8 +243,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             resideMenu!!.openMenu(ResideMenu.DIRECTION_LEFT);
 
         }
-
-
 
 
     }
@@ -291,9 +290,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var tv_level = parentLayout.findViewById<AppCompatTextView>(R.id.tv_level);
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
-       
 
-        Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH+"/"+getUserData().profile_image).into(profile_image)
+
+        Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH + "/" + getUserData().profile_image)
+            .into(profile_image)
 
         //Log.d("profile_image","*----"+getUserData().profile_image);
 
@@ -433,6 +433,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)

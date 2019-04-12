@@ -117,7 +117,6 @@ dependencies {
     //realm database
 //    implementation 'io.realm:realm-android:0.87.4'
 
-
 /*    implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'*/
     //side menu
