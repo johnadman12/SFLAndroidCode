@@ -42,6 +42,7 @@ import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
@@ -70,8 +71,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             //setMenu(true, false, false, false, false, false, false)
             setTitleVisibility(false, true)
             setTitleText(getString(R.string.my_contest))
-            setFragment(MyContestFragment(), Bundle());
-
+//            setFragment(MyContestFragment(), Bundle());
+            startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
             changetTextViewBackground(tv_contest, R.color.colorPrimary);
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
