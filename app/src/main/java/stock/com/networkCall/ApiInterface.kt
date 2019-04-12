@@ -260,40 +260,52 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("users/logout")
-    fun logOut(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<BasePojo>
+    fun logOut(@Header("x-access-token") token: String, @Field("user_id") user_id: String): Call<BasePojo>
 
 
     @FormUrlEncoded
     @POST("users/get_profile")
-    fun getProfile(@Header("x-access-token")token: String,@Field("user_id")user_id:String):Call<UserPojo>
+    fun getProfile(@Header("x-access-token") token: String, @Field("user_id") user_id: String): Call<UserPojo>
 
 
     @FormUrlEncoded
     @POST("users/update_profile_details")
-    fun  updateProfileDetails(@Header("x-access-token")token: String,@Field("user_id")user_id:String,@Field("address")address:String,@Field("zipcode")zipcode:String,@Field("phone_number")phone_number:String,@Field("country_id")country_id:String?):Call<BasePojo>
+    fun updateProfileDetails(
+        @Header("x-access-token") token: String, @Field("user_id") user_id: String, @Field("address") address: String, @Field(
+            "zipcode"
+        ) zipcode: String, @Field("phone_number") phone_number: String, @Field("country_id") country_id: String?
+    ): Call<BasePojo>
 
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/faq")
-    fun faq():Call<WebViewPojo>
+    fun faq(): Call<WebViewPojo>
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/rules-and-winnings")
-    fun rulesAndWinning():Call<WebViewPojo>
+    fun rulesAndWinning(): Call<WebViewPojo>
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/how-to-play")
-    fun howToPlay():Call<WebViewPojo>
+    fun howToPlay(): Call<WebViewPojo>
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/country_list")
-    fun getCountryList():Call<Country>
+    fun getCountryList(): Call<Country>
 
-   @Multipart
-   @POST("users/update_profile")
-   fun updateProfile(@Header("x-access-token")token: String, @Part("user_id") user_id: RequestBody,@Part("biography") biography: RequestBody,@Part file: MultipartBody.Part?):Call<BasePojo>
+    @Multipart
+    @POST("users/update_profile")
+    fun updateProfile(@Header("x-access-token") token: String, @Part("user_id") user_id: RequestBody, @Part("biography") biography: RequestBody, @Part file: MultipartBody.Part?): Call<BasePojo>
 
+    @FormUrlEncoded
+    @POST("stock/stock_list")
+    fun getStockList(@Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
+                     @Field("user_id") user_id: String): Call<StockTeamPojo>
 
+    @FormUrlEncoded
+    @POST("stock/wizard_stock_list")
+    fun getWizardStockList(@Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
+                           @Field("user_id") user_id: String): Call<StockTeamPojo>
 
 
     /* @Headers("Content-Type: application/json")

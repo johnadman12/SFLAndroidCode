@@ -29,17 +29,11 @@
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Create Team "
+                            android:text="Market "
                             android:textColor="@color/white"
                             style="@style/TextStyleSemiBold"
                             android:textSize="@dimen/_22ssp"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="use in +/- to choose 12 team members "
-                            android:padding="@dimen/_2sdp"
-                            android:textColor="@color/textColorOffWhite"
-                            style="@style/TextStyleNormal"/>
+
                 </LinearLayout>
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -114,12 +108,18 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1sp"
+                  android:background="#38A1DA"/>
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvstock"
                     android:layout_width="match_parent"
+                    android:background="@color/white"
                     tools:listitem="@layout/row_view_stock_name"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"
+                    android:padding="@dimen/_5sdp"
                     android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -129,7 +129,7 @@
                     android:orientation="horizontal"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/ll_search"
                     android:visibility="visible"
@@ -162,6 +162,7 @@
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:background="@color/white"
+                          android:gravity="center"
                           android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -169,9 +170,10 @@
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
                         android:text="Currencies"
-                        android:textSize="@dimen/_12ssp"
+                        android:textSize="@dimen/_10ssp"
                         android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
@@ -180,9 +182,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
-                        android:text="Currencies" android:textSize="@dimen/_12ssp"
+                        android:text="Indices"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
                         android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
@@ -191,10 +195,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
-                        android:text="Currencies"
-                        android:textSize="@dimen/_12ssp"
+                        android:text="Commodities"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10ssp"
                         android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
@@ -203,10 +208,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
-                        android:text="Currencies"
-                        android:textSize="@dimen/_12ssp"
+                        android:text="Stocks"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
                         android:layout_weight="1"
-                        android:padding="@dimen/_10sdp"
+                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
@@ -222,17 +228,43 @@
                     android:padding="@dimen/_10sdp"
                     android:textColor="@color/white"/>
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_Players"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_match"
-                    app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
+                    android:id="@+id/rv_market_movers"
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    tools:listitem="@layout/row_team"
-                    android:layout_height="0dp">
+                    android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="  See All   "
+                    android:textAllCaps="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_2sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:background="@drawable/white_fill_button"
+                    android:textColor="@color/black"
+                    style="@style/TextStyleNormal"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleSemiBold"
+                    android:text="Technology"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/white"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_Technology"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

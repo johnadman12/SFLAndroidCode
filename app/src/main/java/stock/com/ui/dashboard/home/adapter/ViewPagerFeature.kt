@@ -17,9 +17,11 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,6 +56,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
+        val ll_Circular: LinearLayout = view.findViewById(R.id.ll_Circular)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
@@ -91,7 +94,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString()+"S")
+                tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
             }
         }
         iv_info.setOnClickListener {
@@ -111,8 +114,18 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
 
         llWinners.setOnClickListener {
             val manager = (context as AppCompatActivity).supportFragmentManager
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
+            val bottomSheetDialogFragment =
+                BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
+
+        ll_Circular.setOnClickListener {
+            context.startActivity(
+                Intent(context, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID,
+                    list.get(position).exchangeid
+                )
+            )
         }
         // Add the view to the parent
         parent?.addView(view)

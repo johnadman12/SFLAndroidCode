@@ -6,6 +6,7 @@ object StockConstant{
     @JvmStatic
     val PREF_NAME = "com.stock.app"
     val COUNTRYLIST = "country"
+    val EXCHANGEID = "exchangeid"
     val DEVICE_TOKEN = ""
 
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"

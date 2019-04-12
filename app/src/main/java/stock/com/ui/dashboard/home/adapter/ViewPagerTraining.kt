@@ -2,6 +2,7 @@ package stock.com.ui.dashboard.home.adapter
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
@@ -14,6 +15,7 @@ import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -46,6 +48,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val tvTimeLeft: TextView = view.findViewById(R.id.tvTimeLeft)
         val tvWinnersTotal: TextView = view.findViewById(R.id.tvWinnersTotal)
         val iv_info: AppCompatImageButton = view.findViewById(R.id.iv_info)
+        val ll_Circular: LinearLayout = view.findViewById(R.id.ll_Circular)
 
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
@@ -104,6 +107,10 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             val manager = (context as AppCompatActivity).supportFragmentManager
             val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
+
+        ll_Circular.setOnClickListener {
+            context.startActivity(Intent(context, ActivityCreateTeam::class.java))
         }
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);

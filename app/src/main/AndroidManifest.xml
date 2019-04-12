@@ -269,6 +269,11 @@
                 android:name=".ui.dashboard.Team.ActivityCreateTeam"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Team.ActivityViewTeam"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
         <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
