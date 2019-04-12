@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.my_contest.MyContestActivity"
+        android:orientation="vertical"
+        android:background="@mipmap/bg">
+    <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/include_back"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp">
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_contests"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_22ssp"
+                android:layout_weight="1"
+                android:layout_gravity="center"/>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/ll_my_team"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:visibility="visible">
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    app:srcCompat="@mipmap/myteams"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:background="@null"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_teams"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:paddingTop="@dimen/_5sdp"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="5">
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:layout_width="0dp"
+                android:textFontWeight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/created"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:id="@+id/tv_created"/>
+
+        <View android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@color/GrayColor"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:layout_width="0dp"
+                android:textFontWeight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/invited"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:id="@+id/tv_invited"/>
+
+        <View android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@color/GrayColor"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:layout_width="0dp"
+                android:textFontWeight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/upcoming"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:id="@+id/tv_upcoming"/>
+
+        <View android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@color/GrayColor"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:layout_width="0dp"
+                android:textFontWeight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/live_in"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:id="@+id/tv_live"/>
+        <View android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@color/GrayColor"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleNormal"
+                android:layout_width="0dp"
+                android:textFontWeight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/finished"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11ssp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:id="@+id/tv_finished"/>
+    </LinearLayout>
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_below="@+id/app_bar"
+            android:background="@mipmap/bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+    />
+
+
+
+
+
+</LinearLayout>

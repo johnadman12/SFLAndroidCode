@@ -40,6 +40,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="home">Home</string>
     <string name="my_contest">My Contest</string>
+    <string name="my_contests">My Contests</string>
     <string name="profile">Profile</string>
     <string name="more">More</string>
     <string name="fixtures">Upcomming</string>
@@ -124,6 +125,7 @@
     <string name="vice_caotain">VICE CAOTAIN</string>
     <string name="vice_captain">VICE CAPTAIN</string>
     <string name="my_team">My Team</string>
+    <string name="my_teams">My Teams</string>
     <string name="join_this_contest">Join This Contest</string>
     <string name="invite_code">Invite Code</string>
     <string name="enter_contest_name">Enter Contest Name</string>
@@ -439,5 +441,13 @@
 
     <string name="old_pass">Old Password</string>
     <string name="new_pass">New Password</string>
+
+    <string name="created">Created</string>
+    <string name="invited">Invited</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="finished">Finished</string>
+
+    <string name="time">Time:</string>
+    <string name="scores">Scores</string>
 
 </resources>
