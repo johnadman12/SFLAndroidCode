@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_remove" />
-                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\share.svg" />
+                            <entry key="outputName" value="ic_down_arrow" />
+                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\down-arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

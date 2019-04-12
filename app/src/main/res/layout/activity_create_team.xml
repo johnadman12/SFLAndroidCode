@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_below="@+id/include"
+            android:layout_above="@+id/parantbottom"
             android:layout_height="match_parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -140,7 +141,7 @@
                         android:textColorHint="@color/white"
                         android:textColor="@color/white"
                         android:singleLine="true"
-                        android:id="@+id/et_search"/>
+                        android:id="@+id/et_search_stock"/>
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
@@ -171,22 +172,25 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/_8sdp"
-                  android:gravity="center"
-                  android:background="#32A5DE"
-                  android:layout_alignParentBottom="true">
+    <LinearLayout
+            android:id="@+id/parantbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            android:gravity="center"
+            android:background="#32A5DE"
+            android:layout_alignParentBottom="true">
 
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
                       android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvteamplayer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="4/12 "
+                    android:text="0/12 "
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:gravity="left"
                     android:padding="@dimen/_2sdp"
@@ -212,7 +216,7 @@
                 android:layout_gravity="right|center_vertical"
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_14ssp"
-                android:background="@drawable/white_fill_button"
+                android:background="@drawable/grey_fill_button"
                 android:textColor="@color/black"
                 style="@style/TextStyleNormal"/>
 

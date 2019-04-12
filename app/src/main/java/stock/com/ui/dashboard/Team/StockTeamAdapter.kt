@@ -1,30 +1,49 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
-import stock.com.ui.pojo.FilterPojo
+import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
 
 class StockTeamAdapter(
-    val mContext: Context,
-    val mContest: List<StockTeamPojo.Stock>/*,
-    val onItemCheckListener: OnItemCheckListener*/
+    val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
+    val yes: String,
+    val onItemCheckListener: OnItemCheckListener
 ) :
-    RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>() {
+    RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
+
+    /*data class StockTeamAdapter(
+        val mContext: Context,
+        val mContest: List<StockTeamPojo.Stock>,
+        val activity: ActivityCreateTeam,
+        val other:String
+    )
+
+*/
+    private var searchList: List<StockTeamPojo.Stock>? = null
+
 
     private fun createCheckedHolder() {
         checkedHolder = BooleanArray(mContest.size)
     }
 
     init {
+        this.searchList = mContest;
+
+        //Toast.makeText(mContext,""+ searchList!!.size.toString(),1000).show()
         createCheckedHolder();
     }
 
@@ -34,32 +53,82 @@ class StockTeamAdapter(
     }
 
     interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
+        fun onItemCheck(item: Int)
+        fun onItemUncheck(item: Int)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        holder.itemView.tvSymbol.setText(mContest.get(position).symbol)
-        holder.itemView.tvCompanyName.setText(mContest.get(position).companyName)
 
-        holder.itemView.lladdStock.setOnClickListener {
+        holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
+        holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
+        holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
+        holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
+        holder.itemView.tvPercentage.setText(searchList!!.get(position).changePercent)
+        Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
+
+        if (yes.equals("yes")) {
             holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.lladdStock.visibility = GONE
+            holder.itemView.img_add.visibility = GONE
+        }
+
+        if (searchList!!.get(position).addedStock.equals("yes")) {
+            holder.itemView.toggleButton1.isChecked = true
+        } else {
+            holder.itemView.toggleButton1.isChecked = false
+
+        }
+
+        holder.itemView.img_add.setOnClickListener {
+            holder.itemView.llremoveStock.visibility = VISIBLE
+            holder.itemView.img_add.visibility = GONE
+            onItemCheckListener.onItemCheck(searchList!!.get(position).stockid);
         }
         holder.itemView.llremoveStock.setOnClickListener {
             holder.itemView.llremoveStock.visibility = GONE
-            holder.itemView.lladdStock.visibility = VISIBLE
+            holder.itemView.img_add.visibility = VISIBLE
+            onItemCheckListener.onItemUncheck(searchList!!.get(position).stockid);
         }
     }
 
 
     override fun getItemCount(): Int {
-        return mContest.size
+        return searchList!!.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setOnClickListener(onClickListener: View.OnClickListener) {
+            itemView.img_add.setOnClickListener(onClickListener)
+            itemView.llremoveStock.setOnClickListener(onClickListener)
+            notifyDataSetChanged()
+        }
+    }
 
+    override
+    fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
+                val charString = charSequence.toString()
+                if (charString.isEmpty()) {
+                    searchList = mContest
+                } else {
+                    val filteredList = ArrayList<StockTeamPojo.Stock>()
+                    for (row in mContest) {
+                        if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row)
+                            Log.d("dadada", "---" + filteredList.size);
+                        }
+                    }
+                    searchList = filteredList
+                }
+                val filterResults = Filter.FilterResults()
+                filterResults.values = searchList
+                return filterResults
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
+                searchList = filterResults.values as ArrayList<StockTeamPojo.Stock>
+                notifyDataSetChanged()
+            }
         }
     }
 }

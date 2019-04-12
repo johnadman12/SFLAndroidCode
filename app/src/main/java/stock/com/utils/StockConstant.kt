@@ -8,6 +8,7 @@ object StockConstant{
     val COUNTRYLIST = "country"
     val EXCHANGEID = "exchangeid"
     val DEVICE_TOKEN = ""
+    val STOCKLIST = "stocklist"
 
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"
 

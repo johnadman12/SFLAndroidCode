@@ -24,8 +24,6 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class WatchListActivity : BaseActivity(){
-
-
     private var watchListAdapter: WatchListAdapter_?=null;
     private var list:ArrayList<StockPojo.Stock>?=null;
 

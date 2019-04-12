@@ -4,8 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_create_team.*
 import kotlinx.android.synthetic.main.include_back.*
@@ -16,12 +20,17 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.pojo.FilterPojo
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
+
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
+    private var stockSelectedItems: ArrayList<Int>? = null
+    private var stockTeamAdapter: StockTeamAdapter? = null;
+    private var list: ArrayList<StockTeamPojo.Stock>? = null;
+    private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
+
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -31,7 +40,16 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
             }
             R.id.tvViewteam -> {
-                startActivity(Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java))
+                if (stockSelectedItems!!.size > 0) {
+                    for (i in 0 until stockSelectedItems!!.size) {
+                        parseList!!.add(list!!.get(stockSelectedItems!![i]))
+                        Log.e("parselist", parseList!!.get(i).companyName)
+                    }
+                }
+                startActivity(
+                    Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
+                        .putExtra(StockConstant.STOCKLIST, parseList)
+                )
             }
         }
     }
@@ -41,16 +59,64 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
         StockConstant.ACTIVITIES.add(this)
+        list = ArrayList();
         initView()
     }
 
+    @SuppressLint("WrongConstant")
     private fun initView() {
+        stockSelectedItems = ArrayList();
+        parseList = ArrayList();
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
+        tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
             exchangeId = intent.getStringExtra(StockConstant.EXCHANGEID)
         }
+
+        /*val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Players!!.layoutManager = llm
+        rv_Players.visibility = View.VISIBLE
+        rv_Players!!.adapter
+        */
+
+        stockTeamAdapter = StockTeamAdapter(
+            this, list as ArrayList,"no",
+            object : StockTeamAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: Int) {
+                    stockSelectedItems?.remove(item);
+                    setTeamText(stockSelectedItems!!.size.toString())
+                    Log.e("stocklistremove", stockSelectedItems.toString())
+                }
+
+                override fun onItemCheck(item: Int) {
+                    stockSelectedItems?.add(item);
+                    setTeamText(stockSelectedItems!!.size.toString())
+                    Log.e("stocklist", stockSelectedItems.toString())
+                }
+            });
+
+        et_search_stock.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                stockTeamAdapter!!.getFilter().filter(s);
+            }
+        })
+
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Players!!.layoutManager = llm
+        rv_Players.visibility = View.VISIBLE
+        rv_Players!!.adapter = stockTeamAdapter;
+
         getTeamlist()
     }
 
@@ -71,7 +137,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        setStockTeamAdapter(response.body()!!.stock!!)
+                        list!!.addAll(response.body()!!.stock!!);
+
+//                        displayToast(list!!.size.toString())
+                        rv_Players.adapter!!.notifyDataSetChanged();
+
+                        //  setStockTeamAdapter(response.body()!!.stock!!)
 
                     }
                 } else {
@@ -97,14 +168,40 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-    @SuppressLint("WrongConstant")
-    private fun setStockTeamAdapter(stock: List<StockTeamPojo.Stock>) {
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Players!!.layoutManager = llm
-        rv_Players.visibility = View.VISIBLE
-        rv_Players!!.adapter = StockTeamAdapter(this, stock);
-    }
+    /* @SuppressLint("WrongConstant")
+     private fun setStockTeamAdapter(stock: List<StockTeamPojo.Stock>) {
+         val llm = LinearLayoutManager(this)
+         llm.orientation = LinearLayoutManager.VERTICAL
+         rv_Players!!.layoutManager = llm
+         rv_Players.visibility = View.VISIBLE
+         rv_Players!!.adapter = StockTeamAdapter(
+             this,
+             stock,
+             object : StockTeamAdapter.OnItemCheckListener {
+                 override fun onItemUncheck(item: String) {
+                     stockSelectedItems?.remove(item);
+                     setTeamText(stockSelectedItems!!.size.toString())
+                     Log.e("stocklistremove", stockSelectedItems.toString())
+                 }
 
+                 override fun onItemCheck(item: String) {
+                     stockSelectedItems?.add(item);
+                     setTeamText(stockSelectedItems!!.size.toString())
+                     Log.e("stocklist", stockSelectedItems.toString())
+                 }
+             });
+     }*/
+
+    fun setTeamText(add: String) {
+        tvteamplayer.setText(add + "/12")
+        if (add.toInt() == 12) {
+            tvViewteam.isEnabled = true
+            tvViewteam.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.white_fill_button))
+        } else {
+            tvViewteam.isEnabled = false
+            tvViewteam.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.grey_fill_button))
+
+        }
+    }
 
 }
