@@ -73,10 +73,14 @@ open class BaseFragment : Fragment() {
         dialog.show()*/
 
         saveIntoPrefsString(StockConstant.USERID,"")
-        startActivity(Intent(context, WelcomeActivity::class.java))
+        val intent = Intent(context, WelcomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent);
+
+       /* startActivity(Intent(context, WelcomeActivity::class.java))
         (0 until StockConstant.ACTIVITIES.size)
             .filter { StockConstant.ACTIVITIES[it] != null }
             .forEach { StockConstant.ACTIVITIES[it]?.finish() }
-        activity!!.finish()
+        activity!!.finish()*/
     }
 }

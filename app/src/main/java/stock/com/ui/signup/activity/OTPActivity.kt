@@ -46,7 +46,9 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     if (NetworkUtils.isConnected()) {
                         if (flag)
                             forgotVerifyOtp()
-                        else
+                        else if(comingFromActivity.equals("profile")){
+                            verifyOTPApiContact()
+                        }else
                             verifyOTPApi()
 
                     } else {
@@ -90,13 +92,17 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 username = intent.getStringExtra(StockConstant.USERNAME);
                 email = intent.getStringExtra(StockConstant.USEREMAIL);
                 userId = intent.getStringExtra(StockConstant.USERID);
-            } else {
+            }else if(comingFromActivity.equals("profile")){
+                flag = false
+                phoneNumber = intent.getStringExtra("phoneNumber")
+                displayToast(phoneNumber)
+            }
+            else {
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
             }
         }
-
-        println("Phone number is   " + phoneNumber)
+       // println("Phone number is   " + phoneNumber)
         initViews()
     }
 
@@ -238,7 +244,35 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     d.dismiss()
                 }
             }
-
+            override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+    fun verifyOTPApiContact() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<SignupPojo> = apiService.verify_otp_new(getFromPrefsString(StockConstant.USERID).toString(),otp_view.text.toString(),phoneNumber)
+        call.enqueue(object : Callback<SignupPojo> {
+            override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
+                d.dismiss()
+                if (response?.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                        finish()
+                    }
+                    displayToast(response.body()!!.message)
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))

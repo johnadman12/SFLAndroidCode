@@ -39,6 +39,17 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>,var act
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
+            if(activity!=null&&holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.social_network))) {
+                var intent= Intent(mContext, SocialNetworkActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+            if(activity!=null&&holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.offers))) {
+                var intent= Intent(mContext, OfferListActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+
         }
     }
     override fun getItemCount(): Int {

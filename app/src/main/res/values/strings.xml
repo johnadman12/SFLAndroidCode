@@ -96,6 +96,7 @@
     <string name="transaction_history">Transaction History</string>
     <string name="how_to_play">How to \n Play</string>
     <string name="how_to_play_">How to Play</string>
+
     <string name="about">About</string>
     <string name="time_left">Time Left</string>
     <string name="rules">Rules</string>
@@ -270,6 +271,7 @@
     <string name="contest_type">Contest Type</string>
     <string name="_50_001_more"><![CDATA[50,001 & more]]></string>
     <string name="apply">Apply</string>
+
     <string name="unutilized_balance_winnings_rs_0">Unutilized balance + Winnings= \u20B9 0</string>
     <string name="confirmation">Confirmation</string>
     <string name="usable_cash_bonus">Usable Cash Bonus</string>
@@ -434,5 +436,8 @@
     <string name="address_error">Please enter address</string>
     <string name="zip_coder_error">Please enter zipcode</string>
     <string name="country_error">Please select country</string>
+
+    <string name="old_pass">Old Password</string>
+    <string name="new_pass">New Password</string>
 
 </resources>

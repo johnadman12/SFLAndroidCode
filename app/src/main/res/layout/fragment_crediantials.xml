@@ -11,7 +11,9 @@
         <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/ll_main"
+                android:visibility="gone">
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,9 +48,11 @@
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
-                            android:inputType="phone"
+                            android:inputType="text"
                             android:singleLine="true"
-                            android:imeOptions="actionNext"/>
+                            android:imeOptions="actionNext"
+                            android:enabled="false"
+                            android:id="@+id/et_user_name"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -87,6 +91,8 @@
                             android:textColorHint="@color/white"
                             android:inputType="phone"
                             android:singleLine="true"
+                            android:enabled="false"
+                            android:id="@+id/et_mob"
                             android:imeOptions="actionNext"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -124,7 +130,9 @@
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
-                            android:inputType="phone"
+                            android:inputType="textEmailAddress"
+                            android:enabled="false"
+                            android:id="@+id/et_email"
                             android:singleLine="true"
                             android:imeOptions="actionNext"/>
 
@@ -137,14 +145,14 @@
                     android:layout_marginLeft="@dimen/_18sdp"
                     android:padding="@dimen/_15sdp">
                 <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_apply"
+                        android:id="@+id/tv_achange_pass"
                         style="@style/TextStyleSemiBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/radiuse"
                         android:gravity="center"
                         android:padding="@dimen/_10sdp"
-                        android:text="@string/apply"/>
+                        android:text="@string/change_password"/>
             </RelativeLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>

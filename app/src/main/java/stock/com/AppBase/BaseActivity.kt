@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -257,11 +258,17 @@ open class BaseActivity : AppCompatActivity() {
         dialog.show()*/
 
         saveIntoPrefsString(StockConstant.USERID, "")
-        startActivity(Intent(this, WelcomeActivity::class.java))
+        val intent = Intent(this, WelcomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent);
+
+       /* startActivity(Intent(this, WelcomeActivity::class.java))
         (0 until StockConstant.ACTIVITIES.size)
             .filter { StockConstant.ACTIVITIES[it] != null }
             .forEach { StockConstant.ACTIVITIES[it]?.finish() }
-        finish()
+        finish()*/
+
+
     }
 
     /*
@@ -280,6 +287,8 @@ open class BaseActivity : AppCompatActivity() {
         //edit.putString(key, userdata.toString())
         edit.putString(StockConstant.USERNAME, userdata!!.username)
         edit.putString(StockConstant.USERPHONE, userdata!!.phone_number);
+        edit.putString(StockConstant.USERIMG, userdata!!.profile_image);
+        Log.d("fsfsfs---", "---" + userdata!!.profile_image);
         edit.apply()
     }
 
@@ -288,6 +297,7 @@ open class BaseActivity : AppCompatActivity() {
         var signupDataPojo = SignupDataPojo()
         signupDataPojo.username = prefs.getString(StockConstant.USERNAME, "");
         signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");
+        signupDataPojo.profile_image = prefs.getString(StockConstant.USERIMG, "");
         return signupDataPojo;
     }
 

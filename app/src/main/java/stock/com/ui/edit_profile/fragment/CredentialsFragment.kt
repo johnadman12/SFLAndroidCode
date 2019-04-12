@@ -2,6 +2,7 @@ package stock.com.ui.edit_profile.fragment
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,12 +15,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_filter.*
-import kotlinx.android.synthetic.main.content_login.*
 import kotlinx.android.synthetic.main.fragment_contact_info.*
 import kotlinx.android.synthetic.main.fragment_contact_info.view.*
-import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_crediantials.*
+import kotlinx.android.synthetic.main.fragment_crediantials.view.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,13 +35,13 @@ import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.Country
 import stock.com.ui.pojo.FilterPojo
 import stock.com.ui.pojo.UserPojo
+import stock.com.ui.signup.activity.ConfirmationActivity
 import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
 
-class CredentialsFragment : BaseFragment(), View.OnClickListener {
-
+class CredentialsFragment : BaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -49,17 +51,61 @@ class CredentialsFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getProfile();
 
+        view.tv_achange_pass.setOnClickListener {
 
-    }
-
-    override fun onClick(v: View?) {
-        when (v!!.id) {
+            startActivity(Intent(context, ConfirmationActivity::class.java)
+                    .putExtra(StockConstant.USEREMAIL, et_email.text.toString())
+                    .putExtra(StockConstant.USERNAME, et_user_name.text.toString())
+                    .putExtra(StockConstant.USERPHONE, et_mob.text.toString())
+                    .putExtra(StockConstant.USERID, getFromPrefsString(StockConstant.USERID).toString())
+                    .putExtra(StockConstant.FLAG,  "true")
+            )
 
         }
+
+
+
     }
 
+    fun getProfile() {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<UserPojo> = apiService.getProfile(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+            getFromPrefsString(StockConstant.USERID).toString()
+        )
+        call.enqueue(object : Callback<UserPojo> {
+            override fun onResponse(call: Call<UserPojo>, response: Response<UserPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status.equals("1")) {
+                        setData(response.body()!!.user!!)
+                        ll_main.visibility = View.VISIBLE;
+                    } else if (response.body()!!.status.equals("2")) {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error))
+                    d.dismiss()
+                }
+            }
 
+            override fun onFailure(call: Call<UserPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    private fun setData(user: UserPojo.User) {
+        et_email.setText(user.email);
+        et_user_name.setText(user.username);
+        et_mob.setText(user.phone_number);
+    }
 
 
 }

@@ -120,6 +120,7 @@ class ForgotPasswordActivity : BaseActivity() {
                                 .putExtra(StockConstant.USERNAME, username)
                                 .putExtra(StockConstant.USERPHONE, phone)
                                 .putExtra(StockConstant.USERID,  response.body()!!.user_id)
+                                .putExtra(StockConstant.FLAG,  "false")
                         )
                         finish()
                     }
