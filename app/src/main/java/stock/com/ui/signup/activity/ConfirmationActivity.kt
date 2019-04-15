@@ -50,16 +50,7 @@ class ConfirmationActivity : BaseActivity() {
             username = intent.getStringExtra(StockConstant.USERNAME);
             email = intent.getStringExtra(StockConstant.USEREMAIL);
             userId = intent.getStringExtra(StockConstant.USERID);
-            flag = intent.getStringExtra(StockConstant.FLAG);
         }
-        //displayToast(flag)
-
-        if(flag.equals("true")){
-            txtor.visibility=View.GONE
-            tv_requestOtp.visibility=View.GONE
-        }
-
-
 
         img_back.setOnClickListener {
             onBackPressed()
@@ -131,7 +122,6 @@ class ConfirmationActivity : BaseActivity() {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         startActivity(Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
-                            .putExtra(StockConstant.FLAG,  flag)
                         )
                         finish()
                     }

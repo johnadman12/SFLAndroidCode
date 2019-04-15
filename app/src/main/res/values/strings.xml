@@ -390,6 +390,7 @@
     <string name="watch_list">Watchlist</string>
 
     <string name="search_by_market">Search by market symbol or name</string>
+    <string name="search_by_user_name">Search by username</string>
 
     <string name="social_network">Social Network</string>
 
@@ -449,5 +450,21 @@
 
     <string name="time">Time:</string>
     <string name="scores">Scores</string>
+
+    <string name="error_old_pass">Please enter old password</string>
+    <string name="error_new_pass">Please enter new password</string>
+    <string name="error_con_pass">Please enter confirm password</string>
+    <string name="error_pass_match">Password does not match</string>
+
+    <string name="refer_a_friend">Refer a Friend</string>
+    <string name="friend">Friends</string>
+
+    <string name="tap_to_coppy">Tap to copy</string>
+    <string name="share_unique_code">Share Unique code</string>
+    <string name="share">Share</string>
+
+    <string name="add">Add</string>
+
+
 
 </resources>

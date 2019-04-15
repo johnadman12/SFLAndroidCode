@@ -44,6 +44,7 @@ import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -67,17 +68,27 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         initView()
 
         ll_contest.setOnClickListener {
-            toolbar.visibility = View.VISIBLE
-            //setMenu(true, false, false, false, false, false, false)
-            setTitleVisibility(false, true)
-            setTitleText(getString(R.string.my_contest))
-//            setFragment(MyContestFragment(), Bundle());
-            startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
-            changetTextViewBackground(tv_contest, R.color.colorPrimary);
-            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
 
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                )
+            } else {
+                toolbar.visibility = View.VISIBLE
+                //setMenu(true, false, false, false, false, false, false)
+                setTitleVisibility(false, true)
+                setTitleText(getString(R.string.my_contest))
+
+                // setFragment(MyContestFragment(), Bundle());
+                startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
+                /*changetTextViewBackground(tv_contest, R.color.colorPrimary);
+                changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);*/
+            }
         }
         ll_home.setOnClickListener {
             toolbar.visibility = View.VISIBLE
@@ -88,48 +99,72 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
-
         }
         ll_profile.setOnClickListener {
-            toolbar.visibility = View.GONE
-            setTitleVisibility(true, false)
-            // setMenu(false, false, false, true, false, false, false)
-            setTitleText(getString(R.string.profile))
-            setFragment(ProfileFragment(), Bundle())
 
-            changetTextViewBackground(tv_profile, R.color.colorPrimary);
-            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                )
+            } else {
+                toolbar.visibility = View.GONE
+                setTitleVisibility(true, false)
+                // setMenu(false, false, false, true, false, false, false)
+                setTitleText(getString(R.string.profile))
+                setFragment(ProfileFragment(), Bundle())
 
+                changetTextViewBackground(tv_profile, R.color.colorPrimary);
+                changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);
 
+            }
         }
         ll_market.setOnClickListener {
-            toolbar.visibility = View.VISIBLE
-            setTitleVisibility(true, false)
-            // setMenu(false, false, false, true, false, false, false)
-            setFragment(MarketFragment(), Bundle())
 
-            changetTextViewBackground(tv_market, R.color.colorPrimary);
-            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                )
+            } else {
+                toolbar.visibility = View.VISIBLE
+                setTitleVisibility(true, false)
+                // setMenu(false, false, false, true, false, false, false)
+                setFragment(MarketFragment(), Bundle())
 
-
+                changetTextViewBackground(tv_market, R.color.colorPrimary);
+                changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+            }
         }
         ll_lobby.setOnClickListener {
-            toolbar.visibility = VISIBLE
-            setTitleVisibility(true, false)
-            // setMenu(false, false, false, true, false, false, false)
-            val bundle = Bundle()
-            bundle.putString("flag", "")
-            setFragment(LobbyFragment(), bundle)
-            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
-            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                )
+            } else {
+                toolbar.visibility = VISIBLE
+                setTitleVisibility(true, false)
+                // setMenu(false, false, false, true, false, false, false)
+                val bundle = Bundle()
+                bundle.putString("flag", "")
+                setFragment(LobbyFragment(), bundle)
+                changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+            }
         }
-
     }
 
     private fun changetTextViewBackground(tv: TextView, color: Int) {
@@ -225,18 +260,21 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     */
 
 
-        if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-            ll_bottom.visibility = View.GONE;
-            img_btn_menu.visibility = GONE;
-            img_btn_menu.visibility = GONE;
-            setMenu(false, false, false, false, false, false, false)
-        } else {
-            ll_bottom.visibility = View.VISIBLE;
-            img_btn_menu.visibility = VISIBLE;
 
-            img_btn_menu.visibility = VISIBLE;
-            setMenu(true, false, false, false, false, false, false)
+        setMenu(true, false, false, false, false, false, false)
+        if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+            //ll_bottom.visibility = View.GONE;
+            //img_btn_menu.visibility = GONE;
+            //img_btn_menu.visibility = GONE;
+            //setMenu(false, false, false, false, false, false, false)
+        } else {
+            //ll_bottom.visibility = View.VISIBLE;
+            //img_btn_menu.visibility = VISIBLE;
+            //img_btn_menu.visibility = VISIBLE;
+            // setMenu(true, false, false, false, false, false, false)
         }
+
+
 
 
 
@@ -282,7 +320,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         arrayList.add(resources.getString(R.string.membership))
         arrayList.add(resources.getString(R.string.feedback))
         arrayList.add(resources.getString(R.string.company))
-        arrayList.add(resources.getString(R.string.logout))
+
 
         var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
         var img_btn_close = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_close);
@@ -293,12 +331,22 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
 
 
+
+        Log.d("ProfileImage", "--" + getUserData().profile_image);
+
         Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH + "/" + getUserData().profile_image)
-            .into(profile_image)
+            .error(R.mipmap.ic_launcher).into(profile_image)
+        tv_username.setText("Guest user");
 
-        //Log.d("profile_image","*----"+getUserData().profile_image);
+        if (!getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+            arrayList.add(resources.getString(R.string.logout))
+            tv_username.setText(getUserData().username);
 
-        tv_username.setText(getUserData().username);
+        }
+
+
+//Log.d("profile_image","*----"+getUserData().profile_image);
+
 
         val llm = LinearLayoutManager(applicationContext);
         llm.orientation = LinearLayoutManager.VERTICAL;
@@ -309,16 +357,36 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         img_btn_close.setOnClickListener {
             resideMenu!!.closeMenu();
         }
+
         img_btn_eye.setOnClickListener {
-            startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
-            resideMenu!!.closeMenu();
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
+                resideMenu!!.closeMenu();
+            } else {
+                startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
+                resideMenu!!.closeMenu();
+            }
         }
+
         profile_image.setOnClickListener {
-            startActivity(Intent(this@DashBoardActivity, EditProfileActivity::class.java));
-            resideMenu!!.closeMenu();
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
+                resideMenu!!.closeMenu();
+            } else {
+                startActivity(Intent(this@DashBoardActivity, EditProfileActivity::class.java));
+                resideMenu!!.closeMenu();
+            }
         }
-
-
     }
 
 //    fun updateNavigationView() {
@@ -442,6 +510,13 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 d.dismiss()
             }
         })
+    }
+
+    public fun setIntent(pos: String) {
+        if (pos.equals(resources.getString(R.string.logout))) {
+            showDialog1();
+            resideMenu!!.closeMenu()
+        }
 
     }
 }

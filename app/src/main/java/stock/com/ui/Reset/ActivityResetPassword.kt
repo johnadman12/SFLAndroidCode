@@ -26,14 +26,6 @@ class ActivityResetPassword : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
         StockConstant.ACTIVITIES.add(this)
-        if (intent != null) {
-            flag = intent.getStringExtra(StockConstant.FLAG);
-        }
-
-        if(flag.equals("true")){
-            til_conf_pass.setHint(resources.getString(R.string.old_pass));
-            til_new_pass.setHint(resources.getString(R.string.new_pass));
-        }
         initViews()
     }
     private fun initViews() {
@@ -43,12 +35,9 @@ class ActivityResetPassword : BaseActivity() {
             onBackPressed()
         }
         btn_submit.setOnClickListener {
-            if(flag.equals("true")){
-                checkValidationChangePasssword();
-            }else {
-                checkValidation();
+            checkValidation();
 
-            }}
+        }
         bt_cancel.setOnClickListener {
             finish()
         }
@@ -56,20 +45,7 @@ class ActivityResetPassword : BaseActivity() {
     }
 
 
-    private fun checkValidationChangePasssword() {
-        if (et_new_pass.text.toString().isEmpty())
-            AppDelegate.showToast(this, getString(R.string.enter_password))
-        else if (et_conf_pass.text.toString().isEmpty()) {
-                AppDelegate.showToast(this, getString(R.string.old_pass))
-         } else {
-            AppDelegate.hideKeyBoard(this)
-            if (NetworkUtils.isConnected()) {
-                    changePassword();
-            } else {
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
+
 
     private fun checkValidation() {
         if (et_new_pass.text.toString().isEmpty())
@@ -114,35 +90,5 @@ class ActivityResetPassword : BaseActivity() {
             }
         })
     }
-    fun changePassword() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<BasePojo> = apiService.changePassword(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),getFromPrefsString(StockConstant.USERID).toString(),et_new_pass.text.toString().trim(),et_conf_pass.text.toString().trim())
-        call.enqueue(object : Callback<BasePojo> {
-            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        //startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
-                        displayToast(response.body()!!.message)
-                        appLogout();
-                    }else if(response.body()!!.status == "2"){
-                        appLogout();
-                    }else{
-                        displayToast(response.body()!!.message)
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
-                    d.dismiss()
-                }
-            }
-            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
-        })
-    }
+
 }

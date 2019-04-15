@@ -70,7 +70,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 }
             }
             R.id.txt_Signup -> {
-                startActivity(Intent(this, SignUpActivity::class.java))
+                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"true"))
                 finish()
             }
             R.id.img_back -> {
@@ -185,6 +185,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
+                        finish();
                     } /*else if (response.body()!!.status == "0") {
                         startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
                         finish()

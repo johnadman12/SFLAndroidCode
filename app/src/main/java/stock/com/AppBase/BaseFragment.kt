@@ -73,9 +73,14 @@ open class BaseFragment : Fragment() {
         dialog.show()*/
 
         saveIntoPrefsString(StockConstant.USERID,"")
+        saveIntoPrefsString(StockConstant.USERNAME, "")
+        saveIntoPrefsString(StockConstant.USERPHONE, "")
+        saveIntoPrefsString(StockConstant.USEREMAIL, "")
+        saveIntoPrefsString(StockConstant.USERIMG, "")
         val intent = Intent(context, WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent);
+        activity!!.finish();
 
 
        /* startActivity(Intent(context, WelcomeActivity::class.java))

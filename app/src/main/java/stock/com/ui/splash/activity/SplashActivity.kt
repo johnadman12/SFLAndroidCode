@@ -8,6 +8,8 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.GoThroughScreens.ActivityGoThrough1
 import stock.com.ui.dashboard.DashBoardActivity
+import stock.com.ui.friends.FriendsActivity
+import stock.com.ui.share.ShareActivity
 import stock.com.utils.StockConstant
 
 
@@ -25,7 +27,6 @@ class SplashActivity : BaseActivity() {
                         startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
                         finish()
                     } else {
-
                         startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
                         finish()
                     }
@@ -38,6 +39,8 @@ class SplashActivity : BaseActivity() {
             } catch (e: Exception) {
             }
         }, 2000)
+
+
 //        if (BuildConfig.APPLICATION_ID == "os.cashfantasy") {
 //            Handler().postDelayed({
 //                try {

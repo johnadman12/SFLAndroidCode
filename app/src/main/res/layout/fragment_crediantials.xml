@@ -13,7 +13,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/ll_main"
-                android:visibility="gone">
+                android:visibility="visible">
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/username"/>
+                        android:src="@mipmap/password"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -37,22 +37,21 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_8sdp"
                             android:textSize="@dimen/_12sdp"
-                            android:text="@string/user_name"
+                            android:text="@string/old_pass"
                             android:textColor="@color/white"/>
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ll_search"
-                            android:hint="@string/user_name"
+                            android:hint="@string/old_pass"
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
-                            android:inputType="text"
+                            android:inputType="textPassword"
                             android:singleLine="true"
                             android:imeOptions="actionNext"
-                            android:enabled="false"
-                            android:id="@+id/et_user_name"/>
+                            android:id="@+id/et_old_pass"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -66,7 +65,7 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/mobile"/>
+                        android:src="@mipmap/password"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -78,21 +77,20 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_8sdp"
                             android:textSize="@dimen/_12sdp"
-                            android:text="@string/mobile_no"
+                            android:text="@string/new_pass"
                             android:textColor="@color/white"/>
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ll_search"
-                            android:hint="@string/mobile_number"
+                            android:hint="@string/new_pass"
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
-                            android:inputType="phone"
+                            android:inputType="textPassword"
                             android:singleLine="true"
-                            android:enabled="false"
-                            android:id="@+id/et_mob"
+                            android:id="@+id/et_new_pass"
                             android:imeOptions="actionNext"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -107,7 +105,7 @@
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_gravity="bottom"
-                        android:src="@mipmap/email"/>
+                        android:src="@mipmap/password"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -119,31 +117,31 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_8sdp"
                             android:textSize="@dimen/_12sdp"
-                            android:text="@string/email"
+                            android:text="@string/conf_password"
                             android:textColor="@color/white"/>
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ll_search"
-                            android:hint="@string/email_txt"
+                            android:hint="@string/conf_password"
                             android:textColor="@color/white"
                             android:padding="@dimen/_10sdp"
                             android:textColorHint="@color/white"
-                            android:inputType="textEmailAddress"
-                            android:enabled="false"
-                            android:id="@+id/et_email"
+                            android:inputType="textPassword"
+                            android:id="@+id/et_conf_pass"
                             android:singleLine="true"
                             android:imeOptions="actionNext"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
-            <RelativeLayout
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_18sdp"
-                    android:padding="@dimen/_15sdp">
+                    android:padding="@dimen/_15sdp"
+                    android:orientation="vertical">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_achange_pass"
                         style="@style/TextStyleSemiBold"
@@ -152,8 +150,19 @@
                         android:background="@drawable/radiuse"
                         android:gravity="center"
                         android:padding="@dimen/_10sdp"
-                        android:text="@string/change_password"/>
-            </RelativeLayout>
+                        android:text="@string/apply"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_cancel"
+                        style="@style/TextStyleSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_apply"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/button_rounded_background_pitch"
+                        android:gravity="center"
+                        android:padding="@dimen/_10sdp"
+                        android:text="@string/cancel"/>
+            </LinearLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 </LinearLayout>
