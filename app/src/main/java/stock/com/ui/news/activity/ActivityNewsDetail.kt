@@ -97,6 +97,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
             tvTime.setText(parseDateToddMMyyyy(news.newstime))
             tvDescription.setText(news.description)
             Glide.with(this).load(news.image).into(ivNews)
+            Glide.with(this).load(news.channel_image).into(ivEditor)
         }
     }
 

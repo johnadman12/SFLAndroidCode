@@ -102,8 +102,7 @@ interface ApiInterface {
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/new_verify_phone_otp")
-    fun verify_otp_new(@Field("user_id") userid: String, @Field("otp") otp: String,@Field("phone_number")phone_number:String): Call<SignupPojo>
-
+    fun verify_otp_new(@Field("user_id") userid: String, @Field("otp") otp: String, @Field("phone_number") phone_number: String): Call<SignupPojo>
 
 
     @FormUrlEncoded
@@ -127,13 +126,11 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("users/change_password")
-    fun changePassword(@Header("x-access-token") token: String,@Field("user_id") userid: String,@Field("old_password") old_password: String,@Field("new_password")new_password:String): Call<BasePojo>
-
-
-
-
-
-
+    fun changePassword(
+        @Header("x-access-token") token: String, @Field("user_id") userid: String, @Field("old_password") old_password: String, @Field(
+            "new_password"
+        ) new_password: String
+    ): Call<BasePojo>
 
 
     @FormUrlEncoded
@@ -190,8 +187,6 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("offers/index")
     fun getOfferList(): Call<OffersPojo>
-
-
 
 
     @FormUrlEncoded
@@ -299,13 +294,25 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("stock/stock_list")
-    fun getStockList(@Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
-                     @Field("user_id") user_id: String): Call<StockTeamPojo>
+    fun getStockList(
+        @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
+        @Field("user_id") user_id: String
+    ): Call<StockTeamPojo>
 
     @FormUrlEncoded
     @POST("stock/wizard_stock_list")
-    fun getWizardStockList(@Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
-                           @Field("user_id") user_id: String): Call<StockTeamPojo>
+    fun getWizardStockList(
+        @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
+        @Field("user_id") user_id: String
+    ): Call<StockTeamPojo>
+
+    @FormUrlEncoded
+    @POST("team/create_team")
+    fun saveTeam(
+        @Header("x-access-token") token: String, @Field("contest_id") contest_id: String,
+        @Field("team_id") team_id: String, @Field("stock_id") stock_id: String,
+        @Field("user_id") user_id: String
+    ): Call<BasePojo>
 
 
     /* @Headers("Content-Type: application/json")

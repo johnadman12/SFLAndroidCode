@@ -4,70 +4,28 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_myteam"
+        tools:showIn="@layout/activity_my_team"
         android:layout_height="match_parent">
-    <LinearLayout
-            android:id="@+id/ll_match"
-            android:background="@color/colorSecondaryLight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/myteam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleSemiBold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/_10sdp"
+            android:text="My Teams "
+            android:textSize="@dimen/_25ssp"
+            android:padding="@dimen/_10sdp"/>
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_gravity="center_vertical"
-                android:id="@+id/txt_matchVS"
-                style="@style/TextStyleSemiBold"
-                android:gravity="start"
-                android:textSize="@dimen/_15sdp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/textColorBlack"
-                android:text="IND vs PAK"
-                android:layout_height="wrap_content"/>
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_gravity="center_vertical"
-                android:id="@+id/txt_CountDownTimer"
-                style="@style/TextStyleNormal"
-                android:gravity="end"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:drawableStart="@mipmap/time"
-                android:textColor="@color/textColorLightBlack"
-                android:text="06h 23m 45s"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <View
-            android:id="@+id/view1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_match"
-            android:background="@color/colorItemBackgroundLightGray"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_Contest"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view1"
-            app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
             android:layout_width="match_parent"
-            android:padding="@dimen/_8sdp"
-            tools:listitem="@layout/item_my_team"
-            android:layout_height="0dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
-    <!--<androidx.appcompat.widget.AppCompatButton-->
-            <!--android:id="@+id/btn_CreateTeam"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--android:layout_width="match_parent"-->
-            <!--style="@style/ButtonStyle"-->
-            <!--android:text="@string/create_team1"-->
-            <!--android:background="@color/colorASPrimary"-->
-            <!--android:layout_height="wrap_content"/>-->
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/row_my_team"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myteam"
+    ></androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

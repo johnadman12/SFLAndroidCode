@@ -149,7 +149,7 @@
         The actual prize money may be different than the prize money mentioned above if there is a tie for any of
         the winning positions.
     </string>
-    <string name="view_teams">View Teams</string>
+    <string name="view_teams">View Team</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
     <string name="legality">Legality</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>

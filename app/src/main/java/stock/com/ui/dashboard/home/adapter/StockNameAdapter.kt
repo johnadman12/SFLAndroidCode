@@ -31,10 +31,13 @@ class StockNameAdapter(val mContext: Context, val mContest: List<HomePojo.Exchan
         holder.itemView.tvExchangeName.setText(mContest.get(position).name)
         if (mContest.get(position).changePercent!!.substring(0, 1).equals("-")) {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed))
+            holder.itemView.tvExchangePercentage.setText( mContest.get(position).changePercent)
         } else {
             holder.itemView.tvExchangePercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+            holder.itemView.tvExchangePercentage.setText("+" + mContest.get(position).changePercent)
+
         }
-        holder.itemView.tvExchangePercentage.setText(mContest.get(position).latestPrice + " (" + mContest.get(position).changePercent+")")
+        holder.itemView.tvValue.setText(mContest.get(position).latestPrice)
     }
 
 

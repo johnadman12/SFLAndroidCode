@@ -19,6 +19,7 @@ import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,7 +91,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                tvTimeLeft.setText(/*days.toString() + "D: " + */hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString()+"S")
+                tvTimeLeft.setText(/*days.toString() + "D: " + */hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
             }
         }
         circular_progress.isAnimationEnabled
@@ -105,12 +106,18 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
         llWinners.setOnClickListener {
             val manager = (context as AppCompatActivity).supportFragmentManager
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
+            val bottomSheetDialogFragment =
+                BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
 
         ll_Circular.setOnClickListener {
-            context.startActivity(Intent(context, ActivityCreateTeam::class.java))
+            context.startActivity(
+                Intent(context, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID,
+                    list.get(position).exchangeid
+                )
+            )
         }
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);

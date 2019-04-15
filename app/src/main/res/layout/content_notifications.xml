@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:background="@mipmap/bg"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_notifications"
         android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/rv_Notifications"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNotification"
             android:layout_width="match_parent"
-            android:padding="@dimen/_8sdp"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleSemiBold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Notifications "
+            android:textColor="@color/white"
+            android:textSize="@dimen/_25ssp"
+            android:padding="@dimen/_10sdp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@+id/tvNotification"
+            android:layout_width="match_parent"
+            android:id="@+id/rv_Notifications"
+            android:layout_height="wrap_content"
             tools:listitem="@layout/item_notification"
-            android:layout_height="0dp">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

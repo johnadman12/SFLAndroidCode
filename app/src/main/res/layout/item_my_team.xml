@@ -307,7 +307,8 @@
                 />
             </RelativeLayout>
             <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1" android:layout_height="wrap_content">
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
                         android:drawablePadding="@dimen/_10sdp"

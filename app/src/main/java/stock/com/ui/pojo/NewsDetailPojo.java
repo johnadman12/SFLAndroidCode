@@ -25,6 +25,9 @@ public class NewsDetailPojo extends BasePojo {
         @SerializedName("image")
         @Expose
         public String image;
+        @SerializedName("channel_image")
+        @Expose
+        public String channel_image;
         @SerializedName("newstime")
         @Expose
         public String newstime;

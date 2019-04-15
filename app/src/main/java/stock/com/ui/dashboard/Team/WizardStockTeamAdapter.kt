@@ -17,12 +17,11 @@ import stock.com.R
 import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
 
-class StockTeamAdapter(
+class WizardStockTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
-    val yes: String,
     val onItemCheckListener: OnItemCheckListener
 ) :
-    RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>(), Filterable {
+    RecyclerView.Adapter<WizardStockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
 
     /*data class StockTeamAdapter(
@@ -66,11 +65,15 @@ class StockTeamAdapter(
         holder.itemView.tvPercentage.setText(searchList!!.get(position).changePercent)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
-        if (yes.equals("yes")) {
-            holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.img_add.visibility = GONE
-        }
+        holder.itemView.llremoveStock.visibility = VISIBLE
+        holder.itemView.img_add.visibility = GONE
 
+       /* if (searchList!!.get(position).addedStock.equals("yes")) {
+            holder.itemView.toggleButton1.isChecked = true
+        } else {
+            holder.itemView.toggleButton1.isChecked = false
+        }
+*/
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE

@@ -5,16 +5,14 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorContestItemBackground"
-        card_view:cardCornerRadius="@dimen/_6sdp"
+        android:backgroundTint="@color/white"
         card_view:cardElevation="@dimen/_3sdp"
         card_view:cardPreventCornerOverlap="false"
-        card_view:cardUseCompatPadding="true" >
+        card_view:cardUseCompatPadding="true">
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-
-            android:padding="@dimen/_5sdp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:id="@+id/ll_main"
             android:orientation="horizontal"
             android:layout_height="wrap_content">
@@ -25,15 +23,33 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:src="@mipmap/ic_launcher"
                 android:layout_width="@dimen/_25sdp"
+                android:visibility="gone"
                 android:layout_height="@dimen/_25sdp"/>
         <androidx.appcompat.widget.AppCompatTextView
                 app:layout_constraintStart_toEndOf="@id/img_notification"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/txt_Notification"
-                style="@style/TextStyleNormal"
+                android:id="@+id/txt_title"
+                style="@style/TextStyleSemiBold"
+                android:padding="@dimen/_2sdp"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_12ssp"
+                android:textSize="@dimen/_10sdp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:text="Lorem Ipsum is simply dummy "
+                android:layout_height="match_parent"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                app:layout_constraintTop_toBottomOf="@+id/txt_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/txt_Notification"
+                style="@style/TextStyleNormal"
+                android:padding="@dimen/_2sdp"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_3sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="0dp"
@@ -45,19 +61,29 @@
         <androidx.appcompat.widget.AppCompatTextView
                 app:layout_constraintTop_toBottomOf="@+id/txt_Notification"
                 app:layout_constraintStart_toEndOf="@id/img_notification"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/txt_Date"
                 style="@style/TextStyleMedium"
-                android:gravity="start"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/_2sdp"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
+                android:drawableLeft="@mipmap/timegrey"
+                android:drawablePadding="@dimen/_5sdp"
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textColor="@color/textColorLightBlack"
                 android:text="04 December, 2018"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
+
+        <View android:layout_width="match_parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              android:layout_height="@dimen/_1ssp"
+              android:layout_marginTop="@dimen/_2sdp"
+              android:background="@null"
+        />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

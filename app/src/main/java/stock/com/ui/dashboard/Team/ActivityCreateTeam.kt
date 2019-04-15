@@ -26,10 +26,12 @@ import stock.com.utils.StockDialog
 
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
-    private var stockSelectedItems: ArrayList<Int>? = null
+    private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
+    private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockTeamAdapter: StockTeamAdapter? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
+    var flag: Boolean = false
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -37,19 +39,34 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.imgButtonWizard -> {
-
+                getWizardStocklist()
             }
             R.id.tvViewteam -> {
-                if (stockSelectedItems!!.size > 0) {
-                    for (i in 0 until stockSelectedItems!!.size) {
-                        parseList!!.add(list!!.get(stockSelectedItems!![i]))
-                        Log.e("parselist", parseList!!.get(i).companyName)
-                    }
+                if (flag) {
+                    startActivity(
+                        Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
+                            .putExtra(StockConstant.STOCKLIST, stockSelectedWizardItems)
+                            .putExtra(
+                                StockConstant.EXCHANGEID,
+                                exchangeId
+                            )
+                    )
+                } else {
+                    /*  if (stockSelectedItems!!.size > 0) {
+                          for (i in 0 until stockSelectedItems!!.size) {
+                              parseList!!.add(list!!.get(stockSelectedItems!![i]))
+                              Log.e("parselist", parseList!!.get(i).companyName)
+                          }
+                      }*/
+                    startActivity(
+                        Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
+                            .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                            .putExtra(
+                                StockConstant.EXCHANGEID,
+                                exchangeId
+                            )
+                    )
                 }
-                startActivity(
-                    Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
-                        .putExtra(StockConstant.STOCKLIST, parseList)
-                )
             }
         }
     }
@@ -66,6 +83,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     @SuppressLint("WrongConstant")
     private fun initView() {
         stockSelectedItems = ArrayList();
+        stockSelectedWizardItems = ArrayList();
         parseList = ArrayList();
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
@@ -83,15 +101,15 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         */
 
         stockTeamAdapter = StockTeamAdapter(
-            this, list as ArrayList,"no",
+            this, list as ArrayList, "no",
             object : StockTeamAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: Int) {
+                override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.remove(item);
                     setTeamText(stockSelectedItems!!.size.toString())
                     Log.e("stocklistremove", stockSelectedItems.toString())
                 }
 
-                override fun onItemCheck(item: Int) {
+                override fun onItemCheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.add(item);
                     setTeamText(stockSelectedItems!!.size.toString())
                     Log.e("stocklist", stockSelectedItems.toString())
@@ -168,6 +186,59 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
+
+    fun getWizardStocklist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.getWizardStockList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId,
+                getFromPrefsString(StockConstant.USERID).toString()
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        flag = true
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        list!!.clear()
+                        list!!.addAll(response.body()!!.stock!!);
+                        setTeamText(list!!.size.toString())
+                        stockSelectedWizardItems!!.addAll(list!!)
+//                        stockSelectedItems!!.addAll(response.body()!!.stock!!)
+//                        displayToast(list!!.size.toString())
+                        setWizardAdapter()
+
+                        //  setStockTeamAdapter(response.body()!!.stock!!)
+
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityCreateTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityCreateTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
     /* @SuppressLint("WrongConstant")
      private fun setStockTeamAdapter(stock: List<StockTeamPojo.Stock>) {
          val llm = LinearLayoutManager(this)
@@ -200,8 +271,27 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         } else {
             tvViewteam.isEnabled = false
             tvViewteam.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.grey_fill_button))
-
         }
     }
+
+    fun setWizardAdapter() {
+        rv_Players!!.adapter = WizardStockTeamAdapter(
+            this,
+            list as ArrayList,
+            object : WizardStockTeamAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: StockTeamPojo.Stock) {
+                    stockSelectedWizardItems?.remove(item);
+                    setTeamText(stockSelectedWizardItems!!.size.toString())
+                    Log.e("stocklistremove", stockSelectedWizardItems.toString())
+                }
+
+                override fun onItemCheck(item: StockTeamPojo.Stock) {
+                    stockSelectedWizardItems?.add(item);
+                    setTeamText(stockSelectedWizardItems!!.size.toString())
+                    Log.e("stocklist", stockSelectedItems.toString())
+                }
+            });
+    }
+
 
 }
