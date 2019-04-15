@@ -95,7 +95,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             }else if(comingFromActivity.equals("profile")){
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
-                displayToast(phoneNumber)
+                //displayToast(phoneNumber)
             }
             else {
                 flag = false

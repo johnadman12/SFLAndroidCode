@@ -49,6 +49,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     private var socialId: String = "";
     lateinit var socialmodel: SocialModel
 
+    private var flag: String = "";
+
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,6 +137,14 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         et_dob.setOnClickListener(this)
 //        txt_TC.setOnClickListener(this)
         countryCodePicker!!.setOnCountryChangeListener(this)
+
+
+        if (intent.extras != null) {
+            flag = intent!!.getStringExtra(StockConstant.FLAG)
+        }
+
+
+
         try {
             userData = intent.getParcelableExtra(IntentConstant.DATA)
         } catch (e: Exception) {
@@ -349,9 +359,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@SignUpActivity, WelcomeActivity::class.java))
-        finish()
+        if (!flag.equals("false")) {
+            startActivity(Intent(this@SignUpActivity, WelcomeActivity::class.java))
+            finish()
+        }else{
+            super.onBackPressed();
+        }
     }
-
-
 }

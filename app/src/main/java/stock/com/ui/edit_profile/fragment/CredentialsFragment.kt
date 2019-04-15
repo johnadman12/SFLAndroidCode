@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.android.synthetic.main.content_signup.*
 import kotlinx.android.synthetic.main.fragment_contact_info.*
-import kotlinx.android.synthetic.main.fragment_contact_info.view.*
 import kotlinx.android.synthetic.main.fragment_crediantials.*
 import kotlinx.android.synthetic.main.fragment_crediantials.view.*
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -51,49 +51,70 @@ class CredentialsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getProfile();
-
         view.tv_achange_pass.setOnClickListener {
+            if(et_old_pass.text.toString().equals("")){
+                displayToast(resources.getString(R.string.error_old_pass));
+            }else if(et_new_pass.text.toString().equals("")){
+                displayToast(resources.getString(R.string.error_new_pass));
+            }else if(et_conf_pass.text.toString().equals("")){
+                displayToast(resources.getString(R.string.error_con_pass));
+            }else{
+                if(!et_conf_pass.text.toString().equals(et_new_pass.text.toString())){
+                    displayToast(resources.getString(R.string.error_pass_match))
+                }else{
+                    if(NetworkUtils.isConnected()){
+                        changePassword();
+                    }else{
+                        displayToast(resources.getString(R.string.error_network_connection))
+                    }
+                }
+            }
 
-            startActivity(Intent(context, ConfirmationActivity::class.java)
+          /*  startActivity(Intent(context, ConfirmationActivity::class.java)
                     .putExtra(StockConstant.USEREMAIL, et_email.text.toString())
                     .putExtra(StockConstant.USERNAME, et_user_name.text.toString())
                     .putExtra(StockConstant.USERPHONE, et_mob.text.toString())
                     .putExtra(StockConstant.USERID, getFromPrefsString(StockConstant.USERID).toString())
                     .putExtra(StockConstant.FLAG,  "true")
-            )
+            )*/
+
 
         }
+
+        view.tv_cancel.setOnClickListener{
+              activity!!.finish();
+        }
+
 
 
 
     }
 
-    fun getProfile() {
+    fun changePassword() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<UserPojo> = apiService.getProfile(
-            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-            getFromPrefsString(StockConstant.USERID).toString()
-        )
-        call.enqueue(object : Callback<UserPojo> {
-            override fun onResponse(call: Call<UserPojo>, response: Response<UserPojo>) {
+        val call: Call<BasePojo> = apiService.changePassword(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),getFromPrefsString(StockConstant.USERID).toString(),et_old_pass.text.toString().trim(),et_new_pass.text.toString().trim())
+        call.enqueue(object : Callback<BasePojo> {
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    if (response.body()!!.status.equals("1")) {
-                        setData(response.body()!!.user!!)
-                        ll_main.visibility = View.VISIBLE;
-                    } else if (response.body()!!.status.equals("2")) {
-                        appLogout()
+                    if (response.body()!!.status == "1") {
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        //startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
+                        displayToast(response.body()!!.message)
+                        appLogout();
+                    }else if(response.body()!!.status == "2"){
+                        appLogout();
+                    }else{
+                        displayToast(response.body()!!.message)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))
                     d.dismiss()
                 }
             }
-
-            override fun onFailure(call: Call<UserPojo>, t: Throwable) {
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
@@ -101,11 +122,6 @@ class CredentialsFragment : BaseFragment() {
         })
     }
 
-    private fun setData(user: UserPojo.User) {
-        et_email.setText(user.email);
-        et_user_name.setText(user.username);
-        et_mob.setText(user.phone_number);
-    }
 
 
 }

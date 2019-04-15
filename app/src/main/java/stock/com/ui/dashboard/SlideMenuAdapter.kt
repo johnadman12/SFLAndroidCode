@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.item_match.view.*
 import kotlinx.android.synthetic.main.row_view_slide_menu.view.*
 import stock.com.R
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.friends.FriendsActivity
 import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.social_network.SocialNetworkActivity
@@ -28,7 +29,8 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
         holder.itemView.tv_title_menu.setText(mContest.get(position));
         holder.itemView.tv_title_menu.setOnClickListener {
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.logout))) {
-                activity.showDialog1();
+                //activity.showDialog1();
+                activity.setIntent(holder.itemView.tv_title_menu.text.toString());
             }
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.support))) {
                 var intent = Intent(mContext, SupportActivity::class.java);
@@ -38,10 +40,10 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.how_to_play_))) {
 
 
-              /*  var intent= Intent(mContext, MyContestActivity::class.java);
+                  var intent= Intent(mContext, FriendsActivity::class.java);
                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                   mContext.startActivity(intent);
-              */
+
 
 
             }

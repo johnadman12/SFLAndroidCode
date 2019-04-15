@@ -25,6 +25,7 @@ import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.createTeam.activity.ChooseTeamActivity
 import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.pojo.SignupDataPojo
+import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
 
@@ -98,7 +99,12 @@ open class BaseActivity : AppCompatActivity() {
         /* se click listener of toolbar cart icon*/
         notificationView.setOnClickListener {
             //            startActivity(Intent(this,ContestDetailActivity::class.java))
-            startActivity(Intent(this, NotificationActivity::class.java))
+
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(Intent(this@BaseActivity, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"false"))
+            } else {
+                startActivity(Intent(this, NotificationActivity::class.java))
+            }
         }
 
 
@@ -258,9 +264,14 @@ open class BaseActivity : AppCompatActivity() {
         dialog.show()*/
 
         saveIntoPrefsString(StockConstant.USERID, "")
+        saveIntoPrefsString(StockConstant.USERNAME, "")
+        saveIntoPrefsString(StockConstant.USERPHONE, "")
+        saveIntoPrefsString(StockConstant.USEREMAIL, "")
+        saveIntoPrefsString(StockConstant.USERIMG, "")
         val intent = Intent(this, WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent);
+        finish();
 
        /* startActivity(Intent(this, WelcomeActivity::class.java))
         (0 until StockConstant.ACTIVITIES.size)
@@ -282,7 +293,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun saveUserData(key: String, userdata: SignupDataPojo?) {
-        val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit();
         //edit.putString(key, userdata.toString())
         edit.putString(StockConstant.USERNAME, userdata!!.username)
@@ -293,7 +304,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun getUserData(): SignupDataPojo {
-        val prefs = getSharedPreferences(StockConstant.USERDATA, Context.MODE_PRIVATE)
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         var signupDataPojo = SignupDataPojo()
         signupDataPojo.username = prefs.getString(StockConstant.USERNAME, "");
         signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");

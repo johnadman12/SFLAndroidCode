@@ -48,7 +48,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_EnterCode -> {
-                startActivity(Intent(this, SignUpActivity::class.java))
+                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"true"))
             }
             R.id.txt_Login -> {
                 startActivity(Intent(this, LoginActivity::class.java))
@@ -237,6 +237,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                             startActivity(
                                 Intent(this@WelcomeActivity, SignUpActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
+                                    .putExtra(StockConstant.FLAG,"true")
                             )
                         }
 
@@ -247,6 +248,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                     startActivity(
                         Intent(this@WelcomeActivity, SignUpActivity::class.java)
                             .putExtra(IntentConstant.DATA, socialModel)
+                            .putExtra(StockConstant.FLAG,"true")
                     )
                     d.dismiss()
                 }
