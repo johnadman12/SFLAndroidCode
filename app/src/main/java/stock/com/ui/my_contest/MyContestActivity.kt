@@ -163,7 +163,6 @@ class MyContestActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-
     private fun changeTextColor(textView: TextView, color: Int) {
         textView.setTextColor(color)
     }
