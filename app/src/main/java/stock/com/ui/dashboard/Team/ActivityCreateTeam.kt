@@ -1,17 +1,24 @@
 package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_create_team.*
+import kotlinx.android.synthetic.main.dialog_join_contest.*
+import kotlinx.android.synthetic.main.dialog_join_wizard.*
+import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,8 +28,11 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
@@ -31,6 +41,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var stockTeamAdapter: StockTeamAdapter? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
+    val RESULT_DATA = 1003
     var flag: Boolean = false
 
     override fun onClick(p0: View?) {
@@ -39,7 +50,18 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.imgButtonWizard -> {
-                getWizardStocklist()
+                showJoinContestDialogue()
+            }
+            R.id.ll_watchlist -> {
+                startActivity(
+                    Intent(this@ActivityCreateTeam, WatchListActivity::class.java)
+                )
+            }
+            R.id.ll_sort -> {
+                startActivityForResult(
+                    Intent(this@ActivityCreateTeam, ActivitySortTeam::class.java),
+                    StockConstant.RESULT_CODE_SORT_CREATE_TEAM
+                )
             }
             R.id.tvViewteam -> {
                 if (flag) {
@@ -87,6 +109,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         parseList = ArrayList();
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
+        ll_watchlist.setOnClickListener(this)
+        ll_sort.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
@@ -187,6 +211,32 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     }
 
 
+    fun showJoinContestDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_join_wizard)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val builder = SpannableStringBuilder()
+
+        val next: String = "<font color='#46AFE6'>NOTE :</font>";
+        dialogue.tvNote.setText(Html.fromHtml(next + getString(R.string.note)))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.tvMAgic.setOnClickListener {
+            getWizardStocklist()
+            dialogue.dismiss()
+        }
+        dialogue.tv_cancel.setOnClickListener {
+            dialogue.dismiss()
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
     fun getWizardStocklist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -239,30 +289,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-    /* @SuppressLint("WrongConstant")
-     private fun setStockTeamAdapter(stock: List<StockTeamPojo.Stock>) {
-         val llm = LinearLayoutManager(this)
-         llm.orientation = LinearLayoutManager.VERTICAL
-         rv_Players!!.layoutManager = llm
-         rv_Players.visibility = View.VISIBLE
-         rv_Players!!.adapter = StockTeamAdapter(
-             this,
-             stock,
-             object : StockTeamAdapter.OnItemCheckListener {
-                 override fun onItemUncheck(item: String) {
-                     stockSelectedItems?.remove(item);
-                     setTeamText(stockSelectedItems!!.size.toString())
-                     Log.e("stocklistremove", stockSelectedItems.toString())
-                 }
-
-                 override fun onItemCheck(item: String) {
-                     stockSelectedItems?.add(item);
-                     setTeamText(stockSelectedItems!!.size.toString())
-                     Log.e("stocklist", stockSelectedItems.toString())
-                 }
-             });
-     }*/
-
     fun setTeamText(add: String) {
         tvteamplayer.setText(add + "/12")
         if (add.toInt() == 12) {
@@ -293,5 +319,34 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             });
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.RESULT_CODE_SORT) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("Volume")) {
+                    var sortedList = list!!.sortedWith(compareBy({ it.latestVolume }))
+                    for (obj in sortedList) {
+                        /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                } else if (data.getStringExtra("flag").equals("price")) {
+                    var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
+                    for (obj in sortedList) {
+                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                } else if (data.getStringExtra("flag").equals("Alpha")) {
+                    var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
+                    for (obj in sortedList) {
+                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                }
+            }
+        }
 
+    }
 }
+
+
+

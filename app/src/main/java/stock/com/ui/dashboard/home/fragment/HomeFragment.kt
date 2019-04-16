@@ -1,17 +1,21 @@
 package stock.com.ui.dashboard.home.fragment
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.dialog_join_contest.*
+import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.item_my_team.*
 import retrofit2.Call
@@ -21,6 +25,7 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.dashboard.home.adapter.*
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.HomePojo
@@ -36,9 +41,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view!!.id) {
-            R.id.txt_Fixtures -> matchSelector(FIXTURES)
-            R.id.txt_Live -> matchSelector(LIVE)
-            R.id.txt_Results -> matchSelector(RESULTS)
+
         }
     }
 
@@ -54,7 +57,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private fun initViews() {
         ll_expandable_view.visibility = View.VISIBLE
         ll_matchSelector.visibility = View.GONE
-        matchSelector(FIXTURES)
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
@@ -84,36 +86,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private var FIXTURES = 2
     private var RESULTS = 3
 
-    fun matchSelector(value: Int) {
-        txt_Fixtures.isSelected = false
-        txt_Live.isSelected = false
-        txt_Results.isSelected = false
-        view1.visibility = View.VISIBLE
-        view2.visibility = View.VISIBLE
-        when (value) {
-            LIVE -> {
-                txt_title.visibility = GONE
-                txt_Live.isSelected = true
-                view1.visibility = View.GONE
-                view2.visibility = View.GONE
-                setLiveAdapter()
-            }
-            FIXTURES -> {
-                txt_title.visibility = VISIBLE
-                txt_title.setText(R.string.featured_contest)
-                txt_Fixtures.isSelected = true
-                view1.visibility = View.GONE
-                setFixturesAdapter()
-            }
-            RESULTS -> {
-                txt_title.visibility = GONE
-                txt_title.setText(R.string.results)
-                txt_Results.isSelected = true
-                view2.visibility = View.GONE
-                setCompletedAdapter()
-            }
-        }
-    }
 
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
@@ -240,6 +212,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
         })
     }
+
+
 
     fun getTrainingContentlist() {
         val d = StockDialog.showLoading(activity!!)

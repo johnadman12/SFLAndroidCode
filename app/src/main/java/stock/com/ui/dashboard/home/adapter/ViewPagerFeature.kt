@@ -15,6 +15,8 @@ import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
+import kotlinx.android.synthetic.main.dialog_join_contest.*
+import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
@@ -120,15 +122,10 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         }
 
         ll_Circular.setOnClickListener {
-            context.startActivity(
-                Intent(context, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID,
-                    list.get(position).exchangeid
-                )
-            )
+            showJoinContestDialogue(list.get(position).entryFees, list.get(position).exchangeid)
         }
         // Add the view to the parent
-        parent?.addView(view)
+        parent.addView(view)
 
         // Return the view
         return view
@@ -171,6 +168,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
         dialogue.tvInfo.setText(textView)
         dialogue.btnOK.setOnClickListener {
             if (dialogue.isShowing)
@@ -178,6 +176,31 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         }
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
+    fun showJoinContestDialogue(price: String, exchangeId: String) {
+        var dialogue = Dialog(context)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_join_contest)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        dialogue.setTitle(null)
+        dialogue.entreefee.setText(price)
+        dialogue.tvEntryFee.setText(price)
+        dialogue.tv_yes.setOnClickListener {
+            context.startActivity(
+                Intent(context, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID,exchangeId
+                    )
+            )
+            dialogue.dismiss()
+        }
+
         if (dialogue.isShowing)
             dialogue.dismiss()
         dialogue.show()

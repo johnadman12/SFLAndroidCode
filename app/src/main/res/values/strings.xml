@@ -127,6 +127,9 @@
     <string name="my_team">My Team</string>
     <string name="my_teams">My Teams</string>
     <string name="join_this_contest">Join This Contest</string>
+    <string name="join_this_contest_rule">By joining this contest you accept contest rules and SFL(c) Terms and
+        Conditions.
+    </string>
     <string name="invite_code">Invite Code</string>
     <string name="enter_contest_name">Enter Contest Name</string>
     <string name="winning_amount">Enter total winning amount (Rs)</string>
@@ -317,6 +320,12 @@
     <string name="something_went_wrong">Something went wrong</string>
     <string name="back_exit">Please click BACK again to exit</string>
     <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="note">Team performance is based on market and is a kind of risk. Additionally, Team Wizard (C) is only
+        a help tool and does not confirm a winning team.
+    </string>
+    <string name="wizard_message">The Wizard will choose team members uniquely for you based on Artificial Intelligence
+        and expert analytics
+    </string>
     <string name="receive_offers_and_notification">Receive Offers &amp; Notification</string>
     <string name="legal_first_name">Legal First Name</string>
     <string name="legal_last_name">Legal Last Name</string>
@@ -464,7 +473,13 @@
     <string name="share">Share</string>
 
     <string name="add">Add</string>
-
-
+    <string name="appl">Stock</string>
+    <string name="volume">volume</string>
+    <string name="market_">Market :</string>
+    <string name="news">News</string>
+    <string name="data">Data</string>
+    <string name="chart">Chart</string>
+    <string name="analystics">Analystics</string>
+    <string name="comments">Comments</string>
 
 </resources>

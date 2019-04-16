@@ -24,15 +24,7 @@ class WizardStockTeamAdapter(
     RecyclerView.Adapter<WizardStockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
 
-    /*data class StockTeamAdapter(
-        val mContext: Context,
-        val mContest: List<StockTeamPojo.Stock>,
-        val activity: ActivityCreateTeam,
-        val other:String
-    )
-
-*/
-    private var searchList: List<StockTeamPojo.Stock>? = null
+      private var searchList: List<StockTeamPojo.Stock>? = null
 
 
     private fun createCheckedHolder() {

@@ -23,6 +23,7 @@ import stock.com.R
 import stock.com.data.Prefs
 import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.createTeam.activity.ChooseTeamActivity
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.signup.activity.SignUpActivity
@@ -230,7 +231,7 @@ open class BaseActivity : AppCompatActivity() {
             dialogue.dismiss()
         }
         dialogue.btn_Join.setOnClickListener {
-            startActivity(Intent(this, ChooseTeamActivity::class.java))
+            startActivity(Intent(this, ActivityCreateTeam::class.java))
             dialogue.dismiss()
         }
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_2sdp">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stock name"
+            android:paddingLeft="@dimen/_8sdp"
+            style="@style/TextStyleSemiBold"
+            android:textStyle="bold"
+            android:textSize="@dimen/_16ssp"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_8sdp"
+            android:textSize="@dimen/_11ssp"
+            android:text="Stock"
+            style="@style/TextStyleMedium"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

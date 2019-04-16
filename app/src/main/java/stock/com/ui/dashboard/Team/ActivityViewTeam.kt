@@ -30,7 +30,7 @@ import stock.com.utils.StockDialog
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var ids: ArrayList<String>? = null;
-    private var wizardStockTeamAdapter: WizardStockTeamAdapter? = null;
+    private var viewMyTeamAdapter: ViewMyTeamAdapter? = null;
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     var exchangeId: String = ""
     override fun onClick(p0: View?) {
@@ -86,17 +86,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             exchangeId = intent.getStringExtra(StockConstant.EXCHANGEID)
         }
         stockSelectedItems = list
-        wizardStockTeamAdapter = WizardStockTeamAdapter(
-            this, list as ArrayList,
-            object : WizardStockTeamAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.remove(item);
-                }
-
-                override fun onItemCheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.add(item);
-                }
-            });
+        viewMyTeamAdapter = ViewMyTeamAdapter(
+            this, list as ArrayList
+        );
         setStockAdapter()
     }
 
@@ -106,7 +98,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_team!!.layoutManager = llm
         rv_team.visibility = View.VISIBLE
-        rv_team!!.adapter = wizardStockTeamAdapter;
+        rv_team!!.adapter = viewMyTeamAdapter;
     }
 
     fun saveTeamList() {

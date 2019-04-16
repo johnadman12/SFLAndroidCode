@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/_25sdp"
+              android:layout_gravity="center"
+              android:background="@android:color/transparent">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:id="@+id/congratulation_card"
+                app:cardBackgroundColor="#FAFAFA"
+                app:cardElevation="0dp"
+                android:layout_gravity="bottom">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    android:background="@color/white">
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_6sdp"
+                              android:layout_marginTop="@dimen/_40sdp"
+                              android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/TextStyleSemiBold"
+                            android:textColor="@color/black"
+                            android:text="Entry"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/entreefee"
+                            android:layout_width="wrap_content"
+                            style="@style/TextStyleSemiBold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            android:text="26$"
+                            android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="1sp"
+                      android:background="@color/GrayColor"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_6sdp"
+                              android:layout_marginTop="@dimen/_10sdp"
+                              android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            style="@style/TextStyleMedium"
+                            android:textColor="@color/green"
+                            android:text="To Pay"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvEntryFee"
+                            android:layout_width="wrap_content"
+                            style="@style/TextStyleMedium"
+                            android:textColor="@color/green"
+                            android:text="26$"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="1sp"
+                      android:background="@color/GrayColor"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/textColorLightBlack"
+                        android:layout_margin="@dimen/_15sdp"
+                        android:gravity="center"
+                        android:padding="@dimen/_5sdp"
+                        android:lineSpacingExtra="@dimen/_2sdp"
+                        android:textSize="@dimen/_12ssp"
+                        android:layout_gravity="center"
+                        android:text="@string/join_this_contest_rule"
+                        android:layout_height="wrap_content"/>
+
+
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/white"
+                        android:text="Confirm and Join"
+                        android:gravity="center"
+                        style="@style/TextStyleMedium"
+                        android:background="#31E15A"
+                        android:padding="@dimen/_10ssp"
+                        android:id="@+id/tv_yes"/>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/circular_tick"
+                android:layout_gravity="center_horizontal|top">
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/joincontestpopup"
+                    android:background="@null"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Join Contest"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:textColor="#005881"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

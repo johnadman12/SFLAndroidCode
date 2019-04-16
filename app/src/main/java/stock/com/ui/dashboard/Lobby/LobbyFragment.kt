@@ -5,11 +5,14 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.fragment_lobby.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,9 +42,7 @@ class LobbyFragment : BaseFragment() {
     }
 
     private fun initViews() {
-
         contest = ArrayList();
-
         list = ArrayList();
         getContestlist()
         ll_filter.setOnClickListener {
@@ -55,6 +56,19 @@ class LobbyFragment : BaseFragment() {
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
         }
+
+        refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                //TODO make api call here
+                Handler().postDelayed({
+                    refreshLayout.finishRefreshing()
+                }, 5000)
+                getContestlist()
+            }
+        })
 
     }
 
@@ -74,9 +88,10 @@ class LobbyFragment : BaseFragment() {
         val call: Call<LobbyContestPojo> =
             apiService.getContestList(getFromPrefsString(StockConstant.ACCESSTOKEN).toString())
         call.enqueue(object : Callback<LobbyContestPojo> {
-
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
                 d.dismiss()
+                if (refreshLayout != null)
+                    refreshLayout.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
@@ -104,6 +119,7 @@ class LobbyFragment : BaseFragment() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_contest!!.layoutManager = llm
+        recyclerView_contest?.itemAnimator = DefaultItemAnimator()
         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
     }
 
