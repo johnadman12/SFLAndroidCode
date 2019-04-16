@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_friends.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.utils.StockConstant
 
 class FriendsActivity : BaseActivity() {
 
@@ -18,9 +19,14 @@ class FriendsActivity : BaseActivity() {
 
         tv_title.visibility=View.VISIBLE;
 
+        tv_title.setText(getFromPrefsString(StockConstant.USERNAME));
+
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
+
+
+
 
     }
     private fun setAdapter(){

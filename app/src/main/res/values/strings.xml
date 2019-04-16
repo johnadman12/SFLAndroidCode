@@ -29,6 +29,7 @@
     <string name="user_name">Username</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="email">Email</string>
+    <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="register">Register Now</string>
     <string name="already_have_an_account">Already have an account?</string>
@@ -52,7 +53,7 @@
     <string name="sign_up">SignUp</string>
     <string name="notification">Notifications</string>
     <string name="filter">Filter</string>
-    <string name="wallet">Walllet</string>
+    <string name="wallet">Wallet</string>
     <string name="enter_contest_code">Enter Contest Code</string>
     <string name="create_contest">Create Contest</string>
     <string name="create_team">Create Team</string>
@@ -371,6 +372,7 @@
     <string name="saifty">Saifty &amp; Security</string>
     <string name="licenses">Licenses</string>
     <string name="rules_winning">Rules and scoring</string>
+    <string name="rules_scoring">Rules &amp; Scoring</string>
     <string name="new_and_press">News and Press</string>
     <string name="careers">Careers</string>
     <string name="membership">Membership</string>
@@ -396,6 +398,8 @@
 
     <string name="edit_profile">Edit Profile</string>
     <string name="contact_info">Contact Info</string>
+    <string name="contact_us">Contact us</string>
+    <string name="contact_information">Contact Information</string>
     <string name="credentials">Credentials</string>
 
     <string name="biography">Biography</string>
@@ -464,7 +468,25 @@
     <string name="share">Share</string>
 
     <string name="add">Add</string>
+    <string name="language">Language</string>
 
+    <string name="add_title">Add Title</string>
+    <string name="name">Name</string>
+
+    <string name="message">Message</string>
+    <string name="enter_message">Enter your message here...</string>
+    
+    <string name="available_funds">Available \n funds </string>
+    <string name="currently_used">Currently \n Used</string>
+    
+    <string name="withdraw_funds">Withdraw Funds</string>
+    
+    <string name="history">History</string>
+    <string name="deposit">Deposits</string>
+    <string name="withdrawals">Withdrawals</string>
+    <string name="transactions">Transactions</string>
+
+    <string name="payment_method">Payment Method:</string>
 
 
 </resources>

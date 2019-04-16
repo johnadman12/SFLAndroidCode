@@ -42,9 +42,11 @@ import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.friends.FriendsActivity
 import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.signup.activity.SignUpActivity
+import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -330,6 +332,22 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
 
+        var ll_Friends=parentLayout.findViewById<LinearLayout>(R.id.ll_Friends);
+        var ll_wallet=parentLayout.findViewById<LinearLayout>(R.id.ll_wallet);
+
+
+        ll_wallet.setOnClickListener {
+
+            var intent=Intent(this,WalletActivity::class.java);
+            startActivity(intent);
+        }
+
+        ll_Friends.setOnClickListener {
+
+            var intent=Intent(this,FriendsActivity::class.java);
+            startActivity(intent);
+
+        }
 
 
         Log.d("ProfileImage", "--" + getUserData().profile_image);

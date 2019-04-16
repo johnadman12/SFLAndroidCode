@@ -18,9 +18,26 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.friends.FriendsActivity"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="stateHidden|adjustResize">
+        <activity android:name=".ui.wallet.WalletActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ui.rules_and_scoring.RulesScoringActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ui.contact_us.ContactUsActivity"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+                android:name=".ui.setting.SettingActivity"
+                android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:name=".ui.friends.FriendsActivity"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
                 android:name=".ui.share.ShareActivity"
@@ -47,7 +64,6 @@
                 android:name=".ui.watch_list.WatchSortActivity"
                 android:screenOrientation="portrait">
         </activity>
-
         <activity
                 android:name=".ui.watch_list.WatchListActivity"
                 android:screenOrientation="portrait"

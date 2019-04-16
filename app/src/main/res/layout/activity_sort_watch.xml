@@ -44,7 +44,8 @@
                       android:orientation="horizontal"
                       android:layout_marginTop="@dimen/_1sdp">
             <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cb_weekly" android:layout_width="wrap_content"
+                    android:id="@+id/cb_weekly"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/colorPrimary"/>
             <androidx.appcompat.widget.AppCompatTextView
@@ -121,7 +122,7 @@
         </LinearLayout>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sortApply"
+            android:id="@+id/btn_Apply"
             style="@style/ButtonStylelogin"
             android:text="Apply"
             android:background="@drawable/green_fill_button"
