@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import stock.com.R
 
-class WalletAdapter(val mContext: Context): RecyclerView.Adapter<WalletAdapter.WatchListHolder>() {
+class MessageHistoryAdapter(val mContext: Context): RecyclerView.Adapter<MessageHistoryAdapter.WatchListHolder>() {
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_history, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_message_history, parent, false)
         return WatchListHolder(view)
     }
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {

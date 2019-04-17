@@ -48,11 +48,10 @@
                     android:layout_gravity="center"
                     android:paddingLeft="@dimen/_12sdp"
                     android:paddingRight="@dimen/_12sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"/>
+                    android:paddingTop="@dimen/_8sdp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleNormal"
+                    style="@style/TextStyleLight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/rules_text"
@@ -71,9 +70,58 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/_15sdp"
+                        android:id="@+id/ll_first">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Test hhkhkhlhlkh"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            app:srcCompat="@mipmap/arrowright"
+                            android:background="@null"
+                            android:scaleType="fitCenter"
+                            android:id="@+id/imgBtnArrow"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/GrayColor"
+                        android:alpha="0.7"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:id="@+id/ll_expand"
+                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rules_text"
+                            android:textColor="@color/GrayColor"
+                            android:textSize="@dimen/_12ssp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_marginTop="2dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="@dimen/_15sdp">
                     <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextStyleMedium"
+                            style="@style/TextStyleNormal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Test hhkhkhlhlkh"
@@ -93,24 +141,171 @@
                         android:layout_height="0.1dp"
                         android:background="@color/GrayColor"
                         android:alpha="0.7"/>
-
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/_10sdp">
-
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="gone">
                     <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextStyleNormal"
+                            style="@style/TextStyleLight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/rules_text"
                             android:textColor="@color/GrayColor"
                             android:textSize="@dimen/_12ssp"/>
-
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_marginTop="2dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_15sdp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Test hhkhkhlhlkh"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            app:srcCompat="@mipmap/arrowright"
+                            android:background="@null"
+                            android:scaleType="fitCenter"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/GrayColor"
+                        android:alpha="0.7"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rules_text"
+                            android:textColor="@color/GrayColor"
+                            android:textSize="@dimen/_12ssp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scoring"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/_12sdp"
+                    android:paddingRight="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_marginTop="2dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_15sdp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Test hhkhkhlhlkh"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            app:srcCompat="@mipmap/arrowright"
+                            android:background="@null"
+                            android:scaleType="fitCenter"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/GrayColor"
+                        android:alpha="0.7"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rules_text"
+                            android:textColor="@color/GrayColor"
+                            android:textSize="@dimen/_12ssp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:layout_marginTop="2dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_15sdp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Test hhkhkhlhlkh"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14ssp"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_18sdp"
+                            android:layout_height="@dimen/_18sdp"
+                            app:srcCompat="@mipmap/arrowright"
+                            android:background="@null"
+                            android:scaleType="fitCenter"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="@color/GrayColor"
+                        android:alpha="0.7"/>
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleLight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/rules_text"
+                            android:textColor="@color/GrayColor"
+                            android:textSize="@dimen/_12ssp"/>
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
+
+
     </ScrollView>
 
 

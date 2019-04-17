@@ -5,4 +5,11 @@
     <attr format="color" name="AniForeColor"/>
     <attr format="integer" name="CircleSmaller"/>
   </declare-styleable>
+
+  <declare-styleable name="ExpandableLayout">
+    <attr name="el_duration" format="integer" />
+    <attr name="el_expanded" format="boolean" />
+    <attr name="el_parallax" format="float" />
+    <attr name="android:orientation"/>
+  </declare-styleable>
 </resources>

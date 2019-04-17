@@ -421,6 +421,7 @@
     <string name="no_data">No data</string>
     <string name="country_list">Country List</string>
     <string name="send_to">Sent To</string>
+    <string name="send">Send</string>
     <string name="filter_by">Filter By</string>
 
     <string name="asset_type">Asset Type</string>
@@ -491,9 +492,10 @@
     <string name="name">Name</string>
 
     <string name="message">Message</string>
+    <string name="message_history">Message History</string>
     <string name="enter_message">Enter your message here...</string>
 
-    <string name="available_funds">Available \n funds </string>
+    <string name="available_funds">Available \n funds</string>
     <string name="currently_used">Currently \n Used</string>
 
     <string name="withdraw_funds">Withdraw Funds</string>
@@ -504,6 +506,23 @@
     <string name="transactions">Transactions</string>
 
     <string name="payment_method">Payment Method:</string>
+
+
+
+    <string name="scoring">Scoring</string>
+
+    <string name="statistics">Statistics</string>
+
+    <string name="rewards">Rewards</string>
+
+    <string name="not_earn_any_reward">You have not earn any rewards yet.</string>
+
+    <string name="contest_joined">Contest joined</string>
+    <string name="contest_won">Contest won</string>
+    <string name="winning_percentage">Winning percentage</string>
+    <string name="contest_lost">Contest lost</string>
+    <string name="total_spent">Total Spent</string>
+    <string name="totalwinning">Total Winning</string>
 
     <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the following set of rules: </string>
 <string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only. </string>
