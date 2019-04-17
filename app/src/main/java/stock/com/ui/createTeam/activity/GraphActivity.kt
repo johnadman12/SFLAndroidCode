@@ -15,6 +15,8 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 
 
+
+
 class GraphActivity : BaseActivity(), View.OnClickListener {
 
     val xVals_earnings = ArrayList<String>()
@@ -30,8 +32,8 @@ class GraphActivity : BaseActivity(), View.OnClickListener {
         for(i in 0 until 10) {
             xVals_earnings.add(i.toString())
             val total_sale_value = i.toDouble()
-            val v1e1 = Entry(total_sale_value.toFloat(), i)
-            val v1e2 = CandleEntry(0,total_sale_value.toFloat(), i.toFloat(), 0.0f, 0.0f)
+            val v1e1 = Entry(total_sale_value.toFloat(), i.toFloat())
+            val v1e2 = CandleEntry(0F,total_sale_value.toFloat(), i.toFloat(), 0.0f, 0.0f)
             total_earnings.add(v1e1)
             total_earnings_candle.add(v1e2)
         }
@@ -41,11 +43,11 @@ class GraphActivity : BaseActivity(), View.OnClickListener {
         for(j in 0 until 10) {
             xVals_earnings.add(j.toString())
             val total_sale_value = j.toDouble()
-            val v1e2 = CandleEntry(0,total_sale_value.toFloat(), j.toFloat(), 0.0f, 0.0f)
+            val v1e2 = CandleEntry(0F,total_sale_value.toFloat(), j.toFloat(), 0.0f, 0.0f)
             total_earnings_candle.add(v1e2)
         }
         // Line Graph
-        val barDataSet = LineDataSet(total_earnings, "")
+      /*  val barDataSet = LineDataSet(total_earnings, "")
         val data = LineData(xVals_earnings, barDataSet)
         chart.data = data
         chart.animateXY(500, 500)
@@ -85,7 +87,7 @@ class GraphActivity : BaseActivity(), View.OnClickListener {
         yAxis_candle.textColor = ContextCompat.getColor(this, R.color.black)
         val rightAxis_candle = candle_chart.axisRight
         rightAxis_candle.setDrawLabels(false)
-
+        candle_chart.invalidate()*/
     }
 
     override fun onBackPressed() {

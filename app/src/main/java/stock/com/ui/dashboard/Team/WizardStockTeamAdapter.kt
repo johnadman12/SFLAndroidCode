@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
 
@@ -54,7 +56,7 @@ class WizardStockTeamAdapter(
         holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
-        holder.itemView.tvPercentage.setText(searchList!!.get(position).changePercent)
+        holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
         holder.itemView.llremoveStock.visibility = VISIBLE
@@ -75,6 +77,10 @@ class WizardStockTeamAdapter(
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
+        }
+
+        holder.itemView.setOnClickListener {
+            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
         }
     }
 

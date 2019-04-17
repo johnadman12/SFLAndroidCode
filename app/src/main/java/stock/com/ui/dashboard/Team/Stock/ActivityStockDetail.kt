@@ -8,6 +8,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_stock_detail_page.*
+import kotlinx.android.synthetic.main.include_back.*
 import stock.com.R
 
 
@@ -22,6 +23,7 @@ class ActivityStockDetail : AppCompatActivity(), View.OnClickListener {
         setFragment(ChartFragment());
 
         ll_news.setOnClickListener(this);
+        img_btn_back.setOnClickListener(this);
         ll_data.setOnClickListener(this);
         ll_chart.setOnClickListener(this);
         ll_analystics.setOnClickListener(this);
@@ -31,6 +33,9 @@ class ActivityStockDetail : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
+            R.id.img_btn_back -> {
+                onBackPressed()
+            }
             R.id.ll_chart -> {
                 if (fragment is ChartFragment)
                     return;

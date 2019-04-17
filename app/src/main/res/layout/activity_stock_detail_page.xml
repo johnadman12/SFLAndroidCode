@@ -40,7 +40,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_1sdp"
                     android:weightSum="1">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -50,13 +49,12 @@
                         style="@style/TextStyleSemiBold"
                         android:gravity="center"
                         android:layout_gravity="center_horizontal|center_vertical"
-                        android:layout_weight="0.1"
                         android:textColor="@color/textColorBlack"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="|"
+                        android:layout_height="match_parent"
+                        android:text="|"
                         android:layout_weight="0.1"
                         android:gravity="center"
                         style="@style/TextStyleNormal"
@@ -65,33 +63,37 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stockname"
+                        android:text="Stock"
                         style="@style/TextStyleMedium"
                         android:textStyle="italic"
-                        android:layout_weight="0.1"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical"
                         android:textColor="@color/textColorGray"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:src="@mipmap/upgraph"
-                        android:layout_weight=".3"/>
+                        android:layout_weight="0.1"
+                />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
                         android:src="@drawable/ic_down_arrow"
                         android:layout_weight="0.1"
-                        android:layout_gravity="center|top"/>
+                        android:layout_gravity="center"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="$"
-                        android:gravity="right|center"
+                        android:gravity="top|center"
                         style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_10ssp"
+                        android:padding="@dimen/_2sdp"
                         android:textColor="@color/textColorBlack"
-                        android:layout_weight="0.2"/>
+                />
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -99,8 +101,9 @@
                         android:text="@string/default_notification_channel_id"
                         android:textColor="@color/colorRed"
                         style="@style/TextStyleSemiBold"
-                        android:gravity="center|left"
-                        android:layout_weight="0.1"/>
+                        android:gravity="center"
+                        android:textSize="@dimen/_14ssp"
+                        android:layout_weight="0.2"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -108,20 +111,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_1sdp">
+            >
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/volume"
                         style="@style/TextStyleNormal"
+                        android:padding="@dimen/_2sdp"
                         android:textColor="@color/textColorGray"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="34.5"
+                        android:textSize="@dimen/_10ssp"
                         style="@style/TextStyleNormal"
+                        android:padding="@dimen/_2sdp"
                         android:textColor="@color/textColorBlack"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -129,6 +135,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
+                        android:layout_marginTop="-5dp"
+                        android:padding="@dimen/_3sdp"
                         android:text="@string/percentage"
                         android:textColor="@color/colorRed"
                         android:textSize="@dimen/_12ssp"
@@ -140,6 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:padding="@dimen/_2sdp"
                     android:layout_weight="2">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -166,6 +175,7 @@
                                 android:text="@string/market"
                                 style="@style/TextStyleNormal"
                                 android:textSize="@dimen/_12ssp"
+                                android:layout_marginRight="@dimen/_5sdp"
                                 android:paddingLeft="@dimen/_5sdp"
                                 android:textColor="@color/textColorBlack"/>
 
@@ -182,7 +192,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Price in USD"
+                            android:text="Price by xinigite, IN USD"
                             style="@style/TextStyleNormal"
                             android:textSize="@dimen/_11ssp"
                             android:padding="@dimen/_2sdp"
@@ -191,7 +201,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="@dimen/_90sdp"
+                        android:layout_width="@dimen/_80sdp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
@@ -201,15 +211,15 @@
                         android:background="@drawable/grey_fill_button">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
                             app:srcCompat="@mipmap/watchlist"
                             android:tint="@color/blue"
                             android:layout_weight="0.1"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_12sdp"
+                            android:layout_height="@dimen/_12sdp"
                             app:srcCompat="@mipmap/addsign"
                             android:tint="@color/blue"
                             android:layout_weight="0.1"/>
@@ -241,11 +251,11 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@color/white"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_news">
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@mipmap/newsunselect"
                     android:background="@null"
                     android:scaleType="fitCenter"
@@ -257,9 +267,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/news"
                     android:textColor="@color/textColorLightBlack"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:paddingTop="@dimen/_2sdp"
                     android:id="@+id/tv_news"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -271,11 +282,11 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@color/white"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_data">
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@mipmap/dataunselect"
                     android:background="@null"
                     android:scaleType="fitCenter"
@@ -287,9 +298,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/data"
                     android:textColor="@color/textColorLightBlack"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:paddingTop="@dimen/_2sdp"
                     android:id="@+id/tv_data"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -302,11 +314,11 @@
                 android:gravity="center"
                 android:id="@+id/ll_chart"
                 android:background="@color/colorPrimary"
-                android:padding="@dimen/_5sdp">
+                android:padding="@dimen/_8sdp">
 
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@mipmap/chartunselect"
                     android:background="@null"
                     android:scaleType="fitCenter"
@@ -320,9 +332,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/chart"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:paddingTop="@dimen/_2sdp"
                     android:id="@+id/tv_chart"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -334,11 +347,11 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@color/white"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_analystics">
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@mipmap/analyticsunselect"
                     android:background="@null"
                     android:scaleType="fitCenter"
@@ -350,8 +363,10 @@
                     android:layout_height="wrap_content"
                     android:text="@string/analystics"
                     android:textColor="@color/textColorLightBlack"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:paddingTop="@dimen/_2sdp"
                     android:gravity="center"
                     android:id="@+id/tv_analystics"/>
 
@@ -365,11 +380,11 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@color/white"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_comments">
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     app:srcCompat="@mipmap/commentunselect"
                     android:background="@null"
                     android:scaleType="fitCenter"
@@ -381,7 +396,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/comments"
                     android:textColor="@color/textColorLightBlack"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
+                    android:paddingTop="@dimen/_2sdp"
+                    android:singleLine="true"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:id="@+id/tv_comments"/>

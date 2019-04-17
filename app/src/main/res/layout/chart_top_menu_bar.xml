@@ -14,22 +14,22 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="@dimen/_2sdp">
+            android:padding="@dimen/_5sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 app:srcCompat="@mipmap/lobbyy_"/>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/appl"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="@dimen/_14ssp"
                 style="@style/TextStyleSemiBold"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -63,7 +63,7 @@
                     android:text="@string/default_notification_channel_id"
                     style="@style/TextStyleMedium"
                     android:textColor="@color/colorRed"
-                    android:textSize="@dimen/_13ssp"/>
+                    android:textSize="@dimen/_14ssp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
@@ -77,10 +77,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="@dimen/_5sdp"
-                app:srcCompat="@mipmap/addblue"/>
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:tint="@color/white"
+                android:background="@color/blue"
+                app:srcCompat="@mipmap/addsign"/>
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -93,8 +95,8 @@
 
             <Spinner
                     android:id="@+id/spinner1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:spinnerMode="dropdown"/>
@@ -121,13 +123,23 @@
                 android:gravity="right"
                 android:paddingRight="@dimen/_3sdp"
                 android:layout_weight="1">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_settings"/>
+
             <Spinner
                     android:id="@+id/spinner2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
                     android:spinnerMode="dropdown"/>
+
+
 
             <ImageView
                     android:layout_width="wrap_content"

@@ -478,7 +478,7 @@
 
     <string name="add">Add</string>
     <string name="appl">Stock</string>
-    <string name="volume">volume</string>
+    <string name="volume">vol:</string>
     <string name="market_">Market :</string>
     <string name="news">News</string>
     <string name="data">Data</string>
@@ -506,6 +506,6 @@
     <string name="payment_method">Payment Method:</string>
 
     <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the following set of rules: </string>
-
+<string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only. </string>
 
 </resources>

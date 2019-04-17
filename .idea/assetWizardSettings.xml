@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_check" />
-                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\down-arrow.svg" />
+                            <entry key="outputName" value="ic_like" />
+                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\thumbs-up-hand-symbol.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -12,4 +12,6 @@
     <color name="colorRed">#df2826</color>
     <color name="light_blue_color">#26A3D5</color>
     <color name="dot_color">#16D3FD</color>
+    <color name="green_candle">#8BC276</color>
+    <color name="red_candle">#BF2B06</color>
 </resources>

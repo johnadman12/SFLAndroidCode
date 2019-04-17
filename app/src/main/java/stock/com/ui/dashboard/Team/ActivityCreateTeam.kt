@@ -321,23 +321,32 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == StockConstant.RESULT_CODE_SORT) {
+        if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
                     var sortedList = list!!.sortedWith(compareBy({ it.latestVolume }))
                     for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
                         /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
                          rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                     for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
                         /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
-                    var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
+                    var sortedList = list!!.sortedBy { it.symbol?.toString() }
                     for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
                         /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
