@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_match.view.*
 import kotlinx.android.synthetic.main.row_view_slide_menu.view.*
 import stock.com.R
+import stock.com.ui.company.CompanyActivity
 import stock.com.ui.contact_us.ContactUsActivity
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
+import stock.com.ui.invite.activity.InviteCodeActivity
+import stock.com.ui.invite.activity.InviteFriendsActivity
 import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.rules_and_scoring.RulesScoringActivity
 import stock.com.ui.setting.SettingActivity
+import stock.com.ui.share.ShareActivity
 import stock.com.ui.social_network.SocialNetworkActivity
 import stock.com.ui.support.SupportActivity
 import stock.com.ui.watch_list.WatchListActivity
@@ -30,8 +35,13 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
 
     override fun onBindViewHolder(holder: SlideMenuHolder, position: Int) {
         holder.itemView.tv_title_menu.setText(mContest.get(position));
+
         holder.itemView.tv_title_menu.setOnClickListener {
-            if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.logout))) {
+
+            if(activity!= null){
+                activity.setIntent(holder.itemView.tv_title_menu.text.toString());
+            }
+           /* if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.logout))) {
                 //activity.showDialog1();
                 activity.setIntent(holder.itemView.tv_title_menu.text.toString());
             }
@@ -41,11 +51,9 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
                 mContext.startActivity(intent);
             }
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.how_to_play_))) {
-
-              /* var intent= Intent(mContext, ContactUsActivity::class.java);
-                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                 mContext.startActivity(intent);*/
-
+                  /* var intent= Intent(mContext, ShareActivity::class.java);
+                   intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                   mContext.startActivity(intent);*/
             }
 
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.social_network))) {
@@ -61,14 +69,33 @@ class SlideMenuAdapter(val mContext: Context, val mContest: List<String>, var ac
             }
 
             if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.rules_winning))) {
-
                 var intent = Intent(mContext, RulesScoringActivity::class.java);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
-
             }
 
+            if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.feedback))) {
+                var intent = Intent(mContext, FeedBackActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
 
+            if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.company))) {
+                var intent = Intent(mContext, CompanyActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+
+            if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.action_settings))) {
+                var intent = Intent(mContext, SettingActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+            if (activity != null && holder.itemView.tv_title_menu.text.toString().equals(mContext.getString(R.string.invite))) {
+                var intent = Intent(mContext, ShareActivity::class.java);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }*/
         }
     }
 

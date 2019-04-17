@@ -1,6 +1,5 @@
 package stock.com.ui.wallet
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -10,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.ui.wallet.adapter.MessageHistoryAdapter
 import stock.com.ui.wallet.adapter.WalletAdapter
 
 class WalletActivity : BaseActivity(), View.OnClickListener {

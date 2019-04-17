@@ -28,6 +28,7 @@ import com.specyci.residemenu.ResideMenu
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.row_view_offers.view.*
+import kotlinx.android.synthetic.main.row_view_slide_menu.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,6 +36,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.company.CompanyActivity
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
@@ -42,10 +44,18 @@ import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
 import stock.com.ui.my_contest.MyContestActivity
+import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.rules_and_scoring.RulesScoringActivity
+import stock.com.ui.setting.SettingActivity
+import stock.com.ui.share.ShareActivity
 import stock.com.ui.signup.activity.SignUpActivity
+import stock.com.ui.social_network.SocialNetworkActivity
+import stock.com.ui.statistics.StatisticsActivity
+import stock.com.ui.support.SupportActivity
 import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
@@ -310,6 +320,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
         arrayList.add(resources.getString(R.string.how_to_play_))
         arrayList.add(resources.getString(R.string.offers))
+        arrayList.add(resources.getString(R.string.invite))
         arrayList.add(resources.getString(R.string.social_network))
         arrayList.add(resources.getString(R.string.legality))
         arrayList.add(resources.getString(R.string.fair_play_commitment))
@@ -322,6 +333,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         arrayList.add(resources.getString(R.string.membership))
         arrayList.add(resources.getString(R.string.feedback))
         arrayList.add(resources.getString(R.string.company))
+        arrayList.add(resources.getString(R.string.action_settings))
 
 
         var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
@@ -332,25 +344,23 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
 
-        var ll_Friends=parentLayout.findViewById<LinearLayout>(R.id.ll_Friends);
-        var ll_wallet=parentLayout.findViewById<LinearLayout>(R.id.ll_wallet);
+        var ll_Friends = parentLayout.findViewById<LinearLayout>(R.id.ll_Friends);
+        var ll_wallet = parentLayout.findViewById<LinearLayout>(R.id.ll_wallet);
 
 
         ll_wallet.setOnClickListener {
 
-            var intent=Intent(this,WalletActivity::class.java);
+            var intent = Intent(this, WalletActivity::class.java);
             startActivity(intent);
         }
 
         ll_Friends.setOnClickListener {
 
-            var intent=Intent(this,FriendsActivity::class.java);
+            var intent = Intent(this, FriendsActivity::class.java);
             startActivity(intent);
 
         }
 
-
-        Log.d("ProfileImage", "--" + getUserData().profile_image);
 
         Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH + "/" + getUserData().profile_image)
             .error(R.mipmap.ic_launcher).into(profile_image)
@@ -359,6 +369,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         if (!getFromPrefsString(StockConstant.USERID).toString().equals("")) {
             arrayList.add(resources.getString(R.string.logout))
             tv_username.setText(getUserData().username);
+
 
         }
 
@@ -530,11 +541,72 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         })
     }
 
-    public fun setIntent(pos: String) {
+    fun setIntent(pos: String) {
         if (pos.equals(resources.getString(R.string.logout))) {
             showDialog1();
-            resideMenu!!.closeMenu()
         }
-
+        if (pos.equals(resources.getString(R.string.support))) {
+            var intent = Intent(this, SupportActivity::class.java);
+            startActivity(intent);
+        }
+        if (pos.equals(resources.getString(R.string.social_network))) {
+            var intent = Intent(this, SocialNetworkActivity::class.java);
+            startActivity(intent);
+        }
+        if (pos.equals(resources.getString(R.string.offers))) {
+            var intent = Intent(this, OfferListActivity::class.java);
+            startActivity(intent);
+        }
+        if (pos.equals(resources.getString(R.string.rules_winning))) {
+            var intent = Intent(this, RulesScoringActivity::class.java);
+            startActivity(intent);
+        }
+        if (pos.equals(resources.getString(R.string.feedback))) {
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
+            } else {
+                var intent = Intent(this, FeedBackActivity::class.java);
+                startActivity(intent);
+            }
+        }
+        if (pos.equals(resources.getString(R.string.company))) {
+            var intent = Intent(this, CompanyActivity::class.java);
+            startActivity(intent);
+        }
+        if (pos.equals(resources.getString(R.string.action_settings))) {
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
+            } else {
+                var intent = Intent(this, SettingActivity::class.java);
+                startActivity(intent);
+            }
+        }
+        if (pos.equals(resources.getString(R.string.invite))) {
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
+            } else {
+                var intent = Intent(this, ShareActivity::class.java);
+                startActivity(intent);
+            }
+        }
+       /* if (pos.equals(resources.getString(R.string.how_to_play_))) {
+            var intent = Intent(this, StatisticsActivity::class.java);
+            startActivity(intent);
+        }*/
     }
 }
