@@ -60,4 +60,6 @@
     <color name="green">#52DF45</color>
 
     <color name="menu_bg">#2FAEE3</color>
+
+    <color name="history_selector">#0084BD</color>
 </resources>

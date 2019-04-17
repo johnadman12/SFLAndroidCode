@@ -23,7 +23,7 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
     init {
         this.searchList=mContest;
     }
-    // This object helps you save/restore the open/close state of each view
+
     private val viewBinderHelper = ViewBinderHelper()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
@@ -31,7 +31,6 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
         return WatchListHolder(view)
     }
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
-       // holder.itemView. tv_title_menu.setText(mContest.get(position));
          viewBinderHelper.bind(holder.itemView.swipeRevealLayout, ""+position);
          holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
          holder.itemView.tv_sector.setText(searchList!!.get(position).sector);
@@ -45,6 +44,8 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
         }
         if(!searchList!!.get(position).image.equals("")){
             Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
+        }else{
+            holder.itemView.imageView.setImageResource(0)
         }
      }
     override fun getItemCount(): Int {
@@ -63,8 +64,7 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
                     for (row in mContest) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
-                            Log.d("dadada","---"+filteredList.size);
-                        }
+                       }
                     }
                     searchList = filteredList
                 }
