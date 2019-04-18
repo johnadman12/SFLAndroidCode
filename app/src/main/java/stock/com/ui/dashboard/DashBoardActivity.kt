@@ -36,6 +36,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.company.CompanyActivity
 import stock.com.ui.dashboard.ContestNewBottom.MyContestFragment
+import stock.com.ui.contest_invitation.ContestInvitationActivity
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
@@ -52,6 +53,7 @@ import stock.com.ui.setting.SettingActivity
 import stock.com.ui.share.ShareActivity
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.social_network.SocialNetworkActivity
+import stock.com.ui.statistics.StatisticsActivity
 import stock.com.ui.support.SupportActivity
 import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
@@ -336,6 +338,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var recyclerView_slide = parentLayout.findViewById<RecyclerView>(R.id.recyclerView_slide_menu);
         var img_btn_close = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_close);
         var img_btn_eye = parentLayout.findViewById<AppCompatImageButton>(R.id.img_btn_eye);
+        var img_my_contest = parentLayout.findViewById<AppCompatImageButton>(R.id.img_my_contest);
         var tv_username = parentLayout.findViewById<AppCompatTextView>(R.id.tv_username);
         var tv_level = parentLayout.findViewById<AppCompatTextView>(R.id.tv_level);
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
@@ -356,6 +359,11 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             var intent = Intent(this, FriendsActivity::class.java);
             startActivity(intent);
 
+        }
+
+        img_my_contest.setOnClickListener {
+           // var intent = Intent(this, StatisticsActivity::class.java);
+           // startActivity(intent);
         }
 
 
@@ -605,5 +613,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
              var intent = Intent(this, StatisticsActivity::class.java);
              startActivity(intent);
          }*/
+        if (pos.equals(resources.getString(R.string.how_to_play_))) {
+            /*  var intent = Intent(this, LocationActivity::class.java);
+              startActivity(intent);
+            */
+        }
     }
 }

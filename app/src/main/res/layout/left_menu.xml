@@ -140,7 +140,8 @@
                     android:layout_height="@dimen/_35sdp"
                     app:srcCompat="@mipmap/mycontests"
                     android:clickable="false"
-                    android:background="@null"/>
+                    android:background="@null"
+                    android:id="@+id/img_my_contest"/>
         </LinearLayout>
         <View android:layout_width="0.1dp"
               android:layout_height="match_parent"

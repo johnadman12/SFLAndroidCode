@@ -33,6 +33,7 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import java.util.*
 
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
@@ -319,7 +320,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
-                    var sortedList = list!!.sortedWith(compareBy({ it.latestVolume }))
+
+                    var sortedList = list!!.sortedBy{it.latestVolume.toDouble()}
+
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)

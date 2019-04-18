@@ -2,6 +2,7 @@ package stock.com.ui.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 import stock.com.R
+import stock.com.ui.live_contest.LiveContestActivity
 
 
 class LiveAdapter(val mContext: Context) : RecyclerView.Adapter<LiveAdapter.FeatureListHolder>() {
@@ -26,6 +28,10 @@ class LiveAdapter(val mContext: Context) : RecyclerView.Adapter<LiveAdapter.Feat
          holder.itemView.card_view.setUseCompatPadding(true);
          holder.itemView.card_view.setContentPadding(-6,-600,-6,-6);
          holder.itemView.card_view.setPreventCornerOverlap(false);*/
+
+        holder.itemView.setOnClickListener {
+            mContext.startActivity(Intent(mContext, LiveContestActivity::class.java))
+        }
 
     }
 

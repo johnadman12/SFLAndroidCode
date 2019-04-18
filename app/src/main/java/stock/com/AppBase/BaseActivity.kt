@@ -300,7 +300,6 @@ open class BaseActivity : AppCompatActivity() {
         edit.putString(StockConstant.USERNAME, userdata!!.username)
         edit.putString(StockConstant.USERPHONE, userdata!!.phone_number);
         edit.putString(StockConstant.USERIMG, userdata!!.profile_image);
-        Log.d("fsfsfs---", "---" + userdata!!.profile_image);
         edit.apply()
     }
 

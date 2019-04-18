@@ -126,6 +126,8 @@ dependencies {
     implementation 'com.github.JesusM:FingerprintManager:2.0.2'
     //swipeRefresh
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
     /*//chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'*/
     //implementation 'com.android.support:support-core-utils:28.0.0'
