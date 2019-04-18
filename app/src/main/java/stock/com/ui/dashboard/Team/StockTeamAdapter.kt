@@ -1,18 +1,20 @@
 package stock.com.ui.dashboard.Team
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.dialog_view_contest.*
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
@@ -86,7 +88,7 @@ class StockTeamAdapter(
 
         holder.itemView.setOnClickListener {
             mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
-        }
+             }
     }
 
 
@@ -130,4 +132,6 @@ class StockTeamAdapter(
             }
         }
     }
+
+
 }

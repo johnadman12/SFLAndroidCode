@@ -30,8 +30,6 @@ class WatchSortActivity : BaseActivity(),CompoundButton.OnCheckedChangeListener 
             finish()
         }
 
-
-
         checkBoxDailyChanges.setOnCheckedChangeListener(this);
         cb_weekly.setOnCheckedChangeListener(this);
         cb_monthly.setOnCheckedChangeListener(this);

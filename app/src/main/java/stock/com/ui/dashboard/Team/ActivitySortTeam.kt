@@ -8,11 +8,13 @@ import kotlinx.android.synthetic.main.activity_sort_create_team.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.utils.StockConstant
 
 class ActivitySortTeam : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sort_create_team)
+        StockConstant.ACTIVITIES.add(this)
         initViews()
 
         checkBoxPrize?.setOnCheckedChangeListener { buttonView, isChecked ->

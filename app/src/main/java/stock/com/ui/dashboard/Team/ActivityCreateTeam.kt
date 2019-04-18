@@ -74,12 +74,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             )
                     )
                 } else {
-                    /*  if (stockSelectedItems!!.size > 0) {
-                          for (i in 0 until stockSelectedItems!!.size) {
-                              parseList!!.add(list!!.get(stockSelectedItems!![i]))
-                              Log.e("parselist", parseList!!.get(i).companyName)
-                          }
-                      }*/
                     startActivity(
                         Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
                             .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
@@ -237,6 +231,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         dialogue.show()
     }
 
+
     fun getWizardStocklist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -355,6 +350,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         }
 
     }
+
+
 }
 
 

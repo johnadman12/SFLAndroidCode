@@ -508,7 +508,6 @@
     <string name="payment_method">Payment Method:</string>
 
 
-
     <string name="scoring">Scoring</string>
 
     <string name="statistics">Statistics</string>
@@ -524,7 +523,14 @@
     <string name="total_spent">Total Spent</string>
     <string name="totalwinning">Total Winning</string>
 
-    <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the following set of rules: </string>
-<string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only. </string>
+    <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the
+        following set of rules:
+    </string>
+    <string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only.
+    </string>
+    <string name="invite_message">         You have been invited by Sara Thomas to a private Contest!
+    </string>
+    <string name="dare">Dare to challenge?
+    </string>
 
 </resources>

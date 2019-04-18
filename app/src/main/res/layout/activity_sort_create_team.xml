@@ -23,69 +23,51 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:background="@color/white"
-                      android:padding="@dimen/_10sdp"
-                      android:orientation="horizontal">
+                      android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxPrize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorPrimary"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextStyleNormal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
                     android:text="Prize Total (High To Low)"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
-              android:background="@color/GrayColor"/>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/white"
-                      android:padding="@dimen/_10sdp"
-                      android:orientation="horizontal">
-            <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/checkBoxVolume" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
                     android:buttonTint="@color/colorPrimary"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxVolume"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     style="@style/TextStyleNormal"
                     android:text="BY Volume"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/colorPrimary"/>
 
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
-              android:background="@color/GrayColor"/>
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/white"
-                      android:padding="@dimen/_10sdp"
-                      android:orientation="horizontal">
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
             <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxAlpha"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:buttonTint="@color/colorPrimary"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
                     style="@style/TextStyleNormal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
                     android:text="Alphabatic (A to Z)"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_3sdp"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"/>
+                    android:buttonTint="@color/colorPrimary"/>
+
 
         </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
+        <View android:layout_width="match_parent"
+              android:layout_height="@dimen/_1sdp"
               android:background="@color/GrayColor"/>
 
 

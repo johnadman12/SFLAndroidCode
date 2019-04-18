@@ -27,8 +27,6 @@ import kotlinx.android.synthetic.main.bottom_navigation.*
 import com.specyci.residemenu.ResideMenu
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.dashboard_activity.*
-import kotlinx.android.synthetic.main.row_view_offers.view.*
-import kotlinx.android.synthetic.main.row_view_slide_menu.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,16 +35,16 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.company.CompanyActivity
+import stock.com.ui.dashboard.ContestNewBottom.MyContestFragment
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
-import stock.com.ui.dashboard.myContest.fragment.MyContestFragment
+import stock.com.ui.dashboard.myContest.fragment.MyContestFragmentOld
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
-import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.rules_and_scoring.RulesScoringActivity
@@ -54,7 +52,6 @@ import stock.com.ui.setting.SettingActivity
 import stock.com.ui.share.ShareActivity
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.social_network.SocialNetworkActivity
-import stock.com.ui.statistics.StatisticsActivity
 import stock.com.ui.support.SupportActivity
 import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
@@ -94,12 +91,12 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 setTitleVisibility(false, true)
                 setTitleText(getString(R.string.my_contest))
 
-                // setFragment(MyContestFragment(), Bundle());
-                startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
-                /*changetTextViewBackground(tv_contest, R.color.colorPrimary);
+                setFragment(MyContestFragment(), Bundle());
+//                startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
+                changetTextViewBackground(tv_contest, R.color.colorPrimary);
                 changetTextViewBackground(tv_market, R.color.textColorLightBlack);
                 changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
-                changetTextViewBackground(tv_home, R.color.textColorLightBlack);*/
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);
             }
         }
         ll_home.setOnClickListener {
@@ -198,7 +195,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 setMenu(true, false, false, false, false, false, false)
                 setTitleVisibility(true, false)
                 setTitleText(getString(R.string.my_contest))
-                setFragment(MyContestFragment(), Bundle())
+                setFragment(MyContestFragmentOld(), Bundle())
                 return true
             }
             R.id.navigation_profile -> {
@@ -604,9 +601,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 startActivity(intent);
             }
         }
-       /* if (pos.equals(resources.getString(R.string.how_to_play_))) {
-            var intent = Intent(this, StatisticsActivity::class.java);
-            startActivity(intent);
-        }*/
+        /* if (pos.equals(resources.getString(R.string.how_to_play_))) {
+             var intent = Intent(this, StatisticsActivity::class.java);
+             startActivity(intent);
+         }*/
     }
 }

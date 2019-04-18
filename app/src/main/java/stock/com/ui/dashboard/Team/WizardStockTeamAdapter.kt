@@ -1,18 +1,22 @@
 package stock.com.ui.dashboard.Team
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_create_team.*
+import kotlinx.android.synthetic.main.dialog_join_wizard.*
+import kotlinx.android.synthetic.main.dialog_view_contest.*
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
@@ -26,7 +30,7 @@ class WizardStockTeamAdapter(
     RecyclerView.Adapter<WizardStockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
 
-      private var searchList: List<StockTeamPojo.Stock>? = null
+    private var searchList: List<StockTeamPojo.Stock>? = null
 
 
     private fun createCheckedHolder() {
@@ -62,12 +66,12 @@ class WizardStockTeamAdapter(
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
 
-       /* if (searchList!!.get(position).addedStock.equals("yes")) {
-            holder.itemView.toggleButton1.isChecked = true
-        } else {
-            holder.itemView.toggleButton1.isChecked = false
-        }
-*/
+        /* if (searchList!!.get(position).addedStock.equals("yes")) {
+             holder.itemView.toggleButton1.isChecked = true
+         } else {
+             holder.itemView.toggleButton1.isChecked = false
+         }
+ */
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
@@ -80,7 +84,7 @@ class WizardStockTeamAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
+            showViewContestDialogue()
         }
     }
 
@@ -125,4 +129,27 @@ class WizardStockTeamAdapter(
             }
         }
     }
+
+    fun showViewContestDialogue() {
+        var dialogue = Dialog(mContext)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_view_contest)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.tvViewContest.setOnClickListener {
+            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
+            dialogue.dismiss()
+        }
+        dialogue.tv_hide.setOnClickListener {
+            dialogue.dismiss()
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
 }

@@ -17,7 +17,6 @@ import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
 import stock.com.ui.invite.activity.InviteCodeActivity
 import stock.com.ui.invite.activity.InviteFriendsActivity
-import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.rules_and_scoring.RulesScoringActivity
 import stock.com.ui.setting.SettingActivity

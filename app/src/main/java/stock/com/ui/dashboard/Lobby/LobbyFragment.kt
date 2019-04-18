@@ -3,16 +3,18 @@ package stock.com.ui.dashboard.Lobby
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
+import kotlinx.android.synthetic.main.dialog_view_contest.*
 import kotlinx.android.synthetic.main.fragment_lobby.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +23,7 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -52,6 +55,10 @@ class LobbyFragment : BaseFragment() {
         }
 
         ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
+        ll_codejoin.setOnClickListener { showViewContestDialogue() }
+        ll_createContest.setOnClickListener{
+            startActivity(Intent(activity, ActivityCreateContest::class.java))
+        }
         ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
@@ -180,5 +187,27 @@ class LobbyFragment : BaseFragment() {
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
             return hour
         }*/
+    }
+
+    fun showViewContestDialogue() {
+        var dialogue = Dialog(activity!!)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_view_contest)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.tvViewContest.setOnClickListener {
+
+            dialogue.dismiss()
+        }
+        dialogue.tv_hide.setOnClickListener {
+            dialogue.dismiss()
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
     }
 }

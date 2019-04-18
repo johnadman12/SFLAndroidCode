@@ -57,10 +57,7 @@
                 android:name=".ui.share.ShareActivity"
                 android:screenOrientation="portrait">
         </activity>
-        <activity
-                android:name=".ui.my_contest.MyContestActivity"
-                android:screenOrientation="portrait">
-        </activity>
+
         <activity android:name=".ui.offer_list.OfferListActivity">
         </activity>
         <activity
@@ -322,7 +319,7 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
         <activity
-                android:name=".ui.dashboard.Team.ActivityMyTeam"
+                android:name=".ui.dashboard.ContestNewBottom.ActivityMyTeam"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
@@ -333,6 +330,11 @@
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
                 android:name=".ui.dashboard.Team.Stock.ActivityStockDetail"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Lobby.ActivityCreateContest"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->

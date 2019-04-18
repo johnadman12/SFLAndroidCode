@@ -16,7 +16,7 @@ import stock.com.ui.dashboard.myContest.adapter.MyContestFixturesAdapter
 import stock.com.ui.dashboard.myContest.adapter.MyContestLiveAdapter
 
 
-class MyContestFragment : BaseFragment(), View.OnClickListener {
+class MyContestFragmentOld : BaseFragment(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_Fixtures -> matchSelector(FIXTURES)

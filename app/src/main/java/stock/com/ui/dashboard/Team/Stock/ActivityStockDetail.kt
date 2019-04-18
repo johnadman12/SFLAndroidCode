@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_stock_detail_page.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.R
+import stock.com.utils.StockConstant
 
 
 class ActivityStockDetail : AppCompatActivity(), View.OnClickListener {
@@ -19,7 +20,7 @@ class ActivityStockDetail : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_detail_page)
-
+        StockConstant.ACTIVITIES.add(this)
         setFragment(ChartFragment());
 
         ll_news.setOnClickListener(this);

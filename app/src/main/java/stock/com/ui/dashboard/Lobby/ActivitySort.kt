@@ -42,7 +42,8 @@ class ActivitySort : BaseActivity() {
             }
         }
 
-        checkBoxPosition?.setOnCheckedChangeListener { buttonView, isChecked ->
+        checkBoxPosition?.setOnCheckedChangeListener {
+                buttonView, isChecked ->
             //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
             if(isChecked){
                 checkBoxEntry.isChecked=false;

@@ -1,17 +1,23 @@
 package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_view_team.*
+import kotlinx.android.synthetic.main.dialog_join_contest.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +43,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
+            }
+            R.id.btn_Join -> {
+                showJoinContestDialogue()
             }
             R.id.relFieldView -> {
                 startActivity(Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java))
@@ -79,6 +88,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         stockSelectedItems = ArrayList();
         ivedit.setOnClickListener(this)
         img_btn_back.setOnClickListener(this)
+        btn_Join.setOnClickListener(this)
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
@@ -144,5 +154,25 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+
+    fun showJoinContestDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_join_contest)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        dialogue.setTitle(null)
+        dialogue.entreefee.setText("")
+        dialogue.tvEntryFee.setText("")
+        dialogue.tv_yes.setOnClickListener {
+            dialogue.dismiss()
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
     }
 }
