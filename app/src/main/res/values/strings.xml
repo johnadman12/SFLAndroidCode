@@ -132,6 +132,7 @@
         Conditions.
     </string>
     <string name="invite_code">Invite Code</string>
+    <string name="invitation_code">Invitation Code</string>
     <string name="enter_contest_name">Enter Contest Name</string>
     <string name="winning_amount">Enter total winning amount (Rs)</string>
     <string name="contest_size">Contest Size</string>
@@ -287,6 +288,7 @@
         <![CDATA[By joining this contest you accept T & C and confirm that you are not a resident of Assam, Odisha, Talngana or Sikkim.]]></string>
     <string name="clear_all">Clear All</string>
     <string name="invite">Invite</string>
+    <string name="invite_user">Invite User</string>
     <string name="joined_Contest">Joined Contest</string>
     <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get
         \u20B9 100 for free
@@ -508,7 +510,6 @@
     <string name="payment_method">Payment Method:</string>
 
 
-
     <string name="scoring">Scoring</string>
 
     <string name="statistics">Statistics</string>
@@ -524,7 +525,18 @@
     <string name="total_spent">Total Spent</string>
     <string name="totalwinning">Total Winning</string>
 
-    <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the following set of rules: </string>
-<string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only. </string>
+    <string name="rules_text">In addition to our Terms of Use and Privacy Policy Contests at DFX are governed by the
+        following set of rules:
+    </string>
+    <string name="chart_info">chart shows the cell price. all prices are indicative and for information purpose only.
+    </string>
+
+
+    <string name="send_contest_invitation">Send Contest Invitation</string>
+
+    <string name="total_changes">Total changes</string>
+
+    <string name="location">Location</string>
+
 
 </resources>

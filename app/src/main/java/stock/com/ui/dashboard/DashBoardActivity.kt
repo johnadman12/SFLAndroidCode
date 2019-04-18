@@ -37,6 +37,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.company.CompanyActivity
+import stock.com.ui.contest_invitation.ContestInvitationActivity
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
 import stock.com.ui.dashboard.home.fragment.HomeFragment
@@ -46,6 +47,8 @@ import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
+import stock.com.ui.live_contest.LiveContestActivity
+import stock.com.ui.location.LocationActivity
 import stock.com.ui.my_contest.MyContestActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.pojo.BasePojo
@@ -604,9 +607,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 startActivity(intent);
             }
         }
-       /* if (pos.equals(resources.getString(R.string.how_to_play_))) {
-            var intent = Intent(this, StatisticsActivity::class.java);
-            startActivity(intent);
-        }*/
+        if (pos.equals(resources.getString(R.string.how_to_play_))) {
+            /*  var intent = Intent(this, LocationActivity::class.java);
+              startActivity(intent);
+            */
+        }
     }
 }
