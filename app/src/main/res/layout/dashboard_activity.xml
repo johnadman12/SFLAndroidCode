@@ -35,7 +35,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/img_AppIcon"
                         android:paddingStart="@dimen/_16sdp"
-                        android:src="@mipmap/toplogo"
+                        android:src="@mipmap/logotop"
                         android:visibility="visible"
                         android:transitionName="img_logo"
                         android:layout_width="wrap_content"

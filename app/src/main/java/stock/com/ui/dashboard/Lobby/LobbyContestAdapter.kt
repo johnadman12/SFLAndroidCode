@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Lobby
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
@@ -13,11 +14,13 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.ui.pojo.PriceBreak
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -72,7 +75,7 @@ class LobbyContestAdapter(
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                holder.itemView.tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString()+"S")
+                holder.itemView.tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
             }
         }
 
@@ -88,8 +91,18 @@ class LobbyContestAdapter(
 
         holder.itemView.llWinners.setOnClickListener {
             val manager = (mContext as AppCompatActivity).supportFragmentManager
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment(mContest.get(position).priceBreak as ArrayList<PriceBreak>, mContest.get(position).winningAmount)
+            val bottomSheetDialogFragment = BottomSheetWinningListFragment(
+                mContest.get(position).priceBreak as ArrayList<PriceBreak>,
+                mContest.get(position).winningAmount
+            )
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+        }
+        holder.itemView.ll_Circular.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID, mContest.get(position).exchangeid
+                )
+            )
         }
     }
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/_3sdp"
+              android:background="@color/white"
+              android:gravity="center_vertical">
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_name"
+            style="@style/TextStyleNormal"
+            android:textSize="@dimen/_13ssp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:padding="@dimen/_2sdp"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:padding="@dimen/_5sdp">
+
+        <RelativeLayout
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/gray_circle"
+                android:gravity="center">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/contestselect"/>
+
+        </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="@string/Rs20"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

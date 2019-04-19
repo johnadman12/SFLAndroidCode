@@ -25,7 +25,7 @@ public class LobbyContestPojo extends BasePojo {
         public Integer contestId;
         @SerializedName("exchangeid")
         @Expose
-        public Integer exchangeid;
+        public String exchangeid;
         @SerializedName("exchangename")
         @Expose
         public String exchangename;
@@ -111,7 +111,7 @@ public class LobbyContestPojo extends BasePojo {
             if (in.readByte() == 0) {
                 exchangeid = null;
             } else {
-                exchangeid = in.readInt();
+                exchangeid = in.readString();
             }
             exchangename = in.readString();
             exchangeimage = in.readString();

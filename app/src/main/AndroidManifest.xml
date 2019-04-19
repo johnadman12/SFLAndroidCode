@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission
+            android:name="android.permission.USE_FINGERPRINT"/>
+    <uses-feature android:name="android.hardware.fingerprint"
+                  android:required="false"/>
 
     <application
             android:name=".application.FantasyApplication"
@@ -350,7 +354,20 @@
                 android:name=".ui.dashboard.Lobby.ActivityCreateContest"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/> <!-- <meta-data -->
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.login.activity.FingerPrintActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
+                android:name=".ui.dashboard.Team.ActivityJoiningConfirmation"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <!-- <meta-data -->
         <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
         <!-- android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" /> -->
@@ -364,10 +381,9 @@
                 android:label="@string/app_name"/>
 
 
-
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyDKymeBXNeiFWY5jRUejv6zItpmr2MVyQ0" />
+                android:value="AIzaSyDKymeBXNeiFWY5jRUejv6zItpmr2MVyQ0"/>
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"

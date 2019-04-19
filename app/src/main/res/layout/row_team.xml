@@ -82,18 +82,19 @@
                     <TextView
                             android:id="@+id/tvPercentage"
                             android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="88%"
-                              android:textSize="@dimen/_14sdp"
-                              style="@style/TextStyleSemiBold"
-                              android:textColor="@color/colorRed"/>
+                            android:layout_height="wrap_content"
+                            android:text="88%"
+                            android:textSize="@dimen/_14sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textColor="@color/colorRed"/>
 
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="-202(-1.06)"
-                              android:textSize="@dimen/_11sdp"
-                              style="@style/TextStyleNormal"
-                              android:textColor="@color/colorRed"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-202(-1.06)"
+                            android:textSize="@dimen/_11sdp"
+                            style="@style/TextStyleNormal"
+                            android:textColor="@color/colorRed"/>
 
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -129,12 +130,12 @@
                         <TextView
                                 android:id="@+id/tvlatestVolume"
                                 android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="34.5 m"
-                                  android:textSize="@dimen/_12sdp"
-                                  android:layout_marginLeft="@dimen/_3sdp"
-                                  style="@style/TextStyleSemiBold"
-                                  android:textColor="@color/black"/>
+                                android:layout_height="wrap_content"
+                                android:text="34.5 m"
+                                android:textSize="@dimen/_12sdp"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                style="@style/TextStyleSemiBold"
+                                android:textColor="@color/black"/>
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:text="Prev. Close:"
@@ -145,12 +146,12 @@
                         <TextView
                                 android:id="@+id/tvPrevClose"
                                 android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="172.50"
-                                  android:textSize="@dimen/_10sdp"
-                                  android:layout_marginLeft="@dimen/_3sdp"
-                                  style="@style/TextStyleNormal"
-                                  android:textColor="@color/black"/>
+                                android:layout_height="wrap_content"
+                                android:text="172.50"
+                                android:textSize="@dimen/_10sdp"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/black"/>
 
                     </LinearLayout>
 

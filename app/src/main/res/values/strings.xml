@@ -1,5 +1,5 @@
 <resources>
-    <!--<string name="app_name">Dream11</string>-->
+    <!--<string name="app_name">DFL</string>-->
     <!--<string name="facebook_app_id">314582115819242</string>-->
     <string name="facebook_app_id">320398858824133</string>
     <string name="default_notification_channel_id">32000</string>
@@ -542,6 +542,7 @@
     <string name="total_changes">Total changes</string>
 
     <string name="location">Location</string>
+    <string name="skip">skip</string>
 
 
 </resources>

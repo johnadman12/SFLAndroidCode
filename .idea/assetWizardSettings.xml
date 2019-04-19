@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_like" />
-                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\thumbs-up-hand-symbol.svg" />
+                            <entry key="outputName" value="ic_fingerprint" />
+                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\scan.svg" />
                           </map>
                         </option>
                       </PersistentState>

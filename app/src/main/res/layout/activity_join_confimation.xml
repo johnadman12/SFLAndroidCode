@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@mipmap/bg"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/include_back"/>
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTransparent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <include
+                    android:layout_margin="@dimen/_10sdp"
+                    layout="@layout/row_view_featured_contest"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_14ssp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="Contest Rules &amp; Winnings"
+            />
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_rules"
+                    android:layout_width="match_parent"
+
+                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_14ssp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:text="Scores"
+                    android:layout_marginLeft="@dimen/_10sdp"
+            />
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_join_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

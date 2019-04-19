@@ -70,7 +70,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 }
             }
             R.id.txt_Signup -> {
-                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"true"))
+                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG, "true"))
                 finish()
             }
             R.id.img_back -> {
@@ -81,30 +81,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.faceimg -> {
-                createFingerprintManagerInstance().authenticate(object : KFingerprintManager.AuthenticationCallback {
-                    override fun onAuthenticationFailedWithHelp(help: String?) {
-                    }
-
-                    override fun onAuthenticationSuccess() {
-                        AppDelegate.showToast(this@LoginActivity,"Successfully authenticated")
-                    }
-
-                    override fun onSuccessWithManualPassword(password: String) {
-//                        messageTextView.value.text = "Manual password: " + password
-                    }
-
-                    override fun onFingerprintNotRecognized() {
-                        AppDelegate.showToast(this@LoginActivity,"Fingerprint not recognized")
-                    }
-
-                    override fun onFingerprintNotAvailable() {
-                        AppDelegate.showToast(this@LoginActivity,"Fingerprint not available")
-                    }
-
-                    override fun onCancelled() {
-                    }
-                }, supportFragmentManager)
-
+                startActivity(Intent(this, FingerPrintActivity::class.java))
             }
 
         }

@@ -45,10 +45,13 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_Join -> {
-                showJoinContestDialogue()
+                startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
             }
             R.id.relFieldView -> {
-                startActivity(Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java))
+                startActivity(
+                    Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, list)
+                )
             }
             R.id.ivedit -> {
                 edtTeamName.isEnabled = true
@@ -156,23 +159,5 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-    fun showJoinContestDialogue() {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_join_contest)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        dialogue.setTitle(null)
-        dialogue.entreefee.setText("")
-        dialogue.tvEntryFee.setText("")
-        dialogue.tv_yes.setOnClickListener {
-            dialogue.dismiss()
-        }
 
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
 }
