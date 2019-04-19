@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_edit_profile.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -21,7 +21,7 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_edit_profile)
 
         setFragment(ProfileFragment());
 

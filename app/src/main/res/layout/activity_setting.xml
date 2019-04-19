@@ -90,7 +90,8 @@
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:padding="@dimen/_15sdp"
-                android:layout_marginBottom="1dp">
+                android:layout_marginBottom="1dp"
+                android:id="@+id/ll_profile">
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"
@@ -118,7 +119,8 @@
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:padding="@dimen/_15sdp"
-                android:layout_marginBottom="1dp">
+                android:layout_marginBottom="1dp"
+                android:id="@+id/ll_contact">
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"
@@ -147,7 +149,7 @@
                 android:background="@color/white"
                 android:padding="@dimen/_15sdp"
                 android:layout_marginBottom="1dp"
-                 android:id="@+id/ll_wallet">
+                android:id="@+id/ll_wallet">
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"

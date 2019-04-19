@@ -213,7 +213,7 @@
                                 android:layout_width="@dimen/_37sdp"
                                 android:layout_height="@dimen/_37sdp"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@mipmap/contestjoined"
+                                app:srcCompat="@mipmap/contestwon"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:clickable="false"/>
@@ -262,7 +262,7 @@
                                 android:layout_width="@dimen/_37sdp"
                                 android:layout_height="@dimen/_37sdp"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@mipmap/contestjoined"
+                                app:srcCompat="@mipmap/winningpercent"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:clickable="false"/>
@@ -305,7 +305,7 @@
                                 android:layout_width="@dimen/_37sdp"
                                 android:layout_height="@dimen/_37sdp"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@mipmap/contestjoined"
+                                app:srcCompat="@mipmap/contestlost"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:clickable="false"/>
@@ -354,7 +354,7 @@
                                 android:layout_width="@dimen/_37sdp"
                                 android:layout_height="@dimen/_37sdp"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@mipmap/contestjoined"
+                                app:srcCompat="@mipmap/amoluntspent"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:clickable="false"/>
@@ -397,7 +397,7 @@
                                 android:layout_width="@dimen/_37sdp"
                                 android:layout_height="@dimen/_37sdp"
                                 android:scaleType="fitCenter"
-                                app:srcCompat="@mipmap/contestjoined"
+                                app:srcCompat="@mipmap/totalwinning"
                                 android:layout_gravity="center"
                                 android:background="@null"
                                 android:clickable="false"/>

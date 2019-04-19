@@ -1,14 +1,17 @@
 package stock.com.ui.dashboard.profile.fragment
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
+import android.widget.TextView
 import com.google.android.material.appbar.AppBarLayout
+import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
 import stock.com.AppBase.BaseFragment
@@ -16,25 +19,39 @@ import stock.com.R
 import stock.com.ui.addfunds.activity.AddFundsActivity
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.profile.activity.MyAccountActivity
+import stock.com.ui.edit_profile.EditProfileActivity
+import stock.com.ui.friends.FriendsActivity
+import stock.com.ui.share.ShareActivity
+import stock.com.ui.statistics.StatisticsActivity
+import stock.com.ui.wallet.WalletActivity
 
 class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var ctx: DashBoardActivity
+
     override fun onClick(view: View?) {
         when (view!!.id) {
-            R.id.txt_MyAccount -> {
-                startActivity(Intent(activity, MyAccountActivity::class.java))
+            R.id.tv_statics -> {
+                startActivity(Intent(activity, StatisticsActivity::class.java))
             }
 
-            R.id.txt_Add -> {
-                startActivity(Intent(activity, AddFundsActivity::class.java))
+            R.id.tv_invite_friends -> {
+                startActivity(Intent(activity, ShareActivity::class.java))
             }
 
-            R.id.logout_profile -> {
-                ctx.appLogout()
+            R.id.ll_friend -> {
+                startActivity(Intent(activity, FriendsActivity::class.java))
+            }
+            R.id.ll_wallet -> {
+                startActivity(Intent(activity, WalletActivity::class.java))
+            }
+            R.id.ll_edit -> {
+                startActivity(Intent(activity, EditProfileActivity::class.java))
             }
         }
     }
+
+
 //    private val PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f
 //    private val PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f
 //    private val ALPHA_ANIMATIONS_DURATION = 200
@@ -43,7 +60,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 //    private var mIsTheTitleContainerVisible = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_myprofile, container, false)
+        return inflater.inflate(R.layout.activity_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,25 +71,58 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     }
 
-
-
     private fun initViews() {
         ctx = activity as DashBoardActivity
-        coordinator.visibility = VISIBLE
-        app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                //  Collapsed
-                toolbar.visibility = VISIBLE
-                ll_main.visibility = GONE
-            } else {
-                //Expanded
-                toolbar.visibility = GONE
-                ll_main.visibility = VISIBLE
-            }
-        })
-        txt_MyAccount.setOnClickListener(this)
-        txt_Add.setOnClickListener(this)
-        logout_profile.setOnClickListener(this)
+
+        /*  coordinator.visibility = VISIBLE
+          app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+              if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                  //  Collapsed
+                  toolbar.visibility = VISIBLE
+                  ll_main.visibility = GONE
+              } else {
+                  //Expanded
+                  toolbar.visibility = GONE
+                  ll_main.visibility = VISIBLE
+              }
+          })*/
+
+
+        tv_statics.setOnClickListener(this);
+        tv_invite_friends.setOnClickListener(this);
+        ll_friend.setOnClickListener(this);
+        ll_wallet.setOnClickListener(this);
+        ll_edit.setOnClickListener(this);
+        showDialog();
+    }
+
+
+    public fun showDialog() {
+        val dialog = Dialog(activity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_verification)
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setGravity(Gravity.CENTER)
+        dialog.setCancelable(true)
+        val lp = WindowManager.LayoutParams()
+        val window = dialog.window
+        lp.copyFrom(window!!.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        window.attributes = lp
+        dialog.setCanceledOnTouchOutside(true);
+
+        val tv_yes = dialog.findViewById(R.id.tv_yes) as TextView
+        val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
+
+        tv_yes.setOnClickListener {
+            //appLogout();
+            dialog.dismiss();
+        }
+        tv_cancel.setOnClickListener {
+            dialog.dismiss();
+        }
+        dialog.show();
     }
 
 //    private fun initViews() {
