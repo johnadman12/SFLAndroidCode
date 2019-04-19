@@ -174,7 +174,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     d.dismiss()
                 }
             }
-
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))

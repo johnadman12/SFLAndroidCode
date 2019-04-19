@@ -13,29 +13,30 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.LatLng
 import android.R.id
+import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.activity_location.*
+import kotlinx.android.synthetic.main.activity_location.view.*
 
 
+class LocationActivity : FragmentActivity() ,OnMapReadyCallback{
+    override fun onMapReady(p0: GoogleMap?) {
 
-class LocationActivity : BaseActivity() {
+    }
 
+    private var mMap: GoogleMap? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
 
-        val latitude = 26.857858
-        val longitude = 75.824929
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment!!.getMapAsync { googleMap ->
-            googleMap.uiSettings.isMyLocationButtonEnabled = true
-            val latLng = LatLng(latitude, longitude)
-            val marker = googleMap.addMarker(MarkerOptions().position(latLng))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(marker.position))
-            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17.0f)
-            googleMap.animateCamera(cameraUpdate)
-        }
+        /*val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment;
+          mapFragment.getMapAsync(this);*/
+
+
+
+
     }
 
 

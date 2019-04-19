@@ -8,10 +8,11 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.ui.contact_us.ContactUsActivity
+import stock.com.ui.profile.ProfileActivity
 import stock.com.ui.wallet.WalletActivity
 
-class SettingActivity : BaseActivity(),View.OnClickListener {
-
+class SettingActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,22 +20,24 @@ class SettingActivity : BaseActivity(),View.OnClickListener {
 
         ll_wallet.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
-
+        ll_contact.setOnClickListener(this);
 
     }
+
     override fun onClick(v: View?) {
-            when(v!!.id){
-                R.id.ll_wallet->{
-                    var intent=Intent(this,WalletActivity::class.java);
-                    startActivity(intent)
-                }
-
-                R.id.img_btn_back->{
-                    onBackPressed()
-                }
-
-
+        when (v!!.id) {
+            R.id.ll_wallet -> {
+                var intent = Intent(this, WalletActivity::class.java);
+                startActivity(intent)
             }
+            R.id.img_btn_back -> {
+                onBackPressed()
+            }
+            R.id.ll_contact -> {
+              var intent = Intent(this, ContactUsActivity::class.java);
+              startActivity(intent)
+            }
+        }
     }
 
 

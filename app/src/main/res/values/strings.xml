@@ -526,7 +526,7 @@
     <string name="totalwinning">Total Winning</string>
 
 
-    <string name="invite_message">         You have been invited by Sara Thomas to a private Contest!
+    <string name="invite_message">You have been invited by Sara Thomas to a private Contest!
     </string>
     <string name="dare">Dare to challenge?
     </string>
@@ -543,6 +543,18 @@
 
     <string name="location">Location</string>
     <string name="skip">skip</string>
+
+    <string name="identity_verification">Identity Verification</string>
+
+    <string name="account_restricted">Your account is Restricted until your identity is verified!</string>
+
+    <string name="verify_now">Verify Now!</string>
+    <string name="remind_me_later">Remind me later</string>
+
+    <string name="google_maps_api_key">AIzaSyCV1nmknhKE5gV-n5DjyhmDx1rbCinn8f4</string>
+
+    <string name="verified">Verified</string>
+    <string name="contest_total_price">Contest Total Prize</string>
 
 
 </resources>
