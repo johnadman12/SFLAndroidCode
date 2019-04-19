@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_join_confimation.*
 import kotlinx.android.synthetic.main.dialog_join_contest.*
+import kotlinx.android.synthetic.main.include_back.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -21,6 +22,9 @@ class ActivityJoiningConfirmation : BaseActivity() {
         setContentView(R.layout.activity_join_confimation)
         circular_progress.setOnClickListener {
             showJoinContestDialogue()
+        }
+        img_btn_back.setOnClickListener {
+            finish()
         }
         setAdapter()
         setJoinScoreAdapter()
