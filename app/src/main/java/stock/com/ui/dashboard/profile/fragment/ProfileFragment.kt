@@ -11,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
 import com.google.android.material.appbar.AppBarLayout
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
@@ -88,6 +89,14 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
           })*/
 
 
+        refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                refreshLayout.finishRefreshing()
+            }
+        })
         tv_statics.setOnClickListener(this);
         tv_invite_friends.setOnClickListener(this);
         ll_friend.setOnClickListener(this);

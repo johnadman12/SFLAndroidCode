@@ -29,7 +29,6 @@
                 android:paddingRight="@dimen/_12sdp"
                 android:paddingTop="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_15sdp"/>
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
                     android:checked="true"
                     style="@style/SwitchCompatStyle"/>
         </LinearLayout>
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
