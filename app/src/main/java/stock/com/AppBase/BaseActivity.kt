@@ -266,8 +266,8 @@ open class BaseActivity : AppCompatActivity() {
 
         saveIntoPrefsString(StockConstant.USERID, "")
         saveIntoPrefsString(StockConstant.USERNAME, "")
-        saveIntoPrefsString(StockConstant.USERPHONE, "")
-        saveIntoPrefsString(StockConstant.USEREMAIL, "")
+//        saveIntoPrefsString(StockConstant.USERPHONE, "")
+//        saveIntoPrefsString(StockConstant.USEREMAIL, "")
         saveIntoPrefsString(StockConstant.USERIMG, "")
         val intent = Intent(this, WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -298,6 +298,7 @@ open class BaseActivity : AppCompatActivity() {
         val edit = prefs.edit();
         //edit.putString(key, userdata.toString())
         edit.putString(StockConstant.USERNAME, userdata!!.username)
+        edit.putString(StockConstant.USEREMAIL, userdata!!.email)
         edit.putString(StockConstant.USERPHONE, userdata!!.phone_number);
         edit.putString(StockConstant.USERIMG, userdata!!.profile_image);
         edit.apply()
@@ -307,6 +308,7 @@ open class BaseActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         var signupDataPojo = SignupDataPojo()
         signupDataPojo.username = prefs.getString(StockConstant.USERNAME, "");
+        signupDataPojo.email = prefs.getString(StockConstant.USEREMAIL, "");
         signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");
         signupDataPojo.profile_image = prefs.getString(StockConstant.USERIMG, "");
         return signupDataPojo;

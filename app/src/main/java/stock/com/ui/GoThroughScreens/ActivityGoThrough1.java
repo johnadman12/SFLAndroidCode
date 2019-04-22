@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 public class ActivityGoThrough1 extends BaseActivity {
     AppCompatButton btn_Skip, btn_Next;
+    TextView tv_title, into_des, into_des_small;
 
 
     boolean b = false;
@@ -51,8 +53,8 @@ public class ActivityGoThrough1 extends BaseActivity {
         list.add(drawable5);
         list.add(drawable6);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        final TabLayout tab = (TabLayout) findViewById(R.id.tab_layout);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
+        final TabLayout tab = findViewById(R.id.tab_layout);
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, list);
         viewPager.setAdapter(adapter);
         tab.setupWithViewPager(viewPager);
@@ -60,6 +62,9 @@ public class ActivityGoThrough1 extends BaseActivity {
 
         btn_Next = findViewById(R.id.btn_Next);
         btn_Skip = findViewById(R.id.btn_Skip);
+        tv_title = findViewById(R.id.tv_title);
+        into_des = findViewById(R.id.into_des);
+        into_des_small = findViewById(R.id.into_des_small);
         btn_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,15 +84,44 @@ public class ActivityGoThrough1 extends BaseActivity {
             public void onPageSelected(int position) {
                 if (position == 0) {
                     btn_Skip.setVisibility(View.VISIBLE);
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.deposit_funds));
+                    into_des.setText(getResources().getString(R.string.intro1));
                 } else {
                     btn_Skip.setVisibility(View.INVISIBLE);
                 }
                 if (position == 5) {
                     b = true;
                     btn_Next.setText("Finish");
-                } else {
+                    tv_title.setText(getResources().getString(R.string.intro6));
+                    into_des.setText("");
+                    into_des_small.setText("");
+                } else if (position == 1) {
                     b = false;
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.join_contest));
+                    into_des.setText(getResources().getString(R.string.intro2));
+                    into_des_small.setText("");
+                } else if (position == 2) {
+                    b = false;
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.win_cash));
+                    into_des.setText(getResources().getString(R.string.intro3));
+                    into_des_small.setText(getResources().getString(R.string.intro3_1));
+                } else if (position == 3) {
+                    b = false;
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.form_team));
+                    into_des.setText(getResources().getString(R.string.intro4));
+                    into_des_small.setText("");
+                } else if (position == 4) {
+                    b = false;
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.reffral_bonus));
+                    into_des.setText(getResources().getString(R.string.intro5));
+                    into_des_small.setText(getResources().getString(R.string.intro5_1));
                 }
+
                 Log.d(TAG, "onPageSelected: " + position);
             }
 

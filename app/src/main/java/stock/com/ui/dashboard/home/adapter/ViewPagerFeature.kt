@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.CountDownTimer
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -27,6 +28,7 @@ import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureContest>) : PagerAdapter() {
     var SECONDS_IN_A_DAY = 24 * 60 * 60
@@ -77,6 +79,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
                     list.get(position).contestSize
         )
 
+
         tvTime.setText(parseDateToddMMyyyy(list.get(position).scheduleStart))
         if (!list.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
@@ -90,13 +93,15 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
             } else {
-                val diffSec = diff / 1000
+                /*val diffSec = diff / 1000
                 val days = diffSec / SECONDS_IN_A_DAY
                 val secondsDay = diffSec % SECONDS_IN_A_DAY
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                tvTimeLeft.setText(*//*days.toString() + "D: " +*//* hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+*/                      timer(thatDay.timeInMillis, diff, tvTimeLeft)
+
             }
         }
         iv_info.setOnClickListener {
@@ -164,6 +169,40 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         }
         return str
     }
+
+    fun timer(millisInFuture: Long, countDownInterval: Long, textView: TextView): CountDownTimer {
+        return object : CountDownTimer(millisInFuture, countDownInterval) {
+            override fun onTick(millisUntilFinished: Long) {
+                val timeRemaining = timeString(millisUntilFinished)
+                textView.setText(timeRemaining)
+            }
+
+            override fun onFinish() {
+            }
+        }
+    }
+
+    fun timeString(millisUntilFinished: Long): String {
+        var millisUntilFinished: Long = millisUntilFinished
+        val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+        millisUntilFinished -= TimeUnit.DAYS.toMillis(days)
+
+        val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished)
+        millisUntilFinished -= TimeUnit.HOURS.toMillis(hours)
+
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+        millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes)
+
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
+
+        // Format the string
+        return String.format(
+            Locale.getDefault(),
+            "%02d day: %02d hour: %02d min: %02d sec",
+            days, hours, minutes, seconds
+        )
+    }
+
 
     fun showInfoDialogue(textView: String) {
         var dialogue = Dialog(context)

@@ -3,6 +3,7 @@ package stock.com.ui.login.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
@@ -121,6 +122,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
+                        else
+                            saveIntoPrefsString(StockConstant.PASSWORD, "")
                         startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java))
                         finish()
                     }
@@ -159,6 +162,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
+                        else
+                            saveIntoPrefsString(StockConstant.PASSWORD, "")
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
@@ -174,6 +179,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
@@ -203,9 +209,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 pass_remembered = 1
             }
         }
-        if (checkRemebered.isChecked) {
-            et_email.setText(pref!!.userdata!!.email)
-            et_pass.setText(pref!!.userdata!!.password)
+        /*if (checkRemebered.isChecked) {
+            et_email.setText(getUserData().email)
+            et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
+        }*/
+
+        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
+            et_email.setText(getUserData().email)
+            et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
         }
 
         et_email.addTextChangedListener(object : TextWatcher {

@@ -63,13 +63,6 @@
                     </LinearLayout>
 
 
-                    <ImageView android:layout_width="@dimen/_20sdp"
-                               android:layout_height="@dimen/_20sdp"
-                               android:src="@mipmap/username"
-                               android:layout_marginTop="@dimen/_12sdp"
-                               android:layout_marginLeft="@dimen/_8sdp"/>
-
-
                     <LinearLayout android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
                                   android:padding="@dimen/_2sdp"
@@ -77,6 +70,11 @@
                         <LinearLayout android:layout_width="match_parent"
                                       android:layout_height="wrap_content"
                                       android:orientation="horizontal">
+                            <ImageView android:layout_width="@dimen/_20sdp"
+                                       android:layout_height="@dimen/_20sdp"
+                                       android:src="@mipmap/username"
+                                       android:layout_marginTop="@dimen/_12sdp"
+                                       android:layout_marginLeft="@dimen/_8sdp"/>
                             <com.hbb20.CountryCodePicker
                                     android:id="@+id/countryCodelogin"
                                     android:layout_width="wrap_content"
@@ -111,29 +109,39 @@
                                         android:imeOptions="actionNext"/>
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
+                        <LinearLayout android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="horizontal">
+                            <ImageView
+                                    android:id="@+id/iv_conf_password"
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginLeft="@dimen/_8sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:src="@mipmap/password"/>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/til_password"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_3sdp"
-                                app:passwordToggleEnabled="true"
-                                android:theme="@style/EditTextLabel">
-                            <com.google.android.material.textfield.TextInputEditText
-                                    style="@style/EditTextStyle"
-                                    android:id="@+id/et_pass"
+                            <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/til_password"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/password"
-                                    android:inputType="textPassword"
-                                    android:imeOptions="actionDone"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
+                                    android:layout_marginLeft="@dimen/_3sdp"
+                                    app:passwordToggleEnabled="true"
+                                    android:theme="@style/EditTextLabel">
+                                <com.google.android.material.textfield.TextInputEditText
+                                        style="@style/EditTextStyle"
+                                        android:id="@+id/et_pass"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/password"
+                                        android:inputType="textPassword"
+                                        android:imeOptions="actionDone"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
                         <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
-
+                                android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_height="wrap_content"
-
                                 android:orientation="horizontal">
                             <androidx.appcompat.widget.AppCompatCheckBox
                                     android:id="@+id/checkRemebered"
@@ -157,6 +165,7 @@
                                     android:gravity="right"
                                     android:textSize="@dimen/_13ssp"
                                     android:padding="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"/>
                         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -173,9 +182,9 @@
 
     <ImageView
             android:id="@+id/faceimg"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/faceid"/>
     <androidx.appcompat.widget.AppCompatButton
@@ -202,7 +211,6 @@
                 android:layout_width="wrap_content"
                 android:text="@string/don_t_have_an_account_yet"
                 android:layout_height="wrap_content"
-                android:textAllCaps="true"
                 android:textSize="@dimen/_12ssp"
                 android:backgroundTint="@color/colorBackgroundLoginFacebook"
                 android:foreground="?android:attr/selectableItemBackground"
@@ -215,7 +223,6 @@
                 android:textColor="@color/colorBackgroundTermsAndConditions"
                 android:layout_width="wrap_content"
                 android:text="@string/sign_up_now"
-                android:textAllCaps="true"
                 android:textSize="@dimen/_12ssp"
                 android:layout_marginLeft="@dimen/_2sdp"
                 android:backgroundTint="@color/colorBackgroundLoginGoogle"

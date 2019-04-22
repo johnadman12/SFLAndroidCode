@@ -46,12 +46,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        LinearLayout imageView;
+        ImageView imageView;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.view_pager_layout, container, false);
-        imageView = (LinearLayout) itemView.findViewById(R.id.imageViewPager);
+        imageView =  itemView.findViewById(R.id.imageViewPager);
 
-        imageView.setBackground(list.get(position));
+        imageView.setImageDrawable(list.get(position));
 
        /* try{
             Glide.with(context).load(list.get(position)).error(R.mipmap.ic_launcher).placeholder(0).thumbnail(0.1f).into(imageView);

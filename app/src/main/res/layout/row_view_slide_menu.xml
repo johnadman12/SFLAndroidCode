@@ -12,7 +12,11 @@
             android:text="@string/support"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/textColorLightBlack"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_12sdp"
             android:id="@+id/tv_title_menu"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1sp"
+          android:background="@color/GrayColor"/>
 
 </LinearLayout>

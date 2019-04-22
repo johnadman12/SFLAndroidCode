@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -10,55 +10,119 @@
         <androidx.viewpager.widget.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:id="@+id/viewPager"/>
+        <!-- <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="bottom"
+                 android:gravity="center"
+                 android:layout_marginBottom="@dimen/_50sdp">
+             <com.google.android.material.tabs.TabLayout
+                     android:id="@+id/tab_layout"
+                     android:layout_width="@dimen/_120sdp"
+                     android:layout_height="@dimen/_25sdp"
+                     android:layout_marginBottom="@dimen/_10sdp"
+                     app:tabBackground="@drawable/tab_selector_intro"
+                     app:tabGravity="center"
+                     android:background="@drawable/ll_dot"
+                     app:tabIndicatorHeight="0dp"/>
+         </LinearLayout>-->
+    </FrameLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@mipmap/introbg"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="0dp"
+                      android:layout_weight="1"
+                      android:padding="@dimen/_5sdp"
+                      android:layout_marginLeft="@dimen/_10sdp"
+                      android:layout_marginRight="@dimen/_10sdp"
+                      android:gravity="center"
+                      android:orientation="vertical">
+            <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleMedium"
+                    android:text="@string/deposit_funds"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_25ssp"
+                    android:textAllCaps="true"
+                    android:gravity="center"
+            />
+            <TextView
+                    android:id="@+id/into_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:text="@string/intro1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    android:gravity="center"
+            />
+            <TextView
+                    android:id="@+id/into_des_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_8ssp"
+                    android:gravity="center"
+            />
+
+        </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:gravity="center"
-                android:layout_marginBottom="@dimen/_48sdp">
+                android:layout_marginBottom="@dimen/_8sdp">
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="@dimen/_120sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_below="@+id/viewPager"
+                    android:layout_height="@dimen/_25sdp"
                     app:tabBackground="@drawable/tab_selector_intro"
                     app:tabGravity="center"
                     android:background="@drawable/ll_dot"
                     app:tabIndicatorHeight="0dp"/>
         </LinearLayout>
-    </FrameLayout>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:padding="@dimen/_2sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:orientation="horizontal">
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_Skip"
-                style="@style/ButtonStyle"
-                android:text="Skip"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                android:layout_marginRight="@dimen/_25sdp"
-                android:background="@drawable/white_fill_button"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"/>
-        <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_Next"
-                style="@style/ButtonStyle"
-                android:text="@string/next"
-                android:textAllCaps="true"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/_25sdp"
-                android:background="@drawable/green_fill_button"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginRight="@dimen/_10sdp"
+                      android:layout_marginLeft="@dimen/_10sdp"
+                      android:orientation="horizontal"
+                      android:id="@+id/ll_bottom">
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_Skip"
+                    style="@style/ButtonStyle"
+                    android:text="Skip"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/white_fill_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_Next"
+                    style="@style/ButtonStyle"
+                    android:text="@string/next"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_25sdp"
+                    android:background="@drawable/green_fill_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"/>
+        </LinearLayout>
+
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
