@@ -5,17 +5,20 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.CountDownTimer
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.cardview.widget.CardView
 import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.dialog_join_contest.*
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
@@ -51,6 +54,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val tvWinnersTotal: TextView = view.findViewById(R.id.tvWinnersTotal)
         val iv_info: AppCompatImageButton = view.findViewById(R.id.iv_info)
         val ll_Circular: LinearLayout = view.findViewById(R.id.ll_Circular)
+        val card_view: CardView = view.findViewById(R.id.card_view)
 
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
@@ -86,13 +90,32 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
             } else {
-                val diffSec = diff / 1000
-                val days = diffSec / SECONDS_IN_A_DAY
-                val secondsDay = diffSec % SECONDS_IN_A_DAY
-                val seconds = secondsDay % 60
-                val minutes = secondsDay / 60 % 60
-                val hours = secondsDay / 3600
-                tvTimeLeft.setText(/*days.toString() + "D: " + */hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                /* val diffSec = diff / 1000
+                 val days = diffSec / SECONDS_IN_A_DAY
+                 val secondsDay = diffSec % SECONDS_IN_A_DAY
+                 val seconds = secondsDay % 60
+                 val minutes = secondsDay / 60 % 60
+                 val hours = secondsDay / 3600
+                 tvTimeLeft.setText(*//*days.toString() + "D: " + *//*hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+     */
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val days = diffSec / SECONDS_IN_A_DAY
+                        val secondsDay = diffSec % SECONDS_IN_A_DAY
+                        val seconds = secondsDay % 60
+                        val minutes = secondsDay / 60 % 60
+                        val hours = secondsDay / 3600
+                        tvTimeLeft.setText(/*days.toString() + "D: "+*/hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             }
         }
         circular_progress.isAnimationEnabled
@@ -123,7 +146,14 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             showInfoDialogue(list.get(position).description);
         }
 
-
+        card_view.setOnClickListener {
+            context.startActivity(
+                Intent(context, ContestDetailActivity::class.java).putExtra(
+                    "contestid",
+                    list.get(position).contestid
+                )
+            )
+        }
         // Add the view to the parent
         parent?.addView(view)
 
@@ -180,7 +210,6 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             dialogue.dismiss()
         dialogue.show()
     }
-
 
 
 }

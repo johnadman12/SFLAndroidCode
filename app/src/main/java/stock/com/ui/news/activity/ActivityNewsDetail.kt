@@ -109,7 +109,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 
-    fun parseDateToddMMyyyy(time: String): String? {
+    override fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)

@@ -7,13 +7,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@mipmap/bg">
-   <!-- <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/include_back"/>-->
+    <!-- <include
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             layout="@layout/include_back"/>-->
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_70sdp"
             android:orientation="horizontal"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_15sdp">
@@ -23,9 +23,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/my_contests"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_22ssp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:textSize="@dimen/_25ssp"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,12 +33,12 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:id="@+id/ll_my_team"
-                android:paddingTop="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:visibility="visible">
             <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_35sdp"
+                    android:layout_width="@dimen/_30sdp"
                     android:layout_height="wrap_content"
                     app:srcCompat="@mipmap/myteams"
                     android:scaleType="fitCenter"
@@ -50,10 +50,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_teams"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_11ssp"
                     android:textColor="@color/white"
                     android:layout_gravity="center"
-                    android:paddingTop="@dimen/_5sdp"/>
+                    android:paddingTop="@dimen/_2sdp"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -160,9 +160,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
     />
-
-
-
 
 
 </LinearLayout>

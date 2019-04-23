@@ -3,6 +3,7 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:gravity="center_vertical"
+              android:padding="@dimen/_2sdp"
               android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -10,10 +11,13 @@
             android:layout_height="@dimen/_15sdp"
             android:src="@drawable/srh_cate_checkbox_select"/>
     <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvRule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/_2sdp"
             style="@style/TextStyleNormal"
+            android:textSize="@dimen/_11ssp"
             android:padding="@dimen/_2sdp"
             android:text="Contest Rules Lorem ipsum"/>
 </LinearLayout>

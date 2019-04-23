@@ -568,6 +568,8 @@
     <string name="contest_total_price">Contest Total Prize</string>
     <string name="intro1">Add Funds into your wallet using different payment method to start joining contests and WIN!
     </string>
+    <string name="contestfee">
+        <![CDATA[Contest entry fee is calculated is based on total winning amount & Contest Spots.]]></string>
 
 
 </resources>

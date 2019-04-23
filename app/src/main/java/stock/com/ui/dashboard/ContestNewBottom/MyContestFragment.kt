@@ -31,6 +31,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 startActivity(Intent(activity, ActivityMyTeam::class.java))
             }
             R.id.tv_created -> {
+                ll_my_team.visibility = View.VISIBLE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -48,7 +49,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_invited -> {
 
-
+                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -64,6 +65,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
             }
             R.id.tv_upcoming -> {
+                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.white));
@@ -80,7 +82,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_live -> {
 
-
+                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -98,7 +100,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
             }
             R.id.tv_finished -> {
-
+                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -147,7 +149,6 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         changeBackGroundColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
-
 
         setFragment(CreatedFragment(), Bundle())
 

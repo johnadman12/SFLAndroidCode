@@ -93,22 +93,43 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
             } else {
-                /*val diffSec = diff / 1000
+               /* val diffSec = diff / 1000
                 val days = diffSec / SECONDS_IN_A_DAY
                 val secondsDay = diffSec % SECONDS_IN_A_DAY
                 val seconds = secondsDay % 60
                 val minutes = secondsDay / 60 % 60
                 val hours = secondsDay / 3600
-                tvTimeLeft.setText(*//*days.toString() + "D: " +*//* hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
-*/                      timer(thatDay.timeInMillis, diff, tvTimeLeft)
-
+                tvTimeLeft.setText(days.toString() + "D: " + hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+//                timer(thatDay.timeInMillis, diff, tvTimeLeft)
+*/
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff =thatDay.timeInMillis-cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val days = diffSec / SECONDS_IN_A_DAY
+                        val secondsDay = diffSec % SECONDS_IN_A_DAY
+                        val seconds = secondsDay % 60
+                        val minutes = secondsDay / 60 % 60
+                        val hours = secondsDay / 3600
+                        tvTimeLeft.setText(/*days.toString() + "D: "+*/hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
             }
         }
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);
         }
         card_view.setOnClickListener {
-            context.startActivity(Intent(context, ContestDetailActivity::class.java))
+            context.startActivity(
+                Intent(context, ContestDetailActivity::class.java).putExtra(
+                    "contestid",
+                    list.get(position).contestid
+                )
+            )
         }
 
         circular_progress.isAnimationEnabled
@@ -151,7 +172,6 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
                     " Now"
             sb
         }
-
     fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"
@@ -169,7 +189,6 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         }
         return str
     }
-
     fun timer(millisInFuture: Long, countDownInterval: Long, textView: TextView): CountDownTimer {
         return object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {

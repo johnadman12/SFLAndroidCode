@@ -23,8 +23,9 @@
                       android:layout_height="wrap_content"
                       android:padding="@dimen/_5sdp"
                       android:layout_weight="1"
+                      android:layout_gravity="top"
+                      android:gravity="top"
                       android:layout_marginRight="@dimen/_5sdp"
-                      android:layout_marginTop="@dimen/_5sdp"
                       android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"

@@ -311,16 +311,33 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="@dimen/_8sdp"
                                   android:orientation="vertical">
+                        <LinearLayout android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="@dimen/_10sdp"
+                                      android:orientation="horizontal">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="Total Winning amount "
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                style="@style/TextStyleNormal"
-                                android:text="Entry Fee "
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:textColor="@color/white"
-                                android:padding="@dimen/_3sdp"
-                                android:textSize="@dimen/_10ssp"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="min: 0"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+
+
+                        </LinearLayout>
+
 
                         <androidx.appcompat.widget.AppCompatEditText
                                 android:layout_width="match_parent"
@@ -342,6 +359,7 @@
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
                               android:padding="@dimen/_5sdp"
+                              android:visibility="gone"
                               android:gravity="center"
                               android:orientation="horizontal">
 
@@ -403,17 +421,31 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="@dimen/_8sdp"
                                   android:orientation="vertical">
+                        <LinearLayout android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="@dimen/_10sdp"
+                                      android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                style="@style/TextStyleNormal"
-                                android:text="Spots "
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:textColor="@color/white"
-                                android:padding="@dimen/_3sdp"
-                                android:textSize="@dimen/_10ssp"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="Spots "
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="min: 2"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
 
+                        </LinearLayout>
                         <androidx.appcompat.widget.AppCompatEditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -427,8 +459,81 @@
                                 android:textColorHint="@color/white"
                                 android:background="@drawable/edit_transparent_bg"/>
 
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_10sdp"
+                              android:layout_marginLeft="@dimen/_40sdp"
+                              android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:layout_weight="1"
+                            android:text="Allow Multiple Entries  "
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/_3sdp"
+                            android:textSize="@dimen/_10ssp"/>
+
+                    <ToggleButton
+                            android:id="@+id/toggleButton1"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:background="@drawable/bgtoggle"
+                            android:button="@null"
+                            android:layout_gravity="right"
+                            android:checked="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:textOff=""
+                            android:textOn=""/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_10sdp"
+                        android:background="#4FFFFFFF"
+                        android:gravity="center"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_40sdp">
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center"
+                                  android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleMedium"
+                                android:text="Contest Entry Fee : "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_12ssp"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleMedium"
+                                android:text="$ 10 "
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_12ssp"/>
 
                     </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:text="@string/contestfee"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:padding="@dimen/_3sdp"
+                            android:textSize="@dimen/_10ssp"/>
 
                 </LinearLayout>
 

@@ -42,7 +42,7 @@ class HomePojo : BasePojo() {
 
         @SerializedName("contestid")
         @Expose
-        var contestid: String = ""
+        var contestid: Int = 0
         @SerializedName("category_id")
         @Expose
         var categoryId: String = ""

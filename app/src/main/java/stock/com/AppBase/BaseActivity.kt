@@ -29,6 +29,9 @@ import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 open class BaseActivity : AppCompatActivity() {
     lateinit var notificationView: View
@@ -80,6 +83,24 @@ open class BaseActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
+    open fun parseDateToddMMyyyy(time: String): String? {
+        val inputPattern = "yyyy-MM-dd HH:mm:ss"
+        val outputPattern = "dd MMM h:mm a"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+
+        var date: Date? = null
+        var str: String? = null
+
+        try {
+            date = inputFormat.parse(time)
+            str = outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return str
+    }
+
     var menu: Menu? = null
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         /* set layout of menu*/
@@ -102,7 +123,12 @@ open class BaseActivity : AppCompatActivity() {
             //            startActivity(Intent(this,ContestDetailActivity::class.java))
 
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(Intent(this@BaseActivity, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"false"))
+                startActivity(
+                    Intent(this@BaseActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                )
             } else {
                 startActivity(Intent(this, NotificationActivity::class.java))
             }
@@ -274,11 +300,11 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(intent);
         finish();
 
-       /* startActivity(Intent(this, WelcomeActivity::class.java))
-        (0 until StockConstant.ACTIVITIES.size)
-            .filter { StockConstant.ACTIVITIES[it] != null }
-            .forEach { StockConstant.ACTIVITIES[it]?.finish() }
-        finish()*/
+        /* startActivity(Intent(this, WelcomeActivity::class.java))
+         (0 until StockConstant.ACTIVITIES.size)
+             .filter { StockConstant.ACTIVITIES[it] != null }
+             .forEach { StockConstant.ACTIVITIES[it]?.finish() }
+         finish()*/
 
 
     }

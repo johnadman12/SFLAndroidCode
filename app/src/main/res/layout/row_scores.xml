@@ -31,6 +31,7 @@
                 android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dummy_name"
@@ -52,6 +53,7 @@
                         android:padding="@dimen/_2sdp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="6"
@@ -100,6 +102,7 @@
                 android:layout_toRightOf="@+id/ll_totalChange">
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPercentage"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:gravity="center"
@@ -132,6 +135,7 @@
 
             </RelativeLayout>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrizeMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
