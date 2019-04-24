@@ -126,7 +126,7 @@
                                 style="@style/TextStyleNormal"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:textSize="@dimen/_8ssp"
+                                android:textSize="@dimen/_9ssp"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="0dp"
@@ -182,7 +182,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                         android:id="@+id/ll_Circular"
                         android:layout_width="wrap_content"
                         android:orientation="vertical"
@@ -200,14 +200,26 @@
                             card_view:progressCap="round"
                             android:outlineProvider="paddedBounds"
                             card_view:progressBackgroundStrokeWidth="@dimen/_8sdp"
-                            card_view:textSize="@dimen/_17ssp"
+                            card_view:textSize="@dimen/_16ssp"
                             card_view:textColor="@color/white"
                             style="@style/TextStyleSemiBold"
                             card_view:progressBackgroundColor="@color/green"
                             android:layout_marginBottom="8dp"
                             android:layout_marginTop="8dp"/>
 
-                </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_22ssp"
+                            android:textColor="@color/white"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:lineSpacingExtra="@dimen/_2sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:text="@string/join_now"/>
+                </RelativeLayout>
                 <LinearLayout android:layout_width="0dp"
                               android:layout_height="wrap_content"
                               android:layout_weight="1"
@@ -278,7 +290,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginRight="@dimen/_3sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
                         android:gravity="right">
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleNormal"

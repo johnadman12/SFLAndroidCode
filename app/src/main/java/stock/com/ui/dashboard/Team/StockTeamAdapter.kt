@@ -23,7 +23,6 @@ import stock.com.ui.pojo.StockTeamPojo
 
 class StockTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
-    val yes: String,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>(), Filterable {
@@ -61,6 +60,7 @@ class StockTeamAdapter(
         fun onItemUncheck(item: StockTeamPojo.Stock)
     }
 
+
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
 
         holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
@@ -70,10 +70,6 @@ class StockTeamAdapter(
         holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
-        if (yes.equals("yes")) {
-            holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.img_add.visibility = GONE
-        }
 
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
@@ -88,7 +84,15 @@ class StockTeamAdapter(
 
         holder.itemView.setOnClickListener {
             mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
-             }
+        }
+
+        holder.itemView.toggleButton1.setOnClickListener {
+            if (holder.itemView.toggleButton1.isChecked) {
+                searchList!!.get(position).addedStock = "0";
+            } else
+            searchList!!.get(position).addedStock = "1";
+
+        }
     }
 
 

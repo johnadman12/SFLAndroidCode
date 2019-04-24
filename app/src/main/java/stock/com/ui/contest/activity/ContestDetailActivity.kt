@@ -2,9 +2,11 @@ package stock.com.ui.contest.activity
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
 import android.view.Window
@@ -12,6 +14,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.contest_detail_activity.*
 import kotlinx.android.synthetic.main.dialog_information.*
@@ -26,14 +29,19 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
+    var exchangeid: Int = 0
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_btn_close -> {
@@ -54,12 +62,20 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         if (intent != null) {
-            contestid = intent.getIntExtra("contestid",0)
+            contestid = intent.getIntExtra("contestid", 0)
+            exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
         img_btn_close.visibility = View.VISIBLE
         getContestDetail()
+        ll_Circular.setOnClickListener {
+            startActivity(
+                Intent(this, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID, exchangeid
+                )
+            )
+        }
 
     }
 
@@ -76,7 +92,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this,scores)
+        rv_score!!.adapter = ScoresAdapter(this, scores)
     }
 
     fun getContestDetail() {
@@ -125,6 +141,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
+        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
             .into(ivStock)
         iv_info.setOnClickListener {
@@ -136,6 +153,36 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             sports.toString() + "/" +
                     contest.contestSize
         )
+        if (!contest.scheduleStart.equals(" ")) {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val inputFormat = SimpleDateFormat(inputPattern)
+            var date: Date? = null
+            date = inputFormat.parse(contest.scheduleStart)
+            val thatDay = Calendar.getInstance()
+            thatDay.setTime(date);
+            val today = Calendar.getInstance()
+            val diff = thatDay.timeInMillis - today.timeInMillis
+            if (diff.toString().contains("-")) {
+                tvTimeLeft.setText("0:0:0: Left")
+            } else {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff =thatDay.timeInMillis-cTime.timeInMillis
+
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60%60
+                        val hours = diffSec / 3600
+
+                        tvTimeLeft.setText(hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+            }
+        }
         llWinners.setOnClickListener {
             val manager = supportFragmentManager
             val bottomSheetDialogFragment =
@@ -166,5 +213,10 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         dialogue.show()
     }
 
+    private val TIME_TEXT_ADAPTER =
+        CircularProgressIndicator.ProgressTextAdapter { time ->
+            val sb = ""
+            sb
+        }
 
 }

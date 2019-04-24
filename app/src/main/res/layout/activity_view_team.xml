@@ -124,8 +124,8 @@
 
                 <RelativeLayout
                         android:id="@+id/relFieldView"
-                        android:layout_width="@dimen/_60sdp"
-                        android:layout_height="@dimen/_60sdp"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_65sdp"
                         android:background="@drawable/circle_dark_blue"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/_10sdp">
@@ -134,14 +134,14 @@
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             app:srcCompat="@mipmap/fieldview"
                     />
 
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Field   View "
+                            android:text="@string/field_view"
                             android:gravity="center"
                             android:layout_centerVertical="true"
                             android:textSize="@dimen/_12ssp"
@@ -153,11 +153,12 @@
                     />
                 </RelativeLayout>
 
-                <RelativeLayout android:layout_width="@dimen/_60sdp"
-                                android:layout_height="@dimen/_60sdp"
-                                android:background="@mipmap/greencircle"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginRight="@dimen/_10sdp"
+                <RelativeLayout
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_65sdp"
+                        android:background="@mipmap/greencircle"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/_10sdp"
                 >
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTotal"

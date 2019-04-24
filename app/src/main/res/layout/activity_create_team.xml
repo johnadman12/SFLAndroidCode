@@ -10,6 +10,9 @@
             android:id="@+id/include"
             layout="@layout/include_back"/>
 
+
+
+
     <LinearLayout android:id="@+id/lltop"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -117,11 +120,18 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_below="@+id/lltop"
+            android:background="#38A1DA"/>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:orientation="horizontal"
-            android:layout_below="@+id/lltop"
+            android:layout_below="@+id/view"
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_5sdp"
@@ -142,6 +152,7 @@
                 android:inputType="textCapSentences"
                 android:textColor="@color/white"
                 android:singleLine="true"
+                android:padding="@dimen/_5sdp"
                 android:id="@+id/et_search_stock"/>
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/imgSearch"

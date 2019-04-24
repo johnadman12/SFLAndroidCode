@@ -32,19 +32,25 @@ import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONArray
+
 
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var ids: ArrayList<String>? = null;
     private var viewMyTeamAdapter: ViewMyTeamAdapter? = null;
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
-    var exchangeId: String = ""
+    var exchangeId: Int =0
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
             }
             R.id.btn_Join -> {
+
+                showJoinContestDialogue()
                 startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
             }
             R.id.relFieldView -> {
@@ -96,13 +102,33 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ivRight.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
         if (intent != null) {
-            exchangeId = intent.getStringExtra(StockConstant.EXCHANGEID)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID,0)
         }
         stockSelectedItems = list
         viewMyTeamAdapter = ViewMyTeamAdapter(
             this, list as ArrayList
         );
         setStockAdapter()
+    }
+
+    fun showJoinContestDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_join_contest)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        dialogue.setTitle(null)
+        dialogue.entreefee.setText("")
+        dialogue.tvEntryFee.setText("")
+        dialogue.tv_yes.setOnClickListener {
+            dialogue.dismiss()
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
     }
 
     @SuppressLint("WrongConstant")
@@ -121,7 +147,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val call: Call<BasePojo> =
             apiService.saveTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                exchangeId,
+                exchangeId.toString(),
                 "",
                 ids.toString(),
                 getFromPrefsString(StockConstant.USERID).toString()

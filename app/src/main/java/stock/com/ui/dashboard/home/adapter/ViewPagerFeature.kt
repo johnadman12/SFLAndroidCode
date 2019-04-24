@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.view.*
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
@@ -60,7 +61,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
-        val ll_Circular: LinearLayout = view.findViewById(R.id.ll_Circular)
+        val ll_Circular: RelativeLayout = view.findViewById(R.id.ll_Circular)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
@@ -93,26 +94,17 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
             } else {
-               /* val diffSec = diff / 1000
-                val days = diffSec / SECONDS_IN_A_DAY
-                val secondsDay = diffSec % SECONDS_IN_A_DAY
-                val seconds = secondsDay % 60
-                val minutes = secondsDay / 60 % 60
-                val hours = secondsDay / 3600
-                tvTimeLeft.setText(days.toString() + "D: " + hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
-//                timer(thatDay.timeInMillis, diff, tvTimeLeft)
-*/
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff =thatDay.timeInMillis-cTime.timeInMillis
+
                         val diffSec = diff / 1000
-                        val days = diffSec / SECONDS_IN_A_DAY
-                        val secondsDay = diffSec % SECONDS_IN_A_DAY
-                        val seconds = secondsDay % 60
-                        val minutes = secondsDay / 60 % 60
-                        val hours = secondsDay / 3600
-                        tvTimeLeft.setText(/*days.toString() + "D: "+*/hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60%60
+                        val hours = diffSec / 3600
+
+                        tvTimeLeft.setText(hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
                     override fun onFinish() {
                     }
@@ -123,11 +115,14 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);
         }
-        card_view.setOnClickListener {
+        ll_Circular.setOnClickListener {
             context.startActivity(
                 Intent(context, ContestDetailActivity::class.java).putExtra(
                     "contestid",
                     list.get(position).contestid
+                ).putExtra(
+                    StockConstant.EXCHANGEID,
+                    list.get(position).exchangeid
                 )
             )
         }
@@ -147,13 +142,6 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
 
-        ll_Circular.setOnClickListener {
-            context.startActivity(
-                Intent(context, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID, list.get(position).exchangeid
-                )
-            )
-        }
         // Add the view to the parent
         parent.addView(view)
 
@@ -168,8 +156,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
 
     private val TIME_TEXT_ADAPTER =
         CircularProgressIndicator.ProgressTextAdapter { time ->
-            val sb = "Join" +
-                    " Now"
+            val sb = ""
             sb
         }
     fun parseDateToddMMyyyy(time: String): String? {

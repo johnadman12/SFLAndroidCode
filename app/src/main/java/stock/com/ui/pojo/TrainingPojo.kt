@@ -45,7 +45,7 @@ class TrainingPojo : BasePojo() {
         var description: String = ""
         @SerializedName("exchangeid")
         @Expose
-        var exchangeid: String = ""
+        var exchangeid: Int = 0
         @SerializedName("exchangename")
         @Expose
         var exchangename: String = ""

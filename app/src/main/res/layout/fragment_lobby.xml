@@ -155,7 +155,7 @@
                 </LinearLayout>
                 <View android:layout_width="match_parent"
                       android:layout_height="1sp"
-                      android:background="#3CA1D5"/>
+                      android:background="#38A1DA"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleSemiBold"

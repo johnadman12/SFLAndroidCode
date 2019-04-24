@@ -300,8 +300,8 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("stock/stock_list")
     fun getStockList(
-        @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: String,
-        @Field("user_id") user_id: String
+        @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: Int,
+        @Field("user_id") user_id: Int
     ): Call<StockTeamPojo>
 
     @FormUrlEncoded

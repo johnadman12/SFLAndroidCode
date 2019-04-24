@@ -48,7 +48,7 @@
     <string name="live">Live</string>
     <string name="results">Results</string>
     <string name="select_a_match">Select a Match</string>
-    <string name="enter_contest">Feature Contest</string>
+    <string name="enter_contest">Featured Contests</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="sign_up">SignUp</string>
     <string name="notification">Notifications</string>
@@ -570,6 +570,8 @@
     </string>
     <string name="contestfee">
         <![CDATA[Contest entry fee is calculated is based on total winning amount & Contest Spots.]]></string>
+    <string name="join_now">Join\nNow</string>
+    <string name="field_view">Field\nView</string>
 
 
 </resources>

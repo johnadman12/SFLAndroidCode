@@ -75,6 +75,14 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
         @Expose
         public String addedStock;
 
+        public String getAddedStock() {
+            return addedStock;
+        }
+
+        public void setAddedStock(String addedStock) {
+            this.addedStock = addedStock;
+        }
+
         protected Stock(Parcel in) {
             if (in.readByte() == 0) {
                 stockid = null;

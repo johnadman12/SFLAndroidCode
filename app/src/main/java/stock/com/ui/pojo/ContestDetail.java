@@ -83,24 +83,26 @@ public class ContestDetail extends BasePojo {
     }
     public class Score {
 
-        @SerializedName("id")
+        @SerializedName("team_id")
         @Expose
-        public String id;
-        @SerializedName("image")
+        public Integer teamId;
+        @SerializedName("team_name")
         @Expose
-        public String image;
-        @SerializedName("username")
-        @Expose
-        public String username;
+        public String teamName;
         @SerializedName("rank")
         @Expose
         public String rank;
-        @SerializedName("rankPercentage")
+        @SerializedName("points")
         @Expose
-        public String rankPercentage;
-        @SerializedName("price")
+        public Integer points;
+        @SerializedName("userid")
         @Expose
-        public String price;
-
+        public Integer userid;
+        @SerializedName("username")
+        @Expose
+        public String username;
+        @SerializedName("image")
+        @Expose
+        public String image;
     }
 }

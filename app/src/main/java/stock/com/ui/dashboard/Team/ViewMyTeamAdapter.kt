@@ -26,6 +26,7 @@ class ViewMyTeamAdapter(
         return FeatureListHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.tvSymbol.setText(mContest.get(position).symbol)
         holder.itemView.tvCompanyName.setText(mContest.get(position).companyName)
@@ -40,6 +41,19 @@ class ViewMyTeamAdapter(
         holder.itemView.setOnClickListener {
             mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
         }
+        if (mContest.get(position).getAddedStock().equals("0")) {
+            holder.itemView.toggleButton1.isChecked = true
+        } else if (mContest.get(position).getAddedStock().equals("1"))
+            holder.itemView.toggleButton1.isChecked = false
+
+
+        holder.itemView.toggleButton1.setOnClickListener {
+            if (holder.itemView.toggleButton1.isChecked) {
+                mContest.get(position).addedStock = "1";
+            } else
+                mContest.get(position).addedStock = "0";
+
+        }
 
     }
 
@@ -49,7 +63,10 @@ class ViewMyTeamAdapter(
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        fun setOnClickListener(onClickListener: View.OnClickListener) {
+            itemView.toggleButton1.setOnClickListener(onClickListener)
+            notifyDataSetChanged()
+        }
     }
 
 

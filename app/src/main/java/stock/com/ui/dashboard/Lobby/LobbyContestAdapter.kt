@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.CountDownTimer
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.LobbyContestPojo
@@ -69,13 +71,22 @@ class LobbyContestAdapter(
             if (diff.toString().contains("-")) {
                 holder.itemView.tvTimeLeft.setText("0:0:0: Left")
             } else {
-                val diffSec = diff / 1000
-                val days = diffSec / SECONDS_IN_A_DAY
-                val secondsDay = diffSec % SECONDS_IN_A_DAY
-                val seconds = secondsDay % 60
-                val minutes = secondsDay / 60 % 60
-                val hours = secondsDay / 3600
-                holder.itemView.tvTimeLeft.setText(/*days.toString() + "D: " +*/ hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
             }
         }
 
@@ -99,8 +110,12 @@ class LobbyContestAdapter(
         }
         holder.itemView.ll_Circular.setOnClickListener {
             mContext.startActivity(
-                Intent(mContext, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID, mContest.get(position).exchangeid
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(
+                    "contestid",
+                    mContest.get(position).contestid
+                ).putExtra(
+                    StockConstant.EXCHANGEID,
+                    mContest.get(position).exchangeid
                 )
             )
         }
@@ -118,8 +133,7 @@ class LobbyContestAdapter(
 
     private val TIME_TEXT_ADAPTER =
         CircularProgressIndicator.ProgressTextAdapter { time ->
-            val sb = "Join" +
-                    " Now"
+            val sb = ""
             sb
         }
 

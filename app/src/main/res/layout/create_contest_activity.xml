@@ -532,7 +532,10 @@
                             android:text="@string/contestfee"
                             android:textColor="@color/white"
                             android:gravity="center"
-                            android:padding="@dimen/_3sdp"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:lineSpacingExtra="@dimen/_2sdp"
+                            android:padding="@dimen/_5sdp"
                             android:textSize="@dimen/_10ssp"/>
 
                 </LinearLayout>

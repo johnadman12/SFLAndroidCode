@@ -88,7 +88,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
-    var exchangeId: String = ""
+    var exchangeId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
@@ -109,7 +109,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
-            exchangeId = intent.getStringExtra(StockConstant.EXCHANGEID)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
 
         /*val llm = LinearLayoutManager(this)
@@ -120,7 +120,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         */
 
         stockTeamAdapter = StockTeamAdapter(
-            this, list as ArrayList, "no",
+            this, list as ArrayList,
             object : StockTeamAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.remove(item);
@@ -163,8 +163,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId,
-                getFromPrefsString(StockConstant.USERID).toString()
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
             )
         call.enqueue(object : Callback<StockTeamPojo> {
 
@@ -239,7 +239,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getWizardStockList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId,
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId.toString(),
                 getFromPrefsString(StockConstant.USERID).toString()
             )
         call.enqueue(object : Callback<StockTeamPojo> {
@@ -321,7 +321,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
 
-                    var sortedList = list!!.sortedBy{it.latestVolume.toDouble()}
+                    var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
 
                     for (obj in sortedList) {
                         list!!.clear()

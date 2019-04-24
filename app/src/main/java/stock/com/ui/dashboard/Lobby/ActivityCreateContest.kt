@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.appcompat.widget.AppCompatTextView
@@ -50,6 +51,17 @@ class ActivityCreateContest : BaseActivity() {
             }
 
         }
+
+        val timeSetListener1 = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            myCalendar.set(Calendar.HOUR_OF_DAY, hour)
+            myCalendar.set(Calendar.MINUTE, minute)
+            updateTime(startTime)
+        }
+        val timeSetListener2 = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+            myCalendar.set(Calendar.HOUR_OF_DAY, hour)
+            myCalendar.set(Calendar.MINUTE, minute)
+            updateTime(endTime)
+        }
         endDate.setOnClickListener {
             val dialog = DatePickerDialog(
                 this@ActivityCreateContest, dateSetListener1, myCalendar
@@ -69,6 +81,19 @@ class ActivityCreateContest : BaseActivity() {
             dialog.show()
         }
 
+        startTime.setOnClickListener {
+            TimePickerDialog(
+                this@ActivityCreateContest, timeSetListener1,
+                myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true
+            ).show()
+        }
+        endTime.setOnClickListener {
+            TimePickerDialog(
+                this@ActivityCreateContest, timeSetListener1,
+                myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true
+            ).show()
+        }
+
     }
 
     private fun updateLabel(date: AppCompatTextView) {
@@ -76,5 +101,12 @@ class ActivityCreateContest : BaseActivity() {
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         date.setText(sdf.format(myCalendar.time))
     }
+
+    private fun updateTime(date: AppCompatTextView) {
+        val myFormat = "HH:mm" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        date.setText(sdf.format(myCalendar.time))
+    }
+
 
 }

@@ -30,7 +30,7 @@ class ActivityJoiningConfirmation : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_confimation)
         circular_progress.setOnClickListener {
-            showJoinContestDialogue()
+//            showJoinContestDialogue()
         }
         img_btn_back.setOnClickListener {
             finish()
@@ -41,25 +41,7 @@ class ActivityJoiningConfirmation : BaseActivity() {
     }
 
 
-    fun showJoinContestDialogue() {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_join_contest)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        dialogue.setTitle(null)
-        dialogue.entreefee.setText("")
-        dialogue.tvEntryFee.setText("")
-        dialogue.tv_yes.setOnClickListener {
-            dialogue.dismiss()
-        }
 
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
 
    /* @SuppressLint("WrongConstant")
     private fun setAdapter() {

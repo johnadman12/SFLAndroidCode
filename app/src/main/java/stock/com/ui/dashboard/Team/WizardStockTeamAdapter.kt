@@ -83,6 +83,16 @@ class WizardStockTeamAdapter(
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
         }
 
+        holder.itemView.toggleButton1.setOnClickListener {
+            if (holder.itemView.toggleButton1.isChecked) {
+//                holder.itemView.toggleButton1.isChecked = false
+                searchList!!.get(position).setAddedStock("0")
+            } else
+//                holder.itemView.toggleButton1.isChecked = true
+            searchList!!.get(position).setAddedStock("1");
+
+        }
+
         holder.itemView.setOnClickListener {
             showViewContestDialogue()
         }

@@ -48,7 +48,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:text="Scores"
+                    android:text="Teams"
                     android:layout_marginLeft="@dimen/_10sdp"
             />
             <androidx.recyclerview.widget.RecyclerView
