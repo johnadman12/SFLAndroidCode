@@ -129,15 +129,16 @@
             android:background="#38A1DA"/>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/view"
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/ll_search"
             android:visibility="visible"
+            android:padding="@dimen/_8sdp"
             android:id="@+id/ll_search">
         <EditText
                 android:layout_width="match_parent"
@@ -152,7 +153,6 @@
                 android:inputType="textCapSentences"
                 android:textColor="@color/white"
                 android:singleLine="true"
-                android:padding="@dimen/_5sdp"
                 android:id="@+id/et_search_stock"/>
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/imgSearch"

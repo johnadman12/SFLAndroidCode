@@ -32,17 +32,21 @@ import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import org.json.JSONException
-import org.json.JSONObject
+import com.google.gson.JsonObject
+import com.google.gson.JsonArray
 import org.json.JSONArray
+import org.json.JSONObject
 
 
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var ids: ArrayList<String>? = null;
     private var viewMyTeamAdapter: ViewMyTeamAdapter? = null;
+    var array: JsonArray = JsonArray()
+    var postData: JsonObject = JsonObject()
+    var jsonparams: JsonObject = JsonObject()
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
-    var exchangeId: Int =0
+    var exchangeId: Int = 0
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -51,7 +55,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             R.id.btn_Join -> {
 
                 showJoinContestDialogue()
-                startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
+//                startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
             }
             R.id.relFieldView -> {
                 startActivity(
@@ -71,9 +75,24 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.ll_save -> {
                 if (stockSelectedItems!!.size > 0) {
-                    for (i in 0 until stockSelectedItems!!.size)
-                        ids!!.add(stockSelectedItems!!.get(i).stockid.toString())
-                    Log.e("savedlist", ids.toString())
+                    for (i in 0 until stockSelectedItems!!.size) {
+                        /*if (stockSelectedItems!!.get(i).addedStock.equals("yes")) {
+                            stockSelectedItems!!.get(i).addedStock="0"
+                        } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
+                            stockSelectedItems!!.get(i).addedStock="1"
+                        }*/
+                        try {
+                            postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                            postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                            postData.addProperty("stock_status", stockSelectedItems!!.get(i).addedStock);
+                            Log.e("savedlist", stockSelectedItems!!.get(i).addedStock)
+
+                        } catch (e: Exception) {
+
+                        }
+                        array.add(postData)
+                    }
+//                    Log.e("savedlist", array.toString())
                     saveTeamList()
                 } else {
                     displayToast("please select Stock first")
@@ -95,6 +114,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
     private fun initView() {
         stockSelectedItems = ArrayList();
+        array = JsonArray()
+        postData = JsonObject()
+        jsonparams = JsonObject()
         ivedit.setOnClickListener(this)
         img_btn_back.setOnClickListener(this)
         btn_Join.setOnClickListener(this)
@@ -102,7 +124,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ivRight.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
         if (intent != null) {
-            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID,0)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
         stockSelectedItems = list
         viewMyTeamAdapter = ViewMyTeamAdapter(
@@ -144,13 +166,14 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", exchangeId.toString())
+        jsonparams.addProperty("team_id", "")
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("stocks", array)
         val call: Call<BasePojo> =
             apiService.saveTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                exchangeId.toString(),
-                "",
-                ids.toString(),
-                getFromPrefsString(StockConstant.USERID).toString()
+                jsonparams
             )
         call.enqueue(object : Callback<BasePojo> {
 

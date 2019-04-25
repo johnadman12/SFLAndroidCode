@@ -46,7 +46,7 @@ class LobbyContestAdapter(
         holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
         holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
         holder.itemView.tvTime.setText(mContest.get(position).exchangename)
-//        holder.itemView.tvWinnersTotal.setText(mContest.get(position).totalWinners)
+        holder.itemView.tvWinnersTotal.setText(mContest.get(position).totalWinners)
         holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)

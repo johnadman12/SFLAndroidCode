@@ -16,9 +16,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@drawable/sfl_banner"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_5sdp"/>
+        android:src="@drawable/sfl_banner"/>
 </LinearLayout>
 
 

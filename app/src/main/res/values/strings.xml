@@ -10,6 +10,7 @@
 
     <string name="login">Login</string>
     <string name="let_s_play">Let\'s Play</string>
+    <string name="type_comment_here">Type your comment here...</string>
     <string name="enter_code">Sign up</string>
     <string name="have_a_referral_code">Don\'t have an account?</string>
     <string name="already_a_user">Already a user?</string>
@@ -40,7 +41,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="home">Home</string>
-    <string name="my_contest">My Contest</string>
+    <string name="my_contest">My Contests</string>
     <string name="my_contests">My Contests</string>
     <string name="profile">Profile</string>
     <string name="more">More</string>

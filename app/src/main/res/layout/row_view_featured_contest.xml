@@ -220,31 +220,68 @@
                             style="@style/TextStyleSemiBold"
                             android:text="@string/join_now"/>
                 </RelativeLayout>
-                <LinearLayout android:layout_width="0dp"
-                              android:layout_height="wrap_content"
-                              android:layout_weight="1"
-                              android:layout_gravity="center"
-                              android:gravity="center"
-                              android:orientation="vertical">
+                <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_centerInParent="true"
+                                  android:orientation="vertical">
+                        <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/ivStock"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:src="@mipmap/home_icon"
+                                android:layout_gravity="center"
+                                android:background="@null"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleNormal"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="@dimen/_12sdp"
+                                android:id="@+id/tvStockName"
+                                android:layout_below="@+id/ivStock"
+                                android:layout_width="wrap_content"
+                                android:textColor="@color/textColorLightBlack"
+                                android:layout_height="wrap_content"
+                                android:text="@string/nasdaq"
+                                android:layout_marginTop="@dimen/_2sdp"/>
+                    </LinearLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/ivStock"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:src="@mipmap/home_icon"
-                            android:background="@null"/>
-                    <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextStyleNormal"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textSize="@dimen/_12sdp"
-                            android:id="@+id/tvStockName"
-                            android:layout_width="wrap_content"
-                            android:textColor="@color/textColorLightBlack"
-                            android:layout_height="wrap_content"
-                            android:text="@string/nasdaq"
-                            android:layout_marginTop="@dimen/_2sdp"/>
-                </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center"
+                                  android:layout_alignParentBottom="true"
+                                  android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:background="@drawable/gray_empty_button"
+                                android:text="C"
+                                android:gravity="center"
+                                android:layout_gravity="left"
+                                android:textSize="@dimen/_10ssp"
+                                android:layout_marginRight="@dimen/_10sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/textColorGray"
+                        />
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:background="@drawable/gray_empty_button"
+                                android:text="M"
+                                android:gravity="center"
+                                android:layout_gravity="right"
+                                android:textSize="@dimen/_10ssp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/textColorGray"
+                        />
+
+                    </LinearLayout>
+                </RelativeLayout>
 
 
             </LinearLayout>
@@ -253,7 +290,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:weightSum="2"
-                    android:padding="@dimen/_8sdp"
+                    android:padding="@dimen/_5sdp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:background="@mipmap/bgcontest_back"

@@ -17,13 +17,13 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
-            <LinearLayout android:layout_width="match_parent"
-
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:weightSum="1"
-                          android:layout_marginTop="@dimen/_5sdp"
-                          android:padding="@dimen/_2sdp">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:padding="@dimen/_2sdp">
 
                 <LinearLayout android:layout_width="0dp"
                               android:layout_height="wrap_content"
@@ -193,8 +193,7 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_team"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-            >
+                    android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -206,7 +205,6 @@
             android:id="@+id/btn_Join"
             style="@style/ButtonStylelogin"
             android:text="Join with this team"
-            android:layout_below="@+id/rel"
             android:textAllCaps="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/_15sdp"

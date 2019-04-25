@@ -29,7 +29,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:text="Contest Rules &amp; Winnings"
+                    android:text="Contest Rules"
             />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -48,7 +48,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
-                    android:text="Teams"
+                    android:text="Winnings"
                     android:layout_marginLeft="@dimen/_10sdp"
             />
             <androidx.recyclerview.widget.RecyclerView

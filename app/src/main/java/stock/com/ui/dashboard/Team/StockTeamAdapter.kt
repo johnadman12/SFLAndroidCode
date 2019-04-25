@@ -83,7 +83,7 @@ class StockTeamAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
+            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", searchList!!.get(position).stockid))
         }
 
         holder.itemView.toggleButton1.setOnClickListener {

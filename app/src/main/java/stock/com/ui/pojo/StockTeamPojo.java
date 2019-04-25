@@ -40,7 +40,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
 
         @SerializedName("stockid")
         @Expose
-        public Integer stockid;
+        public int stockid;
         @SerializedName("symbol")
         @Expose
         public String symbol;
@@ -85,7 +85,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
 
         protected Stock(Parcel in) {
             if (in.readByte() == 0) {
-                stockid = null;
+                stockid = 0;
             } else {
                 stockid = in.readInt();
             }
@@ -120,7 +120,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
 
         @Override
         public void writeToParcel(Parcel parcel, int i) {
-            if (stockid == null) {
+            if (stockid == 0) {
                 parcel.writeByte((byte) 0);
             } else {
                 parcel.writeByte((byte) 1);

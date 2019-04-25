@@ -67,7 +67,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
         if (!isAdded)
             return
-        viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!, listImage)
+      /*  viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!, listImage)
         viewPager_Banner.setClipToPadding(false);
         viewPager_Banner.setPageMargin(10);
         viewPager_Banner.startAutoScroll()
@@ -78,7 +78,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_Banner.setPageMargin(20);
 
         tab_layout.visibility = VISIBLE;
-        tab_layout.setupWithViewPager(viewPager_Banner);
+        tab_layout.setupWithViewPager(viewPager_Banner);*/
+        hicvp.adapter=HorizontalPagerAdapter(context,listImage!!)
     }
 
 

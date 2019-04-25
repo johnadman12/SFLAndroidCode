@@ -150,7 +150,7 @@ class WizardStockTeamAdapter(
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)
         dialogue.tvViewContest.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
+//            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", searchList!!.get(position).stockid))
             dialogue.dismiss()
         }
         dialogue.tv_hide.setOnClickListener {

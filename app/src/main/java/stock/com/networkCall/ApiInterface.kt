@@ -1,8 +1,11 @@
 package stock.com.networkCall
 
+import android.content.res.TypedArray
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
@@ -312,11 +315,24 @@ interface ApiInterface {
     ): Call<StockTeamPojo>
 
     @FormUrlEncoded
+    @POST("stock/add_watch")
+    fun addStockWatch(
+        @Header("x-access-token") token: String, @Field("stock_id") stock_id: Int,
+        @Field("user_id") user_id: String
+    ): Call<BasePojo>
+
+    /*  @FormUrlEncoded
+      @POST("team/create_team")
+      fun saveTeam(
+          @Header("x-access-token") token: String, @Field("contest_id") contest_id: String,
+          @Field("team_id") team_id: String, @Field("stocks") stock: String,
+          @Field("user_id") user_id: String
+      ): Call<BasePojo>
+  */
+
     @POST("team/create_team")
     fun saveTeam(
-        @Header("x-access-token") token: String, @Field("contest_id") contest_id: String,
-        @Field("team_id") team_id: String, @Field("stock_id") stock_id: String,
-        @Field("user_id") user_id: String
+        @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 
 

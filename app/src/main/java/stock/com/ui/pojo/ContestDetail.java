@@ -30,7 +30,7 @@ public class ContestDetail extends BasePojo {
         public String winningAmount;
         @SerializedName("contest_size")
         @Expose
-        public Integer contestSize;
+        public int contestSize;
         @SerializedName("contest_type")
         @Expose
         public String contestType;
@@ -85,7 +85,7 @@ public class ContestDetail extends BasePojo {
 
         @SerializedName("team_id")
         @Expose
-        public Integer teamId;
+        public int teamId;
         @SerializedName("team_name")
         @Expose
         public String teamName;
@@ -94,10 +94,10 @@ public class ContestDetail extends BasePojo {
         public String rank;
         @SerializedName("points")
         @Expose
-        public Integer points;
+        public int points;
         @SerializedName("userid")
         @Expose
-        public Integer userid;
+        public int userid;
         @SerializedName("username")
         @Expose
         public String username;

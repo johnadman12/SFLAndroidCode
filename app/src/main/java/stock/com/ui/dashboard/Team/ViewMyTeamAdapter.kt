@@ -39,7 +39,7 @@ class ViewMyTeamAdapter(
         holder.itemView.img_add.visibility = GONE
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java))
+            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", mContest.get(position).stockid))
         }
         if (mContest.get(position).getAddedStock().equals("0")) {
             holder.itemView.toggleButton1.isChecked = true

@@ -42,25 +42,14 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <com.github.demono.AutoScrollViewPager
-                    android:id="@+id/viewPager_Banner"
+            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                    android:id="@+id/hicvp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
-                    app:slideDirection="right"
-                    android:clipToPadding="false"
-                    app:slideDuration="3000"
-                    app:slideInterval="3000"
-                    app:stopWhenTouch="true"
-                    android:layout_weight="1"/>
-            <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/viewPager_Banner"
-                    app:tabBackground="@drawable/tab_selector"
-                    app:tabGravity="center"
-                    app:tabIndicatorHeight="0dp"
-                    android:visibility="gone"/>
+                    android:layout_height="@dimen/_150sdp"
+                    app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                    app:icvp_scroll_duration="250"
+                    app:icvp_medium_scaled="false"
+            />
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_stock_name"
