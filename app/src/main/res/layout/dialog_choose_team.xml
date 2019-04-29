@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/_25sdp"
+              android:layout_gravity="center"
+              android:background="@android:color/transparent">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:id="@+id/congratulation_card"
+            app:cardBackgroundColor="#FAFAFA"
+            app:cardElevation="0dp"
+            android:layout_gravity="bottom">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/white">
+
+
+            <LinearLayout
+                    android:id="@+id/ll_saved"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:background="@drawable/circle_grey_stroke"
+                        android:src="@drawable/flag_norfolk_island"
+                        android:visibility="visible"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose Saved Team"
+                        android:padding="@dimen/_3sdp"
+                        android:gravity="center"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/textColorLightBlack"
+                />
+
+            </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/ll_new"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:background="@drawable/circle_grey_stroke"
+                        android:src="@mipmap/addblue"
+                        android:tint="@color/GrayColor"
+                        android:visibility="visible"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Create New Team"
+                        android:gravity="center"
+                        android:padding="@dimen/_3sdp"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/textColorLightBlack"
+                />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

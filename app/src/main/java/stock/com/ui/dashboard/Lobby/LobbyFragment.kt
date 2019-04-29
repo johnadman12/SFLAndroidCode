@@ -23,7 +23,6 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog

@@ -321,6 +321,11 @@ interface ApiInterface {
         @Field("user_id") user_id: String
     ): Call<BasePojo>
 
+    @GET("contest/GetContestsList")
+    fun getContest(
+        @Header("x-access-token") token: String, @Query("status") status: String,
+        @Query("user_id") user_id: String
+    ): Call<LobbyContestPojo>
     /*  @FormUrlEncoded
       @POST("team/create_team")
       fun saveTeam(

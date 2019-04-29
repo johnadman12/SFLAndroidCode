@@ -2,7 +2,9 @@ package stock.com.ui.my_contest.fragment
 
 import android.os.Bundle
 import android.os.Handler
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_finished.*
@@ -13,15 +15,14 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.my_contest.adapter.FinishedAdapter
+import stock.com.ui.my_contest.adapter.LiveAdapter
+import stock.com.ui.my_contest.adapter.UpcomingAdapter
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.util.ArrayList
 
-class FinishedFragment : BaseFragment() {
-
-
+class UpcomingFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_finished, container, false)
     }
@@ -38,7 +39,7 @@ class FinishedFragment : BaseFragment() {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<LobbyContestPojo> =
             apiService.getContest(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), "finished",
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), "upcoming",
                 getFromPrefsString(StockConstant.USERID).toString()
             )
         call.enqueue(object : Callback<LobbyContestPojo> {
@@ -74,11 +75,10 @@ class FinishedFragment : BaseFragment() {
     }
 
     private fun setAdapter(contest: ArrayList<LobbyContestPojo.Contest>) {
-        val llm = GridLayoutManager(context, 2)
+        val llm = GridLayoutManager(context,2)
         //llm.orientation = GridLayoutManager(applicationContext,2)
         recycler_finished!!.layoutManager = llm
-        recycler_finished!!.adapter = FinishedAdapter(context!!, contest);
+        recycler_finished!!.adapter = UpcomingAdapter(context!!,contest);
     }
-
 
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_stock_detail_page.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -19,6 +20,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.AppDelegate.showAlert
 import stock.com.utils.StockConstant
@@ -26,19 +28,34 @@ import stock.com.utils.StockDialog
 
 
 class ActivityStockDetail : BaseActivity(), View.OnClickListener {
-
+    private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var fragment: Fragment? = null;
     var stockId: Int = 0
+    var position: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_detail_page)
+        list = ArrayList()
         StockConstant.ACTIVITIES.add(this)
-        if (intent != null)
+        if (intent != null) {
             stockId = intent.getIntExtra("Stockid", 0);
+            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+        }
+
+        if (list!!.size > 0)
+            for (i in 0 until list!!.size) {
+                if (stockId.equals(list!!.get(i).stockid))
+                    position = i
+            }
+        setStockData()
+
+        /*  if (list!!.get(position).getAddedStock().equals("0")) {
+              list!!.get(position).addedStock = "1";
+          } else if (list!!.get(position).getAddedStock().equals("1"))
+              list!!.get(position).addedStock = "0";*/
 
         setFragment(ChartFragment());
-
         ll_news.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
         ll_data.setOnClickListener(this);
@@ -61,7 +78,15 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             }
 
             R.id.ivTeam -> {
-
+                if (list!!.get(position).getAddedToList() == 0) {
+                    list!!.get(position).setAddedToList(1)
+                    //show green button
+                    AppDelegate.showAlert(this, "Removed from stock")
+                } else if (list!!.get(position).getAddedToList() == 1) {
+                    list!!.get(position).setAddedToList(0)
+                    //show red button
+                    AppDelegate.showAlert(this, "added to stock")
+                }
             }
 
             R.id.ll_chart -> {
@@ -177,14 +202,24 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 img_btn_analystics.setColorFilter(ContextCompat.getColor(this, R.color.GrayColor));
                 img_btn_comments.setColorFilter(ContextCompat.getColor(this, R.color.white));
             }
-            R.id.img_btn_back -> {
-                onBackPressed();
-            }
+
         }
     }
 
     private fun setTextViewColor(tv: TextView, color: Int) {
         tv.setTextColor(color);
+    }
+
+    fun setStockData() {
+        if (position != -1) {
+            stock_name.setText(list!!.get(position).symbol)
+            tv_stockcomp.setText(list!!.get(position).companyName)
+            tvStockPercentage.setText(list!!.get(position).previousClose)
+            tvVol.setText(list!!.get(position).latestVolume)
+            tvlatestPrice.setText(list!!.get(position).latestPrice)
+            Glide.with(this).load(list!!.get(position).image).into(iv_stock_img)
+        }
+
     }
 
 
@@ -207,7 +242,11 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityStockDetail, response.message())
+                        AppDelegate.showAlert(this@ActivityStockDetail, "stock added to watchlist sucessfully ")
+                    }else
+                    {
+                        AppDelegate.showAlert(this@ActivityStockDetail, "stock already added to watchlist")
+
                     }
                 } else {
                     Toast.makeText(

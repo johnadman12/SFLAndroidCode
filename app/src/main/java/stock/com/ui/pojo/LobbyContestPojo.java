@@ -77,9 +77,10 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("price_break")
         @Expose
         public ArrayList<PriceBreak> priceBreak = null;
+
         @SerializedName("total_winners")
         @Expose
-        public int totalWinners;
+        public String totalWinners;
 
         public void setCalculatePosition(int calculatePosition) {
             this.calculatePosition = calculatePosition;
@@ -148,9 +149,9 @@ public class LobbyContestPojo extends BasePojo {
                 teamsJoined = in.readInt();
             }
             if (in.readByte() == 0) {
-                totalWinners = 0;
+                totalWinners ="";
             } else {
-                totalWinners = in.readInt();
+                totalWinners = in.readString();
             }
         }
     }

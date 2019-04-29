@@ -23,7 +23,7 @@
             android:weightSum="1.5">
 
         <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_apple"
+                android:id="@+id/iv_stock_img"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
                 android:src="@mipmap/lobbyy_"
@@ -43,6 +43,7 @@
                     android:weightSum="1">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/stock_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/appl"
@@ -61,12 +62,15 @@
                         android:textColor="@color/textColorGray"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_stockcomp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Stock"
-                        style="@style/TextStyleMedium"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_11ssp"
                         android:textStyle="italic"
                         android:layout_weight="0.5"
+                        android:maxLines="1"
                         android:gravity="center_vertical"
                         android:textColor="@color/textColorGray"/>
 
@@ -96,6 +100,7 @@
                 />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvlatestPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/default_notification_channel_id"
@@ -122,6 +127,7 @@
                         android:textColor="@color/textColorGray"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvVol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="34.5"
@@ -131,6 +137,7 @@
                         android:textColor="@color/textColorBlack"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStockPercentage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -180,6 +187,7 @@
                                 android:textColor="@color/textColorBlack"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMarket_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/TextStyleNormal"

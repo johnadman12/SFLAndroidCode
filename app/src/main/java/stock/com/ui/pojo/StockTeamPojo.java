@@ -74,6 +74,15 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
         @SerializedName("addedStock")
         @Expose
         public String addedStock;
+        public int addedToList;
+
+        public void setAddedToList(int addedToList) {
+            this.addedToList = addedToList;
+        }
+
+        public int getAddedToList() {
+            return addedToList;
+        }
 
         public String getAddedStock() {
             return addedStock;

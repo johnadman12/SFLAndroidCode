@@ -23,6 +23,7 @@ import stock.com.ui.edit_profile.fragment.ContactInfoFragment
 import stock.com.ui.my_contest.fragment.CreatedFragment
 import stock.com.ui.my_contest.fragment.FinishedFragment
 import stock.com.ui.my_contest.fragment.LiveFragment
+import stock.com.ui.my_contest.fragment.UpcomingFragment
 
 class MyContestFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
@@ -77,6 +78,9 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
+
+                setFragment(UpcomingFragment(), Bundle())
+
 
 
             }

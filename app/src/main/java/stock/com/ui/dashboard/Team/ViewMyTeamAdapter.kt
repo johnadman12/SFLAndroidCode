@@ -15,11 +15,13 @@ import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.StockConstant
 
 class ViewMyTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>
 ) :
     RecyclerView.Adapter<ViewMyTeamAdapter.FeatureListHolder>() {
+    var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_team, parent, false)
@@ -28,6 +30,8 @@ class ViewMyTeamAdapter(
 
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
+        list = ArrayList()
+        list = mContest as ArrayList
         holder.itemView.tvSymbol.setText(mContest.get(position).symbol)
         holder.itemView.tvCompanyName.setText(mContest.get(position).companyName)
         holder.itemView.tvPrevClose.setText(mContest.get(position).previousClose)
@@ -39,8 +43,25 @@ class ViewMyTeamAdapter(
         holder.itemView.img_add.visibility = GONE
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", mContest.get(position).stockid))
+            mContext.startActivity(
+                Intent(
+                    mContext,
+                    ActivityStockDetail::class.java
+                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    .putExtra("Stockid", mContest.get(position).stockid)
+                    .putExtra(StockConstant.STOCKLIST, list)
+            )
         }
+
+        if (mContest.get(position).getAddedToList() == 0) {
+            holder.itemView.llremoveStock.visibility = VISIBLE
+            holder.itemView.img_add.visibility = GONE
+        } else if (mContest.get(position).getAddedToList() == 1) {
+            holder.itemView.llremoveStock.visibility = GONE
+            holder.itemView.img_add.visibility = VISIBLE
+        }
+
+
         if (mContest.get(position).getAddedStock().equals("0")) {
             holder.itemView.toggleButton1.isChecked = true
         } else if (mContest.get(position).getAddedStock().equals("1"))

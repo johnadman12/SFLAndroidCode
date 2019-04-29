@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.contest_detail_activity.*
+import kotlinx.android.synthetic.main.dialog_choose_team.*
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.include_back.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.*
@@ -70,11 +71,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         img_btn_close.visibility = View.VISIBLE
         getContestDetail()
         ll_Circular.setOnClickListener {
-            startActivity(
-                Intent(this, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID, exchangeid
-                )
-            )
+            showJoinTeamDialogue()
+
         }
 
     }
@@ -168,15 +166,16 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
-                        val diff =thatDay.timeInMillis-cTime.timeInMillis
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
 
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
-                        val minutes = diffSec / 60%60
+                        val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
+
                     override fun onFinish() {
                     }
                 }
@@ -205,6 +204,37 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         dialogue.btnOK.setOnClickListener {
             if (dialogue.isShowing)
                 dialogue.dismiss()
+        }
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
+
+    fun showJoinTeamDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_choose_team)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        dialogue.ll_new.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+            startActivity(
+                Intent(this, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID, exchangeid
+                )
+            )
+        }
+        dialogue.ll_saved.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+
+
         }
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)

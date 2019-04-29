@@ -11,9 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 import stock.com.R
 import stock.com.ui.live_contest.LiveContestActivity
+import stock.com.ui.pojo.LobbyContestPojo
+import java.util.ArrayList
 
 
-class LiveAdapter(val mContext: Context) : RecyclerView.Adapter<LiveAdapter.FeatureListHolder>() {
+class LiveAdapter(
+    val mContext: Context,
+   val contest: ArrayList<LobbyContestPojo.Contest>
+) : RecyclerView.Adapter<LiveAdapter.FeatureListHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -37,8 +42,7 @@ class LiveAdapter(val mContext: Context) : RecyclerView.Adapter<LiveAdapter.Feat
 
 
     override fun getItemCount(): Int {
-        // return list.size;
-        return 10;
+         return contest.size;
     }
 
 

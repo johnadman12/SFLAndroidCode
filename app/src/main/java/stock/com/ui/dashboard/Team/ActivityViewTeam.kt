@@ -146,6 +146,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         dialogue.tvEntryFee.setText("")
         dialogue.tv_yes.setOnClickListener {
             dialogue.dismiss()
+            joinWithThisTeam()
         }
 
         if (dialogue.isShowing)
@@ -168,6 +169,54 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", exchangeId.toString())
         jsonparams.addProperty("team_id", "")
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("stocks", array)
+        val call: Call<BasePojo> =
+            apiService.saveTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityViewTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityViewTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun joinWithThisTeam() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", exchangeId.toString())
+        jsonparams.addProperty("team_id", "")
+        jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
         val call: Call<BasePojo> =

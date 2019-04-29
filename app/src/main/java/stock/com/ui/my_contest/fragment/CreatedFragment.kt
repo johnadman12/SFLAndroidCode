@@ -18,7 +18,6 @@ class CreatedFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setAdapter()
 
     }
