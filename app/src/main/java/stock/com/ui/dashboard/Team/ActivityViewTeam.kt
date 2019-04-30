@@ -34,13 +34,13 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import com.google.gson.JsonObject
 import com.google.gson.JsonArray
-import org.json.JSONArray
-import org.json.JSONObject
+import stock.com.ui.dashboard.DashBoardActivity
 
 
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var ids: ArrayList<String>? = null;
+    var activity: DashBoardActivity = DashBoardActivity()
     private var viewMyTeamAdapter: ViewMyTeamAdapter? = null;
     var array: JsonArray = JsonArray()
     var postData: JsonObject = JsonObject()
@@ -53,7 +53,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_Join -> {
-
                 showJoinContestDialogue()
 //                startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
             }
@@ -104,12 +103,21 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_team)
+        activity = DashBoardActivity()
+    }
+
+    override fun onResume() {
+        super.onResume()
         list = ArrayList()
         ids = ArrayList()
         if (intent != null)
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
         StockConstant.ACTIVITIES.add(this)
         initView()
+        Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
+        viewMyTeamAdapter!!.notifyDataSetChanged()
+
+
     }
 
     private fun initView() {
@@ -128,8 +136,13 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         }
         stockSelectedItems = list
         viewMyTeamAdapter = ViewMyTeamAdapter(
-            this, list as ArrayList
-        );
+            this, list as ArrayList, object : ViewMyTeamAdapter.OnItemCheckListener {
+                override fun onItemCheck(item: Int) {
+//                    stockSelectedItems!!.remove(item)
+                    setTeamText(item)
+                    Log.e("stocklist", stockSelectedItems!!.get(0).stockid.toString())
+                }
+            });
         setStockAdapter()
     }
 
@@ -146,7 +159,30 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         dialogue.tvEntryFee.setText("")
         dialogue.tv_yes.setOnClickListener {
             dialogue.dismiss()
-            joinWithThisTeam()
+            if (stockSelectedItems!!.size > 0) {
+                for (i in 0 until stockSelectedItems!!.size) {
+                    /*if (stockSelectedItems!!.get(i).addedStock.equals("yes")) {
+                        stockSelectedItems!!.get(i).addedStock="0"
+                    } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
+                        stockSelectedItems!!.get(i).addedStock="1"
+                    }*/
+                    try {
+                        postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                        postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                        postData.addProperty("stock_status", stockSelectedItems!!.get(i).addedStock);
+                        Log.e("savedlist", stockSelectedItems!!.get(i).addedStock)
+
+                    } catch (e: Exception) {
+
+                    }
+                    array.add(postData)
+                }
+//                    Log.e("savedlist", array.toString())
+                joinWithThisTeam()
+            } else {
+                displayToast("please select Stock first")
+            }
+
         }
 
         if (dialogue.isShowing)
@@ -185,6 +221,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                    } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.message())
                     }
                 } else {
@@ -233,6 +271,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                        activity.setFragmentForActivity()
+                        finish()
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                        activity.setFragmentForActivity()
+                        finish()
                     }
                 } else {
                     Toast.makeText(
@@ -255,6 +299,20 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+
+    fun setTeamText(total: Int) {
+        if (total >= 12) {
+            ll_save.isEnabled = true
+            btn_Join.isEnabled = true
+            save.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.white_fill_button))
+            btn_Join.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.green_fill_button))
+        } else {
+            ll_save.isEnabled = false
+            btn_Join.isEnabled = false
+            save.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.grey_fill_button))
+            btn_Join.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.grey_fill_button))
+        }
     }
 
 

@@ -65,7 +65,6 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
-        tvTime.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
 

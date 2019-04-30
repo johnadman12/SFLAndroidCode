@@ -38,7 +38,6 @@ import stock.com.utils.custom.CirclePagerIndicatorDecoration
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
 
-
     override fun onClick(view: View?) {
         when (view!!.id) {
 

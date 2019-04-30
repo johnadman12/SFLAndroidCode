@@ -16,6 +16,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -50,6 +52,20 @@ open class BaseActivity : AppCompatActivity() {
         pref = Prefs(this)
 
     }
+
+
+     /*fun setFragment(fragment: Fragment, bundle: Bundle) {
+//        this.fragment = fragment;
+        fragment.arguments = bundle;
+        val fragmentManager = supportFragmentManager
+        fragmentManager
+            .beginTransaction()
+//            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
+            .replace(R.id.container, fragment)
+            .commitAllowingStateLoss()
+    }*/
+
+
 
     /* */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -112,6 +112,7 @@
                                 style="@style/TextStyleNormal"
                                 android:layout_gravity="center"
                                 android:gravity="center"
+                                android:id="@+id/tvRank"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/textColorLightBlack"
@@ -256,7 +257,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
                                 android:textSize="@dimen/_9sdp"
-                                android:id="@+id/tvTime"
+
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="wrap_content"
@@ -274,7 +275,8 @@
                             android:layout_marginRight="@dimen/_5sdp">
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
-                                android:textSize="@dimen/_9sdp"
+                                android:textSize="@dimen/_8ssp"
+                                android:id="@+id/tvTime"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="wrap_content"

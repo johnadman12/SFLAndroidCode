@@ -2,6 +2,7 @@ package stock.com.ui.dashboard.Team.Stock
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -79,14 +80,16 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
 
             R.id.ivTeam -> {
                 if (list!!.get(position).getAddedToList() == 0) {
-                    list!!.get(position).setAddedToList(1)
+                    list!!.get(position).addedToList = 1
                     //show green button
                     AppDelegate.showAlert(this, "Removed from stock")
                 } else if (list!!.get(position).getAddedToList() == 1) {
-                    list!!.get(position).setAddedToList(0)
+                    list!!.get(position).addedToList = 0
                     //show red button
                     AppDelegate.showAlert(this, "added to stock")
                 }
+
+                Log.e("updatedlist", list!!.get(position).addedToList.toString())
             }
 
             R.id.ll_chart -> {
@@ -243,8 +246,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         AppDelegate.showAlert(this@ActivityStockDetail, "stock added to watchlist sucessfully ")
-                    }else
-                    {
+                    } else {
                         AppDelegate.showAlert(this@ActivityStockDetail, "stock already added to watchlist")
 
                     }

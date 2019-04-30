@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.fragment_finished.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +28,18 @@ class LiveFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getContests()
+        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                //TODO make api call here
+                Handler().postDelayed({
+                    refreshData.finishRefreshing()
+                }, 5000)
+                getContests()
+            }
+        })
 
     }
 
@@ -43,6 +56,8 @@ class LiveFragment : BaseFragment() {
 
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
                 d.dismiss()
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {

@@ -47,6 +47,7 @@ import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.feedback.FeedBackActivity
 import stock.com.ui.friends.FriendsActivity
 import stock.com.ui.location.LocationActivity
+import stock.com.ui.my_contest.fragment.UpcomingFragment
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.profile.ProfileActivity
@@ -301,7 +302,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
     @SuppressLint("WrongConstant")
     private fun setUpMenu() {
-
         resideMenu = ResideMenu(this, R.layout.left_menu, R.layout.left_menu);
         resideMenu?.setBackground(R.color.menu_bg);
         resideMenu!!.attachToActivity(this);
@@ -321,7 +321,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         arrayList.add(resources.getString(R.string.support))//Adding object in arraylist
         arrayList.add(resources.getString(R.string.how_to_play_))
         arrayList.add(resources.getString(R.string.offers))
-       // arrayList.add(resources.getString(R.string.invite))
+        // arrayList.add(resources.getString(R.string.invite))
         arrayList.add(resources.getString(R.string.social_network))
         arrayList.add(resources.getString(R.string.legality))
         arrayList.add(resources.getString(R.string.fair_play_commitment))
@@ -352,14 +352,19 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         ll_wallet.setOnClickListener {
 
-           // var intent = Intent(this, WalletActivity::class.java);
+            // var intent = Intent(this, WalletActivity::class.java);
             //startActivity(intent);
         }
         ll_Friends.setOnClickListener {
-           // var intent = Intent(this, FriendsActivity::class.java);
+            // var intent = Intent(this, FriendsActivity::class.java);
             //startActivity(intent);
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(StockConstant.FLAG, "false"));
+                startActivity(
+                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
             } else {
                 var intent = Intent(this, ShareActivity::class.java);
                 startActivity(intent);
@@ -368,8 +373,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
 
         img_my_contest.setOnClickListener {
-           // var intent = Intent(this, StatisticsActivity::class.java);
-           // startActivity(intent);
+            // var intent = Intent(this, StatisticsActivity::class.java);
+            // startActivity(intent);
         }
 
 
@@ -443,7 +448,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             toolbarTitle.visibility = GONE
     }
 
-    private fun setFragment(fragment: Fragment, bundle: Bundle) {
+    fun setFragment(fragment: Fragment, bundle: Bundle) {
         this.fragment = fragment;
         fragment.arguments = bundle;
         val fragmentManager = supportFragmentManager
@@ -452,6 +457,12 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 //            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
             .replace(R.id.container, fragment)
             .commitAllowingStateLoss()
+    }
+
+
+    fun setFragmentForActivity() {
+//             setFragment(UpcomingFragment(), Bundle())
+        setFragment(HomeFragment(), Bundle())
     }
 
     override fun onResume() {
@@ -600,14 +611,15 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             }
         }
 
+
         /* if (pos.equals(resources.getString(R.string.how_to_play_))) {
              var intent = Intent(this, StatisticsActivity::class.java);
              startActivity(intent);
          }*/
 
-     /*   if (pos.equals(resources.getString(R.string.how_to_play_))) {
-              var intent = Intent(this, LocationActivity::class.java);
-              startActivity(intent);
-        }*/
+        /*   if (pos.equals(resources.getString(R.string.how_to_play_))) {
+                 var intent = Intent(this, LocationActivity::class.java);
+                 startActivity(intent);
+           }*/
     }
 }

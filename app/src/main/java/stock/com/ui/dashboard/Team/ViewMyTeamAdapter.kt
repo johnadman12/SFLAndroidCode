@@ -7,8 +7,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -18,7 +16,8 @@ import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 
 class ViewMyTeamAdapter(
-    val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>
+    val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
+    val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<ViewMyTeamAdapter.FeatureListHolder>() {
     var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
@@ -28,6 +27,9 @@ class ViewMyTeamAdapter(
         return FeatureListHolder(view)
     }
 
+    interface OnItemCheckListener {
+        fun onItemCheck(item: Int)
+    }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         list = ArrayList()
@@ -42,21 +44,30 @@ class ViewMyTeamAdapter(
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
 
+
+        holder.itemView.llremoveStock.setOnClickListener {
+            mContest.remove(mContest.get(position))
+            notifyDataSetChanged()
+            onItemCheckListener.onItemCheck((mContest.size))
+        }
+
+
         holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(
                     mContext,
                     ActivityStockDetail::class.java
-                ).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                )
+//                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     .putExtra("Stockid", mContest.get(position).stockid)
                     .putExtra(StockConstant.STOCKLIST, list)
             )
         }
 
-        if (mContest.get(position).getAddedToList() == 0) {
+        if (mContest.get(position).addedToList == 0) {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
-        } else if (mContest.get(position).getAddedToList() == 1) {
+        } else if (mContest.get(position).addedToList == 1) {
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
         }
@@ -73,7 +84,6 @@ class ViewMyTeamAdapter(
                 mContest.get(position).addedStock = "1";
             } else
                 mContest.get(position).addedStock = "0";
-
         }
 
     }
@@ -86,6 +96,7 @@ class ViewMyTeamAdapter(
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun setOnClickListener(onClickListener: View.OnClickListener) {
             itemView.toggleButton1.setOnClickListener(onClickListener)
+            itemView.llremoveStock.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
     }

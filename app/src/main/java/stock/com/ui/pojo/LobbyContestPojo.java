@@ -65,6 +65,9 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("catname")
         @Expose
         public String catname;
+        @SerializedName("rank")
+        @Expose
+        public String rank;
         @SerializedName("description")
         @Expose
         public String description;
