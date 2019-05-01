@@ -75,6 +75,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
         @Expose
         public String addedStock;
         public int addedToList;
+        public boolean flagAddStockToList;
 
         public void setAddedToList(int addedToList) {
             this.addedToList = addedToList;
@@ -103,6 +104,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
             companyName = in.readString();
             sector = in.readString();
             addedStock = in.readString();
+            addedToList = in.readInt();
             latestVolume = in.readString();
             marketopen = in.readString();
             marketclose = in.readString();
@@ -140,6 +142,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
             parcel.writeString(companyName);
             parcel.writeString(sector);
             parcel.writeString(addedStock);
+            parcel.writeInt(addedToList);
             parcel.writeString(latestVolume);
             parcel.writeString(marketopen);
             parcel.writeString(marketclose);

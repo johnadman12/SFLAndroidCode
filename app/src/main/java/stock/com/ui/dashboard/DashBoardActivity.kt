@@ -462,7 +462,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
     fun setFragmentForActivity() {
 //             setFragment(UpcomingFragment(), Bundle())
-        setFragment(HomeFragment(), Bundle())
+        (0 until StockConstant.ACTIVITIES.size)
+            .filter { StockConstant.ACTIVITIES[it] != null }
+            .forEach { StockConstant.ACTIVITIES[it]?.finish() }
+        setFragment(UpcomingFragment(), Bundle())
     }
 
     override fun onResume() {

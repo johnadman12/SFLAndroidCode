@@ -1,7 +1,6 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -11,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
-import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockTeamPojo
-import stock.com.utils.StockConstant
 
 class ViewMyTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
@@ -28,7 +25,8 @@ class ViewMyTeamAdapter(
     }
 
     interface OnItemCheckListener {
-        fun onItemCheck(item: Int)
+        fun onItemCheck(item: Int, get: Int)
+        fun onItemClick(item: StockTeamPojo.Stock)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -43,31 +41,25 @@ class ViewMyTeamAdapter(
 
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
+        mContest.get(position).addedToList=1
 
 
         holder.itemView.llremoveStock.setOnClickListener {
             mContest.remove(mContest.get(position))
             notifyDataSetChanged()
-            onItemCheckListener.onItemCheck((mContest.size))
+            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position).addedToList)
+            mContest.get(position).addedToList=0
         }
 
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
-                Intent(
-                    mContext,
-                    ActivityStockDetail::class.java
-                )
-//                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .putExtra("Stockid", mContest.get(position).stockid)
-                    .putExtra(StockConstant.STOCKLIST, list)
-            )
+            onItemCheckListener.onItemClick(mContest.get(position))
         }
 
-        if (mContest.get(position).addedToList == 0) {
+        if (mContest.get(position).addedToList == 1) {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
-        } else if (mContest.get(position).addedToList == 1) {
+        } else if (mContest.get(position).addedToList ==0) {
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
         }

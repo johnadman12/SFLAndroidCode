@@ -19,8 +19,10 @@ import kotlinx.android.synthetic.main.dialog_join_wizard.*
 import kotlinx.android.synthetic.main.dialog_view_contest.*
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.StockConstant
 
 class WizardStockTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
@@ -30,7 +32,7 @@ class WizardStockTeamAdapter(
     var checkedHolder: BooleanArray? = null;
 
     private var searchList: List<StockTeamPojo.Stock>? = null
-
+    var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
 
     private fun createCheckedHolder() {
         checkedHolder = BooleanArray(mContest.size)
@@ -51,10 +53,12 @@ class WizardStockTeamAdapter(
     interface OnItemCheckListener {
         fun onItemCheck(item: StockTeamPojo.Stock)
         fun onItemUncheck(item: StockTeamPojo.Stock)
+        fun onItemClick(item: StockTeamPojo.Stock)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-
+        list = ArrayList()
+        list = mContest as ArrayList
         holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
         holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
@@ -64,6 +68,7 @@ class WizardStockTeamAdapter(
 
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
+        searchList!!.get(position).addedToList=1
 
         /* if (searchList!!.get(position).addedStock.equals("yes")) {
              holder.itemView.toggleButton1.isChecked = true
@@ -74,14 +79,25 @@ class WizardStockTeamAdapter(
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
+            searchList!!.get(position).addedToList = 1
             onItemCheckListener.onItemCheck(searchList!!.get(position));
         }
         holder.itemView.llremoveStock.setOnClickListener {
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
+            searchList!!.get(position).addedToList = 0
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
         }
 
+        //default value of addedlisttostock -> 0
+       /* if (searchList!!.get(position).addedToList == 1) {
+            holder.itemView.llremoveStock.visibility = VISIBLE
+            holder.itemView.img_add.visibility = GONE
+        } else if (searchList!!.get(position).addedToList == 0) {
+            holder.itemView.llremoveStock.visibility = GONE
+            holder.itemView.img_add.visibility = VISIBLE
+        }
+*/
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
 //                holder.itemView.toggleButton1.isChecked = false
@@ -91,10 +107,13 @@ class WizardStockTeamAdapter(
             searchList!!.get(position).setAddedStock("1");
 
         }
-
         holder.itemView.setOnClickListener {
-            showViewContestDialogue()
+            onItemCheckListener.onItemClick(searchList!!.get(position))
         }
+
+       /* holder.itemView.setOnClickListener {
+            showViewContestDialogue()
+        }*/
     }
 
 

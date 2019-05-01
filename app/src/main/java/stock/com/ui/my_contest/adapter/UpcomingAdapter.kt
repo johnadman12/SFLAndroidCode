@@ -40,8 +40,10 @@ class UpcomingAdapter(
             .into(holder.itemView.ivStock)
         var sports: Double =
             (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
+
+
         holder.itemView.tvSprortsLeft.setText(
-            sports.toString() + "/" +
+          contest.get(position).contest_teamremaining.toString() + "/" +
                     contest.get(position).contestSize
         )
 

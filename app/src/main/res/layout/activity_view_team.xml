@@ -73,7 +73,8 @@
                             android:id="@+id/save"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:src="@mipmap/saveteam"/>
+                            android:src="@mipmap/saveteam"
+                    />
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

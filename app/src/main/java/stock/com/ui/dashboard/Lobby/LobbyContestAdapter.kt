@@ -51,8 +51,10 @@ class LobbyContestAdapter(
             .into(holder.itemView.ivStock)
         var sports: Double =
             (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt()).toDouble()
+
+
         holder.itemView.tvSprortsLeft.setText(
-            sports.toString() + "/" +
+            mContest.get(position).contest_teamremaining.toString() + "/" +
                     mContest.get(position).contestSize
         )
         mContest.get(position).setCalculatePosition(sports.toInt())

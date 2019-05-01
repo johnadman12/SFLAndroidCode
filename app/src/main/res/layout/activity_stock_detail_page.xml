@@ -209,29 +209,30 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                        android:layout_width="@dimen/_80sdp"
+                        android:layout_width="@dimen/_90sdp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:padding="@dimen/_6sdp"
                         android:backgroundTint="#ECECEC"
                         android:background="@drawable/grey_fill_button">
 
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivWatchlist"
-                            android:layout_width="@dimen/_12sdp"
-                            android:layout_height="@dimen/_12sdp"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="@dimen/_22sdp"
                             app:srcCompat="@mipmap/watchlist"
                             android:tint="@color/blue"
+                            android:padding="@dimen/_5sdp"
                             android:layout_weight="0.1"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivTeam"
-                            android:layout_width="@dimen/_12sdp"
-                            android:layout_height="@dimen/_12sdp"
+                            android:layout_width="@dimen/_22sdp"
+                            android:layout_height="@dimen/_22sdp"
                             app:srcCompat="@mipmap/addsign"
                             android:tint="@color/blue"
+                            android:padding="@dimen/_5sdp"
                             android:layout_weight="0.1"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,6 +3,7 @@ package stock.com.ui.my_contest.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,12 +44,43 @@ class LiveAdapter(
         var sports: Double =
             (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
         holder.itemView.tvSprortsLeft.setText(
-            sports.toString() + "/" +
+            contest.get(position).contest_teamremaining.toString()+ "/" +
                     contest.get(position).contestSize
         )
         contest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvRank.setText(contest.get(position).rank)
-        holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))
+
+        if (!contest.get(position).scheduleEnd.equals(" ")) {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val inputFormat = SimpleDateFormat(inputPattern)
+            var date: Date? = null
+            date = inputFormat.parse(contest.get(position).scheduleEnd)
+            val thatDay = Calendar.getInstance()
+            thatDay.setTime(date);
+            val today = Calendar.getInstance()
+            val diff = thatDay.timeInMillis - today.timeInMillis
+            contest.get(position).setDate(diff.toInt())
+            if (diff.toString().contains("-")) {
+                holder.itemView.tvTime.setText("0:0:0: Left")
+            } else {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+            }
+        }
         holder.itemView.setOnClickListener {
             mContext.startActivity(Intent(mContext, LiveContestActivity::class.java))
         }

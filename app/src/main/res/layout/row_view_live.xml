@@ -258,11 +258,10 @@
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
                                 android:textSize="@dimen/_9sdp"
-
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="wrap_content"
-                                android:text="@string/time"
+                                android:text="Time Left"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_gravity="center"/>
                     </LinearLayout>
@@ -276,7 +275,7 @@
                             android:layout_marginRight="@dimen/_5sdp">
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
-                                android:textSize="@dimen/_8ssp"
+                                android:textSize="@dimen/_10ssp"
                                 android:id="@+id/tvTime"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"

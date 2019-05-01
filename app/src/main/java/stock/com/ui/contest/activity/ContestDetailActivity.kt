@@ -57,6 +57,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.contest_detail_activity)
+        StockConstant.ACTIVITIES.add(this)
         initViews()
     }
 

@@ -60,6 +60,7 @@ class StockTeamAdapter(
     interface OnItemCheckListener {
         fun onItemCheck(item: StockTeamPojo.Stock)
         fun onItemUncheck(item: StockTeamPojo.Stock)
+        fun onItemClick(item: StockTeamPojo.Stock)
     }
 
 
@@ -77,23 +78,28 @@ class StockTeamAdapter(
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
+            searchList!!.get(position).addedToList = 1
             onItemCheckListener.onItemCheck(searchList!!.get(position));
         }
         holder.itemView.llremoveStock.setOnClickListener {
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
+            searchList!!.get(position).addedToList = 0
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
         }
 
+        //default value of addedlisttostock -> 0
+        if (searchList!!.get(position).addedToList == 1) {
+            holder.itemView.llremoveStock.visibility = VISIBLE
+            holder.itemView.img_add.visibility = GONE
+        } else if (searchList!!.get(position).addedToList == 0) {
+            holder.itemView.llremoveStock.visibility = GONE
+            holder.itemView.img_add.visibility = VISIBLE
+        }
+//
+
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
-                Intent(
-                    mContext,
-                    ActivityStockDetail::class.java
-                )
-                    .putExtra("Stockid", searchList!!.get(position).stockid)
-                    .putExtra(StockConstant.STOCKLIST, list)
-            )
+            onItemCheckListener.onItemClick(searchList!!.get(position))
         }
 
         holder.itemView.toggleButton1.setOnClickListener {

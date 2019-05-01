@@ -38,8 +38,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
-                        android:background="@drawable/circle_grey_stroke"
-                        android:src="@drawable/flag_norfolk_island"
+                        android:src="@mipmap/savenew_"
                         android:visibility="visible"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -62,13 +61,12 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical">
+                <!--android:background="@drawable/circle_grey_stroke"-->
 
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_70sdp"
                         android:layout_height="@dimen/_70sdp"
-                        android:background="@drawable/circle_grey_stroke"
-                        android:src="@mipmap/addblue"
-                        android:tint="@color/GrayColor"
+                        android:src="@mipmap/addneww_"
                         android:visibility="visible"
                 />
                 <androidx.appcompat.widget.AppCompatTextView

@@ -33,12 +33,14 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import java.util.*
 
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
+    private var stockRemovedItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockTeamAdapter: StockTeamAdapter? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
@@ -66,22 +68,22 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.tvViewteam -> {
                 if (flag) {
-                    startActivity(
+                    startActivityForResult(
                         Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
                             .putExtra(StockConstant.STOCKLIST, stockSelectedWizardItems)
                             .putExtra(
                                 StockConstant.EXCHANGEID,
                                 exchangeId
-                            )
+                            ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 } else {
-                    startActivity(
+                    startActivityForResult(
                         Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
                             .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
                             .putExtra(
                                 StockConstant.EXCHANGEID,
                                 exchangeId
-                            )
+                            ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 }
             }
@@ -97,10 +99,18 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        rv_Players!!.adapter!!.notifyDataSetChanged()
+        stockTeamAdapter!!.notifyDataSetChanged()
+//        wizard
+    }
+
     @SuppressLint("WrongConstant")
     private fun initView() {
         stockSelectedItems = ArrayList();
         stockSelectedWizardItems = ArrayList();
+        stockRemovedItems = ArrayList();
         parseList = ArrayList();
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
@@ -122,6 +132,20 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         stockTeamAdapter = StockTeamAdapter(
             this, list as ArrayList,
             object : StockTeamAdapter.OnItemCheckListener {
+                override fun onItemClick(item: StockTeamPojo.Stock) {
+                    startActivityForResult(
+                        Intent(
+                            this@ActivityCreateTeam,
+                            ActivityStockDetail::class.java
+                        )
+                            .putExtra("Stockid", item.stockid)
+                            .putExtra(StockConstant.STOCKLIST, list)
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
+
+
+                }
+
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.remove(item);
                     setTeamText(stockSelectedItems!!.size.toString())
@@ -175,7 +199,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         list!!.addAll(response.body()!!.stock!!);
-
+                        stockRemovedItems= list
 //                        displayToast(list!!.size.toString())
                         rv_Players.adapter!!.notifyDataSetChanged();
 
@@ -301,6 +325,18 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             this,
             list as ArrayList,
             object : WizardStockTeamAdapter.OnItemCheckListener {
+                override fun onItemClick(item: StockTeamPojo.Stock) {
+                    startActivityForResult(
+                        Intent(
+                            this@ActivityCreateTeam,
+                            ActivityStockDetail::class.java
+                        )
+                            .putExtra("Stockid", item.stockid)
+                            .putExtra(StockConstant.STOCKLIST, list)
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
+                }
+
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedWizardItems?.remove(item);
                     setTeamText(stockSelectedWizardItems!!.size.toString())
@@ -352,10 +388,31 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
         }
 
+        if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+
+                setTeamText(list!!.size.toString())
+            }
+        }
+
+//        if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                list!!.clear()
+                stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
+                list!!.addAll(stockRemovedItems as ArrayList)
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+                setTeamText(list!!.size.toString())
+//            }
+        }
     }
 
-
 }
+
+
+
 
 
 

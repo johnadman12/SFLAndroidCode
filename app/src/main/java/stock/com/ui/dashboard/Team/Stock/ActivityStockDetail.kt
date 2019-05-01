@@ -1,5 +1,7 @@
 package stock.com.ui.dashboard.Team.Stock
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -79,14 +81,18 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             }
 
             R.id.ivTeam -> {
-                if (list!!.get(position).getAddedToList() == 0) {
-                    list!!.get(position).addedToList = 1
+                if (list!!.get(position).getAddedToList() == 1) {
                     //show green button
-                    AppDelegate.showAlert(this, "Removed from stock")
-                } else if (list!!.get(position).getAddedToList() == 1) {
-                    list!!.get(position).addedToList = 0
+                    AppDelegate.showAlert(this, "already added to stock")
+                } else if (list!!.get(position).getAddedToList() == 0) {
+                    list!!.get(position).addedToList = 1
                     //show red button
                     AppDelegate.showAlert(this, "added to stock")
+
+                    var intent = Intent();
+                    intent.putExtra("list", list)
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
                 }
 
                 Log.e("updatedlist", list!!.get(position).addedToList.toString())

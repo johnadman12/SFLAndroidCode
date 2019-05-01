@@ -19,10 +19,13 @@ public class LobbyContestPojo extends BasePojo {
 
         @SerializedName("schedule_id")
         @Expose
-        public Integer scheduleId;
+        public int scheduleId; 
+        @SerializedName("contest_teamremaining")
+        @Expose
+        public int contest_teamremaining;
         @SerializedName("contest_id")
         @Expose
-        public Integer contestId;
+        public int contestId;
         @SerializedName("exchangeid")
         @Expose
         public String exchangeid;
@@ -34,25 +37,28 @@ public class LobbyContestPojo extends BasePojo {
         public String exchangeimage;
         @SerializedName("scheduleid")
         @Expose
-        public Integer scheduleid;
+        public int scheduleid;
         @SerializedName("schedule_name")
         @Expose
         public String scheduleName;
         @SerializedName("schedule_start")
         @Expose
         public String scheduleStart;
+        @SerializedName("schedule_end")
+        @Expose
+        public String scheduleEnd;
         @SerializedName("winning_amount")
         @Expose
         public String winningAmount;
         @SerializedName("contestid")
         @Expose
-        public Integer contestid;
+        public int contestid;
         @SerializedName("category_id")
         @Expose
-        public Integer categoryId;
+        public int categoryId;
         @SerializedName("contest_size")
         @Expose
-        public Integer contestSize;
+        public int contestSize;
         @SerializedName("contest_type")
         @Expose
         public String contestType;
@@ -73,7 +79,7 @@ public class LobbyContestPojo extends BasePojo {
         public String description;
         @SerializedName("teams_joined")
         @Expose
-        public Integer teamsJoined;
+        public int teamsJoined;
 
         public int calculatePosition;
         public int date;
@@ -103,12 +109,12 @@ public class LobbyContestPojo extends BasePojo {
 
         protected Contest(Parcel in) {
             if (in.readByte() == 0) {
-                scheduleId = null;
+                scheduleId = 0;
             } else {
                 scheduleId = in.readInt();
             }
             if (in.readByte() == 0) {
-                contestId = null;
+                contestId = 0;
             } else {
                 contestId = in.readInt();
             }
@@ -120,7 +126,7 @@ public class LobbyContestPojo extends BasePojo {
             exchangename = in.readString();
             exchangeimage = in.readString();
             if (in.readByte() == 0) {
-                scheduleid = null;
+                scheduleid = 0;
             } else {
                 scheduleid = in.readInt();
             }
@@ -128,17 +134,17 @@ public class LobbyContestPojo extends BasePojo {
             scheduleStart = in.readString();
             winningAmount = in.readString();
             if (in.readByte() == 0) {
-                contestid = null;
+                contestid = 0;
             } else {
                 contestid = in.readInt();
             }
             if (in.readByte() == 0) {
-                categoryId = null;
+                categoryId = 0;
             } else {
                 categoryId = in.readInt();
             }
             if (in.readByte() == 0) {
-                contestSize = null;
+                contestSize = 0;
             } else {
                 contestSize = in.readInt();
             }
@@ -147,7 +153,7 @@ public class LobbyContestPojo extends BasePojo {
             catname = in.readString();
             description = in.readString();
             if (in.readByte() == 0) {
-                teamsJoined = null;
+                teamsJoined = 0;
             } else {
                 teamsJoined = in.readInt();
             }
