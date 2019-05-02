@@ -1,11 +1,8 @@
 package stock.com.networkCall
 
-import android.content.res.TypedArray
 import com.google.gson.JsonObject
-import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
@@ -332,7 +329,7 @@ interface ApiInterface {
     fun getMyTeams(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String
-    ): Call<BasePojo>
+    ): Call<MyTeamsPojo>
 
 
     /*  @FormUrlEncoded

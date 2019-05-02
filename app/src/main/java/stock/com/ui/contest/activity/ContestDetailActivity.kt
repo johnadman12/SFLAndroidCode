@@ -13,6 +13,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.contest_detail_activity.*
 import kotlinx.android.synthetic.main.dialog_choose_team.*
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.include_back.*
-import kotlinx.android.synthetic.main.row_view_featured_contest.*
+import kotlinx.android.synthetic.main.row_contest_detail.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -146,10 +147,9 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         iv_info.setOnClickListener {
             showInfoDialogue(contest.description);
         }
-        var sports: Double =
-            (contest.contestSize.toInt() - contest.teamsJoined.toInt()).toDouble()
+
         tvSprortsLeft.setText(
-            sports.toString() + "/" +
+            contest.contest_teamremaining.toString() + "/" +
                     contest.contestSize
         )
         if (!contest.scheduleStart.equals(" ")) {
@@ -169,6 +169,17 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
 
+                        if (diff < 900000) {
+                            ll_Circular.isEnabled = false
+                            txtjoin.setText(getString(R.string.live_now))
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+                        } else {
+                            ll_Circular.isEnabled = true
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(this@ContestDetailActivity, R.color.green)
+                        }
+
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
                         val minutes = diffSec / 60 % 60
@@ -183,6 +194,13 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 newtimer.start()
             }
         }
+
+        val contestLeft: Double = contest.contestSize.toDouble() - contest.contest_teamremaining.toDouble()
+        circular_progress.isAnimationEnabled
+        circular_progress.setProgress(
+            contestLeft,
+            contest.contestSize.toDouble()
+        )
         llWinners.setOnClickListener {
             val manager = supportFragmentManager
             val bottomSheetDialogFragment =

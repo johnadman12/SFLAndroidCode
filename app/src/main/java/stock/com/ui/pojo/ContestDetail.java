@@ -22,6 +22,9 @@ public class ContestDetail extends BasePojo {
         @SerializedName("contestid")
         @Expose
         public int contestid;
+        @SerializedName("contest_teamremaining")
+        @Expose
+        public int contest_teamremaining;
         @SerializedName("category_id")
         @Expose
         public int categoryId;

@@ -379,7 +379,17 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-
+        <activity
+                android:name=".ui.dashboard.Team.ActivityEditTeam"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+       <!-- <activity
+                android:name=".ActivityMyTeamView"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+-->
         <!-- <meta-data -->
         <!-- <meta-data -->
         <!-- android:name="com.google.android.geo.API_KEY" -->
@@ -392,6 +402,10 @@
                 android:name="com.facebook.FacebookActivity"
                 android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
                 android:label="@string/app_name"/>
+        <activity android:name=".ui.dashboard.Team.ActivityMyTeamView"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
 
         <meta-data

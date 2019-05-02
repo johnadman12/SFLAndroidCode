@@ -76,6 +76,9 @@ class HomePojo : BasePojo() {
         @SerializedName("exchangeid")
         @Expose
         var exchangeid: Int = 0
+        @SerializedName("contest_teamremaining")
+        @Expose
+        var contest_teamremaining: Int = 0
         @SerializedName("exchangename")
         @Expose
         var exchangename: String = ""

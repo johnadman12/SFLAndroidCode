@@ -74,7 +74,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         var sports: Double =
             (list.get(position).contestSize.toInt() - list.get(position).teamsJoined.toInt()).toDouble()
         tvSprortsLeft.setText(
-            sports.toString() + "/" +
+            list.get(position).contest_teamremaining.toString() + "/" +
                     list.get(position).contestSize
         )
 
@@ -94,24 +94,27 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
-                        val diff =thatDay.timeInMillis-cTime.timeInMillis
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
 
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
-                        val minutes = diffSec / 60%60
+                        val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
+
                     override fun onFinish() {
                     }
                 }
                 newtimer.start()
             }
         }
+        val contestLeft: Double =
+            list.get(position).contestSize.toDouble() - list.get(position).contest_teamremaining.toDouble()
         circular_progress.isAnimationEnabled
         circular_progress.setProgress(
-            list.get(position).teamsJoined.toDouble(),
+            contestLeft,
             list.get(position).contestSize.toDouble()
         )
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);

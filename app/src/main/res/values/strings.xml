@@ -453,7 +453,7 @@
     <string name="dummy_rank">Rank:</string>
     <string name="total">Total</string>
     <string name="change">Change</string>
-    <string name="percentage">+11.3%</string>
+    <string name="percentage">0.0%</string>
 
 
     <string name="take_photo">Take Photo</string>
@@ -572,6 +572,7 @@
     <string name="contestfee">
         <![CDATA[Contest entry fee is calculated is based on total winning amount & Contest Spots.]]></string>
     <string name="join_now">Join\nNow</string>
+    <string name="live_now">Now\nLive</string>
     <string name="field_view">Field\nView</string>
 
 

@@ -88,7 +88,6 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     list!!.get(position).addedToList = 1
                     //show red button
                     AppDelegate.showAlert(this, "added to stock")
-
                     var intent = Intent();
                     intent.putExtra("list", list)
                     setResult(Activity.RESULT_OK, intent);

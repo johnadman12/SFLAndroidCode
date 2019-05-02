@@ -19,13 +19,20 @@
             android:text="My Teams "
             android:textSize="@dimen/_25ssp"
             android:padding="@dimen/_10sdp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMYTeam"
+    <com.madapps.liquid.LiquidRefreshLayout
+            android:id="@+id/refreshData"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/row_my_team"
-            android:paddingBottom="@dimen/_10sdp"
-    ></androidx.recyclerview.widget.RecyclerView>
+            app:AniBackColor="@color/colorPrimary"
+            app:AniForeColor="@color/white"
+            app:CircleSmaller="6"
+            android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMYTeam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/row_my_team"
+                android:paddingBottom="@dimen/_10sdp"
+        ></androidx.recyclerview.widget.RecyclerView>
+    </com.madapps.liquid.LiquidRefreshLayout>
 
 </LinearLayout>

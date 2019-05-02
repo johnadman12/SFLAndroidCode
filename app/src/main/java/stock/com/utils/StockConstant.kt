@@ -9,6 +9,7 @@ object StockConstant{
     val EXCHANGEID = "exchangeid"
     val DEVICE_TOKEN = ""
     val STOCKLIST = "stocklist"
+    val TEAMID = "teamid"
 
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"
 
@@ -19,6 +20,8 @@ object StockConstant{
     val RESULT_CODE_CREATE_TEAM=1004;
     val RESULT_CODE_VIEW_TEAM=1005;
     val RESULT_CODE_VIEW_REMOVE_TEAM=1006;
+    val RESULT_CODE_EDIT_TEAM=1007;
+    val RESULT_CODE_SORT_EDIT_TEAM=1008;
     val REQUEST_WRITE_STORAGE = 112
     val REQUEST_CAMERA = 113
     val REQUEST_GALLARY = 114

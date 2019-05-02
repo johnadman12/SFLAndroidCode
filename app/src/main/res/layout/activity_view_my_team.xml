@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:background="@mipmap/bg"
+                android:layout_height="match_parent">
+    <include
+            android:id="@+id/tool"
+            layout="@layout/include_back"/>
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:padding="@dimen/_2sdp">
+
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:layout_weight="1"
+                              android:layout_marginRight="@dimen/_5sdp"
+                              android:layout_marginTop="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <EditText
+                            android:id="@+id/edtTeamName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Team "
+                            android:enabled="false"
+                            android:textColor="@color/white"
+                            style="@style/TextStyleSemiBold"
+                            android:background="@null"
+                            android:textSize="@dimen/_22ssp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivedit"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
+                            android:src="@mipmap/editteam"/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRight"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
+                            android:src="@drawable/ic_check"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                        android:id="@+id/ll_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@mipmap/sort_"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sort"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="#39A2D9"/>
+
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_10sdp">
+
+                <RelativeLayout
+                        android:id="@+id/relFieldView"
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_65sdp"
+                        android:background="@drawable/circle_dark_blue"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="@dimen/_10sdp">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgfield"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            app:srcCompat="@mipmap/fieldview"
+                    />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/field_view"
+                            android:gravity="center"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_centerInParent="true"
+                            android:layout_below="@+id/imgfield"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:layout_width="@dimen/_65sdp"
+                        android:layout_height="@dimen/_65sdp"
+                        android:background="@mipmap/greencircle"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/_10sdp"
+                >
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total"
+                            android:textSize="@dimen/_12ssp"
+                            android:textAllCaps="true"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/percentage"
+                            android:gravity="center"
+                            android:layout_below="@+id/tvTotal"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleSemiBold"
+
+                    />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_team"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

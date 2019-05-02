@@ -75,7 +75,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         var sports: Double =
             (list.get(position).contestSize.toInt() - list.get(position).teamsJoined.toInt()).toDouble()
         tvSprortsLeft.setText(
-            sports.toString() + "/" +
+            list.get(position).contest_teamremaining.toString() + "/" +
                     list.get(position).contestSize
         )
 
@@ -126,9 +126,10 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             )
         }
 
+        val contestLeft: Double = list.get(position).contestSize.toDouble()- list.get(position).contest_teamremaining.toDouble()
         circular_progress.isAnimationEnabled
         circular_progress.setProgress(
-            list.get(position).teamsJoined.toDouble(),
+            contestLeft,
             list.get(position).contestSize.toDouble()
         )
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
@@ -175,17 +176,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         }
         return str
     }
-    fun timer(millisInFuture: Long, countDownInterval: Long, textView: TextView): CountDownTimer {
-        return object : CountDownTimer(millisInFuture, countDownInterval) {
-            override fun onTick(millisUntilFinished: Long) {
-                val timeRemaining = timeString(millisUntilFinished)
-                textView.setText(timeRemaining)
-            }
 
-            override fun onFinish() {
-            }
-        }
-    }
 
     fun timeString(millisUntilFinished: Long): String {
         var millisUntilFinished: Long = millisUntilFinished

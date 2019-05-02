@@ -57,7 +57,7 @@ class LobbyContestAdapter(
             mContest.get(position).contest_teamremaining.toString() + "/" +
                     mContest.get(position).contestSize
         )
-        mContest.get(position).setCalculatePosition(sports.toInt())
+
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
         if (!mContest.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
@@ -94,11 +94,14 @@ class LobbyContestAdapter(
         holder.itemView.iv_info.setOnClickListener {
             showInfoDialogue(mContest.get(position).description);
         }
+
+        val contestLeft: Double = mContest.get(position).contestSize.toDouble()- mContest.get(position).contest_teamremaining.toDouble()
         holder.itemView.circular_progress.isAnimationEnabled
         holder.itemView.circular_progress.setProgress(
-            mContest.get(position).teamsJoined.toDouble(),
+            contestLeft,
             mContest.get(position).contestSize.toDouble()
         )
+
         holder.itemView.circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 
         holder.itemView.llWinners.setOnClickListener {

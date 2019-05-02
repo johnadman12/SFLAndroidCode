@@ -199,11 +199,68 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         list!!.addAll(response.body()!!.stock!!);
-                        stockRemovedItems= list
 //                        displayToast(list!!.size.toString())
                         rv_Players.adapter!!.notifyDataSetChanged();
 
                         //  setStockTeamAdapter(response.body()!!.stock!!)
+
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityCreateTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityCreateTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getTeamAgainlist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.getStockList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        list!!.clear()
+                        list!!.addAll(response.body()!!.stock!!)
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockRemovedItems!!.size) {
+                                Log.e("stockremoved", stockRemovedItems!!.get(0).stockid.toString())
+//                            list!!.get(i).addedToList = 0
+                                if (list!!.get(i).stockid .equals(stockRemovedItems!!.get(j).stockid)) {
+                                    //show green button
+                                    list!!.get(i).addedToList = 0
+                                } else {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        setTeamText(stockRemovedItems!!.size.toString())
 
                     }
                 } else {
@@ -398,14 +455,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
         }
 
-//        if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
+        if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-                list!!.clear()
                 stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
-                list!!.addAll(stockRemovedItems as ArrayList)
-                rv_Players!!.adapter!!.notifyDataSetChanged()
-                setTeamText(list!!.size.toString())
-//            }
+                getTeamAgainlist()
+
+            }
         }
     }
 

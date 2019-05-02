@@ -41,10 +41,9 @@ import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
-    private var removedlist: ArrayList<StockTeamPojo.Stock>? = null;
     private var ids: ArrayList<String>? = null;
     var activity: DashBoardActivity = DashBoardActivity()
-    private var viewMyTeamAdapter: ViewMyTeamAdapter? = null;
+    private var viewTeamAdapter: ViewTeamAdapter? = null;
     var array: JsonArray = JsonArray()
     var postData: JsonObject = JsonObject()
     var jsonparams: JsonObject = JsonObject()
@@ -78,11 +77,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             R.id.ll_save -> {
                 if (stockSelectedItems!!.size > 0) {
                     for (i in 0 until stockSelectedItems!!.size) {
-                        /*if (stockSelectedItems!!.get(i).addedStock.equals("yes")) {
-                            stockSelectedItems!!.get(i).addedStock="0"
-                        } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
-                            stockSelectedItems!!.get(i).addedStock="1"
-                        }*/
                         try {
                             postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
@@ -109,23 +103,17 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         activity = DashBoardActivity()
         list = ArrayList()
         ids = ArrayList()
-        removedlist = ArrayList()
         if (intent != null)
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
         StockConstant.ACTIVITIES.add(this)
         initView()
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
-        viewMyTeamAdapter!!.notifyDataSetChanged()
-    }
-
-    override fun onResume() {
-        super.onResume()
+        viewTeamAdapter!!.notifyDataSetChanged()
     }
 
     private fun initView() {
         stockSelectedItems = ArrayList();
         array = JsonArray()
-        removedlist= ArrayList()
         postData = JsonObject()
         jsonparams = JsonObject()
         ivedit.setOnClickListener(this)
@@ -138,8 +126,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
         stockSelectedItems = list
-        viewMyTeamAdapter = ViewMyTeamAdapter(
-            this, list as ArrayList, object : ViewMyTeamAdapter.OnItemCheckListener {
+        viewTeamAdapter = ViewTeamAdapter(
+            this, list as ArrayList, object : ViewTeamAdapter.OnItemCheckListener {
                 override fun onItemClick(item: StockTeamPojo.Stock) {
                     startActivityForResult(
                         Intent(
@@ -152,9 +140,11 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     )
                 }
 
-                override fun onItemCheck(item: Int, pos: Int) {
-//                    stockSelectedItems!!.remove(item)
+                override fun onItemCheck(item: Int, itemcontest: StockTeamPojo.Stock) {
                     setTeamText(item)
+                    val intent = Intent();
+                    intent.putExtra("removedlist", list)
+                    setResult(Activity.RESULT_OK, intent);
                     Log.e("stocklist", stockSelectedItems!!.get(0).stockid.toString())
                 }
             });
@@ -211,7 +201,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_team!!.layoutManager = llm
         rv_team.visibility = View.VISIBLE
-        rv_team!!.adapter = viewMyTeamAdapter;
+        rv_team!!.adapter = viewTeamAdapter;
     }
 
     fun saveTeamList() {
@@ -342,11 +332,4 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent();
-        intent.putExtra("removedlist", list)
-        this.setResult(Activity.RESULT_OK, intent);
-    }
-
-}
+   }

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:background="@mipmap/bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <include
+            android:id="@+id/include"
+            layout="@layout/include_back"/>
+
+
+
+
+    <LinearLayout android:id="@+id/lltop"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:weightSum="1"
+                  android:layout_below="@+id/include"
+                  android:layout_marginTop="@dimen/_5sdp"
+                  android:padding="@dimen/_2sdp">
+
+        <LinearLayout android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_5sdp"
+                      android:layout_weight="1"
+                      android:layout_gravity="top"
+                      android:gravity="top"
+                      android:layout_marginRight="@dimen/_5sdp"
+                      android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Team "
+                    android:textColor="@color/white"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_22ssp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="use in +/- to choose 12 team members "
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"/>
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_watchlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_gravity="top"
+                android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/watchlist_team"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/watch_list"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"
+
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/ll_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_gravity="top"
+                android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/filter_"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter"
+                    android:padding="@dimen/_2sdp"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"
+
+            />
+
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_gravity="top"
+                android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/sort_"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sort"
+                    android:textSize="@dimen/_10ssp"
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"
+
+            />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1sp"
+            android:layout_below="@+id/lltop"
+            android:background="#38A1DA"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/view"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/ll_search"
+            android:visibility="visible"
+            android:padding="@dimen/_8sdp"
+            android:id="@+id/ll_search">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_weight="1"
+                android:textSize="@dimen/_11sdp"
+                android:hint="@string/search_by_market"
+                android:textColorHint="@color/white"
+                android:inputType="textCapSentences"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:id="@+id/et_search_stock"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                app:srcCompat="@mipmap/search"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_3sdp"
+                android:tint="@color/white"/>
+    </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_below="@+id/ll_search"
+            android:layout_above="@+id/parantbottom"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_Players"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_match"
+                    app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    tools:listitem="@layout/row_team"
+                    android:layout_height="0dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+            android:id="@+id/parantbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp"
+            android:gravity="center"
+            android:background="#32A5DE"
+            android:layout_alignParentBottom="true">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvteamplayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0/12 "
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:gravity="left"
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Team Members "
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/textColorOffWhite"
+                    style="@style/TextStyleNormal"/>
+        </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvViewteam"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:text="   Save Team   "
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_gravity="right|center_vertical"
+                android:padding="@dimen/_2sdp"
+                android:textSize="@dimen/_14ssp"
+                android:background="@drawable/grey_fill_button"
+                android:textColor="@color/black"
+                style="@style/TextStyleNormal"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+            android:id="@+id/relFieldView"
+            android:layout_width="@dimen/_65sdp"
+            android:layout_height="@dimen/_65sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_65sdp"
+            android:background="@drawable/circle_dark_blue"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/_10sdp">
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgfield"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:srcCompat="@mipmap/fieldview"
+        />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_view"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/_12ssp"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/imgfield"
+                android:textColor="@color/textColorOffWhite"
+                style="@style/TextStyleNormal"
+
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

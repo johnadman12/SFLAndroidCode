@@ -13,6 +13,9 @@ class TrainingPojo : BasePojo() {
         @SerializedName("contestid")
         @Expose
         var contestid: Int = 0
+        @SerializedName("contest_teamremaining")
+        @Expose
+        var contest_teamremaining: Int = 0
         @SerializedName("category_id")
         @Expose
         var categoryId: String = ""

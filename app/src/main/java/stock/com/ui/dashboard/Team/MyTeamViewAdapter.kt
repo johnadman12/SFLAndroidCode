@@ -3,8 +3,6 @@ package stock.com.ui.dashboard.Team
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,11 +10,11 @@ import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
 import stock.com.ui.pojo.StockTeamPojo
 
-class ViewMyTeamAdapter(
+class MyTeamViewAdapter (
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
     val onItemCheckListener: OnItemCheckListener
 ) :
-    RecyclerView.Adapter<ViewMyTeamAdapter.FeatureListHolder>() {
+    RecyclerView.Adapter<MyTeamViewAdapter.FeatureListHolder>() {
     var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -25,7 +23,7 @@ class ViewMyTeamAdapter(
     }
 
     interface OnItemCheckListener {
-        fun onItemCheck(item: Int, get: Int)
+        fun onItemCheck(sizeContest: Int, item: StockTeamPojo.Stock)
         fun onItemClick(item: StockTeamPojo.Stock)
     }
 
@@ -39,31 +37,19 @@ class ViewMyTeamAdapter(
         holder.itemView.tvPercentage.setText(mContest.get(position).changePercent)
         Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.ivsTOCK)
 
-        holder.itemView.llremoveStock.visibility = VISIBLE
-        holder.itemView.img_add.visibility = GONE
-        mContest.get(position).addedToList=1
+        holder.itemView.llremoveStock.visibility = View.VISIBLE
+        holder.itemView.img_add.visibility = View.GONE
+        mContest.get(position).addedToList = 1
 
 
         holder.itemView.llremoveStock.setOnClickListener {
-            mContest.remove(mContest.get(position))
-            notifyDataSetChanged()
-            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position).addedToList)
-            mContest.get(position).addedToList=0
+            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))
         }
 
 
         holder.itemView.setOnClickListener {
             onItemCheckListener.onItemClick(mContest.get(position))
         }
-
-        if (mContest.get(position).addedToList == 1) {
-            holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.img_add.visibility = GONE
-        } else if (mContest.get(position).addedToList ==0) {
-            holder.itemView.llremoveStock.visibility = GONE
-            holder.itemView.img_add.visibility = VISIBLE
-        }
-
 
         if (mContest.get(position).getAddedStock().equals("0")) {
             holder.itemView.toggleButton1.isChecked = true
@@ -80,7 +66,6 @@ class ViewMyTeamAdapter(
 
     }
 
-
     override fun getItemCount(): Int {
         return mContest.size
     }
@@ -92,6 +77,4 @@ class ViewMyTeamAdapter(
             notifyDataSetChanged()
         }
     }
-
-
 }
