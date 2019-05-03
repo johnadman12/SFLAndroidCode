@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
@@ -62,6 +63,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
         val ll_Circular: RelativeLayout = view.findViewById(R.id.ll_Circular)
+        val txtjoin: TextView = view.findViewById(R.id.txtjoin)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
@@ -92,19 +94,24 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
+                ll_Circular.isEnabled = false
+                txtjoin.setText(context.getString(R.string.Finished))
+                circular_progress.progressBackgroundColor =
+                    ContextCompat.getColor(context, R.color.GrayColor)
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
-                        val diff =thatDay.timeInMillis-cTime.timeInMillis
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
 
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
-                        val minutes = diffSec / 60%60
+                        val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() +"H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
+
                     override fun onFinish() {
                     }
                 }
@@ -126,7 +133,8 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             )
         }
 
-        val contestLeft: Double = list.get(position).contestSize.toDouble()- list.get(position).contest_teamremaining.toDouble()
+        val contestLeft: Double =
+            list.get(position).contestSize.toDouble() - list.get(position).contest_teamremaining.toDouble()
         circular_progress.isAnimationEnabled
         circular_progress.setProgress(
             contestLeft,
@@ -159,6 +167,7 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             val sb = ""
             sb
         }
+
     fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"

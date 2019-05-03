@@ -35,7 +35,6 @@ class ActivityMyTeamView : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_Join -> {
-//                startActivity(Intent(this@ActivityViewTeam, ActivityJoiningConfirmation::class.java))
             }
             R.id.relFieldView -> {
                 startActivity(
@@ -89,7 +88,6 @@ class ActivityMyTeamView : BaseActivity(), View.OnClickListener {
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
         viewTeamAdapter!!.notifyDataSetChanged()
 
-
     }
 
     private fun initView() {
@@ -133,6 +131,18 @@ class ActivityMyTeamView : BaseActivity(), View.OnClickListener {
         rv_team!!.layoutManager = llm
         rv_team.visibility = View.VISIBLE
         rv_team!!.adapter = viewTeamAdapter;
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.RESULT_CODE_VIEW_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_team!!.adapter!!.notifyDataSetChanged()
+
+            }
+        }
     }
 
 }

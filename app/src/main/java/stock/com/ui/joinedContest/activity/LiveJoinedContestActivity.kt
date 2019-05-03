@@ -3,13 +3,23 @@ package stock.com.ui.joinedContest.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_joined_completed_contestlist.*
 import kotlinx.android.synthetic.main.app_toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import stock.com.AppBase.BaseActivity
 import stock.com.R
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiInterface
 import stock.com.ui.joinedContest.adapter.JoinedCompletedContestAdapter
+import stock.com.ui.pojo.ContestDetail
+import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
 
 
 class LiveJoinedContestActivity : BaseActivity(), View.OnClickListener {
@@ -46,6 +56,9 @@ class LiveJoinedContestActivity : BaseActivity(), View.OnClickListener {
         rv_Contest!!.layoutManager = llm
         rv_Contest!!.adapter = JoinedCompletedContestAdapter(this)
     }
+
+
+
 
 
 }

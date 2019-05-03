@@ -6,19 +6,60 @@
               android:layout_marginTop="@dimen/_3sdp"
               android:background="@color/white"
               android:gravity="center_vertical">
+    <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_user"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/cricketer"/>
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvRank"
-            android:layout_width="0dp"
+    <LinearLayout
+            android:id="@+id/ll_n_r"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rank 1"
-            style="@style/TextStyleNormal"
-            android:textSize="@dimen/_13ssp"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:textColor="@color/black"
-            android:padding="@dimen/_2sdp"/>
+            android:padding="@dimen/_5sdp"
+            android:layout_weight=".5"
+            android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy_name"
+                style="@style/TextStyleSemiBold"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/blue"
+                android:padding="@dimen/_2sdp"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy_rank"
+                    style="@style/TextStyleNormal"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/textColorBlack"
+                    android:padding="@dimen/_2sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvRank"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    style="@style/TextStyleNormal"
+                    android:textSize="@dimen/_13ssp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/_2sdp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
     <LinearLayout
             android:layout_width="wrap_content"

@@ -16,6 +16,7 @@ import stock.com.R
 import stock.com.ui.live_contest.LiveContestActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,7 +45,7 @@ class LiveAdapter(
         var sports: Double =
             (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
         holder.itemView.tvSprortsLeft.setText(
-            contest.get(position).contest_teamremaining.toString()+ "/" +
+            contest.get(position).contest_teamremaining.toString() + "/" +
                     contest.get(position).contestSize
         )
         contest.get(position).setCalculatePosition(sports.toInt())
@@ -82,7 +83,10 @@ class LiveAdapter(
             }
         }
         holder.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, LiveContestActivity::class.java))
+            mContext.startActivity(
+                Intent(mContext, LiveContestActivity::class.java).putExtra("contestid", contest.get(position).contestId)
+                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
+            )
         }
 
     }

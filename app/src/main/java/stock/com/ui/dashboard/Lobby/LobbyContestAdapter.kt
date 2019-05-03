@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
@@ -71,6 +72,10 @@ class LobbyContestAdapter(
             mContest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
                 holder.itemView.tvTimeLeft.setText("0:0:0: Left")
+                holder.itemView.ll_Circular.isEnabled = false
+                holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))
+                holder.itemView.circular_progress.progressBackgroundColor =
+                    ContextCompat.getColor(mContext, R.color.GrayColor)
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -95,7 +100,8 @@ class LobbyContestAdapter(
             showInfoDialogue(mContest.get(position).description);
         }
 
-        val contestLeft: Double = mContest.get(position).contestSize.toDouble()- mContest.get(position).contest_teamremaining.toDouble()
+        val contestLeft: Double =
+            mContest.get(position).contestSize.toDouble() - mContest.get(position).contest_teamremaining.toDouble()
         holder.itemView.circular_progress.isAnimationEnabled
         holder.itemView.circular_progress.setProgress(
             contestLeft,

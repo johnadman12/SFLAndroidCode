@@ -22,14 +22,11 @@ class ScoresAdapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
-        holder.itemView.tvRank.setText(scores.get(position).rank + "(" + scores.get(position).teamName + ")")
-        /*holder.itemView.tvPrizeMoney.setText(scores.get(position).price)
+        holder.itemView.tvRank.setText(scores.get(position).rank + " (T -" + scores.get(position).teamId + ")")
         holder.itemView.username.setText(scores.get(position).username)
-        Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)*/
+        Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
 
-//        holder.itemView.txt_Join.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
-//        }
+
     }
 
 

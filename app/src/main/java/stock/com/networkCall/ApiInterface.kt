@@ -211,10 +211,13 @@ interface ApiInterface {
     @GET("contest/news_detail/{id}")
     fun getNewsDetail(@Path("id") newsId: String): Call<NewsDetailPojo>
 
-
+    @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
-    @GET("contest/GetContestsDetail/{id}")
-    fun getContestDetail(@Path("id") contest_id: String): Call<ContestDetail>
+    @POST("contest/GetContestsDetail")
+    fun getContestDetail(
+        @Field("contest_id") contest_id: String, @Field("user_id") user_id: String,
+        @Field("status") status: String
+    ): Call<ContestDetail>
 
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)

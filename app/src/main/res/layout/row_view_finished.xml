@@ -17,7 +17,7 @@
             card_view:cardPreventCornerOverlap="false">
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
             <LinearLayout
                     android:layout_width="match_parent"
@@ -218,6 +218,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvScore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/scores"
@@ -231,7 +232,7 @@
                     style="@style/ButtonStylelogin"/>
             <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"

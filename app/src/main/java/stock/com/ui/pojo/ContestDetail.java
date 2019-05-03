@@ -49,6 +49,9 @@ public class ContestDetail extends BasePojo {
         @SerializedName("schedule_start")
         @Expose
         public String scheduleStart;
+        @SerializedName("schedule_end")
+        @Expose
+        public String schedule_end;
         @SerializedName("catname")
         @Expose
         public String catname;
@@ -70,6 +73,9 @@ public class ContestDetail extends BasePojo {
         @SerializedName("total_winners")
         @Expose
         public String totalwinners;
+        @SerializedName("rank")
+        @Expose
+        public String rank;
         @SerializedName("price_break")
         @Expose
         public ArrayList<PriceBreak> priceBreak = null;
@@ -97,7 +103,7 @@ public class ContestDetail extends BasePojo {
         public String rank;
         @SerializedName("points")
         @Expose
-        public int points;
+        public String points;
         @SerializedName("userid")
         @Expose
         public int userid;

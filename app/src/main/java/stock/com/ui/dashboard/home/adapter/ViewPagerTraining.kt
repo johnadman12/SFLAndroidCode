@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
@@ -56,7 +57,7 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val iv_info: AppCompatImageButton = view.findViewById(R.id.iv_info)
         val ll_Circular: RelativeLayout = view.findViewById(R.id.ll_Circular)
         val card_view: CardView = view.findViewById(R.id.card_view)
-
+        val txtjoin: TextView = view.findViewById(R.id.txtjoin)
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
 
@@ -90,6 +91,10 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("0:0:0: Left")
+                ll_Circular.isEnabled = false
+                txtjoin.setText(context.getString(R.string.Finished))
+                circular_progress.progressBackgroundColor =
+                    ContextCompat.getColor(context, R.color.GrayColor)
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {

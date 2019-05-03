@@ -3,6 +3,7 @@ package stock.com.ui.my_contest.adapter
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
@@ -12,8 +13,10 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.UpcomingContestDetailActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,6 +82,18 @@ class UpcomingAdapter(
                 }
                 newtimer.start()
             }
+        }
+
+        holder.itemView.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, UpcomingContestDetailActivity::class.java).putExtra(
+                    "contestid",
+                    contest.get(position).contestid
+                ).putExtra(
+                    StockConstant.EXCHANGEID,
+                    contest.get(position).exchangeid
+                )
+            )
         }
 
 

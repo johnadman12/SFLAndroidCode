@@ -1,4 +1,4 @@
-package stock.com.ui.contest.activity
+package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -12,14 +12,13 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.contest_detail_activity.*
 import kotlinx.android.synthetic.main.dialog_choose_team.*
 import kotlinx.android.synthetic.main.dialog_information.*
+import kotlinx.android.synthetic.main.upcoming_contest_detail_activity.*
 import kotlinx.android.synthetic.main.include_back.*
 import kotlinx.android.synthetic.main.row_contest_detail.*
 import retrofit2.Call
@@ -31,7 +30,6 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
-import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -40,8 +38,7 @@ import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-class ContestDetailActivity : BaseActivity(), View.OnClickListener {
+class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var exchangeid: Int = 0
     override fun onClick(view: View?) {
@@ -57,7 +54,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.contest_detail_activity)
+        setContentView(R.layout.upcoming_contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
         initViews()
     }
@@ -102,7 +99,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), ""
+                , getFromPrefsString(StockConstant.USERID).toString(),"upcoming"
             )
         call.enqueue(object : Callback<ContestDetail> {
 
@@ -118,7 +115,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     }
                 } else {
                     Toast.makeText(
-                        this@ContestDetailActivity,
+                        this@UpcomingContestDetailActivity,
                         resources.getString(R.string.internal_server_error),
                         Toast.LENGTH_LONG
                     ).show()
@@ -129,7 +126,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
                 Toast.makeText(
-                    this@ContestDetailActivity,
+                    this@UpcomingContestDetailActivity,
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
@@ -169,7 +166,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 ll_Circular.isEnabled = false
                 txtjoin.setText(getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
-                    ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+                    ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -180,11 +177,11 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             ll_Circular.isEnabled = false
                             txtjoin.setText(getString(R.string.live_now))
                             circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+                                ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
                         } else {
                             ll_Circular.isEnabled = true
                             circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(this@ContestDetailActivity, R.color.green)
+                                ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.green)
                         }
 
                         val diffSec = diff / 1000
@@ -274,5 +271,4 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             val sb = ""
             sb
         }
-
 }

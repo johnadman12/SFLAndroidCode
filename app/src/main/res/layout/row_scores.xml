@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/dummy_rank"
                         style="@style/TextStyleNormal"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_12ssp"
                         android:textColor="@color/textColorBlack"
                         android:padding="@dimen/_2sdp"/>
 

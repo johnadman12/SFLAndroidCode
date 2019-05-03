@@ -103,6 +103,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         activity = DashBoardActivity()
         list = ArrayList()
         ids = ArrayList()
+        list!!.clear()
         if (intent != null)
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
         StockConstant.ACTIVITIES.add(this)
@@ -278,11 +279,11 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.message())
                         activity.setFragmentForActivity()
                         finish()
-                    } else if (response.body()!!.status == "0") {
+                    } /*else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.message())
                         activity.setFragmentForActivity()
                         finish()
-                    }
+                    }*/
                 } else {
                     Toast.makeText(
                         this@ActivityViewTeam,

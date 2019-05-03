@@ -50,7 +50,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.relFieldView -> {
-
                 startActivity(
                     Intent(this@ActivityEditTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, list)
@@ -79,12 +78,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        rv_Players!!.adapter!!.notifyDataSetChanged()
-        stockTeamAdapter!!.notifyDataSetChanged()
-//        wizard
-    }
 
     @SuppressLint("WrongConstant")
     private fun initView() {
@@ -100,8 +93,9 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
         }
 
-        stockSelectedItems = list
-        setTeamText(stockSelectedItems!!.size.toString())
+//        stockSelectedItems = list
+        stockSelectedItems!!.addAll(list!!)
+        setTeamText(list!!.size.toString())
         stockTeamAdapter = EditTeamAdapter(
             this, list as ArrayList,
             object : EditTeamAdapter.OnItemCheckListener {
@@ -198,14 +192,13 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                     }
                 }
             }
-
-            if (requestCode == StockConstant.RESULT_CODE_EDIT_TEAM) {
-                if (resultCode == RESULT_OK && data != null) {
-                    list!!.clear()
-                    list!!.addAll(data.getParcelableArrayListExtra("list"))
-                    rv_Players!!.adapter!!.notifyDataSetChanged()
-                    setTeamText(list!!.size.toString())
-                }
+        }
+        if (requestCode == StockConstant.RESULT_CODE_EDIT_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+                setTeamText(list!!.size.toString())
             }
         }
     }

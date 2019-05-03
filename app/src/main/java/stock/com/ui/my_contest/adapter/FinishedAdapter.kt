@@ -2,6 +2,7 @@ package stock.com.ui.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,12 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_finished.view.*
 
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
+import stock.com.ui.dashboard.Team.LiveScoreActivity
+import stock.com.ui.dashboard.Team.UpcomingContestDetailActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,6 +52,9 @@ class FinishedAdapter(
         contest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvRank.setText(contest.get(position).rank)
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))
+        holder.itemView.tvScore.setOnClickListener {
+            mContext.startActivity(Intent(mContext, LiveScoreActivity::class.java))
+        }
     }
 
 
@@ -58,6 +66,7 @@ class FinishedAdapter(
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
+
     fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"

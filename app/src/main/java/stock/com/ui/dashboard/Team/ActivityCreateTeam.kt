@@ -99,12 +99,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         initView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        rv_Players!!.adapter!!.notifyDataSetChanged()
-        stockTeamAdapter!!.notifyDataSetChanged()
-//        wizard
-    }
 
     @SuppressLint("WrongConstant")
     private fun initView() {
@@ -191,7 +185,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
             )
         call.enqueue(object : Callback<StockTeamPojo> {
-
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
@@ -228,6 +221,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
+
     fun getTeamAgainlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -246,22 +240,25 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         list!!.clear()
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!)
+
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+
                         for (i in 0 until list!!.size) {
                             for (j in 0 until stockRemovedItems!!.size) {
-                                Log.e("stockremoved", stockRemovedItems!!.get(0).stockid.toString())
-//                            list!!.get(i).addedToList = 0
-                                if (list!!.get(i).stockid .equals(stockRemovedItems!!.get(j).stockid)) {
-                                    //show green button
-                                    list!!.get(i).addedToList = 0
-                                } else {
+                                if(list!!.get(i).stockid == stockRemovedItems!!.get(j).stockid){
                                     list!!.get(i).addedToList = 1
                                 }
                             }
                         }
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                        setTeamText(stockRemovedItems!!.size.toString())
+                        rv_Players!!.adapter = stockTeamAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
 
+                        stockSelectedItems=stockRemovedItems;
+                        setTeamText(stockSelectedItems!!.size.toString())
                     }
                 } else {
                     Toast.makeText(
