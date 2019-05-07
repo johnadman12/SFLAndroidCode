@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_edit_team.*
-import kotlinx.android.synthetic.main.dialog_join_wizard.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,6 +42,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     var flag: Boolean = false
     var teamId: Int = 0
+    var exchangeId: Int = 0
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -89,13 +89,12 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         ll_sort.setOnClickListener(this)
         tvViewteam.isEnabled = true
         if (intent != null) {
-            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
 
-//        stockSelectedItems = list
-        stockSelectedItems!!.addAll(list!!)
-        setTeamText(list!!.size.toString())
+        setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = EditTeamAdapter(
             this, list as ArrayList,
             object : EditTeamAdapter.OnItemCheckListener {
@@ -110,7 +109,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         , StockConstant.RESULT_CODE_EDIT_TEAM
                     )
                 }
-
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.remove(item);
                     setTeamText(stockSelectedItems!!.size.toString())
@@ -142,7 +140,64 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         rv_Players!!.layoutManager = llm
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter = stockTeamAdapter;
+        getTeamlist()
 
+    }
+
+    fun getTeamlist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.getStockList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        list!!.clear()
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        list!!.addAll(response.body()!!.stock!!);
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+//                        rv_Players.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        rv_Players!!.adapter = stockTeamAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityEditTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityEditTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
     }
 
     fun setTeamText(add: String) {

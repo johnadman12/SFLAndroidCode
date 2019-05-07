@@ -65,17 +65,17 @@ class ViewTeamAdapter(
         }
 
 
-        if (mContest.get(position).getAddedStock().equals("0")) {
+       /* if (mContest.get(position).stock_type.equals("0"))
             holder.itemView.toggleButton1.isChecked = true
-        } else if (mContest.get(position).getAddedStock().equals("1"))
-            holder.itemView.toggleButton1.isChecked = false
+         else if (mContest.get(position).getAddedStock().equals("1"))
+            holder.itemView.toggleButton1.isChecked = false*/
 
 
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
-                mContest.get(position).addedStock = "1";
+                mContest.get(position).stock_type = "1";
             } else
-                mContest.get(position).addedStock = "0";
+                mContest.get(position).stock_type = "0";
         }
 
     }

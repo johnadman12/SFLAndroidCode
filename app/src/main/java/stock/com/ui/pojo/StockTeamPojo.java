@@ -68,6 +68,9 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
         @SerializedName("changePercent")
         @Expose
         public String changePercent;
+        @SerializedName("stock_type")
+        @Expose
+        public String stock_type;
         @SerializedName("sector")
         @Expose
         public String sector;

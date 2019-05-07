@@ -35,7 +35,6 @@ class LiveFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                    refreshData.finishRefreshing()
                 }, 5000)
                 getContests()
             }
@@ -75,6 +74,8 @@ class LiveFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
                 println(t.toString())
                 Toast.makeText(
                     activity!!,

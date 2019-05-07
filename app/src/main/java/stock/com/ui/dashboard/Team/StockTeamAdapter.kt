@@ -88,11 +88,6 @@ class StockTeamAdapter(
             searchList!!.get(position).addedToList = 0
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
         }
-
-        //default value of addedlisttostock -> 1
-
-
-        Log.d("4654646464--","---"+ searchList!!.get(position).addedToList)
         if (searchList!!.get(position).addedToList == 1) {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE

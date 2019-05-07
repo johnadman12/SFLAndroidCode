@@ -49,6 +49,8 @@
                     app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
                     app:icvp_scroll_duration="250"
                     app:icvp_medium_scaled="false"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginBottom="-8dp"
             />
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"

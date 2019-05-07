@@ -121,15 +121,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
-        /*val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView_tranning_contest!!.layoutManager = llm
-        recyclerView_tranning_contest.visibility = View.VISIBLE
-        recyclerView_tranning_contest!!.adapter = TranningContestAdapter(context!!, traniningContest)
-        recyclerView_tranning_contest.addItemDecoration(CirclePagerIndicatorDecoration(activity))*/
-
-
-        viewPager_training.visibility = View.VISIBLE
+         viewPager_training.visibility = View.VISIBLE
         viewPager_training.setClipToPadding(false);
         viewPager_training.setPadding(30, 0, 30, 0);
         viewPager_training.setPageMargin(10);

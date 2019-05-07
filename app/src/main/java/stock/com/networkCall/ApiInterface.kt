@@ -350,6 +350,12 @@ interface ApiInterface {
     ): Call<BasePojo>
 
 
+   @POST("stock/get_sector")
+    fun getSectorList(
+        @Header("x-access-token") token: String
+    ): Call<SectorListPojo>
+
+
     /* @Headers("Content-Type: application/json")
 
      @POST(ApiConstant.social_signup)

@@ -129,7 +129,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 // setMenu(false, false, false, true, false, false, false)
                 setTitleText(getString(R.string.profile))
                 setFragment(ProfileFragment(), Bundle())
-
                 changetTextViewBackground(tv_profile, R.color.colorPrimary);
                 changetTextViewBackground(tv_market, R.color.textColorLightBlack);
                 changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
@@ -378,7 +377,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
 
 
-        Glide.with(applicationContext).load(StockConstant.IMAG_BASE_PATH + "/" + getUserData().profile_image)
+        Glide.with(applicationContext).load(/*StockConstant.IMAG_BASE_PATH + "/" +*/ getUserData().profile_image)
             .error(R.mipmap.ic_launcher).into(profile_image)
         tv_username.setText("Guest user");
 

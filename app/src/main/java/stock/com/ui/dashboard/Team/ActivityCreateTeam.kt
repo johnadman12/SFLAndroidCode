@@ -60,6 +60,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     Intent(this@ActivityCreateTeam, WatchListActivity::class.java)
                 )
             }
+            R.id.ll_filter -> {
+                startActivity(
+                    Intent(this@ActivityCreateTeam, ActivitySectorFilter::class.java)
+                )
+            }
             R.id.ll_sort -> {
                 startActivityForResult(
                     Intent(this@ActivityCreateTeam, ActivitySortTeam::class.java),
@@ -99,7 +104,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         initView()
     }
 
-
     @SuppressLint("WrongConstant")
     private fun initView() {
         stockSelectedItems = ArrayList();
@@ -109,6 +113,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
         ll_watchlist.setOnClickListener(this)
+        ll_filter.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)

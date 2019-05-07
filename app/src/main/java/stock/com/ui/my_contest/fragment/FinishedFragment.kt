@@ -37,7 +37,6 @@ class FinishedFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                    refreshData.finishRefreshing()
                 }, 5000)
                 getContests()
             }

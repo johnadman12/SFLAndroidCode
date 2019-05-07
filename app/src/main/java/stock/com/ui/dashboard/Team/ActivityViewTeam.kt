@@ -45,7 +45,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     var activity: DashBoardActivity = DashBoardActivity()
     private var viewTeamAdapter: ViewTeamAdapter? = null;
     var array: JsonArray = JsonArray()
-    var postData: JsonObject = JsonObject()
     var jsonparams: JsonObject = JsonObject()
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     var exchangeId: Int = 0
@@ -77,18 +76,20 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             R.id.ll_save -> {
                 if (stockSelectedItems!!.size > 0) {
                     for (i in 0 until stockSelectedItems!!.size) {
+                        var postData1 = JsonObject();
                         try {
-                            postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
-                            postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                            postData.addProperty("stock_status", stockSelectedItems!!.get(i).addedStock);
-                            Log.e("savedlist", stockSelectedItems!!.get(i).addedStock)
-
+                            postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                            postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                            postData1.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
+                            Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
 
                         }
-                        array.add(postData)
+                        Log.d("finaldata", array.toString())
+                        array.add(postData1)
                     }
-//                    Log.e("savedlist", array.toString())
+
+
                     saveTeamList()
                 } else {
                     displayToast("please select Stock first")
@@ -115,7 +116,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private fun initView() {
         stockSelectedItems = ArrayList();
         array = JsonArray()
-        postData = JsonObject()
         jsonparams = JsonObject()
         ivedit.setOnClickListener(this)
         img_btn_back.setOnClickListener(this)
@@ -172,11 +172,11 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
                         stockSelectedItems!!.get(i).addedStock="1"
                     }*/
+                    var postData: JsonObject = JsonObject()
                     try {
                         postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                         postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                        postData.addProperty("stock_status", stockSelectedItems!!.get(i).addedStock);
-                        Log.e("savedlist", stockSelectedItems!!.get(i).addedStock)
+                        postData.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
 
                     } catch (e: Exception) {
 
@@ -214,6 +214,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
+
+        Log.e("savedlist", array.toString())
+
         val call: Call<BasePojo> =
             apiService.saveTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
@@ -227,9 +230,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                     } else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                     }
                 } else {
                     Toast.makeText(
@@ -276,7 +279,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         activity.setFragmentForActivity()
                         finish()
                     } /*else if (response.body()!!.status == "0") {
@@ -333,4 +336,4 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
-   }
+}

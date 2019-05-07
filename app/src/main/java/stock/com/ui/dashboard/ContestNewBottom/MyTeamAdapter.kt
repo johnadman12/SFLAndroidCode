@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_my_team.view.*
 import stock.com.R
+import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityEditTeam
 import stock.com.ui.dashboard.Team.ActivityMyTeamView
 import stock.com.ui.pojo.MyTeamsPojo
@@ -41,15 +42,30 @@ class MyTeamAdapter(
                 Intent(mContext, ActivityEditTeam::class.java)
                     .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                     .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+            )
+        }
+
+        holder.itemView.relClone.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityEditTeam::class.java)
+                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
             )
         }
 
         holder.itemView.relViewTeam.setOnClickListener {
             mContext.startActivity(
-                Intent(mContext, ActivityMyTeamView::class.java)
+                Intent(mContext, TeamPreviewActivity::class.java)
                     .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+//                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
             )
+        }
+
+
+        holder.itemView.relShare.setOnClickListener {
+            shareIntent()
         }
     }
 
@@ -78,5 +94,13 @@ class MyTeamAdapter(
             e.printStackTrace()
         }
         return str
+    }
+
+    fun shareIntent() {
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "share your team");
+        mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.send_to)))
     }
 }

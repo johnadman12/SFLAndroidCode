@@ -16,7 +16,7 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
             <include
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     layout="@layout/row_contest_detail"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>

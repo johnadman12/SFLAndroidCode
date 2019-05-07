@@ -34,11 +34,9 @@ class UpcomingFragment : BaseFragment() {
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
-
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                    refreshData.finishRefreshing()
                 }, 5000)
                 getContests()
             }

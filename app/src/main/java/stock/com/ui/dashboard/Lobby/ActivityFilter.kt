@@ -78,8 +78,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-    fun setFilters(
-    ) {
+    fun setFilters() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)

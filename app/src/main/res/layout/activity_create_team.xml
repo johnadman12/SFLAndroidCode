@@ -10,9 +10,6 @@
             android:id="@+id/include"
             layout="@layout/include_back"/>
 
-
-
-
     <LinearLayout android:id="@+id/lltop"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -224,7 +221,19 @@
                     android:textColor="@color/textColorOffWhite"
                     style="@style/TextStyleNormal"/>
         </LinearLayout>
-
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:text="   My Team   "
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_gravity="right|center_vertical"
+                android:padding="@dimen/_2sdp"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="gone"
+                android:background="@drawable/white_fill_button"
+                android:textColor="@color/black"
+                style="@style/TextStyleNormal"/>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvViewteam"
@@ -232,7 +241,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:text="   View Team   "
                 android:gravity="center"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_gravity="right|center_vertical"
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_14ssp"
@@ -247,11 +256,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_60sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
             android:background="@null"
-            android:layout_marginLeft="@dimen/_10sdp"
             android:src="@mipmap/teamwizard"
     />
-
-
 </RelativeLayout>

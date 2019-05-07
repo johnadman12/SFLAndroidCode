@@ -51,7 +51,8 @@
                     android:textColor="@color/black"
                     android:buttonTint="@color/colorPrimary"/>
 
-            <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
                   android:background="@color/GrayColor"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox

@@ -5,13 +5,12 @@
         xmlns:app="http://schemas.android.com/tools"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:ignore="NamespaceTypo">
     <stock.com.utils.custom.RoundRectCornerImageView
         android:id="@+id/imv_product"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"

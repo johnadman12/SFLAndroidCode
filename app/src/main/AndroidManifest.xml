@@ -395,6 +395,11 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Team.ActivitySectorFilter"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <!-- <activity
                  android:name=".ActivityMyTeamView"
                  android:configChanges="orientation|keyboardHidden"

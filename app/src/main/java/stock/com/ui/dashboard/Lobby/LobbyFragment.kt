@@ -55,7 +55,7 @@ class LobbyFragment : BaseFragment() {
 
         ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
         ll_codejoin.setOnClickListener { showViewContestDialogue() }
-        ll_createContest.setOnClickListener{
+        ll_createContest.setOnClickListener {
             startActivity(Intent(activity, ActivityCreateContest::class.java))
         }
         ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
@@ -70,7 +70,6 @@ class LobbyFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                    refreshLayout.finishRefreshing()
                 }, 5000)
                 getContestlist()
             }
@@ -112,6 +111,8 @@ class LobbyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
+                if (refreshLayout != null)
+                    refreshLayout.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()

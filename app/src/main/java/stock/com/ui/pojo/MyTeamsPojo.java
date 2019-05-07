@@ -34,6 +34,9 @@ public class MyTeamsPojo extends BasePojo {
         @SerializedName("stocksid")
         @Expose
         public int stocksid;
+        @SerializedName("exchangeid")
+        @Expose
+        public int exchangeid;
         @SerializedName("exchangename")
         @Expose
         public String exchangename;
