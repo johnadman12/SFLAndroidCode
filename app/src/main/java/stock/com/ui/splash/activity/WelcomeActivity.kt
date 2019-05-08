@@ -345,6 +345,8 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                         val json = gson.toJson(country); // myObject - instance of MyObject
                         SessionManager.getInstance(this@WelcomeActivity).putString(StockConstant.COUNTRYLIST, json);
                         Log.e("list", json.toString())
+                    }else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error))

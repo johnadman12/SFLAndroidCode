@@ -95,17 +95,23 @@ class StockTeamAdapter(
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
         }
-//
+
+        if (searchList!!.get(position).stock_type.equals("0"))
+            holder.itemView.toggleButton1.isChecked = true
+        else if (searchList!!.get(position).stock_type.equals("1")) {
+            holder.itemView.toggleButton1.isChecked = false
+        }
 
         holder.itemView.setOnClickListener {
             onItemCheckListener.onItemClick(searchList!!.get(position))
         }
 
+
         holder.itemView.toggleButton1.setOnClickListener {
-            if (holder.itemView.toggleButton1.isChecked) {
-                searchList!!.get(position).addedStock = "0";
-            } else
-                searchList!!.get(position).addedStock = "1";
+            if (holder.itemView.toggleButton1.isChecked)
+                searchList!!.get(position).stock_type = "0";
+            else
+                searchList!!.get(position).stock_type = "1";
 
         }
     }

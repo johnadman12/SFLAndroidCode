@@ -121,7 +121,7 @@ class LobbyContestAdapter(
         holder.itemView.ll_Circular.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(
-                    "contestid",
+                    StockConstant.CONTESTID,
                     mContest.get(position).contestid
                 ).putExtra(
                     StockConstant.EXCHANGEID,

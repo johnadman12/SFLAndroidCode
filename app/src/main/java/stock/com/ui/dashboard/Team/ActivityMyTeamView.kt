@@ -116,6 +116,7 @@ class ActivityMyTeamView : BaseActivity(), View.OnClickListener {
                     startActivity(
                         Intent(this@ActivityMyTeamView, ActivityEditTeam::class.java)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.CONTESTID, 0)
                             .putExtra(StockConstant.TEAMID, teamId)
                     )
                 }

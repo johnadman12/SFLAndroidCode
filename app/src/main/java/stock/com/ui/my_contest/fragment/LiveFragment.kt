@@ -62,6 +62,8 @@ class LiveFragment : BaseFragment() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         setAdapter(response.body()!!.contest)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -88,10 +90,10 @@ class LiveFragment : BaseFragment() {
     }
 
     private fun setAdapter(contest: ArrayList<LobbyContestPojo.Contest>) {
-        val llm = GridLayoutManager(context,2)
+        val llm = GridLayoutManager(context, 2)
         //llm.orientation = GridLayoutManager(applicationContext,2)
         recycler_finished!!.layoutManager = llm
-        recycler_finished!!.adapter = LiveAdapter(context!!,contest);
+        recycler_finished!!.adapter = LiveAdapter(context!!, contest);
     }
 
 }

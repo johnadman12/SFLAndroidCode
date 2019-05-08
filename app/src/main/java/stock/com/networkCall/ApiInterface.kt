@@ -304,7 +304,7 @@ interface ApiInterface {
     @POST("stock/stock_list")
     fun getStockList(
         @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: Int,
-        @Field("user_id") user_id: Int
+        @Field("user_id") user_id: Int, @Field("sector") Sector: String
     ): Call<StockTeamPojo>
 
     @FormUrlEncoded
@@ -349,8 +349,13 @@ interface ApiInterface {
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 
+    @POST("team/edit_team")
+    fun editTeam(
+        @Header("x-access-token") token: String, @Body stocks: JsonObject
+    ): Call<BasePojo>
 
-   @POST("stock/get_sector")
+
+    @POST("stock/get_sector")
     fun getSectorList(
         @Header("x-access-token") token: String
     ): Call<SectorListPojo>

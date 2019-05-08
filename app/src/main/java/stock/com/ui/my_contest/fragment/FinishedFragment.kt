@@ -63,6 +63,8 @@ class FinishedFragment : BaseFragment() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         setAdapter(response.body()!!.contest)
+                    }else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(

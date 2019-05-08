@@ -19,6 +19,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_edit_team.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -30,8 +32,10 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
+import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.util.ArrayList
@@ -41,13 +45,36 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
     private var stockTeamAdapter: EditTeamAdapter? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     var flag: Boolean = false
+    var array: JsonArray = JsonArray()
     var teamId: Int = 0
+    var jsonparams: JsonObject = JsonObject()
     var exchangeId: Int = 0
+    var contestId: Int = 0
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
+            }
+            R.id.tvViewteam -> {
+                if (stockSelectedItems!!.size > 0) {
+                    for (i in 0 until stockSelectedItems!!.size) {
+                        var postData1 = JsonObject();
+                        try {
+                            postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                            postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                            postData1.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
+                            Log.e("savedlist", postData1.toString())
+                        } catch (e: Exception) {
+
+                        }
+                        Log.d("finaldata", array.toString())
+                        array.add(postData1)
+                    }
+                    saveTeamList()
+                } else {
+                    displayToast("please select Stock first")
+                }
             }
             R.id.relFieldView -> {
                 startActivity(
@@ -75,6 +102,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_edit_team)
         StockConstant.ACTIVITIES.add(this)
         list = ArrayList();
+        array = JsonArray()
+        jsonparams = JsonObject()
         initView()
     }
 
@@ -91,6 +120,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         if (intent != null) {
             stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
 
@@ -109,6 +139,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         , StockConstant.RESULT_CODE_EDIT_TEAM
                     )
                 }
+
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.remove(item);
                     setTeamText(stockSelectedItems!!.size.toString())
@@ -151,7 +182,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, ""
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
@@ -176,6 +207,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         }
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -256,6 +289,60 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 setTeamText(list!!.size.toString())
             }
         }
+    }
+
+    fun saveTeamList() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("stocks", array)
+
+        Log.e("savedlist", array.toString())
+
+        val call: Call<BasePojo> =
+            apiService.editTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityEditTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityEditTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
     }
 
 }

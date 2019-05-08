@@ -250,7 +250,7 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
             startActivity(
                 Intent(this, ActivityCreateTeam::class.java).putExtra(
                     StockConstant.EXCHANGEID, exchangeid
-                )
+                ) .putExtra("isCloning",1)
             )
         }
         dialogue.ll_saved.setOnClickListener {

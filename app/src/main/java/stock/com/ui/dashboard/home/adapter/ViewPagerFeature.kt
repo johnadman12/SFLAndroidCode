@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.home.adapter
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
@@ -22,7 +24,6 @@ import kotlinx.android.synthetic.main.dialog_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
-import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -122,15 +123,18 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             showInfoDialogue(list.get(position).description);
         }
         ll_Circular.setOnClickListener {
-            context.startActivity(
-                Intent(context, ContestDetailActivity::class.java).putExtra(
-                    "contestid",
-                    list.get(position).contestid
-                ).putExtra(
-                    StockConstant.EXCHANGEID,
-                    list.get(position).exchangeid
-                )
-            )
+            /*  context.startActivity(
+                  Intent(context, ContestDetailActivity::class.java).putExtra("contestid", list.get(position).contestid).putExtra(
+                      StockConstant.EXCHANGEID,
+                      list.get(position).exchangeid
+                  )
+              )*/
+
+            var intent = Intent(context, ContestDetailActivity::class.java);
+            intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
+            intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
+            startActivityForResult(context as Activity, intent, 404, null);
+
         }
 
         val contestLeft: Double =

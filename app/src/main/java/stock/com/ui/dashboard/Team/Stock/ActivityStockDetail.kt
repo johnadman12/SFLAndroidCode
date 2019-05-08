@@ -251,6 +251,8 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         AppDelegate.showAlert(this@ActivityStockDetail, "stock added to watchlist sucessfully ")
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     } else {
                         AppDelegate.showAlert(this@ActivityStockDetail, "stock already added to watchlist")
 

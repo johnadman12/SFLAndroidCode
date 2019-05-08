@@ -7,6 +7,7 @@ object StockConstant{
     val PREF_NAME = "com.stock.app"
     val COUNTRYLIST = "country"
     val EXCHANGEID = "exchangeid"
+    val CONTESTID = "contestid"
     val DEVICE_TOKEN = ""
     val STOCKLIST = "stocklist"
     val TEAMID = "teamid"
@@ -22,6 +23,7 @@ object StockConstant{
     val RESULT_CODE_VIEW_REMOVE_TEAM=1006;
     val RESULT_CODE_EDIT_TEAM=1007;
     val RESULT_CODE_SORT_EDIT_TEAM=1008;
+    val RESULT_CODE_FILTER_TEAM=1009;
     val REQUEST_WRITE_STORAGE = 112
     val REQUEST_CAMERA = 113
     val REQUEST_GALLARY = 114

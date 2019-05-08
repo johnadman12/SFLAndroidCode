@@ -32,8 +32,8 @@ class SectorAdapter(
     }
 
     interface OnItemCheckListener {
-        fun onItemCheck(item: SectorListPojo.Sector)
-        fun onItemUncheck(item: SectorListPojo.Sector)
+        fun onItemCheck(item: String)
+        fun onItemUncheck(item: String)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -45,9 +45,9 @@ class SectorAdapter(
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem);
+                onItemCheckListener.onItemCheck(currentItem.sector);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem);
+                onItemCheckListener.onItemUncheck(currentItem.sector);
                 checkedHolder!![position] = false;
             }
         }

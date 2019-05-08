@@ -23,17 +23,27 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ActivitySectorFilter : BaseActivity() {
-    private var sectorSelected: ArrayList<SectorListPojo.Sector>? = null
+    private var sectorSelected: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sector_listing)
         StockConstant.ACTIVITIES.add(this)
+        sectorSelected = ArrayList()
         img_btn_close.visibility = View.VISIBLE
         img_btn_back.setOnClickListener {
             finish()
         }
         img_btn_close.setOnClickListener {
+            finish()
+        }
+
+        btn_filterApply.setOnClickListener {
+            val selectedSector: String = android.text.TextUtils.join(",", sectorSelected)
+            Log.e("sectorlist", selectedSector)
+            var resultIntent = Intent()
+            resultIntent.putExtra("sectorlist", selectedSector)
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
         getFilterlist()
@@ -54,6 +64,8 @@ class ActivitySectorFilter : BaseActivity() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         setSectorAdapter(response.body()!!.sectorList!!)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -84,15 +96,16 @@ class ActivitySectorFilter : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_sector!!.layoutManager = llm
         recycle_sector!!.adapter = SectorAdapter(this, sector, object : SectorAdapter.OnItemCheckListener {
-            override fun onItemUncheck(item: SectorListPojo.Sector) {
+            override fun onItemUncheck(item: String) {
                 sectorSelected?.remove(item);
             }
 
-            override fun onItemCheck(item: SectorListPojo.Sector) {
+            override fun onItemCheck(item: String) {
                 sectorSelected?.add(item)
             }
         })
 
     }
+
 
 }

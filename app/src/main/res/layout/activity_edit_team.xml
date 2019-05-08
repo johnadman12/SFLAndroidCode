@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
                 android:gravity="center"
+                android:visibility="gone"
                 android:layout_gravity="top"
                 android:orientation="vertical">
             <androidx.appcompat.widget.AppCompatImageView

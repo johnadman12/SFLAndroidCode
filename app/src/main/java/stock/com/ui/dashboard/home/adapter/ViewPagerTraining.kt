@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.home.adapter
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
@@ -135,15 +137,20 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         }
 
         ll_Circular.setOnClickListener {
-            context.startActivity(
-                Intent(context, ContestDetailActivity::class.java).putExtra(
-                    "contestid",
-                    list.get(position).contestid
-                ).putExtra(
-                    StockConstant.EXCHANGEID,
-                    list.get(position).exchangeid
-                )
-            )
+            /* context.startActivity(
+                 Intent(context, ContestDetailActivity::class.java).putExtra(
+                     StockConstant.CONTESTID,
+                     list.get(position).contestid
+                 ).putExtra(
+                     StockConstant.EXCHANGEID,
+                     list.get(position).exchangeid
+                 )
+             )*/
+
+            var intent = Intent(context, ContestDetailActivity::class.java);
+            intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
+            intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
+            ActivityCompat.startActivityForResult(context as Activity, intent, 404, null);
         }
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);

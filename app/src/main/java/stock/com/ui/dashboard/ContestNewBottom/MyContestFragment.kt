@@ -119,9 +119,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
                 setFragment(FinishedFragment(), Bundle());
 
-
             }
-
 
         }
     }
@@ -141,20 +139,43 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         tv_finished.setOnClickListener(this);
         ll_my_team.setOnClickListener(this);
 
+        val args = arguments;
 
-        changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
-        changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_live, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_finished, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+        if(args!!.getString("flag").equals("true")){
 
-        changeBackGroundColor(tv_created, ContextCompat.getColor(activity!!, R.color.colorbutton));
-        changeBackGroundColor(tv_invited, ContextCompat.getColor(activity!!, R.color.white));
-        changeBackGroundColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.white));
-        changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
-        changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
+            changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.white));
+            changeTextColor(tv_live, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_finished, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
-        setFragment(CreatedFragment(), Bundle())
+            changeBackGroundColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_invited, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.colorbutton));
+            changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
+
+            setFragment(UpcomingFragment(), Bundle());
+
+        }else{
+            changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
+            changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_live, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+            changeTextColor(tv_finished, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+
+            changeBackGroundColor(tv_created, ContextCompat.getColor(activity!!, R.color.colorbutton));
+            changeBackGroundColor(tv_invited, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
+            changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
+
+            setFragment(CreatedFragment(), Bundle());
+
+
+        }
+
+
 
     }
 
@@ -177,6 +198,8 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
     private fun changeBackGroundColor(textView: TextView, color: Int) {
         textView.setBackgroundColor(color);
     }
+
+
 }
 
 

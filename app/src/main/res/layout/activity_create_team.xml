@@ -194,7 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/_8sdp"
+            android:padding="@dimen/_5sdp"
             android:gravity="center"
             android:background="#32A5DE"
             android:layout_alignParentBottom="true">
@@ -256,7 +256,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_60sdp"
             android:background="@null"
             android:src="@mipmap/teamwizard"
     />

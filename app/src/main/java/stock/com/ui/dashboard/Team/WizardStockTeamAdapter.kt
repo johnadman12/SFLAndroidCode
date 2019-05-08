@@ -68,14 +68,8 @@ class WizardStockTeamAdapter(
 
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
-        searchList!!.get(position).addedToList=1
+        searchList!!.get(position).addedToList = 1
 
-        /* if (searchList!!.get(position).addedStock.equals("yes")) {
-             holder.itemView.toggleButton1.isChecked = true
-         } else {
-             holder.itemView.toggleButton1.isChecked = false
-         }
- */
         holder.itemView.img_add.setOnClickListener {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
@@ -89,31 +83,24 @@ class WizardStockTeamAdapter(
             onItemCheckListener.onItemUncheck(searchList!!.get(position));
         }
 
-        //default value of addedlisttostock -> 0
-       /* if (searchList!!.get(position).addedToList == 1) {
-            holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.img_add.visibility = GONE
-        } else if (searchList!!.get(position).addedToList == 0) {
-            holder.itemView.llremoveStock.visibility = GONE
-            holder.itemView.img_add.visibility = VISIBLE
+        if (searchList!!.get(position).stock_type.equals("0"))
+            holder.itemView.toggleButton1.isChecked = true
+        else if (searchList!!.get(position).stock_type.equals("1")) {
+            holder.itemView.toggleButton1.isChecked = false
         }
-*/
+
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
-//                holder.itemView.toggleButton1.isChecked = false
-                searchList!!.get(position).setAddedStock("0")
+                searchList!!.get(position).stock_type = "0";
             } else
-//                holder.itemView.toggleButton1.isChecked = true
-            searchList!!.get(position).setAddedStock("1");
+                searchList!!.get(position).stock_type = "1";
 
         }
         holder.itemView.setOnClickListener {
             onItemCheckListener.onItemClick(searchList!!.get(position))
         }
 
-       /* holder.itemView.setOnClickListener {
-            showViewContestDialogue()
-        }*/
+
     }
 
 
@@ -168,7 +155,7 @@ class WizardStockTeamAdapter(
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)
         dialogue.tvViewContest.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", searchList!!.get(position).stockid))
+            //            mContext.startActivity(Intent(mContext, ActivityStockDetail::class.java).putExtra("Stockid", searchList!!.get(position).stockid))
             dialogue.dismiss()
         }
         dialogue.tv_hide.setOnClickListener {

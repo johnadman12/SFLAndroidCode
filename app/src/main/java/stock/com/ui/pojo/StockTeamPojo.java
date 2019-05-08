@@ -113,6 +113,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
             marketclose = in.readString();
             latestPrice = in.readString();
             changePercent = in.readString();
+            stock_type = in.readString();
         }
 
         public static final Creator<Stock> CREATOR = new Creator<Stock>() {
@@ -151,6 +152,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
             parcel.writeString(marketclose);
             parcel.writeString(latestPrice);
             parcel.writeString(changePercent);
+            parcel.writeString(stock_type);
         }
     }
 }

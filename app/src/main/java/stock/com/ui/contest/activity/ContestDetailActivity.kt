@@ -1,6 +1,7 @@
 package stock.com.ui.contest.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -17,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_create_team.*
 import kotlinx.android.synthetic.main.contest_detail_activity.*
 import kotlinx.android.synthetic.main.dialog_choose_team.*
 import kotlinx.android.synthetic.main.dialog_information.*
@@ -31,6 +33,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
+import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
@@ -44,6 +47,7 @@ import java.util.*
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var exchangeid: Int = 0
+    var activity: DashBoardActivity = DashBoardActivity()
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_btn_close -> {
@@ -59,6 +63,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
+        activity = DashBoardActivity()
         initViews()
     }
 
@@ -73,7 +78,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         img_btn_close.visibility = View.VISIBLE
         getContestDetail()
         ll_Circular.setOnClickListener {
-            showJoinTeamDialogue()
+                        showJoinTeamDialogue()
+
+            // activity.setFragmentForActivity()
+           /* var intent = Intent();
+            setResult(Activity.RESULT_OK);
+            finish();*/
 
         }
 
@@ -250,11 +260,17 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         dialogue.ll_new.setOnClickListener {
             if (dialogue.isShowing)
                 dialogue.dismiss()
-            startActivity(
+           /* startActivity(
                 Intent(this, ActivityCreateTeam::class.java).putExtra(
                     StockConstant.EXCHANGEID, exchangeid
-                )
-            )
+                ).putExtra("isCloning", 1)
+            )*/
+
+            var intent=Intent(this, ActivityCreateTeam::class.java)
+            intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+            intent.putExtra(StockConstant.CONTESTID, contestid)
+            intent.putExtra("isCloning", 1)
+            startActivityForResult(intent,405);
         }
         dialogue.ll_saved.setOnClickListener {
             if (dialogue.isShowing)
@@ -274,5 +290,18 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             val sb = ""
             sb
         }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 405) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+            }
+        }
+
+    }
 
 }

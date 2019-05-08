@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -46,6 +47,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
     val RESULT_DATA = 1003
     var flag: Boolean = false
+    var flagCloning: Int = 1
+    var sector: String = ""
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -61,9 +64,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.ll_filter -> {
-                startActivity(
-                    Intent(this@ActivityCreateTeam, ActivitySectorFilter::class.java)
+                startActivityForResult(
+                    Intent(this@ActivityCreateTeam, ActivitySectorFilter::class.java),
+                    1009
                 )
+
             }
             R.id.ll_sort -> {
                 startActivityForResult(
@@ -79,6 +84,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             .putExtra(
                                 StockConstant.EXCHANGEID,
                                 exchangeId
+                            ).putExtra(
+                                StockConstant.CONTESTID,
+                                contestId
                             ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 } else {
@@ -88,6 +96,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             .putExtra(
                                 StockConstant.EXCHANGEID,
                                 exchangeId
+                            ).putExtra(
+                                StockConstant.CONTESTID,
+                                contestId
                             ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 }
@@ -96,6 +107,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     }
 
     var exchangeId: Int = 0
+    var contestId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
@@ -119,6 +131,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+            contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
+            if (flagCloning == 0)
+                stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
         }
 
         /*val llm = LinearLayoutManager(this)
@@ -127,7 +142,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter
         */
-
+        setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = StockTeamAdapter(
             this, list as ArrayList,
             object : StockTeamAdapter.OnItemCheckListener {
@@ -141,7 +156,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             .putExtra(StockConstant.STOCKLIST, list)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
                     )
-
 
                 }
 
@@ -180,6 +194,53 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         getTeamlist()
     }
 
+    //    fun getTeamlist() {
+//        val d = StockDialog.showLoading(this)
+//        d.setCanceledOnTouchOutside(false)
+//        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+//        val call: Call<StockTeamPojo> =
+//            apiService.getStockList(
+//                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
+//                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+//            )
+//        call.enqueue(object : Callback<StockTeamPojo> {
+//            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+//                d.dismiss()
+//                if (response.body() != null) {
+//                    if (response.body()!!.status == "1") {
+//                        Handler().postDelayed(Runnable {
+//                        }, 100)
+//                        list!!.addAll(response.body()!!.stock!!);
+////                        displayToast(list!!.size.toString())
+//                        rv_Players.adapter!!.notifyDataSetChanged();
+//
+//                        //  setStockTeamAdapter(response.body()!!.stock!!)
+//
+//                    } else if (response.body()!!.status == "2") {
+//                        appLogout()
+//                    }
+//                } else {
+//                    Toast.makeText(
+//                        this@ActivityCreateTeam,
+//                        resources.getString(R.string.internal_server_error),
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//                    d.dismiss()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+//                println(t.toString())
+//                Toast.makeText(
+//                    this@ActivityCreateTeam,
+//                    resources.getString(R.string.something_went_wrong),
+//                    Toast.LENGTH_LONG
+//                ).show()
+//                displayToast(resources.getString(R.string.something_went_wrong))
+//                d.dismiss()
+//            }
+//        })
+//    }
     fun getTeamlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -187,7 +248,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, sector
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
@@ -196,12 +257,24 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+                        list!!.clear()
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!);
-//                        displayToast(list!!.size.toString())
-                        rv_Players.adapter!!.notifyDataSetChanged();
-
-                        //  setStockTeamAdapter(response.body()!!.stock!!)
-
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+//                        rv_Players.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        rv_Players!!.adapter = stockTeamAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -226,7 +299,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-
     fun getTeamAgainlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -234,7 +306,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, ""
             )
         call.enqueue(object : Callback<StockTeamPojo> {
 
@@ -254,7 +326,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                         for (i in 0 until list!!.size) {
                             for (j in 0 until stockRemovedItems!!.size) {
-                                if(list!!.get(i).stockid == stockRemovedItems!!.get(j).stockid){
+                                if (list!!.get(i).stockid == stockRemovedItems!!.get(j).stockid) {
                                     list!!.get(i).addedToList = 1
                                 }
                             }
@@ -262,8 +334,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
 
-                        stockSelectedItems=stockRemovedItems;
+                        stockSelectedItems = stockRemovedItems;
                         setTeamText(stockSelectedItems!!.size.toString())
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -344,6 +418,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                         //  setStockTeamAdapter(response.body()!!.stock!!)
 
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -459,8 +535,21 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
         if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-                stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
-                getTeamAgainlist()
+                if(data.getStringExtra("flag").equals("1")) {
+                    stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
+                    getTeamAgainlist()
+                }else if(data.getStringExtra("flag").equals("2")){
+                    var intent = Intent();
+                    setResult(Activity.RESULT_OK,intent);
+                    finish();
+                }
+
+            }
+        }
+        if (requestCode == 1009) {
+            if (resultCode == RESULT_OK && data != null) {
+                sector= data.getStringExtra("sectorlist")
+                getTeamlist()
 
             }
         }

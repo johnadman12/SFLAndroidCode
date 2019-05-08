@@ -48,6 +48,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     var jsonparams: JsonObject = JsonObject()
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     var exchangeId: Int = 0
+    var contestId: Int = 0
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -105,8 +106,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         list = ArrayList()
         ids = ArrayList()
         list!!.clear()
-        if (intent != null)
+        if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            contestId = intent.getIntExtra(StockConstant.CONTESTID,0)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+
+        }
         StockConstant.ACTIVITIES.add(this)
         initView()
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
@@ -123,9 +128,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
-        if (intent != null) {
-            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
-        }
+
         stockSelectedItems = list
         viewTeamAdapter = ViewTeamAdapter(
             this, list as ArrayList, object : ViewTeamAdapter.OnItemCheckListener {
@@ -145,6 +148,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     setTeamText(item)
                     val intent = Intent();
                     intent.putExtra("removedlist", list)
+                    intent.putExtra("flag", "1")
                     setResult(Activity.RESULT_OK, intent);
                     Log.e("stocklist", stockSelectedItems!!.get(0).stockid.toString())
                 }
@@ -209,7 +213,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        jsonparams.addProperty("contest_id", exchangeId.toString())
+        jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -233,6 +237,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
                     }
                 } else {
                     Toast.makeText(
@@ -261,7 +267,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        jsonparams.addProperty("contest_id", exchangeId.toString())
+        jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -280,8 +286,10 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
-                        activity.setFragmentForActivity()
-                        finish()
+                        var intent = Intent();
+                        intent.putExtra("flag", "2")
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
                     } /*else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.message())
                         activity.setFragmentForActivity()

@@ -40,7 +40,7 @@
         </RelativeLayout>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_sortApply"
+            android:id="@+id/btn_filterApply"
             style="@style/ButtonStylelogin"
             android:text="Apply"
             android:layout_below="@+id/llfilter"
