@@ -109,6 +109,7 @@ class ActivityMyTeamView : BaseActivity(), View.OnClickListener {
                         )
                             .putExtra("Stockid", item.stockid)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                     )
                 }
 

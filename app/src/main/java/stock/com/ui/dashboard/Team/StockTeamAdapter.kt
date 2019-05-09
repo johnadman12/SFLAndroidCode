@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.Team
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -24,7 +25,9 @@ import stock.com.utils.StockConstant
 
 class StockTeamAdapter(
     val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
+    val activity: ActivityCreateTeam,
     val onItemCheckListener: OnItemCheckListener
+
 ) :
     RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
@@ -65,6 +68,7 @@ class StockTeamAdapter(
     }
 
 
+    @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         list = ArrayList()
         list = mContest as ArrayList
@@ -77,10 +81,14 @@ class StockTeamAdapter(
 
 
         holder.itemView.img_add.setOnClickListener {
-            holder.itemView.llremoveStock.visibility = VISIBLE
-            holder.itemView.img_add.visibility = GONE
-            searchList!!.get(position).addedToList = 1
-            onItemCheckListener.onItemCheck(searchList!!.get(position));
+            if (activity.getTeamText() > 11) {
+                Toast.makeText(mContext, "You have selected maximum number of stocks for your team.", 10000).show()
+            }else{
+                holder.itemView.llremoveStock.visibility = VISIBLE
+                holder.itemView.img_add.visibility = GONE
+                searchList!!.get(position).addedToList = 1
+                onItemCheckListener.onItemCheck(searchList!!.get(position));
+            }
         }
         holder.itemView.llremoveStock.setOnClickListener {
             holder.itemView.llremoveStock.visibility = GONE
@@ -157,6 +165,5 @@ class StockTeamAdapter(
             }
         }
     }
-
 
 }

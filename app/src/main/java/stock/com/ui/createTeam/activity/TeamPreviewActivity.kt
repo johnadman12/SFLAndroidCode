@@ -37,7 +37,6 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         img_back.setOnClickListener(this)
-        img_close.visibility = VISIBLE
         img_close.setOnClickListener(this)
         if (list != null)
             setData()

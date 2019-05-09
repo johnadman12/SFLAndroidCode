@@ -51,7 +51,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:textSize="@dimen/_15sdp"
-            android:textColor="@color/green"
+            android:textColor="@color/textColorGray"
             android:text="@string/Rs1000"
             android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView

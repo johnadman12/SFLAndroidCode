@@ -8,8 +8,21 @@
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="@dimen/_6sdp"
         card_view:cardElevation="@dimen/_3sdp">
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                       android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/iv_info1"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:background="@mipmap/info_"
+                android:visibility="visible"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                />
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvInfo" android:layout_width="match_parent"
@@ -18,10 +31,11 @@
                 android:layout_height="wrap_content"
                 style="@style/TextStyleNormal"
                 android:textSize="@dimen/_12ssp"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_8sdp"
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"/>
+                card_view:layout_constraintTop_toBottomOf="@+id/iv_info1"
+              />
 
         <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnOK"

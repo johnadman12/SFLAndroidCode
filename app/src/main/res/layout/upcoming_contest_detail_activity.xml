@@ -22,6 +22,7 @@
                     android:layout_width="match_parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvContestRules"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -41,6 +42,7 @@
 
             </androidx.recyclerview.widget.RecyclerView>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTeams"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"

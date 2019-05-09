@@ -38,7 +38,7 @@ import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
+class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var exchangeid: Int = 0
     override fun onClick(view: View?) {
@@ -65,9 +65,9 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
             contestid = intent.getIntExtra("contestid", 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
+        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
-        img_btn_close.visibility = View.VISIBLE
         getContestDetail()
         ll_Circular.setOnClickListener {
             showJoinTeamDialogue()
@@ -89,7 +89,7 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, scores)
+        rv_score!!.adapter = ScoresAdapter(this,getFromPrefsString(StockConstant.USERID)!!.toInt(),  scores, 0)
     }
 
     fun getContestDetail() {
@@ -99,7 +99,7 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(),"upcoming"
+                , getFromPrefsString(StockConstant.USERID).toString(), "upcoming"
             )
         call.enqueue(object : Callback<ContestDetail> {
 
@@ -109,6 +109,12 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+                        if (response.body()!!.scores.size == 0)
+                            tvTeams.setText("0 Teams")
+                        else
+                            tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
+                        if (response.body()!!.rules.size == 0)
+                            tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
                         setScoreAdapter(response.body()!!.scores)
                         setData(response.body()!!.contest.get(0))
@@ -250,7 +256,7 @@ class UpcomingContestDetailActivity:  BaseActivity(), View.OnClickListener {
             startActivity(
                 Intent(this, ActivityCreateTeam::class.java).putExtra(
                     StockConstant.EXCHANGEID, exchangeid
-                ) .putExtra("isCloning",1)
+                ).putExtra("isCloning", 1)
             )
         }
         dialogue.ll_saved.setOnClickListener {

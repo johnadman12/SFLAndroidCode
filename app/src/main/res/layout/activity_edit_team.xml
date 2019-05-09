@@ -246,8 +246,8 @@
 
     <RelativeLayout
             android:id="@+id/relFieldView"
-            android:layout_width="@dimen/_65sdp"
-            android:layout_height="@dimen/_65sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/_65sdp"
             android:background="@drawable/circle_dark_blue"
@@ -255,10 +255,10 @@
             android:layout_marginLeft="@dimen/_10sdp">
         <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgfield"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 app:srcCompat="@mipmap/fieldview"
         />
 
@@ -268,7 +268,7 @@
                 android:text="@string/field_view"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_10ssp"
                 android:layout_centerInParent="true"
                 android:layout_below="@+id/imgfield"
                 android:textColor="@color/textColorOffWhite"

@@ -81,7 +81,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                            postData1.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
+                            postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
 
@@ -140,6 +140,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         )
                             .putExtra("Stockid", item.stockid)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_VIEW_TEAM
                     )
                 }
@@ -180,7 +181,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     try {
                         postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                         postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                        postData.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
+                        postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
 
                     } catch (e: Exception) {
 
@@ -235,8 +236,10 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        finish()
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        finish()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }

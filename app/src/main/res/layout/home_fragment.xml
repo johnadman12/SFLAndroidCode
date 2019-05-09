@@ -178,7 +178,7 @@
                 android:gravity="left"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +223,7 @@
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout_features"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
@@ -233,14 +233,13 @@
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"
                     android:gravity="left"
-                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:textSize="@dimen/_14ssp"
                     android:layout_width="match_parent"
                     android:textColor="@color/white"
                     android:text="@string/tranning_contest"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tv_tranning_contest"
                     android:visibility="gone"/>
             <!--<androidx.recyclerview.widget.RecyclerView
@@ -265,7 +264,7 @@
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout_training"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
@@ -283,11 +282,10 @@
                     android:textColor="@color/white"
                     android:text="@string/latest_new"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/tv_latest_new"
                     android:visibility="gone"/>
             <androidx.recyclerview.widget.RecyclerView
-                    android:paddingTop="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_2sdp"
                     android:id="@+id/recyclerView_latest_new"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

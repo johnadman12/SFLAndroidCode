@@ -30,7 +30,6 @@ class ActivitySectorFilter : BaseActivity() {
         setContentView(R.layout.activity_sector_listing)
         StockConstant.ACTIVITIES.add(this)
         sectorSelected = ArrayList()
-        img_btn_close.visibility = View.VISIBLE
         img_btn_back.setOnClickListener {
             finish()
         }

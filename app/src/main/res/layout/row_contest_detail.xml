@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="@dimen/_240sdp">
+              android:layout_height="@dimen/_220sdp">
 
     <androidx.cardview.widget.CardView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -42,7 +42,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="3"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_gravity="center"
                     android:gravity="center">
                 <LinearLayout
@@ -69,7 +68,6 @@
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="0dp"
-                                android:text="$50"
                                 android:textStyle="bold"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
@@ -98,7 +96,6 @@
                             android:layout_width="wrap_content"
                             android:textColor="@color/colorSecondary"
                             android:layout_height="wrap_content"
-                            android:text="$ 100000"
                             android:textStyle="bold"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleNormal"
@@ -132,7 +129,6 @@
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/black"
                                 android:layout_height="0dp"
-                                android:text="$50"
                                 android:layout_marginLeft="@dimen/_2sdp"
                                 android:layout_marginRight="@dimen/_2sdp"
                                 android:id="@+id/tvTimeLeft"
@@ -156,8 +152,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:weightSum="2">
                 <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -176,7 +171,7 @@
                             android:layout_width="wrap_content"
                             android:textColor="@color/textColorLightBlack"
                             android:layout_height="wrap_content"
-                            android:text="8631/50000"/>
+                           />
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleNormal"
                             android:layout_gravity="center"
@@ -241,7 +236,6 @@
                                 android:id="@+id/ivStock"
                                 android:layout_width="@dimen/_25sdp"
                                 android:layout_height="@dimen/_25sdp"
-                                android:src="@mipmap/home_icon"
                                 android:layout_gravity="center"
                                 android:background="@null"/>
                         <androidx.appcompat.widget.AppCompatTextView
@@ -254,7 +248,6 @@
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/textColorLightBlack"
                                 android:layout_height="wrap_content"
-                                android:text="@string/nasdaq"
                                 android:layout_marginTop="@dimen/_2sdp"/>
                     </LinearLayout>
 
@@ -325,7 +318,6 @@
                             android:layout_width="wrap_content"
                             android:textColor="@color/white"
                             android:layout_height="wrap_content"
-                            android:text="25 Feb 05:00 PM"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_gravity="center"/>
 
@@ -358,7 +350,6 @@
                             android:layout_width="wrap_content"
                             android:textColor="@color/white"
                             android:layout_height="wrap_content"
-                            android:text="350000"
                             android:id="@+id/tvWinnersTotal"
                             android:layout_marginLeft="@dimen/_5sdp"/>
                     <androidx.appcompat.widget.AppCompatImageButton
@@ -367,7 +358,7 @@
                             android:src="@mipmap/dropdown"
                             android:background="@null"
                             android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_8sdp"
                             android:layout_marginLeft="@dimen/_5sdp"/>
 
 

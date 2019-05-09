@@ -26,17 +26,17 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     style="@style/TextStyleSemiBold"
+                    android:id="@+id/tvContestRules"
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:text="Contest Rules"
             />
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_rules"
                     android:layout_width="match_parent"
-
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -47,9 +47,10 @@
                     style="@style/TextStyleSemiBold"
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_8sdp"
                     android:text="Teams"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:id="@+id/tvTeams"
+                    android:layout_marginLeft="@dimen/_5sdp"
             />
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_score"

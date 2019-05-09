@@ -113,5 +113,10 @@ public class ContestDetail extends BasePojo {
         @SerializedName("image")
         @Expose
         public String image;
+
+        @SerializedName("stock")
+        @Expose
+        public ArrayList<StockTeamPojo.Stock>stock = null;
+
     }
 }

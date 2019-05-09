@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:gravity="center_vertical"
               android:padding="@dimen/_2sdp"
+              android:gravity="center"
               android:layout_height="wrap_content">
-
+    <!--@drawable/srh_cate_checkbox_select-->
     <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
-            android:src="@drawable/srh_cate_checkbox_select"/>
+            android:layout_gravity="center"
+            android:src="@mipmap/srh_cate_checkbox_select"/>
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvRule"
             android:layout_width="match_parent"
@@ -17,7 +18,7 @@
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/_2sdp"
             style="@style/TextStyleNormal"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_12ssp"
             android:padding="@dimen/_2sdp"
             android:text="Contest Rules Lorem ipsum"/>
 </LinearLayout>

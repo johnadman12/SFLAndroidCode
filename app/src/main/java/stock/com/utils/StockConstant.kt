@@ -10,6 +10,7 @@ object StockConstant{
     val CONTESTID = "contestid"
     val DEVICE_TOKEN = ""
     val STOCKLIST = "stocklist"
+    val SELECTEDSTOCK = "selectedstock"
     val TEAMID = "teamid"
 
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"

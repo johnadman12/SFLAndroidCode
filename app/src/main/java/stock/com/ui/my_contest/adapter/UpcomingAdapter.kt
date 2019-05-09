@@ -50,7 +50,6 @@ class UpcomingAdapter(
                     contest.get(position).contestSize
         )
 
-        contest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))
         if (!contest.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -14,7 +15,9 @@ import stock.com.R
 import stock.com.ui.pojo.StockTeamPojo
 
 class EditTeamAdapter(
-    val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
+    val mContext: Context,
+    val activity: ActivityEditTeam,
+    val mContest: MutableList<StockTeamPojo.Stock>,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<EditTeamAdapter.FeatureListHolder>(), Filterable {
@@ -58,10 +61,14 @@ class EditTeamAdapter(
 
 
         holder.itemView.img_add.setOnClickListener {
-            holder.itemView.llremoveStock.visibility = View.VISIBLE
-            holder.itemView.img_add.visibility = View.GONE
-            searchList!!.get(position).addedToList = 1
-            onItemCheckListener.onItemCheck(searchList!!.get(position));
+            if (activity.getTeamText() > 11) {
+                Toast.makeText(mContext, "You have selected maximum number of stocks for your team.", 10000).show()
+            } else {
+                holder.itemView.llremoveStock.visibility = View.VISIBLE
+                holder.itemView.img_add.visibility = View.GONE
+                searchList!!.get(position).addedToList = 1
+                onItemCheckListener.onItemCheck(searchList!!.get(position));
+            }
         }
 
         holder.itemView.llremoveStock.setOnClickListener {
@@ -75,8 +82,7 @@ class EditTeamAdapter(
         if (searchList!!.get(position).addedToList == 1) {
             holder.itemView.llremoveStock.visibility = View.VISIBLE
             holder.itemView.img_add.visibility = View.GONE
-        }
-        else if (searchList!!.get(position).addedToList == 0) {
+        } else if (searchList!!.get(position).addedToList == 0) {
             holder.itemView.llremoveStock.visibility = View.GONE
             holder.itemView.img_add.visibility = View.VISIBLE
         }

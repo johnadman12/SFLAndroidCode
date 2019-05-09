@@ -128,6 +128,7 @@ class LobbyFragment : BaseFragment() {
         recyclerView_contest!!.layoutManager = llm
         recyclerView_contest?.itemAnimator = DefaultItemAnimator()
         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -63,7 +63,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                            postData1.addProperty("stock_status", stockSelectedItems!!.get(i).stock_type);
+                            postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
 
@@ -79,7 +79,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityEditTeam, TeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.STOCKLIST, list)
+                        .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
                 )
             }
             R.id.ll_watchlist -> {
@@ -124,9 +124,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
 
-        setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = EditTeamAdapter(
-            this, list as ArrayList,
+            this, this@ActivityEditTeam, list as ArrayList,
             object : EditTeamAdapter.OnItemCheckListener {
                 override fun onItemClick(item: StockTeamPojo.Stock) {
                     startActivityForResult(
@@ -136,20 +135,26 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         )
                             .putExtra("Stockid", item.stockid)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_EDIT_TEAM
                     )
                 }
 
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.remove(item);
+
+                    for (j in 0 until stockSelectedItems!!.size) {
+                        if(item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
+                            stockSelectedItems!!.removeAt(j);
+                            break;
+                        }
+                    }
                     setTeamText(stockSelectedItems!!.size.toString())
-                    Log.e("stocklistremove", stockSelectedItems.toString())
                 }
 
                 override fun onItemCheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.add(item);
+                    stockSelectedItems!!.add(item);
                     setTeamText(stockSelectedItems!!.size.toString())
-                    Log.e("stocklist", stockSelectedItems.toString())
+                    Log.e("stocklist0000", stockSelectedItems!!.get(0).stockid.toString())
                 }
             });
 
@@ -175,6 +180,10 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
 
     }
 
+    fun getTeamText(): Int {
+        return stockSelectedItems!!.size.toInt()
+    }
+
     fun getTeamlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -189,8 +198,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!);
@@ -207,6 +214,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         }
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(stockSelectedItems!!.size.toString())
+
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -275,8 +284,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
                 }
             }
@@ -314,8 +321,6 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)

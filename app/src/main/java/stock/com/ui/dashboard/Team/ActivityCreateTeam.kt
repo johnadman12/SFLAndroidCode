@@ -145,6 +145,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = StockTeamAdapter(
             this, list as ArrayList,
+            this@ActivityCreateTeam,
             object : StockTeamAdapter.OnItemCheckListener {
                 override fun onItemClick(item: StockTeamPojo.Stock) {
                     startActivityForResult(
@@ -154,6 +155,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         )
                             .putExtra("Stockid", item.stockid)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
                     )
 
@@ -168,6 +170,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 override fun onItemCheck(item: StockTeamPojo.Stock) {
                     stockSelectedItems?.add(item);
                     setTeamText(stockSelectedItems!!.size.toString())
+
                     Log.e("stocklist", stockSelectedItems.toString())
                 }
             });
@@ -252,11 +255,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
-                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!);
@@ -273,7 +273,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         }
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
+                        d.dismiss()
                     } else if (response.body()!!.status == "2") {
+                        d.dismiss()
                         appLogout()
                     }
                 } else {
@@ -314,8 +316,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!)
@@ -453,6 +453,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             tvViewteam.isEnabled = false
             tvViewteam.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.grey_fill_button))
         }
+
+    }
+
+    fun getTeamText(): Int {
+        return stockSelectedItems!!.size.toInt()
     }
 
     fun setWizardAdapter() {
@@ -468,6 +473,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         )
                             .putExtra("Stockid", item.stockid)
                             .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
                     )
                 }
@@ -486,6 +492,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             });
     }
 
+    @SuppressLint("WrongConstant")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
@@ -525,22 +532,26 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
         if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-                list!!.clear()
-                list!!.addAll(data.getParcelableArrayListExtra("list"))
-                rv_Players!!.adapter!!.notifyDataSetChanged()
+               /* if (getTeamText() > 12) {
+                    Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                } else {*/
 
-                setTeamText(list!!.size.toString())
+                    list!!.clear()
+                    list!!.addAll(data.getParcelableArrayListExtra("list"))
+                    rv_Players!!.adapter!!.notifyDataSetChanged()
+                    setTeamText(stockSelectedItems!!.size.toString())
+//                }
             }
         }
 
         if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-                if(data.getStringExtra("flag").equals("1")) {
+                if (data.getStringExtra("flag").equals("1")) {
                     stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
                     getTeamAgainlist()
-                }else if(data.getStringExtra("flag").equals("2")){
+                } else if (data.getStringExtra("flag").equals("2")) {
                     var intent = Intent();
-                    setResult(Activity.RESULT_OK,intent);
+                    setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
 
@@ -548,12 +559,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         }
         if (requestCode == 1009) {
             if (resultCode == RESULT_OK && data != null) {
-                sector= data.getStringExtra("sectorlist")
+                sector = data.getStringExtra("sectorlist")
                 getTeamlist()
 
             }
         }
     }
+
 
 }
 

@@ -41,8 +41,6 @@ class ActivitySortTeam : BaseActivity() {
     }
 
     private fun initViews() {
-        img_btn_close.visibility = View.VISIBLE
-
         img_btn_close.setOnClickListener {
             finish();
         }

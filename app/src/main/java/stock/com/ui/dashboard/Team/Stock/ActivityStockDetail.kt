@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.Team.Stock
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -32,6 +33,7 @@ import stock.com.utils.StockDialog
 
 class ActivityStockDetail : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
+    private var selectedItems: Int=0
     private var fragment: Fragment? = null;
     var stockId: Int = 0
     var position: Int = -1
@@ -44,6 +46,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         if (intent != null) {
             stockId = intent.getIntExtra("Stockid", 0);
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
         }
 
         if (list!!.size > 0)
@@ -71,6 +74,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
     }
 
 
+    @SuppressLint("WrongConstant")
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.img_btn_back -> {
@@ -85,13 +89,18 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     //show green button
                     AppDelegate.showAlert(this, "already added to stock")
                 } else if (list!!.get(position).getAddedToList() == 0) {
-                    list!!.get(position).addedToList = 1
-                    //show red button
-                    AppDelegate.showAlert(this, "added to stock")
-                    var intent = Intent();
-                    intent.putExtra("list", list)
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
+                    if (selectedItems >= 12) {
+                        Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                    } else {
+                        list!!.get(position).addedToList = 1
+                        //show red button
+                        AppDelegate.showAlert(this, "added to stock")
+                        var intent = Intent();
+                        intent.putExtra("list", list)
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
+
+                    }
                 }
 
                 Log.e("updatedlist", list!!.get(position).addedToList.toString())

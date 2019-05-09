@@ -70,20 +70,20 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         if (intent != null) {
-            contestid = intent.getIntExtra("contestid", 0)
+            contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
-        img_btn_close.visibility = View.VISIBLE
         getContestDetail()
+        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         ll_Circular.setOnClickListener {
-                        showJoinTeamDialogue()
+            showJoinTeamDialogue()
 
             // activity.setFragmentForActivity()
-           /* var intent = Intent();
-            setResult(Activity.RESULT_OK);
-            finish();*/
+            /* var intent = Intent();
+             setResult(Activity.RESULT_OK);
+             finish();*/
 
         }
 
@@ -102,7 +102,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, scores)
+        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1 )
     }
 
     fun getContestDetail() {
@@ -120,8 +120,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
+                        if (response.body()!!.scores.size == 0)
+                            tvTeams.setText("0 Teams")
+                        else
+                            tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
+                        if (response.body()!!.rules.size == 0)
+                            tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
                         setScoreAdapter(response.body()!!.scores)
                         setData(response.body()!!.contest.get(0))
@@ -154,7 +158,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
-        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
             .into(ivStock)
         iv_info.setOnClickListener {
@@ -260,17 +263,17 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         dialogue.ll_new.setOnClickListener {
             if (dialogue.isShowing)
                 dialogue.dismiss()
-           /* startActivity(
-                Intent(this, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID, exchangeid
-                ).putExtra("isCloning", 1)
-            )*/
+            /* startActivity(
+                 Intent(this, ActivityCreateTeam::class.java).putExtra(
+                     StockConstant.EXCHANGEID, exchangeid
+                 ).putExtra("isCloning", 1)
+             )*/
 
-            var intent=Intent(this, ActivityCreateTeam::class.java)
+            var intent = Intent(this, ActivityCreateTeam::class.java)
             intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
             intent.putExtra(StockConstant.CONTESTID, contestid)
             intent.putExtra("isCloning", 1)
-            startActivityForResult(intent,405);
+            startActivityForResult(intent, 405);
         }
         dialogue.ll_saved.setOnClickListener {
             if (dialogue.isShowing)
@@ -287,7 +290,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private val TIME_TEXT_ADAPTER =
         CircularProgressIndicator.ProgressTextAdapter { time ->
-            val sb = ""
+            val sb = " "
             sb
         }
 
@@ -297,7 +300,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         if (requestCode == 405) {
             if (resultCode == RESULT_OK && data != null) {
                 var intent = Intent();
-                setResult(Activity.RESULT_OK,intent);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         }
