@@ -39,7 +39,7 @@ class MarketListAdapter(
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val currentItem: FilterPojo.Market = mContest.get(position);
-        holder.itemView.tvFlagName.setText(mContest.get(position).name)
+        holder.itemView.checkCountry.setText(mContest.get(position).name)
         Glide.with(mContext).load(mContest.get(position).imageUrl).into(holder.itemView.ivFlag)
 
         holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);

@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_my_team.view.*
 import stock.com.R
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityEditTeam
 import stock.com.ui.pojo.MyTeamsPojo
@@ -22,7 +24,7 @@ import java.util.*
 class MyTeamAdapter(
     val mContext: Context,
     val myteam: MutableList<MyTeamsPojo.Myteam>,
-    val  activityMyTeam: ActivityMyTeam
+    val activityMyTeam: ActivityMyTeam
 ) :
     RecyclerView.Adapter<MyTeamAdapter.FeatureListHolder>() {
 
@@ -50,14 +52,14 @@ class MyTeamAdapter(
         }
 
         holder.itemView.relClone.setOnClickListener {
-           /* mContext.startActivity(
-                Intent(mContext, ActivityCreateTeam::class.java)
-                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                    .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
-                    .putExtra("isCloning",0)
-                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
-            )*/
+            /* mContext.startActivity(
+                 Intent(mContext, ActivityCreateTeam::class.java)
+                     .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                     .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                     .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                     .putExtra("isCloning",0)
+                     .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+             )*/
             activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
 
         }
@@ -107,7 +109,10 @@ class MyTeamAdapter(
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "share your team");
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "Join [DFX], Fantasy Stock League Application [ " + ApiConstant.BASE_URL + " ]"
+        );
         mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.send_to)))
     }
 }

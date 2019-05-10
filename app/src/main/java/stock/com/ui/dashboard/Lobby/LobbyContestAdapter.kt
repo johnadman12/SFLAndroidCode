@@ -71,12 +71,29 @@ class LobbyContestAdapter(
             val diff = thatDay.timeInMillis - today.timeInMillis
             mContest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
-                holder.itemView.tvTimeLeft.setText("0:0:0: Left")
+                holder.itemView.tvTimeLeft.setText("00H:00M:00S")
                 holder.itemView.ll_Circular.isEnabled = false
+                holder.itemView.txtjoin.setTextSize(20.00f)
                 holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))
                 holder.itemView.circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(mContext, R.color.GrayColor)
-            } else {
+            } else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
+            }else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()

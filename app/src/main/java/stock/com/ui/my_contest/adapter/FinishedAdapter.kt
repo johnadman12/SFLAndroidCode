@@ -43,12 +43,10 @@ class FinishedAdapter(
         holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
-        var sports: Double =
-            (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
-        holder.itemView.tvSprortsLeft.setText(
-            contest.get(position).contest_teamremaining.toString() + "/" +
-                    contest.get(position).contestSize
-        )
+        var sports: Int =
+            contest.get(position).contestSize -   contest.get(position).contest_teamremaining
+
+        holder.itemView.tvSprortsLeft.setText(sports.toString() + " Participants")
         contest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvRank.setText(contest.get(position).rank)
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))

@@ -41,7 +41,7 @@ class CountryListAdapter(
 
     override fun onBindViewHolder(holder: Countryclass, position: Int) {
         val currentItem: Country.CountryPojo = mContest.country!!.get(position);
-        holder.itemView.tvFlagName.setText(currentItem.name)
+        holder.itemView.checkCountry.setText(currentItem.name)
         Glide.with(mContext).load(currentItem.flagUrl6464).into(holder.itemView.ivFlag)
 
         holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);

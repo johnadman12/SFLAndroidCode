@@ -16,6 +16,7 @@ object StockConstant{
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"
 
     val RESULT_CODE_SORT=102;
+    val RESULT_CODE_FILTER=103;
     val RESULT_CODE_FILTER_WATCH=1001;
     val RESULT_CODE_SORT_WATCH=1002;
     val RESULT_CODE_SORT_CREATE_TEAM=1003;

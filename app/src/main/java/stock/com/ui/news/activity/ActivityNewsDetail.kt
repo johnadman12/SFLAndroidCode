@@ -3,6 +3,7 @@ package stock.com.ui.news.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -45,7 +46,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         if (intent != null) {
-            newsId = intent.getIntExtra("newsId",0)
+            newsId = intent.getIntExtra("newsId", 0)
         }
         img_btn_back.setOnClickListener(this)
         ivShare.setOnClickListener(this)
@@ -96,7 +97,11 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
             tvNewsEditor.setText(news.channel)
             tvTime.setText(parseDateToddMMyyyy(news.newstime))
             tvDescription.setText(news.description)
-            Glide.with(this).load(news.image).into(ivNews)
+
+            if (TextUtils.isEmpty(news.image))
+                ivNews.visibility = View.VISIBLE
+            else
+                Glide.with(this).load(news.image).into(ivNews)
             Glide.with(this).load(news.channel_image).into(ivEditor)
         }
     }

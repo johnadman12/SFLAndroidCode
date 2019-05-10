@@ -78,8 +78,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         getContestDetail()
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         ll_Circular.setOnClickListener {
-            showJoinTeamDialogue()
-
+            //            showJoinTeamDialogue()
+            var intent = Intent(this, ActivityCreateTeam::class.java)
+            intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+            intent.putExtra(StockConstant.CONTESTID, contestid)
+            intent.putExtra("isCloning", 1)
+            startActivityForResult(intent, 405);
             // activity.setFragmentForActivity()
             /* var intent = Intent();
              setResult(Activity.RESULT_OK);
@@ -102,7 +106,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1 )
+        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1)
     }
 
     fun getContestDetail() {
@@ -121,9 +125,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (response.body()!!.scores.size == 0)
-                            tvTeams.setText("0 Teams")
+                            tvTeams.setText("0 Team")
+                        else if (response.body()!!.scores.size == 1)
+                            tvTeams.setText("1 Team")
                         else
                             tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
+
                         if (response.body()!!.rules.size == 0)
                             tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
@@ -178,11 +185,28 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
-                tvTimeLeft.setText("0:0:0: Left")
+                tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
+                txtjoin.setTextSize(20.00f)
                 txtjoin.setText(getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+            }else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {

@@ -141,9 +141,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 }
 
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
-
                     for (j in 0 until stockSelectedItems!!.size) {
-                        if(item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
+                        if (item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
                             stockSelectedItems!!.removeAt(j);
                             break;
                         }
@@ -293,7 +292,13 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 list!!.clear()
                 list!!.addAll(data.getParcelableArrayListExtra("list"))
                 rv_Players!!.adapter!!.notifyDataSetChanged()
-                setTeamText(list!!.size.toString())
+                stockSelectedItems!!.clear();
+                for (i in 0 until list!!.size) {
+                    if (list!!.get(i).addedToList == 1) {
+                        stockSelectedItems!!.add(list!!.get(i))
+                    }
+                }
+                setTeamText(stockSelectedItems!!.size.toString())
             }
         }
     }
@@ -322,8 +327,10 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)
+                        finish()
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityEditTeam, response.body()!!.message)
+                        finish()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }

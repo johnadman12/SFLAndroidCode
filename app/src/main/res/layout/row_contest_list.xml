@@ -3,29 +3,28 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:clickable="false">
+              android:background="@color/white">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:clickable="false"
-                  android:padding="@dimen/_5sdp">
+                  android:id="@+id/llfilter">
         <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkboxContest"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:checked="false"
-                android:gravity="center"
+                android:textColor="@color/textColorGray"
+                style="@style/TextStyleNormal"
                 android:buttonTint="@color/colorPrimary"
-                android:padding="@dimen/_2sdp"/>
+                android:padding="@dimen/_8sdp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:id="@+id/tvContestName"
+                android:visibility="gone"
                 style="@style/TextStyleNormal"
-                android:clickable="false"
                 android:textColor="@color/textColorGray"/>
     </LinearLayout>
     <View android:layout_width="match_parent"

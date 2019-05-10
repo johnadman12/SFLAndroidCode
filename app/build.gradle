@@ -110,7 +110,7 @@ dependencies {
 
     //progress bar
     implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0'
-
+//    implementation 'com.agrawalsuneet.androidlibs:loaderspack:1.2.3'
     //rangebar
     implementation 'com.crystal:crystalrangeseekbar:1.1.3'
     implementation 'com.google.code.gson:gson:2.8.5'

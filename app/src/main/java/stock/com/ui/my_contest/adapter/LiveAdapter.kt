@@ -42,13 +42,11 @@ class LiveAdapter(
         holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
-        var sports: Double =
-            (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
-        holder.itemView.tvSprortsLeft.setText(
-            contest.get(position).contest_teamremaining.toString() + "/" +
-                    contest.get(position).contestSize
-        )
-        contest.get(position).setCalculatePosition(sports.toInt())
+        var sports: Int =
+            contest.get(position).contestSize - contest.get(position).contest_teamremaining
+
+        holder.itemView.tvSprortsLeft.setText(sports.toString() + " Participants")
+
         holder.itemView.tvRank.setText(contest.get(position).rank)
 
         if (!contest.get(position).scheduleEnd.equals(" ")) {
@@ -62,13 +60,28 @@ class LiveAdapter(
             val diff = thatDay.timeInMillis - today.timeInMillis
             contest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
-                holder.itemView.tvTime.setText("0:0:0: Left")
+                holder.itemView.tvTime.setText("00H:00M:00S")
+            } else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
-
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
                         val minutes = diffSec / 60 % 60

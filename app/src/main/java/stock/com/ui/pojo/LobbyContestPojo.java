@@ -50,6 +50,17 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("winning_amount")
         @Expose
         public String winningAmount;
+
+        public String winningAmount_temp="";
+
+        public String getWinningAmount_temp() {
+            return winningAmount_temp;
+        }
+
+        public void setWinningAmount_temp(String winningAmount_temp) {
+            this.winningAmount_temp = winningAmount_temp;
+        }
+
         @SerializedName("contestid")
         @Expose
         public int contestid;

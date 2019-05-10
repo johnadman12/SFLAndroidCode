@@ -10,7 +10,6 @@ public class ViewAnimationUtils {
     public static void expand(final View v) {
         v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
-
         v.getLayoutParams().height = 10;
         v.setVisibility(View.VISIBLE);
         Animation a = new Animation() {

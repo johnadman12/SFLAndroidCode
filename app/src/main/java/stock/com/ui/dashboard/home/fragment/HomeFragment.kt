@@ -66,19 +66,19 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
         if (!isAdded)
             return
-      /*  viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!, listImage)
-        viewPager_Banner.setClipToPadding(false);
-        viewPager_Banner.setPageMargin(10);
-        viewPager_Banner.startAutoScroll()
-        viewPager_Banner.isCycle = true
+        /*  viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!, listImage)
+          viewPager_Banner.setClipToPadding(false);
+          viewPager_Banner.setPageMargin(10);
+          viewPager_Banner.startAutoScroll()
+          viewPager_Banner.isCycle = true
 
-        viewPager_Banner.setClipToPadding(false);
-        viewPager_Banner.setPadding(40, 0, 40, 0);
-        viewPager_Banner.setPageMargin(20);
+          viewPager_Banner.setClipToPadding(false);
+          viewPager_Banner.setPadding(40, 0, 40, 0);
+          viewPager_Banner.setPageMargin(20);
 
-        tab_layout.visibility = VISIBLE;
-        tab_layout.setupWithViewPager(viewPager_Banner);*/
-        hicvp.adapter=HorizontalPagerAdapter(context,listImage!!)
+          tab_layout.visibility = VISIBLE;
+          tab_layout.setupWithViewPager(viewPager_Banner);*/
+        hicvp.adapter = HorizontalPagerAdapter(context, listImage!!)
     }
 
 
@@ -121,7 +121,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
-         viewPager_training.visibility = View.VISIBLE
+        viewPager_training.visibility = View.VISIBLE
         viewPager_training.setClipToPadding(false);
         viewPager_training.setPadding(30, 0, 30, 0);
         viewPager_training.setPageMargin(10);
@@ -179,9 +179,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                            setHomeBannerAdapter(response.body()!!.banner!!)
-                        }, 100)
+//                        progressBar.visibility = GONE
+                        setHomeBannerAdapter(response.body()!!.banner!!)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
                         setStockNameAdapter(response.body()!!.exchange!!)
                         getTrainingContentlist()
@@ -204,7 +203,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
         })
     }
-
 
 
     fun getTrainingContentlist() {

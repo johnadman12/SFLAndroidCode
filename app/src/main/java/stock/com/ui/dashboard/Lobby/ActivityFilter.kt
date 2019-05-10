@@ -43,6 +43,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var marketSelectedItems: ArrayList<String>? = null
     private var countrySelectedItems: ArrayList<String>? = null
     var contestList: List<LobbyContestPojo.Contest>? = null
+    var maxprice: Int = 0
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -66,6 +67,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_apply -> {
+                if (maxprice.toString().equals(tvMax.text.toString())) {
+                    maxprice = 0
+                }
                 setFilters()
             }
         }
@@ -90,7 +94,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 android.text.TextUtils.join(",", marketSelectedItems),
                 android.text.TextUtils.join(",", countrySelectedItems),
                 tvMin.text.toString(),
-                tvMax.text.toString()
+                maxprice.toString()
             )
         call.enqueue(object : Callback<LobbyContestPojo> {
 
@@ -107,8 +111,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
 
                         if (testing != null && testing.size != 0) {
                             val resultIntent = Intent()
-                            resultIntent.putExtra(StockConstant.CONTEST, testing)
-//                        resultIntent.putExtras(bundle)
+                            resultIntent.putExtra("contestlist", testing)
                             setResult(Activity.RESULT_OK, resultIntent)
                             finish()
                         } else if (response.body()!!.status == "2") {
@@ -157,6 +160,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
             tvMin.setText(minValue.toString())
             tvMax.setText(maxValue.toString())
+            maxprice = maxValue.toInt()
+
         })
         rangeSeekbar1.setOnRangeSeekbarFinalValueListener({ minValue, maxValue ->
             Log.d(
@@ -183,8 +188,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         setMarketAdapter(response.body()!!.market)
                         setContestAdapter(response.body()!!.category!!)
                         setRangebar(response.body()!!.entryFees)
-//                        setCountryAdapter(topic)
-//                        setCountryAdapter(response.body()!!.country)
                     }
                 } else {
                     Toast.makeText(
@@ -254,6 +257,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             tvMin.setText(entryFees.get(0).minValue!!.toString())
 //            tvMin.setText("test")
             tvMax.setText(entryFees.get(0).maxValue!!.toString())
+            maxprice = entryFees.get(0).maxValue!!.toInt()
         }
     }
 
@@ -351,5 +355,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             header_plus_icon.setImageResource(R.mipmap.arrowright)
             range.visibility = GONE
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

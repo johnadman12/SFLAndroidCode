@@ -218,6 +218,7 @@
                     android:layout_height="wrap_content"
                     android:text="Team Members "
                     android:padding="@dimen/_2sdp"
+                    android:maxLines="1"
                     android:textColor="@color/textColorOffWhite"
                     style="@style/TextStyleNormal"/>
         </LinearLayout>
@@ -226,11 +227,13 @@
                 android:layout_height="@dimen/_30sdp"
                 android:text="   My Team   "
                 android:gravity="center"
+                android:id="@+id/tvMyTeam"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_gravity="right|center_vertical"
                 android:padding="@dimen/_2sdp"
                 android:textSize="@dimen/_14ssp"
-                android:visibility="gone"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:visibility="visible"
                 android:background="@drawable/white_fill_button"
                 android:textColor="@color/black"
                 style="@style/TextStyleNormal"/>

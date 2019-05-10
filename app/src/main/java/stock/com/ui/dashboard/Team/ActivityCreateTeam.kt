@@ -34,6 +34,7 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import java.util.*
 
@@ -54,6 +55,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
+            }
+            R.id.tvMyTeam -> {
+                startActivity(Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java))
             }
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
@@ -127,6 +131,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         ll_watchlist.setOnClickListener(this)
         ll_filter.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
+        tvMyTeam.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
@@ -162,9 +167,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 }
 
                 override fun onItemUncheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.remove(item);
+                    for (j in 0 until stockSelectedItems!!.size) {
+                        if (item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
+                            stockSelectedItems!!.removeAt(j);
+                            break;
+                        }
+                    }
                     setTeamText(stockSelectedItems!!.size.toString())
-                    Log.e("stocklistremove", stockSelectedItems.toString())
                 }
 
                 override fun onItemCheck(item: StockTeamPojo.Stock) {
@@ -336,7 +345,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                         stockSelectedItems = stockRemovedItems;
                         setTeamText(stockSelectedItems!!.size.toString())
+
                     } else if (response.body()!!.status == "2") {
+                        d.dismiss()
                         appLogout()
                     }
                 } else {
@@ -406,8 +417,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         flag = true
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         list!!.clear()
                         list!!.addAll(response.body()!!.stock!!);
                         setTeamText(list!!.size.toString())
@@ -532,15 +541,20 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
         if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-               /* if (getTeamText() > 12) {
-                    Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
-                } else {*/
+                /* if (getTeamText() > 12) {
+                     Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                 } else {*/
 
-                    list!!.clear()
-                    list!!.addAll(data.getParcelableArrayListExtra("list"))
-                    rv_Players!!.adapter!!.notifyDataSetChanged()
-                    setTeamText(stockSelectedItems!!.size.toString())
-//                }
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+                stockSelectedItems!!.clear();
+                for (i in 0 until list!!.size) {
+                    if (list!!.get(i).addedToList == 1) {
+                        stockSelectedItems!!.add(list!!.get(i))
+                    }
+                }
+                setTeamText(stockSelectedItems!!.size.toString())
             }
         }
 

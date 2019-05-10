@@ -184,6 +184,7 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textSize="@dimen/_10sdp"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"

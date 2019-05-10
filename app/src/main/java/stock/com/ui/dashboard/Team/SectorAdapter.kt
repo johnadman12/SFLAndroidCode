@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_contest_list.view.*
 import stock.com.R
@@ -38,8 +39,7 @@ class SectorAdapter(
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val currentItem: SectorListPojo.Sector = mContest.get(position);
-        holder.itemView.tvContestName.setText(mContest.get(position).sector)
-
+        holder.itemView.checkboxContest.setText(mContest.get(position).sector)
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
 
         holder.itemView.checkboxContest.setOnClickListener {
@@ -51,6 +51,7 @@ class SectorAdapter(
                 checkedHolder!![position] = false;
             }
         }
+
 
     }
 

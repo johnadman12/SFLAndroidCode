@@ -92,11 +92,28 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
-                tvTimeLeft.setText("0:0:0: Left")
+                tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
+                txtjoin.setTextSize(20.00f)
                 txtjoin.setText(context.getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
+            }else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {

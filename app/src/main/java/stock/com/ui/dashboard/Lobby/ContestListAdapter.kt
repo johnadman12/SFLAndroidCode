@@ -40,7 +40,7 @@ class ContestListAdapter(
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val currentItem: FilterPojo.Category = mContest.get(position);
-        holder.itemView.tvContestName.setText(mContest.get(position).name)
+        holder.itemView.checkboxContest.setText(mContest.get(position).name)
 
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
 

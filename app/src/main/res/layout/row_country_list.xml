@@ -14,6 +14,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:id="@+id/ivFlag"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -23,13 +24,18 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:id="@+id/tvFlagName"
                 android:clickable="false"
+                android:visibility="gone"
                 style="@style/TextStyleNormal"
                 android:textColor="@color/textColorGray"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/colorPrimary"
+                android:button="@null"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/textColorGray"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:id="@+id/checkCountry"
         />
     </LinearLayout>

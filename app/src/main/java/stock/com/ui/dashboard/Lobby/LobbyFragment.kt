@@ -25,18 +25,16 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
+import stock.com.utils.StockConstant.RESULT_CODE_FILTER
 import stock.com.utils.StockDialog
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LobbyFragment : BaseFragment() {
 
-    var list: List<LobbyContestPojo.Contest>? = null;
 
-    val RESULT_DATA = 1001
-
-
-    var contest: List<LobbyContestPojo.Contest>? = null;
+    var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,20 +43,17 @@ class LobbyFragment : BaseFragment() {
 
     private fun initViews() {
         contest = ArrayList();
-        list = ArrayList();
         getContestlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
             val intent = Intent(context, ActivityFilter::class.java)
-            startActivityForResult(intent, RESULT_DATA)
+            startActivityForResult(intent, RESULT_CODE_FILTER)
         }
 
-        ll_sort.setOnClickListener { startActivity(Intent(context, ActivitySort::class.java)) }
         ll_codejoin.setOnClickListener { showViewContestDialogue() }
         ll_createContest.setOnClickListener {
             startActivity(Intent(activity, ActivityCreateContest::class.java))
         }
-        ll_filter.setOnClickListener { startActivity(Intent(context, ActivityFilter::class.java)) }
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
         }
@@ -100,7 +95,7 @@ class LobbyFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
-                        list = response.body()!!.contest!!;
+                        contest = response.body()!!.contest!!;
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -133,31 +128,40 @@ class LobbyFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+
+
         if (requestCode == StockConstant.RESULT_CODE_SORT) {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Entry")) {
-                    var sortedList = list!!.sortedWith(compareBy({ it.fees }))
+                    var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
-                } else if (data.getStringExtra("flag").equals("time")) {
-                    var sortedList = list!!.sortedWith(compareBy { it.getDate() })
+                }
+                else if (data.getStringExtra("flag").equals("time")) {
+                    var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
-                } else if (data.getStringExtra("flag").equals("price")) {
-                    val sortedList = list!!.sortedWith(compareBy({ it.winningAmount }))
-                    for (obj in sortedList) {
-                        Log.d("sdadada---", "--" + obj.winningAmount)
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                    }
+                }
+                else if (data.getStringExtra("flag").equals("price")) {
+
+
+                   //  val sortedList = contest!!.sortedWith(compareBy({ it.winningAmount}));
+                    //val sortedList1 = contest!!.sortedWith(compareBy({ it.winningAmount.replace("$","") }));
+                    //val sortedList1 = sortedList!!.sortedWith(compareBy({ it.winningAmount.replace(",","") }));
+                    recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+                    recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+
+                    //val sortedList = contest!!.sortedWith(compareBy({ it.winningAmount.substring(0, 1) })).asReversed();
+
                 } else if (data.getStringExtra("flag").equals("position")) {
-                    val sortedList = list!!.sortedWith(compareBy({ it.getCalculatePosition() }))
+                    val sortedList = contest!!.sortedWith(compareBy({ it.getCalculatePosition() }))
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.calculatePosition)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
@@ -166,10 +170,16 @@ class LobbyFragment : BaseFragment() {
                 }
             }
 
-        } else if (requestCode == 1001) {
-            if (data != null && resultCode == RESULT_OK) {
+        } else if (requestCode == RESULT_CODE_FILTER) {
+
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                /*contest!!.clear()
                 var testing = data.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
+                Log.d("sdadada---", "--" + testing.size)
                 recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
+                recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+            */
+                recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();
             }
         }

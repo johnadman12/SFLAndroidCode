@@ -89,7 +89,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this,getFromPrefsString(StockConstant.USERID)!!.toInt(),  scores, 0)
+        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0)
     }
 
     fun getContestDetail() {
@@ -110,7 +110,9 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         if (response.body()!!.scores.size == 0)
-                            tvTeams.setText("0 Teams")
+                            tvTeams.setText("0 Team")
+                        else if (response.body()!!.scores.size == 1)
+                            tvTeams.setText("1 Team")
                         else
                             tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
                         if (response.body()!!.rules.size == 0)
@@ -168,11 +170,28 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
-                tvTimeLeft.setText("0:0:0: Left")
+                tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
+                txtjoin.setTextSize(20.00f)
                 txtjoin.setText(getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
+            }else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                       tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {

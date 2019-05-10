@@ -35,10 +35,10 @@ class UpcomingAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ContestListHolder, position: Int) {
-      holder.itemView.entry_fee.setText(contest.get(position).entryFees)
-      holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
+        holder.itemView.entry_fee.setText(contest.get(position).entryFees)
+        holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
-      holder.itemView.tvStockName.setText(contest.get(position).exchangename)
+        holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
         var sports: Double =
@@ -46,7 +46,7 @@ class UpcomingAdapter(
 
 
         holder.itemView.tvSprortsLeft.setText(
-          contest.get(position).contest_teamremaining.toString() + "/" +
+            contest.get(position).contest_teamremaining.toString() + "/" +
                     contest.get(position).contestSize
         )
 
@@ -62,7 +62,23 @@ class UpcomingAdapter(
             val diff = thatDay.timeInMillis - today.timeInMillis
             contest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
-                holder.itemView.tvTimeLeft.setText("0:0:0: Left")
+                holder.itemView.tvTimeLeft.setText("00H:00M:00S")
+            } else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
+
             } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
