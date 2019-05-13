@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="@dimen/_5sdp"
+              android:paddingBottom="@dimen/_5sdp">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_user"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:src="@mipmap/image"
+                android:scaleType="centerCrop"/>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/civ_user"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_5sdp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/ll_first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_1sdp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jim Keller"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/textColorBlack"
+                        android:textSize="@dimen/_13ssp"
+                        android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BUY"
+                        android:textSize="@dimen/_13ssp"
+                        style="@style/TextStyleNormal"
+                        android:textColor="@color/green"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Argus Research"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/textColorGray"
+                        android:layout_weight="1"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Rs20"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/green"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_1sdp">
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light_white"
+                        android:stepSize="0.1"
+                        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                        android:rating="2.5"
+                        android:progressTint="@color/rating_color"
+                        android:progressBackgroundTint="@color/rating_color"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="18.04.2019"
+                        style="@style/TextStyleNormal"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textSize="@dimen/_11ssp"
+                        android:textColor="@color/textColorGray"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

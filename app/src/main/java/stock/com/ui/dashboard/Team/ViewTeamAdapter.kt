@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -41,14 +42,21 @@ class ViewTeamAdapter(
 
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
-        mContest.get(position).addedToList=1
+        mContest.get(position).addedToList = 1
+
+        if (!TextUtils.isEmpty(mContest.get(position).changePercent))
+            if (mContest.get(position).changePercent.contains("-"))
+                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+            else
+                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+
 
 
         holder.itemView.llremoveStock.setOnClickListener {
             mContest.remove(mContest.get(position))
             notifyDataSetChanged()
             onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))
-            mContest.get(position).addedToList=0
+            mContest.get(position).addedToList = 0
         }
 
 
@@ -59,7 +67,7 @@ class ViewTeamAdapter(
         if (mContest.get(position).addedToList == 1) {
             holder.itemView.llremoveStock.visibility = VISIBLE
             holder.itemView.img_add.visibility = GONE
-        } else if (mContest.get(position).addedToList ==0) {
+        } else if (mContest.get(position).addedToList == 0) {
             holder.itemView.llremoveStock.visibility = GONE
             holder.itemView.img_add.visibility = VISIBLE
         }

@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -171,6 +172,17 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             showInfoDialogue(contest.description);
         }
 
+        if (TextUtils.isEmpty(contest.confirm_winning))
+            tvConfirmWin.visibility = View.GONE
+        else
+            tvConfirmWin.visibility = View.VISIBLE
+
+        if (TextUtils.isEmpty(contest.join_multiple))
+            tvMulJoin.visibility = View.GONE
+        else
+            tvMulJoin.visibility = View.VISIBLE
+
+
         tvSprortsLeft.setText(
             contest.contest_teamremaining.toString() + "/" +
                     contest.contestSize
@@ -191,7 +203,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 txtjoin.setText(getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
-            }else if (diff.equals("3600000")) {
+            } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()

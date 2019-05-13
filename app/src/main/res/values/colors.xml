@@ -14,4 +14,13 @@
     <color name="dot_color">#16D3FD</color>
     <color name="green_candle">#8BC276</color>
     <color name="red_candle">#BF2B06</color>
+
+    <color name="yellowcolor">#FFCE5B</color>
+    <color name="redcolor">#E65E5E</color>
+    <color name="lightGreencolor">#88C230</color>
+    <color name="rating_color">#FB960E</color>
+    <color name="rating_out_line">#FB960E</color>
+    <color name="history_selector">#0084BD</color>
+    <color name="light_white">#F8FDFD</color>
+    <color name="analyst_menu_color">#F8F9F4</color>
 </resources>

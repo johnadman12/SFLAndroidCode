@@ -21,9 +21,6 @@ import stock.com.ui.createTeam.adapter.StockListAdapter
 import stock.com.ui.news.activity.NewsActivity
 
 class StockDetailActivity : BaseActivity(){
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.stock_details_screen)

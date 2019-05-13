@@ -124,7 +124,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         else
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
-                        startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom","0"))
                         finish()
                     }
 //                    displayToast(response.body()!!.message)
@@ -166,6 +167,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
+                                .putExtra("flagcomingFrom", "0")
                         )
                         finish();
                     } /*else if (response.body()!!.status == "0") {

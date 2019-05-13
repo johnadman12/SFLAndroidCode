@@ -29,8 +29,9 @@ class ScoresAdapter(
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
-        holder.itemView.tvRank.setText(scores.get(position).rank + " (T -" + scores.get(position).teamId + ")")
-        holder.itemView.username.setText(scores.get(position).username)
+//        holder.itemView.tvPercentage.setText(scores.get(position).)
+        holder.itemView.tvRank.setText(scores.get(position).rank)
+        holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamName + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
         if (flag == 0) {
             holder.itemView.setOnClickListener {

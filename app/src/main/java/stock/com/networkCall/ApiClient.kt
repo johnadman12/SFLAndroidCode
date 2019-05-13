@@ -15,7 +15,11 @@ object ApiClient {
     @JvmStatic
     private var BASE_URL = ApiConstant.BASE_URL
     @JvmStatic
+    private var BASE_URL_NEWS = ApiConstant.NEWS_URL
+    @JvmStatic
     private var retrofit: Retrofit? = null
+    @JvmStatic
+    private var retrofit2: Retrofit? = null
 
     @JvmStatic
     fun getClient(): Retrofit? {
@@ -30,6 +34,21 @@ object ApiClient {
                 .build()
         }
         return retrofit
+    }
+
+    @JvmStatic
+    fun getClientNews(): Retrofit? {
+
+        if (retrofit2 == null) {
+            retrofit2 = Retrofit.Builder()
+                .baseUrl(BASE_URL_NEWS)
+                //.client(UnsafeOkHttpClient.unsafeOkHttpClient)
+                .client(ApiClient.okClient())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+        return retrofit2
     }
 
 

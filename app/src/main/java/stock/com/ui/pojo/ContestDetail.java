@@ -31,6 +31,12 @@ public class ContestDetail extends BasePojo {
         @SerializedName("winning_amount")
         @Expose
         public String winningAmount;
+        @SerializedName("confirm_winning")
+        @Expose
+        public String confirm_winning = "";
+        @SerializedName("join_multiple")
+        @Expose
+        public String join_multiple= "";
         @SerializedName("contest_size")
         @Expose
         public int contestSize;

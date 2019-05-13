@@ -40,6 +40,7 @@ import stock.com.ui.dashboard.ContestNewBottom.MyContestFragment
 import stock.com.ui.contest_invitation.ContestInvitationActivity
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
+import stock.com.ui.dashboard.home.InterfaceHome
 import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.dashboard.more.fragment.MoreFragment
 import stock.com.ui.dashboard.myContest.fragment.MyContestFragmentOld
@@ -65,9 +66,20 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,
-    BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */ {
+    BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */,
+    InterfaceHome {
 
+    override fun changeFragment(fragment: Fragment?) {
+        val bundle = Bundle()
+        bundle.putString("flag", "")
+        setFragment(LobbyFragment(), bundle)
+        changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+        changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+        changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+        changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+    }
 
+    var flagcomingScreen: String = "0"
     private var doubleBackToExitPressedOnce = false
 
     private var resideMenu: ResideMenu? = null
@@ -79,6 +91,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
+        if (intent != null)
+            flagcomingScreen = intent.getStringExtra("flagcomingFrom");
+
         setUpMenu();
         initView()
 
@@ -97,9 +112,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 setTitleVisibility(false, true)
                 setTitleText(getString(R.string.my_contest))
                 //setFragment(MyContestFragment(), Bundle());
-                var  b=Bundle();
-                b.putString("flag","false")
-                setFragment(MyContestFragment(),b);
+                var b = Bundle();
+                b.putString("flag", "false")
+                setFragment(MyContestFragment(), b);
 //                startActivity(Intent(this@DashBoardActivity, MyContestActivity::class.java))
                 changetTextViewBackground(tv_contest, R.color.colorPrimary);
                 changetTextViewBackground(tv_market, R.color.textColorLightBlack);
@@ -181,6 +196,16 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 changetTextViewBackground(tv_home, R.color.textColorLightBlack);
             }
         }
+
+        if (flagcomingScreen.equals("1")) {
+            val bundle = Bundle()
+            bundle.putString("flag", "")
+            setFragment(LobbyFragment(), bundle)
+            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+        }
     }
 
     private fun changetTextViewBackground(tv: TextView, color: Int) {
@@ -202,9 +227,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 setMenu(true, false, false, false, false, false, false)
                 setTitleVisibility(true, false)
                 setTitleText(getString(R.string.my_contest))
-                var  b=Bundle();
-                b.putString("flag","false")
-                setFragment(MyContestFragment(),b);
+                var b = Bundle();
+                b.putString("flag", "false")
+                setFragment(MyContestFragment(), b);
                 return true
             }
             R.id.navigation_profile -> {
@@ -632,14 +657,22 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if((requestCode==404)&&(resultCode== Activity.RESULT_OK)){
-            var  b=Bundle();
-            b.putString("flag","true")
-            setFragment(MyContestFragment(),b);
+        if ((requestCode == 404) && (resultCode == Activity.RESULT_OK)) {
+            var b = Bundle();
+            b.putString("flag", "true")
+            setFragment(MyContestFragment(), b);
             changetTextViewBackground(tv_contest, R.color.colorPrimary);
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_home, R.color.textColorLightBlack);
-         }
+        } else if ((requestCode == 406) && (resultCode == Activity.RESULT_OK)) {
+            val bundle = Bundle()
+            bundle.putString("flag", "")
+            setFragment(LobbyFragment(), bundle)
+            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+        }
     }
 }

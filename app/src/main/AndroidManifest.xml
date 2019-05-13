@@ -400,6 +400,23 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
+                android:name=".ui.dashboard.Team.Stock.LineChartGraph"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
+                android:name=".ui.dashboard.Team.Stock.PieChartGraph"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Team.Stock.StockChartActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <!-- <activity
                  android:name=".ActivityMyTeamView"
                  android:configChanges="orientation|keyboardHidden"
@@ -418,6 +435,7 @@
                 android:name="com.facebook.FacebookActivity"
                 android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
                 android:label="@string/app_name"/>
+
         <activity android:name=".ui.dashboard.Team.ActivityMyTeamView"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"

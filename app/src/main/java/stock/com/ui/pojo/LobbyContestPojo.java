@@ -38,6 +38,12 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("scheduleid")
         @Expose
         public int scheduleid;
+        @SerializedName("confirm_winning")
+        @Expose
+        public String confirm_winning = "";
+        @SerializedName("join_multiple")
+        @Expose
+        public String join_multiple= "";
         @SerializedName("schedule_name")
         @Expose
         public String scheduleName;
@@ -79,6 +85,9 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("fees")
         @Expose
         public int fees;
+        @SerializedName("win_amount")
+        @Expose
+        public String win_amount;
         @SerializedName("catname")
         @Expose
         public String catname;

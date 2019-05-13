@@ -284,6 +284,7 @@ interface ApiInterface {
     @GET("cms/pages/faq")
     fun faq(): Call<WebViewPojo>
 
+
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("cms/pages/rules-and-winnings")
     fun rulesAndWinning(): Call<WebViewPojo>
@@ -360,6 +361,15 @@ interface ApiInterface {
         @Header("x-access-token") token: String
     ): Call<SectorListPojo>
 
+    @GET("stories")
+    fun getNewsHome(
+        @Query("identifier_type") identifier_type: String, @Query("identifiers") identifiers: String,
+        @Query("categories") categories: String,
+        @Query("min_cityfalcon_score") min_cityfalcon_score: String, @Query("order_by") order_by: String,
+        @Query("time_filter") time_filter: String,
+        @Query("all_languages") all_languages: Boolean,
+        @Query("access_token") access_token: String
+    ): Call<CityfalconNewsPojo>
 
     /* @Headers("Content-Type: application/json")
 

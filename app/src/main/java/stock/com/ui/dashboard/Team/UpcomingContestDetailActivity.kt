@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -155,7 +156,15 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         iv_info.setOnClickListener {
             showInfoDialogue(contest.description);
         }
+        if (TextUtils.isEmpty(contest.confirm_winning))
+            tvConfirmWin.visibility = View.GONE
+        else
+            tvConfirmWin.visibility = View.VISIBLE
 
+        if (TextUtils.isEmpty(contest.join_multiple))
+            tvMulJoin.visibility = View.GONE
+        else
+            tvMulJoin.visibility = View.VISIBLE
         tvSprortsLeft.setText(
             contest.contest_teamremaining.toString() + "/" +
                     contest.contestSize
@@ -176,7 +185,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                 txtjoin.setText(getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
-            }else if (diff.equals("3600000")) {
+            } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
@@ -184,7 +193,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                       tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {

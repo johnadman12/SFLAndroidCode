@@ -258,6 +258,7 @@
                                   android:orientation="horizontal">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvConfirmWin"
                                 android:layout_width="@dimen/_15sdp"
                                 android:layout_height="@dimen/_15sdp"
                                 android:background="@drawable/gray_empty_button"
@@ -265,15 +266,18 @@
                                 android:gravity="center"
                                 android:layout_gravity="left"
                                 android:textSize="@dimen/_10ssp"
+                                android:visibility="gone"
                                 android:layout_marginRight="@dimen/_10sdp"
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/textColorGray"
                         />
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMulJoin"
                                 android:layout_width="@dimen/_15sdp"
                                 android:layout_height="@dimen/_15sdp"
                                 android:background="@drawable/gray_empty_button"
                                 android:text="M"
+                                android:visibility="gone"
                                 android:gravity="center"
                                 android:layout_gravity="right"
                                 android:textSize="@dimen/_10ssp"

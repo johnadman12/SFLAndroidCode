@@ -235,6 +235,11 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             tvVol.setText(list!!.get(position).latestVolume)
             tvlatestPrice.setText(list!!.get(position).latestPrice)
             Glide.with(this).load(list!!.get(position).image).into(iv_stock_img)
+
+            if (list!!.get(position).changePercent.contains("-"))
+                Glide.with(this).load(R.mipmap.downred).into(stockgraph)
+            else
+                Glide.with(this).load(R.mipmap.upgraph).into(stockgraph)
         }
 
     }

@@ -14,11 +14,10 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.home.adapter.LatestNewsAdapter
-import stock.com.ui.pojo.HomePojo
-import stock.com.ui.pojo.NewsPojo
+import stock.com.ui.pojo.CityfalconNewsPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.util.ArrayList
 
 class NewsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -27,43 +26,42 @@ class NewsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getLatestNewslist()
+        getNewslist()
     }
 
 
-    fun getLatestNewslist() {
+    val identifires: String = "FB,TWTR"
+    fun getNewslist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<NewsPojo> =
-            apiService.getLatestNewslist(getFromPrefsString(StockConstant.ACCESSTOKEN).toString())
-        call.enqueue(object : Callback<NewsPojo> {
-            override fun onResponse(call: Call<NewsPojo>, response: Response<NewsPojo>) {
+        val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
+        val call: Call<CityfalconNewsPojo> =
+            apiService.getNewsHome(
+                "tickers",
+                identifires, "op", "0",
+                "latest", "d1", false,
+                StockConstant.NEWS_ACCESS_TOKEN
+            )
+        call.enqueue(object : Callback<CityfalconNewsPojo> {
+            override fun onResponse(call: Call<CityfalconNewsPojo>, response: Response<CityfalconNewsPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        setLatestNewAdapter(response.body()!!.news)
-
-                    } else if (response.body()!!.status == "2") {
-                        appLogout()
-                    } else {
-                        displayToast(resources.getString(R.string.internal_server_error))
-                        d.dismiss()
-                    }
+                    d.dismiss()
+                    setLatestNewAdapter(response.body()!!.stories)
                 }
             }
 
-            override fun onFailure(call: Call<NewsPojo>, t: Throwable) {
+            override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
             }
-
         })
     }
 
+
     @SuppressLint("WrongConstant")
-    private fun setLatestNewAdapter(news: List<NewsPojo.News>) {
+    private fun setLatestNewAdapter(news: ArrayList<CityfalconNewsPojo.Story>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         rvNews!!.layoutManager = llm

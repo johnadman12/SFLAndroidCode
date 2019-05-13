@@ -199,7 +199,7 @@
             android:background="#32A5DE"
             android:layout_alignParentBottom="true">
 
-        <LinearLayout android:layout_width="wrap_content"
+        <LinearLayout android:layout_width="0dp"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
                       android:orientation="vertical">
@@ -210,7 +210,6 @@
                     android:text="0/12 "
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:gravity="left"
-                    android:padding="@dimen/_2sdp"
                     android:textColor="@color/textColorOffWhite"
                     style="@style/TextStyleNormal"/>
             <androidx.appcompat.widget.AppCompatTextView
@@ -222,21 +221,35 @@
                     android:textColor="@color/textColorOffWhite"
                     style="@style/TextStyleNormal"/>
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatTextView
+
+        <LinearLayout
+                android:id="@+id/llMyTeam"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:text="   My Team   "
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:gravity="center"
-                android:id="@+id/tvMyTeam"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_gravity="right|center_vertical"
-                android:padding="@dimen/_2sdp"
-                android:textSize="@dimen/_14ssp"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:visibility="visible"
-                android:background="@drawable/white_fill_button"
-                android:textColor="@color/black"
-                style="@style/TextStyleNormal"/>
+                android:layout_marginRight="@dimen/_20sdp"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:visibility="gone">
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    app:srcCompat="@mipmap/myteams"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:background="@null"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_teams"
+                    android:textSize="@dimen/_10ssp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvViewteam"

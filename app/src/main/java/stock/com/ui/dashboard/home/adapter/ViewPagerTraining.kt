@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -62,13 +63,27 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val txtjoin: TextView = view.findViewById(R.id.txtjoin)
         val ivStock: AppCompatImageButton = view.findViewById(R.id.ivStock)
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
-
+        val tvConfirmWin: TextView = view.findViewById(R.id.tvConfirmWin)
+        val tvMulJoin: TextView = view.findViewById(R.id.tvMulJoin)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvTime.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
+
+
+
+        if (TextUtils.isEmpty(list.get(position).confirm_winning))
+            tvConfirmWin.visibility = View.GONE
+        else
+            tvConfirmWin.visibility = View.VISIBLE
+
+        if (TextUtils.isEmpty(list.get(position).join_multiple))
+            tvMulJoin.visibility = View.GONE
+        else
+            tvMulJoin.visibility = View.VISIBLE
+
 
         Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
             .into(ivStock)
@@ -93,7 +108,6 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                ll_Circular.isEnabled = false
                 txtjoin.setTextSize(20.00f)
                 txtjoin.setText(context.getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =

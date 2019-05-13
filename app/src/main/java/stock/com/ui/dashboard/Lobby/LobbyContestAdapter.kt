@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -59,6 +60,18 @@ class LobbyContestAdapter(
                     mContest.get(position).contestSize
         )
 
+        if (TextUtils.isEmpty(mContest.get(position).confirm_winning))
+            holder.itemView.tvConfirmWin.visibility = View.GONE
+        else
+            holder.itemView.tvConfirmWin.visibility = View.VISIBLE
+
+        if (TextUtils.isEmpty(mContest.get(position).join_multiple))
+            holder.itemView.tvMulJoin.visibility = View.GONE
+        else
+            holder.itemView.tvMulJoin.visibility = View.VISIBLE
+
+
+
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
         if (!mContest.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
@@ -72,7 +85,6 @@ class LobbyContestAdapter(
             mContest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
                 holder.itemView.tvTimeLeft.setText("00H:00M:00S")
-                holder.itemView.ll_Circular.isEnabled = false
                 holder.itemView.txtjoin.setTextSize(20.00f)
                 holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))
                 holder.itemView.circular_progress.progressBackgroundColor =

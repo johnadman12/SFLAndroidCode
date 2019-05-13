@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -77,13 +78,22 @@ class StockTeamAdapter(
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
         holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
+        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
+
+
+        if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
+            if (searchList!!.get(position).changePercent.contains("-"))
+                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+            else
+                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+
 
 
         holder.itemView.img_add.setOnClickListener {
             if (activity.getTeamText() > 11) {
                 Toast.makeText(mContext, "You have selected maximum number of stocks for your team.", 10000).show()
-            }else{
+            } else {
                 holder.itemView.llremoveStock.visibility = VISIBLE
                 holder.itemView.img_add.visibility = GONE
                 searchList!!.get(position).addedToList = 1

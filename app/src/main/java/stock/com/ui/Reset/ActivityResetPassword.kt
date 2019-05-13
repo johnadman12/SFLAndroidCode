@@ -75,7 +75,8 @@ class ActivityResetPassword : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
+                        startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom", "0"))
                     }
                     displayToast(response.body()!!.message)
                 } else {

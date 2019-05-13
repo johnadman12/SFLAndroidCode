@@ -24,7 +24,8 @@ class SplashActivity : BaseActivity() {
                 if (getFromPrefsString(StockConstant.USERFIRSTTIME).toString().equals("no")) {
                     // if (getFromPrefsString(StockConstant.USERID).toString() != "") {
                     if (!getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                        startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
+                        startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom", "0"))
                         finish()
                     } else {
                         startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))

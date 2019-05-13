@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -65,6 +66,12 @@ class WizardStockTeamAdapter(
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
         holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
+
+        if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
+            if (searchList!!.get(position).changePercent.contains("-"))
+                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+            else
+                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
 
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE

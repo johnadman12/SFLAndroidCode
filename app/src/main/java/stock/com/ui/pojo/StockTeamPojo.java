@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class StockTeamPojo extends BasePojo implements Parcelable {
+    public String myteam = "";
+
     @SerializedName("stock")
     @Expose
     public List<Stock> stock = null;
@@ -77,7 +79,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
         @SerializedName("addedStock")
         @Expose
         public String addedStock;
-        public int addedToList=1;
+        public int addedToList = 1;
         public boolean flagAddStockToList;
 
         public void setAddedToList(int addedToList) {

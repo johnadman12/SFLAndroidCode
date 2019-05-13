@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class MarketListAdapter(
         holder.itemView.checkCountry.setText(mContest.get(position).name)
         Glide.with(mContext).load(mContest.get(position).imageUrl).into(holder.itemView.ivFlag)
 
+        Log.e("marketid", mContest.get(position).name)
         holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);
 
         holder.itemView.checkCountry.setOnClickListener {

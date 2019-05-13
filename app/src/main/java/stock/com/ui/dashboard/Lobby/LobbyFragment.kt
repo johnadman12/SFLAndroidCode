@@ -130,60 +130,71 @@ class LobbyFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
 
+            if (requestCode == StockConstant.RESULT_CODE_SORT) {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    if (data.getStringExtra("flag").equals("Entry")) {
+                        var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
+                        for (obj in sortedList) {
+                            Log.d("sdadada---", "--" + obj.fees)
+                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                        }
+                    } else if (data.getStringExtra("flag").equals("time")) {
+                        var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
+                        for (obj in sortedList) {
+                            Log.d("sdadada---", "--" + obj.fees)
+                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                        }
+                    } else if (data.getStringExtra("flag").equals("price")) {
+                        /* var tempList = ArrayList<LobbyContestPojo.Contest>();
+                         for (obj in contest!!) {
+                             obj.setWinningAmount_temp(obj.winningAmount.replace(",", ""));
+                             obj.setWinningAmount_temp(obj.getWinningAmount_temp().replace("$", ""));
+                             tempList.add(obj)
+                         }*/
+                        contest!!.sortByDescending { it.win_amount.toDouble() };
+                        //var sortedList1 = tempList!!.sortByDescending { it.getWinningAmount_temp().toDouble() };
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged();
 
-        if (requestCode == StockConstant.RESULT_CODE_SORT) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                if (data.getStringExtra("flag").equals("Entry")) {
-                    var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
-                    for (obj in sortedList) {
-                        Log.d("sdadada---", "--" + obj.fees)
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    } else if (data.getStringExtra("flag").equals("position")) {
+                        val sortedList = contest!!.sortedWith(compareBy({ it.getCalculatePosition() }))
+                        for (obj in sortedList) {
+                            Log.d("sdadada---", "--" + obj.calculatePosition)
+                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                        }
                     }
                 }
-                else if (data.getStringExtra("flag").equals("time")) {
-                    var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
-                    for (obj in sortedList) {
-                        Log.d("sdadada---", "--" + obj.fees)
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                    }
-                }
-                else if (data.getStringExtra("flag").equals("price")) {
-
-
-                   //  val sortedList = contest!!.sortedWith(compareBy({ it.winningAmount}));
-                    //val sortedList1 = contest!!.sortedWith(compareBy({ it.winningAmount.replace("$","") }));
-                    //val sortedList1 = sortedList!!.sortedWith(compareBy({ it.winningAmount.replace(",","") }));
-                    recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+            } else if (requestCode == RESULT_CODE_FILTER) {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    //contest!!.clear()
+                    var testing = data.getSerializableExtra("contestlist") as ArrayList<LobbyContestPojo.Contest>;
+                    Log.d("sdadada---Filter", "--" + testing.size)
+                    recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                     recyclerView_contest!!.adapter!!.notifyDataSetChanged();
 
-                    //val sortedList = contest!!.sortedWith(compareBy({ it.winningAmount.substring(0, 1) })).asReversed();
-
-                } else if (data.getStringExtra("flag").equals("position")) {
-                    val sortedList = contest!!.sortedWith(compareBy({ it.getCalculatePosition() }))
-                    for (obj in sortedList) {
-                        Log.d("sdadada---", "--" + obj.calculatePosition)
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                    }
+                    /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+                    recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
                 }
             }
 
-        } else if (requestCode == RESULT_CODE_FILTER) {
-
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                /*contest!!.clear()
-                var testing = data.getSerializableExtra(StockConstant.CONTEST) as ArrayList<LobbyContestPojo.Contest>;
-                Log.d("sdadada---", "--" + testing.size)
-                recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
-                recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-            */
-                recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
-                recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-            }
+            /*fun convertTime(time:String ): Long {
+                val inputPattern = "yyyy-MM-dd HH:mm:ss"
+                val inputFormat = SimpleDateFormat(inputPattern)
+                var date: Date? = null
+                date = inputFormat.parse(time)
+                val thatDay = Calendar.getInstance()
+                thatDay.setTime(date);
+                val today = Calendar.getInstance()
+                val diff =  thatDay.timeInMillis -today.timeInMillis
+                val days = diff / (24  60  60 * 1000)
+                val day = TimeUnit.SECONDS.toDays(diff).toInt()
+                val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
+                return hour
+            }*/
         }
-
         /*fun convertTime(time:String ): Long {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
@@ -198,7 +209,7 @@ class LobbyFragment : BaseFragment() {
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
             return hour
         }*/
-    }
+
 
     fun showViewContestDialogue() {
         var dialogue = Dialog(activity!!)

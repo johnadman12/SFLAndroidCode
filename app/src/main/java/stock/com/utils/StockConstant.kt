@@ -14,6 +14,7 @@ object StockConstant{
     val TEAMID = "teamid"
 
     val IMAG_BASE_PATH="http://18.188.34.216/webadmin/uploads/user/"
+    val NEWS_ACCESS_TOKEN= "3ff9fe7e393fde1cc21e7bb3f9153431cd2456a10aac18191cc3e9401cf4c5ce"
 
     val RESULT_CODE_SORT=102;
     val RESULT_CODE_FILTER=103;

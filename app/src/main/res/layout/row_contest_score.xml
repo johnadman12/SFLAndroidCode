@@ -59,7 +59,54 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/ll_totalChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight=".5"
+            android:padding="@dimen/_2sdp"
+            android:gravity="center">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyleNormal"
+                android:text="@string/total"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/textColorLightBlack"
+        />
 
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyleNormal"
+                android:textSize="@dimen/_12ssp"
+                android:text="@string/change"
+                android:textColor="@color/textColorLightBlack"
+        />
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/ll_change_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ll_totalChange">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPercentage"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:gravity="center"
+                style="@style/TextStyleNormal"
+                android:textColor="@color/textColorLightBlack"
+                android:textSize="@dimen/_9sdp"
+                android:background="@mipmap/greencircle"
+                android:text="@string/percentage"/>
+
+    </LinearLayout>
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

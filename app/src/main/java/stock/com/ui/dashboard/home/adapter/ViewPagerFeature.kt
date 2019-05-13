@@ -7,7 +7,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -65,11 +68,24 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
         val ll_Circular: RelativeLayout = view.findViewById(R.id.ll_Circular)
         val txtjoin: TextView = view.findViewById(R.id.txtjoin)
+        val tvConfirmWin: TextView = view.findViewById(R.id.tvConfirmWin)
+        val tvMulJoin: TextView = view.findViewById(R.id.tvMulJoin)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
+
+        if (TextUtils.isEmpty(list.get(position).confirm_winning))
+            tvConfirmWin.visibility = GONE
+        else
+            tvConfirmWin.visibility = VISIBLE
+
+        if (TextUtils.isEmpty(list.get(position).join_multiple))
+            tvMulJoin.visibility = GONE
+        else
+            tvMulJoin.visibility = VISIBLE
+
 
 
         Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
@@ -95,12 +111,11 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                ll_Circular.isEnabled = false
                 txtjoin.setTextSize(20.00f)
                 txtjoin.setText(context.getString(R.string.Finished))
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
-            }else if (diff.equals("3600000")) {
+            } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()

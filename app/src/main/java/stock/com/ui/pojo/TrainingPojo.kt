@@ -22,6 +22,12 @@ class TrainingPojo : BasePojo() {
         @SerializedName("winning_amount")
         @Expose
         var winningAmount: String = ""
+        @SerializedName("confirm_winning")
+        @Expose
+        var confirm_winning: String = ""
+        @SerializedName("join_multiple")
+        @Expose
+        var join_multiple: String = ""
         @SerializedName("contest_size")
         @Expose
         var contestSize: String = ""

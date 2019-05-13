@@ -33,6 +33,8 @@ import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import android.text.style.ForegroundColorSpan
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
@@ -56,7 +58,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
-            R.id.tvMyTeam -> {
+            R.id.llMyTeam -> {
                 startActivity(Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java))
             }
             R.id.imgButtonWizard -> {
@@ -131,7 +133,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         ll_watchlist.setOnClickListener(this)
         ll_filter.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
-        tvMyTeam.setOnClickListener(this)
+        llMyTeam.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
@@ -266,6 +268,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.myteam.equals("1"))
+                            llMyTeam.visibility = VISIBLE
+                        else if (response.body()!!.myteam.equals("0"))
+                            llMyTeam.visibility = GONE
+
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!);

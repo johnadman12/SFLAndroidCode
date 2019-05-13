@@ -32,7 +32,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 startActivity(Intent(activity, ActivityMyTeam::class.java))
             }
             R.id.tv_created -> {
-                ll_my_team.visibility = View.VISIBLE
+//                ll_my_team.visibility = View.VISIBLE
                 changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));

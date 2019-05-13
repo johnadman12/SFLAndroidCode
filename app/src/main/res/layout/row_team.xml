@@ -67,6 +67,7 @@
 
                 </LinearLayout>
                 <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_graph"
                         android:layout_width="@dimen/_30sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:src="@mipmap/downred"/>
@@ -89,6 +90,7 @@
                             android:textColor="@color/colorRed"/>
 
                     <TextView
+                            android:id="@+id/tv_change_percentage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-202(-1.06)"

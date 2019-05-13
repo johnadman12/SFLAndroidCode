@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -70,6 +71,14 @@ class EditTeamAdapter(
                 onItemCheckListener.onItemCheck(searchList!!.get(position));
             }
         }
+
+        if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
+            if (searchList!!.get(position).changePercent.contains("-"))
+                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+            else
+                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+
+
 
         holder.itemView.llremoveStock.setOnClickListener {
             holder.itemView.llremoveStock.visibility = View.GONE

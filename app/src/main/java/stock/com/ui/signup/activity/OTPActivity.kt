@@ -235,7 +235,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom", "0"))
                         finish()
                     }
                     displayToast(response.body()!!.message)
@@ -264,7 +265,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom", "0"))
                         finish()
                     }
                     displayToast(response.body()!!.message)
@@ -296,7 +298,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java)
+                            .putExtra("flagcomingFrom", "0"))
                         finish()
                     }
                     displayToast(response.body()!!.message)

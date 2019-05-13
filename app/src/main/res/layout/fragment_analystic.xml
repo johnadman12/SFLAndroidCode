@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/menu_bg">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_2sdp"
+                    app:cardElevation="@dimen/_2sdp"
+                    app:contentPadding="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    android:layout_gravity="center">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_analystic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:text="Analyst Consensus"
+                            android:textColor="@color/textColorLightBlack"/>
+                    <LinearLayout
+                            android:id="@+id/ll_pie_chart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                        <com.github.mikephil.charting.charts.PieChart
+                                android:id="@+id/piechart"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_180sdp">
+
+                        </com.github.mikephil.charting.charts.PieChart>
+
+
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            style="@style/ButtonStylelogin"
+                            android:textSize="@dimen/_11ssp"
+                            android:background="@drawable/green_fill_button"
+                            android:textStyle="normal"
+                            android:text="MODRATE BUY"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:text="@string/dummy_txt_analystis"
+                            android:padding="@dimen/_10sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/textColorGray"
+                            android:textAlignment="center"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginBottom="@dimen/_3sdp"
+                    app:contentPadding="@dimen/_10sdp">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_analystic_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleMedium"
+                            android:text="Analyst Price Target"
+                            android:textColor="@color/textColorLightBlack"/>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:padding="@dimen/_5sdp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="@string/Rs20"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:layout_gravity="bottom"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="@string/percentage"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:layout_gravity="bottom"
+                                android:paddingLeft="@dimen/_4sdp"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="@color/textColorGray"
+                                android:text="(UPDATED)"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Based on 36 ranked analysts"
+                            android:textColor="@color/textColorLightBlack"/>
+                    <LinearLayout
+                            android:id="@+id/ll_line_chart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <com.github.mikephil.charting.charts.LineChart
+                                android:id="@+id/linechart"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_180sdp"
+                        />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_60sdp"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:weightSum="3"
+                            android:background="@color/analyst_menu_color">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_4sdp"
+                                    android:textColor="@color/colorRed"
+                                    style="@style/TextStyleNormal"
+                                    android:text="@string/Rs20"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_4sdp"
+                                    android:textColor="@color/textColorGray"
+                                    style="@style/TextStyleNormal"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:text="Low Estimate"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <View android:layout_width="0.3dp"
+                              android:layout_height="wrap_content"
+                              android:background="@color/textColorGray"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_5sdp"
+                                    android:textColor="@color/textColorBlack"
+                                    style="@style/TextStyleNormal"
+                                    android:text="@string/Rs20"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_4sdp"
+                                    android:textColor="@color/textColorGray"
+                                    style="@style/TextStyleNormal"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:text="Low Estimate"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <View android:layout_width="0.3dp"
+                              android:layout_height="wrap_content"
+                              android:background="@color/textColorGray"/>
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_4sdp"
+                                    android:textColor="@color/green"
+                                    style="@style/TextStyleNormal"
+                                    android:text="@string/Rs20"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_4sdp"
+                                    android:textColor="@color/textColorGray"
+                                    style="@style/TextStyleNormal"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:gravity="center"
+                                    android:text="High Estimate"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    app:contentPadding="@dimen/_10sdp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_analystic_ratings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:text="Analyst Ratings"
+                            android:padding="5dp"
+                            android:textColor="@color/textColorLightBlack"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_list_ratings"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:listitem="@layout/row_analyst_rating"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,16 +1,25 @@
 package stock.com.ui.dashboard.home.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 
 import stock.com.R;
+import stock.com.ui.dashboard.DashBoardActivity;
+import stock.com.ui.dashboard.home.fragment.HomeFragment;
+import stock.com.ui.invite.activity.InviteCodeActivity;
+import stock.com.ui.invite.activity.InviteFriendsActivity;
+import stock.com.ui.offer_list.OfferListActivity;
 import stock.com.ui.pojo.HomePojo;
+import stock.com.ui.share.ShareActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +33,16 @@ public class HorizontalPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-
+    private HomeFragment homeFragment;
     private List<HomePojo.Banner> LIBRARIES;
 
 
-    public HorizontalPagerAdapter(final Context context, List<HomePojo.Banner> LIBRARIES) {
+    public HorizontalPagerAdapter(final Context context, List<HomePojo.Banner> LIBRARIES, HomeFragment fragment) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
 
         this.LIBRARIES = LIBRARIES;
+        this.homeFragment= fragment;
     }
 
     @Override
@@ -52,9 +62,26 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         view = mLayoutInflater.inflate(R.layout.child_banner_layout, container, false);
         ImageView imageView = view.findViewById(R.id.imv_product);
 
-        Glide.with(mContext).load("http://18.188.34.216/webadmin/uploads/banner/"+LIBRARIES.get(position).getImage()).error(R.mipmap.ic_launcher).into(imageView);
+        Glide.with(mContext).load("http://18.188.34.216/webadmin/uploads/banner/" + LIBRARIES.get(position).getImage()).error(R.mipmap.ic_launcher).into(imageView);
 
         container.addView(view);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (LIBRARIES.get(position).getType() == 1) {
+                   /* Intent intent = new Intent(mContext, DashBoardActivity.class);
+                    intent.putExtra("flagcomingFrom", "0");
+                    mContext.startActivity(intent);*/
+                    homeFragment.setintent();
+
+
+                } else if (LIBRARIES.get(position).getType() == 2) {
+                    mContext.startActivity(new Intent(mContext, ShareActivity.class));
+                } else if (LIBRARIES.get(position).getType() == 3) {
+                    mContext.startActivity(new Intent(mContext, OfferListActivity.class));
+                }
+            }
+        });
         return view;
     }
 
