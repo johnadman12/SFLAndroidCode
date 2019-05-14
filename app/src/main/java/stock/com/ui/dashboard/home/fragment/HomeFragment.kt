@@ -1,7 +1,6 @@
 package stock.com.ui.dashboard.home.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,6 +18,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Lobby.LobbyFragment
+import stock.com.ui.dashboard.home.ActivityNewsListing
 import stock.com.ui.dashboard.home.adapter.*
 import stock.com.ui.pojo.*
 import stock.com.utils.StockConstant
@@ -27,12 +27,19 @@ import stock.com.utils.StockDialog
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
 
-
-    private var dashBoradACtivity:DashBoardActivity?=null;
+    var identifires: String = ""
+    private var dashBoradACtivity: DashBoardActivity? = null;
+    var dataExchange: ArrayList<String>? = null;
 
     override fun onClick(view: View?) {
         when (view!!.id) {
+            R.id.seeall -> {
+                startActivity(
+                    Intent(context, ActivityNewsListing::class.java)
+                        .putExtra(StockConstant.IDENTIFIRE, identifires)
+                )
 
+            }
         }
     }
 
@@ -51,7 +58,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
+        seeall.setOnClickListener(this)
         getFeatureContentlist();
+        dataExchange = ArrayList()
         txt_title.visibility = GONE;
     }
 
@@ -135,7 +144,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_latest_new!!.layoutManager = llm
         recyclerView_latest_new.visibility = View.VISIBLE
-        recyclerView_latest_new!!.adapter = LatestNewsAdapter(context!!, news);
+        recyclerView_latest_new!!.adapter = LatestNewsAdapter(context!!, news, identifires);
         //recyclerView_latest_new.addItemDecoration(CirclePagerIndicatorDecoration(activity));
     }
 
@@ -178,6 +187,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                         setHomeBannerAdapter(response.body()!!.banner!!)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
                         setStockNameAdapter(response.body()!!.exchange!!)
+                        if (response.body()!!.exchange != null) {
+                            for (i in 0 until response.body()!!.exchange!!.size)
+                                dataExchange!!.add(response.body()!!.exchange!!.get(i).name)
+                        }
+                        setIdentifire()
                         getTrainingContentlist()
                         getNewslist()
                         setVisibility()
@@ -199,6 +213,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+
+    fun setIdentifire() {
+        identifires = android.text.TextUtils.join(",", dataExchange)
+    }
 
     fun getTrainingContentlist() {
         val d = StockDialog.showLoading(activity!!)
@@ -231,7 +249,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-    val identifires: String = "AAPL,TSLA,FTSE"
+    val categories: String = "mp,op"
+
     fun getNewslist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
@@ -239,7 +258,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val call: Call<CityfalconNewsPojo> =
             apiService.getNewsHome(
                 "tickers",
-                identifires, "mp", "20",
+                identifires, categories, "20",
                 "top", "d1", false,
                 StockConstant.NEWS_ACCESS_TOKEN
             )
@@ -293,6 +312,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         tv_tranning_contest.visibility = VISIBLE;
         txt_title.visibility = VISIBLE;
         tv_latest_new.visibility = VISIBLE;
+        seeall.visibility = VISIBLE;
     }
 
     override fun onAttach(context: Context?) {

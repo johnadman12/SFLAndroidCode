@@ -136,7 +136,7 @@ class HomePojo : BasePojo() {
         var id: Int? = null
         @SerializedName("name")
         @Expose
-        var name: String? = null
+        var name: String = ""
         @SerializedName("changePercent")
         @Expose
         var changePercent: String? = null

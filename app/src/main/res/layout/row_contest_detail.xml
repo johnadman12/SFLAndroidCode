@@ -204,6 +204,7 @@
                             card_view:progressBackgroundStrokeWidth="@dimen/_8sdp"
                             card_view:textSize="@dimen/_16ssp"
                             card_view:textColor="@color/white"
+                            card_view:direction="clockwise"
                             style="@style/TextStyleSemiBold"
                             card_view:progressBackgroundColor="@color/green"
                             android:layout_marginBottom="8dp"

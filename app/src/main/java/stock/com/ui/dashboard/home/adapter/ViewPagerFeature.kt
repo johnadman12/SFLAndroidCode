@@ -14,6 +14,7 @@ import android.view.View.VISIBLE
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
@@ -111,8 +112,9 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                txtjoin.setTextSize(20.00f)
-                txtjoin.setText(context.getString(R.string.Finished))
+//               Toast.makeText(context,"Contest is live now",10000).show()
+               /* txtjoin.setTextSize(20.00f)
+                txtjoin.setText(context.getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
             } else if (diff.equals("3600000")) {

@@ -48,15 +48,20 @@
                         android:padding="@dimen/_2sdp"
                         android:src="@mipmap/arrowright"/>
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
+            <RelativeLayout
+                    android:id="@+id/rel_contesttype"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_250sdp"
-                    android:id="@+id/recycle_contest"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recycle_contest"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_5sdp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent"
@@ -88,7 +93,8 @@
             </LinearLayout>
 
             <RelativeLayout
-                    android:id="@+id/relative_range" android:layout_width="match_parent"
+                    android:id="@+id/relative_range"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_5sdp"
                     android:visibility="gone"
@@ -152,20 +158,26 @@
                         android:textColor="@color/black"/>
 
                 <ImageView
-                        android:id="@+id/ivMarket" android:layout_width="@dimen/_20sdp"
+                        android:id="@+id/ivMarket"
+                        android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:padding="@dimen/_2sdp"
                         android:src="@mipmap/arrowright"/>
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
+            <RelativeLayout
+                    android:id="@+id/rel_market"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_250sdp"
-                    android:id="@+id/recycle_market"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recycle_market"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_5sdp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent"
@@ -190,19 +202,26 @@
                         android:textColor="@color/black"/>
 
                 <ImageView
-                        android:id="@+id/ivCountry" android:layout_width="@dimen/_20sdp"
+                        android:id="@+id/ivCountry"
+                        android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:padding="@dimen/_2sdp"
                         android:src="@mipmap/arrowright"/>
             </LinearLayout>
-            <androidx.recyclerview.widget.RecyclerView
+            <RelativeLayout
+                    android:id="@+id/rel_country"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_250sdp"
-                    android:id="@+id/recycle_country"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_5sdp">
+                    android:layout_height="@dimen/_200sdp"
+                    android:visibility="gone">
+                <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/recycle_country"
+                        android:layout_marginTop="@dimen/_5sdp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
 
         </LinearLayout>
 

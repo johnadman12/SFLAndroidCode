@@ -25,16 +25,25 @@ import stock.com.utils.StockDialog
 class ActivitySectorFilter : BaseActivity() {
     private var sectorSelected: ArrayList<String>? = null
 
+    private var sectorTypeFilter: String? = "";
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sector_listing)
         StockConstant.ACTIVITIES.add(this)
         sectorSelected = ArrayList()
+        sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_TYPE);
+        reset.visibility = View.VISIBLE
         img_btn_back.setOnClickListener {
             finish()
         }
-        img_btn_close.setOnClickListener {
+        reset.setOnClickListener {
+//            setFilter("");
+            val resultIntent = Intent()
+            resultIntent.putExtra("resetfilter", "1")
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
+
         }
 
         btn_filterApply.setOnClickListener {
@@ -42,6 +51,7 @@ class ActivitySectorFilter : BaseActivity() {
             Log.e("sectorlist", selectedSector)
             var resultIntent = Intent()
             resultIntent.putExtra("sectorlist", selectedSector)
+            resultIntent.putExtra("resetfilter", "0")
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
@@ -94,15 +104,18 @@ class ActivitySectorFilter : BaseActivity() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_sector!!.layoutManager = llm
-        recycle_sector!!.adapter = SectorAdapter(this, sector, object : SectorAdapter.OnItemCheckListener {
-            override fun onItemUncheck(item: String) {
-                sectorSelected?.remove(item);
-            }
+        recycle_sector!!.adapter =
+            SectorAdapter(this, sector, sectorTypeFilter!!, object : SectorAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: String) {
+                    sectorSelected?.remove(item);
+                    setFilter(android.text.TextUtils.join(",", sectorSelected))
+                }
 
-            override fun onItemCheck(item: String) {
-                sectorSelected?.add(item)
-            }
-        })
+                override fun onItemCheck(item: String) {
+                    sectorSelected?.add(item)
+                    setFilter(android.text.TextUtils.join(",", sectorSelected))
+                }
+            })
 
     }
 

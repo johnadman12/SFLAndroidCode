@@ -38,4 +38,17 @@
             android:padding="@dimen/_12sdp"
             android:visibility="gone"
             android:id="@+id/img_btn_close"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            style="@style/TextStyleSemiBold"
+            android:textColor="@color/textColorLightBlack"
+            android:text="RESET"
+            android:padding="@dimen/_12sdp"
+            android:visibility="gone"
+            android:id="@+id/reset"/>
 </RelativeLayout>

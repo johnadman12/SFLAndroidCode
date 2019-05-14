@@ -43,20 +43,33 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var marketSelectedItems: ArrayList<String>? = null
     private var countrySelectedItems: ArrayList<String>? = null
     var contestList: List<LobbyContestPojo.Contest>? = null
-    var maxprice: Int = 0
+    var maxprice: String = "";
+    var canSelect: String = "";
+    private var contestTypeFilter: String? = "";
 
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.llCountry -> {
-                clickPlusIcon(recycle_country, ivCountry)
+                clickPlusIcon(recycle_country, ivCountry, rel_country)
+            }
+            R.id.reset -> {
+//                setContestType("");
+                val resultIntent = Intent()
+                resultIntent.putExtra("resetfilter", "1")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+
             }
             R.id.llMarket -> {
-                clickPlusIcon(recycle_market, ivMarket)
+                rel_country.visibility = GONE
+                clickPlusIcon(recycle_market, ivMarket, rel_market)
             }
             R.id.llContest -> {
-                clickPlusIcon(recycle_contest, ivContest)
+                rel_country.visibility = GONE
+                clickPlusIcon(recycle_contest, ivContest, rel_contesttype)
             }
             R.id.llEntry -> {
+                rel_country.visibility = GONE
                 clickPlusRange(relative_range, ivEntry)
             }
 
@@ -67,8 +80,10 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_apply -> {
-                if (maxprice.toString().equals(tvMax.text.toString())) {
-                    maxprice = 0
+                if (maxprice.toString().equals(canSelect.toString())) {
+                    maxprice = ""
+                } else {
+                    maxprice = tvMax.text.toString();
                 }
                 setFilters()
             }
@@ -80,6 +95,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_filter)
         StockConstant.ACTIVITIES.add(this)
         initViews()
+        contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
     }
 
     fun setFilters() {
@@ -106,12 +122,12 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         }, 100)
                         var testing = ArrayList<LobbyContestPojo.Contest>()
                         testing = response.body()!!.contest
-
                         Log.e("nckshbj", testing.size.toString())
 
                         if (testing != null && testing.size != 0) {
                             val resultIntent = Intent()
                             resultIntent.putExtra("contestlist", testing)
+                            resultIntent.putExtra("resetfilter", "0")
                             setResult(Activity.RESULT_OK, resultIntent)
                             finish()
                         } else if (response.body()!!.status == "2") {
@@ -140,8 +156,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         currentSelectedItems = ArrayList();
         marketSelectedItems = ArrayList();
         img_btn_back.setOnClickListener(this)
-        img_btn_close.setOnClickListener(this)
-        img_btn_close.visibility = VISIBLE
+        reset.setOnClickListener(this)
+        reset.visibility = VISIBLE
         llMarket.setOnClickListener(this)
         llCountry.setOnClickListener(this)
         llContest.setOnClickListener(this)
@@ -160,7 +176,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         rangeSeekbar1.setOnRangeSeekbarChangeListener(OnRangeSeekbarChangeListener { minValue, maxValue ->
             tvMin.setText(minValue.toString())
             tvMax.setText(maxValue.toString())
-            maxprice = maxValue.toInt()
+            maxprice = maxValue.toString()
 
         })
         rangeSeekbar1.setOnRangeSeekbarFinalValueListener({ minValue, maxValue ->
@@ -257,7 +273,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             tvMin.setText(entryFees.get(0).minValue!!.toString())
 //            tvMin.setText("test")
             tvMax.setText(entryFees.get(0).maxValue!!.toString())
-            maxprice = entryFees.get(0).maxValue!!.toInt()
+            maxprice = entryFees.get(0).maxValue!!.toString()
+            canSelect = entryFees.get(0).maxValue!!.toString()
         }
     }
 
@@ -320,28 +337,37 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_contest!!.layoutManager = llm
-        recycle_contest!!.adapter = ContestListAdapter(this, contest, object : ContestListAdapter.OnItemCheckListener {
-            override fun onItemUncheck(item: String) {
-                currentSelectedItems?.remove(item);
-            }
+        recycle_contest!!.adapter =
+            ContestListAdapter(this, contest, contestTypeFilter!!, object : ContestListAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: String) {
+                    currentSelectedItems?.remove(item);
+                    setContestType(android.text.TextUtils.join(",", currentSelectedItems));
 
-            override fun onItemCheck(item: String) {
-                currentSelectedItems?.add(item)
-            }
-        })
+                }
+
+                override fun onItemCheck(item: String) {
+                    currentSelectedItems?.add(item)
+                    setContestType(android.text.TextUtils.join(",", currentSelectedItems));
+                }
+            })
 
     }
 
-
-    private fun clickPlusIcon(lin_child_title: RecyclerView, header_plus_icon: ImageView) {
+    private fun clickPlusIcon(
+        lin_child_title: RecyclerView,
+        header_plus_icon: ImageView,
+        perspectiveLay: RelativeLayout
+    ) {
         if (lin_child_title.visibility == View.GONE) {
             ViewAnimationUtils.expand(lin_child_title)
             header_plus_icon.setImageResource(R.mipmap.arrowdown)
             lin_child_title.visibility = VISIBLE
+            perspectiveLay.visibility = VISIBLE
         } else {
             ViewAnimationUtils.collapse(lin_child_title)
             header_plus_icon.setImageResource(R.mipmap.arrowright)
             lin_child_title.visibility = GONE
+            perspectiveLay.visibility = GONE
         }
     }
 

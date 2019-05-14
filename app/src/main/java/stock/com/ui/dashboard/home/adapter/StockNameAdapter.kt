@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.item_expendable_layout.view.*
 import kotlinx.android.synthetic.main.row_view_stock_name.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.AllContestActivity
+import stock.com.ui.dashboard.home.fragment.HomeFragment
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.HomePojo
 import stock.com.utils.DateUtils
@@ -38,6 +39,7 @@ class StockNameAdapter(val mContext: Context, val mContest: List<HomePojo.Exchan
 
         }
         holder.itemView.tvValue.setText(mContest.get(position).latestPrice)
+
     }
 
 

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -33,7 +34,7 @@ import stock.com.utils.StockDialog
 
 class ActivityStockDetail : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
-    private var selectedItems: Int=0
+    private var selectedItems: Int = 0
     private var fragment: Fragment? = null;
     var stockId: Int = 0
     var position: Int = -1
@@ -133,7 +134,11 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_news -> {
                 if (fragment is NewsFragment)
                     return;
-                setFragment(NewsFragment());
+                val fragment: NewsFragment = NewsFragment()
+                var nd: Bundle = Bundle()
+                nd.putString("Stockname", list!!.get(position).symbol)
+                fragment.setArguments(nd)
+                setFragment(fragment);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -236,10 +241,12 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             tvlatestPrice.setText(list!!.get(position).latestPrice)
             Glide.with(this).load(list!!.get(position).image).into(iv_stock_img)
 
-            if (list!!.get(position).changePercent.contains("-"))
-                Glide.with(this).load(R.mipmap.downred).into(stockgraph)
-            else
-                Glide.with(this).load(R.mipmap.upgraph).into(stockgraph)
+
+            if (!TextUtils.isEmpty(list!!.get(position).changePercent))
+                if (list!!.get(position).changePercent.contains("-"))
+                    Glide.with(this).load(R.mipmap.downred).into(stockgraph)
+                else
+                    Glide.with(this).load(R.mipmap.upgraph).into(stockgraph)
         }
 
     }

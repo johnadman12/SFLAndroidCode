@@ -294,6 +294,21 @@
                     android:fillViewport="true"
                     tools:listitem="@layout/item_match"
                     android:layout_marginBottom="@dimen/_10sdp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleSemiBold"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="  See All  "
+                    android:padding="@dimen/_5sdp"
+                    android:background="@drawable/white_fill_button"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seeall"
+                    android:visibility="gone"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
                 android:paddingTop="@dimen/_6sdp"

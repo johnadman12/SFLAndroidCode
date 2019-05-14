@@ -50,7 +50,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
     val RESULT_DATA = 1003
     var flag: Boolean = false
-    var flagCloning: Int = 1
+    var flagCloning: Int = 0
     var sector: String = ""
 
     override fun onClick(p0: View?) {
@@ -139,7 +139,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (intent != null) {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            if (flagCloning == 0)
+            flagCloning = intent.getIntExtra("isCloning", 0)
+            if (flagCloning == 1)
                 stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
         }
 
@@ -284,6 +285,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             for (j in 0 until stockSelectedItems!!.size) {
                                 if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
                                     list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).stock_type = stockSelectedItems!!.get(j).stock_type
                                 }
                             }
                         }
@@ -582,7 +590,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 sector = data.getStringExtra("sectorlist")
                 getTeamlist()
-
             }
         }
     }

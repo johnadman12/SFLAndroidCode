@@ -96,6 +96,11 @@ class EditTeamAdapter(
             holder.itemView.img_add.visibility = View.VISIBLE
         }
 //
+        if (searchList!!.get(position).stock_type.equals("0"))
+            holder.itemView.toggleButton1.isChecked = true
+        else if (searchList!!.get(position).stock_type.equals("1")) {
+            holder.itemView.toggleButton1.isChecked = false
+        }
 
         holder.itemView.setOnClickListener {
             onItemCheckListener.onItemClick(searchList!!.get(position))

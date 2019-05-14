@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import stock.com.ui.pojo.SectorListPojo
 class SectorAdapter(
     val mContext: Context,
     val mContest: List<SectorListPojo.Sector>,
+    val filter: String,
     val onItemCheckListener: OnItemCheckListener
 ) :
 
@@ -41,6 +43,16 @@ class SectorAdapter(
         val currentItem: SectorListPojo.Sector = mContest.get(position);
         holder.itemView.checkboxContest.setText(mContest.get(position).sector)
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
+
+        val parts = filter.split(",")
+        for (i in 0 until parts.size) {
+            if (currentItem.sector.equals(parts[i])) {
+                Log.e("NUMBER------", parts[i])
+                holder.itemView.checkboxContest.isChecked = true;
+                onItemCheckListener.onItemCheck(currentItem.sector);
+            }
+        }
+
 
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {

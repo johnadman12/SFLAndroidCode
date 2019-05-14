@@ -1,46 +1,42 @@
-package stock.com.ui.dashboard.Team.Stock
+package stock.com.ui.dashboard.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_news.*
+import kotlinx.android.synthetic.main.activity_news_list.*
+import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import stock.com.AppBase.BaseFragment
+import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.home.adapter.LatestNewsAdapter
 import stock.com.ui.pojo.CityfalconNewsPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import java.util.ArrayList
-import android.content.Intent.getIntent
 
+class ActivityNewsListing : BaseActivity() {
+    var identifires: String = ""
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_news_list)
+        img_btn_back.setOnClickListener {
+            onBackPressed()
+        }
 
+        if (intent != null)
+            identifires = intent.getStringExtra(StockConstant.IDENTIFIRE)
 
-class NewsFragment : BaseFragment() {
-    var bd:Bundle= Bundle()
-    var identifires: String = "AAPL,TSLA,FTSE"
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_news, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if (arguments!=null)
-            identifires= arguments!!.getString("Stockname")
         getNewslist()
     }
 
 
     val categories: String = "mp,op"
     fun getNewslist() {
-        val d = StockDialog.showLoading(activity!!)
+        val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
         val call: Call<CityfalconNewsPojo> =
@@ -55,7 +51,7 @@ class NewsFragment : BaseFragment() {
                 d.dismiss()
                 if (response.body() != null) {
                     d.dismiss()
-                    setLatestNewAdapter(response.body()!!.stories, identifires)
+                    setLatestNewAdapter(response.body()!!.stories)
                 }
             }
 
@@ -67,16 +63,13 @@ class NewsFragment : BaseFragment() {
         })
     }
 
-
     @SuppressLint("WrongConstant")
-    private fun setLatestNewAdapter(
-        news: ArrayList<CityfalconNewsPojo.Story>,
-        identifires: String
-    ) {
-        val llm = LinearLayoutManager(context)
+    private fun setLatestNewAdapter(news: ArrayList<CityfalconNewsPojo.Story>) {
+        val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
-        rvNews!!.layoutManager = llm
-        rvNews.visibility = View.VISIBLE
-        rvNews!!.adapter = StockNewsAdapter(context!!, news,identifires);
+        recycle_news!!.layoutManager = llm
+        recycle_news.visibility = View.VISIBLE
+        recycle_news!!.adapter = NewsListdapter(this, news, identifires);
     }
+
 }

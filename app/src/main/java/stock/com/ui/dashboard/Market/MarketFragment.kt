@@ -15,7 +15,6 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.home.adapter.StockNameAdapter
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.HomePojo
 import stock.com.utils.StockDialog

@@ -93,6 +93,7 @@ class LobbyFragment : BaseFragment() {
                 if (refreshLayout != null)
                     refreshLayout.finishRefreshing()
                 if (response.body() != null) {
+//                    setContestType("")
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
@@ -128,73 +129,62 @@ class LobbyFragment : BaseFragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.RESULT_CODE_SORT) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("Entry")) {
+                    var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.fees)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                } else if (data.getStringExtra("flag").equals("time")) {
+                    var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.fees)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
+                    }
+                } else if (data.getStringExtra("flag").equals("price")) {
+                    /* var tempList = ArrayList<LobbyContestPojo.Contest>();
+                     for (obj in contest!!) {
+                         obj.setWinningAmount_temp(obj.winningAmount.replace(",", ""));
+                         obj.setWinningAmount_temp(obj.getWinningAmount_temp().replace("$", ""));
+                         tempList.add(obj)
+                     }*/
+                    contest!!.sortByDescending { it.win_amount.toDouble() };
+                    //var sortedList1 = tempList!!.sortByDescending { it.getWinningAmount_temp().toDouble() };
+                    recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+                    recyclerView_contest!!.adapter!!.notifyDataSetChanged();
 
-
-            if (requestCode == StockConstant.RESULT_CODE_SORT) {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    if (data.getStringExtra("flag").equals("Entry")) {
-                        var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
-                        for (obj in sortedList) {
-                            Log.d("sdadada---", "--" + obj.fees)
-                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                        }
-                    } else if (data.getStringExtra("flag").equals("time")) {
-                        var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
-                        for (obj in sortedList) {
-                            Log.d("sdadada---", "--" + obj.fees)
-                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                        }
-                    } else if (data.getStringExtra("flag").equals("price")) {
-                        /* var tempList = ArrayList<LobbyContestPojo.Contest>();
-                         for (obj in contest!!) {
-                             obj.setWinningAmount_temp(obj.winningAmount.replace(",", ""));
-                             obj.setWinningAmount_temp(obj.getWinningAmount_temp().replace("$", ""));
-                             tempList.add(obj)
-                         }*/
-                        contest!!.sortByDescending { it.win_amount.toDouble() };
-                        //var sortedList1 = tempList!!.sortByDescending { it.getWinningAmount_temp().toDouble() };
-                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
-                        recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-
-                    } else if (data.getStringExtra("flag").equals("position")) {
-                        val sortedList = contest!!.sortedWith(compareBy({ it.getCalculatePosition() }))
-                        for (obj in sortedList) {
-                            Log.d("sdadada---", "--" + obj.calculatePosition)
-                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                            recyclerView_contest!!.adapter!!.notifyDataSetChanged()
-                        }
+                } else if (data.getStringExtra("flag").equals("position")) {
+                    val sortedList = contest!!.sortedWith(compareBy({ it.getCalculatePosition() }))
+                    for (obj in sortedList) {
+                        Log.d("sdadada---", "--" + obj.calculatePosition)
+                        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 }
-            } else if (requestCode == RESULT_CODE_FILTER) {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    //contest!!.clear()
+            }
+        } else if (requestCode == RESULT_CODE_FILTER) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                //contest!!.clear()
+                var flagreset = data.getStringExtra("resetfilter")
+                if (flagreset.equals("0")) {
                     var testing = data.getSerializableExtra("contestlist") as ArrayList<LobbyContestPojo.Contest>;
                     Log.d("sdadada---Filter", "--" + testing.size)
                     recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                     recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-
-                    /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
-                    recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
                 }
+                else
+                {
+                    getContestlist()
+                }
+                /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
+                recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
             }
-
-            /*fun convertTime(time:String ): Long {
-                val inputPattern = "yyyy-MM-dd HH:mm:ss"
-                val inputFormat = SimpleDateFormat(inputPattern)
-                var date: Date? = null
-                date = inputFormat.parse(time)
-                val thatDay = Calendar.getInstance()
-                thatDay.setTime(date);
-                val today = Calendar.getInstance()
-                val diff =  thatDay.timeInMillis -today.timeInMillis
-                val days = diff / (24  60  60 * 1000)
-                val day = TimeUnit.SECONDS.toDays(diff).toInt()
-                val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
-                return hour
-            }*/
         }
+
         /*fun convertTime(time:String ): Long {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
@@ -204,11 +194,26 @@ class LobbyFragment : BaseFragment() {
             thatDay.setTime(date);
             val today = Calendar.getInstance()
             val diff =  thatDay.timeInMillis -today.timeInMillis
-            val days = diff / (24 * 60 * 60 * 1000)
+            val days = diff / (24  60  60 * 1000)
             val day = TimeUnit.SECONDS.toDays(diff).toInt()
             val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
             return hour
         }*/
+    }
+    /*fun convertTime(time:String ): Long {
+        val inputPattern = "yyyy-MM-dd HH:mm:ss"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        var date: Date? = null
+        date = inputFormat.parse(time)
+        val thatDay = Calendar.getInstance()
+        thatDay.setTime(date);
+        val today = Calendar.getInstance()
+        val diff =  thatDay.timeInMillis -today.timeInMillis
+        val days = diff / (24 * 60 * 60 * 1000)
+        val day = TimeUnit.SECONDS.toDays(diff).toInt()
+        val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
+        return hour
+    }*/
 
 
     fun showViewContestDialogue() {

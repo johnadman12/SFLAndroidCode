@@ -210,6 +210,7 @@
                                 card_view:textSize="@dimen/_16ssp"
                                 card_view:textColor="@color/white"
                                 style="@style/TextStyleSemiBold"
+                                card_view:direction="clockwise"
                                 card_view:progressBackgroundColor="@color/green"
                                 android:layout_marginBottom="8dp"
                                 android:layout_marginTop="8dp"/>

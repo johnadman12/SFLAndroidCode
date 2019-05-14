@@ -50,7 +50,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:text="Teams"
                     android:id="@+id/tvTeams"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
             />
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_score"

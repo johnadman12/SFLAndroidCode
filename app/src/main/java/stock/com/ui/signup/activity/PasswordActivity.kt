@@ -85,7 +85,7 @@ class PasswordActivity : BaseActivity() {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         startActivity(Intent(this@PasswordActivity, DashBoardActivity::class.java)
-                            .putExtra("flagcomingFrom", "0"))
+                            )
                         finish()
                     } /*else if (response.body()!!.status == "0") {
                         startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))

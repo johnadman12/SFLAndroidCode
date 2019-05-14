@@ -37,6 +37,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonArray
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
+import stock.com.ui.pojo.ContestDetail
 
 
 class ActivityViewTeam : BaseActivity(), View.OnClickListener {
@@ -49,10 +50,18 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     var exchangeId: Int = 0
     var contestId: Int = 0
+    var contestFee: String = ""
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
+            }
+
+            R.id.ll_sort -> {
+                startActivityForResult(
+                    Intent(this@ActivityViewTeam, ActivitySortTeam::class.java),
+                    StockConstant.RESULT_CODE_SORT_VIEW_TEAM
+                )
             }
             R.id.btn_Join -> {
                 showJoinContestDialogue()
@@ -99,6 +108,46 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
+
+    fun getContestDetail() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<ContestDetail> =
+            apiService.getContestDetail(
+                contestId.toString()
+                , getFromPrefsString(StockConstant.USERID).toString(), ""
+            )
+        call.enqueue(object : Callback<ContestDetail> {
+
+            override fun onResponse(call: Call<ContestDetail>, response: Response<ContestDetail>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        contestFee = response.body()!!.contest.get(0).entryFees
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityViewTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityViewTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                d.dismiss()
+            }
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_team)
@@ -108,7 +157,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         list!!.clear()
         if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
-            contestId = intent.getIntExtra(StockConstant.CONTESTID,0)
+            contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
 
         }
@@ -116,6 +165,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         initView()
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
         viewTeamAdapter!!.notifyDataSetChanged()
+        getContestDetail()
     }
 
     private fun initView() {
@@ -127,6 +177,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         btn_Join.setOnClickListener(this)
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
+        ll_sort.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
 
         stockSelectedItems = list
@@ -166,8 +217,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         dialogue.setCancelable(true)
         dialogue.setCanceledOnTouchOutside(true)
         dialogue.setTitle(null)
-        dialogue.entreefee.setText("")
-        dialogue.tvEntryFee.setText("")
+        dialogue.entreefee.setText(contestFee)
+        dialogue.tvEntryFee.setText(contestFee)
         dialogue.tv_yes.setOnClickListener {
             dialogue.dismiss()
             if (stockSelectedItems!!.size > 0) {
@@ -343,6 +394,39 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 list!!.addAll(data.getParcelableArrayListExtra("list"))
                 rv_team!!.adapter!!.notifyDataSetChanged()
 
+            }
+        }else     if (requestCode == StockConstant.RESULT_CODE_SORT_VIEW_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("Volume")) {
+
+                    var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
+
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_team!!.adapter!!.notifyDataSetChanged()
+                        /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                } else if (data.getStringExtra("flag").equals("price")) {
+                    var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_team!!.adapter!!.notifyDataSetChanged()
+                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                } else if (data.getStringExtra("flag").equals("Alpha")) {
+                    var sortedList = list!!.sortedBy { it.symbol?.toString() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_team!!.adapter!!.notifyDataSetChanged()
+                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                }
             }
         }
     }

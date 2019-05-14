@@ -232,7 +232,6 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                             startActivity(
                                 Intent(this@WelcomeActivity, DashBoardActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
-                                    .putExtra("flagcomingFrom", "0")
                             )
                         } else {
                             startActivity(

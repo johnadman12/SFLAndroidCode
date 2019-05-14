@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -85,8 +86,8 @@ class LobbyContestAdapter(
             mContest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
                 holder.itemView.tvTimeLeft.setText("00H:00M:00S")
-                holder.itemView.txtjoin.setTextSize(20.00f)
-                holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))
+                /*holder.itemView.txtjoin.setTextSize(20.00f)
+                holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))*/
                 holder.itemView.circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(mContext, R.color.GrayColor)
             } else if (diff.equals("3600000")) {

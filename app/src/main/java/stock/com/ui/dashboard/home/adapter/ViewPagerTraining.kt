@@ -12,6 +12,7 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.cardview.widget.CardView
@@ -24,7 +25,6 @@ import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.dialog_join_contest.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
-import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.TrainingPojo
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -108,8 +108,9 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                txtjoin.setTextSize(20.00f)
-                txtjoin.setText(context.getString(R.string.Finished))
+//                Toast.makeText(context,"Contest is live now",10000).show()
+               /* txtjoin.setTextSize(20.00f)
+                txtjoin.setText(context.getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
             }else if (diff.equals("3600000")) {

@@ -89,4 +89,17 @@ open class BaseFragment : Fragment() {
             .forEach { StockConstant.ACTIVITIES[it]?.finish() }
         activity!!.finish()*/
     }
+    fun setContestType(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.CONTEST_TYPE, s)
+        edit.apply()
+    }
+    fun setFilter(s: String, key:String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(key, s)
+        edit.apply()
+    }
+
 }

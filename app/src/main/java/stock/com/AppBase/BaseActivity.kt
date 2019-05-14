@@ -54,17 +54,16 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
-     /*fun setFragment(fragment: Fragment, bundle: Bundle) {
+    /*fun setFragment(fragment: Fragment, bundle: Bundle) {
 //        this.fragment = fragment;
-        fragment.arguments = bundle;
-        val fragmentManager = supportFragmentManager
-        fragmentManager
-            .beginTransaction()
+       fragment.arguments = bundle;
+       val fragmentManager = supportFragmentManager
+       fragmentManager
+           .beginTransaction()
 //            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
-            .replace(R.id.container, fragment)
-            .commitAllowingStateLoss()
-    }*/
-
+           .replace(R.id.container, fragment)
+           .commitAllowingStateLoss()
+   }*/
 
 
     /* */
@@ -368,6 +367,21 @@ open class BaseActivity : AppCompatActivity() {
     fun getFromPrefsString(key: String): String? {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         return prefs.getString(key, StockConstant.DEFAULT_VALUE_STRING)
+    }
+
+    fun setContestType(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.CONTEST_TYPE, s)
+        edit.apply()
+    }
+
+
+    fun setFilter(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.SECTOR_TYPE, s)
+        edit.apply()
     }
 
 }

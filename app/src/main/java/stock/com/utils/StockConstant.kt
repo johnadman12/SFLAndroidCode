@@ -8,6 +8,8 @@ object StockConstant{
     val COUNTRYLIST = "country"
     val EXCHANGEID = "exchangeid"
     val CONTESTID = "contestid"
+    val UUID = "uuid"
+    val IDENTIFIRE = "identifire"
     val DEVICE_TOKEN = ""
     val STOCKLIST = "stocklist"
     val SELECTEDSTOCK = "selectedstock"
@@ -21,6 +23,7 @@ object StockConstant{
     val RESULT_CODE_FILTER_WATCH=1001;
     val RESULT_CODE_SORT_WATCH=1002;
     val RESULT_CODE_SORT_CREATE_TEAM=1003;
+    val RESULT_CODE_SORT_VIEW_TEAM=1012;
     val RESULT_CODE_CREATE_TEAM=1004;
     val RESULT_CODE_VIEW_TEAM=1005;
     val RESULT_CODE_VIEW_REMOVE_TEAM=1006;
@@ -47,4 +50,6 @@ object StockConstant{
 
     @JvmStatic
     var ACTIVITIES = ArrayList<Activity?>()
+    val CONTEST_TYPE= "contesttype"
+    val SECTOR_TYPE= "sectortype"
 }

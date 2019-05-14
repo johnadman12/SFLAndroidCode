@@ -83,7 +83,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             var intent = Intent(this, ActivityCreateTeam::class.java)
             intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
             intent.putExtra(StockConstant.CONTESTID, contestid)
-            intent.putExtra("isCloning", 1)
+            intent.putExtra("isCloning", 0)
             startActivityForResult(intent, 405);
             // activity.setFragmentForActivity()
             /* var intent = Intent();
@@ -199,8 +199,9 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
-                txtjoin.setTextSize(20.00f)
-                txtjoin.setText(getString(R.string.Finished))
+                displayToast("Contest is live now")
+               /* txtjoin.setTextSize(20.00f)
+                txtjoin.setText(getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
@@ -224,9 +225,9 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
-
                         if (diff < 900000) {
                             ll_Circular.isEnabled = false
+                            txtjoin.setTextSize(20.00f)
                             txtjoin.setText(getString(R.string.live_now))
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
@@ -308,7 +309,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             var intent = Intent(this, ActivityCreateTeam::class.java)
             intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
             intent.putExtra(StockConstant.CONTESTID, contestid)
-            intent.putExtra("isCloning", 1)
+            intent.putExtra("isCloning", 0)
             startActivityForResult(intent, 405);
         }
         dialogue.ll_saved.setOnClickListener {

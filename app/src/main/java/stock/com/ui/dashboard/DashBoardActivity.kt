@@ -91,10 +91,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
-        if (intent != null)
-            flagcomingScreen = intent.getStringExtra("flagcomingFrom");
-
-        setUpMenu();
+//        if (intent != null)
+            setUpMenu();
         initView()
 
         ll_contest.setOnClickListener {

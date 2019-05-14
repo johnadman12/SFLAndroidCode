@@ -211,6 +211,13 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).stock_type = stockSelectedItems!!.get(j).stock_type
+                                }
+                            }
+                        }
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         setTeamText(stockSelectedItems!!.size.toString())

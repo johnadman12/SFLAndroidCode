@@ -13,6 +13,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.dashboard.Team.ActivityEditTeam
 import stock.com.ui.pojo.MyTeamsPojo
 import stock.com.utils.AppDelegate
@@ -52,15 +53,18 @@ class MyTeamAdapter(
         }
 
         holder.itemView.relClone.setOnClickListener {
-            /* mContext.startActivity(
-                 Intent(mContext, ActivityCreateTeam::class.java)
-                     .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                     .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                     .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
-                     .putExtra("isCloning",0)
-                     .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
-             )*/
             activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
+
+        }
+        holder.itemView.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityCreateTeam::class.java)
+                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                    .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                    .putExtra("isCloning", 1)
+                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+            )
 
         }
 

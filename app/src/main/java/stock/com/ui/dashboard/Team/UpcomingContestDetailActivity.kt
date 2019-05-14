@@ -181,8 +181,9 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
-                txtjoin.setTextSize(20.00f)
-                txtjoin.setText(getString(R.string.Finished))
+                Toast.makeText(this, "Contest is live now", 10000).show()
+                /*  txtjoin.setTextSize(20.00f)
+                  txtjoin.setText(getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
@@ -284,7 +285,9 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             startActivity(
                 Intent(this, ActivityCreateTeam::class.java).putExtra(
                     StockConstant.EXCHANGEID, exchangeid
-                ).putExtra("isCloning", 1)
+                ).putExtra(
+                    StockConstant.CONTESTID, contestid
+                ).putExtra("isCloning", 0)
             )
         }
         dialogue.ll_saved.setOnClickListener {

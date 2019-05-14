@@ -5,17 +5,23 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_latest_news.view.*
 import stock.com.R
 import stock.com.ui.news.activity.ActivityNewsDetail
 import stock.com.ui.pojo.CityfalconNewsPojo
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StockNewsAdapter (val mContext: Context, val mContest: ArrayList<CityfalconNewsPojo.Story>) :
+class StockNewsAdapter(
+    val mContext: Context,
+    val mContest: ArrayList<CityfalconNewsPojo.Story>,
+    val identifires: String
+) :
     RecyclerView.Adapter<StockNewsAdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -32,11 +38,11 @@ class StockNewsAdapter (val mContext: Context, val mContest: ArrayList<Cityfalco
         holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ActivityNewsDetail::class.java)
-                    .putParcelableArrayListExtra("newspojo", mContest)
-                    .putExtra("clickpos", position)
+                    .putExtra(StockConstant.UUID, mContest.get(position).uuid)
+                    .putExtra(StockConstant.IDENTIFIRE, identifires)
+
             )
         }
-
     }
 
 

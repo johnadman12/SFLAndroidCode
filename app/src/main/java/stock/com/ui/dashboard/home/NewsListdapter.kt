@@ -1,4 +1,5 @@
-package stock.com.ui.dashboard.home.adapter
+package stock.com.ui.dashboard.home
+
 
 import android.content.Context
 import android.content.Intent
@@ -16,12 +17,12 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LatestNewsAdapter(
+class NewsListdapter(
     val mContext: Context,
     val mContest: ArrayList<CityfalconNewsPojo.Story>,
     val identifires: String
 ) :
-    RecyclerView.Adapter<LatestNewsAdapter.FeatureListHolder>() {
+    RecyclerView.Adapter<NewsListdapter.FeatureListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_latest_news, parent, false)
@@ -47,9 +48,6 @@ class LatestNewsAdapter(
 
 
     override fun getItemCount(): Int {
-        if (mContest.size > 10)
-            return 10
-        else
             return mContest.size
     }
 

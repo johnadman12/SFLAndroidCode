@@ -9,11 +9,13 @@ import kotlinx.android.synthetic.main.row_contest_list.view.*
 import stock.com.R
 import stock.com.ui.pojo.FilterPojo
 import android.R.id.checkbox
+import android.util.Log
 
 
 class ContestListAdapter(
     val mContext: Context,
-    val mContest: List<FilterPojo.Category>,
+    val mContest: List<FilterPojo.Category>
+    , val filter: String,
     val onItemCheckListener: OnItemCheckListener
 ) :
 
@@ -43,7 +45,14 @@ class ContestListAdapter(
         holder.itemView.checkboxContest.setText(mContest.get(position).name)
 
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
-
+        val parts = filter.split(",")
+        for (i in 0 until parts.size) {
+            if (currentItem.id.toString().equals(parts[i])) {
+                Log.e("NUMBER------", parts[i].toString())
+                holder.itemView.checkboxContest.isChecked = true;
+                onItemCheckListener.onItemCheck(currentItem.id.toString());
+            }
+        }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
