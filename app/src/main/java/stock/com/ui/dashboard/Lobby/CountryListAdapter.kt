@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import stock.com.ui.pojo.FilterPojo
 class CountryListAdapter(
     val mContext: Context,
     val mContest: Country,
+    val filters:String,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<CountryListAdapter.Countryclass>() {
@@ -46,6 +48,14 @@ class CountryListAdapter(
 
         holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);
 
+        val parts = filters.split(",")
+        for (i in 0 until parts.size) {
+            if (currentItem.id.toString().equals(parts[i])) {
+                Log.e("NUMBER------", parts[i].toString())
+                holder.itemView.checkCountry.isChecked = true;
+                onItemCheckListener.onItemCheck(currentItem.id.toString());
+            }
+        }
         holder.itemView.checkCountry.setOnClickListener {
             if (holder.itemView.checkCountry.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkCountry.isChecked();

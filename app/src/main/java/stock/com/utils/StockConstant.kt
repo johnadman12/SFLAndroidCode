@@ -41,7 +41,7 @@ object StockConstant{
     val USEREMAIL = "useremail"
     val USERIMG = "userimg"
     val USERDATA = ""
-    val CONTEST = ""
+    val NEWS = "news"
     val USERFIRSTTIME = "user_first_time"
     val ACCESSTOKEN = "x_access_token"
     val PASSWORD = "password"
@@ -52,4 +52,6 @@ object StockConstant{
     var ACTIVITIES = ArrayList<Activity?>()
     val CONTEST_TYPE= "contesttype"
     val SECTOR_TYPE= "sectortype"
+    val MARKET_TYPE= "market_type"
+    val COUNTRY_TYPE= "country_type"
 }

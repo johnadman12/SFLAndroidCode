@@ -20,11 +20,12 @@ import stock.com.utils.StockDialog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
     var uuid: String = ""
     var identifires: String = ""
-    var newsdetail: ArrayList<CityfalconNewsPojo.Story>? = null
+    var newsdetail: CityfalconNewsPojo.Story? = null
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -40,18 +41,17 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_detail)
         StockConstant.ACTIVITIES.add(this)
-        newsdetail = ArrayList();
         initViews()
     }
 
     private fun initViews() {
         if (intent != null) {
-            uuid = intent.getStringExtra(StockConstant.UUID)
-            identifires = intent.getStringExtra(StockConstant.IDENTIFIRE)
+            newsdetail = intent.getSerializableExtra(StockConstant.NEWS) as CityfalconNewsPojo.Story?
         }
         img_btn_back.setOnClickListener(this)
         ivShare.setOnClickListener(this)
-        getNewslist()
+        setdata(newsdetail!!)
+//        getNewslist()
 
     }
 
@@ -97,7 +97,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
 
     val categories: String = "mp,op"
 
-    fun getNewslist() {
+   /* fun getNewslist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
@@ -127,6 +127,6 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
             }
 
         })
-    }
+    }*/
 
 }

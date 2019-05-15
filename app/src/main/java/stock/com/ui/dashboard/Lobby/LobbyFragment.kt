@@ -93,7 +93,9 @@ class LobbyFragment : BaseFragment() {
                 if (refreshLayout != null)
                     refreshLayout.finishRefreshing()
                 if (response.body() != null) {
-//                    setContestType("")
+                    setContestType(" ")
+                    setMarketContest(" ")
+                    setCountryContest(" ")
                     if (response.body()!!.status == "1") {
                         setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
@@ -175,9 +177,7 @@ class LobbyFragment : BaseFragment() {
                     Log.d("sdadada---Filter", "--" + testing.size)
                     recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
                     recyclerView_contest!!.adapter!!.notifyDataSetChanged();
-                }
-                else
-                {
+                } else {
                     getContestlist()
                 }
                 /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)

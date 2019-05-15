@@ -97,6 +97,7 @@ class WatchListActivity : BaseActivity() {
                         // displayToast("dsdadadadada"+""+response.body()!!.stockList!!.size);
                         if (response.body()!!.stockList!!.size != 0) {
                             //setWatchListAdapter(response.body()!!.stockList!!);
+                            list!!.clear()
                             list!!.addAll(response.body()!!.stockList!!);
                             setWatchListAdapter();
                             ll_search.visibility = View.VISIBLE;
@@ -122,6 +123,7 @@ class WatchListActivity : BaseActivity() {
             }
         })
     }
+
     fun callApiRemoveWatch(id: String) {
         Log.d("Remove ", "--" + id);
         val d = StockDialog.showLoading(this)
@@ -149,14 +151,16 @@ class WatchListActivity : BaseActivity() {
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-               // Log.d("WatchList--", "" + t.localizedMessage)
+                // Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()
             }
         })
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_FILTER_WATCH) {
@@ -164,15 +168,15 @@ class WatchListActivity : BaseActivity() {
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                   var flag=data.getStringExtra("flag");
-                    if(flag.equals("high")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice})).asReversed();
+                    var flag = data.getStringExtra("flag");
+                    if (flag.equals("high")) {
+                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice })).asReversed();
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);
                         setWatchListAdapter();
-                    }else if(flag.equals("low")){
-                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice}));
+                    } else if (flag.equals("low")) {
+                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice }));
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);

@@ -52,8 +52,6 @@ class SectorAdapter(
                 onItemCheckListener.onItemCheck(currentItem.sector);
             }
         }
-
-
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();

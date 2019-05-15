@@ -48,6 +48,7 @@ class LobbyContestAdapter(
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
         holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
+        holder.itemView.tvContestType.setText(mContest.get(position).catname)
         holder.itemView.tvWinnersTotal.setText(mContest.get(position).totalWinners)
         holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
@@ -106,7 +107,7 @@ class LobbyContestAdapter(
                 }
                 newtimer.start()
 
-            }else {
+            } else {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()

@@ -3,13 +3,12 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:clickable="false">
+             >
     <LinearLayout
             android:id="@+id/llCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
-            android:clickable="false"
             android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="@dimen/_25sdp"
@@ -33,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/colorPrimary"
                 android:button="@null"
+                android:checked="false"
                 style="@style/TextStyleNormal"
                 android:textColor="@color/textColorGray"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"

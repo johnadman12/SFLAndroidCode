@@ -249,7 +249,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-    val categories: String = "mp,op"
+    val categories: String = "op"
 
     fun getNewslist() {
         val d = StockDialog.showLoading(activity!!)

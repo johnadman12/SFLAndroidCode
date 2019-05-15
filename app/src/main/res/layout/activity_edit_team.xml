@@ -10,9 +10,6 @@
             android:id="@+id/include"
             layout="@layout/include_back"/>
 
-
-
-
     <LinearLayout android:id="@+id/lltop"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -184,6 +181,8 @@
                     app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:clipToPadding="false"
                     tools:listitem="@layout/row_team"
                     android:layout_height="0dp">
 

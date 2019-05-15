@@ -30,6 +30,7 @@ import android.widget.Toast
 import kotlin.collections.ArrayList
 import android.content.Intent
 import android.content.SharedPreferences
+import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import stock.com.ui.pojo.Country
@@ -46,10 +47,15 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     var maxprice: String = "";
     var canSelect: String = "";
     private var contestTypeFilter: String? = "";
+    private var marketTypeFilter: String? = "";
+    private var countryTypeFilter: String? = "";
 
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.llCountry -> {
+                rel_market.visibility = GONE
+                rel_contesttype.visibility = GONE
+                relative_range.visibility = GONE
                 clickPlusIcon(recycle_country, ivCountry, rel_country)
             }
             R.id.reset -> {
@@ -96,6 +102,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         StockConstant.ACTIVITIES.add(this)
         initViews()
         contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
+        marketTypeFilter = getFromPrefsString(StockConstant.MARKET_TYPE);
+        countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
+
     }
 
     fun setFilters() {
@@ -110,7 +119,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 android.text.TextUtils.join(",", marketSelectedItems),
                 android.text.TextUtils.join(",", countrySelectedItems),
                 tvMin.text.toString(),
-                maxprice.toString()
+                maxprice
             )
         call.enqueue(object : Callback<LobbyContestPojo> {
 
@@ -178,6 +187,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             tvMax.setText(maxValue.toString())
             maxprice = maxValue.toString()
 
+
         })
         rangeSeekbar1.setOnRangeSeekbarFinalValueListener({ minValue, maxValue ->
             Log.d(
@@ -228,55 +238,19 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         })
     }
 
-    /*fun setFilters() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<LobbyContestPojo> =
-            apiService.setContestFilter(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                android.text.TextUtils.join(",", currentSelectedItems),
-                android.text.TextUtils.join(",", marketSelectedItems),
-                android.text.TextUtils.join(",", countrySelectedItems),
-                tvMin.text.toString(),
-                tvMax.text.toString()
-            )
-        call.enqueue(object : Callback<LobbyContestPojo> {
-
-            override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
-        })
-    }*/
 
     fun setRangebar(entryFees: List<FilterPojo.EntryFee>?) {
         if (entryFees != null) {
             rangeSeekbar1.setMinValue(entryFees.get(0).minValue!!.toFloat())
             rangeSeekbar1.setMaxValue(entryFees.get(0).maxValue!!.toFloat())
             tvMin.setText(entryFees.get(0).minValue!!.toString())
-//            tvMin.setText("test")
             tvMax.setText(entryFees.get(0).maxValue!!.toString())
+
             maxprice = entryFees.get(0).maxValue!!.toString()
             canSelect = entryFees.get(0).maxValue!!.toString()
         }
     }
+
 
     /*  @SuppressLint("WrongConstant")
       private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
@@ -302,13 +276,15 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
         recycle_country!!.adapter =
-            CountryListAdapter(this, country, object : CountryListAdapter.OnItemCheckListener {
+            CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
+                    setCountryContest(android.text.TextUtils.join(",", countrySelectedItems));
                 }
 
                 override fun onItemCheck(item: String) {
                     countrySelectedItems!!.add(item);
+                    setCountryContest(android.text.TextUtils.join(",", countrySelectedItems));
                     Log.e("value", item)
                 }
             })
@@ -319,16 +295,19 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_market!!.layoutManager = llm
-        recycle_market!!.adapter = MarketListAdapter(this, market!!, object : MarketListAdapter.OnItemCheckListener {
-            override fun onItemUncheck(item: String) {
-                marketSelectedItems!!.remove(item);
+        recycle_market!!.adapter =
+            MarketListAdapter(this, market!!, marketTypeFilter!!, object : MarketListAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: String) {
+                    marketSelectedItems!!.remove(item)
+                    setMarketContest(android.text.TextUtils.join(",", marketSelectedItems));
 //                Log.e("valueremove", item.name.toString())
-            }
+                }
 
-            override fun onItemCheck(item: String) {
-                marketSelectedItems!!.add(item);
-            }
-        })
+                override fun onItemCheck(item: String) {
+                    marketSelectedItems!!.add(item);
+                    setMarketContest(android.text.TextUtils.join(",", marketSelectedItems));
+                }
+            })
     }
 
 

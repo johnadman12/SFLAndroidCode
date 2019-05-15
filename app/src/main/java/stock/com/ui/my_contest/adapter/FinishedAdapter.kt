@@ -41,6 +41,7 @@ class FinishedAdapter(
         holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
         holder.itemView.tvStockName.setText(contest.get(position).exchangename)
+        holder.itemView.tvContestType.setText(contest.get(position).catname)
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
         var sports: Int =

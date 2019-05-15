@@ -15,6 +15,7 @@ import stock.com.ui.pojo.FilterPojo
 class MarketListAdapter(
     val mContext: Context,
     val mContest: List<FilterPojo.Market>,
+    val filters: String,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<MarketListAdapter.FeatureListHolder>() {
@@ -45,6 +46,15 @@ class MarketListAdapter(
 
         Log.e("marketid", mContest.get(position).name)
         holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);
+
+        val parts = filters.split(",")
+        for (i in 0 until parts.size) {
+            if (currentItem.id.toString().equals(parts[i])) {
+                Log.e("NUMBER------", parts[i].toString())
+                holder.itemView.checkCountry.isChecked = true;
+                onItemCheckListener.onItemCheck(currentItem.id.toString());
+            }
+        }
 
         holder.itemView.checkCountry.setOnClickListener {
             if (holder.itemView.checkCountry.isChecked()) {

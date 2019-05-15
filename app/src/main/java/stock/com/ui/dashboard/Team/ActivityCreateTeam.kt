@@ -339,6 +339,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
+                    setSectorFilter("")
                     if (response.body()!!.status == "1") {
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
@@ -588,8 +589,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         }
         if (requestCode == 1009) {
             if (resultCode == RESULT_OK && data != null) {
-                sector = data.getStringExtra("sectorlist")
-                getTeamlist()
+                var flagreset = data.getStringExtra("resetfilter")
+                if (flagreset.equals("0")) {
+                    sector = data.getStringExtra("sectorlist")
+                    getTeamlist()
+                } else {
+                    sector = ""
+                    getTeamlist()
+                }
             }
         }
     }

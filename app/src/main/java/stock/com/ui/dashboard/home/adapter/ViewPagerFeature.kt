@@ -71,11 +71,13 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
         val txtjoin: TextView = view.findViewById(R.id.txtjoin)
         val tvConfirmWin: TextView = view.findViewById(R.id.tvConfirmWin)
         val tvMulJoin: TextView = view.findViewById(R.id.tvMulJoin)
+        val tvContestType: TextView = view.findViewById(R.id.tvContestType)
 
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
+        tvContestType.setText(list.get(position).catname)
 
         if (TextUtils.isEmpty(list.get(position).confirm_winning))
             tvConfirmWin.visibility = GONE

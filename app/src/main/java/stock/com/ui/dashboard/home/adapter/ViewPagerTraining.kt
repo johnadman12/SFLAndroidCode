@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.*
+import android.view.View.GONE
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -65,13 +66,18 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val circular_progress: CircularProgressIndicator = view.findViewById(R.id.circular_progress)
         val tvConfirmWin: TextView = view.findViewById(R.id.tvConfirmWin)
         val tvMulJoin: TextView = view.findViewById(R.id.tvMulJoin)
+        val tvContestType: TextView = view.findViewById(R.id.tvContestType)
+        val tvtotal: TextView = view.findViewById(R.id.tvtotal)
+        val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
 
+        tvtotal.visibility= GONE
+        tvTotalWinnings.visibility= GONE
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvTime.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
-
+        tvContestType.setText(list.get(position).catname)
 
 
         if (TextUtils.isEmpty(list.get(position).confirm_winning))
@@ -160,13 +166,13 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 
 
-        val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
-        llWinners.setOnClickListener {
+
+       /* llWinners.setOnClickListener {
             val manager = (context as AppCompatActivity).supportFragmentManager
             val bottomSheetDialogFragment =
                 BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
-        }
+        }*/
 
         ll_Circular.setOnClickListener {
             /* context.startActivity(

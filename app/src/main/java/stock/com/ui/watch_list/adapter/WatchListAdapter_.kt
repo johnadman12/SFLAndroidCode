@@ -1,6 +1,7 @@
 package stock.com.ui.watch_list.adapter
 
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,14 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
                 activity.callApiRemoveWatch(searchList!!.get(position).id)
             }
         }
+
+        if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
+            if (searchList!!.get(position).changePercent.contains("-"))
+                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+            else
+                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+
+
         if(!searchList!!.get(position).image.equals("")){
             Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
         }else{

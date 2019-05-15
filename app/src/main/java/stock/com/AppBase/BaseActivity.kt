@@ -377,10 +377,24 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
-    fun setFilter(s: String) {
+    fun setSectorFilter(s: String) {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()
         edit.putString(StockConstant.SECTOR_TYPE, s)
+        edit.apply()
+    }
+
+    fun setMarketContest(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.MARKET_TYPE, s)
+        edit.apply()
+    }
+
+    fun setCountryContest(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.COUNTRY_TYPE, s)
         edit.apply()
     }
 

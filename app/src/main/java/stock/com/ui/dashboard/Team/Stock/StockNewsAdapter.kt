@@ -38,9 +38,7 @@ class StockNewsAdapter(
         holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ActivityNewsDetail::class.java)
-                    .putExtra(StockConstant.UUID, mContest.get(position).uuid)
-                    .putExtra(StockConstant.IDENTIFIRE, identifires)
-
+                    .putExtra(StockConstant.NEWS, mContest.get(position))
             )
         }
     }

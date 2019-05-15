@@ -38,7 +38,7 @@ class NewsFragment : BaseFragment() {
     }
 
 
-    val categories: String = "mp,op"
+    val categories: String = "op"
     fun getNewslist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)

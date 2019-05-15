@@ -38,7 +38,7 @@ class ActivitySectorFilter : BaseActivity() {
             finish()
         }
         reset.setOnClickListener {
-//            setFilter("");
+            setSectorFilter("")
             val resultIntent = Intent()
             resultIntent.putExtra("resetfilter", "1")
             setResult(Activity.RESULT_OK, resultIntent)
@@ -108,12 +108,12 @@ class ActivitySectorFilter : BaseActivity() {
             SectorAdapter(this, sector, sectorTypeFilter!!, object : SectorAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     sectorSelected?.remove(item);
-                    setFilter(android.text.TextUtils.join(",", sectorSelected))
+                    setSectorFilter(android.text.TextUtils.join(",", sectorSelected))
                 }
 
                 override fun onItemCheck(item: String) {
                     sectorSelected?.add(item)
-                    setFilter(android.text.TextUtils.join(",", sectorSelected))
+                    setSectorFilter(android.text.TextUtils.join(",", sectorSelected))
                 }
             })
 

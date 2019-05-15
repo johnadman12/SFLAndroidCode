@@ -72,7 +72,7 @@ open class BaseFragment : Fragment() {
         }
         dialog.show()*/
 
-        saveIntoPrefsString(StockConstant.USERID,"")
+        saveIntoPrefsString(StockConstant.USERID, "")
         saveIntoPrefsString(StockConstant.USERNAME, "")
         saveIntoPrefsString(StockConstant.USERPHONE, "")
         saveIntoPrefsString(StockConstant.USEREMAIL, "")
@@ -83,22 +83,38 @@ open class BaseFragment : Fragment() {
         activity!!.finish();
 
 
-       /* startActivity(Intent(context, WelcomeActivity::class.java))
-        (0 until StockConstant.ACTIVITIES.size)
-            .filter { StockConstant.ACTIVITIES[it] != null }
-            .forEach { StockConstant.ACTIVITIES[it]?.finish() }
-        activity!!.finish()*/
+        /* startActivity(Intent(context, WelcomeActivity::class.java))
+         (0 until StockConstant.ACTIVITIES.size)
+             .filter { StockConstant.ACTIVITIES[it] != null }
+             .forEach { StockConstant.ACTIVITIES[it]?.finish() }
+         activity!!.finish()*/
     }
+
     fun setContestType(s: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()
         edit.putString(StockConstant.CONTEST_TYPE, s)
         edit.apply()
     }
-    fun setFilter(s: String, key:String) {
+
+    fun setMarketContest(s: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()
-        edit.putString(key, s)
+        edit.putString(StockConstant.MARKET_TYPE, s)
+        edit.apply()
+    }
+    fun setCountryContest(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.COUNTRY_TYPE, s)
+        edit.apply()
+    }
+
+
+    fun setSectorFilter(s: String, key: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.SECTOR_TYPE, s)
         edit.apply()
     }
 
