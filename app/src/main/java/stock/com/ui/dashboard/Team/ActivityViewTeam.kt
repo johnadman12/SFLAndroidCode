@@ -50,13 +50,15 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
     var exchangeId: Int = 0
     var contestId: Int = 0
+    var teamId: Int = 0
+    var flagCloning: Int = 0
     var contestFee: String = ""
+    var blank: String = ""
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
             }
-
             R.id.ll_sort -> {
                 startActivityForResult(
                     Intent(this@ActivityViewTeam, ActivitySortTeam::class.java),
@@ -98,8 +100,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Log.d("finaldata", array.toString())
                         array.add(postData1)
                     }
-
-
                     saveTeamList()
                 } else {
                     displayToast("please select Stock first")
@@ -159,6 +159,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+            teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            flagCloning = intent.getIntExtra("isCloning", 0)
 
         }
         StockConstant.ACTIVITIES.add(this)
@@ -183,7 +185,24 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         stockSelectedItems = list
         viewTeamAdapter = ViewTeamAdapter(
             this, list as ArrayList, object : ViewTeamAdapter.OnItemCheckListener {
+                override fun onToggleBuy(item: StockTeamPojo.Stock) {
+                    for (i in 0 until stockSelectedItems!!.size) {
+                        if (stockSelectedItems!!.get(i).stockid == item.stockid) {
+                            stockSelectedItems!!.get(i).stock_type = item.stock_type
+                        }
+                    }
+                }
+
+                override fun onToggleSell(item: StockTeamPojo.Stock) {
+                    for (i in 0 until stockSelectedItems!!.size) {
+                        if (stockSelectedItems!!.get(i).stockid == item.stockid) {
+                            stockSelectedItems!!.get(i).stock_type = item.stock_type
+                        }
+                    }
+                }
+
                 override fun onItemClick(item: StockTeamPojo.Stock) {
+
                     startActivityForResult(
                         Intent(
                             this@ActivityViewTeam,
@@ -240,7 +259,11 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     array.add(postData)
                 }
 //                    Log.e("savedlist", array.toString())
-                joinWithThisTeam()
+
+                if (flagCloning == 1)
+                    joinWithThisTeamID()
+                else
+                    joinWithThisTeam()
             } else {
                 displayToast("please select Stock first")
             }
@@ -286,11 +309,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+                        teamId = response.body()!!.team_id.toInt()
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         finish()
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
-                        finish()
+
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -321,8 +345,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        if (teamId == 0) {
+            jsonparams.addProperty("team_id", "")
+        } else {
+            jsonparams.addProperty("team_id", teamId)
+        }
         jsonparams.addProperty("contest_id", contestId.toString())
-        jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
@@ -344,11 +372,63 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         intent.putExtra("flag", "2")
                         setResult(Activity.RESULT_OK, intent);
                         finish();
-                    } /*else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.message())
-                        activity.setFragmentForActivity()
-                        finish()
-                    }*/
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityViewTeam,
+                        resources.getString(R.string.internal_server_error),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                Toast.makeText(
+                    this@ActivityViewTeam,
+                    resources.getString(R.string.something_went_wrong),
+                    Toast.LENGTH_LONG
+                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong))
+                d.dismiss()
+            }
+        })
+    }
+
+
+    fun joinWithThisTeamID() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("join_var", 1)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("stocks", array)
+        val call: Call<BasePojo> =
+            apiService.joinWithTeamId(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        var intent = Intent();
+                        intent.putExtra("flag", "2")
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                    }
                 } else {
                     Toast.makeText(
                         this@ActivityViewTeam,
@@ -395,7 +475,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 rv_team!!.adapter!!.notifyDataSetChanged()
 
             }
-        }else     if (requestCode == StockConstant.RESULT_CODE_SORT_VIEW_TEAM) {
+        } else if (requestCode == StockConstant.RESULT_CODE_SORT_VIEW_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
 

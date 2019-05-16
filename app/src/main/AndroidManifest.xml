@@ -289,31 +289,6 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-                android:name=".ui.GoThroughScreens.ActivityGoThrough2"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.GoThroughScreens.ActivityGoThrough3"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.GoThroughScreens.ActivityGoThrough4"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.GoThroughScreens.ActivityGoThrough5"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.GoThroughScreens.ActivityGoThrough6"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
                 android:name=".ui.Reset.ActivityResetPassword"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
@@ -440,11 +415,6 @@
                 android:name="com.facebook.FacebookActivity"
                 android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
                 android:label="@string/app_name"/>
-
-        <activity android:name=".ui.dashboard.Team.ActivityMyTeamView"
-                  android:configChanges="orientation|keyboardHidden"
-                  android:screenOrientation="portrait"
-                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
 
         <meta-data

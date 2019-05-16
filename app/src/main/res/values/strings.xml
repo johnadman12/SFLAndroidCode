@@ -316,7 +316,7 @@
     <string name="resend_in">Resend in</string>
     <string name="sec">seconds</string>
     <string name="nse">NSE</string>
-    <string name="nasdaq">NASDAQ</string>
+    <string name="nasdaq"></string>
     <string name="donjones">Donjones</string>
     <string name="ftse">FTSE</string>
     <string name="invalid_otp">Please enter valid OTP.</string>
@@ -509,8 +509,8 @@
     <string name="message_history">Message History</string>
     <string name="enter_message">Enter your message here...</string>
 
-    <string name="available_funds">Available \n funds</string>
-    <string name="currently_used">Currently \n Used</string>
+    <string name="available_funds">Available funds</string>
+    <string name="currently_used">Currently Used</string>
 
     <string name="withdraw_funds">Withdraw Funds</string>
 

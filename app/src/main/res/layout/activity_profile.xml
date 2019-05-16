@@ -154,7 +154,7 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             app:civ_border_width="3dp"
-                            android:src="@drawable/ic_launcher"
+                            android:src="@mipmap/ic_launcher"
                             app:civ_border_color="@color/colorbutton"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleSemiBold"
@@ -222,7 +222,7 @@
                             style="@style/TextStyleNormal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Biography: fsdfsfsfs sdfsfdsdf sdffsdf dfsfdsfsfsfsfsfdsdfsfdsfsfsdfsfsdfsfsfsfsfsfsfsfsfsffs"
+                            android:text="Biography: Contrary to popular belief, Lorem Ipsum is not simply random text"
                             android:textSize="@dimen/_12sdp"
                             android:textColor="@color/white"
                             android:padding="@dimen/_5ssp"/>

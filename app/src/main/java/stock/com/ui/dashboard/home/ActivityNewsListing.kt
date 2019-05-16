@@ -2,8 +2,10 @@ package stock.com.ui.dashboard.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_news_list.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -20,17 +22,32 @@ import stock.com.utils.StockDialog
 
 class ActivityNewsListing : BaseActivity() {
     var identifires: String = ""
+    var newsStories: ArrayList<CityfalconNewsPojo.Story>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_list)
+        newsStories = ArrayList()
         img_btn_back.setOnClickListener {
             onBackPressed()
         }
 
         if (intent != null)
             identifires = intent.getStringExtra(StockConstant.IDENTIFIRE)
+        newsStories = intent.getSerializableExtra(StockConstant.NEWSLIST) as ArrayList<CityfalconNewsPojo.Story>?
 
-        getNewslist()
+        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                //TODO make api call here
+                Handler().postDelayed({
+                }, 5000)
+                getNewslist()
+            }
+        })
+        if (newsStories != null)
+            setLatestNewAdapter(newsStories!!)
     }
 
 
@@ -49,13 +66,18 @@ class ActivityNewsListing : BaseActivity() {
         call.enqueue(object : Callback<CityfalconNewsPojo> {
             override fun onResponse(call: Call<CityfalconNewsPojo>, response: Response<CityfalconNewsPojo>) {
                 d.dismiss()
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
                 if (response.body() != null) {
                     d.dismiss()
-                    setLatestNewAdapter(response.body()!!.stories)
+                    newsStories = response.body()!!.stories
+//                    setLatestNewAdapter(response.body()!!.stories)
                 }
             }
 
             override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong))
                 d.dismiss()

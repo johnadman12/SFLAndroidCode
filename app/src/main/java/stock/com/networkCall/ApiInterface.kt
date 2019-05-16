@@ -332,7 +332,8 @@ interface ApiInterface {
     @POST("team/my_team")
     fun getMyTeams(
         @Header("x-access-token") token: String,
-        @Field("user_id") user_id: String
+        @Field("user_id") user_id: String,
+        @Field("exchange_id") exchange_id: String
     ): Call<MyTeamsPojo>
 
 
@@ -347,6 +348,12 @@ interface ApiInterface {
 
     @POST("team/create_team")
     fun saveTeam(
+        @Header("x-access-token") token: String, @Body stocks: JsonObject
+    ): Call<BasePojo>
+
+
+    @POST("team/join_team")
+    fun joinWithTeamId(
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 

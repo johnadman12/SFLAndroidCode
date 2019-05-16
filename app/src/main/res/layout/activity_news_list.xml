@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -20,19 +20,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextStyleSemiBold"
-                android:text="General News:"
+                android:text="News:"
                 android:visibility="visible"
                 android:textSize="@dimen/_22ssp"
                 android:layout_below="@+id/include_cross"
                 android:padding="@dimen/_10sdp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.madapps.liquid.LiquidRefreshLayout
+                android:id="@+id/refreshData"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recycle_news"
-                android:visibility="visible"
-                tools:listitem="@layout/row_latest_news"
-                android:layout_marginTop="@dimen/_5sdp"/>
+                app:AniBackColor="@color/colorPrimary"
+                app:AniForeColor="@color/white"
+                app:CircleSmaller="6"
+                android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycle_news"
+                    android:visibility="visible"
+                    tools:listitem="@layout/row_latest_news"
+                    android:layout_marginTop="@dimen/_5sdp"/>
+        </com.madapps.liquid.LiquidRefreshLayout>
+        /
     </LinearLayout>
 
 

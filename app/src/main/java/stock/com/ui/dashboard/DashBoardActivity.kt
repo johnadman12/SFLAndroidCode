@@ -65,8 +65,8 @@ import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener,
-    BottomNavigationView.OnNavigationItemSelectedListener/*, NavigationView.OnNavigationItemSelectedListener */,
+class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener
+ /*, NavigationView.OnNavigationItemSelectedListener */,
     InterfaceHome {
 
     override fun changeFragment(fragment: Fragment?) {
@@ -210,44 +210,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         tv.setTextColor(ContextCompat.getColor(applicationContext, color));
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                toolbar.visibility = View.VISIBLE
-                setTitleVisibility(false, true)
-                setMenu(true, false, false, false, false, false, false)
-                setTitleText(getString(R.string.home))
-                setFragment(HomeFragment(), Bundle())
-                return true
-            }
-            R.id.navigation_mycontest -> {
-                toolbar.visibility = View.VISIBLE
-                setMenu(true, false, false, false, false, false, false)
-                setTitleVisibility(true, false)
-                setTitleText(getString(R.string.my_contest))
-                var b = Bundle();
-                b.putString("flag", "false")
-                setFragment(MyContestFragment(), b);
-                return true
-            }
-            R.id.navigation_profile -> {
-                toolbar.visibility = View.GONE
-                setTitleVisibility(true, false)
-                setMenu(false, false, false, true, false, false, false)
-                setTitleText(getString(R.string.profile))
-                setFragment(ProfileFragment(), Bundle())
-                return true
-            }
-            R.id.navigation_more -> {
-                toolbar.visibility = View.VISIBLE
-                setMenu(true, false, false, false, false, false, false)
-                setTitleText(getString(R.string.more))
-                setFragment(MoreFragment(), Bundle())
-                return true
-            }
-        }
-        return false
-    }
+
 
     @SuppressLint("RestrictedApi")
     private fun removeShiftMode(view: BottomNavigationView) {

@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +44,17 @@ class FinishedAdapter(
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
         holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         holder.itemView.tvContestType.setText(contest.get(position).catname)
+
+        var amount: String = contest.get(position).entryFees.substring(1)
+        if (amount.equals("0") && contest.get(position).priceBreak.size <= 0) {
+            holder.itemView.tvTotalWinnings.setText("Free")
+            holder.itemView.text_totalwin.visibility = GONE
+            holder.itemView.llWinners.isEnabled = false
+        } else {
+            holder.itemView.text_totalwin.visibility = VISIBLE
+            holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
+            holder.itemView.llWinners.isEnabled = true
+        }
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
             .into(holder.itemView.ivStock)
         var sports: Int =

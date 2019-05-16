@@ -71,7 +71,14 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         img_btn_close.setOnClickListener(this)
         getContestDetail()
         ll_Circular.setOnClickListener {
-            showJoinTeamDialogue()
+            //            showJoinTeamDialogue()
+            startActivity(
+                Intent(this, ActivityCreateTeam::class.java).putExtra(
+                    StockConstant.EXCHANGEID, exchangeid
+                ).putExtra(
+                    StockConstant.CONTESTID, contestid
+                ).putExtra("isCloning", 0)
+            )
 
         }
 
@@ -150,6 +157,18 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
+
+        var amount: String = contest.entryFees.substring(1)
+        if (amount.equals("0") && contest.priceBreak.size <= 0) {
+            tvTotalWinnings.visibility = View.GONE
+            text_totalwin.visibility = View.GONE
+            llWinners.isEnabled = false
+        } else {
+            tvTotalWinnings.visibility = View.VISIBLE
+            text_totalwin.visibility = View.VISIBLE
+            llWinners.isEnabled = true
+        }
+
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
             .into(ivStock)

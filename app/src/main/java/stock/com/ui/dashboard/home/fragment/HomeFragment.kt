@@ -30,6 +30,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     var identifires: String = ""
     private var dashBoradACtivity: DashBoardActivity? = null;
     var dataExchange: ArrayList<String>? = null;
+    var newsStories: ArrayList<CityfalconNewsPojo.Story>? = null
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -37,6 +38,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 startActivity(
                     Intent(context, ActivityNewsListing::class.java)
                         .putExtra(StockConstant.IDENTIFIRE, identifires)
+                        .putExtra(StockConstant.NEWSLIST, newsStories)
                 )
 
             }
@@ -61,6 +63,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         seeall.setOnClickListener(this)
         getFeatureContentlist();
         dataExchange = ArrayList()
+        newsStories = ArrayList()
         txt_title.visibility = GONE;
     }
 
@@ -186,7 +189,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 //                        progressBar.visibility = GONE
                         setHomeBannerAdapter(response.body()!!.banner!!)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
+
                         setStockNameAdapter(response.body()!!.exchange!!)
+
                         if (response.body()!!.exchange != null) {
                             for (i in 0 until response.body()!!.exchange!!.size)
                                 dataExchange!!.add(response.body()!!.exchange!!.get(i).name)
@@ -267,6 +272,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     d.dismiss()
+                    newsStories = response.body()!!.stories
                     setLatestNewAdapter(response.body()!!.stories)
                 }
             }

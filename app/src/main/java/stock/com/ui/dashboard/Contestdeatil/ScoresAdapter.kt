@@ -18,7 +18,8 @@ import stock.com.utils.StockConstant
 class ScoresAdapter(
     val mContext: Context,
     val userId: Int,
-    val scores: MutableList<ContestDetail.Score>, val flag: Int
+    val scores: MutableList<ContestDetail.Score>,
+    val flag: Int
 ) : RecyclerView.Adapter<ScoresAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -33,19 +34,19 @@ class ScoresAdapter(
         holder.itemView.tvRank.setText(scores.get(position).rank)
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamName + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
-        if (flag == 0) {
-            holder.itemView.setOnClickListener {
-                if (userId == scores.get(position).userid) {
-                    mContext.startActivity(
-                        Intent(mContext, TeamPreviewActivity::class.java)
-                            .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-                    )
-                } else {
-                    Toast.makeText(mContext, "Contest is not live yet.", 10000).show()
+//        if (flag == 0) {
+        holder.itemView.setOnClickListener {
+            if (userId == scores.get(position).userid) {
+                mContext.startActivity(
+                    Intent(mContext, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                )
+            } else {
+                Toast.makeText(mContext, "Contest is not live yet.", 10000).show()
 
-                }
             }
         }
+//        }
 
     }
 

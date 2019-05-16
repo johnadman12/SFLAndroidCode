@@ -11,6 +11,8 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
@@ -166,6 +168,18 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
+        var amount: String = contest.entryFees.substring(1)
+        if (amount.equals("0") && contest.priceBreak.size <= 0) {
+            tvTotalWinnings.visibility = GONE
+            text_totalwin.visibility = GONE
+            llWinners.isEnabled = false
+        } else {
+            tvTotalWinnings.visibility = VISIBLE
+            text_totalwin.visibility = VISIBLE
+            llWinners.isEnabled = true
+        }
+
+
         Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
             .into(ivStock)
         iv_info.setOnClickListener {
@@ -200,8 +214,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
                 displayToast("Contest is live now")
-               /* txtjoin.setTextSize(20.00f)
-                txtjoin.setText(getString(R.string.Finished))*/
+                /* txtjoin.setTextSize(20.00f)
+                 txtjoin.setText(getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {

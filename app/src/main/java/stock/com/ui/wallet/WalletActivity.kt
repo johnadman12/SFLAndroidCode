@@ -1,5 +1,6 @@
 package stock.com.ui.wallet
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -15,6 +16,7 @@ import stock.com.ui.wallet.adapter.WalletAdapter
 class WalletActivity : BaseActivity(), View.OnClickListener {
 
     private var watchListAdapter: WalletAdapter? = null;
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)

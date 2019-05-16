@@ -12,6 +12,7 @@ object StockConstant{
     val IDENTIFIRE = "identifire"
     val DEVICE_TOKEN = ""
     val STOCKLIST = "stocklist"
+    val NEWSLIST = "newslist"
     val SELECTEDSTOCK = "selectedstock"
     val TEAMID = "teamid"
 

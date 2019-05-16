@@ -59,7 +59,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.llMyTeam -> {
-                startActivity(Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java))
+                startActivity(Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java)
+                    .putExtra(
+                        StockConstant.EXCHANGEID,
+                        exchangeId
+                    ))
             }
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
@@ -93,6 +97,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             ).putExtra(
                                 StockConstant.CONTESTID,
                                 contestId
+                            ).putExtra(
+                                StockConstant.TEAMID,
+                                teamId
+                            ).putExtra(
+                                "isCloning",
+                                flagCloning
                             ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 } else {
@@ -105,6 +115,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             ).putExtra(
                                 StockConstant.CONTESTID,
                                 contestId
+                            ).putExtra(
+                                StockConstant.TEAMID,
+                                teamId
+                            ).putExtra(
+                                "isCloning",
+                                flagCloning
                             ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
                     )
                 }
@@ -114,6 +130,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
     var exchangeId: Int = 0
     var contestId: Int = 0
+    var teamId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_team)
@@ -140,8 +157,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
-            if (flagCloning == 1)
+            if (flagCloning == 1) {
                 stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            }
         }
 
         /*val llm = LinearLayoutManager(this)

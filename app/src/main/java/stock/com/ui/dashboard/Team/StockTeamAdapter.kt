@@ -124,6 +124,7 @@ class StockTeamAdapter(
             onItemCheckListener.onItemClick(searchList!!.get(position))
         }
 
+//        1-sell,0-buy
 
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked)

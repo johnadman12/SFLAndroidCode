@@ -25,11 +25,14 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ActivityMyTeam : BaseActivity() {
+    var exchangeId:Int =0
     var jsonparams: JsonObject = JsonObject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
         StockConstant.ACTIVITIES.add(this)
+        if (intent!=null)
+            exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         initView()
     }
 
@@ -60,7 +63,8 @@ class ActivityMyTeam : BaseActivity() {
         val call: Call<MyTeamsPojo> =
             apiService.getMyTeams(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID)!!
+                getFromPrefsString(StockConstant.USERID)!!,
+                exchangeId.toString()
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
 

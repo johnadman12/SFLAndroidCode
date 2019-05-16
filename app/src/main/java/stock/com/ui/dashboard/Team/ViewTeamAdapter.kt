@@ -28,6 +28,8 @@ class ViewTeamAdapter(
     interface OnItemCheckListener {
         fun onItemCheck(sizeContest: Int, item: StockTeamPojo.Stock)
         fun onItemClick(item: StockTeamPojo.Stock)
+        fun onToggleSell(item: StockTeamPojo.Stock)
+        fun onToggleBuy(item: StockTeamPojo.Stock)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -81,8 +83,10 @@ class ViewTeamAdapter(
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
                 mContest.get(position).stock_type = "1";
+                onItemCheckListener.onToggleSell(mContest.get(position))
             } else
                 mContest.get(position).stock_type = "0";
+            onItemCheckListener.onToggleBuy(mContest.get(position))
         }
 
     }
