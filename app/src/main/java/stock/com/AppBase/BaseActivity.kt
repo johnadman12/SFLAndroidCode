@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.irozon.sneaker.Sneaker
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -94,8 +95,24 @@ open class BaseActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun displayToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
+    fun displayToast(message: String, type: String) {
+        if (type.equals("error")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakError()
+        } else if (type.equals("sucess")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakSuccess()
+        } else if (type.equals("warning")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakWarning()
+        }
     }
 
     open fun parseDateToddMMyyyy(time: String): String? {
@@ -381,6 +398,33 @@ open class BaseActivity : AppCompatActivity() {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()
         edit.putString(StockConstant.SECTOR_TYPE, s)
+        edit.apply()
+    }
+
+    fun setSectorWatchlistFilter(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.SECTOR_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
+
+    fun setMarketWatchlistFilter(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.MARKET_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
+
+    fun setCountryWatchlistFilter(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.COUNTRY_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
+    fun setAssetWatchlistFilter(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.ASSETS_WATCHLIST_TYPE, s)
         edit.apply()
     }
 

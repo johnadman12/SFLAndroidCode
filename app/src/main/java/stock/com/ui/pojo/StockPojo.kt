@@ -2,68 +2,67 @@ package stock.com.ui.pojo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class StockPojo :BasePojo(){
+class StockPojo : BasePojo(), Serializable {
 
 
     @SerializedName("stock")
     @Expose
-    var stockList: List<Stock>? = null
+    var stockList: ArrayList<Stock>? = null
 
 
-    inner class Stock{
+    inner class Stock : Serializable {
         @SerializedName("id")
         @Expose
-        var id:String="";
+        var id: String = "";
 
         @SerializedName("stockid")
         @Expose
-        var stockid:String="";
+        var stockid: String = "";
 
         @SerializedName("symbol")
         @Expose
-        var symbol:String="";
+        var symbol: String = "";
 
         @SerializedName("image")
         @Expose
-        var image:String="";
+        var image: String = "";
 
         @SerializedName("previousClose")
         @Expose
-        var previousClose:String="";
+        var previousClose: String = "";
 
         @SerializedName("latestVolume")
         @Expose
-        var latestVolume:String="";
+        var latestVolume: String = "";
 
         @SerializedName("marketopen")
         @Expose
-        var marketopen:String=""
+        var marketopen: String = ""
 
         @SerializedName("marketclose")
         @Expose
-        var marketclose:String="";
+        var marketclose: String = "";
 
         @SerializedName("latestPrice")
         @Expose
-        var latestPrice:String="";
+        var latestPrice: String = "";
 
         @SerializedName("changePercent")
         @Expose
-        var changePercent:String="";
+        var changePercent: String = "";
 
         @SerializedName("sector")
         @Expose
-        var sector:String=""
+        var sector: String = ""
 
         @SerializedName("companyName")
         @Expose
-        var companyName:String="";
-
+        var companyName: String = "";
 
 
     }
-
 
 
 }

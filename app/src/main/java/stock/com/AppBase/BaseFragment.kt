@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.irozon.sneaker.Sneaker
+import stock.com.R
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
 
@@ -18,10 +20,27 @@ open class BaseFragment : Fragment() {
 //        updateMenuTitles()
     }
 
-    fun displayToast(message: String) {
+    fun displayToast(message: String, type: String) {
         Toast.makeText(activity!!, message, Toast.LENGTH_LONG).show()
     }
-
+    /*fun displayToast(message: String, type: String) {
+        if (type.equals("error")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakError()
+        } else if (type.equals("sucess")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakSuccess()
+        } else if (type.equals("warning")) {
+            Sneaker.with(this) // Activity, Fragment or ViewGroup
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .sneakWarning()
+        }
+    }*/
 //    fun isNetworkAvailable() : Boolean{
 //        if (NetworkUtils.isConnected()) {
 //            return true

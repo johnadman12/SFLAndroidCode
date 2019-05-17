@@ -34,7 +34,7 @@ class CommentActivity : BaseActivity(){
     private fun setListener() {
         sent_comment.setOnClickListener {
             if(et_comment.text.toString().trim().isEmpty()){
-                displayToast("Please enter comment")
+                displayToast("Please enter comment","warning")
             }else{
 
             }

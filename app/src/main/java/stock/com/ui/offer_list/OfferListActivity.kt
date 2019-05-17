@@ -1,5 +1,6 @@
 package stock.com.ui.offer_list
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,7 @@ class OfferListActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("WrongConstant")
     private fun setAdapter() {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -63,13 +65,13 @@ class OfferListActivity : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
             override fun onFailure(call: Call<OffersPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

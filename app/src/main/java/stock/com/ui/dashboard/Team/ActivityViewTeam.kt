@@ -102,7 +102,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     }
                     saveTeamList()
                 } else {
-                    displayToast("please select Stock first")
+                    displayToast("please select Stock first","warning")
                 }
             }
         }
@@ -265,7 +265,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 else
                     joinWithThisTeam()
             } else {
-                displayToast("please select Stock first")
+                displayToast("please select Stock first","warning")
             }
 
         }
@@ -335,7 +335,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -392,7 +392,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -441,12 +441,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityViewTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

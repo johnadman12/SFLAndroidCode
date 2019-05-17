@@ -33,6 +33,7 @@
                 android:buttonTint="@color/colorPrimary"
                 android:button="@null"
                 android:checked="false"
+                android:drawableTint="@color/colorPrimary"
                 style="@style/TextStyleNormal"
                 android:textColor="@color/textColorGray"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"

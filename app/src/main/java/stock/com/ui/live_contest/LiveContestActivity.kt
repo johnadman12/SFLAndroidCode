@@ -47,7 +47,10 @@ class LiveContestActivity : BaseActivity() {
 
     @SuppressLint("WrongConstant")
     fun setLiveAdapter(scores: MutableList<ContestDetail.Score>) {
-        liveAdapter = LiveContestAdapter(applicationContext, scores);
+        liveAdapter = LiveContestAdapter(
+            applicationContext,
+            getFromPrefsString(StockConstant.USERID)!!.toInt(), scores
+        );
         val llm = LinearLayoutManager(applicationContext);
         llm.orientation = LinearLayoutManager.VERTICAL;
         recyclerView_Live!!.layoutManager = llm;

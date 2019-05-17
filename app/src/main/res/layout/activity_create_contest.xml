@@ -3,6 +3,7 @@
                                                      android:layout_width="match_parent"
                                                      android:background="@drawable/bg"
                                                      android:layout_height="match_parent">
-    <include layout="@layout/app_toolbar"/>
+    <!--<include
+            layout="@layout/include_back"/>-->
     <include layout="@layout/content_create_contest"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

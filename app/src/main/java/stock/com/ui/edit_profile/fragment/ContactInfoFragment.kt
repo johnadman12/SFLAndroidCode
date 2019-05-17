@@ -82,18 +82,18 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_apply -> {
                 if (et_number.text.toString().equals(""))
-                    displayToast(resources.getString(R.string.mob_error));
+                    displayToast(resources.getString(R.string.mob_error), "warning");
                 else if (et_address.text.toString().equals(""))
-                    displayToast(resources.getString(R.string.address_error));
+                    displayToast(resources.getString(R.string.address_error), "warning");
                 else if (et_country.text.toString().equals("")) {
-                    displayToast(resources.getString(R.string.country_error));
+                    displayToast(resources.getString(R.string.country_error),"warning");
                 } else if (et_zip_code.text.toString().equals("")) {
-                    displayToast(resources.getString(R.string.zip_coder_error));
+                    displayToast(resources.getString(R.string.zip_coder_error), "warning");
                 } else {
                     if (NetworkUtils.isConnected()) {
                         callApiUpdateProfile();
                     } else {
-                        displayToast(resources.getString(R.string.error_network_connection))
+                        displayToast(resources.getString(R.string.error_network_connection),"error")
                     }
                 }
             }
@@ -127,20 +127,20 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                             context!!.startActivity(intent)
                             activity!!.finish();
                         } else {
-                            displayToast(response.body()!!.message)
+                            displayToast(response.body()!!.message, "warning")
                         }
                     }else if(response.body()!!.status.equals("2")){
                         appLogout();
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -166,14 +166,14 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                         appLogout();
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<UserPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -198,6 +198,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    @SuppressLint("WrongConstant")
     private fun showCountryList() {
         dialog = Dialog(context)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)

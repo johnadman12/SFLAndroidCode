@@ -5,7 +5,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.appcompat.widget.AppCompatTextView
-import kotlinx.android.synthetic.main.create_contest_activity.*
+import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -18,7 +18,7 @@ class ActivityCreateContest : BaseActivity() {
     val myCalendar = Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_contest_activity)
+        setContentView(R.layout.activity_create_contest)
         StockConstant.ACTIVITIES.add(this)
         initView()
     }

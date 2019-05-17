@@ -479,7 +479,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             return
         }
         this.doubleBackToExitPressedOnce = true
-        displayToast(resources.getString(R.string.back_exit))
+        displayToast(resources.getString(R.string.back_exit),"error")
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
@@ -532,14 +532,14 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         appLogout();
-                        displayToast(response.body()!!.message);
+                        displayToast(response.body()!!.message, "error");
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     } else {
-                        displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message,"warning")
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
@@ -547,7 +547,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

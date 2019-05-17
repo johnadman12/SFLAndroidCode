@@ -44,7 +44,7 @@ class MarketFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         setStockNameAdapter(response.body()!!.exchange)
                     } else {
-                        displayToast(resources.getString(R.string.internal_server_error))
+                        displayToast(resources.getString(R.string.internal_server_error),"error")
                         d.dismiss()
                     }
                 }
@@ -52,7 +52,7 @@ class MarketFragment : BaseFragment() {
 
             override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

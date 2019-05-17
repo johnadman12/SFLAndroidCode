@@ -96,12 +96,12 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
 
         tv_apply.setOnClickListener {
             if (et_biography.equals("")) {
-                displayToast(resources.getString(R.string.please_enter_bio))
+                displayToast(resources.getString(R.string.please_enter_bio),"warning")
             } else {
                 if (NetworkUtils.isConnected()) {
                     updateDetails()
                 } else {
-                    displayToast(resources.getString(R.string.error_network_connection))
+                    displayToast(resources.getString(R.string.error_network_connection),"error")
                 }
 
             }
@@ -144,14 +144,14 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         //setData(response.body()!!.user!!)
-                        displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message,"warning")
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout()
                     } else {
-                        displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message,"warning")
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
@@ -159,7 +159,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 //  Log.d("profileupdate","---"+t.localizedMessage)
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -187,14 +187,14 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<UserPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -285,7 +285,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterf
             thumbnail_camera = bitmap;
             profile_image.setImageBitmap(bitmap);
         } catch (e: Exception) {
-            displayToast("Failed to load")
+            displayToast("Failed to load","error")
         }
     }
 

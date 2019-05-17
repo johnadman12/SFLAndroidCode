@@ -61,7 +61,7 @@ class NewsFragment : BaseFragment() {
 
             override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

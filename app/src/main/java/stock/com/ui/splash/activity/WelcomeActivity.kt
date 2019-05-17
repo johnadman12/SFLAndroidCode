@@ -243,7 +243,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
 
                     }
-                    displayToast(response.body()!!.message)
+                    displayToast(response.body()!!.message,"sucess")
                 } else {
                     startActivity(
                         Intent(this@WelcomeActivity, SignUpActivity::class.java)
@@ -256,7 +256,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -349,14 +349,14 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<Country>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
 

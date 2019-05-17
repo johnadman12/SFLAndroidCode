@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
+import com.irozon.sneaker.Sneaker
 import kotlinx.android.synthetic.main.activity_create_team.*
 import kotlinx.android.synthetic.main.contest_detail_activity.*
 import kotlinx.android.synthetic.main.dialog_choose_team.*
@@ -213,7 +214,11 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
-                displayToast("Contest is live now")
+                Sneaker.with(this) // Activity, Fragment or ViewGroup
+                    .setTitle("DFX")
+                    .setMessage("Contest is not live yet.")
+                    .sneakWarning()
+//                displayToast("Contest is live now")
                 /* txtjoin.setTextSize(20.00f)
                  txtjoin.setText(getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =

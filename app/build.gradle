@@ -96,6 +96,9 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+
+    //sneaker
+    implementation 'com.irozon.sneaker:sneaker:2.0.0'
     //country code
     implementation 'com.hbb20:ccp:2.2.2'
 //font

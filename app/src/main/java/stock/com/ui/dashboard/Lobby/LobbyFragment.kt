@@ -103,7 +103,7 @@ class LobbyFragment : BaseFragment() {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
@@ -112,7 +112,7 @@ class LobbyFragment : BaseFragment() {
                 if (refreshLayout != null)
                     refreshLayout.finishRefreshing()
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
 

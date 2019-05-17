@@ -1,203 +1,567 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_create_contest"
-        android:layout_height="match_parent">
-    <LinearLayout
-            android:id="@+id/ll_match"
-            android:background="@color/colorSecondaryLight"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/_10sdp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
+    <include
+            layout="@layout/include_back"/>
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_gravity="center_vertical"
-                android:id="@+id/txt_matchVS"
-                style="@style/TextStyleSemiBold"
-                android:gravity="start"
-                android:textSize="@dimen/_15sdp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/textColorBlack"
-                android:text="IND vs PAK"
-                android:layout_height="wrap_content"/>
-        <androidx.appcompat.widget.AppCompatTextView
-                android:layout_gravity="center_vertical"
-                android:id="@+id/txt_CountDownTimer"
-                style="@style/TextStyleNormal"
-                android:gravity="end"
-                android:drawablePadding="@dimen/_5sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:drawableStart="@mipmap/time"
-                android:textColor="@color/textColorLightBlack"
-                android:text="06h 23m 45s"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <View
-            android:id="@+id/view1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_match"
-            android:background="@color/colorItemBackgroundLightGray"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
-    <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/_5sdp"
-            android:id="@+id/card_view"
-            card_view:layout_constraintTop_toBottomOf="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardCornerRadius="@dimen/_6sdp"
-            card_view:cardElevation="@dimen/_3sdp"
-            card_view:cardPreventCornerOverlap="false"
-            android:backgroundTint="@color/white"
-            card_view:cardUseCompatPadding="true">
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingTop="@dimen/_10sdp"
-                android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:id="@+id/til_contestName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/EditTextLabel">
-                <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextStyle"
-                        android:id="@+id/et_contestName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/enter_contest_name"
-                        android:inputType="textEmailAddress"
-                        android:imeOptions="actionNext"
-                        android:textSize="@dimen/_12sdp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/til_contestName"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:id="@+id/til_winning_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/EditTextLabel">
-                <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextStyle"
-                        android:id="@+id/et_winning_amount"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/winning_amount"
-                        android:inputType="number"
-                        android:imeOptions="actionNext"
-                        android:textSize="@dimen/_12sdp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/til_winning_amount"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:id="@+id/til_contest_size"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/EditTextLabel">
-                <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextStyle"
-                        android:id="@+id/et_contest_size"
-                        android:imeOptions="actionNext"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/contest_size"
-                        android:inputType="textEmailAddress"
-                        android:textSize="@dimen/_12sdp"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="match_parent">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                      android:background="@mipmap/bg">
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:padding="@dimen/_10sdp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toStartOf="@id/switch_multipleTeam"
-                    style="@style/TextStyleNormal"
-                    android:textSize="@dimen/_11sdp"
-                    android:textColor="@color/textColorGray"
-                    android:text="@string/allow_friends_to_join_with_multiple_team"
-                    app:layout_constraintTop_toBottomOf="@+id/til_contest_size"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_multipleTeam"
-                    app:layout_constraintTop_toBottomOf="@+id/til_contest_size"
-                    android:padding="@dimen/_5sdp"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:theme="@style/SwitchTheme"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-    <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/_5sdp"
-            card_view:layout_constraintTop_toBottomOf="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardCornerRadius="@dimen/_6sdp"
-            card_view:cardElevation="@dimen/_3sdp"
-            card_view:cardPreventCornerOverlap="false"
-            android:backgroundTint="@color/white"
-            card_view:cardUseCompatPadding="true">
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:padding="@dimen/_10sdp"
-                android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_EntryFee"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    style="@style/TextStyleMedium"
-                    android:textSize="@dimen/_13sdp"
-                    android:gravity="center"
-                    android:textColor="@color/textColorLightBlack"
-                    android:text="@string/entry_per_team"
+                    android:id="@+id/tvNotification"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/txt_EntryFee"
-                    app:layout_constraintStart_toStartOf="parent"
-                    style="@style/TextStyleNormal"
-                    android:textSize="@dimen/_11sdp"
-                    android:gravity="center"
-                    android:textColor="@color/textColorGray"
-                    android:text="@string/entry_is_calculated_based_on_total_prize_amount_contest_size"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleSemiBold"
+                    android:text="Create Contest "
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_25ssp"
+                    android:padding="@dimen/_10sdp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-    android:id="@+id/btn_CreateContest"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_width="match_parent"
-    style="@style/ButtonStyle"
-    android:text="@string/create_contest"
-    android:background="@color/colorASPrimary"
-    android:layout_height="wrap_content"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1sp"
+                  android:background="#3CA1D5"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="@dimen/_5sdp"
+                          android:orientation="vertical">
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/contestname_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="Create Contest "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="Training Contest"
+                                android:textSize="@dimen/_12ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/startdate_"/>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_height="wrap_content"
+                                  android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="Start Date "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/startDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="5th March 2018"
+                                android:textSize="@dimen/_10ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:drawableRight="@mipmap/date"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="Start Time "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/startTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="5th April 2018"
+                                android:textSize="@dimen/_10ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:gravity="center"
+                                android:drawableRight="@mipmap/time_"
+                                android:layout_gravity="center"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/startdate_"/>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_height="wrap_content"
+                                  android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="End Date "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/endDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="5th March 2018"
+                                android:textSize="@dimen/_10ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:drawableRight="@mipmap/date"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="End Time "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/endTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="5th April 2018"
+                                android:textSize="@dimen/_10ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:gravity="center"
+                                android:drawableRight="@mipmap/time_"
+                                android:layout_gravity="center"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/market_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="Market "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="Stock Market"
+                                android:textSize="@dimen/_12ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:drawableRight="@mipmap/dropdown"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/entryfee_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+                        <LinearLayout android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="@dimen/_10sdp"
+                                      android:orientation="horizontal">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="Total Winning amount "
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="min: 0"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+
+
+                        </LinearLayout>
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="$ 20"
+                                android:textSize="@dimen/_12ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:visibility="gone"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/market_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:text="Contest Type "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="Single Constest"
+                                android:textSize="@dimen/_12ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:drawableRight="@mipmap/dropdown"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:gravity="center"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/pots_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
+                        <LinearLayout android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="@dimen/_10sdp"
+                                      android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="Spots "
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/TextStyleNormal"
+                                    android:text="min: 2"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:textColor="@color/white"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textSize="@dimen/_10ssp"/>
+
+                        </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/_10sdp"
+                                android:hint="230"
+                                android:textSize="@dimen/_12ssp"
+                                android:paddingLeft="@dimen/_5sdp"
+                                style="@style/TextStyleNormal"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:background="@drawable/edit_transparent_bg"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_10sdp"
+                              android:layout_marginLeft="@dimen/_40sdp"
+                              android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:layout_weight="1"
+                            android:text="Allow Multiple Entries  "
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/_3sdp"
+                            android:textSize="@dimen/_10ssp"/>
+
+                    <ToggleButton
+                            android:id="@+id/toggleButton1"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:background="@drawable/bgtoggle"
+                            android:button="@null"
+                            android:layout_gravity="right"
+                            android:checked="true"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:textOff=""
+                            android:textOn=""/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_10sdp"
+                        android:background="#4FFFFFFF"
+                        android:gravity="center"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_40sdp">
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="center"
+                                  android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleMedium"
+                                android:text="Contest Entry Fee : "
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_12ssp"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleMedium"
+                                android:text="$ 10 "
+                                android:textColor="@color/white"
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_12ssp"/>
+
+                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/TextStyleNormal"
+                            android:text="@string/contestfee"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:lineSpacingExtra="@dimen/_2sdp"
+                            android:padding="@dimen/_5sdp"
+                            android:textSize="@dimen/_10ssp"/>
+
+                </LinearLayout>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_Next"
+                        style="@style/TextStyleNormal"
+                        android:text="Create contest"
+                        android:textAllCaps="true"
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@drawable/green_fill_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

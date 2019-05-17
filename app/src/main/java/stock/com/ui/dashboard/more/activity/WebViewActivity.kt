@@ -60,13 +60,13 @@ class WebViewActivity : BaseActivity() {
                         Log.d("sdadadadadad--",""+response.body()!!.cms!!.description)
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
             override fun onFailure(call: Call<WebViewPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

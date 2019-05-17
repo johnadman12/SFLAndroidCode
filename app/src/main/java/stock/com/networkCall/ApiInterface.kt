@@ -250,7 +250,14 @@ interface ApiInterface {
     @FormUrlEncoded
     // @Header("Content-Type: application/x-www-form-urlencoded")
     @POST("stock/feature_stock")
-    fun getWatchList(@Header("x-access-token") token: String, @Field("user_id") userid: String): Call<StockPojo>
+    fun getWatchList(@Header("x-access-token") token: String,
+                     @Field("user_id") userid: String,
+                     @Field("asset_type") asset_type: String,
+                     @Field("sector") sector: String,
+                     @Field("market") market: String,
+                     @Field("country_id") country_id: String
+
+    ): Call<StockPojo>
 
     @FormUrlEncoded
     @POST("stock/remove_watch")
@@ -258,7 +265,8 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("stock/get_filter")
-    fun getWatchListFilter(@Header("x-access-token") token: String, @Field("user_id") user_id: String): Call<WatchListFilterPojo>;
+    fun getWatchListFilter(@Header("x-access-token") token: String,
+                           @Field("user_id") user_id: String): Call<WatchListFilterPojo>;
 
 
     @FormUrlEncoded

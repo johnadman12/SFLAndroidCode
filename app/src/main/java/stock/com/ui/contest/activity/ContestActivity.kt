@@ -15,6 +15,7 @@ import stock.com.R
 import stock.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
 import stock.com.ui.contest.dialogues.BottomSheetFilterFragment
 import stock.com.ui.createTeam.activity.myTeam.MyTeamActivity
+import stock.com.ui.dashboard.Lobby.ActivityCreateContest
 import stock.com.ui.invite.activity.InviteCodeActivity
 import stock.com.ui.joinedContest.activity.FixtureJoinedContestActivity
 
@@ -29,7 +30,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, InviteCodeActivity::class.java))
             }
             R.id.rl_createContest -> {
-                startActivity(Intent(this, CreateContestActivity::class.java))
+                startActivity(Intent(this, ActivityCreateContest::class.java))
             }
             R.id.ll_joinedContests -> {
                 startActivity(Intent(this, FixtureJoinedContestActivity::class.java))

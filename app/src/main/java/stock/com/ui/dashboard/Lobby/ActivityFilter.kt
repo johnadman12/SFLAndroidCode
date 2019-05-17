@@ -43,7 +43,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var currentSelectedItems: ArrayList<String>? = null
     private var marketSelectedItems: ArrayList<String>? = null
     private var countrySelectedItems: ArrayList<String>? = null
-    var contestList: List<LobbyContestPojo.Contest>? = null
     var maxprice: String = "";
     var canSelect: String = "";
     private var contestTypeFilter: String? = "";
@@ -59,7 +58,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 clickPlusIcon(recycle_country, ivCountry, rel_country)
             }
             R.id.reset -> {
-//                setContestType("");
                 val resultIntent = Intent()
                 resultIntent.putExtra("resetfilter", "1")
                 setResult(Activity.RESULT_OK, resultIntent)
@@ -142,19 +140,19 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         } else if (response.body()!!.status == "2") {
                             appLogout();
                         } else {
-                            displayToast("no data exist")
+                            displayToast("no data exist","warning")
                             finish()
                         }
                     }
                 } else {
-                    displayToast(resources.getString(stock.com.R.string.internal_server_error))
+                    displayToast(resources.getString(stock.com.R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -216,11 +214,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         setRangebar(response.body()!!.entryFees)
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityFilter,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                   displayToast(response.body()!!.message,"error")
                     d.dismiss()
                 }
             }
@@ -232,7 +226,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -251,25 +245,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         }
     }
 
-
-    /*  @SuppressLint("WrongConstant")
-      private fun setCountryAdapter(country: ArrayList<FilterPojo.CountryPojo>?) {
-          val llm = LinearLayoutManager(this)
-          llm.orientation = LinearLayoutManager.VERTICAL
-          recycle_country!!.layoutManager = llm
-          recycle_country!!.adapter =
-              CountryListAdapter(this, country, object : CountryListAdapter.OnItemCheckListener {
-                  override fun onItemUncheck(item: String) {
-                      countrySelectedItems!!.remove(item);
-                  }
-
-                  override fun onItemCheck(item: String) {
-                      countrySelectedItems!!.add(item);
-                      Log.e("value", item)
-                  }
-              })
-      }
-  */
     @SuppressLint("WrongConstant")
     private fun setCountryAdapter(country: Country) {
         val llm = LinearLayoutManager(this)

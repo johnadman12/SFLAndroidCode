@@ -415,6 +415,7 @@
     <string name="watch_list">Watchlist</string>
 
     <string name="search_by_market">Search by market symbol or name</string>
+    <string name="search_by_news">Search by Exchange symbol or name</string>
     <string name="search_by_user_name">Search by username</string>
 
     <string name="social_network">Social Network</string>

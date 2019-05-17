@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -29,6 +30,9 @@ class ActivityNewsListing : BaseActivity() {
         newsStories = ArrayList()
         img_btn_back.setOnClickListener {
             onBackPressed()
+        }
+        ll_search.setOnClickListener {
+            startActivity(Intent(this, ActivityNewsSearch::class.java))
         }
 
         if (intent != null)
@@ -79,7 +83,7 @@ class ActivityNewsListing : BaseActivity() {
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

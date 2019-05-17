@@ -53,19 +53,19 @@ class CredentialsFragment : BaseFragment() {
 
         view.tv_achange_pass.setOnClickListener {
             if(et_old_pass.text.toString().equals("")){
-                displayToast(resources.getString(R.string.error_old_pass));
+                displayToast(resources.getString(R.string.error_old_pass),"warning");
             }else if(et_new_pass.text.toString().equals("")){
-                displayToast(resources.getString(R.string.error_new_pass));
+                displayToast(resources.getString(R.string.error_new_pass),"warning");
             }else if(et_conf_pass.text.toString().equals("")){
-                displayToast(resources.getString(R.string.error_con_pass));
+                displayToast(resources.getString(R.string.error_con_pass), "warning");
             }else{
                 if(!et_conf_pass.text.toString().equals(et_new_pass.text.toString())){
-                    displayToast(resources.getString(R.string.error_pass_match))
+                    displayToast(resources.getString(R.string.error_pass_match), "warning")
                 }else{
                     if(NetworkUtils.isConnected()){
                         changePassword();
                     }else{
-                        displayToast(resources.getString(R.string.error_network_connection))
+                        displayToast(resources.getString(R.string.error_network_connection),"error")
                     }
                 }
             }
@@ -102,21 +102,21 @@ class CredentialsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         //startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
-                        displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message, "warning")
                         appLogout();
                     }else if(response.body()!!.status == "2"){
                         appLogout();
                     }else{
-                        displayToast(response.body()!!.message)
+                        displayToast(response.body()!!.message, "warning")
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

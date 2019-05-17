@@ -205,14 +205,14 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<HomePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -241,14 +241,14 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<TrainingPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -279,7 +279,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
             override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
 
@@ -300,7 +300,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
 //                        setStockNameAdapter(response.body()!!.exchange)
                     } else {
-                        displayToast(resources.getString(R.string.internal_server_error))
+                        displayToast(resources.getString(R.string.internal_server_error),"error")
                         d.dismiss()
                     }
                 }
@@ -308,7 +308,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
             override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

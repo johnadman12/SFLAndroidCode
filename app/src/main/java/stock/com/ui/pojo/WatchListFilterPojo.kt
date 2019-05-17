@@ -26,7 +26,8 @@ class WatchListFilterPojo : BasePojo() {
     }
 
     inner class asset {
-        var asset_type: String = ""
+        var name: String = ""
+        var id: String = ""
     }
     inner class sector {
         var sector: String = ""

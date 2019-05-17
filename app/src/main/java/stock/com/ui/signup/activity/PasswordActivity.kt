@@ -91,16 +91,16 @@ class PasswordActivity : BaseActivity() {
                         startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
                         finish()
                     }*/
-                    displayToast(response.body()!!.message)
+                    displayToast(response.body()!!.message,"sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error))
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

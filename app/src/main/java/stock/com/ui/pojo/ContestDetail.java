@@ -101,9 +101,9 @@ public class ContestDetail extends BasePojo {
         @SerializedName("team_id")
         @Expose
         public int teamId;
-        @SerializedName("team_name")
+        @SerializedName("teamNameCount")
         @Expose
-        public String teamName;
+        public String teamNameCount;
         @SerializedName("rank")
         @Expose
         public String rank;

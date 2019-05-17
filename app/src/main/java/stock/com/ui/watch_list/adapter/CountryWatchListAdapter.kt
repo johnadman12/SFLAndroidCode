@@ -21,10 +21,6 @@ import stock.com.ui.watch_list.WatchListActivity
 
 class CountryWatchListAdapter(val mContext: Context, val searchList: List<WatchListFilterPojo.country>): RecyclerView.Adapter<CountryWatchListAdapter.WatchListHolder>() {
 
-
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_country_list, parent, false)
         return WatchListHolder(view)
@@ -32,13 +28,13 @@ class CountryWatchListAdapter(val mContext: Context, val searchList: List<WatchL
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
 
         holder.itemView.tvFlagName.setText(searchList.get(position).name)
-        Glide.with(mContext).load(searchList.get(position).flag_url_6464).into(holder.itemView.ivFlag)
+        Glide.with(mContext).load(searchList.get(position).flag_url_1616).into(holder.itemView.ivFlag)
 
        // holder.itemView.checkCountry.setChecked(checkedHolder?.get(position)!!);
 
     }
     override fun getItemCount(): Int {
-        return searchList!!.size;
+        return searchList.size;
     }
     inner class WatchListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }

@@ -102,7 +102,7 @@ class ActivityMyTeam : BaseActivity() {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -164,7 +164,7 @@ class ActivityMyTeam : BaseActivity() {
                     resources.getString(R.string.something_went_wrong),
                     Toast.LENGTH_LONG
                 ).show()
-                displayToast(resources.getString(R.string.something_went_wrong))
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
