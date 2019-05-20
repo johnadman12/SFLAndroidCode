@@ -7,17 +7,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.irozon.sneaker.Sneaker
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
@@ -25,7 +21,6 @@ import kotlinx.android.synthetic.main.dialogue_wallet.view.*
 import stock.com.R
 import stock.com.data.Prefs
 import stock.com.ui.comment.activity.CommentActivity
-import stock.com.ui.createTeam.activity.ChooseTeamActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.pojo.SignupDataPojo
@@ -98,21 +93,66 @@ open class BaseActivity : AppCompatActivity() {
 
     fun displayToast(message: String, type: String) {
         if (type.equals("error")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakError()
+            showSneakBarRed(message, type)
         } else if (type.equals("sucess")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakSuccess()
+            showSneakBar(message, type)
         } else if (type.equals("warning")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakWarning()
+            showSneakBarOrange(message, type)
         }
+    }
+
+    fun showSneakBar(message: String, type: String) {
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+             .setTypeface(
+                 Typeface.createFromAsset(
+                     this.getAssets(),
+                     "fonts/faktpro_medium.ttf"
+                 )
+             )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.green_trans) // Sneak with background color
+    }
+
+    fun showSneakBarOrange(message: String, type: String) {
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+             .setTypeface(
+                 Typeface.createFromAsset(
+                     this.getAssets(),
+                     "fonts/faktpro_medium.ttf"
+                 )
+             )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.orange) // Sneak with background color
+    }
+
+    fun showSneakBarRed(message: String, type: String) {
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+             .setTypeface(
+                 Typeface.createFromAsset(
+                     this.getAssets(),
+                     "fonts/faktpro_medium.ttf"
+                 )
+             )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.redcolorTrans) // Sneak with background color
     }
 
     open fun parseDateToddMMyyyy(time: String): String? {
@@ -421,6 +461,7 @@ open class BaseActivity : AppCompatActivity() {
         edit.putString(StockConstant.COUNTRY_WATCHLIST_TYPE, s)
         edit.apply()
     }
+
     fun setAssetWatchlistFilter(s: String) {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()

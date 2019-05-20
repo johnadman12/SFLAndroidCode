@@ -44,7 +44,7 @@ class NewsFragment : BaseFragment() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
         val call: Call<CityfalconNewsPojo> =
-            apiService.getNewsHome(
+            apiService.getNews(
                 "tickers",
                 identifires, categories, "0",
                 "latest", "d1", false,

@@ -250,12 +250,13 @@ interface ApiInterface {
     @FormUrlEncoded
     // @Header("Content-Type: application/x-www-form-urlencoded")
     @POST("stock/feature_stock")
-    fun getWatchList(@Header("x-access-token") token: String,
-                     @Field("user_id") userid: String,
-                     @Field("asset_type") asset_type: String,
-                     @Field("sector") sector: String,
-                     @Field("market") market: String,
-                     @Field("country_id") country_id: String
+    fun getWatchList(
+        @Header("x-access-token") token: String,
+        @Field("user_id") userid: String,
+        @Field("asset_type") asset_type: String,
+        @Field("sector") sector: String,
+        @Field("market") market: String,
+        @Field("country_id") country_id: String
 
     ): Call<StockPojo>
 
@@ -265,8 +266,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("stock/get_filter")
-    fun getWatchListFilter(@Header("x-access-token") token: String,
-                           @Field("user_id") user_id: String): Call<WatchListFilterPojo>;
+    fun getWatchListFilter(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<WatchListFilterPojo>;
 
 
     @FormUrlEncoded
@@ -377,8 +380,19 @@ interface ApiInterface {
     ): Call<SectorListPojo>
 
     @GET("stories")
-    fun getNewsHome(
+    fun getNews(
         @Query("identifier_type") identifier_type: String, @Query("identifiers") identifiers: String,
+        @Query("categories") categories: String,
+        @Query("min_cityfalcon_score") min_cityfalcon_score: String, @Query("order_by") order_by: String,
+        @Query("time_filter") time_filter: String,
+        @Query("all_languages") all_languages: Boolean,
+        @Query("access_token") access_token: String
+    ): Call<CityfalconNewsPojo>
+
+
+    @GET("stories")
+    fun getHomeNews(
+        @Query("topic_classes") topic_classes: String,
         @Query("categories") categories: String,
         @Query("min_cityfalcon_score") min_cityfalcon_score: String, @Query("order_by") order_by: String,
         @Query("time_filter") time_filter: String,

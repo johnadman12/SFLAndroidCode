@@ -15,16 +15,47 @@
             android:layout_below="@+id/include_cross"
             android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvfilter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TextStyleSemiBold"
-                android:text="News:"
-                android:visibility="visible"
-                android:textSize="@dimen/_22ssp"
-                android:layout_below="@+id/include_cross"
-                android:padding="@dimen/_10sdp"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="@dimen/_5sdp"
+                      android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvfilter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleSemiBold"
+                    android:text="News:"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:textSize="@dimen/_22ssp"
+                    android:layout_below="@+id/include_cross"
+            />
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleSemiBold"
+                        android:text="Powered By:"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_12ssp"
+                        android:textColor="@color/textColorOffWhite"
+                        android:visibility="visible"
+                />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_gravity="right"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/cityfalcon_logo"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -34,6 +65,7 @@
                 android:layout_below="@+id/view"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@drawable/ll_search"
                 android:visibility="visible"
                 android:padding="@dimen/_8sdp"

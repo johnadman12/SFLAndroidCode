@@ -358,8 +358,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    setSectorFilter("")
                     if (response.body()!!.status == "1") {
+                        setSectorFilter("")
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!)
@@ -417,7 +417,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val builder = SpannableStringBuilder()
 
-        val next: String = "<font color='#46AFE6'>NOTE :</font>";
+        val next: String = "<fonts color='#46AFE6'>NOTE :</fonts>";
         dialogue.tvNote.setText(Html.fromHtml(next + getString(R.string.note)))
         dialogue.setCancelable(true)
         dialogue.setCanceledOnTouchOutside(false)

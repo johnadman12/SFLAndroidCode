@@ -2,7 +2,9 @@ package stock.com.AppBase
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.irozon.sneaker.Sneaker
@@ -21,26 +23,68 @@ open class BaseFragment : Fragment() {
     }
 
     fun displayToast(message: String, type: String) {
-        Toast.makeText(activity!!, message, Toast.LENGTH_LONG).show()
-    }
-    /*fun displayToast(message: String, type: String) {
         if (type.equals("error")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakError()
+            showSneakBarRed(message, type)
         } else if (type.equals("sucess")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakSuccess()
+            showSneakBar(message, type)
         } else if (type.equals("warning")) {
-            Sneaker.with(this) // Activity, Fragment or ViewGroup
-                .setTitle(getString(R.string.app_name))
-                .setMessage(message)
-                .sneakWarning()
+            showSneakBarOrange(message, type)
         }
-    }*/
+    }
+
+    fun showSneakBar(message: String, type: String) {
+        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+            .setTypeface(
+                Typeface.createFromAsset(
+                    activity!!.assets,
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.green_trans) // Sneak with background color
+    }
+
+    fun showSneakBarOrange(message: String, type: String) {
+        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+            .setTypeface(
+                Typeface.createFromAsset(
+                    activity!!.assets,
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.orange) // Sneak with background color
+    }
+
+    fun showSneakBarRed(message: String, type: String) {
+        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+            .setTypeface(
+                Typeface.createFromAsset(
+                   activity!!.assets,
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.redcolorTrans) // Sneak with background color
+    }
 //    fun isNetworkAvailable() : Boolean{
 //        if (NetworkUtils.isConnected()) {
 //            return true

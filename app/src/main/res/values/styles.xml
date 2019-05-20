@@ -24,7 +24,7 @@
         <item name="android:minWidth">0dip</item>
         <item name="android:paddingStart">8dip</item>
         <item name="android:paddingEnd">8dip</item>
-        <!--<item name="android:fontFamily">@font/faktpro_normal</item>-->
+        <!--<item name="android:fontFamily">@fonts/faktpro_normal</item>-->
     </style>
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/colorASPrimary</item>
@@ -43,26 +43,26 @@
     <style name="ToolbarTitleStyle">
         <item name="android:textSize">@dimen/_15ssp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/faktpro_semibold</item>
+        <item name="android:fontFamily">@fonts/faktpro_semibold</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
     </style>
     <style name="ButtonStyle">
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:fontFamily">@font/faktpro_semibold</item>
+        <item name="android:fontFamily">@fonts/faktpro_semibold</item>
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
-        <!--<item name="android:fontFamily">@font/faktpro_semibold</item>-->
+        <!--<item name="android:fontFamily">@fonts/faktpro_semibold</item>-->
     </style>
 
     <style name="TextInputHint" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/faktpro_normal</item>
+        <item name="android:fontFamily">@fonts/faktpro_normal</item>
     </style>
 
     <style name="EditTextLabel" parent="Theme.AppCompat.Light">
         <item name="android:textSize">@dimen/_13ssp</item>
-        <item name="android:fontFamily">@font/faktpro_light</item>
+        <item name="android:fontFamily">@fonts/faktpro_light</item>
         <item name="android:textColorHint">@color/textColorGray</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/textColorGray</item>
@@ -74,7 +74,7 @@
 
 -->
     <style name="EditTextStyle" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/faktpro_normal</item>
+        <item name="android:fontFamily">@fonts/faktpro_normal</item>
         <item name="android:textSize">@dimen/_13ssp</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHint">@color/textColorLightBlack</item>
@@ -84,22 +84,22 @@
     </style>
 
     <style name="TextStyleNormal" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/faktpro_normal</item>
+        <item name="android:fontFamily">@fonts/faktpro_normal</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/textColorOffWhite</item>
     </style>
     <style name="TextStyleSemiBold" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/faktpro_semibold</item>
+        <item name="android:fontFamily">@fonts/faktpro_semibold</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/textColorOffWhite</item>
     </style>
     <style name="TextStyleLight" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/faktpro_light</item>
+        <item name="android:fontFamily">@fonts/faktpro_light</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/textColorOffWhite</item>
     </style>
     <style name="TextStyleMedium" parent="Theme.AppCompat.Light">
-        <item name="android:fontFamily">@font/faktpro_medium</item>
+        <item name="android:fontFamily">@fonts/faktpro_medium</item>
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/textColorOffWhite</item>
     </style>

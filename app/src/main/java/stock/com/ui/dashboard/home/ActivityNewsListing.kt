@@ -56,14 +56,14 @@ class ActivityNewsListing : BaseActivity() {
 
 
     val categories: String = "mp,op"
+    val topic: String = "stocks,indices,commodities,cryptocurrencies"
     fun getNewslist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
         val call: Call<CityfalconNewsPojo> =
-            apiService.getNewsHome(
-                "tickers",
-                identifires, categories, "0",
+            apiService.getHomeNews(
+                topic, categories, "0",
                 "latest", "d1", false,
                 StockConstant.NEWS_ACCESS_TOKEN
             )
@@ -83,7 +83,7 @@ class ActivityNewsListing : BaseActivity() {
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

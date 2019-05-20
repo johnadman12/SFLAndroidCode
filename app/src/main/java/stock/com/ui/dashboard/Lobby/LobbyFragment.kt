@@ -93,10 +93,10 @@ class LobbyFragment : BaseFragment() {
                 if (refreshLayout != null)
                     refreshLayout.finishRefreshing()
                 if (response.body() != null) {
-                    setContestType(" ")
-                    setMarketContest(" ")
-                    setCountryContest(" ")
                     if (response.body()!!.status == "1") {
+                        setContestType(" ")
+                        setMarketContest(" ")
+                        setCountryContest(" ")
                         setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
                     } else if (response.body()!!.status == "2") {
