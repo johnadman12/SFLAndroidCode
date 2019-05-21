@@ -57,14 +57,13 @@ class PasswordActivity : BaseActivity() {
                 ".*[0-9]+.*[A-Za-z]+.*".toRegex()
             ))
         )
-
             AppDelegate.showToast(this, getString(R.string.invalid_password))
         else {
             AppDelegate.hideKeyBoard(this)
             if (NetworkUtils.isConnected()) {
                 emailLogin()
             } else {
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                displayToast(getString(R.string.error_network_connection), "error")
             }
         }
     }

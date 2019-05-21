@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:weightSum="1"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_3sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:src="@mipmap/rewards"/>
+            <LinearLayout
+                    android:id="@+id/ll_stock_detial"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1"
+                    android:padding="@dimen/_3sdp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="CLMT"
+                              android:textSize="@dimen/_12sdp"
+                              style="@style/TextStyleSemiBold"
+                              android:textColor="@color/black"/>
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Calumet speciality"
+                              android:textSize="@dimen/_11sdp"
+                              style="@style/TextStyleSemiBold"
+                              android:textColor="@color/GrayColor"/>
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="Vol: 48.2 m"
+                              android:visibility="gone"
+                              android:drawableRight="@mipmap/heartblue"
+                              android:drawablePadding="@dimen/_5sdp"
+                              android:textSize="@dimen/_11sdp"
+                              style="@style/TextStyleSemiBold"
+                              android:textColor="@color/colorbutton"/>
+
+                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@mipmap/downred"/>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_weight=".3"
+                        android:gravity="right"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="88%"
+                              android:textSize="@dimen/_14sdp"
+                              style="@style/TextStyleSemiBold"
+                              android:textColor="@color/black"/>
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="-202(-1.06)"
+                              android:textSize="@dimen/_11sdp"
+                              style="@style/TextStyleNormal"
+                              android:textColor="@color/colorRed"/>
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="-202(-1.06)"
+                              android:visibility="gone"
+                              android:drawableRight="@mipmap/heartblue"
+                              android:drawablePadding="@dimen/_5sdp"
+                              android:textSize="@dimen/_11sdp"
+                              style="@style/TextStyleSemiBold"
+                              android:textColor="@color/colorbutton"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="@dimen/_2sdp"
+              android:background="@android:color/transparent"/>
+
+</LinearLayout>

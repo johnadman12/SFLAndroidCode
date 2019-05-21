@@ -3,6 +3,7 @@ package stock.com.ui.news.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.text.format.DateUtils
 import android.view.View
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_news_detail.*
@@ -20,7 +21,6 @@ import stock.com.utils.StockDialog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
     var uuid: String = ""
@@ -58,7 +58,10 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
     private fun setdata(news: CityfalconNewsPojo.Story) {
             tvNewsText.setText(news.title)
             tvDescription.setText(news.description)
-            tvTime.setText(parseDateToddMMyyyy(news.publishTime))
+            tvTime.setText(
+                DateUtils.getRelativeTimeSpanString(parseDateToddMMyyyyMILIEs(news.publishTime)!!,
+                    Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS))
+
             tvNewsEditor.setText(news.source.brandName)
 
             if (TextUtils.isEmpty(news.source.imageUrls.large))
@@ -77,24 +80,19 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 
-    override fun parseDateToddMMyyyy(time: String): String? {
+    fun parseDateToddMMyyyyMILIEs(time: String): Long? {
         val inputPattern = "yyyy-MM-dd'T'HH:mm:ss"
-        val outputPattern = "dd MMM h:mm a"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
-
-        var date: Date? = null
-        var str: String? = null
-
+        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        var dateInMillis: Long = 0
         try {
-            date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            val date = outputPattern.parse(time)
+            dateInMillis = date.getTime()
+            return dateInMillis
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-        return str
+        return 0
     }
-
     val categories: String = "mp,op"
 
    /* fun getNewslist() {

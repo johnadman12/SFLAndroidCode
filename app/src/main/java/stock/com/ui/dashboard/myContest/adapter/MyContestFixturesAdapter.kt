@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_match.view.*
 import stock.com.BuildConfig
 import stock.com.R
-import stock.com.ui.joinedContest.activity.FixtureJoinedContestActivity
 
 
 class MyContestFixturesAdapter(val mContext: Context) : RecyclerView.Adapter<MyContestFixturesAdapter.AppliedCouponCodeHolder>() {
@@ -37,7 +36,6 @@ class MyContestFixturesAdapter(val mContext: Context) : RecyclerView.Adapter<MyC
             }*/
         }
         holder.itemView.card_view.setOnClickListener {
-            mContext.startActivity(Intent(mContext, FixtureJoinedContestActivity::class.java))
         }
     }
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/bg">
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleSemiBold"
+            android:text="Market Movers"
+            android:textSize="@dimen/_12ssp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/white"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_market_movers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:text="  See All   "
+            android:textAllCaps="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_2sdp"
+            android:textSize="@dimen/_14ssp"
+            android:background="@drawable/white_fill_button"
+            android:textColor="@color/black"
+            style="@style/TextStyleNormal"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleSemiBold"
+            android:text="Technology"
+            android:textSize="@dimen/_12ssp"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@color/white"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_Technology"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

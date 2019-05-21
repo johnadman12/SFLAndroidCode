@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_match.view.*
 import kotlinx.android.synthetic.main.item_my_contest.view.*
 import stock.com.R
-import stock.com.ui.joinedContest.activity.FixtureJoinedContestActivity
-
 
 class MyContestLiveAdapter(val mContext: Context) :
     RecyclerView.Adapter<MyContestLiveAdapter.AppliedCouponCodeHolder>() {

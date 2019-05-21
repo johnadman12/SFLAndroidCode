@@ -198,10 +198,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
-                    Toast.makeText(
-                        this@WelcomeActivity, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    displayToast(getString(R.string.error_network_connection), "error")
                 }
             }
     }

@@ -35,12 +35,14 @@
                             android:textSize="@dimen/_22ssp"/>
 
                 </LinearLayout>
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:padding="@dimen/_5sdp"
-                              android:gravity="center"
-                              android:layout_gravity="top"
-                              android:orientation="vertical">
+                <LinearLayout
+                        android:id="@+id/ll_watchlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
@@ -160,110 +162,141 @@
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
+                          android:layout_height="@dimen/_35sdp"
                           android:background="@color/white"
                           android:gravity="center"
+                          android:weightSum="4"
                           android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_currency"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
                         android:text="Currencies"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_gravity="center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
+
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
-                      android:background="@color/GrayColor"/>
+                      android:background="@color/colorTransparent"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_indices"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
                         android:text="Indices"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
                         android:gravity="center"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_11ssp"
                         android:layout_weight="1"
-                        android:padding="@dimen/_8sdp"
+                        android:layout_gravity="center"
                         android:textColor="@color/black"/>
+
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
-                      android:background="@color/GrayColor"/>
+                      android:background="@color/colorTransparent"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_commodity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
                         android:text="Commodities"
                         android:gravity="center"
-                        android:textSize="@dimen/_10ssp"
+                        android:textSize="@dimen/_11ssp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
+
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
-                      android:background="@color/GrayColor"/>
+                      android:background="@color/colorTransparent"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_stocks"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleNormal"
                         android:text="Stocks"
-                        android:textSize="@dimen/_10ssp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_11ssp"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:layout_weight="1"
-                        android:padding="@dimen/_8sdp"
                         android:textColor="@color/black"/>
+
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
-                      android:background="@color/GrayColor"/>
+                      android:background="@color/colorTransparent"/>
 
             </LinearLayout>
-            <androidx.appcompat.widget.AppCompatTextView
+
+            <FrameLayout
+                    android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/TextStyleSemiBold"
-                    android:text="Market Movers"
-                    android:textSize="@dimen/_12ssp"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/white"/>
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_market_movers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                 >
+            </FrameLayout>
 
-            </androidx.recyclerview.widget.RecyclerView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="  See All   "
-                    android:textAllCaps="true"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_gravity="center"
-                    android:padding="@dimen/_2sdp"
-                    android:textSize="@dimen/_14ssp"
-                    android:background="@drawable/white_fill_button"
-                    android:textColor="@color/black"
-                    style="@style/TextStyleNormal"/>
+            <!-- <androidx.appcompat.widget.AppCompatTextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     style="@style/TextStyleSemiBold"
+                     android:text="Market Movers"
+                     android:textSize="@dimen/_12ssp"
+                     android:padding="@dimen/_10sdp"
+                     android:textColor="@color/white"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/TextStyleSemiBold"
-                    android:text="Technology"
-                    android:textSize="@dimen/_12ssp"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/white"/>
+             <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/rv_market_movers"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_Technology"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+             </androidx.recyclerview.widget.RecyclerView>
 
-                </androidx.recyclerview.widget.RecyclerView>
+             <androidx.appcompat.widget.AppCompatTextView
+                     android:layout_width="@dimen/_100sdp"
+                     android:layout_height="@dimen/_30sdp"
+                     android:text="  See All   "
+                     android:textAllCaps="true"
+                     android:layout_marginTop="@dimen/_10sdp"
+                     android:gravity="center"
+                     android:layout_marginLeft="@dimen/_10sdp"
+                     android:layout_gravity="center"
+                     android:padding="@dimen/_2sdp"
+                     android:textSize="@dimen/_14ssp"
+                     android:background="@drawable/white_fill_button"
+                     android:textColor="@color/black"
+                     style="@style/TextStyleNormal"/>
+
+             <androidx.appcompat.widget.AppCompatTextView
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     style="@style/TextStyleSemiBold"
+                     android:text="Technology"
+                     android:textSize="@dimen/_12ssp"
+                     android:padding="@dimen/_10sdp"
+                     android:textColor="@color/white"/>
+
+             <androidx.recyclerview.widget.RecyclerView
+                     android:id="@+id/rv_Technology"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+             </androidx.recyclerview.widget.RecyclerView>-->
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

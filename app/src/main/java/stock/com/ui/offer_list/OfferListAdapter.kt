@@ -2,31 +2,14 @@ package stock.com.ui.offer_list
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
-import stock.com.ui.contest.activity.AllContestActivity
-import stock.com.ui.pojo.HomePojo
-import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
-import stock.com.utils.AppDelegate
-import stock.com.utils.DateUtils
-import stock.com.utils.ViewAnimationUtils
-import java.text.SimpleDateFormat
 import java.util.*
-import java.text.ParseException
-import java.util.concurrent.TimeUnit
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kotlinx.android.synthetic.main.row_view_offers.view.*
-import kotlinx.android.synthetic.main.row_view_watch_list.view.*
 import stock.com.ui.pojo.OffersPojo
 
 

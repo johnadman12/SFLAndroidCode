@@ -26,7 +26,6 @@
                         android:layout_height="wrap_content"
                         style="@style/TextStyleSemiBold"
                         android:textColor="@color/white"
-                        android:ellipsize="marquee"
                         android:textSize="@dimen/_16ssp"
                 />
 
@@ -104,7 +103,7 @@
                                 android:text="Powered By:"
                                 android:gravity="center"
                                 android:layout_gravity="center"
-                                android:textSize="@dimen/_12ssp"
+                                android:textSize="@dimen/_11ssp"
                                 android:textColor="@color/GrayColor"
                                 android:visibility="visible"
                         />
@@ -112,8 +111,8 @@
                         <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="@dimen/_50sdp"
                                 android:layout_gravity="right"
-                                android:layout_height="@dimen/_30sdp"
-                                android:src="@mipmap/cityfalcon_logo"/>
+                                android:layout_height="@dimen/_25sdp"
+                                android:src="@drawable/ic_city_falcon"/>
 
 
                     </LinearLayout>

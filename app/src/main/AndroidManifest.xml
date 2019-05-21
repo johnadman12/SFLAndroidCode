@@ -137,31 +137,19 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.createTeam.activity.StockDetailActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.comment.activity.CommentActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.news.activity.NewsActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.signup.activity.WebUrlActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.addfunds.activity.AddFundsActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.createTeam.activity.GraphActivity"
                 android:configChanges="orientation|keyboardHidden"
@@ -192,16 +180,7 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.createTeam.activity.ChooseTeamActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.createTeam.activity.Choose_C_VC_Activity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.createTeam.activity.TeamPreviewActivity"
                 android:configChanges="orientation|keyboardHidden"
@@ -218,26 +197,13 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.contest.activity.CreateContestActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.contest.activity.AllContestActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.notification.activity.NotificationActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.joinedContest.activity.FixtureJoinedContestActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.dashboard.more.activity.WebViewActivity"
                 android:configChanges="orientation|keyboardHidden"
@@ -248,36 +214,13 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.joinedContest.activity.FixtureJoinedContestDetailActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.watch_list.WatchFilterActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.createTeam.activity.PlayerDetailActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.joinedContest.activity.CompletedJoinedContestActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.joinedContest.activity.PlayerStatsActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.joinedContest.activity.LeaderShipBoardActivity"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
         <activity
                 android:name=".ui.dashboard.profile.activity.MyAccountActivity"
                 android:configChanges="orientation|keyboardHidden"
@@ -399,6 +342,16 @@
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
                 android:name=".ui.dashboard.home.ActivityNewsSearch"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Lobby.ActivityPriceBreak"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity
+                android:name=".ui.dashboard.Market.ActivityMarketSort"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>

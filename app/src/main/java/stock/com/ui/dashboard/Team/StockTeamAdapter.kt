@@ -22,6 +22,7 @@ import stock.com.R
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 
 class StockTeamAdapter(
@@ -92,8 +93,11 @@ class StockTeamAdapter(
 
         holder.itemView.img_add.setOnClickListener {
             if (activity.getTeamText() > 11) {
-                Toast.makeText(mContext, "You have selected maximum number of stocks for your team.", 10000).show()
-            } else {
+                AppDelegate.showSneakBarRed(
+                    mContext,
+                    "You have selected maximum number of stocks for your team.",
+                    "DFX"
+                )  } else {
                 holder.itemView.llremoveStock.visibility = VISIBLE
                 holder.itemView.img_add.visibility = GONE
                 searchList!!.get(position).addedToList = 1

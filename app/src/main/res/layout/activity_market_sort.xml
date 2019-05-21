@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@mipmap/bg"
+              android:layout_height="match_parent">
+    <include
+            android:id="@+id/include_cross"
+            layout="@layout/include_back"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextStyleSemiBold"
+                android:text="Sort By:"
+                android:textSize="@dimen/_25ssp"
+                android:padding="@dimen/_10sdp"/>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:background="@color/white"
+                      android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxPrize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:text="Price (High To Low)"
+                    android:padding="@dimen/_10sdp"
+                    android:buttonTint="@color/colorPrimary"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:text="BY Day Change"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/colorPrimary"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxAlpha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:text="Alphabatic (A to Z)"
+                    android:buttonTint="@color/colorPrimary"/>
+
+
+        </LinearLayout>
+        <View android:layout_width="match_parent"
+              android:layout_height="@dimen/_1sdp"
+              android:background="@color/GrayColor"/>
+
+
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sortApply"
+            style="@style/ButtonStylelogin"
+            android:text="Apply"
+            android:background="@drawable/green_fill_button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"/>
+</LinearLayout>

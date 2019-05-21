@@ -28,6 +28,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -35,6 +36,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.irozon.sneaker.Sneaker
+import stock.com.BuildConfig
 import stock.com.R
 import stock.com.constant.Tags
 import stock.com.utils.networkUtils.NetworkUtils
@@ -179,6 +182,7 @@ object AppDelegate {
         }
 
     }
+
     fun changeTimeToRelativeTime(timeStamp: Long): String {
 
         // it comes out like this 2013-08-31 15:55:22 so adjust the date format
@@ -1401,6 +1405,19 @@ object AppDelegate {
     }
 
     fun showAlert(mContext: Context, Title: String, Message: String, str_button_name: String) {
+        val dialog = Dialog(mContext, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.next_button_dailog)
+        val message: TextView = dialog.findViewById(R.id.text)
+        message.setText(Message)
+        val no: Button = dialog.findViewById(R.id.cancle_btn)
+        no.setText(str_button_name)
+        no.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+/*fun showAlert(mContext: Context, Title: String, Message: String, str_button_name: String) {
         try {
             mAlert = AlertDialog.Builder(mContext)
             mAlert.setCancelable(false)
@@ -1414,7 +1431,7 @@ object AppDelegate {
             LogE(e)
         }
 
-    }
+    }*/
 
     fun showAlert(
         mContext: Context,
@@ -1439,6 +1456,24 @@ object AppDelegate {
             LogE(e)
         }
 
+    }
+
+    fun showSneakBarRed(context: Context, message: String, type: String) {
+        Sneaker.with(context as Activity) // Activity, Fragment or ViewGroup
+            .setTitle(type, R.color.colorPrimary) // Title and title color
+            .setMessage(message, R.color.white) // Message and message color
+            .setDuration(4000) // Time duration to show
+            .autoHide(true) // Auto hide Sneaker view
+            .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
+            .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
+            .setTypeface(
+                Typeface.createFromAsset(
+                    context.getAssets(),
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
+            .setCornerRadius(10, 2)
+            .sneak(R.color.redcolorTrans) // Sneak with background color
     }
 
     fun showAlert(

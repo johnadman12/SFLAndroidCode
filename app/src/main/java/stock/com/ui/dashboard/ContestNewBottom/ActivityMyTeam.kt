@@ -84,11 +84,7 @@ class ActivityMyTeam : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityMyTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
@@ -97,11 +93,6 @@ class ActivityMyTeam : BaseActivity() {
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityMyTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
@@ -148,22 +139,13 @@ class ActivityMyTeam : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityMyTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                   displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityMyTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }

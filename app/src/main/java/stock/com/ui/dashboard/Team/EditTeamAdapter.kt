@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.AppDelegate
 
 class EditTeamAdapter(
     val mContext: Context,
@@ -63,7 +64,11 @@ class EditTeamAdapter(
 
         holder.itemView.img_add.setOnClickListener {
             if (activity.getTeamText() > 11) {
-                Toast.makeText(mContext, "You have selected maximum number of stocks for your team.", 10000).show()
+                AppDelegate.showSneakBarRed(
+                    mContext,
+                    "You have selected maximum number of stocks for your team.",
+                    "DFX"
+                )
             } else {
                 holder.itemView.llremoveStock.visibility = View.VISIBLE
                 holder.itemView.img_add.visibility = View.GONE

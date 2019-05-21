@@ -142,22 +142,14 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         setData(response.body()!!.contest.get(0))
                     }
                 } else {
-                    Toast.makeText(
-                        this@ContestDetailActivity,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ContestDetailActivity,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
+                displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
             }
         })
@@ -214,13 +206,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
                 ll_Circular.isEnabled = false
-                Sneaker.with(this) // Activity, Fragment or ViewGroup
-                    .setTitle("DFX")
-                    .setMessage("Contest is not live yet.")
-                    .sneakWarning()
-//                displayToast("Contest is live now")
-                /* txtjoin.setTextSize(20.00f)
-                 txtjoin.setText(getString(R.string.Finished))*/
+                AppDelegate.showSneakBarRed(this@ContestDetailActivity, "Contest is not live yet.", "DFX")
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {

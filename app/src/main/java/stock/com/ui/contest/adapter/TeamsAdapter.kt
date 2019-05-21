@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_teams.view.*
 import stock.com.R
-import stock.com.ui.createTeam.activity.PlayerDetailActivity
 
 
 class TeamsAdapter(val mContext: Context) : RecyclerView.Adapter<TeamsAdapter.AppliedCouponCodeHolder>() {
@@ -29,7 +28,6 @@ class TeamsAdapter(val mContext: Context) : RecyclerView.Adapter<TeamsAdapter.Ap
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
         holder.itemView.cimg_player.setOnClickListener {
-            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))

@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
 import stock.com.AppBase.BaseFragment
 import stock.com.R
-import stock.com.ui.addfunds.activity.AddFundsActivity
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.profile.activity.MyAccountActivity
 import stock.com.ui.edit_profile.EditProfileActivity

@@ -99,7 +99,8 @@ class ForgotPasswordActivity : BaseActivity() {
             AppDelegate.hideKeyBoard(this)
             if (NetworkUtils.isConnected())
                 forgotPass()
-            else Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+            else
+                displayToast(getString(R.string.error_network_connection), "error")
         }
     }
 

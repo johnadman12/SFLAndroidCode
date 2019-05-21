@@ -11,6 +11,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -155,7 +156,7 @@ open class BaseActivity : AppCompatActivity() {
             .sneak(R.color.redcolorTrans) // Sneak with background color
     }
 
-    open fun parseDateToddMMyyyy(time: String): String? {
+  /**/  open fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
@@ -482,6 +483,18 @@ open class BaseActivity : AppCompatActivity() {
         edit.putString(StockConstant.COUNTRY_TYPE, s)
         edit.apply()
     }
+
+    fun nextdialog() {
+        val dialog = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.next_button_dailog)
+        val no: Button = dialog.findViewById(R.id.cancle_btn)
+        no.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
 
 }
 

@@ -2,6 +2,7 @@ package stock.com.ui.dashboard.Team.Stock
 
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,8 @@ class StockNewsAdapter(
         holder.itemView.tvNewsTitle.setText(mContest.get(position).title)
         holder.itemView.tvNewsAuthor.setText(mContest.get(position).source!!.brandName)
         holder.itemView.tvDescription.setText(mContest.get(position).description)
-        holder.itemView.tvNewsTime.setText(parseDateToddMMyyyy(mContest.get(position).publishTime))
+        holder.itemView.tvNewsTime.setText(DateUtils.getRelativeTimeSpanString(parseDateToddMMyyyy(mContest.get(position).publishTime)!!,
+            Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS))
         holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ActivityNewsDetail::class.java)
@@ -52,21 +54,17 @@ class StockNewsAdapter(
 
     }
 
-    fun parseDateToddMMyyyy(time: String): String? {
+    fun parseDateToddMMyyyy(time: String): Long? {
         val inputPattern = "yyyy-MM-dd'T'HH:mm:ss"
-        val outputPattern = "dd MMM h:mm a"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
-
-        var date: Date? = null
-        var str: String? = null
-
+        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        var dateInMillis: Long = 0
         try {
-            date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            val date = outputPattern.parse(time)
+            dateInMillis = date.getTime()
+            return dateInMillis
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-        return str
+        return 0
     }
 }

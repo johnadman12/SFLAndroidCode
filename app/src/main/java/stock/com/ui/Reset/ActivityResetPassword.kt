@@ -59,7 +59,7 @@ class ActivityResetPassword : BaseActivity() {
             if (NetworkUtils.isConnected()) {
                 resetPassword()
             } else {
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                displayToast(getString(R.string.error_network_connection), "error")
             }
         }
     }

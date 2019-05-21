@@ -17,7 +17,6 @@ import stock.com.ui.contest.dialogues.BottomSheetFilterFragment
 import stock.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import stock.com.ui.dashboard.Lobby.ActivityCreateContest
 import stock.com.ui.invite.activity.InviteCodeActivity
-import stock.com.ui.joinedContest.activity.FixtureJoinedContestActivity
 
 
 class ContestActivity : BaseActivity(), View.OnClickListener {
@@ -32,12 +31,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             R.id.rl_createContest -> {
                 startActivity(Intent(this, ActivityCreateContest::class.java))
             }
-            R.id.ll_joinedContests -> {
-                startActivity(Intent(this, FixtureJoinedContestActivity::class.java))
-            }
-            R.id.ll_AllContest -> {
-                startActivity(Intent(this, AllContestActivity::class.java))
-            }
+
         }
     }
 

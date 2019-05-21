@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_all_contest.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
-import stock.com.ui.createTeam.activity.ChooseTeamActivity
-import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
 class AllContestAdapter(val mContext: AppCompatActivity) :
     RecyclerView.Adapter<AllContestAdapter.AppliedCouponCodeHolder>() {
@@ -39,7 +37,6 @@ class AllContestAdapter(val mContext: AppCompatActivity) :
         }
         holder.itemView.txt_Join.setOnClickListener {
             //(mContext as BaseActivity).showJoinContestDialogue(mContext)
-            mContext.startActivity(Intent(mContext, ChooseTeamActivity::class.java))
         }
     }
 

@@ -186,7 +186,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             if (NetworkUtils.isConnected()) {
                 registerSocial("social", "1")
             } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                displayToast(getString(R.string.error_network_connection), "error")
         }
     }
 
@@ -225,7 +225,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             if (NetworkUtils.isConnected()) {
                 register("normal", "2")
             } else {
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                displayToast(getString(R.string.error_network_connection), "error")
             }
         }
     }

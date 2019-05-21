@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_contest.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.ui.createTeam.adapter.MyTeamAdapter
+import stock.com.ui.dashboard.ContestNewBottom.MyTeamAdapter
 
 class MyTeamActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -46,6 +46,6 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = MyTeamAdapter(this)
+//        rv_Contest!!.adapter = MyTeamAdapter(this)
     }
 }
