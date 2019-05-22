@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_live.view.*
 
 import stock.com.R
+import stock.com.ui.dashboard.Team.LiveScoreActivity
 import stock.com.ui.live_contest.LiveContestActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
@@ -53,6 +54,15 @@ class LiveAdapter(
             holder.itemView.text_totalwin.visibility = VISIBLE
             holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
             holder.itemView.llWinners.isEnabled = true
+        }
+
+        holder.itemView.tvScore.setOnClickListener {
+            holder.itemView.tvScore.setOnClickListener {
+                mContext.startActivity(
+                    Intent(mContext, LiveScoreActivity::class.java)
+                        .putExtra(StockConstant.CONTESTID, contest.get(position).contestId)
+                )
+            }
         }
 
         Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())

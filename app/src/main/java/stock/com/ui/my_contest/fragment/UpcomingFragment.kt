@@ -60,29 +60,19 @@ class UpcomingFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         setAdapter(response.body()!!.contest)
                     }else if (response.body()!!.status == "2") {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        activity!!,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    activity!!,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
+                displayToast(resources.getString(R.string.internal_server_error),"error")
                 d.dismiss()
             }
         })

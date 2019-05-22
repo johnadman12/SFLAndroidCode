@@ -66,11 +66,7 @@ class LiveFragment : BaseFragment() {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        activity!!,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
@@ -79,11 +75,7 @@ class LiveFragment : BaseFragment() {
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 println(t.toString())
-                Toast.makeText(
-                    activity!!,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })

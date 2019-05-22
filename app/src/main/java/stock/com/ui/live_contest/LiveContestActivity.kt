@@ -1,6 +1,7 @@
 package stock.com.ui.live_contest
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -14,8 +15,10 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.live_contest.adapter.LiveContestAdapter
 import stock.com.ui.pojo.ContestDetail
+import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
@@ -24,6 +27,7 @@ import java.util.*
 class LiveContestActivity : BaseActivity() {
     var contestid: Int = 0
     var exchangeid: Int = 0
+    private var stockList: ArrayList<StockTeamPojo.Stock>? = null;
 
     private var liveAdapter: LiveContestAdapter? = null;
 
@@ -41,6 +45,13 @@ class LiveContestActivity : BaseActivity() {
         }
         img_btn_close.setOnClickListener {
             finish();
+        }
+
+        tvViewTeam.setOnClickListener {
+           /* startActivity(
+                Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
+                    .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+            )*/
         }
         getContestDetail()
     }
@@ -75,28 +86,19 @@ class LiveContestActivity : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-//                        setRulesAdapter(response.body()!!.rules)
                         setLiveAdapter(response.body()!!.scores)
                         if (response.body()!!.contest.size > 0)
                             setData(response.body()!!.contest.get(0))
                     }
                 } else {
-                    Toast.makeText(
-                        this@LiveContestActivity,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@LiveContestActivity,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
+                displayToast(resources.getString(R.string.internal_server_error),"error")
                 d.dismiss()
             }
         })
@@ -104,6 +106,7 @@ class LiveContestActivity : BaseActivity() {
 
     private fun setData(contest: ContestDetail.Contest) {
         tvRank.setText(contest.rank)
+//        stockList= contest.
         if (!contest.schedule_end.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)

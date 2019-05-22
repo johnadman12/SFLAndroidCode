@@ -1,6 +1,7 @@
 package stock.com.ui.news.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.format.DateUtils
@@ -34,6 +35,9 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
             R.id.ivShare -> {
                 shareIntent()
             }
+            R.id.llcityfalcon -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(StockConstant.CITYFALCON_URL)))
+            }
         }
     }
 
@@ -50,6 +54,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         }
         img_btn_back.setOnClickListener(this)
         ivShare.setOnClickListener(this)
+        llcityfalcon.setOnClickListener(this)
         setdata(newsdetail!!)
 //        getNewslist()
 

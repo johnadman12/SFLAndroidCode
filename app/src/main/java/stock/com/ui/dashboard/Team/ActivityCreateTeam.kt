@@ -322,22 +322,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityCreateTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityCreateTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
@@ -386,22 +377,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityCreateTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityCreateTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
@@ -466,22 +447,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityCreateTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityCreateTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }

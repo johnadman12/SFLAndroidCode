@@ -77,22 +77,13 @@ class ActivitySectorFilter : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivitySectorFilter,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.internal_server_error),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SectorListPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivitySectorFilter,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }

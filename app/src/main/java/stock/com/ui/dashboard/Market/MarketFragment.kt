@@ -97,7 +97,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getExchangeNamelist()
+//        getExchangeNamelist()
         //setMarketAdapter()
         // setTechnologyAdapter()
 

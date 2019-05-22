@@ -1,31 +1,28 @@
-package stock.com.ui.dashboard.Contestdeatil
+package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.irozon.sneaker.Sneaker
-import kotlinx.android.synthetic.main.row_contest_score.view.*
+import kotlinx.android.synthetic.main.row_scores.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
-import stock.com.ui.pojo.ContestDetail
+import stock.com.ui.pojo.Scores
 import stock.com.utils.StockConstant
 
-class ScoresAdapter(
+class LiveScoreAdapter(
     val mContext: Context,
     val userId: Int,
-    val scores: MutableList<ContestDetail.Score>,
+    val scores: ArrayList<Scores.Score>,
     val flag: Int
-) : RecyclerView.Adapter<ScoresAdapter.AppliedCouponCodeHolder>() {
+) : RecyclerView.Adapter<LiveScoreAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_contest_score, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_scores, parent, false)
         return AppliedCouponCodeHolder(view)
     }
 

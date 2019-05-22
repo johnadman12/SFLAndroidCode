@@ -163,10 +163,11 @@ class ActivityCreateContest : BaseActivity() {
 
             override fun afterTextChanged(s: Editable) {
                 var original = s.toString()
+                sSports = edtSports.text.toString()
                 if (original.length != 0) {
-                    if (original.toInt() < 10000) {
-                        if (sSports != null && !sSports.equals("0")) {
-                            calculateContestFee(edtWinningAmount.text.toString(), original)
+                    if (original.toInt() <= 10000) {
+                        if (!TextUtils.isEmpty(sSports) && sSports.toInt() == 0) {
+                            calculateContestFee(edtWinningAmount.text.toString(), sSports)
                         } else {
                             edtSports.setText("")
                         }
@@ -188,20 +189,19 @@ class ActivityCreateContest : BaseActivity() {
             override fun afterTextChanged(s: Editable) {
                 var originalString = s.toString()
                 if (originalString.length != 0) {
-                    if (originalString.toInt() < 100) {
+                    if (originalString.toInt() <= 100) {
                         if (originalString.contains(",")) {
                             originalString = originalString.replace(",".toRegex(), "")
                         }
                         if (TextUtils.isEmpty(edtWinningAmount.text.toString()))
-                            displayToast("please fill winning amount first", "error")
+                            displayToast("please enter winning amount first", "error")
                         else
                             calculateContestFee(edtWinningAmount.text.toString(), originalString)
                     } else
                         displayToast("spots cannot be exceed from 100", "error")
 
-                } else
-                    displayToast("please fill sports", "warning")
-                sSports = originalString
+                } /*else
+                    displayToast("please fill sports", "warning")*/
             }
         })
 

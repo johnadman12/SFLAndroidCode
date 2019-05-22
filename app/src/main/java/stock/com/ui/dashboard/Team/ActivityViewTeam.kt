@@ -127,22 +127,14 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         contestFee = response.body()!!.contest.get(0).entryFees
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityViewTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityViewTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
+                displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
         })
@@ -309,7 +301,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        teamId = response.body()!!.team_id.toInt()
+                        teamId = response.body()!!.team_id
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         finish()
                     } else if (response.body()!!.status == "0") {
@@ -319,22 +311,13 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityViewTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityViewTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
@@ -376,22 +359,13 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityViewTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityViewTeam,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
@@ -420,8 +394,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
-                        }, 100)
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                            AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        }, 1000)
                         var intent = Intent();
                         intent.putExtra("flag", "2")
                         setResult(Activity.RESULT_OK, intent);
@@ -430,11 +404,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityViewTeam,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong),"error")
                     d.dismiss()
                 }
             }

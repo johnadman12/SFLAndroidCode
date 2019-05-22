@@ -62,6 +62,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Results.setOnClickListener(this)
         seeall.setOnClickListener(this)
         getFeatureContentlist();
+        getTrainingContentlist()
+       getNewslist()
         dataExchange = ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
@@ -197,8 +199,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                                 dataExchange!!.add(response.body()!!.exchange!!.get(i).name)
                         }
                         setIdentifire()
-                        getTrainingContentlist()
-                        getNewslist()
                         setVisibility()
                         //  displayToast(response.body()!!.message)
                     } else if (response.body()!!.status == "2") {

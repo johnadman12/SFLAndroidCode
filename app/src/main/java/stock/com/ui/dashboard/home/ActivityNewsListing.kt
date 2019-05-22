@@ -2,6 +2,7 @@ package stock.com.ui.dashboard.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -33,6 +34,10 @@ class ActivityNewsListing : BaseActivity() {
         }
         ll_search.setOnClickListener {
             startActivity(Intent(this, ActivityNewsSearch::class.java))
+
+        }
+        llcityfalcon.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(StockConstant.CITYFALCON_URL)))
         }
 
         if (intent != null)

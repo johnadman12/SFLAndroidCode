@@ -65,7 +65,8 @@ class FinishedAdapter(
         holder.itemView.tvRank.setText(contest.get(position).rank)
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))
         holder.itemView.tvScore.setOnClickListener {
-            mContext.startActivity(Intent(mContext, LiveScoreActivity::class.java))
+            mContext.startActivity(Intent(mContext, LiveScoreActivity::class.java)
+                .putExtra(StockConstant.CONTESTID, contest.get(position).contestId))
         }
     }
 

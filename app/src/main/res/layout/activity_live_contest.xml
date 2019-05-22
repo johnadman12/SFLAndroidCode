@@ -173,6 +173,7 @@
                     android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
+                    android:id="@+id/tvViewTeam"
                     android:layout_gravity="center"
                     android:background="@drawable/green_fill_button"
                     android:padding="@dimen/_8sdp"

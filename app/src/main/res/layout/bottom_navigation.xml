@@ -17,7 +17,7 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:id="@+id/ll_home"
                 android:layout_marginTop="@dimen/_10sdp">
@@ -47,8 +47,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp">
+                android:padding="@dimen/_6sdp">
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
@@ -116,8 +115,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:id="@+id/ll_profile"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:padding="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_10sdp">
             <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="@dimen/_20sdp"

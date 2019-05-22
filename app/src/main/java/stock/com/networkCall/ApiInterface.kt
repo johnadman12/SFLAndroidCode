@@ -219,6 +219,14 @@ interface ApiInterface {
         @Field("status") status: String
     ): Call<ContestDetail>
 
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("contest/GetContestsStatus")
+    fun getContestScore(
+        @Header("x-access-token") token: String,
+        @Field("contest_id") contest_id: String, @Field("user_id") user_id: String
+    ): Call<Scores>
+
     /* @Headers("Content-Type: application/json")
      @POST(ApiConstant.signup)
      fun signup(@Body signupRequest: SignUpRequest): Deferred<SignUpResponse>

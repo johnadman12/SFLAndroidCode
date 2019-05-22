@@ -91,7 +91,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     AppDelegate.showAlert(this, "already added to stock")
                 } else if (list!!.get(position).getAddedToList() == 0) {
                     if (selectedItems >= 12) {
-                        Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                        displayToast("You have selected maximum number of stocks for your team.", "error")
                     } else {
                         list!!.get(position).addedToList = 1
                         //show red button
@@ -267,30 +267,26 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    AppDelegate.showToast(this@ActivityStockDetail, response.message())
+                    displayToast( response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityStockDetail, "stock added to watchlist sucessfully ")
+                        displayToast("stock added to watchlist sucessfully ", "sucess")
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
-                        AppDelegate.showAlert(this@ActivityStockDetail, "stock already added to watchlist")
+                      displayToast("stock already added to watchlis ", "warning")
 
                     }
                 } else {
-                    Toast.makeText(
-                        this@ActivityStockDetail,
-                        resources.getString(R.string.internal_server_error),
-                        Toast.LENGTH_LONG
-                    ).show()
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

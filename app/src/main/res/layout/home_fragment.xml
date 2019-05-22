@@ -150,7 +150,6 @@
                         android:text="@string/live"
                         android:layout_height="match_parent"/>
 
-
                 <View
                         android:id="@+id/view2"
                         android:layout_width="@dimen/_1sdp"
@@ -223,12 +222,13 @@
 
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout_features"
-                    android:layout_width="@dimen/_100sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_10sdp"
+                    app:tabMaxWidth="@dimen/_100sdp"
                     android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
-                    app:tabMode="scrollable"
+                    app:tabMode="fixed"
                     app:tabPadding="0dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="-5dp"
@@ -268,13 +268,14 @@
 
             <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout_training"
-                    android:layout_width="@dimen/_100sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_10sdp"
+                    app:tabMaxWidth="@dimen/_100sdp"
                     android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
                     android:layout_marginTop="-5dp"
-                    app:tabMode="scrollable"
+                    app:tabMode="fixed"
                     android:layout_gravity="center"
                     app:tabIndicatorHeight="0dp"
                     android:visibility="gone"/>

@@ -221,11 +221,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<FilterPojo>, t: Throwable) {
                 println(t.toString())
-                Toast.makeText(
-                    this@ActivityFilter,
-                    resources.getString(R.string.something_went_wrong),
-                    Toast.LENGTH_LONG
-                ).show()
                 displayToast(resources.getString(R.string.something_went_wrong),"error")
                 d.dismiss()
             }
