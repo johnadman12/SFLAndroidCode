@@ -62,7 +62,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
           } else if (list!!.get(position).getAddedStock().equals("1"))
               list!!.get(position).addedStock = "0";*/
 
-        setFragment(ChartFragment());
+        setFragment(ChartFragment(), Bundle());
         ll_news.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
         ll_data.setOnClickListener(this);
@@ -110,7 +110,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_chart -> {
                 if (fragment is ChartFragment)
                     return;
-                setFragment(ChartFragment());
+                setFragment(ChartFragment(), Bundle());
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -137,8 +137,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 val fragment: NewsFragment = NewsFragment()
                 var nd: Bundle = Bundle()
                 nd.putString("Stockname", list!!.get(position).symbol)
-                fragment.setArguments(nd)
-                setFragment(fragment);
+                setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -161,7 +160,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_analystics -> {
                 if (fragment is AnalysticFragment)
                     return;
-                setFragment(AnalysticFragment());
+                setFragment(AnalysticFragment(), Bundle());
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.colorbutton));
@@ -183,7 +182,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_data -> {
                 if (fragment is DataFragment)
                     return;
-                setFragment(DataFragment());
+                setFragment(DataFragment(), Bundle());
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -205,7 +204,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_comments -> {
                 if (fragment is CommentsFragment)
                     return;
-                setFragment(CommentsFragment());
+                val fragment1: CommentsFragment = CommentsFragment()
+                var nd: Bundle = Bundle()
+                nd.putString("Stockname", list!!.get(position).stockid.toString())
+                setFragment(fragment1, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -267,7 +269,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    displayToast( response.body()!!.message, "sucess")
+                    displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
@@ -275,7 +277,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
-                      displayToast("stock already added to watchlis ", "warning")
+                        displayToast("stock already added to watchlis ", "warning")
 
                     }
                 } else {
@@ -296,8 +298,9 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         ll.setBackgroundColor(color);
     }
 
-    private fun setFragment(fragment: Fragment) {
+    fun setFragment(fragment: Fragment, bundle: Bundle) {
         this.fragment = fragment;
+        fragment.arguments = bundle;
         val fragmentManager = supportFragmentManager
         fragmentManager
             .beginTransaction()
@@ -305,4 +308,5 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             .replace(R.id.container1, fragment)
             .commitAllowingStateLoss()
     }
+
 }

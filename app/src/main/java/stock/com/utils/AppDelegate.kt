@@ -1401,7 +1401,7 @@ object AppDelegate {
     }
 
     fun showAlert(mContext: Context, Message: String) {
-        showAlert(mContext, mContext.getString(R.string.app_name), Message, mContext.getString(R.string.ok))
+        showAlert(mContext, Message, mContext.getString(R.string.ok))
     }
 
     fun showAlert(mContext: Context, Title: String, Message: String, str_button_name: String) {

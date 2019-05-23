@@ -387,6 +387,32 @@ interface ApiInterface {
         @Header("x-access-token") token: String
     ): Call<SectorListPojo>
 
+
+    @GET("comments/commentList")
+    fun getComments(
+        @Header("x-access-token") token: String,
+        @Query("stockid") stock_id: Int,
+        @Query("user_id") user_id: String
+    ): Call<Comments>
+
+    @FormUrlEncoded
+    @POST("comments/commentPost")
+    fun postComments(
+        @Header("x-access-token") token: String,
+        @Field("stockid") stock_id: Int,
+//        @Field("comment_id") comments_id: Int,
+        @Field("user_id") user_id: String,
+        @Field("comments") comments: String
+    ): Call<Comments>
+
+
+    @GET("comments/commentLikes")
+    fun likeComment(
+        @Query("comment_id") comments_id: Int,
+        @Query("user_id") user_id: String
+    ): Call<BasePojo>
+
+
     @GET("stories")
     fun getNews(
         @Query("identifier_type") identifier_type: String, @Query("identifiers") identifiers: String,

@@ -24,7 +24,8 @@ import android.content.Intent.getIntent
 
 class NewsFragment : BaseFragment() {
     var bd:Bundle= Bundle()
-    var identifires: String = "AAPL,TSLA,FTSE"
+//    var identifires: String = "AAPL,TSLA,FTSE"
+    var identifires: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false)

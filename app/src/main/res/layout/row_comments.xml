@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
                           android:padding="@dimen/_5sdp"
                           android:orientation="horizontal">
                 <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_user"
                         android:layout_width="@dimen/_50sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_gravity="center"
@@ -32,6 +34,7 @@
                                   android:padding="@dimen/_2sdp"
                                   android:orientation="horizontal">
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/username"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -40,6 +43,7 @@
                                 android:text="Sarathomas02"
                                 android:textColor="@color/black"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/comment_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/_10ssp"
@@ -51,6 +55,7 @@
                                 android:textColor="@color/textColorLightBlack"/>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_comments"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_10ssp"
@@ -77,39 +82,62 @@
             <View android:layout_width="match_parent"
                   android:layout_height="1sp"
                   android:background="@color/colorBackgroundGray"/>
-
+            <!--android:drawableLeft="@drawable/ic_like"-->
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
+                          android:visibility="visible"
                           android:orientation="horizontal">
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_weight="1"
-                              android:padding="@dimen/_5sdp"
-                              android:gravity="center"
-                              android:orientation="horizontal">
-                    <androidx.appcompat.widget.AppCompatTextView
+                <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_3sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                    <LinearLayout
+                            android:id="@+id/ll_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_13ssp"
-                            android:drawableLeft="@drawable/ic_like"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:text="Like"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            style="@style/TextStyleNormal"
-                            android:textColor="@color/black"/>
+                            android:orientation="horizontal">
+                        <com.like.LikeButton
+                                android:id="@+id/star_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:circle_end_color="@android:color/holo_blue_dark"
+                                app:circle_start_color="@android:color/holo_blue_bright"
+                                app:dots_primary_color="@android:color/holo_blue_light"
+                                app:dots_secondary_color="@android:color/holo_blue_dark"
+                                app:icon_size="18dp"
+                                app:like_drawable="@drawable/thumb_on"
+                                app:unlike_drawable="@drawable/thumb_off"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/tv_like"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_13ssp"
+                                android:text=" 0 Like"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:gravity="center"
+                                android:visibility="visible"
+                                android:layout_gravity="center"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/black"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View android:layout_width="@dimen/_1ssp"
                       android:layout_height="match_parent"
                       android:background="@color/colorBackgroundGray"/>
 
-                <LinearLayout android:layout_width="wrap_content"
-                              android:layout_height="match_parent"
-                              android:layout_weight="1"
-                              android:padding="@dimen/_5sdp"
-                              android:gravity="center"
-                              android:orientation="horizontal">
+                <LinearLayout
+                        android:id="@+id/ll_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

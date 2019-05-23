@@ -34,8 +34,9 @@
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:inputType="textMultiLine"
-                android:id="@+id/et_search"/>
+                android:id="@+id/et_comment"/>
         <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnSend"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 app:srcCompat="@mipmap/send_"
