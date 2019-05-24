@@ -84,7 +84,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
           tab_layout.visibility = VISIBLE;
           tab_layout.setupWithViewPager(viewPager_Banner);*/
-        hicvp.adapter = HorizontalPagerAdapter(context, listImage!!, this)
+        hicvp.adapter = HorizontalPagerAdapter(context, listImage!!, this, getFromPrefsString(StockConstant.USERID))
     }
 
 

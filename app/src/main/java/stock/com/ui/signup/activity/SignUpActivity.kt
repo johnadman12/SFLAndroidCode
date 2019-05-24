@@ -244,7 +244,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             et_UserName.text.toString().trim(),
             et_UserNamefirst.text.toString(),
             et_UserNamelast.text.toString(),
-            "1",
+            "0",
             SessionManager.getInstance(this@SignUpActivity).token,
             notification_accept.toString(),
             term_condition_accept.toString(),

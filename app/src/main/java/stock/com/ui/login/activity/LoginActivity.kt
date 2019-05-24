@@ -107,7 +107,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val call: Call<SignupPojo> = apiService.phoneLogin(
             countryCodelogin.selectedCountryCode + et_email.text.toString().trim(),
             et_pass.text.toString().trim(),
-            "1",
+            "0",
             SessionManager.getInstance(this@LoginActivity).token
         )
         call.enqueue(object : Callback<SignupPojo> {
@@ -149,7 +149,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.login(
             et_email.text.toString(),
-            et_pass.text.toString().trim(), "1", SessionManager.getInstance(this@LoginActivity).token
+            et_pass.text.toString().trim(), "0", SessionManager.getInstance(this@LoginActivity).token
         )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {

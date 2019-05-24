@@ -66,7 +66,7 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMenuListener
- /*, NavigationView.OnNavigationItemSelectedListener */,
+    /*, NavigationView.OnNavigationItemSelectedListener */,
     InterfaceHome {
 
     override fun changeFragment(fragment: Fragment?) {
@@ -92,7 +92,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
 //        if (intent != null)
-            setUpMenu();
+        setUpMenu();
         initView()
 
         ll_contest.setOnClickListener {
@@ -211,7 +211,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     }
 
 
-
     @SuppressLint("RestrictedApi")
     private fun removeShiftMode(view: BottomNavigationView) {
         val menuView = view.getChildAt(0) as BottomNavigationMenuView
@@ -265,7 +264,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
 
 
-        setMenu(true, false, false, false, false, false, false)
+        setMenu(true, true, false, false, false, false, false)
         if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
             //ll_bottom.visibility = View.GONE;
             //img_btn_menu.visibility = GONE;
@@ -277,10 +276,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             //img_btn_menu.visibility = VISIBLE;
             // setMenu(true, false, false, false, false, false, false)
         }
-
-
-
-
 
         img_btn_menu.setOnClickListener {
             resideMenu!!.openMenu(ResideMenu.DIRECTION_LEFT);
@@ -479,7 +474,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             return
         }
         this.doubleBackToExitPressedOnce = true
-        displayToast(resources.getString(R.string.back_exit),"error")
+        displayToast(resources.getString(R.string.back_exit), "error")
         Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
@@ -489,7 +484,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     override fun closeMenu() {
     }
 
-    public fun showDialog1() {
+    fun showDialog1() {
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_logout)
@@ -536,10 +531,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     } else {
-                        displayToast(response.body()!!.message,"warning")
+                        displayToast(response.body()!!.message, "warning")
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
@@ -547,7 +542,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

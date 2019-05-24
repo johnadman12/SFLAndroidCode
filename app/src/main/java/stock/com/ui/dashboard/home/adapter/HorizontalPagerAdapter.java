@@ -20,6 +20,8 @@ import stock.com.ui.invite.activity.InviteFriendsActivity;
 import stock.com.ui.offer_list.OfferListActivity;
 import stock.com.ui.pojo.HomePojo;
 import stock.com.ui.share.ShareActivity;
+import stock.com.ui.signup.activity.SignUpActivity;
+import stock.com.utils.StockConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +34,19 @@ public class HorizontalPagerAdapter extends PagerAdapter {
 
 
     private Context mContext;
+    private String userId;
     private LayoutInflater mLayoutInflater;
     private HomeFragment homeFragment;
     private List<HomePojo.Banner> LIBRARIES;
 
 
-    public HorizontalPagerAdapter(final Context context, List<HomePojo.Banner> LIBRARIES, HomeFragment fragment) {
+    public HorizontalPagerAdapter(final Context context, List<HomePojo.Banner> LIBRARIES, HomeFragment fragment, String userid) {
         mContext = context;
+        userId = userid;
         mLayoutInflater = LayoutInflater.from(context);
 
         this.LIBRARIES = LIBRARIES;
-        this.homeFragment= fragment;
+        this.homeFragment = fragment;
     }
 
     @Override
@@ -68,17 +72,27 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (LIBRARIES.get(position).getType() == 1) {
+
+                if (userId.toString().equals("")) {
+                    mContext.startActivity(
+                            new Intent(mContext, SignUpActivity.class).putExtra(
+                                    StockConstant.INSTANCE.getFLAG(),
+                                    "false"
+                            )
+                    );
+                } else {
+
+                    if (LIBRARIES.get(position).getType() == 1) {
                    /* Intent intent = new Intent(mContext, DashBoardActivity.class);
                     intent.putExtra("flagcomingFrom", "0");
                     mContext.startActivity(intent);*/
-                    homeFragment.setintent();
+                        homeFragment.setintent();
 
-
-                } else if (LIBRARIES.get(position).getType() == 2) {
-                    mContext.startActivity(new Intent(mContext, ShareActivity.class));
-                } else if (LIBRARIES.get(position).getType() == 3) {
-                    mContext.startActivity(new Intent(mContext, OfferListActivity.class));
+                    } else if (LIBRARIES.get(position).getType() == 2) {
+                        mContext.startActivity(new Intent(mContext, ShareActivity.class));
+                    } else if (LIBRARIES.get(position).getType() == 3) {
+                        mContext.startActivity(new Intent(mContext, OfferListActivity.class));
+                    }
                 }
             }
         });

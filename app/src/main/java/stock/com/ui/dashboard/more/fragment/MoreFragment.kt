@@ -73,7 +73,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews() {
         if (activity is DashBoardActivity)
-            (activity as DashBoardActivity).setMenu(true, false, false, false, false, false, false)
+            (activity as DashBoardActivity).setMenu(true, true, false, false, false, false, false)
         tv_invite_friends.setOnClickListener(this)
         tv_contest_invite_code.setOnClickListener(this)
         tv_fantasy_point_system.setOnClickListener(this)

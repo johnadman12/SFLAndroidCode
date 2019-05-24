@@ -43,6 +43,7 @@ open class BaseActivity : AppCompatActivity() {
     var comment = false
     var info_icon = false
     var sor_icon = false
+    var search = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0);
@@ -181,12 +182,13 @@ open class BaseActivity : AppCompatActivity() {
         this.menu = menu
         /* if child activity is product activity then visible filer menu icon*/
         menu.findItem(R.id.menu_filter).isVisible = filter
+        menu.findItem(R.id.menu_sort).isVisible = sor_icon
         menu.findItem(R.id.menu_notification).isVisible = notif
+//        menu.findItem(R.id.menu_Search).isVisible = search
         menu.findItem(R.id.menu_wallet).isVisible = wallet
         menu.findItem(R.id.menu_edit).isVisible = edit
         menu.findItem(R.id.menu_comment).isVisible = comment
         menu.findItem(R.id.menu_info).isVisible = info_icon
-        menu.findItem(R.id.menu_sort).isVisible = sor_icon
 //        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
@@ -212,24 +214,27 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun setMenu(
-        notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
-        info_icon: Boolean, sor_icon: Boolean
+        notif: Boolean,
+        search: Boolean,wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
+        info_icon: Boolean
     ) {
+//        this.search = serach
         this.notif = notif
         this.wallet = wallet
         this.filter = filter
         this.edit = edit
         this.comment = comment
         this.info_icon = info_icon
-        this.sor_icon = sor_icon
+        this.sor_icon = search
         if (menu != null) {
+//            menu!!.findItem(R.id.menu_Search).isVisible = search
             menu!!.findItem(R.id.menu_filter).isVisible = filter
+            menu!!.findItem(R.id.menu_sort).isVisible = search
             menu!!.findItem(R.id.menu_notification).isVisible = notif
             menu!!.findItem(R.id.menu_wallet).isVisible = wallet
             menu!!.findItem(R.id.menu_edit).isVisible = edit
             menu!!.findItem(R.id.menu_comment).isVisible = comment
             menu!!.findItem(R.id.menu_info).isVisible = info_icon
-            menu!!.findItem(R.id.menu_sort).isVisible = sor_icon
         }
     }
 

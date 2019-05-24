@@ -11,6 +11,7 @@ import android.text.TextWatcher
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
+import kotlinx.android.synthetic.main.activity_price_break.*
 import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
@@ -189,7 +190,8 @@ class ActivityCreateContest : BaseActivity() {
             override fun afterTextChanged(s: Editable) {
                 var originalString = s.toString()
                 if (originalString.length != 0) {
-                    if (originalString.toInt() <= 100) {
+                    //if (originalString.toInt() <= 100) {
+                    if (originalString.toInt()>2&&originalString.toInt() <= 100) {
                         if (originalString.contains(",")) {
                             originalString = originalString.replace(",".toRegex(), "")
                         }
@@ -206,9 +208,12 @@ class ActivityCreateContest : BaseActivity() {
         })
 
         btn_Next.setOnClickListener {
-            if (toggleButton1.isChecked)
-                startActivity(Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java))
+            if (toggleButton1.isChecked){
+                startActivity(Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java).putExtra("sport",edtSports.text.toString()))
+            }
         }
+
+
     }
 
     private fun updateLabel(date: AppCompatTextView) {

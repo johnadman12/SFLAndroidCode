@@ -39,7 +39,7 @@ object StockConstant {
     val REQUEST_GALLARY = 114
 
     val USERID = ""
-    val FLAG = ""
+   public final val FLAG = ""
     val USERNAME = "username"
     val USERPHONE = "userphone"
     val USEREMAIL = "useremail"

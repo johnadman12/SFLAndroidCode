@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:id="@+id/ll_main"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gray_empty_button"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_margin="@dimen/_8sdp">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/ll_head"
+                      android:orientation="horizontal"
+                      android:padding="@dimen/_5sdp">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Winners"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorBlack"
+                    android:text=""
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_recommended"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_10ssp"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:textColor="@color/green"
+                    android:layout_weight="1"
+                    android:text="(Recommended)"
+                    android:layout_height="wrap_content"/>
+
+            <RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                         android:buttonTint="@color/green"
+                         android:checked="true"
+                         android:id="@+id/radioBtn"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_below="@+id/ll_head"
+                                                   android:padding="@dimen/_5sdp"
+                                                   android:id="@+id/recylerView"
+        ></androidx.recyclerview.widget.RecyclerView>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

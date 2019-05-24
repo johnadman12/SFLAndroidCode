@@ -136,7 +136,7 @@
                     android:textSize="@dimen/_12sdp"
                     style="@style/TextStyleSemiBold"
                     android:textColor="@color/textColorLightBlack"
-                   />
+            />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -169,6 +169,7 @@
                 android:layout_margin="@dimen/_8sdp"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:id="@+id/ll_winners"
                 android:background="@drawable/green_empty_square">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -180,7 +181,8 @@
                     android:paddingLeft="@dimen/_8sdp"
                     android:layout_weight=".5"
                     android:textColor="@color/textColorBlack"
-                    android:text="25 Winners"/>
+                    android:text=""
+                    android:id="@+id/tv_winner"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="0dp"
@@ -197,7 +199,8 @@
                     android:src="@mipmap/dropdown"
                     android:layout_weight=".5"
                     android:layout_gravity="right|center"
-                    android:tint="@color/green"/>
+                    android:tint="@color/green"
+                    android:clickable="false"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

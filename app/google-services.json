@@ -1,53 +1,1016 @@
 {
   "project_info": {
-    "project_number": "902409099720",
-    "firebase_url": "https://fantasysport-dabbc.firebaseio.com",
-    "project_id": "fantasysport-dabbc",
-    "storage_bucket": "fantasysport-dabbc.appspot.com"
+    "project_number": "91946835444",
+    "firebase_url": "https://emizen-project.firebaseio.com",
+    "project_id": "emizen-project",
+    "storage_bucket": "emizen-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:902409099720:android:26105f44ec1fde41",
+        "mobilesdk_app_id": "1:91946835444:android:1d3147a4f6e1ce16",
+        "android_client_info": {
+          "package_name": "com.allshoots.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:2c14bec3ef2cdb5d",
+        "android_client_info": {
+          "package_name": "com.bedeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-435p92td3v3qgj6n2obdanheaj8aqp4n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bedeal",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:0a33e677b6adac17",
+        "android_client_info": {
+          "package_name": "com.carjo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:0e3808762ce62233",
+        "android_client_info": {
+          "package_name": "com.dohacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-hvvhf1lp7icfq44gj9aqsls24r8e5tcl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dohacon",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:1fb820cf73b9a904",
+        "android_client_info": {
+          "package_name": "com.emizen.plumbgroup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-belq2pqhihn8ap1miihd4r734aqpk1gn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emizen.plumbgroup",
+            "certificate_hash": "ad64bba01783821ddfef177ded01e245e4c5a97b"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:6fd8d8cee8d315e3",
+        "android_client_info": {
+          "package_name": "com.emizend.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:a61368583eb07b7e",
+        "android_client_info": {
+          "package_name": "com.emizend_jeevan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:79deb77268cc8380",
+        "android_client_info": {
+          "package_name": "com.emz.istanbulkebabhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:fd0cb22370bcf016",
+        "android_client_info": {
+          "package_name": "com.emz.valentinos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:a7e79028f7042dab",
+        "android_client_info": {
+          "package_name": "com.example.foodapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-8j44lqrsh9q7a3qkoeaciraa2qh8d6i1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodapp",
+            "certificate_hash": "2fda7d4c8c1a8983f1b04067826e52478052d36a"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:1912f59922f9b821",
+        "android_client_info": {
+          "package_name": "com.example.mystocks11"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-lcmf28lu433d560eilk3ios4dsmgnfeo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mystocks11",
+            "certificate_hash": "f499f7af65d59cac192a36c3149774844f5cedd6"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:92e63651523e7263",
+        "android_client_info": {
+          "package_name": "com.firebasechatsample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:0f696ece7d137137",
+        "android_client_info": {
+          "package_name": "com.foodbasketadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:5920de3503a2d18c",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.fcm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:660c44b67971e49f",
+        "android_client_info": {
+          "package_name": "com.googleloginsample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-gjq3ibtkaai28vvd6o63m2k7j7gcu7ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.googleloginsample",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:86b65203fb52f523",
+        "android_client_info": {
+          "package_name": "com.graduationceremoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:8f86f379f4579f05",
+        "android_client_info": {
+          "package_name": "com.graducationceremoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:c4580ff954f2daaa",
+        "android_client_info": {
+          "package_name": "com.myfoodbasket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:6ffd9c76a63212e3",
+        "android_client_info": {
+          "package_name": "com.reactfirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:28060aae325eccf3",
+        "android_client_info": {
+          "package_name": "com.reactnativepushnotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:4fa03973da70ed5b",
+        "android_client_info": {
+          "package_name": "com.saifty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:782cdacce2180a16",
+        "android_client_info": {
+          "package_name": "com.smscollectionadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-b0cd7ma8snef6qp1l5qpgc3ka7cioq89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smscollectionadmin",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:22f1eaf1bfae9946",
+        "android_client_info": {
+          "package_name": "com.tregix.serviceprovider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:62019a1392d48808",
+        "android_client_info": {
+          "package_name": "com.ytcount"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-dej45l4kvvb8mfqd0k8fp40ss6oa19p2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ytcount",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:acc4c6d8b9a54cee",
+        "android_client_info": {
+          "package_name": "krish.firebaseandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91946835444-66j85lj90042q1ki7rm8b1i06gmmfg59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "krish.firebaseandroid",
+            "certificate_hash": "e8f6d9ac11a885d850e223bb1544fa34e82373dd"
+          }
+        },
+        {
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91946835444:android:26105f44ec1fde41",
         "android_client_info": {
           "package_name": "stock.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "902409099720-1cn5dsu3600qt8jauu4b9bfv6nbgi33r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "stock.com",
-            "certificate_hash": "0678f789c0e185a9bf98ad77690e4ce7ee3e1a5b"
-          }
-        },
-        {
-          "client_id": "902409099720-dhlstjm1h8962vuiciugsr2mtdsnr4hb.apps.googleusercontent.com",
+          "client_id": "91946835444-55ouitvkih8bu8s2vf126ke5ipdvp771.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-//          "current_key": "AIzaSyDmbt2Vu21fLjTP4FkDSfGDc7NsGeOsCbM"
-          "current_key": "AIzaSyBneQu9yhLR1_hI2sb7RdAGahBvZv6_Zrw"
+          "current_key": "AIzaSyCrRCzjcLskakd0A13uERwtVo-ajGbAriU"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "902409099720-dhlstjm1h8962vuiciugsr2mtdsnr4hb.apps.googleusercontent.com",
+              "client_id": "91946835444-vljd5vgi0ltcnpo5ltrc5rd6eoq7a77g.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "91946835444-7srq0k1vk6r7p0i03pblu3ae6lljb4ta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Istanbul-Kebab-House1"
+              }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

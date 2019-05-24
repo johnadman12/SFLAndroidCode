@@ -11,7 +11,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.comment.adapter.CommentAdapter
 
-class CommentActivity : BaseActivity(){
+class CommentActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +28,14 @@ class CommentActivity : BaseActivity(){
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText("Comment")
         setAdapter()
-        setMenu(false, false, false, false, false, false,false)
+        setMenu(false, false, false, false, false, false, false)
     }
 
     private fun setListener() {
         sent_comment.setOnClickListener {
-            if(et_comment.text.toString().trim().isEmpty()){
-                displayToast("Please enter comment","warning")
-            }else{
+            if (et_comment.text.toString().trim().isEmpty()) {
+                displayToast("Please enter comment", "warning")
+            } else {
 
             }
         }
