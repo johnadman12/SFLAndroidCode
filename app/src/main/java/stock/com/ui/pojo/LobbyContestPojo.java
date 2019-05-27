@@ -56,6 +56,12 @@ public class LobbyContestPojo extends BasePojo {
         @SerializedName("winning_amount")
         @Expose
         public String winningAmount;
+        @SerializedName("mid")
+        @Expose
+        public String  mid="";
+        @SerializedName("marketname")
+        @Expose
+        public String  marketname;
 
         public String winningAmount_temp="";
 

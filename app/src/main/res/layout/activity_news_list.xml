@@ -64,14 +64,13 @@
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:enabled="false"
                     android:textSize="@dimen/_11sdp"
                     android:hint="@string/search_by_news"
                     android:textColorHint="@color/white"
                     android:inputType="textCapSentences"
                     android:textColor="@color/white"
                     android:singleLine="true"
-                    android:id="@+id/et_search_stock"/>
+                    android:id="@+id/et_search_news"/>
             <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/imgcross"
                     android:layout_width="@dimen/_15sdp"

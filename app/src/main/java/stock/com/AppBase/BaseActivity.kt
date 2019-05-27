@@ -23,10 +23,12 @@ import stock.com.R
 import stock.com.data.Prefs
 import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
+import stock.com.ui.dashboard.home.ActivityNewsSearch
 import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.splash.activity.WelcomeActivity
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -81,6 +83,17 @@ open class BaseActivity : AppCompatActivity() {
                     showWalletPopUp(view)
                 return true
             }
+            R.id.menu_sort -> {
+                if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                    AppDelegate.showAlertRegister(
+                        this, getResources().getString(R.string.app_name), getString(R.string.login_default),
+                        getResources().getString(R.string.ok)
+                    )
+                } else {
+                    startActivity(Intent(this, ActivityNewsSearch::class.java))
+                }
+                return true
+            }
             R.id.menu_comment -> {
                 startActivity(Intent(this, CommentActivity::class.java))
             }
@@ -111,12 +124,12 @@ open class BaseActivity : AppCompatActivity() {
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
-             .setTypeface(
-                 Typeface.createFromAsset(
-                     this.getAssets(),
-                     "fonts/faktpro_medium.ttf"
-                 )
-             )
+            .setTypeface(
+                Typeface.createFromAsset(
+                    this.getAssets(),
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
             .setCornerRadius(10, 2)
             .sneak(R.color.green_trans) // Sneak with background color
     }
@@ -129,12 +142,12 @@ open class BaseActivity : AppCompatActivity() {
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
-             .setTypeface(
-                 Typeface.createFromAsset(
-                     this.getAssets(),
-                     "fonts/faktpro_medium.ttf"
-                 )
-             )
+            .setTypeface(
+                Typeface.createFromAsset(
+                    this.getAssets(),
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
             .setCornerRadius(10, 2)
             .sneak(R.color.orange) // Sneak with background color
     }
@@ -147,17 +160,17 @@ open class BaseActivity : AppCompatActivity() {
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
-             .setTypeface(
-                 Typeface.createFromAsset(
-                     this.getAssets(),
-                     "fonts/faktpro_medium.ttf"
-                 )
-             )
+            .setTypeface(
+                Typeface.createFromAsset(
+                    this.getAssets(),
+                    "fonts/faktpro_medium.ttf"
+                )
+            )
             .setCornerRadius(10, 2)
             .sneak(R.color.redcolorTrans) // Sneak with background color
     }
 
-  /**/  open fun parseDateToddMMyyyy(time: String): String? {
+    /**/  open fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
@@ -195,27 +208,22 @@ open class BaseActivity : AppCompatActivity() {
         getViewOfCartMenuItem(menu)
         /* se click listener of toolbar cart icon*/
         notificationView.setOnClickListener {
-            //            startActivity(Intent(this,ContestDetailActivity::class.java))
-
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@BaseActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name), getString(R.string.login_default),
+                    getResources().getString(R.string.ok)
                 )
+
             } else {
                 startActivity(Intent(this, NotificationActivity::class.java))
             }
         }
-
-
         return true
     }
 
     fun setMenu(
         notif: Boolean,
-        search: Boolean,wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
+        search: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
         info_icon: Boolean
     ) {
 //        this.search = serach
@@ -302,7 +310,11 @@ open class BaseActivity : AppCompatActivity() {
                     notificationView.notifItemCountTv.visibility = View.VISIBLE
 
                 return notificationView
-            }
+            } /*else if (item.itemId == R.id.menu_sort) {
+                searchView = item.ac
+                return searchView
+
+            }*/
         }
         return notificationView
     }

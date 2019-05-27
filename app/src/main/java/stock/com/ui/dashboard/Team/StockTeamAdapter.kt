@@ -53,7 +53,6 @@ class StockTeamAdapter(
 
     init {
         this.searchList = mContest;
-
         //Toast.makeText(mContext,""+ searchList!!.size.toString(),1000).show()
         createCheckedHolder();
     }

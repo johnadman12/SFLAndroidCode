@@ -157,7 +157,15 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
-        tvStockName.setText(contest.exchangename)
+        if (contest.marketname.equals("Equity")) {
+            Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
+                .into(ivStock)
+            tvStockName.setText(contest.exchangename)
+        } else {
+          tvStockName.setText(contest.marketname)
+            Glide.with(this).load(R.drawable.ic_business)
+                .into(ivStock)
+        }
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
@@ -172,9 +180,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             llWinners.isEnabled = true
         }
 
-
-        Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
-            .into(ivStock)
         iv_info.setOnClickListener {
             showInfoDialogue(contest.description);
         }

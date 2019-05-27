@@ -36,6 +36,12 @@
                     android:id="@+id/img_btn_close"/>
         </LinearLayout>
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_myteam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,6 +109,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/percentage"
+                                    android:id="@+id/totalChange"
                                     android:textSize="@dimen/_10ssp"/>
                         </LinearLayout>
                     </LinearLayout>

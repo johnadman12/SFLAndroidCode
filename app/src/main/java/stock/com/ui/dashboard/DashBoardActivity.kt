@@ -62,6 +62,7 @@ import stock.com.ui.social_network.SocialNetworkActivity
 import stock.com.ui.support.SupportActivity
 import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
@@ -98,11 +99,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         ll_contest.setOnClickListener {
 
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                        getString(R.string.login_default), getResources().getString(R.string.ok)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -133,11 +132,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         ll_profile.setOnClickListener {
 
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -155,11 +152,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         ll_market.setOnClickListener {
 
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -175,11 +170,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
         ll_lobby.setOnClickListener {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
                 )
             } else {
                 toolbar.visibility = VISIBLE
@@ -344,12 +337,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             // var intent = Intent(this, FriendsActivity::class.java);
             //startActivity(intent);
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                )
             } else {
                 var intent = Intent(this, ShareActivity::class.java);
                 startActivity(intent);
@@ -387,12 +378,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         img_btn_eye.setOnClickListener {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                )
                 resideMenu!!.closeMenu();
             } else {
                 startActivity(Intent(this@DashBoardActivity, WatchListActivity::class.java));
@@ -402,12 +391,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
 
         profile_image.setOnClickListener {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                )
                 resideMenu!!.closeMenu();
             } else {
                 startActivity(Intent(this@DashBoardActivity, EditProfileActivity::class.java));
@@ -570,12 +557,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
         if (pos.equals(resources.getString(R.string.feedback))) {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                )
             } else {
                 var intent = Intent(this, FeedBackActivity::class.java);
                 startActivity(intent);
@@ -587,12 +572,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
         if (pos.equals(resources.getString(R.string.action_settings))) {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
-                startActivity(
-                    Intent(this@DashBoardActivity, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name),
+                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                )
             } else {
                 var intent = Intent(this, SettingActivity::class.java);
                 startActivity(intent);

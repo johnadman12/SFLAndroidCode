@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         seeall.setOnClickListener(this)
         getFeatureContentlist();
         getTrainingContentlist()
-//       getNewslist()
+//        getNewslist()
         dataExchange = ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;

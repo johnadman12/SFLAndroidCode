@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_main"
+        android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/_5sdp">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:id="@+id/imageViewNews"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/logo"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="@dimen/_2sdp"
+                          android:layout_marginLeft="@dimen/_3sdp"
+                          android:orientation="vertical">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleMedium"
+                            android:id="@+id/tvNewsTitle"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_width="0dp"
+                            android:ellipsize="end"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorBlack"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_width="@dimen/_45sdp"
+                            android:textColor="@color/white"
+                            android:layout_height="@dimen/_25sdp"
+                            android:id="@+id/tvPercentage"
+                            android:padding="@dimen/_2sdp"
+                            android:visibility="gone"
+                            android:background="@drawable/radiuse"
+                            android:gravity="center"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:paddingBottom="@dimen/_5sdp"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_10ssp"
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:lineSpacingExtra="@dimen/_1sdp"
+                        android:textColor="@color/textColorGray"
+                        android:paddingLeft="@dimen/_2sdp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:weightSum="2">
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:layout_marginBottom="@dimen/_5sdp">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleNormal"
+                                android:textSize="@dimen/_12ssp"
+                                android:id="@+id/tvNewsAuthor"
+                                android:layout_width="match_parent"
+                                android:textColor="#155477"
+                                android:paddingLeft="@dimen/_2sdp"
+                                android:text="CNN News Express "
+                                android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:padding="@dimen/_2sdp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/timegrey"
+                                android:background="@null"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextStyleNormal"
+                                android:textSize="@dimen/_10ssp"
+                                android:id="@+id/tvNewsTime"
+                                android:layout_width="wrap_content"
+                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:textColor="@color/textColorLightBlack"
+                                android:layout_height="wrap_content"
+                                android:text="17 Hour Ago"
+                                android:padding="@dimen/_2sdp"
+                                android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
+
+

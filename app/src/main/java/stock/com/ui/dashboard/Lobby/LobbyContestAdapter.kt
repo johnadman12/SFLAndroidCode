@@ -47,12 +47,20 @@ class LobbyContestAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.entry_fee.setText(mContest.get(position).entryFees)
-        holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
         holder.itemView.tvContestType.setText(mContest.get(position).catname)
         holder.itemView.tvWinnersTotal.setText(mContest.get(position).totalWinners)
         holder.itemView.tvTotalWinnings.setText(mContest.get(position).winningAmount)
-        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
-            .into(holder.itemView.ivStock)
+        if (mContest.get(position).marketname.equals("Equity")) {
+            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + mContest.get(position).exchangeimage.trim())
+                .into(holder.itemView.ivStock)
+            holder.itemView.tvStockName.setText(mContest.get(position).exchangename)
+        } else {
+            holder.itemView.tvStockName.setText(mContest.get(position).marketname)
+            Glide.with(mContext).load(R.drawable.ic_business)
+                .into(holder.itemView.ivStock)
+        }
+
+
         var sports: Double =
             (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt()).toDouble()
 

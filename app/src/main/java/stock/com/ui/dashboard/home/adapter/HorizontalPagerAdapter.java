@@ -21,6 +21,7 @@ import stock.com.ui.offer_list.OfferListActivity;
 import stock.com.ui.pojo.HomePojo;
 import stock.com.ui.share.ShareActivity;
 import stock.com.ui.signup.activity.SignUpActivity;
+import stock.com.utils.AppDelegate;
 import stock.com.utils.StockConstant;
 
 import java.util.ArrayList;
@@ -74,12 +75,8 @@ public class HorizontalPagerAdapter extends PagerAdapter {
             public void onClick(View view) {
 
                 if (userId.toString().equals("")) {
-                    mContext.startActivity(
-                            new Intent(mContext, SignUpActivity.class).putExtra(
-                                    StockConstant.INSTANCE.getFLAG(),
-                                    "false"
-                            )
-                    );
+                    AppDelegate.INSTANCE.showAlertRegister(mContext, mContext.getResources().getString(R.string.app_name),mContext
+                            .getString(R.string.login_default), mContext.getResources().getString(R.string.ok));
                 } else {
 
                     if (LIBRARIES.get(position).getType() == 1) {

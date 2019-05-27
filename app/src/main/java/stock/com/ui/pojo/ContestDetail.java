@@ -82,6 +82,12 @@ public class ContestDetail extends BasePojo {
         @SerializedName("rank")
         @Expose
         public String rank;
+        @SerializedName("mid")
+        @Expose
+        public String  mid="";
+        @SerializedName("marketname")
+        @Expose
+        public String  marketname;
         @SerializedName("price_break")
         @Expose
         public ArrayList<PriceBreak> priceBreak = null;

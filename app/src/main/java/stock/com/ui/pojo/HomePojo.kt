@@ -97,6 +97,12 @@ class HomePojo : BasePojo() {
         @SerializedName("total_winners")
         @Expose
         var totalwinners: String = ""
+        @SerializedName("mid")
+        @Expose
+        var mid: String = ""
+        @SerializedName("marketname")
+        @Expose
+        var marketname: String = ""
         @SerializedName("price_break")
         @Expose
         var priceBreak: ArrayList<PriceBreak>? = null

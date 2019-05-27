@@ -40,6 +40,7 @@ import com.irozon.sneaker.Sneaker
 import stock.com.BuildConfig
 import stock.com.R
 import stock.com.constant.Tags
+import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.utils.networkUtils.NetworkUtils
 import java.io.*
 import java.security.MessageDigest
@@ -1433,22 +1434,24 @@ object AppDelegate {
 
     }*/
 
-    fun showAlert(
-        mContext: Context,
-        Title: String,
-        Message: String,
-        str_button_name: String,
-        onClickListener: View.OnClickListener?
+    fun showAlertRegister(
+        mContext: Context, Title: String, Message: String, str_button_name: String
+        /* onClickListener: View.OnClickListener?*/
     ) {
         try {
             mAlert = AlertDialog.Builder(mContext)
-            mAlert.setCancelable(false)
+            mAlert.setCancelable(true)
             mAlert.setTitle(Title)
             mAlert.setMessage(Message)
             mAlert.setPositiveButton(
                 str_button_name
             ) { dialog, which ->
-                onClickListener?.onClick(null)
+                mContext.startActivity(
+                    Intent(mContext, SignUpActivity::class.java).putExtra(
+                        StockConstant.FLAG,
+                        "false"
+                    )
+                );
                 dialog.dismiss()
             }
             mAlert.show()

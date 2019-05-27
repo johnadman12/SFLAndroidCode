@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_live_contest.*
@@ -17,24 +18,29 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.live_contest.adapter.LiveContestAdapter
+import stock.com.ui.live_contest.adapter.RecycleTeamAdapter
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class LiveContestActivity : BaseActivity() {
     var contestid: Int = 0
     var exchangeid: Int = 0
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null;
+    private var filterTeamList: ArrayList<ContestDetail.Score>? = null;
 
     private var liveAdapter: LiveContestAdapter? = null;
+    private var teamAdapter: RecycleTeamAdapter? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_contest)
         StockConstant.ACTIVITIES.add(this)
+        filterTeamList = ArrayList()
         if (intent != null) {
             contestid = intent.getIntExtra("contestid", 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
@@ -48,10 +54,10 @@ class LiveContestActivity : BaseActivity() {
         }
 
         tvViewTeam.setOnClickListener {
-           /* startActivity(
-                Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
-                    .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-            )*/
+            /* startActivity(
+                 Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
+                     .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+             )*/
         }
         getContestDetail()
     }
@@ -59,13 +65,27 @@ class LiveContestActivity : BaseActivity() {
     @SuppressLint("WrongConstant")
     fun setLiveAdapter(scores: MutableList<ContestDetail.Score>) {
         liveAdapter = LiveContestAdapter(
-            applicationContext,
+            this@LiveContestActivity,
             getFromPrefsString(StockConstant.USERID)!!.toInt(), scores
         );
         val llm = LinearLayoutManager(applicationContext);
         llm.orientation = LinearLayoutManager.VERTICAL;
         recyclerView_Live!!.layoutManager = llm;
         recyclerView_Live!!.adapter = liveAdapter;
+
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setLiveTeamAdapter(scores: MutableList<ContestDetail.Score>) {
+        teamAdapter = RecycleTeamAdapter(
+            this@LiveContestActivity,
+            getFromPrefsString(StockConstant.USERID)!!.toInt()
+            , scores, this
+        );
+        val llm = LinearLayoutManager(this@LiveContestActivity);
+        llm.orientation = LinearLayoutManager.HORIZONTAL;
+        recycle_myteam!!.layoutManager = llm;
+        recycle_myteam!!.adapter = teamAdapter;
 
     }
 
@@ -87,26 +107,38 @@ class LiveContestActivity : BaseActivity() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         setLiveAdapter(response.body()!!.scores)
+                        for (i in 0 until response.body()!!.scores.size)
+                            if (response.body()!!.scores.get(i).userid.equals(getFromPrefsString(StockConstant.USERID))) {
+                                filterTeamList!!.add(response.body()!!.scores.get(i))
+                            }
                         if (response.body()!!.contest.size > 0)
-                            setData(response.body()!!.contest.get(0))
+                            setTimer(response.body()!!.contest.get(0))
+                        if (filterTeamList!!.size > 0) {
+                            if (filterTeamList!!.size == 1) {
+                                setDataForTeam(filterTeamList!!, 0)
+                                recycle_myteam.visibility = View.GONE
+                            } else {
+                                setLiveTeamAdapter(filterTeamList!!)
+                            }
+
+                        }
+
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.internal_server_error),"error")
+                displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
             }
         })
     }
 
-    private fun setData(contest: ContestDetail.Contest) {
-        tvRank.setText(contest.rank)
-//        stockList= contest.
+    fun setTimer(contest: ContestDetail.Contest) {
         if (!contest.schedule_end.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
@@ -138,6 +170,12 @@ class LiveContestActivity : BaseActivity() {
                 newtimer.start()
             }
         }
+    }
+
+
+    fun setDataForTeam(contest: MutableList<ContestDetail.Score>, position: Int) {
+        tvRank.setText(contest.get(position).rank)
+        totalChange.setText(contest.get(position).teamId)
 
     }
 }

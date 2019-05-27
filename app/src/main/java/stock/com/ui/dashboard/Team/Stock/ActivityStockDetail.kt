@@ -27,7 +27,6 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
-import stock.com.utils.AppDelegate.showAlert
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
