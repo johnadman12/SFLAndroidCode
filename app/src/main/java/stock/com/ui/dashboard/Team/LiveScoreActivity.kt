@@ -14,7 +14,6 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.pojo.Scores
 import stock.com.utils.StockConstant

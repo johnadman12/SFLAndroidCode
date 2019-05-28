@@ -97,7 +97,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0)
+        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0,"")
     }
 
     fun getContestDetail() {

@@ -39,6 +39,7 @@ import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
+import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -81,19 +82,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         img_btn_close.setOnClickListener(this)
         getContestDetail()
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
-        ll_Circular.setOnClickListener {
-            //            showJoinTeamDialogue()
-            var intent = Intent(this, ActivityCreateTeam::class.java)
-            intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
-            intent.putExtra(StockConstant.CONTESTID, contestid)
-            intent.putExtra("isCloning", 0)
-            startActivityForResult(intent, 405);
-            // activity.setFragmentForActivity()
-            /* var intent = Intent();
-             setResult(Activity.RESULT_OK);
-             finish();*/
 
-        }
 
     }
 
@@ -106,11 +95,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>) {
+    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>, marketname: String) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1)
+        rv_score!!.adapter =
+            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1, marketname)
     }
 
     fun getContestDetail() {
@@ -138,7 +128,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         if (response.body()!!.rules.size == 0)
                             tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
-                        setScoreAdapter(response.body()!!.scores)
+                        setScoreAdapter(response.body()!!.scores, response.body()!!.contest.get(0).marketname)
                         setData(response.body()!!.contest.get(0))
                     }
                 } else {
@@ -162,10 +152,29 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 .into(ivStock)
             tvStockName.setText(contest.exchangename)
         } else {
-          tvStockName.setText(contest.marketname)
+            tvStockName.setText(contest.marketname)
             Glide.with(this).load(R.drawable.ic_business)
                 .into(ivStock)
         }
+
+        ll_Circular.setOnClickListener {
+            if (contest.marketname.equals("Equity")) {
+                var intent = Intent(this, ActivityCreateTeam::class.java)
+                intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+                intent.putExtra(StockConstant.CONTESTID, contestid)
+                intent.putExtra("isCloning", 0)
+                startActivityForResult(intent, 405);
+            } else {
+                startActivity(
+                    Intent(this@ContestDetailActivity, ActivityMarketTeam::class.java)
+                        .putExtra(StockConstant.MARKETID, contest.mid)
+                        .putExtra(StockConstant.CONTESTID, contestid)
+                        .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
+                )
+            }
+
+        }
+
         tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
@@ -310,11 +319,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         dialogue.ll_new.setOnClickListener {
             if (dialogue.isShowing)
                 dialogue.dismiss()
-            /* startActivity(
-                 Intent(this, ActivityCreateTeam::class.java).putExtra(
-                     StockConstant.EXCHANGEID, exchangeid
-                 ).putExtra("isCloning", 1)
-             )*/
 
             var intent = Intent(this, ActivityCreateTeam::class.java)
             intent.putExtra(StockConstant.EXCHANGEID, exchangeid)

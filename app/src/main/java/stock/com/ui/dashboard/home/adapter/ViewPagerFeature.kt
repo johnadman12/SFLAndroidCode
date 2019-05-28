@@ -37,7 +37,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureContest>) : PagerAdapter() {
+class ViewPagerFeature(val context: Context,
+                       val list: List<HomePojo.FeatureContest>,
+                       val userid:String) : PagerAdapter() {
     var SECONDS_IN_A_DAY = 24 * 60 * 60
 
 
@@ -164,18 +166,17 @@ class ViewPagerFeature(val context: Context, val list: List<HomePojo.FeatureCont
             showInfoDialogue(list.get(position).description);
         }
         ll_Circular.setOnClickListener {
-            /*  context.startActivity(
-                  Intent(context, ContestDetailActivity::class.java).putExtra("contestid", list.get(position).contestid).putExtra(
-                      StockConstant.EXCHANGEID,
-                      list.get(position).exchangeid
-                  )
-              )*/
-
-            var intent = Intent(context, ContestDetailActivity::class.java);
-            intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
-            intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
-            startActivityForResult(context as Activity, intent, 404, null);
-
+            if (userid.equals("")) {
+                AppDelegate.showAlertRegister(
+                    context, context.getResources().getString(R.string.app_name),
+                    context.getString(R.string.login_default)
+                )
+            } else {
+                var intent = Intent(context, ContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
+                intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
+                startActivityForResult(context as Activity, intent, 404, null);
+            }
         }
 
         val contestLeft: Double =

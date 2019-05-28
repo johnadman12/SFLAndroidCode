@@ -36,7 +36,7 @@ public class ContestDetail extends BasePojo {
         public String confirm_winning = "";
         @SerializedName("join_multiple")
         @Expose
-        public String join_multiple= "";
+        public String join_multiple = "";
         @SerializedName("contest_size")
         @Expose
         public int contestSize;
@@ -84,10 +84,10 @@ public class ContestDetail extends BasePojo {
         public String rank;
         @SerializedName("mid")
         @Expose
-        public String  mid="";
+        public int mid;
         @SerializedName("marketname")
         @Expose
-        public String  marketname;
+        public String marketname;
         @SerializedName("price_break")
         @Expose
         public ArrayList<PriceBreak> priceBreak = null;
@@ -102,6 +102,7 @@ public class ContestDetail extends BasePojo {
         public String description;
 
     }
+
     public class Score {
 
         @SerializedName("team_id")
@@ -128,7 +129,9 @@ public class ContestDetail extends BasePojo {
 
         @SerializedName("stock")
         @Expose
-        public ArrayList<StockTeamPojo.Stock>stock = null;
-
+        public ArrayList<StockTeamPojo.Stock> stock = null;
+        @SerializedName("crypto")
+        @Expose
+        public ArrayList<MarketList.Crypto> crypto = null;
     }
 }

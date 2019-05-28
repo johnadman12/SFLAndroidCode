@@ -76,7 +76,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
 
                 if (userId.toString().equals("")) {
                     AppDelegate.INSTANCE.showAlertRegister(mContext, mContext.getResources().getString(R.string.app_name),mContext
-                            .getString(R.string.login_default), mContext.getResources().getString(R.string.ok));
+                            .getString(R.string.login_default));
                 } else {
 
                     if (LIBRARIES.get(position).getType() == 1) {

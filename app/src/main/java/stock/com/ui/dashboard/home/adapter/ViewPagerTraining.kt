@@ -34,7 +34,11 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.TraniningContest>) : PagerAdapter() {
+class ViewPagerTraining(
+    val context: Context,
+    val list: List<TrainingPojo.TraniningContest>,
+    val userid: String
+) : PagerAdapter() {
     var SECONDS_IN_A_DAY = 24 * 60 * 60
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -70,8 +74,8 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         val tvtotal: TextView = view.findViewById(R.id.tvtotal)
         val llWinners: LinearLayout = view.findViewById(R.id.llWinners)
 
-        tvtotal.visibility= GONE
-        tvTotalWinnings.visibility= GONE
+        tvtotal.visibility = GONE
+        tvTotalWinnings.visibility = GONE
         entry_fee.setText(list.get(position).entryFees)
         tvStockName.setText(list.get(position).exchangename)
         tvTime.setText(list.get(position).exchangename)
@@ -115,11 +119,11 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
 //                Toast.makeText(context,"Contest is live now",10000).show()
-               /* txtjoin.setTextSize(20.00f)
-                txtjoin.setText(context.getString(R.string.Finished))*/
+                /* txtjoin.setTextSize(20.00f)
+                 txtjoin.setText(context.getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
-            }else if (diff.equals("3600000")) {
+            } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(1000000000, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
@@ -166,29 +170,25 @@ class ViewPagerTraining(val context: Context, val list: List<TrainingPojo.Tranin
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 
 
-
-       /* llWinners.setOnClickListener {
-            val manager = (context as AppCompatActivity).supportFragmentManager
-            val bottomSheetDialogFragment =
-                BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
-            bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
-        }*/
+        /* llWinners.setOnClickListener {
+             val manager = (context as AppCompatActivity).supportFragmentManager
+             val bottomSheetDialogFragment =
+                 BottomSheetWinningListFragment(list.get(position).priceBreak, list.get(position).winningAmount)
+             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
+         }*/
 
         ll_Circular.setOnClickListener {
-            /* context.startActivity(
-                 Intent(context, ContestDetailActivity::class.java).putExtra(
-                     StockConstant.CONTESTID,
-                     list.get(position).contestid
-                 ).putExtra(
-                     StockConstant.EXCHANGEID,
-                     list.get(position).exchangeid
-                 )
-             )*/
-
-            var intent = Intent(context, ContestDetailActivity::class.java);
-            intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
-            intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
-            ActivityCompat.startActivityForResult(context as Activity, intent, 404, null);
+            if (userid.equals("")) {
+                AppDelegate.showAlertRegister(
+                    context, context.getResources().getString(R.string.app_name),
+                    context.getString(R.string.login_default)
+                )
+            } else {
+                var intent = Intent(context, ContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
+                intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
+                ActivityCompat.startActivityForResult(context as Activity, intent, 404, null);
+            }
         }
         iv_info.setOnClickListener {
             showInfoDialogue(list.get(position).description);

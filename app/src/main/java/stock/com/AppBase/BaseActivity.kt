@@ -86,8 +86,7 @@ open class BaseActivity : AppCompatActivity() {
             R.id.menu_sort -> {
                 if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                     AppDelegate.showAlertRegister(
-                        this, getResources().getString(R.string.app_name), getString(R.string.login_default),
-                        getResources().getString(R.string.ok)
+                        this, getResources().getString(R.string.app_name), getString(R.string.login_default)
                     )
                 } else {
                     startActivity(Intent(this, ActivityNewsSearch::class.java))
@@ -210,8 +209,7 @@ open class BaseActivity : AppCompatActivity() {
         notificationView.setOnClickListener {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
-                    this, getResources().getString(R.string.app_name), getString(R.string.login_default),
-                    getResources().getString(R.string.ok)
+                    this, getResources().getString(R.string.app_name), getString(R.string.login_default)
                 )
 
             } else {

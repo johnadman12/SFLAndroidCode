@@ -334,6 +334,22 @@ interface ApiInterface {
         @Field("user_id") user_id: String
     ): Call<StockTeamPojo>
 
+
+    @FormUrlEncoded
+    @POST("marketdata/marketdata_list")
+    fun getMarketList(
+        @Header("x-access-token") token: String, @Field("market_id") exchange_id: String,
+        @Field("user_id") user_id: String
+    ): Call<MarketList>
+
+    @FormUrlEncoded
+    @POST("marketdata/wizard_market_list")
+    fun getMarketWizardList(
+        @Header("x-access-token") token: String, @Field("market_id") exchange_id: String,
+        @Field("user_id") user_id: String
+    ): Call<MarketList>
+
+
     @FormUrlEncoded
     @POST("stock/add_watch")
     fun addStockWatch(
@@ -367,6 +383,11 @@ interface ApiInterface {
 
     @POST("team/create_team")
     fun saveTeam(
+        @Header("x-access-token") token: String, @Body stocks: JsonObject
+    ): Call<BasePojo>
+
+    @POST("marketteam/create_team")
+    fun saveMarketTeam(
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 

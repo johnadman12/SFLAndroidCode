@@ -12,7 +12,8 @@ import kotlinx.android.synthetic.main.bottom_sheet_filter.*
 import kotlinx.android.synthetic.main.bottom_sheet_pricebreakup.*
 import stock.com.R
 
-public class BottonSheetPriceBreakup(val count:Int,var list:ArrayList<String>) : BottomSheetDialogFragment() {
+@SuppressLint("ValidFragment")
+public class BottonSheetPriceBreakup constructor(val count:Int, var list:ArrayList<String>) : BottomSheetDialogFragment() {
 
 
     private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -25,7 +26,7 @@ public class BottonSheetPriceBreakup(val count:Int,var list:ArrayList<String>) :
         override fun onSlide(bottomSheet: View, slideOffset: Float) {}
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "WrongConstant")
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
         //Get the content View

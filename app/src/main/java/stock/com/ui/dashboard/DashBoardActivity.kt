@@ -101,7 +101,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                        getString(R.string.login_default), getResources().getString(R.string.ok)
+                        getString(R.string.login_default)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -134,7 +134,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -154,7 +154,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -172,7 +172,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 toolbar.visibility = VISIBLE
@@ -339,7 +339,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 var intent = Intent(this, ShareActivity::class.java);
@@ -380,7 +380,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
                 resideMenu!!.closeMenu();
             } else {
@@ -393,7 +393,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
                 resideMenu!!.closeMenu();
             } else {
@@ -485,7 +485,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT
         window.attributes = lp
         dialog.setCanceledOnTouchOutside(true);
-
         val tv_yes = dialog.findViewById(R.id.tv_yes) as TextView
         val tv_cancel = dialog.findViewById(R.id.tv_cancel) as TextView
 
@@ -559,7 +558,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 var intent = Intent(this, FeedBackActivity::class.java);
@@ -574,7 +573,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                    getString(R.string.login_default), getResources().getString(R.string.ok)
+                    getString(R.string.login_default)
                 )
             } else {
                 var intent = Intent(this, SettingActivity::class.java);

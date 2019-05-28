@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.media.ExifInterface
 import android.net.ConnectivityManager
@@ -27,8 +28,10 @@ import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -1382,42 +1385,21 @@ object AppDelegate {
     }
 
     //
-    fun showAlert(mContext: Context, Title: String, Message: String) {
-        try {
-            mAlert = AlertDialog.Builder(mContext)
-            mAlert.setCancelable(false)
-            mAlert.setTitle(Title)
-            mAlert.setMessage(Message)
-            mAlert.setPositiveButton(
-                "Yes"
-            ) { dialog, which -> dialog.dismiss() }
-            mAlert.setNegativeButton(
-                "No"
-            ) { dialog, which -> dialog.dismiss() }
-            mAlert.show()
-        } catch (e: Exception) {
-            LogE(e)
-        }
 
-    }
 
     fun showAlert(mContext: Context, Message: String) {
-        showAlert(mContext, Message, mContext.getString(R.string.ok))
-    }
-
-    fun showAlert(mContext: Context, Title: String, Message: String, str_button_name: String) {
         val dialog = Dialog(mContext, android.R.style.Theme_Translucent_NoTitleBar)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.next_button_dailog)
         val message: TextView = dialog.findViewById(R.id.text)
         message.setText(Message)
         val no: Button = dialog.findViewById(R.id.cancle_btn)
-        no.setText(str_button_name)
         no.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
+
 /*fun showAlert(mContext: Context, Title: String, Message: String, str_button_name: String) {
         try {
             mAlert = AlertDialog.Builder(mContext)
@@ -1435,30 +1417,33 @@ object AppDelegate {
     }*/
 
     fun showAlertRegister(
-        mContext: Context, Title: String, Message: String, str_button_name: String
-        /* onClickListener: View.OnClickListener?*/
+        mContext: Context, Title: String, Message: String
     ) {
-        try {
-            mAlert = AlertDialog.Builder(mContext)
-            mAlert.setCancelable(true)
-            mAlert.setTitle(Title)
-            mAlert.setMessage(Message)
-            mAlert.setPositiveButton(
-                str_button_name
-            ) { dialog, which ->
-                mContext.startActivity(
-                    Intent(mContext, SignUpActivity::class.java).putExtra(
-                        StockConstant.FLAG,
-                        "false"
-                    )
-                );
-                dialog.dismiss()
-            }
-            mAlert.show()
-        } catch (e: Exception) {
-            LogE(e)
+        val dialog = Dialog(mContext/*, android.R.style.ThemeOverlay_Material_Dialog_Alert*/)
+        dialog.setCancelable(false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setGravity(Gravity.CENTER)
+        dialog.setContentView(R.layout.dialog_alert_withoutlogin)
+        val message: TextView = dialog.findViewById(R.id.message)
+        message.setText(Message)
+        val title: TextView = dialog.findViewById(R.id.title)
+        title.setText(Title)
+        val tv_yes: TextView = dialog.findViewById(R.id.tv_yes)
+        val tv_cancel: TextView = dialog.findViewById(R.id.tv_cancel)
+        tv_yes.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, SignUpActivity::class.java).putExtra(
+                    StockConstant.FLAG,
+                    "false"
+                )
+            );
+            dialog.dismiss()
         }
-
+        tv_cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     fun showSneakBarRed(context: Context, message: String, type: String) {

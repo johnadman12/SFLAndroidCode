@@ -14,6 +14,9 @@ class ActivityPriceBreak : BaseActivity() {
 
 
     private var sport: String? = null;
+    private var winningAmount: String? = null;
+    private var Time: String? = null;
+    private var EntryFee: String? = null;
 
     private var count: Int = 0;
 
@@ -23,6 +26,9 @@ class ActivityPriceBreak : BaseActivity() {
 
         if (intent != null) {
             sport = intent.getStringExtra("sport");
+            winningAmount = intent.getStringExtra("winningamount");
+            EntryFee = intent.getStringExtra("fee");
+            Time = intent.getStringExtra("timediff");
         }
 
         tv_winner.setText(sport + " " + "Winners")
@@ -71,7 +77,9 @@ class ActivityPriceBreak : BaseActivity() {
             val bottomSheetFragment = BottonSheetPriceBreakup(count,list)
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.getTag())
         }
-
+        tv_entryfee.setText(EntryFee)
+        tv_prizepool.setText(winningAmount)
+        tv_contest.setText(sport)
         setAdapter()
     }
 

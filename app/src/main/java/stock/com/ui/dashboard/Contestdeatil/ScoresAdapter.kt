@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.irozon.sneaker.Sneaker
 import kotlinx.android.synthetic.main.row_contest_score.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.ContestDetail
 import stock.com.utils.StockConstant
 
@@ -21,7 +23,8 @@ class ScoresAdapter(
     val mContext: Context,
     val userId: Int,
     val scores: MutableList<ContestDetail.Score>,
-    val flag: Int
+    val flag: Int,
+    val marketName: String
 ) : RecyclerView.Adapter<ScoresAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -39,10 +42,15 @@ class ScoresAdapter(
 //        if (flag == 0) {
         holder.itemView.setOnClickListener {
             if (userId == scores.get(position).userid) {
-                mContext.startActivity(
-                    Intent(mContext, TeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-                )
+                if (!TextUtils.isEmpty(marketName) && marketName.equals("Equity"))
+                    mContext.startActivity(
+                        Intent(mContext, TeamPreviewActivity::class.java)
+                            .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                    ) else
+                    mContext.startActivity(
+                        Intent(mContext, MarketTeamPreviewActivity::class.java)
+                            .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                    )
             } else {
 
             }

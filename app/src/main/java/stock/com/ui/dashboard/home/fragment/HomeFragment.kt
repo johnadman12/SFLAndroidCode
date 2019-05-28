@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         seeall.setOnClickListener(this)
         getFeatureContentlist();
         getTrainingContentlist()
-        getNewslist()
+//        getNewslist()
         dataExchange =
             ArrayList()
         newsStories = ArrayList()
@@ -112,7 +112,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_features.setPageMargin(10);
 
 
-        val adapter = ViewPagerFeature(context!!, listItem)
+        val adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_features.setAdapter(adapter)
 
         tab_layout_features.visibility = VISIBLE;
@@ -136,7 +136,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_training.setPadding(30, 0, 30, 0);
         viewPager_training.setPageMargin(10);
 
-        val adapter = ViewPagerTraining(context!!, traniningContest)
+        val adapter =
+            ViewPagerTraining(context!!, traniningContest, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_training.setAdapter(adapter)
 
         tab_layout_training.visibility = VISIBLE;

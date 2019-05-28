@@ -208,11 +208,21 @@ class ActivityCreateContest : BaseActivity() {
         })
 
         btn_Next.setOnClickListener {
+            getTimeDifference()
             if (toggleButton1.isChecked){
-                startActivity(Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java).putExtra("sport",edtSports.text.toString()))
+                startActivity(Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
+                    .putExtra("sport",edtSports.text.toString())
+                    .putExtra("winningamount",edtWinningAmount.text.toString())
+                    .putExtra("fee",tvContestFee.text.toString())
+                    .putExtra("timediff",edtSports.text.toString())
+                       )
             }
         }
 
+
+    }
+
+    private fun getTimeDifference() {
 
     }
 

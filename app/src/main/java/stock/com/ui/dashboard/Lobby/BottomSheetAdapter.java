@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +39,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FeatureListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FeatureListHolder holder, int position) {
 
         holder.txt_Winners.setText(list.get(position) + " " + "Winners");
         PriceBreakUpAdapter mAdapter = new PriceBreakUpAdapter(mContext);
@@ -53,6 +55,14 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             }
         });
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.radioBtn.setChecked(true);
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+            }
+        });
     }
 
     @Override
@@ -65,12 +75,14 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         public AppCompatTextView txt_Winners;
 
         public RadioButton radioBtn;
+        public RelativeLayout rel_lay;
 
         public FeatureListHolder(@NonNull View itemView) {
             super(itemView);
             recylerView = itemView.findViewById(R.id.recylerView);
             txt_Winners = itemView.findViewById(R.id.txt_Winners);
-            radioBtn=itemView.findViewById(R.id.radioBtn);
+            radioBtn = itemView.findViewById(R.id.radioBtn);
+            rel_lay = itemView.findViewById(R.id.rel_lay);
 
         }
     }
