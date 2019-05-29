@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
@@ -23,6 +20,8 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     private Context mContext;
     private int count;
     private ArrayList<String> list;
+    private static CheckBox lastChecked = null;
+    private static int lastCheckedPos = 0;
 
     public BottomSheetAdapter(Context mContext, int count, ArrayList<String> list) {
         this.mContext = mContext;
@@ -47,16 +46,32 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.recylerView.setLayoutManager(mLayoutManager);
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
         holder.recylerView.setAdapter(mAdapter);
-
-        holder.radioBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*if (position == 0 && list.get(0).isSelected() && holder.radioBtn.isChecked()) {
+            lastChecked = holder.radioBtn;
+            lastCheckedPos = 0;
+        }*/
+        /*holder.radioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                int clickedPos = ((Integer) cb.getTag()).intValue();
 
+                if (cb.isChecked()) {
+                    if (lastChecked != null) {
+                        lastChecked.setChecked(false);
+//                        list.get(lastCheckedPos).setSelected(false);
+                    }
+
+                    lastChecked = cb;
+                    lastCheckedPos = clickedPos;
+                } else
+                    lastChecked = null;
+
+//                list.get(clickedPos).setSelected(cb.isChecked());
             }
-        });
+        });*/
 
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ll_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.radioBtn.setChecked(true);
@@ -74,8 +89,9 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         public RecyclerView recylerView;
         public AppCompatTextView txt_Winners;
 
-        public RadioButton radioBtn;
+        public CheckBox radioBtn;
         public RelativeLayout rel_lay;
+        public LinearLayout ll_main;
 
         public FeatureListHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +99,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             txt_Winners = itemView.findViewById(R.id.txt_Winners);
             radioBtn = itemView.findViewById(R.id.radioBtn);
             rel_lay = itemView.findViewById(R.id.rel_lay);
+            ll_main = itemView.findViewById(R.id.ll_main);
 
         }
     }

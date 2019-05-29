@@ -25,14 +25,21 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ActivityMyTeam : BaseActivity() {
-    var exchangeId:Int =0
+    var exchangeId: Int = 0
+    var marketId: Int = 0
     var jsonparams: JsonObject = JsonObject()
+    var flagMarket: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
         StockConstant.ACTIVITIES.add(this)
-        if (intent!=null)
+        if (intent != null)
+            flagMarket = intent.getBooleanExtra("flagMarket", false)
+        if (flagMarket)
+            marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
+        else
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+
         initView()
     }
 
@@ -50,10 +57,16 @@ class ActivityMyTeam : BaseActivity() {
                 //TODO make api call here
                 Handler().postDelayed({
                 }, 5000)
-                getTeamlist()
+                if (flagMarket)
+                    getMarketTeamlist()
+                else
+                    getTeamlist()
             }
         })
-        getTeamlist()
+        if (flagMarket)
+            getMarketTeamlist()
+        else
+            getTeamlist()
     }
 
     fun getTeamlist() {
@@ -84,7 +97,7 @@ class ActivityMyTeam : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.something_went_wrong),"error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
@@ -93,20 +106,64 @@ class ActivityMyTeam : BaseActivity() {
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getMarketTeamlist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<MyTeamsPojo> =
+            apiService.getMyMarketTeams(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID)!!,
+                marketId.toString()
+            )
+        call.enqueue(object : Callback<MyTeamsPojo> {
+
+            override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
+                d.dismiss()
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+//                        displayToast(list!!.size.toString())
+                        setMyAdapter(response.body()!!.myteam)
+                        //  setStockTeamAdapter(response.body()!!.stock!!)
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
+                if (refreshData != null)
+                    refreshData.finishRefreshing()
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
     }
 
     @SuppressLint("WrongConstant")
-    fun setMyAdapter(myteam: MutableList<MyTeamsPojo.Myteam>) {
+    fun setMyAdapter(myteam: MutableList<MyTeamsPojo.Myteam>/*, marketName: String*/) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rvMYTeam!!.layoutManager = llm
         rvMYTeam?.itemAnimator = DefaultItemAnimator()
         rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam)
     }
+
 
     fun makeClone(teamId: Int, contestId: Int) {
         val d = StockDialog.showLoading(this)
@@ -139,14 +196,60 @@ class ActivityMyTeam : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                   displayToast(resources.getString(R.string.something_went_wrong),"error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+
+    fun makeCloneMarket(teamId: Int, contestId: Int) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+
+        val call: Call<BasePojo> =
+            apiService.saveMarketTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                        getMarketTeamlist()
+                        rvMYTeam!!.adapter!!.notifyDataSetChanged()
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

@@ -142,7 +142,7 @@
                             android:layout_height="@dimen/_22sdp"
                             android:scaleType="centerCrop"
                             android:layout_marginRight="@dimen/_10sdp"
-                            android:src="@mipmap/time"/>
+                            android:src="@drawable/ic_business"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/stockName"
                             android:layout_width="wrap_content"

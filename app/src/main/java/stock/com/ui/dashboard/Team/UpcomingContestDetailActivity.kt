@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -31,6 +32,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
+import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
@@ -41,6 +43,7 @@ import java.util.*
 
 class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
+    var flag: Boolean = false
     var exchangeid: Int = 0
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -63,25 +66,13 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         if (intent != null) {
-            contestid = intent.getIntExtra("contestid", 0)
+            contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
         getContestDetail()
-        ll_Circular.setOnClickListener {
-            //            showJoinTeamDialogue()
-            startActivity(
-                Intent(this, ActivityCreateTeam::class.java).putExtra(
-                    StockConstant.EXCHANGEID, exchangeid
-                ).putExtra(
-                    StockConstant.CONTESTID, contestid
-                ).putExtra("isCloning", 0)
-            )
-
-        }
-
     }
 
     @SuppressLint("WrongConstant")
@@ -93,11 +84,12 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>) {
+    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>, marketname: String) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
-        rv_score!!.adapter = ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0,"")
+        rv_score!!.adapter =
+            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0, marketname)
     }
 
     fun getContestDetail() {
@@ -126,7 +118,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         if (response.body()!!.rules.size == 0)
                             tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
-                        setScoreAdapter(response.body()!!.scores)
+                        setScoreAdapter(response.body()!!.scores, response.body()!!.contest.get(0).marketname)
                         setData(response.body()!!.contest.get(0))
                     }
                 } else {
@@ -145,8 +137,6 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
-        tvStockName.setText(contest.exchangename)
-        tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
 
@@ -160,10 +150,38 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             text_totalwin.visibility = View.VISIBLE
             llWinners.isEnabled = true
         }
+        ll_Circular.setOnClickListener {
+            if (flag)
+                AppDelegate.showSneakBarRed(this@UpcomingContestDetailActivity, "Contest is not live yet.", "DFX")
+            else
+                if (contest.marketname.equals("Equity")) {
+                    var intent = Intent(this, ActivityCreateTeam::class.java)
+                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+                    intent.putExtra(StockConstant.CONTESTID, contestid)
+                    intent.putExtra("isCloning", 0)
+                    startActivityForResult(intent, 405);
+                } else {
+                    var intent = Intent(this@UpcomingContestDetailActivity, ActivityMarketTeam::class.java)
+                    intent
+                        .putExtra(StockConstant.MARKETID, contest.mid)
+                        .putExtra(StockConstant.CONTESTID, contestid)
+                        .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
+                        .putExtra("isCloning", 0)
+                    startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
+                }
+        }
 
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
-        Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
-            .into(ivStock)
+        if (contest.marketname.equals("Equity")) {
+            Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
+                .into(ivStock)
+            tvStockName.setText(contest.exchangename)
+        } else {
+            tvStockName.setText(contest.marketname)
+            Glide.with(this).load(R.drawable.ic_business)
+                .into(ivStock)
+        }
+
         iv_info.setOnClickListener {
             showInfoDialogue(contest.description);
         }
@@ -191,9 +209,11 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                ll_Circular.isEnabled = false
-                AppDelegate.showSneakBarRed(this@UpcomingContestDetailActivity,
-                    "Contest is not live yet.", "DFX")
+                flag = true
+                AppDelegate.showSneakBarRed(
+                    this@UpcomingContestDetailActivity,
+                    "Contest is not live yet.", "DFX"
+                )
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
@@ -318,4 +338,23 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             val sb = ""
             sb
         }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 405) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }
+
+    }
 }

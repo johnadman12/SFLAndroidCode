@@ -27,6 +27,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.watch_list.WatchListActivity
@@ -39,7 +40,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var marketlistAdapter: MarketListAdapter? = null
     private var marketSelectedItems: ArrayList<MarketList.Crypto>? = null
     private var marketRemovedItems: ArrayList<MarketList.Crypto>? = null
-    private var marketWizardSelectedItems: ArrayList<MarketList.Crypto>? = null
+    //    private var marketWizardSelectedItems: ArrayList<MarketList.Crypto>? = null
     private var list: ArrayList<MarketList.Crypto>? = null;
     var flag: Boolean = false
     var flagCloning: Int = 0
@@ -51,7 +52,18 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
-
+            R.id.llMyTeam -> {
+                startActivity(
+                    Intent(this@ActivityMarketTeam, ActivityMyTeam::class.java)
+                        .putExtra(
+                            StockConstant.MARKETID,
+                            marketId
+                        ).putExtra(
+                            "flagMarket",
+                            true
+                        )
+                )
+            }
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
             }
@@ -70,7 +82,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (flag) {
                     startActivityForResult(
                         Intent(this@ActivityMarketTeam, ActivityMarketViewTeam::class.java)
-                            .putExtra(StockConstant.MARKETLIST, marketWizardSelectedItems)
+                            .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
                             .putExtra(
                                 StockConstant.TEAMID,
                                 teamId
@@ -126,7 +138,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     @SuppressLint("WrongConstant")
     private fun initView() {
         marketSelectedItems = ArrayList()
-        marketWizardSelectedItems = ArrayList()
+//        marketWizardSelectedItems = ArrayList()
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
         ll_watchlist.setOnClickListener(this)
@@ -137,8 +149,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
-            contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
+            flagCloning = intent.getIntExtra("isCloning", 0)
+
+            if (flagCloning == 1) {
+                marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+            } else {
+                contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            }
+
 
         }
 
@@ -211,10 +231,35 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.myteam.equals("1"))
+                            llMyTeam.visibility = View.VISIBLE
+                        else if (response.body()!!.myteam.equals("0"))
+                            llMyTeam.visibility = View.GONE
+
                         list!!.clear()
-                        list!!.addAll(response.body()!!.crypto)
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        list!!.addAll(response.body()!!.crypto!!);
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+//                        rv_Players.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
+                                }
+                            }
+                        }
                         rv_Players!!.adapter = marketlistAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(marketSelectedItems!!.size.toString())
                         d.dismiss()
                     } else if (response.body()!!.status == "2") {
                         d.dismiss()
@@ -294,15 +339,32 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         flag = true
-                        list!!.clear()
-                        list!!.addAll(response.body()!!.crypto!!);
-                        setTeamText(list!!.size.toString())
-                        marketWizardSelectedItems!!.addAll(list!!)
-//                        stockSelectedItems!!.addAll(response.body()!!.stock!!)
-//                        displayToast(list!!.size.toString())
-                        setWizardAdapter()
+                        marketSelectedItems!!.clear()
+                        marketSelectedItems!!.addAll(response.body()!!.crypto!!);
+                        setTeamText(marketSelectedItems!!.size.toString())
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
+                                }
+                            }
+                        }
 
-                        //  setStockTeamAdapter(response.body()!!.stock!!)
+                        rv_Players!!.adapter = marketlistAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(marketSelectedItems!!.size.toString())
+
 
                     } else if (response.body()!!.status == "2") {
                         appLogout()
@@ -321,13 +383,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-    fun setWizardAdapter() {
-        rv_Players!!.adapter = MarketWizardAdapter(
-            this,
-            list as ArrayList,
-            object : MarketWizardAdapter.OnItemCheckListener {
-                override fun onItemClick(item: MarketList.Crypto) {
-                    /*startActivityForResult(
+    /* fun setWizardAdapter() {
+         rv_Players!!.adapter = MarketWizardAdapter(
+             this,
+             list as ArrayList,
+             object : MarketWizardAdapter.OnItemCheckListener {
+                 override fun onItemClick(item: MarketList.Crypto) {
+                     *//*startActivityForResult(
                         Intent(
                             this@ActivityCreateTeam,
                             ActivityStockDetail::class.java
@@ -336,7 +398,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             .putExtra(StockConstant.STOCKLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
-                    )*/
+                    )*//*
                 }
 
                 override fun onItemUncheck(item: MarketList.Crypto) {
@@ -351,7 +413,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     Log.e("stocklist", marketWizardSelectedItems.toString())
                 }
             });
-    }
+    }*/
 
     fun getTeamAgainlist() {
         val d = StockDialog.showLoading(this)

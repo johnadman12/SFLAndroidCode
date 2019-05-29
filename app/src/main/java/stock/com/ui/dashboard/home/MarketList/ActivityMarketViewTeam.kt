@@ -109,6 +109,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            flagCloning = intent.getIntExtra("isCloning", 0)
             contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
@@ -118,6 +119,41 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         initView()
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
         viewTeamAdapter!!.notifyDataSetChanged()
+
+        if (flagCloning == 1)
+            getContestDetail()
+
+    }
+
+    fun getContestDetail() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<ContestDetail> =
+            apiService.getContestDetail(
+                contestId.toString()
+                , getFromPrefsString(StockConstant.USERID).toString(), ""
+            )
+        call.enqueue(object : Callback<ContestDetail> {
+
+            override fun onResponse(call: Call<ContestDetail>, response: Response<ContestDetail>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        contestFee = response.body()!!.contest.get(0).entryFees
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
     }
 
     private fun initView() {
@@ -355,6 +391,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
                         }, 500)
                         teamId = response.body()!!.team_id
+                        var intent = Intent();
+                        intent.putExtra("flag", "2")
+                        setResult(Activity.RESULT_OK, intent);
                         finish()
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
@@ -404,7 +443,10 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
                         }, 500)
                         teamId = response.body()!!.team_id
-                        finish()
+                        var intent = Intent();
+                        intent.putExtra("flag", "2")
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
 

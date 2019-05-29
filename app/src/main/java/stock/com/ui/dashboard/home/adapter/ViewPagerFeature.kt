@@ -37,9 +37,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ViewPagerFeature(val context: Context,
-                       val list: List<HomePojo.FeatureContest>,
-                       val userid:String) : PagerAdapter() {
+class ViewPagerFeature(
+    val context: Context,
+    val list: List<HomePojo.FeatureContest>,
+    val userid: String
+) : PagerAdapter() {
     var SECONDS_IN_A_DAY = 24 * 60 * 60
 
 
@@ -171,11 +173,16 @@ class ViewPagerFeature(val context: Context,
                     context, context.getResources().getString(R.string.app_name),
                     context.getString(R.string.login_default)
                 )
-            } else {
+            } else if (list.get(position).marketname.equals("Equity")) {
                 var intent = Intent(context, ContestDetailActivity::class.java);
                 intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
                 intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
                 startActivityForResult(context as Activity, intent, 404, null);
+            } else {
+                var intent = Intent(context, ContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, list.get(position).contestid)
+                intent.putExtra(StockConstant.EXCHANGEID, list.get(position).exchangeid)
+                startActivityForResult(context as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null);
             }
         }
 

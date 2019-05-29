@@ -31,7 +31,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_team_preview)
         list = ArrayList()
         if (intent != null)
-            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
         initViews()
     }
 
@@ -45,7 +45,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setData() {
-        Glide.with(this).load(list!!.get(0).image).placeholder(R.mipmap.cricketer).into(cimg_wk1)
+        Glide.with(this).load(list!!.get(0).image)/*.placeholder(R.mipmap.cricketer)*/.into(cimg_wk1)
         price1.setText(list!!.get(0).latestPrice)
         percentage1.setText(list!!.get(0).changeper)
         stockname1.setText(list!!.get(0).symbol)

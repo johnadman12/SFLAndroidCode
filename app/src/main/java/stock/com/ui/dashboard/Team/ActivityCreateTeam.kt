@@ -43,7 +43,7 @@ import java.util.*
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
-    private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
+    //    private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockRemovedItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockTeamAdapter: StockTeamAdapter? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
@@ -59,11 +59,16 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.llMyTeam -> {
-                startActivity(Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java)
-                    .putExtra(
-                        StockConstant.EXCHANGEID,
-                        exchangeId
-                    ))
+                startActivity(
+                    Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java)
+                        .putExtra(
+                            StockConstant.EXCHANGEID,
+                            exchangeId
+                        ).putExtra(
+                            "flagMarket",
+                            false
+                        )
+                )
             }
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
@@ -90,7 +95,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 if (flag) {
                     startActivityForResult(
                         Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
-                            .putExtra(StockConstant.STOCKLIST, stockSelectedWizardItems)
+                            .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
                             .putExtra(
                                 StockConstant.EXCHANGEID,
                                 exchangeId
@@ -142,7 +147,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     @SuppressLint("WrongConstant")
     private fun initView() {
         stockSelectedItems = ArrayList();
-        stockSelectedWizardItems = ArrayList();
+//        stockSelectedWizardItems = ArrayList();
         stockRemovedItems = ArrayList();
         parseList = ArrayList();
         img_btn_back.setOnClickListener(this)
@@ -322,14 +327,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.something_went_wrong),"error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -383,7 +388,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -433,13 +438,32 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         flag = true
-                        list!!.clear()
-                        list!!.addAll(response.body()!!.stock!!);
-                        setTeamText(list!!.size.toString())
-                        stockSelectedWizardItems!!.addAll(list!!)
-//                        stockSelectedItems!!.addAll(response.body()!!.stock!!)
-//                        displayToast(list!!.size.toString())
-                        setWizardAdapter()
+                        stockSelectedItems!!.clear()
+                        stockSelectedItems!!.addAll(response.body()!!.stock!!);
+                        setTeamText(stockSelectedItems!!.size.toString())
+
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).stockid = stockSelectedItems!!.get(j).stockid
+                                }
+                            }
+                        }
+                        rv_Players!!.adapter = stockTeamAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+//                        setWizardAdapter()
 
                         //  setStockTeamAdapter(response.body()!!.stock!!)
 
@@ -447,14 +471,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.something_went_wrong),"error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -476,7 +500,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         return stockSelectedItems!!.size.toInt()
     }
 
-    fun setWizardAdapter() {
+    /*fun setWizardAdapter() {
         rv_Players!!.adapter = WizardStockTeamAdapter(
             this,
             list as ArrayList,
@@ -506,7 +530,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     Log.e("stocklist", stockSelectedItems.toString())
                 }
             });
-    }
+    }*/
 
     @SuppressLint("WrongConstant")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -372,6 +372,15 @@ interface ApiInterface {
     ): Call<MyTeamsPojo>
 
 
+    @FormUrlEncoded
+    @POST("marketteam/my_team")
+    fun getMyMarketTeams(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("market_id") marketId: String
+    ): Call<MyTeamsPojo>
+
+
     /*  @FormUrlEncoded
       @POST("team/create_team")
       fun saveTeam(
@@ -399,6 +408,11 @@ interface ApiInterface {
 
     @POST("team/edit_team")
     fun editTeam(
+        @Header("x-access-token") token: String, @Body stocks: JsonObject
+    ): Call<BasePojo>
+
+    @POST("marketteam/edit_team")
+    fun editMarketTeam(
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 

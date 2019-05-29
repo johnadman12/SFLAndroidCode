@@ -48,8 +48,6 @@ public class BottonSheetPriceBreakup constructor(val count:Int, var list:ArrayLi
         dialog.rv_Prize!!.layoutManager = llm
         dialog.rv_Prize!!.adapter = BottomSheetAdapter(activity!!,count,list)
 
-
-
     }
    /* @SuppressLint("WrongConstant")
     private fun setAdapter() {

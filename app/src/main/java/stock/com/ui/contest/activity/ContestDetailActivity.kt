@@ -52,6 +52,7 @@ import java.util.*
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var exchangeid: Int = 0
+    var flag: Boolean = false
     var activity: DashBoardActivity = DashBoardActivity()
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -158,20 +159,24 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         }
 
         ll_Circular.setOnClickListener {
-            if (contest.marketname.equals("Equity")) {
-                var intent = Intent(this, ActivityCreateTeam::class.java)
-                intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
-                intent.putExtra(StockConstant.CONTESTID, contestid)
-                intent.putExtra("isCloning", 0)
-                startActivityForResult(intent, 405);
-            } else {
-                startActivity(
-                    Intent(this@ContestDetailActivity, ActivityMarketTeam::class.java)
+            if (flag)
+                AppDelegate.showSneakBarRed(this@ContestDetailActivity, "Contest is not live yet.", "DFX")
+            else
+                if (contest.marketname.equals("Equity")) {
+                    var intent = Intent(this, ActivityCreateTeam::class.java)
+                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+                    intent.putExtra(StockConstant.CONTESTID, contestid)
+                    intent.putExtra("isCloning", 0)
+                    startActivityForResult(intent, 405);
+                } else {
+                    var intent = Intent(this@ContestDetailActivity, ActivityMarketTeam::class.java)
+                    intent
                         .putExtra(StockConstant.MARKETID, contest.mid)
                         .putExtra(StockConstant.CONTESTID, contestid)
                         .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
-                )
-            }
+                        .putExtra("isCloning", 0)
+                    startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
+                }
 
         }
 
@@ -219,7 +224,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-                ll_Circular.isEnabled = false
+//                ll_Circular.isEnabled = false
+                flag = true
                 AppDelegate.showSneakBarRed(this@ContestDetailActivity, "Contest is not live yet.", "DFX")
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
@@ -349,6 +355,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 405) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
             if (resultCode == RESULT_OK && data != null) {
                 var intent = Intent();
                 setResult(Activity.RESULT_OK, intent);

@@ -1,6 +1,7 @@
 package stock.com.ui.my_contest.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -10,11 +11,13 @@ import android.os.CountDownTimer
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.UpcomingContestDetailActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
@@ -39,7 +42,6 @@ class UpcomingAdapter(
     override fun onBindViewHolder(holder: ContestListHolder, position: Int) {
         holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
-        holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         holder.itemView.tvContestType.setText(contest.get(position).catname)
         var amount: String = contest.get(position).entryFees.substring(1)
         if (amount.equals("0") && contest.get(position).priceBreak.size <= 0) {
@@ -52,11 +54,16 @@ class UpcomingAdapter(
             holder.itemView.llWinners.isEnabled = true
         }
 
-        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
-            .into(holder.itemView.ivStock)
-        var sports: Double =
-            (contest.get(position).contestSize.toInt() - contest.get(position).teamsJoined.toInt()).toDouble()
+        if (contest.get(position).marketname.equals("Equity")) {
+            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
+                .into(holder.itemView.ivStock)
+            holder.itemView.tvStockName.setText(contest.get(position).exchangename)
 
+        } else {
+            holder.itemView.tvStockName.setText(contest.get(position).marketname)
+            Glide.with(mContext).load(R.drawable.ic_business)
+                .into(holder.itemView.ivStock)
+        }
 
         holder.itemView.tvSprortsLeft.setText(
             contest.get(position).contest_teamremaining.toString() + "/" +
@@ -113,20 +120,25 @@ class UpcomingAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, UpcomingContestDetailActivity::class.java).putExtra(
-                    "contestid",
-                    contest.get(position).contestid
-                ).putExtra(
-                    StockConstant.EXCHANGEID,
-                    contest.get(position).exchangeid
-                )
-            )
+            if (contest.get(position).marketname.equals("Equity")) {
+                var intent = Intent(mContext, UpcomingContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid)
+                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
+                ActivityCompat.startActivityForResult(mContext as Activity, intent, 404, null);
+            } else {
+                var intent = Intent(mContext, UpcomingContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid)
+                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
+                ActivityCompat.startActivityForResult(
+                    mContext as Activity,
+                    intent,
+                    StockConstant.REDIRECT_UPCOMING_MARKET,
+                    null
+                );
+            }
         }
 
-
     }
-
 
     override fun getItemCount(): Int {
         return contest.size;

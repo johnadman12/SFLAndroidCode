@@ -15,6 +15,9 @@ import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.dashboard.Team.ActivityEditTeam
+import stock.com.ui.dashboard.home.MarketList.ActivityMarketEdit
+import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
+import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.MyTeamsPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -35,45 +38,87 @@ class MyTeamAdapter(
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        holder.itemView.stockName.setText(myteam.get(position).exchangename)
-        holder.itemView.totalChange.setText(myteam.get(position).totalchangePercentage.toString() + " %")
         holder.itemView.tvDate.setText(parseDateToddMMyyyy(myteam.get(position).created))
-        if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
-            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
-                .into(holder.itemView.ivStock)
+        holder.itemView.totalChange.setText(myteam.get(position).totalchangePercentage.toString() + " %")
+
+        if (myteam.get(position).stock.size == 0) {
+            holder.itemView.stockName.setText(myteam.get(position).marketname)
+           /* if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
+                Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
+                    .into(holder.itemView.ivStock)*/
+        } else {
+            holder.itemView.stockName.setText(myteam.get(position).exchangename)
+            if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
+                Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
+                    .into(holder.itemView.ivStock)
+        }
 
         holder.itemView.txt_team.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, ActivityEditTeam::class.java)
-                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                    .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
-                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
-            )
+            if (myteam.get(position).stock.size == 0) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityMarketEdit::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                )
+            } else {
+                mContext.startActivity(
+                    Intent(mContext, ActivityEditTeam::class.java)
+                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+                )
+            }
         }
 
         holder.itemView.relClone.setOnClickListener {
-            activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
+            if (myteam.get(position).stock.size == 0)
+                activityMyTeam.makeCloneMarket(myteam.get(position).teamId, myteam.get(position).contestId)
+            else
+                activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
 
         }
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, ActivityCreateTeam::class.java)
-                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                    .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
-                    .putExtra("isCloning", 1)
-                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
-            )
+            if (myteam.get(position).stock.size == 0) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityMarketTeam::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra("isCloning", 1)
+                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                )
+            } else {
+                mContext.startActivity(
+                    Intent(mContext, ActivityCreateTeam::class.java)
+                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra("isCloning", 1)
+                        .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+                )
+            }
+
 
         }
 
         holder.itemView.relViewTeam.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, TeamPreviewActivity::class.java)
-                    .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+            if (myteam.get(position).stock.size == 0) {
+                mContext.startActivity(
+                    Intent(mContext, MarketTeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                )
+            } else {
+                mContext.startActivity(
+                    Intent(mContext, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-            )
+                )
+            }
+
+
         }
 
 

@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class MarketList extends BasePojo {
+    public String myteam = "";
     @SerializedName("crypto")
     @Expose
     public ArrayList<Crypto> crypto = null;

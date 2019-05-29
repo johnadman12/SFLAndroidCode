@@ -101,7 +101,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),
-                        getString(R.string.login_default)
+                    getString(R.string.login_default)
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
@@ -603,6 +603,16 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+
+        } else if ((requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) && (resultCode == Activity.RESULT_OK)) {
+            var b = Bundle();
+            b.putString("flag", "true")
+            setFragment(MyContestFragment(), b);
+            changetTextViewBackground(tv_contest, R.color.colorPrimary);
+            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+
         } else if ((requestCode == 406) && (resultCode == Activity.RESULT_OK)) {
             val bundle = Bundle()
             bundle.putString("flag", "")

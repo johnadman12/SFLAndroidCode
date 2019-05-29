@@ -46,9 +46,17 @@ public class MyTeamsPojo extends BasePojo {
         @SerializedName("image")
         @Expose
         public String image;
+        @SerializedName("marketid")
+        @Expose
+        public int mid;
+        @SerializedName("marketname")
+        @Expose
+        public String marketname;
         @SerializedName("stock")
         @Expose
         public ArrayList<StockTeamPojo.Stock> stock = null;
-
+        @SerializedName("crypto")
+        @Expose
+        public ArrayList<MarketList.Crypto> crypto = null;
     }
 }
