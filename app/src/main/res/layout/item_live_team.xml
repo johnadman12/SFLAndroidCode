@@ -3,20 +3,26 @@
               android:orientation="horizontal"
               android:layout_width="wrap_content"
               android:layout_weight="1"
+              android:id="@+id/ll_team"
               android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_team"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
-            style="@style/TextStyleNormal"
-            android:textSize="@dimen/_12ssp"
-            android:padding="@dimen/_2sdp"
+            style="@style/TextStyleSemiBold"
+            android:textSize="@dimen/_14ssp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/green_empty_layout"
             android:textColor="@color/white"
             android:text="Team1"
     />
     <View android:layout_width="@dimen/_1ssp"
           android:layout_height="match_parent"
-          android:background="@color/GrayColor"/>
+          android:visibility="gone"
+          android:background="@color/green"/>
 </LinearLayout>

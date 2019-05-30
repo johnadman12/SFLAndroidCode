@@ -27,9 +27,11 @@ class LiveContestAdapter(
 
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
-        holder.itemView.tvRank.setText("Rank :" + scores.get(position).rank + " (T-" + scores.get(position).teamNameCount + ")")
-        holder.itemView.username.setText(scores.get(position).username)
+        holder.itemView.tvRank.setText("Rank :" + scores.get(position).rank)
+        holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.profile_image)
+
+
 
         holder.itemView.setOnClickListener {
             if (userId == scores.get(position).userid) {

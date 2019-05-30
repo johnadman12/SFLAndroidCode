@@ -18,17 +18,8 @@ class CurrencyFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setCurrencyAdapter()
+//        setCurrencyAdapter()
 
-    }
-
-    @SuppressLint("WrongConstant")
-    fun setCurrencyAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_currencyList!!.layoutManager = llm
-        rv_currencyList.visibility = View.VISIBLE
-        rv_currencyList!!.adapter = CurrencyAdapter(context!!)
     }
 
 }

@@ -357,6 +357,16 @@ interface ApiInterface {
         @Field("user_id") user_id: String
     ): Call<BasePojo>
 
+
+    @FormUrlEncoded
+    @POST("marketdata/add_watch")
+    fun addCurrencyToWatch(
+        @Header("x-access-token") token: String,
+        @Field("md_id") mdId: Int,
+        @Field("user_id") user_id: String,
+        @Field("status") status: String
+    ): Call<BasePojo>
+
     @GET("contest/GetContestsList")
     fun getContest(
         @Header("x-access-token") token: String, @Query("status") status: String,
@@ -379,6 +389,14 @@ interface ApiInterface {
         @Field("user_id") user_id: String,
         @Field("market_id") marketId: String
     ): Call<MyTeamsPojo>
+
+    @FormUrlEncoded
+    @POST("marketdata/data_list")
+    fun getMarketData(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("market_status") marketStatus: String
+    ): Call<MarketData>
 
 
     /*  @FormUrlEncoded

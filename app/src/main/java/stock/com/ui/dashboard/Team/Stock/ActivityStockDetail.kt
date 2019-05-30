@@ -272,11 +272,11 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        displayToast("stock added to watchlist sucessfully ", "sucess")
+                        displayToast(response.body()!!.message, "sucess")
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
-                        displayToast("stock already added to watchlis ", "warning")
+                        displayToast(response.body()!!.message, "warning")
 
                     }
                 } else {

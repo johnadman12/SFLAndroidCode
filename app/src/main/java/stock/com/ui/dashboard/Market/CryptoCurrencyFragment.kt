@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
-import kotlinx.android.synthetic.main.fragment_stocks.*
+import kotlinx.android.synthetic.main.fragment_currency.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,10 +21,9 @@ import stock.com.ui.pojo.MarketData
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class StocksFragment : BaseFragment() {
-
+class CryptoCurrencyFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_stocks, container, false)
+        return inflater.inflate(R.layout.fragment_currency, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,14 +36,15 @@ class StocksFragment : BaseFragment() {
                 //TODO make api call here
                 Handler().postDelayed({
                 }, 5000)
-                getStocks()
+                getCurrency()
             }
         })
-        getStocks()
 
+        getCurrency()
     }
 
-    fun getStocks() {
+
+    fun getCurrency() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -52,7 +52,7 @@ class StocksFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "stock"
+                "crypto"
             )
         call.enqueue(object : Callback<MarketData> {
 
@@ -62,7 +62,9 @@ class StocksFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setStockAdapter(response.body()!!)
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        setCryptoCurrencyAdapter(response.body()!!)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -83,25 +85,23 @@ class StocksFragment : BaseFragment() {
     }
 
     @SuppressLint("WrongConstant")
-    fun setStockAdapter(item: MarketData) {
+    fun setCryptoCurrencyAdapter(item: MarketData) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_currencyList!!.layoutManager = llm
         rv_currencyList.visibility = View.VISIBLE
-        rv_currencyList!!.adapter = StockAdapter(context!!, item, this)
+        rv_currencyList!!.adapter = CurrencyAdapter(context!!, item, this)
     }
 
-
-
-    fun saveToWatchList(stockId: Int) {
+    fun saveToWatchList(cryptoId: Int) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> =
-            apiService.addStockWatch(
+            apiService.addCurrencyToWatch(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                stockId,
-                getFromPrefsString(StockConstant.USERID).toString()
+                cryptoId,
+                getFromPrefsString(StockConstant.USERID).toString(), "crypto"
             )
         call.enqueue(object : Callback<BasePojo> {
 
@@ -113,7 +113,6 @@ class StocksFragment : BaseFragment() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         displayToast(response.body()!!.message, "sucess")
-
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
@@ -133,5 +132,4 @@ class StocksFragment : BaseFragment() {
             }
         })
     }
-
 }

@@ -29,14 +29,33 @@ import stock.com.utils.StockDialog
 class MarketFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
+            R.id.tv_crypto -> {
+//                ll_my_team.visibility = View.VISIBLE
+                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
+                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+
+                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.colorbutton));
+                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
+
+                setFragment(CryptoCurrencyFragment(), Bundle())
+            }
+
             R.id.tv_currency -> {
 //                ll_my_team.visibility = View.VISIBLE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
                 changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.colorbutton));
+                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
@@ -48,11 +67,13 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 //                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
+                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
                 changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.colorbutton));
+                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
@@ -63,9 +84,11 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
                 changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
@@ -78,9 +101,11 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.colorbutton));
@@ -105,18 +130,21 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         tv_indices.setOnClickListener(this);
         tv_commodity.setOnClickListener(this);
         tv_stocks.setOnClickListener(this);
+        tv_crypto.setOnClickListener(this);
 
         changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
         changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+        changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+        changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
         changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
         changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+        changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
-        changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.colorbutton));
+        changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.colorbutton));
         changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
-        setFragment(CurrencyFragment(), Bundle());
+        setFragment(CryptoCurrencyFragment(), Bundle());
 
         ll_watchlist.setOnClickListener {
             startActivity(Intent(activity!!, WatchListActivity::class.java))
@@ -124,7 +152,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         ll_sort.setOnClickListener {
             startActivity(Intent(activity!!, ActivityMarketSort::class.java))
         }
-
+        getExchangeNamelist()
     }
 
     fun getExchangeNamelist() {

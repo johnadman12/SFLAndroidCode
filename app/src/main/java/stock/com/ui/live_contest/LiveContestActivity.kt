@@ -17,9 +17,11 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.live_contest.adapter.LiveContestAdapter
 import stock.com.ui.live_contest.adapter.RecycleTeamAdapter
 import stock.com.ui.pojo.ContestDetail
+import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -31,8 +33,9 @@ class LiveContestActivity : BaseActivity() {
     var contestid: Int = 0
     var exchangeid: Int = 0
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null;
+    private var crptoList: ArrayList<MarketList.Crypto>? = null;
     private var filterTeamList: ArrayList<ContestDetail.Score>? = null;
-
+    var flagCrypto = false;
     private var liveAdapter: LiveContestAdapter? = null;
     private var teamAdapter: RecycleTeamAdapter? = null;
 
@@ -40,6 +43,8 @@ class LiveContestActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_contest)
         StockConstant.ACTIVITIES.add(this)
+        stockList = ArrayList()
+        crptoList = ArrayList()
         filterTeamList = ArrayList()
         if (intent != null) {
             contestid = intent.getIntExtra("contestid", 0)
@@ -54,12 +59,18 @@ class LiveContestActivity : BaseActivity() {
         }
 
         tvViewTeam.setOnClickListener {
-            /* startActivity(
-                 Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
-                     .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-             )*/
+            if (flagCrypto)
+                startActivity(
+                    Intent(this@LiveContestActivity, MarketTeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, crptoList)
+                ) else
+                startActivity(
+                    Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, stockList)
+                )
         }
         getContestDetail()
+
     }
 
     @SuppressLint("WrongConstant")
@@ -78,15 +89,32 @@ class LiveContestActivity : BaseActivity() {
     @SuppressLint("WrongConstant")
     fun setLiveTeamAdapter(scores: MutableList<ContestDetail.Score>) {
         teamAdapter = RecycleTeamAdapter(
-            this@LiveContestActivity,
-            getFromPrefsString(StockConstant.USERID)!!.toInt()
-            , scores, this
+            this@LiveContestActivity
+            , scores, object : RecycleTeamAdapter.ItemClickListner {
+                override fun onItemClick(item: ContestDetail.Score) {
+                    tvRank.setText(item.rank)
+                    if (item.stock.size == 0) {
+                        flagCrypto = true
+                        crptoList!!.clear()
+                        crptoList!!.addAll(item.crypto)
+                    } else {
+                        flagCrypto = false
+                        stockList!!.clear()
+                        stockList!!.addAll(item.stock)
+                    }
+                }
+            }
         );
         val llm = LinearLayoutManager(this@LiveContestActivity);
         llm.orientation = LinearLayoutManager.HORIZONTAL;
         recycle_myteam!!.layoutManager = llm;
         recycle_myteam!!.adapter = teamAdapter;
 
+    }
+
+
+    public fun setIntent() {
+        displayToast("asdadad", "error")
     }
 
     fun getContestDetail() {
@@ -107,20 +135,37 @@ class LiveContestActivity : BaseActivity() {
                         Handler().postDelayed(Runnable {
                         }, 100)
                         setLiveAdapter(response.body()!!.scores)
+                        tvcontesttype.setText(response.body()!!.contest.get(0).catname)
                         for (i in 0 until response.body()!!.scores.size)
-                            if (response.body()!!.scores.get(i).userid.equals(getFromPrefsString(StockConstant.USERID))) {
+                            if (response.body()!!.scores.get(i).userid.toString().equals(
+                                    getFromPrefsString(
+                                        StockConstant.USERID
+                                    )
+                                )
+                            ) {
                                 filterTeamList!!.add(response.body()!!.scores.get(i))
                             }
                         if (response.body()!!.contest.size > 0)
                             setTimer(response.body()!!.contest.get(0))
                         if (filterTeamList!!.size > 0) {
                             if (filterTeamList!!.size == 1) {
-                                setDataForTeam(filterTeamList!!, 0)
                                 recycle_myteam.visibility = View.GONE
+                                tvRank.setText(filterTeamList!!.get(0).rank)
+                                stockList!!.clear()
+                                crptoList!!.clear()
+                                if (filterTeamList!!.get(0).stock.size == 0) {
+                                    flagCrypto = true
+                                    crptoList!!.addAll(filterTeamList!!.get(0).crypto)
+                                } else
+                                    stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
                             } else {
+                                tvRank.setText(filterTeamList!!.get(0).rank)
+                                stockList!!.clear()
+                                stockList!!.addAll(filterTeamList!!.get(0).stock)
                                 setLiveTeamAdapter(filterTeamList!!)
                             }
 
+                        } else {
                         }
 
                     }
@@ -170,12 +215,5 @@ class LiveContestActivity : BaseActivity() {
                 newtimer.start()
             }
         }
-    }
-
-
-    fun setDataForTeam(contest: MutableList<ContestDetail.Score>, position: Int) {
-        tvRank.setText(contest.get(position).rank)
-        totalChange.setText(contest.get(position).teamId)
-
     }
 }

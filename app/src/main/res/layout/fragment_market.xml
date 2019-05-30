@@ -161,23 +161,41 @@
                         android:tint="@color/white"/>
             </LinearLayout>
 
+
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="@dimen/_35sdp"
+                          android:layout_height="wrap_content"
                           android:background="@color/white"
                           android:gravity="center"
-                          android:weightSum="4"
+                          android:weightSum="5"
                           android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_currency"
+                        android:id="@+id/tv_crypto"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        style="@style/TextStyleNormal"
+                        android:text="Crypto Currencies"
+                        android:textSize="@dimen/_11ssp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.3"
+                        android:gravity="center"
+                        android:textColor="@color/black"/>
+
+                <View android:layout_width="@dimen/_1ssp"
+                      android:layout_height="match_parent"
+                      android:background="@color/colorTransparent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_currency"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         style="@style/TextStyleNormal"
                         android:text="Currencies"
                         android:textSize="@dimen/_11ssp"
                         android:layout_gravity="center"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="@color/black"/>
@@ -189,14 +207,14 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_indices"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         style="@style/TextStyleNormal"
                         android:text="Indices"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
                         android:gravity="center"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:textSize="@dimen/_11ssp"
-                        android:layout_weight="1"
+                        android:layout_weight=".8"
                         android:layout_gravity="center"
                         android:textColor="@color/black"/>
 
@@ -207,15 +225,15 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_commodity"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         style="@style/TextStyleNormal"
                         android:text="Commodities"
                         android:gravity="center"
                         android:textSize="@dimen/_11ssp"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
+                        android:layout_weight="1.2"
                         android:textColor="@color/black"/>
 
                 <View android:layout_width="@dimen/_1ssp"
@@ -225,14 +243,14 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_stocks"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         style="@style/TextStyleNormal"
                         android:text="Stocks"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
                         android:textSize="@dimen/_11ssp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:layout_weight="1"
                         android:textColor="@color/black"/>
 
@@ -247,7 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
-                 >
+            >
             </FrameLayout>
 
 

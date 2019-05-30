@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,26 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     private ArrayList<String> list;
     private static CheckBox lastChecked = null;
     private static int lastCheckedPos = 0;
+    private SparseBooleanArray checkedHolder = null;
+
 
     public BottomSheetAdapter(Context mContext, int count, ArrayList<String> list) {
         this.mContext = mContext;
         // this.onItemCheckListener = onItemCheckListener;
         this.count = count;
         this.list = list;
+//        createCheckedHolder();
+    }
+
+    private void createCheckedHolder() {
+        checkedHolder = new SparseBooleanArray(list.size());
+
+       /* for (int i =0; i<=list.size();i++){
+            if (i == 0)
+                checkedHolder.get
+            else
+            checkedHolder !!.set(i, false);
+        }*/
     }
 
     @NonNull
@@ -46,31 +61,6 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.recylerView.setLayoutManager(mLayoutManager);
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
         holder.recylerView.setAdapter(mAdapter);
-        /*if (position == 0 && list.get(0).isSelected() && holder.radioBtn.isChecked()) {
-            lastChecked = holder.radioBtn;
-            lastCheckedPos = 0;
-        }*/
-        /*holder.radioBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckBox cb = (CheckBox) v;
-                int clickedPos = ((Integer) cb.getTag()).intValue();
-
-                if (cb.isChecked()) {
-                    if (lastChecked != null) {
-                        lastChecked.setChecked(false);
-//                        list.get(lastCheckedPos).setSelected(false);
-                    }
-
-                    lastChecked = cb;
-                    lastCheckedPos = clickedPos;
-                } else
-                    lastChecked = null;
-
-//                list.get(clickedPos).setSelected(cb.isChecked());
-            }
-        });*/
-
         holder.ll_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
