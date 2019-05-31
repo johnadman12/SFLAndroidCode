@@ -141,13 +141,13 @@ class MyTeamAdapter(
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
-
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
 
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {
             e.printStackTrace()
         }

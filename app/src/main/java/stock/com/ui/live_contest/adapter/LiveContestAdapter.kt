@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_live_contest.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.ContestDetail
 import stock.com.utils.StockConstant
 
@@ -35,10 +36,15 @@ class LiveContestAdapter(
 
         holder.itemView.setOnClickListener {
             if (userId == scores.get(position).userid) {
-                mContext.startActivity(
-                    Intent(mContext, TeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-                )
+                if (scores.get(position).stock.size == 0)
+                    mContext.startActivity(
+                        Intent(mContext, MarketTeamPreviewActivity::class.java)
+                            .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                    ) else
+                    mContext.startActivity(
+                        Intent(mContext, TeamPreviewActivity::class.java)
+                            .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                    )
             } else {
 //                Toast.makeText(mContext, "Contest is not live yet.", 10000).show()
 

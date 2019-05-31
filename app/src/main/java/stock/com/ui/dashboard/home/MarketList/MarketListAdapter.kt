@@ -145,7 +145,8 @@ class MarketListAdapter(
                     for (row in mContest) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
-                        }
+                        } else if(row.name!!.toLowerCase().contains(charString.toLowerCase()))
+                            filteredList.add(row)
                     }
                     searchList = filteredList
                 }

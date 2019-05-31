@@ -203,6 +203,8 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             val inputFormat = SimpleDateFormat(inputPattern)
             var date: Date? = null
             date = inputFormat.parse(contest.scheduleStart)
+            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()

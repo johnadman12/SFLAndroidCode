@@ -42,7 +42,6 @@ class LiveAdapter(
         holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
-        holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         holder.itemView.tvContestType.setText(contest.get(position).catname)
 
         var amount: String = contest.get(position).entryFees.substring(1)
@@ -64,9 +63,17 @@ class LiveAdapter(
                 )
             }
         }
+        if (contest.get(position).marketname.equals("Equity")) {
+            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
+                .into(holder.itemView.ivStock)
+            holder.itemView.tvStockName.setText(contest.get(position).exchangename)
 
-        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
-            .into(holder.itemView.ivStock)
+        } else {
+            holder.itemView.tvStockName.setText(contest.get(position).marketname)
+            Glide.with(mContext).load(R.drawable.ic_business)
+                .into(holder.itemView.ivStock)
+        }
+
         var sports: Int =
             contest.get(position).contestSize - contest.get(position).contest_teamremaining
 
@@ -79,6 +86,8 @@ class LiveAdapter(
             val inputFormat = SimpleDateFormat(inputPattern)
             var date: Date? = null
             date = inputFormat.parse(contest.get(position).scheduleEnd)
+            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
@@ -144,18 +153,17 @@ class LiveAdapter(
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
-
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
 
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {
             e.printStackTrace()
         }
         return str
     }
-
 }
 

@@ -90,7 +90,7 @@ public class LobbyContestPojo extends BasePojo {
         public String entryFees;
         @SerializedName("fees")
         @Expose
-        public int fees;
+        public String fees;
         @SerializedName("win_amount")
         @Expose
         public String win_amount;

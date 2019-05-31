@@ -52,7 +52,7 @@ class StocksFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "stock"
+                "Equity"
             )
         call.enqueue(object : Callback<MarketData> {
 

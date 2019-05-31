@@ -88,6 +88,8 @@ class LobbyContestAdapter(
             val inputFormat = SimpleDateFormat(inputPattern)
             var date: Date? = null
             date = inputFormat.parse(mContest.get(position).scheduleStart)
+            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
@@ -191,13 +193,13 @@ class LobbyContestAdapter(
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
-
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
 
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {
             e.printStackTrace()
         }

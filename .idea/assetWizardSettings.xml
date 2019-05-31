@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_business" />
-                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\business.svg" />
+                            <entry key="outputName" value="ic_search" />
+                            <entry key="sourceFile" value="C:\Users\Emizen\Downloads\magnifier.svg" />
                           </map>
                         </option>
                       </PersistentState>

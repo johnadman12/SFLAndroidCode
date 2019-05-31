@@ -26,10 +26,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
-import stock.com.ui.pojo.Country
-import stock.com.ui.pojo.HomePojo
-import stock.com.ui.pojo.StockPojo
-import stock.com.ui.pojo.WatchListFilterPojo
+import stock.com.ui.pojo.*
 import stock.com.ui.watch_list.adapter.AssetAdapter
 import stock.com.ui.watch_list.adapter.CountryWatchListAdapter
 import stock.com.ui.watch_list.adapter.MarketAdapter
@@ -255,7 +252,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<StockPojo> =
+        val call: Call<WatchlistPojo> =
             apiService.getWatchList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
@@ -264,16 +261,16 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                 android.text.TextUtils.join(",", marketSelectedItems),
                 android.text.TextUtils.join(",", countrySelectedItems)
             )
-        call.enqueue(object : Callback<StockPojo> {
-            override fun onResponse(call: Call<StockPojo>, response: Response<StockPojo>) {
+        call.enqueue(object : Callback<WatchlistPojo> {
+            override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         if (response.body()!!.status == "1") {
                             Handler().postDelayed(Runnable {
                             }, 100)
-                            var testing = ArrayList<StockPojo.Stock>()
-                            testing = response.body()!!.stockList!!
+                            var testing = ArrayList<WatchlistPojo.WatchStock>()
+                            testing = response.body()!!.stock!!
                             Log.e("nckshbj", testing.size.toString())
 
                             if (testing != null && testing.size != 0) {
@@ -298,7 +295,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                 }
             }
 
-            override fun onFailure(call: Call<StockPojo>, t: Throwable) {
+            override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")

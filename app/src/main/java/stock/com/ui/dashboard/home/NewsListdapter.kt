@@ -98,7 +98,8 @@ class NewsListdapter(
                         if (row.title!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
                             Log.d("dadada", "---" + filteredList.size);
-                        }
+                        } else if (row.source!!.brandName!!.toLowerCase().contains(charString.toLowerCase()))
+                            filteredList.add(row)
                     }
                     searchList = filteredList
                 }

@@ -165,6 +165,8 @@ class StockTeamAdapter(
                             filteredList.add(row)
                             Log.d("dadada", "---" + filteredList.size);
                         }
+                        else if(row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
+                            filteredList.add(row)
                     }
                     searchList = filteredList
                 }

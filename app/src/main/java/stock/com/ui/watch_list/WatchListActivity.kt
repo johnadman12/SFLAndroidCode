@@ -20,13 +20,14 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.StockPojo
+import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.adapter.WatchListAdapter_
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class WatchListActivity : BaseActivity() {
     private var watchListAdapter: WatchListAdapter_? = null;
-    private var list: ArrayList<StockPojo.Stock>? = null;
+    private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
 
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,25 +85,25 @@ class WatchListActivity : BaseActivity() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<StockPojo> =
+        val call: Call<WatchlistPojo> =
             apiService.getWatchList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(), "", "", "", ""
             )
-        call.enqueue(object : Callback<StockPojo> {
-            override fun onResponse(call: Call<StockPojo>, response: Response<StockPojo>) {
+        call.enqueue(object : Callback<WatchlistPojo> {
+            override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         // displayToast("dsdadadadada"+""+response.body()!!.stockList!!.size);
-                        if (response.body()!!.stockList!!.size != 0) {
+                        if (response.body()!!.stock!!.size != 0) {
                             setAssetWatchlistFilter(" ")
                             setSectorWatchlistFilter(" ")
                             setCountryWatchlistFilter(" ")
                             setMarketWatchlistFilter(" ")
                             //setWatchListAdapter(response.body()!!.stockList!!);
                             list!!.clear()
-                            list!!.addAll(response.body()!!.stockList!!);
+                            list!!.addAll(response.body()!!.stock!!);
                             setWatchListAdapter();
                             ll_search.visibility = View.VISIBLE;
                             ll_filter.visibility = View.VISIBLE;
@@ -120,7 +121,7 @@ class WatchListActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<StockPojo>, t: Throwable) {
+            override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -169,7 +170,7 @@ class WatchListActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_FILTER_WATCH) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
+           /* if (resultCode == Activity.RESULT_OK && data != null) {
                 var flagreset = data.getStringExtra("resetStockfilter")
                 if (flagreset.equals("0")) {
                     var testing = data.getSerializableExtra("stocklist") as ArrayList<StockPojo.Stock>;
@@ -180,7 +181,7 @@ class WatchListActivity : BaseActivity() {
                 } else {
                     getWatchList()
                 }
-            }
+            }*/
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {

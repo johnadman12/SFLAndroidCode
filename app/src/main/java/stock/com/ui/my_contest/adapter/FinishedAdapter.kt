@@ -42,7 +42,6 @@ class FinishedAdapter(
         holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
-        holder.itemView.tvStockName.setText(contest.get(position).exchangename)
         holder.itemView.tvContestType.setText(contest.get(position).catname)
 
         var amount: String = contest.get(position).entryFees.substring(1)
@@ -55,18 +54,29 @@ class FinishedAdapter(
             holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)
             holder.itemView.llWinners.isEnabled = true
         }
-        Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
-            .into(holder.itemView.ivStock)
+
+        if (contest.get(position).marketname.equals("Equity")) {
+            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + contest.get(position).exchangeimage.trim())
+                .into(holder.itemView.ivStock)
+            holder.itemView.tvStockName.setText(contest.get(position).exchangename)
+
+        } else {
+            holder.itemView.tvStockName.setText(contest.get(position).marketname)
+            Glide.with(mContext).load(R.drawable.ic_business)
+                .into(holder.itemView.ivStock)
+        }
         var sports: Int =
-            contest.get(position).contestSize -   contest.get(position).contest_teamremaining
+            contest.get(position).contestSize - contest.get(position).contest_teamremaining
 
         holder.itemView.tvSprortsLeft.setText(sports.toString() + " Participants")
         contest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvRank.setText(contest.get(position).rank)
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(contest.get(position).scheduleStart))
         holder.itemView.tvScore.setOnClickListener {
-            mContext.startActivity(Intent(mContext, LiveScoreActivity::class.java)
-                .putExtra(StockConstant.CONTESTID, contest.get(position).contestId))
+            mContext.startActivity(
+                Intent(mContext, LiveScoreActivity::class.java)
+                    .putExtra(StockConstant.CONTESTID, contest.get(position).contestId)
+            )
         }
     }
 
@@ -85,13 +95,13 @@ class FinishedAdapter(
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
-
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
 
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {
             e.printStackTrace()
         }

@@ -14,12 +14,16 @@ import stock.com.R
 import stock.com.ui.pojo.StockPojo
 import android.widget.Filter
 import android.widget.Filterable
+import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.AppDelegate
 
-class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPojo.Stock>, val activity: WatchListActivity):
+class WatchListAdapter_(val mContext: Context,
+                        val mContest: MutableList<WatchlistPojo.WatchStock>,
+                        val activity: WatchListActivity):
     RecyclerView.Adapter<WatchListAdapter_.WatchListHolder>(), Filterable {
 
-    private var searchList: List<StockPojo.Stock>? = null
+    private var searchList: List<WatchlistPojo.WatchStock>? = null
 
     init {
         this.searchList=mContest;
@@ -50,12 +54,17 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
             else
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
 
-
-        if(!searchList!!.get(position).image.equals("")){
+        /*if (searchList!!.get(position).marketname.equals("Equity")) {
+            if(!searchList!!.get(position).image.equals(""))
+                Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
+            tvStockName.setText(list.get(position).exchangename)
+        } else {
+            tvStockName.setText(list.get(position).marketname)
             Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
-        }else{
-            holder.itemView.imageView.setImageResource(0)
-        }
+        }*/
+
+
+
      }
     override fun getItemCount(): Int {
         return searchList!!.size;
@@ -69,11 +78,12 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
                 if (charString.isEmpty()) {
                     searchList = mContest
                 } else {
-                    val filteredList = ArrayList<StockPojo.Stock>()
+                    val filteredList = ArrayList<WatchlistPojo.WatchStock>()
                     for (row in mContest) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
-                       }
+                       } else if (row.name!!.toLowerCase().contains(charString.toLowerCase()))
+                            filteredList.add(row)
                     }
                     searchList = filteredList
                 }
@@ -82,7 +92,7 @@ class WatchListAdapter_(val mContext: Context, val mContest: MutableList<StockPo
                 return filterResults
             }
             override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
-                searchList = filterResults.values as ArrayList<StockPojo.Stock>
+                searchList = filterResults.values as ArrayList<WatchlistPojo.WatchStock>
                 notifyDataSetChanged()
             }
         }

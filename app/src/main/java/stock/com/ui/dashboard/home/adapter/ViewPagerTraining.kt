@@ -77,7 +77,6 @@ class ViewPagerTraining(
         tvtotal.visibility = GONE
         tvTotalWinnings.visibility = GONE
         entry_fee.setText(list.get(position).entryFees)
-        tvStockName.setText(list.get(position).exchangename)
         tvTime.setText(list.get(position).exchangename)
         tvWinnersTotal.setText(list.get(position).totalwinners)
         tvTotalWinnings.setText(list.get(position).winningAmount)
@@ -94,10 +93,15 @@ class ViewPagerTraining(
         else
             tvMulJoin.visibility = View.VISIBLE
 
-
-        Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
-            .into(ivStock)
-
+        if (list.get(position).marketname.equals("Equity")) {
+            Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
+                .into(ivStock)
+            tvStockName.setText(list.get(position).exchangename)
+        } else {
+            tvStockName.setText(list.get(position).marketname)
+            Glide.with(context).load(R.drawable.ic_business)
+                .into(ivStock)
+        }
 
         var sports: Double =
             (list.get(position).contestSize.toInt() - list.get(position).teamsJoined.toInt()).toDouble()
@@ -112,15 +116,14 @@ class ViewPagerTraining(
             val inputFormat = SimpleDateFormat(inputPattern)
             var date: Date? = null
             date = inputFormat.parse(list.get(position).scheduleStart)
+            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
-//                Toast.makeText(context,"Contest is live now",10000).show()
-                /* txtjoin.setTextSize(20.00f)
-                 txtjoin.setText(context.getString(R.string.Finished))*/
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
@@ -217,13 +220,13 @@ class ViewPagerTraining(
         val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
-
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
 
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {
             e.printStackTrace()
         }

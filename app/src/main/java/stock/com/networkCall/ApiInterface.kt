@@ -265,8 +265,7 @@ interface ApiInterface {
         @Field("sector") sector: String,
         @Field("market") market: String,
         @Field("country_id") country_id: String
-
-    ): Call<StockPojo>
+    ): Call<WatchlistPojo>
 
     @FormUrlEncoded
     @POST("stock/remove_watch")
