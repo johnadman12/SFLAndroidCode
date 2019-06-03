@@ -35,7 +35,7 @@ class LiveContestAdapter(
 
 
         holder.itemView.setOnClickListener {
-            if (userId == scores.get(position).userid) {
+//            if (userId == scores.get(position).userid) {
                 if (scores.get(position).stock.size == 0)
                     mContext.startActivity(
                         Intent(mContext, MarketTeamPreviewActivity::class.java)
@@ -45,15 +45,15 @@ class LiveContestAdapter(
                         Intent(mContext, TeamPreviewActivity::class.java)
                             .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
                     )
-            } else {
+            }/* else {
 //                Toast.makeText(mContext, "Contest is not live yet.", 10000).show()
 
-            }
-        }
+            }*/
+
     }
 
     override fun getItemCount(): Int {
-        return scores!!.size;
+        return scores.size;
     }
 
     inner class WatchListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

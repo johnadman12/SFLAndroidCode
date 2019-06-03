@@ -53,22 +53,26 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(0).changePercent))
             if (list!!.get(0).changePercent.contains("-"))
                 arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
-
-
+                price1.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage1.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
         Glide.with(this).load(list!!.get(1).image).placeholder(R.mipmap.cricketer).into(cimg_wk2)
         price2.setText(list!!.get(1).latestPrice)
         percentage2.setText(list!!.get(1).changePercent)
         stockname2.setText(list!!.get(1).symbol)
-
         if (!TextUtils.isEmpty(list!!.get(1).changePercent))
             if (list!!.get(1).changePercent.contains("-"))
                 arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price2.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage2.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
+
 
 
 
@@ -79,8 +83,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(2).changePercent))
             if (list!!.get(2).changePercent.contains("-"))
                 arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price3.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -91,8 +98,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(3).changePercent))
             if (list!!.get(3).changePercent.contains("-"))
                 arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price4.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage4.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -103,8 +113,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(4).changePercent))
             if (list!!.get(4).changePercent.contains("-"))
                 arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price5.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage5.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -115,8 +128,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(5).changePercent))
             if (list!!.get(5).changePercent.contains("-"))
                 arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price6.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage6.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -127,8 +143,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(6).changePercent))
             if (list!!.get(6).changePercent.contains("-"))
                 arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price7.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage7.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -139,8 +158,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(7).changePercent))
             if (list!!.get(7).changePercent.contains("-"))
                 arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price8.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage8.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -152,8 +174,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(8).changePercent))
             if (list!!.get(8).changePercent.contains("-"))
                 arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price9.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage9.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -164,8 +189,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(9).changePercent))
             if (list!!.get(9).changePercent.contains("-"))
                 arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price10.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage10.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
@@ -176,20 +204,26 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (!TextUtils.isEmpty(list!!.get(10).changePercent))
             if (list!!.get(10).changePercent.contains("-"))
                 arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price11.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage11.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
 
 
 
-//        Glide.with(this).load(list!!.get(11).image).placeholder(R.mipmap.cricketer).into(cimg_wk12)
+        Glide.with(this).load(list!!.get(11).image).placeholder(R.mipmap.cricketer).into(cimg_wk12)
         price12.setText(list!!.get(11).latestPrice)
         percentage12.setText(list!!.get(11).changePercent)
         stockname12.setText(list!!.get(11).symbol)
         if (!TextUtils.isEmpty(list!!.get(11).changePercent))
             if (list!!.get(11).changePercent.contains("-"))
                 arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_down_arrow))
-            else
+            else {
                 arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_up))
+                price12.setTextColor(ContextCompat.getColor(this, R.color.green))
+                percentage12.setTextColor(ContextCompat.getColor(this, R.color.green))
+            }
     }
 
 

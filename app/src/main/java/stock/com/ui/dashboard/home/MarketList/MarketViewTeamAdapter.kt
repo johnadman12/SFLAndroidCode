@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -12,8 +13,9 @@ import stock.com.R
 import stock.com.ui.pojo.MarketList
 
 class MarketViewTeamAdapter
-    (val mContext: Context, val mContest: MutableList<MarketList.Crypto>,
-                            val onItemCheckListener: OnItemCheckListener
+    (
+    val mContext: Context, val mContest: MutableList<MarketList.Crypto>,
+    val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<MarketViewTeamAdapter.FeatureListHolder>() {
     var list: ArrayList<MarketList.Crypto> = ArrayList()
@@ -41,7 +43,6 @@ class MarketViewTeamAdapter
         holder.itemView.img_time.visibility = View.GONE
         holder.itemView.tvPrevClose.visibility = View.GONE
         holder.itemView.tvlatestVolume.setText(mContest.get(position).latestVolume)
-        holder.itemView.tvPercentage.setText(mContest.get(position).changeper)
         Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.ivsTOCK)
 
         holder.itemView.llremoveStock.visibility = View.VISIBLE
@@ -49,10 +50,15 @@ class MarketViewTeamAdapter
         mContest.get(position).addedToList = 1
 
         if (!TextUtils.isEmpty(mContest.get(position).changeper))
-            if (mContest.get(position).changeper.contains("-"))
+            if (mContest.get(position).changeper.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
-            else
+                holder.itemView.tvPercentage.setText(mContest.get(position).changeper)
+            } else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + mContest.get(position).changeper)
+            }
 
 
 

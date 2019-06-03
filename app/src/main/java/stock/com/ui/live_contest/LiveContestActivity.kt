@@ -93,6 +93,7 @@ class LiveContestActivity : BaseActivity() {
             , scores, object : RecycleTeamAdapter.ItemClickListner {
                 override fun onItemClick(item: ContestDetail.Score) {
                     tvRank.setText(item.rank)
+                    tvRankLable.setText(getString(R.string.rank) + " (" + item.teamNameCount + ")")
                     if (item.stock.size == 0) {
                         flagCrypto = true
                         crptoList!!.clear()
@@ -210,7 +211,6 @@ class LiveContestActivity : BaseActivity() {
 
                         tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
-
                     override fun onFinish() {
                     }
                 }

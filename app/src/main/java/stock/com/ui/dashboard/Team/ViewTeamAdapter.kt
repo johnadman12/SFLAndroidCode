@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -47,10 +48,15 @@ class ViewTeamAdapter(
         mContest.get(position).addedToList = 1
 
         if (!TextUtils.isEmpty(mContest.get(position).changePercent))
-            if (mContest.get(position).changePercent.contains("-"))
+            if (mContest.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
-            else
+                holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent)
+            } else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + mContest.get(position).changePercent)
+            }
 
 
 

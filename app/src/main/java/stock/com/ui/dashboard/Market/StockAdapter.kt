@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_currency_market.view.*
@@ -26,20 +27,24 @@ class StockAdapter(
         holder.itemView.name.setText(list.stock.get(position).symbol)
         holder.itemView.tv_company.setText(list.stock.get(position).companyName)
         holder.itemView.tv_latest_price.setText(list.stock.get(position).latestPrice + " %")
-        holder.itemView.tv_change_percentage.setText(list.stock.get(position).changePercent)
+
         Glide.with(mContext).load(list.stock.get(position).image).into(holder.itemView.img_market)
 
         if (!TextUtils.isEmpty(list.stock.get(position).changePercent))
-            if (list.stock.get(position).changePercent.contains("-"))
+            if (list.stock.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.graph)
-            else
+                holder.itemView.tv_change_percentage.setText(list.stock.get(position).changePercent)
+            } else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.graph)
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + list.stock.get(position).changePercent)
+            }
 
 
         if (list.stock.get(position).stock_type.equals("1")) {
             holder.itemView.llAdd.visibility = View.GONE
             holder.itemView.img_check.visibility = View.VISIBLE
-            holder.itemView.llwatch.isEnabled= false
+            holder.itemView.llwatch.isEnabled = false
         } else {
             holder.itemView.llAdd.visibility = View.VISIBLE
             holder.itemView.img_check.visibility = View.GONE

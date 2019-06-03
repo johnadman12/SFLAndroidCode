@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -40,10 +41,16 @@ class MarketListAdapter(
 
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper))
-            if (searchList!!.get(position).changeper.contains("-"))
+            if (searchList!!.get(position).changeper.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
-            else
+                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper)
+            }
+            else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changeper)
+            }
 
 
 

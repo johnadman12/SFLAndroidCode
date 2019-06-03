@@ -147,7 +147,12 @@ class ViewPagerTraining(
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
-
+                        if (diff < 900000) {
+                            txtjoin.setTextSize(22.00f)
+                            txtjoin.setText(context.getString(R.string.live_now))
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(context, R.color.GrayColor)
+                        }
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
                         val minutes = diffSec / 60 % 60

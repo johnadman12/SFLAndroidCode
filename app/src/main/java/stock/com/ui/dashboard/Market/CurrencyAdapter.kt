@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_currency_market.view.*
@@ -34,15 +35,20 @@ class CurrencyAdapter(
         if (!TextUtils.isEmpty(marketData.crypto.get(position).changeper))
             if (marketData.crypto.get(position).changeper.contains("-"))
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.graph)
-            else
+            else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.graph)
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + marketData.crypto.get(position).changeper)
+
+
+            }
 
 
         if (marketData.crypto.get(position).cryptoType.equals("1")) {
             holder.itemView.llAdd.visibility = View.GONE
             holder.itemView.img_check.visibility = View.VISIBLE
-            holder.itemView.llwatch.isEnabled= false
-        }else{
+            holder.itemView.llwatch.isEnabled = false
+        } else {
             holder.itemView.llAdd.visibility = View.VISIBLE
             holder.itemView.img_check.visibility = View.GONE
         }

@@ -44,7 +44,7 @@ import java.util.*
 class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var flag: Boolean = false
-    var exchangeid: Int = 0
+    var exchangeid: String = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_btn_close -> {
@@ -67,7 +67,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     private fun initViews() {
         if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+            exchangeid = intent.getStringExtra(StockConstant.EXCHANGEID)
         }
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         img_btn_back.setOnClickListener(this)
@@ -156,7 +156,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             else
                 if (contest.marketname.equals("Equity")) {
                     var intent = Intent(this, ActivityCreateTeam::class.java)
-                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid.toInt())
                     intent.putExtra(StockConstant.CONTESTID, contestid)
                     intent.putExtra("isCloning", 0)
                     startActivityForResult(intent, 405);

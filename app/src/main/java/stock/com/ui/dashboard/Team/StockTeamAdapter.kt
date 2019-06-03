@@ -14,6 +14,7 @@ import android.view.View.VISIBLE
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_view_contest.*
@@ -78,15 +79,19 @@ class StockTeamAdapter(
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
         holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
-        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
-            if (searchList!!.get(position).changePercent.contains("-"))
+            if (searchList!!.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
-            else
+                holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent)
+            } else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changePercent)
+            }
 
 
 
@@ -96,7 +101,8 @@ class StockTeamAdapter(
                     mContext,
                     "You have selected maximum number of stocks for your team.",
                     "DFX"
-                )  } else {
+                )
+            } else {
                 holder.itemView.llremoveStock.visibility = VISIBLE
                 holder.itemView.img_add.visibility = GONE
                 searchList!!.get(position).addedToList = 1
@@ -164,8 +170,7 @@ class StockTeamAdapter(
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
                             Log.d("dadada", "---" + filteredList.size);
-                        }
-                        else if(row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
+                        } else if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
                             filteredList.add(row)
                     }
                     searchList = filteredList
