@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Market
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +19,22 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.MarketData
+import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class StocksFragment : BaseFragment() {
 
+
+    private var stockAdapter: StockAdapter? = null;
+    private var stockList: ArrayList<StockTeamPojo.Stock>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stocks, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        stockList = ArrayList()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
@@ -62,7 +68,8 @@ class StocksFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setStockAdapter(response.body()!!)
+                        stockList = response.body()!!.stock
+                        setStockAdapter(response.body()!!.stock)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -83,14 +90,17 @@ class StocksFragment : BaseFragment() {
     }
 
     @SuppressLint("WrongConstant")
-    fun setStockAdapter(item: MarketData) {
+    fun setStockAdapter(item: MutableList<StockTeamPojo.Stock>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_currencyList!!.layoutManager = llm
         rv_currencyList.visibility = View.VISIBLE
-        rv_currencyList!!.adapter = StockAdapter(context!!, item, this)
-    }
 
+        stockAdapter = StockAdapter(context!!, stockList!!, this);
+        //rv_currencyList!!.adapter = StockAdapter(context!!, item, this)
+        rv_currencyList!!.adapter = stockAdapter;
+
+    }
 
 
     fun saveToWatchList(stockId: Int) {
@@ -132,6 +142,37 @@ class StocksFragment : BaseFragment() {
                 d.dismiss()
             }
         })
+    }
+
+    public fun setFilter(c: CharSequence) {
+        if (stockAdapter != null)
+            stockAdapter!!.getFilter().filter(c)
+    }
+
+    fun setSorting(type: String) {
+        if (type.equals("Alpha")) {
+            var sortedList = stockList!!.sortedBy { it.symbol?.toString() }
+            for (obj in sortedList) {
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("dayChange")) {
+            var sortedList = stockList!!.sortedBy { it.changePercent?.toDouble() }
+            for (obj in sortedList) {
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("price")) {
+            var sortedList = stockList!!.sortedBy { it.latestPrice?.toDouble() }
+            for (obj in sortedList) {
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        }
+
     }
 
 }

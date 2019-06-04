@@ -61,7 +61,7 @@
                     style="@style/TextStyleNormal"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:textColor="@color/black"
-                    android:text="Alphabatic (A to Z)"
+                    android:text="Alphabetic (A to Z)"
                     android:buttonTint="@color/colorPrimary"/>
 
 

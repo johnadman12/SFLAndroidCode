@@ -1,8 +1,11 @@
 package stock.com.ui.dashboard.Market
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_market.*
-import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,14 +25,22 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.HomePojo
+import stock.com.ui.pojo.StockTeamPojo
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class MarketFragment : BaseFragment(), View.OnClickListener {
+    var position: Int = 0
+
+    private var cryptoAdapter: CurrencyAdapter? = null;
+    private var list: List<StockTeamPojo.Stock>? = null
+
+
+    private var fragment: Fragment? = null;
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tv_crypto -> {
-//                ll_my_team.visibility = View.VISIBLE
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -44,10 +54,10 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(CryptoCurrencyFragment(), Bundle())
+                position = 0
             }
 
             R.id.tv_currency -> {
-//                ll_my_team.visibility = View.VISIBLE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -61,10 +71,10 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(CurrencyFragment(), Bundle())
+                position = 1
             }
             R.id.tv_commodity -> {
 
-//                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -78,9 +88,9 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(CommodityFragment(), Bundle())
+                position = 2
             }
             R.id.tv_indices -> {
-//                ll_my_team.visibility = View.GONE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
@@ -94,10 +104,9 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(IndicesFragment(), Bundle())
+                position = 3
             }
             R.id.tv_stocks -> {
-
-//             ll_my_team.visibility = View.GONE
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -111,6 +120,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.colorbutton));
 
                 setFragment(StocksFragment(), Bundle());
+                position = 4
 
             }
         }
@@ -122,15 +132,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        getExchangeNamelist()
-        //setMarketAdapter()
-        // setTechnologyAdapter()
-
         tv_currency.setOnClickListener(this);
+        list = ArrayList()
         tv_indices.setOnClickListener(this);
         tv_commodity.setOnClickListener(this);
         tv_stocks.setOnClickListener(this);
         tv_crypto.setOnClickListener(this);
+
+
 
         changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
         changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -149,10 +158,29 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         ll_watchlist.setOnClickListener {
             startActivity(Intent(activity!!, WatchListActivity::class.java))
         }
+
         ll_sort.setOnClickListener {
-            startActivity(Intent(activity!!, ActivityMarketSort::class.java))
+            startActivityForResult(Intent(activity!!, ActivityMarketSort::class.java), StockConstant.RESULT_CODE_SORT_MARKET)
         }
         getExchangeNamelist()
+
+        et_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (fragment is StocksFragment)
+                    (fragment as StocksFragment).setFilter(s!!)
+                else if (fragment is CryptoCurrencyFragment)
+                    (fragment as CryptoCurrencyFragment).setFilter(s!!)
+            }
+        })
+
+
     }
 
     fun getExchangeNamelist() {
@@ -190,33 +218,9 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         rvstock.visibility = View.VISIBLE
         rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList)
     }
-/*
-
-    @SuppressLint("WrongConstant")
-    fun setMarketAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-       */
-/* rv_market_movers!!.layoutManager = llm
-        rv_market_movers.visibility = View.VISIBLE
-        rv_market_movers!!.adapter = MarketAdapter(context!!)*//*
-
-    }
-
-    @SuppressLint("WrongConstant")
-    fun setTechnologyAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-     */
-/*   rv_Technology!!.layoutManager = llm
-        rv_Technology.visibility = View.VISIBLE
-        rv_Technology!!.adapter = MarketAdapter(context!!)*//*
-
-    }
-*/
 
     private fun setFragment(fragment: Fragment, bundle: Bundle) {
-        val fragment: Fragment? = fragment;
+        this.fragment = fragment;
         fragment!!.arguments = bundle;
         val fragmentManager: FragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentManager
@@ -231,6 +235,37 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     private fun changeBackGroundColor(textView: TextView, color: Int) {
         textView.setBackgroundColor(color);
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("Alpha")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                }else if (data.getStringExtra("flag").equals("dayChange")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                }
+                else if (data.getStringExtra("flag").equals("price")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                }
+            }
+        }
     }
 }
 

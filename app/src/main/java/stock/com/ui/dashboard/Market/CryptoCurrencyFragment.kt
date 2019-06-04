@@ -18,16 +18,22 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.MarketData
+import stock.com.ui.pojo.MarketList
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class CryptoCurrencyFragment : BaseFragment() {
+    private var cryptoAdapter: CurrencyAdapter? = null;
+    private var cryptoList: ArrayList<MarketList.Crypto>? = null
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cryptoList = ArrayList()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
@@ -64,7 +70,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        setCryptoCurrencyAdapter(response.body()!!)
+                        cryptoList = response.body()!!.crypto
+                        setCryptoCurrencyAdapter(response.body()!!.crypto)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -85,12 +92,13 @@ class CryptoCurrencyFragment : BaseFragment() {
     }
 
     @SuppressLint("WrongConstant")
-    fun setCryptoCurrencyAdapter(item: MarketData) {
+    fun setCryptoCurrencyAdapter(item: MutableList<MarketList.Crypto>) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_currencyList!!.layoutManager = llm
         rv_currencyList.visibility = View.VISIBLE
-        rv_currencyList!!.adapter = CurrencyAdapter(context!!, item, this)
+        cryptoAdapter = CurrencyAdapter(context!!, cryptoList!!, this);
+        rv_currencyList!!.adapter = cryptoAdapter
     }
 
     fun saveToWatchList(cryptoId: Int) {
@@ -132,4 +140,36 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
         })
     }
+
+    public fun setFilter(c: CharSequence) {
+        if (cryptoAdapter != null)
+            cryptoAdapter!!.getFilter().filter(c)
+    }
+
+    fun setSorting(type: String) {
+        if (type.equals("Alpha")) {
+            var sortedList = cryptoList!!.sortedBy { it.symbol?.toString() }
+            for (obj in sortedList) {
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("dayChange")) {
+            var sortedList = cryptoList!!.sortedBy { it.changeper?.toDouble() }
+            for (obj in sortedList) {
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("price")) {
+            var sortedList = cryptoList!!.sortedBy { it.latestPrice?.toDouble() }
+            for (obj in sortedList) {
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        }
+    }
+
+
 }

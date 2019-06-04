@@ -27,7 +27,8 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 
 class StockTeamAdapter(
-    val mContext: Context, val mContest: MutableList<StockTeamPojo.Stock>,
+    val mContext: Context,
+    val mContest: MutableList<StockTeamPojo.Stock>,
     val activity: ActivityCreateTeam,
     val onItemCheckListener: OnItemCheckListener
 

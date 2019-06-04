@@ -12,16 +12,16 @@ public  class MarketData extends BasePojo {
 
     @SerializedName("stock")
     @Expose
-    public List<StockTeamPojo.Stock> stock = null;
+    public ArrayList<StockTeamPojo.Stock> stock = null;
     @SerializedName("crypto")
     @Expose
-    public List<MarketList.Crypto> crypto = null;
+    public ArrayList<MarketList.Crypto> crypto = null;
 
     public List<StockTeamPojo.Stock> getStock() {
         return stock;
     }
 
-    public void setStock(List<StockTeamPojo.Stock> stock) {
+    public void setStock(ArrayList<StockTeamPojo.Stock> stock) {
         this.stock = stock;
     }
 
@@ -29,7 +29,7 @@ public  class MarketData extends BasePojo {
         return crypto;
     }
 
-    public void setCrypto(List<MarketList.Crypto> crypto) {
+    public void setCrypto(ArrayList<MarketList.Crypto> crypto) {
         this.crypto = crypto;
     }
 }

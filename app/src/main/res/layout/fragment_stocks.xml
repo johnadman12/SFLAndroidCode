@@ -6,6 +6,7 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/_3sdp">
 
+
     <com.madapps.liquid.LiquidRefreshLayout
             android:layout_width="match_parent"
             android:id="@+id/refreshData"
