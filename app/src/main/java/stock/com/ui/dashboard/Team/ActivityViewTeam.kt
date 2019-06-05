@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -35,7 +36,9 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import com.google.gson.JsonObject
 import com.google.gson.JsonArray
+import kotlinx.android.synthetic.main.dialogue_wallet_new.*
 import stock.com.ui.dashboard.DashBoardActivity
+import stock.com.ui.dashboard.Lobby.ActivityAddCash
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.ContestDetail
 
@@ -230,36 +233,67 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         dialogue.setTitle(null)
         dialogue.entreefee.setText(contestFee)
         dialogue.tvEntryFee.setText(contestFee)
-        dialogue.tv_yes.setOnClickListener {
+        dialogue.tv_yes1.setOnClickListener {
             dialogue.dismiss()
-            if (stockSelectedItems!!.size > 0) {
-                for (i in 0 until stockSelectedItems!!.size) {
-                    /*if (stockSelectedItems!!.get(i).addedStock.equals("yes")) {
-                        stockSelectedItems!!.get(i).addedStock="0"
-                    } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
-                        stockSelectedItems!!.get(i).addedStock="1"
-                    }*/
-                    var postData: JsonObject = JsonObject()
-                    try {
-                        postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
-                        postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                        postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
+            showDialogue()
+        }
 
-                    } catch (e: Exception) {
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
 
-                    }
-                    array.add(postData)
+
+    fun joinContest() {
+        if (stockSelectedItems!!.size > 0) {
+            for (i in 0 until stockSelectedItems!!.size) {
+                /*if (stockSelectedItems!!.get(i).addedStock.equals("yes")) {
+                    stockSelectedItems!!.get(i).addedStock="0"
+                } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
+                    stockSelectedItems!!.get(i).addedStock="1"
+                }*/
+                var postData: JsonObject = JsonObject()
+                try {
+                    postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                    postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                    postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
+
+                } catch (e: Exception) {
+
                 }
+                array.add(postData)
+            }
 //                    Log.e("savedlist", array.toString())
 
-                if (flagCloning == 1)
-                    joinWithThisTeamID()
-                else
-                    joinWithThisTeam()
-            } else {
-                displayToast("please select Stock first", "warning")
-            }
+            if (flagCloning == 1)
+                joinWithThisTeamID()
+            else
+                joinWithThisTeam()
+        } else {
+            displayToast("please select Stock first", "warning")
+        }
+    }
 
+    public fun showDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialogue_wallet_new)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.window.setGravity(Gravity.BOTTOM)
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.imgbtnCancle.setOnClickListener {
+            dialogue.dismiss()
+        }
+        dialogue.tv_yes.setOnClickListener {
+            dialogue.dismiss()
+            joinContest()
+        }
+        dialogue.txt_Withdraw.setOnClickListener {
+            dialogue.dismiss()
+            startActivity(Intent(this@ActivityViewTeam, ActivityAddCash::class.java))
         }
 
         if (dialogue.isShowing)
@@ -440,8 +474,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 rv_team!!.adapter!!.notifyDataSetChanged()
 
             }
-        }
-        else if (requestCode == StockConstant.RESULT_CODE_SORT_VIEW_TEAM) {
+        } else if (requestCode == StockConstant.RESULT_CODE_SORT_VIEW_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
 

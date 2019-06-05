@@ -163,6 +163,7 @@
                             android:textSize="@dimen/_18ssp"
                             android:text="Sara Thoms"
                             android:gravity="center"
+                            android:id="@+id/text_user"
                             android:layout_margin="@dimen/_5sdp"/>
                     <LinearLayout
                             android:layout_width="@dimen/_75sdp"

@@ -1,18 +1,26 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.Gravity
+import android.view.Window
+import android.view.WindowManager
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import kotlinx.android.synthetic.main.activity_price_break.*
 import kotlinx.android.synthetic.main.content_create_contest.*
+import kotlinx.android.synthetic.main.dialogue_wallet_new.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -191,7 +199,7 @@ class ActivityCreateContest : BaseActivity() {
                 var originalString = s.toString()
                 if (originalString.length != 0) {
                     //if (originalString.toInt() <= 100) {
-                    if (originalString.toInt()>2&&originalString.toInt() <= 100) {
+                    if (originalString.toInt() > 2 && originalString.toInt() <= 100) {
                         if (originalString.contains(",")) {
                             originalString = originalString.replace(",".toRegex(), "")
                         }
@@ -199,7 +207,7 @@ class ActivityCreateContest : BaseActivity() {
                             displayToast("please enter winning amount first", "error")
                         else
                             calculateContestFee(edtWinningAmount.text.toString(), originalString)
-                    } else
+                    } else if (originalString.toInt() > 100)
                         displayToast("spots cannot be exceed from 100", "error")
 
                 } /*else
@@ -208,15 +216,9 @@ class ActivityCreateContest : BaseActivity() {
         })
 
         btn_Next.setOnClickListener {
-            getTimeDifference()
-            if (toggleButton1.isChecked){
-                startActivity(Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
-                    .putExtra("sport",edtSports.text.toString())
-                    .putExtra("winningamount",edtWinningAmount.text.toString())
-                    .putExtra("fee",tvContestFee.text.toString())
-                    .putExtra("timediff",edtSports.text.toString())
-                       )
-            }
+
+            //            initWalletPopUp(llsports)
+            showDialogue()
         }
 
 
@@ -242,6 +244,47 @@ class ActivityCreateContest : BaseActivity() {
         val collection: Long = (winAmount.toLong() * 100) / 80
         val entryFee: Long = collection / s1.toLong()
         tvContestFee.setText("$" + entryFee.toString())
+    }
+
+
+    public fun showDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialogue_wallet_new)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.window.setGravity(Gravity.BOTTOM)
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.imgbtnCancle.setOnClickListener {
+            dialogue.dismiss()
+        }
+        dialogue.tv_yes.setOnClickListener {
+            dialogue.dismiss()
+            goToPercentage()
+        }
+        dialogue.txt_Withdraw.setOnClickListener {
+            dialogue.dismiss()
+            startActivity(Intent(this@ActivityCreateContest, ActivityAddCash::class.java))
+        }
+
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
+
+    fun goToPercentage() {
+        getTimeDifference()
+        if (toggleButton1.isChecked) {
+            startActivity(
+                Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
+                    .putExtra("sport", edtSports.text.toString())
+                    .putExtra("winningamount", edtWinningAmount.text.toString())
+                    .putExtra("fee", tvContestFee.text.toString())
+                    .putExtra("timediff", edtSports.text.toString())
+            )
+        }
     }
 
 }

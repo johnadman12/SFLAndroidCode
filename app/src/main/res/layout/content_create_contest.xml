@@ -424,10 +424,12 @@
                                   android:layout_height="wrap_content"
                                   android:layout_marginLeft="@dimen/_8sdp"
                                   android:orientation="vertical">
-                        <LinearLayout android:layout_width="match_parent"
-                                      android:layout_height="wrap_content"
-                                      android:layout_marginLeft="@dimen/_10sdp"
-                                      android:orientation="horizontal">
+                        <LinearLayout
+                                android:id="@+id/llsports"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:layout_width="0dp"
@@ -471,11 +473,13 @@
 
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:padding="@dimen/_10sdp"
-                              android:layout_marginLeft="@dimen/_40sdp"
-                              android:orientation="horizontal">
+                <LinearLayout
+                        android:id="@+id/ll_entries"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_40sdp"
+                        android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

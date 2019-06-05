@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.irozon.sneaker.Sneaker
 import stock.com.R
+import stock.com.ui.pojo.SignupDataPojo
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.StockConstant
 
@@ -33,7 +34,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBar(message: String, type: String) {
-        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
@@ -51,7 +52,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBarOrange(message: String, type: String) {
-        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
@@ -69,7 +70,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBarRed(message: String, type: String) {
-        Sneaker.with( activity!!) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
@@ -78,7 +79,7 @@ open class BaseFragment : Fragment() {
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
-                   activity!!.assets,
+                    activity!!.assets,
                     "fonts/faktpro_medium.ttf"
                 )
             )
@@ -166,6 +167,7 @@ open class BaseFragment : Fragment() {
         edit.putString(StockConstant.MARKET_TYPE, s)
         edit.apply()
     }
+
     fun setCountryContest(s: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()
@@ -179,6 +181,17 @@ open class BaseFragment : Fragment() {
         val edit = prefs.edit()
         edit.putString(StockConstant.SECTOR_TYPE, s)
         edit.apply()
+    }
+
+    fun getUserData(): SignupDataPojo {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        var signupDataPojo = SignupDataPojo()
+        signupDataPojo.username = prefs.getString(StockConstant.USERNAME, "");
+        signupDataPojo.email = prefs.getString(StockConstant.USEREMAIL, "");
+        signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");
+        signupDataPojo.profile_image = prefs.getString(StockConstant.USERIMG, "");
+        signupDataPojo.level_type = prefs.getString(StockConstant.USERLEVEL, "");
+        return signupDataPojo;
     }
 
 }

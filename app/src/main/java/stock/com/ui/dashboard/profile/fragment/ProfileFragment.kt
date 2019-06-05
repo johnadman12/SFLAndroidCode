@@ -10,6 +10,7 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -73,7 +74,9 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews() {
         ctx = activity as DashBoardActivity
-
+        tv_pro.setText(getUserData().level_type)
+        text_user.setText(getUserData().username)
+        Glide.with(activity!!).load(getUserData().profile_image).into(profile_image)
         /*  coordinator.visibility = VISIBLE
           app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
               if (Math.abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {

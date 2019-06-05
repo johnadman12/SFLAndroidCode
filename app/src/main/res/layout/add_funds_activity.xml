@@ -2,20 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/white">
+              android:orientation="vertical"
+              android:background="@mipmap/bg">
 
-    <include layout="@layout/app_toolbar"/>
+    <include layout="@layout/include_back"/>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-    android:orientation="vertical">
+            android:orientation="vertical">
+
+        <TextView
+                style="@style/TextStyleNormal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:padding="@dimen/_3sdp"
+                android:text="ADD CASH"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:textAllCaps="true"
+                android:textColor="@color/textColorOffWhite"
+                android:textSize="@dimen/_20ssp"/>
+
 
         <RelativeLayout
                 android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp">
+                android:padding="@dimen/_10sdp">
 
             <TextView
                     style="@style/TextStyleSemiBold"
@@ -42,6 +57,77 @@ android:background="@color/white">
                     android:text="$100.0"/>
         </RelativeLayout>
 
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:padding="@dimen/_10sdp">
+
+            <TextView
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Entry Fee"/>
+
+            <TextView
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="$100.0"/>
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/GrayColor"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:background="@color/white"
+                android:padding="@dimen/_10sdp">
+
+            <TextView
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Useable Cash Bonus"
+                    android:drawableTint="@color/colorPrimary"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableRight="@mipmap/info"/>
+
+            <TextView
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="- 10.0"/>
+        </RelativeLayout>
+
         <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -55,47 +141,40 @@ android:background="@color/white">
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:textColor="@color/colorItemBackgroundDarkGray"
+                android:textColor="@color/white"
                 android:text="Add cash to your account"/>
 
-        <TextView
-                style="@style/TextStyleSemiBold"
-                android:textSize="@dimen/_12sdp"
-                android:layout_alignParentRight="true"
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:textColor="@color/black"
-                android:text="Amount to add"
-        android:layout_marginStart="@dimen/_15sdp"/>
+                android:background="@drawable/add_cash_light_blue_background"
+                android:layout_margin="@dimen/_10sdp"
+                android:theme="@style/EditTextLabel">
+            <com.google.android.material.textfield.TextInputEditText
+                    style="@style/EditTextStyle"
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:hint="Amount to add"
+                    android:inputType="phone"
+                    android:focusable="false"
+                    android:imeOptions="actionDone"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:background="@null"/>
-
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-        android:padding="@dimen/_10sdp"
+                android:padding="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-        android:orientation="horizontal">
+                android:orientation="horizontal">
 
 
             <TextView
@@ -105,8 +184,9 @@ android:background="@color/white">
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="$ 10"
+                    android:textColor="@color/colorSecondary"
+                    android:text="$ 100"
+                    android:id="@+id/tv1"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
                     android:background="@drawable/add_cash_light_blue_background"
@@ -119,9 +199,10 @@ android:background="@color/white">
                     android:layout_alignParentRight="true"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:id="@+id/tv2"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="$ 20"
+                    android:textColor="@color/colorSecondary"
+                    android:text="$ 200"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
                     android:background="@drawable/add_cash_light_blue_background"
@@ -131,10 +212,11 @@ android:background="@color/white">
                     android:textSize="@dimen/_12sdp"
                     android:layout_alignParentRight="true"
                     android:layout_width="0dp"
+                    android:id="@+id/tv3"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="$ 50"
+                    android:textColor="@color/colorSecondary"
+                    android:text="$ 500"
                     android:gravity="center"
                     android:padding="@dimen/_10sdp"
                     android:background="@drawable/add_cash_light_blue_background"
@@ -148,9 +230,9 @@ android:background="@color/white">
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                style="@style/ButtonStyle"
-                android:background="@drawable/add_cash_solid_light_blue"
-                android:text="@string/submit"
+                style="@style/ButtonStylelogin"
+                android:background="@drawable/green_fill_button"
+                android:text="ADD CASH"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"/>
 

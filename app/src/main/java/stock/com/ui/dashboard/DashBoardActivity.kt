@@ -361,6 +361,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         if (!getFromPrefsString(StockConstant.USERID).toString().equals("")) {
             arrayList.add(resources.getString(R.string.logout))
             tv_username.setText(getUserData().username);
+            tv_pro.setText(getUserData().level_type);
 
 
         }

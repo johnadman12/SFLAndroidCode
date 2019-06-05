@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -18,6 +19,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_view_team.*
 import kotlinx.android.synthetic.main.dialog_join_contest.*
+import kotlinx.android.synthetic.main.dialogue_wallet_new.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +30,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.DashBoardActivity
+import stock.com.ui.dashboard.Lobby.ActivityAddCash
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.ContestDetail
@@ -224,32 +227,63 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         dialogue.setTitle(null)
         dialogue.entreefee.setText(contestFee)
         dialogue.tvEntryFee.setText(contestFee)
-        dialogue.tv_yes.setOnClickListener {
+        dialogue.tv_yes1.setOnClickListener {
             dialogue.dismiss()
-            if (marketSelectedItem!!.size > 0) {
-                for (i in 0 until marketSelectedItem!!.size) {
-                    var postData: JsonObject = JsonObject()
-                    try {
-                        postData.addProperty("crypto_id", marketSelectedItem!!.get(i).cryptocurrencyid.toString());
-                        postData.addProperty("price", marketSelectedItem!!.get(i).latestPrice.toString());
-                        postData.addProperty("stock_type", marketSelectedItem!!.get(i).cryptoType);
+            showDialogue()
+        }
 
-                    } catch (e: Exception) {
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
 
-                    }
-                    array.add(postData)
+
+    fun joinContest() {
+        if (marketSelectedItem!!.size > 0) {
+            for (i in 0 until marketSelectedItem!!.size) {
+                var postData: JsonObject = JsonObject()
+                try {
+                    postData.addProperty("crypto_id", marketSelectedItem!!.get(i).cryptocurrencyid.toString());
+                    postData.addProperty("price", marketSelectedItem!!.get(i).latestPrice.toString());
+                    postData.addProperty("stock_type", marketSelectedItem!!.get(i).cryptoType);
+
+                } catch (e: Exception) {
+
                 }
+                array.add(postData)
+            }
 //                    Log.e("savedlist", array.toString())
 
-                if (flagCloning == 1)
-                    joinWithThisTeamID()
-                else
-                    joinWithThisTeam()
-                Log.e("savedlist", array.toString())
-            } else {
-                displayToast("please select Crpto first", "warning")
-            }
+            if (flagCloning == 1)
+                joinWithThisTeamID()
+            else
+                joinWithThisTeam()
+            Log.e("savedlist", array.toString())
+        } else {
+            displayToast("please select Crpto first", "warning")
+        }
+    }
 
+    public fun showDialogue() {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialogue_wallet_new)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.window.setGravity(Gravity.BOTTOM)
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        dialogue.imgbtnCancle.setOnClickListener {
+            dialogue.dismiss()
+        }
+        dialogue.tv_yes.setOnClickListener {
+            dialogue.dismiss()
+            joinContest()
+        }
+        dialogue.txt_Withdraw.setOnClickListener {
+            dialogue.dismiss()
+            startActivity(Intent(this@ActivityMarketViewTeam, ActivityAddCash::class.java))
         }
 
         if (dialogue.isShowing)

@@ -249,11 +249,11 @@ open class BaseActivity : AppCompatActivity() {
     private var walletPopupWindow: PopupWindow? = null
 
     private lateinit var popupWindowView: View
-    private fun initWalletPopUp(anchorView: View) {
+    fun initWalletPopUp(anchorView: View) {
         try {
             /* set view for filter popup window*/
             walletPopupWindow = PopupWindow(this)
-            popupWindowView = layoutInflater.inflate(R.layout.dialogue_wallet, null) as View
+            popupWindowView = layoutInflater.inflate(R.layout.dialogue_wallet_new, null) as View
             walletPopupWindow!!.contentView = popupWindowView
             /* set visibility of brands list*/
             popupWindowView.img_close.setOnClickListener {
@@ -417,6 +417,7 @@ open class BaseActivity : AppCompatActivity() {
         edit.putString(StockConstant.USEREMAIL, userdata!!.email)
         edit.putString(StockConstant.USERPHONE, userdata!!.phone_number);
         edit.putString(StockConstant.USERIMG, userdata!!.profile_image);
+        edit.putString(StockConstant.USERLEVEL, userdata!!.level_type);
         edit.apply()
     }
 
@@ -427,6 +428,7 @@ open class BaseActivity : AppCompatActivity() {
         signupDataPojo.email = prefs.getString(StockConstant.USEREMAIL, "");
         signupDataPojo.phone_number = prefs.getString(StockConstant.USERPHONE, "");
         signupDataPojo.profile_image = prefs.getString(StockConstant.USERIMG, "");
+        signupDataPojo.level_type = prefs.getString(StockConstant.USERLEVEL, "");
         return signupDataPojo;
     }
 

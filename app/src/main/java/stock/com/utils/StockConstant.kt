@@ -54,6 +54,7 @@ object StockConstant {
     val USERPHONE = "userphone"
     val USEREMAIL = "useremail"
     val USERIMG = "userimg"
+    val USERLEVEL = "userlevel"
     val USERDATA = ""
     val NEWS = "news"
     val USERFIRSTTIME = "user_first_time"

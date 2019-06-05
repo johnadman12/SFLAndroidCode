@@ -111,7 +111,7 @@
                         style="@style/TextStyleMedium"
                         android:background="#31E15A"
                         android:padding="@dimen/_10ssp"
-                        android:id="@+id/tv_yes"/>
+                        android:id="@+id/tv_yes1"/>
 
 
             </LinearLayout>
