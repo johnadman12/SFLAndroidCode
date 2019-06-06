@@ -211,7 +211,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
 
 
-        Glide.with(this).load(list!!.get(11).image).placeholder(R.mipmap.cricketer).into(cimg_wk12)
+        Glide.with(this).load(list!!.get(11).image).into(cimg_wk12)
         price12.setText(list!!.get(11).latestPrice)
         percentage12.setText(list!!.get(11).changeper)
         stockname12.setText(list!!.get(11).symbol)

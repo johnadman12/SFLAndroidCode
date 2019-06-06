@@ -42,12 +42,10 @@ class WinningsListAdapter(
         }
         if (list != null) {
             if (list.get(position).startNum == list.get(position).endNum) {
-
                 Rank = "Rank " + list.get(position).startNum;        // It will display like Rank 1
                 Price = list.get(position).priceEach.toString()
                 contestID = list.get(position).contestId.toString()
             } else {
-
                 Rank =
                     "Rank " + list.get(position).startNum + "-" + list.get(position).endNum;    // It will display like Rank 2 - 5
                 Price = list.get(position).priceEach.toString()
