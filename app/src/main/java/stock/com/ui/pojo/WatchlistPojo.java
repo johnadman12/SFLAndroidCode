@@ -3,6 +3,7 @@ package stock.com.ui.pojo;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class WatchlistPojo extends BasePojo {
     @Expose
     public ArrayList<WatchStock> stock = null;
 
-    public class WatchStock {
+    public class WatchStock implements Serializable {
 
         @SerializedName("id")
         @Expose

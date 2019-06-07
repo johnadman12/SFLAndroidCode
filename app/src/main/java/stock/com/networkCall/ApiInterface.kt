@@ -380,6 +380,13 @@ interface ApiInterface {
         @Field("exchange_id") exchange_id: String
     ): Call<MyTeamsPojo>
 
+    @FormUrlEncoded
+    @POST("usercontest/GetContestsList")
+    fun getCreatedContest(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<CreateContest>
+
 
     @FormUrlEncoded
     @POST("marketteam/my_team")
@@ -433,6 +440,10 @@ interface ApiInterface {
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 
+    @POST("usercontest/user_contestlist")
+    fun getExchangeForContest(
+        @Header("x-access-token") token: String
+    ): Call<ContestList>
 
     @POST("stock/get_sector")
     fun getSectorList(
@@ -456,6 +467,37 @@ interface ApiInterface {
         @Field("user_id") user_id: String,
         @Field("comments") comments: String
     ): Call<Comments>
+
+
+    @FormUrlEncoded
+    @POST("usercontest/contest_winningBreakup")
+    fun getWinningPercentage(
+        @Header("x-access-token") token: String,
+        @Field("prize_pool") prize_pool: String,
+        @Field("user_id") user_id: String,
+        @Field("contest_size") comments: String,
+        @Field("entry_fee") entry_fee: String
+    ): Call<WinningList>
+
+
+    @FormUrlEncoded
+    @POST("usercontest/user_contestcreate")
+    fun createUserContest(
+        @Header("x-access-token") token: String,
+        @Field("total_winning") total_winning: String,
+        @Field("user_id") user_id: String,
+        @Field("exchange_id") exchange_id: String,
+        @Field("market_id") market_id: String,
+        @Field("contest_size_id") contest_size_id: String,
+        @Field("contest_size") contest_size: String,
+        @Field("contests_winner") contests_winner: String,
+        @Field("join_multiple") join_multiple: String,
+        @Field("ucontest_name") ucontest_name: String,
+        @Field("contest_type") contest_type: String,
+        @Field("schedule_start") schedule_start: String,
+        @Field("schedule_end") schedule_end: String,
+        @Field("entry_fees") entry_fee: String
+    ): Call<BasePojo>
 
 
     @GET("comments/commentLikes")

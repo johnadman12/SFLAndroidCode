@@ -7,13 +7,17 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.activity_price_break.*
-import kotlinx.android.synthetic.main.bottom_sheet_filter.*
 import kotlinx.android.synthetic.main.bottom_sheet_pricebreakup.*
 import stock.com.R
+import stock.com.ui.pojo.WinningList
 
 @SuppressLint("ValidFragment")
-public class BottonSheetPriceBreakup constructor(val count:Int, var list:ArrayList<String>) : BottomSheetDialogFragment() {
+public class BottonSheetPriceBreakup
+    (
+    val count: Int,
+    var list: ArrayList<WinningList.Pricebreaklist>,
+    var activityPriceBreak: ActivityPriceBreak
+) : BottomSheetDialogFragment() {
 
 
     private val mBottomSheetBehaviorCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -25,6 +29,7 @@ public class BottonSheetPriceBreakup constructor(val count:Int, var list:ArrayLi
 
         override fun onSlide(bottomSheet: View, slideOffset: Float) {}
     }
+
 
     @SuppressLint("RestrictedApi", "WrongConstant")
     override fun setupDialog(dialog: Dialog, style: Int) {
@@ -46,15 +51,19 @@ public class BottonSheetPriceBreakup constructor(val count:Int, var list:ArrayLi
         val llm = LinearLayoutManager(activity)
         llm.orientation = LinearLayoutManager.VERTICAL
         dialog.rv_Prize!!.layoutManager = llm
-        dialog.rv_Prize!!.adapter = BottomSheetAdapter(activity!!,count,list)
+        dialog.rv_Prize!!.adapter = BottomSheetAdapter(activity!!, count, list, this)
 
     }
-   /* @SuppressLint("WrongConstant")
-    private fun setAdapter() {
-        val llm = LinearLayoutManager(activity)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Prize!!.layoutManager = llm
-        rv_Prize!!.adapter = BottomSheetAdapter(activity!!)
-    }*/
+
+    fun callAdapter(
+        item: java.util.ArrayList<WinningList.Winner>,
+        winner: String,
+        usercontestSizeId: String
+    ) {
+        activityPriceBreak.setAdapter(item)
+        activityPriceBreak.contestSizeId = usercontestSizeId
+        activityPriceBreak.contestSizeWinner = winner
+        dismiss()
+    }
 
 }

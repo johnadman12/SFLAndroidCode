@@ -58,7 +58,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 style="@style/TextStyleNormal"
-                                android:text="Create Contest "
+                                android:text="Contest Name (Optional) "
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:textColor="@color/white"
                                 android:padding="@dimen/_3sdp"
@@ -68,10 +68,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_10sdp"
-                                android:hint="Training Contest"
+                                android:hint="Enter Contest Name"
                                 android:textSize="@dimen/_12ssp"
                                 android:paddingLeft="@dimen/_5sdp"
                                 style="@style/TextStyleNormal"
+                                android:maxLength="15"
+                                android:id="@+id/edtContestName"
                                 android:textColor="@color/white"
                                 android:textColorHint="@color/white"
                                 android:background="@drawable/edit_transparent_bg"/>
@@ -256,7 +258,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_gravity="bottom"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:src="@mipmap/market_"/>
 
@@ -274,20 +277,117 @@
                                 android:textColor="@color/white"
                                 android:padding="@dimen/_3sdp"
                                 android:textSize="@dimen/_10ssp"/>
+                        <RelativeLayout
+                                android:id="@+id/rel1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_10sdp"
+                                    android:hint="Stock Market"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:id="@+id/spinText1"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@color/white"
+                                    android:background="@drawable/edit_transparent_bg"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/iv1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/dropdown"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/_10sdp"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recycle_spin1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:background="@color/white"
+                                    android:visibility="gone"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_below="@+id/spinText1"/>
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:id="@+id/ll_exchange"
+                              android:gravity="center"
+                              android:visibility="gone"
+                              android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:src="@mipmap/market_"/>
+
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="@dimen/_8sdp"
+                                  android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/_10sdp"
-                                android:hint="Stock Market"
-                                android:textSize="@dimen/_12ssp"
-                                android:paddingLeft="@dimen/_5sdp"
                                 style="@style/TextStyleNormal"
-                                android:drawableRight="@mipmap/dropdown"
-                                android:paddingRight="@dimen/_10sdp"
+                                android:text="Exchange "
+                                android:layout_marginLeft="@dimen/_10sdp"
                                 android:textColor="@color/white"
-                                android:textColorHint="@color/white"
-                                android:background="@drawable/edit_transparent_bg"/>
+                                android:padding="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"/>
+                        <RelativeLayout
+                                android:id="@+id/rel2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/_10sdp"
+                                    android:hint="Market"
+                                    android:id="@+id/spinText2"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:paddingLeft="@dimen/_5sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/white"
+                                    android:textColorHint="@color/white"
+                                    android:background="@drawable/edit_transparent_bg"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/iv2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/dropdown"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/_10sdp"/>
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/recycle_spin2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:background="@color/white"
+                                    android:visibility="gone"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_below="@+id/spinText2"/>
+
+                        </RelativeLayout>
 
 
                     </LinearLayout>

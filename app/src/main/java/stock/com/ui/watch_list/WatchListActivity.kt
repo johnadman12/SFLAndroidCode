@@ -108,7 +108,7 @@ class WatchListActivity : BaseActivity() {
                             ll_search.visibility = View.VISIBLE;
                             ll_filter.visibility = View.VISIBLE;
                             ll_sort.visibility = View.VISIBLE;
-                        } else if(response.body()!!.status.equals("0")) {
+                        } else if (response.body()!!.status.equals("0")) {
                             displayToast(resources.getString(R.string.no_data), "warning");
                             finish()
                         }
@@ -170,10 +170,10 @@ class WatchListActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_FILTER_WATCH) {
-           /* if (resultCode == Activity.RESULT_OK && data != null) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
                 var flagreset = data.getStringExtra("resetStockfilter")
                 if (flagreset.equals("0")) {
-                    var testing = data.getSerializableExtra("stocklist") as ArrayList<StockPojo.Stock>;
+                    var testing = data.getSerializableExtra("stocklist") as ArrayList<WatchlistPojo.WatchStock>;
                     Log.d("sdadada---Filter", "--" + testing.size)
                     list!!.clear()
                     list!!.addAll(testing)
@@ -181,7 +181,7 @@ class WatchListActivity : BaseActivity() {
                 } else {
                     getWatchList()
                 }
-            }*/
+            }
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {

@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import stock.com.R;
+import stock.com.ui.pojo.WinningList;
 import stock.com.utils.StockConstant;
 
 import java.util.ArrayList;
@@ -20,29 +22,18 @@ import java.util.ArrayList;
 public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.FeatureListHolder> {
     private Context mContext;
     private int count;
-    private ArrayList<String> list;
+    private ArrayList<WinningList.Pricebreaklist> list;
     private static CheckBox lastChecked = null;
     private static int lastCheckedPos = 0;
     private SparseBooleanArray checkedHolder = null;
+    BottonSheetPriceBreakup breakup;
 
 
-    public BottomSheetAdapter(Context mContext, int count, ArrayList<String> list) {
+    public BottomSheetAdapter(Context mContext, int count, ArrayList<WinningList.Pricebreaklist> list, BottonSheetPriceBreakup breakup) {
         this.mContext = mContext;
-        // this.onItemCheckListener = onItemCheckListener;
         this.count = count;
         this.list = list;
-//        createCheckedHolder();
-    }
-
-    private void createCheckedHolder() {
-        checkedHolder = new SparseBooleanArray(list.size());
-
-       /* for (int i =0; i<=list.size();i++){
-            if (i == 0)
-                checkedHolder.get
-            else
-            checkedHolder !!.set(i, false);
-        }*/
+        this.breakup = breakup;
     }
 
     @NonNull
@@ -53,10 +44,18 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final FeatureListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final FeatureListHolder holder, final int position) {
+        String text = "<font color=#52DF45>(Recommended)</font>";
+        if (position == 0) {
+            holder.txt_Winners.setText(Html.fromHtml(list.get(position).winner + text));
+            holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+        } else {
+            holder.txt_Winners.setText(list.get(position).winner);
+            holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
 
-        holder.txt_Winners.setText(list.get(position) + " " + "Winners");
-        PriceBreakUpAdapter mAdapter = new PriceBreakUpAdapter(mContext);
+        }
+
+        PriceBreakUpAdapter mAdapter = new PriceBreakUpAdapter(mContext, list.get(position).winners);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
         holder.recylerView.setLayoutManager(mLayoutManager);
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
@@ -66,8 +65,10 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             public void onClick(View view) {
                 holder.radioBtn.setChecked(true);
                 holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+                breakup.callAdapter(list.get(position).winners,list.get(position).winner, list.get(position).usercontestSizeId );
             }
         });
+
     }
 
     @Override

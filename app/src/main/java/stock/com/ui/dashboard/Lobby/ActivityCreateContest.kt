@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.Lobby
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -12,32 +13,61 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.CompoundButton
 import android.widget.DatePicker
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import kotlinx.android.synthetic.main.activity_price_break.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet_new.*
 import kotlinx.android.synthetic.main.include_back.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.utils.AppDelegate
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiInterface
+import stock.com.ui.pojo.ContestList
 import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
+import stock.com.utils.ViewAnimationUtils
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.collections.ArrayList
 
-class ActivityCreateContest : BaseActivity() {
+class ActivityCreateContest : BaseActivity(), View.OnClickListener {
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            R.id.rel1 -> {
+                clickPlusIcon(recycle_spin1, iv1/*, rel1*/)
+            }
+            R.id.rel2 -> {
+                clickPlusIcon(recycle_spin2, iv2/*, rel2*/)
+            }
+        }
+    }
+
     val myCalendar = Calendar.getInstance()
     var sSports: String = ""
     var startdate: Long? = null
     var enddate: Long? = null
     var startmilisec: Long? = null
     var startTimemilisec: Long? = null
+    var exchangeId: String = ""
+    var marketId: String = ""
+    var joinMultiple: Int = 1
+    var list1: ArrayList<ContestList.Market>? = null
+    var list2: ArrayList<ContestList.Exchangelist>? = null
+    var exchangeAdapter: ExchangespinAdapter? = null
+    var marketAdapter: SpinnerAdapter? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +78,11 @@ class ActivityCreateContest : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
+        list1 = ArrayList()
+        list2 = ArrayList()
+        rel1.setOnClickListener(this)
+        rel2.setOnClickListener(this)
+        getExchangeForContest()
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
@@ -187,6 +222,12 @@ class ActivityCreateContest : BaseActivity() {
             }
         })
 
+
+        toggleButton1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (!isChecked) {
+                joinMultiple = 0
+            }
+        }
         edtSports.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -216,9 +257,8 @@ class ActivityCreateContest : BaseActivity() {
         })
 
         btn_Next.setOnClickListener {
-
-            //            initWalletPopUp(llsports)
-            showDialogue()
+            if (checkValidation())
+                goToPercentage()
         }
 
 
@@ -247,44 +287,138 @@ class ActivityCreateContest : BaseActivity() {
     }
 
 
-    public fun showDialogue() {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialogue_wallet_new)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.window.setGravity(Gravity.BOTTOM)
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        dialogue.imgbtnCancle.setOnClickListener {
-            dialogue.dismiss()
-        }
-        dialogue.tv_yes.setOnClickListener {
-            dialogue.dismiss()
-            goToPercentage()
-        }
-        dialogue.txt_Withdraw.setOnClickListener {
-            dialogue.dismiss()
-            startActivity(Intent(this@ActivityCreateContest, ActivityAddCash::class.java))
-        }
-
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
-
     fun goToPercentage() {
         getTimeDifference()
-        if (toggleButton1.isChecked) {
-            startActivity(
-                Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
-                    .putExtra("sport", edtSports.text.toString())
-                    .putExtra("winningamount", edtWinningAmount.text.toString())
-                    .putExtra("fee", tvContestFee.text.toString())
-                    .putExtra("timediff", edtSports.text.toString())
+        startActivity(
+            Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
+                .putExtra("spot", edtSports.text.toString())
+                .putExtra("winningamount", edtWinningAmount.text.toString())
+                .putExtra("fee", tvContestFee.text.toString())
+                .putExtra("startTime", startTime.text)
+                .putExtra("endTime", endTime.text)
+                .putExtra("startDate", startDate.text)
+                .putExtra("endDate", endDate.text)
+                .putExtra("marketId", marketId)
+                .putExtra("exchangeId", exchangeId)
+                .putExtra("contestName", edtContestName.text.toString())
+                .putExtra("joinMultiple", joinMultiple.toString())
+        )
+    }
+
+    fun getExchangeForContest() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<ContestList> =
+            apiService.getExchangeForContest(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString()
             )
+        call.enqueue(object : Callback<ContestList> {
+
+            override fun onResponse(call: Call<ContestList>, response: Response<ContestList>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        if (response.body()!!.market.size > 0)
+                            list1 = response.body()!!.market
+                        setmarketAdapter(response.body()!!.market)
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<ContestList>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.internal_server_error), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun setmarketAdapter(item: ArrayList<ContestList.Market>) {
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recycle_spin1!!.layoutManager = llm
+        recycle_spin1!!.adapter = ExchangespinAdapter(this@ActivityCreateContest, item, this)
+    }
+
+    @SuppressLint("WrongConstant")
+    private fun setExchangeAdapter(item: ArrayList<ContestList.Exchangelist>) {
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recycle_spin2!!.layoutManager = llm
+        recycle_spin2!!.adapter = SpinnerAdapter(this@ActivityCreateContest, item, this)
+    }
+
+    private fun clickPlusIcon(
+        lin_child_title: RecyclerView,
+        header_plus_icon: ImageView/*,
+        perspectiveLay: RelativeLayout*/
+    ) {
+        if (lin_child_title.visibility == View.GONE) {
+            ViewAnimationUtils.expand(lin_child_title)
+            header_plus_icon.setImageResource(R.mipmap.dropdown)
+            lin_child_title.visibility = View.VISIBLE
+//            perspectiveLay.visibility = View.VISIBLE
+        } else {
+            ViewAnimationUtils.collapse(lin_child_title)
+            header_plus_icon.setImageResource(R.mipmap.dropdown)
+            lin_child_title.visibility = View.GONE
+//            perspectiveLay.visibility = View.GONE
         }
+    }
+
+    fun setExchange(name: String, list: ArrayList<ContestList.Exchangelist>, id: String) {
+        spinText1.setText(name)
+        marketId = id
+        recycle_spin1.visibility = View.GONE
+        ll_exchange.visibility = View.VISIBLE
+        if (list != null && list.size > 0)
+            setExchangeAdapter(list)
+    }
+
+    fun setExchange(name: String, id: String) {
+        marketId = id
+        spinText1.setText(name)
+        recycle_spin1.visibility = View.GONE
+        ll_exchange.visibility = View.GONE
+    }
+
+
+    fun setMarket(name: String, id: String) {
+        exchangeId = id   //name reference is opposite
+        spinText2.setText(name)
+        recycle_spin2.visibility = View.GONE
+    }
+
+
+    fun checkValidation(): Boolean {
+        if (TextUtils.isEmpty(startDate.text)) {
+            showSneakBarRed("Please Select StartDate First", "error")
+            return false
+        } else if (TextUtils.isEmpty(startTime.text)) {
+            showSneakBarRed("Please Select StartTime First", "error")
+            return false
+        } else if (TextUtils.isEmpty(endDate.text)) {
+            showSneakBarRed("Please Select EndDate First", "error")
+            return false
+        } else if (TextUtils.isEmpty(endTime.text)) {
+            showSneakBarRed("Please Select EndTime First", "error")
+            return false
+        } else if (TextUtils.isEmpty(spinText1.text)) {
+            showSneakBarRed("Please Select Market First", "error")
+            return false
+        } else if (TextUtils.isEmpty(edtWinningAmount.text.toString())) {
+            showSneakBarRed("Please put some amount to create contest", "error")
+            return false
+        } else if (TextUtils.isEmpty(edtSports.text.toString())) {
+            showSneakBarRed("Please provide contest size", "error")
+            return false
+        }
+        return true
     }
 
 }
