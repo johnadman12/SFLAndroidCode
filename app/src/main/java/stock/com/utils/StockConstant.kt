@@ -47,6 +47,8 @@ object StockConstant {
     val REQUEST_CAMERA = 113
     val REQUEST_GALLARY = 114
     val REDIRECT_UPCOMING_MARKET = 123
+    val REDIRECT_CREATED = 124
+    val RESULT_CODE_MARKET_FILTER = 125
 
     val USERID = ""
    public final val FLAG = ""
@@ -69,6 +71,7 @@ object StockConstant {
     val SECTOR_TYPE = "sectortype"
     val MARKET_TYPE = "market_type"
     val COUNTRY_TYPE = "country_type"
+    val ACTIVE_CURRENCY_TYPE = "active_currency"
 
     val COUNTRY_WATCHLIST_TYPE = "countrywatchlist"
     val SECTOR_WATCHLIST_TYPE = "sectorwatchlist"

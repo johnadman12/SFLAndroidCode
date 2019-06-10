@@ -43,14 +43,14 @@ class StocksFragment : BaseFragment() {
                 //TODO make api call here
                 Handler().postDelayed({
                 }, 5000)
-                getStocks()
+                getStocks("1")
             }
         })
-        getStocks()
+        getStocks("1")
 
     }
 
-    fun getStocks() {
+    fun getStocks(flag: String) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -68,8 +68,18 @@ class StocksFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        stockList = response.body()!!.stock
-                        setStockAdapter(response.body()!!.stock)
+                        if (flag.equals("1")) {
+                            stockList = response.body()!!.stock
+                            setStockAdapter(stockList!!)
+                        } else {
+                            stockList = response.body()!!.stock
+                            for (i in 0 until stockList!!.size) {
+                                if (stockList!!.get(i).changePercent.equals("0")) {
+                                    stockList!!.removeAt(i)
+                                }
+                            }
+                            setStockAdapter(stockList!!)
+                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -171,6 +181,14 @@ class StocksFragment : BaseFragment() {
                 stockList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
+        }
+
+    }
+
+    fun changePercentFilter(type: String) {
+        if (type.equals("0")) {
+            getStocks("0")
+            rv_currencyList!!.adapter!!.notifyDataSetChanged()
         }
 
     }

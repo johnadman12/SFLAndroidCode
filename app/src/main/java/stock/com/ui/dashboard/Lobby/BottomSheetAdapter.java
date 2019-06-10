@@ -27,13 +27,15 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     private static int lastCheckedPos = 0;
     private SparseBooleanArray checkedHolder = null;
     BottonSheetPriceBreakup breakup;
+    String contestSizeWinner = "";
 
 
-    public BottomSheetAdapter(Context mContext, int count, ArrayList<WinningList.Pricebreaklist> list, BottonSheetPriceBreakup breakup) {
+    public BottomSheetAdapter(Context mContext, int count, ArrayList<WinningList.Pricebreaklist> list, BottonSheetPriceBreakup breakup, String userContestId) {
         this.mContext = mContext;
         this.count = count;
         this.list = list;
         this.breakup = breakup;
+        this.contestSizeWinner = userContestId;
     }
 
     @NonNull
@@ -45,6 +47,16 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final FeatureListHolder holder, final int position) {
+        for (int i = 0; i < list.size(); i++) {
+            if (contestSizeWinner.equalsIgnoreCase(list.get(i).winner)) {
+//                holder.txt_Winners.setText(Html.fromHtml(list.get(i).winner + text));
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+            } else {
+//                holder.txt_Winners.setText(list.get(i).winner);
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
+            }
+        }
+
         String text = "<font color=#52DF45>(Recommended)</font>";
         if (position == 0) {
             holder.txt_Winners.setText(Html.fromHtml(list.get(position).winner + text));
@@ -60,12 +72,12 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.recylerView.setLayoutManager(mLayoutManager);
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
         holder.recylerView.setAdapter(mAdapter);
-        holder.ll_main.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.radioBtn.setChecked(true);
                 holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
-                breakup.callAdapter(list.get(position).winners,list.get(position).winner, list.get(position).usercontestSizeId );
+                breakup.callAdapter(list.get(position).winners, list.get(position).winner, list.get(position).usercontestSizeId);
             }
         });
 
@@ -80,7 +92,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         public RecyclerView recylerView;
         public AppCompatTextView txt_Winners;
 
-        public CheckBox radioBtn;
+        public RadioButton radioBtn;
         public RelativeLayout rel_lay;
         public LinearLayout ll_main;
 
@@ -91,7 +103,16 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             radioBtn = itemView.findViewById(R.id.radioBtn);
             rel_lay = itemView.findViewById(R.id.rel_lay);
             ll_main = itemView.findViewById(R.id.ll_main);
-
+            /*for (int i = 0; i < list.size(); i++) {
+                if (contestSizeWinner.equalsIgnoreCase(list.get(i).winner)) {
+                    String text = "<font color=#52DF45>(Recommended)</font>";
+                    holder.txt_Winners.setText(Html.fromHtml(list.get(position).winner + text));
+                    holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+                } else {
+                    holder.txt_Winners.setText(list.get(position).winner);
+                    holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
+                }
+            }*/
         }
     }
 }

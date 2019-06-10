@@ -42,15 +42,15 @@ class CryptoCurrencyFragment : BaseFragment() {
                 //TODO make api call here
                 Handler().postDelayed({
                 }, 5000)
-                getCurrency()
+                getCurrency("1")
             }
         })
 
-        getCurrency()
+        getCurrency("1")
     }
 
 
-    fun getCurrency() {
+    fun getCurrency(flag: String) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -70,8 +70,19 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        cryptoList = response.body()!!.crypto
-                        setCryptoCurrencyAdapter(response.body()!!.crypto)
+                        if (flag.equals("1")) {
+                            cryptoList = response.body()!!.crypto
+                            setCryptoCurrencyAdapter(response.body()!!.crypto)
+                        } else {
+                            cryptoList = response.body()!!.crypto
+                            for (i in 0 until cryptoList!!.size) {
+                                if (cryptoList!!.get(i).changeper.equals("0")) {
+                                    cryptoList!!.removeAt(i)
+                                }
+                            }
+                            setCryptoCurrencyAdapter(cryptoList!!)
+                        }
+
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -171,5 +182,12 @@ class CryptoCurrencyFragment : BaseFragment() {
         }
     }
 
+    fun changePercentFilter(type: String) {
+        if (type.equals("0")) {
+            getCurrency("0")
+            rv_currencyList!!.adapter!!.notifyDataSetChanged()
+        }
+
+    }
 
 }

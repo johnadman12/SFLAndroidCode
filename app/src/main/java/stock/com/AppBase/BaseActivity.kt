@@ -453,6 +453,13 @@ open class BaseActivity : AppCompatActivity() {
         edit.apply()
     }
 
+    fun setActiveCurrencyType(s: String) {
+        val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.ACTIVE_CURRENCY_TYPE, s)
+        edit.apply()
+    }
+
 
     fun setSectorFilter(s: String) {
         val prefs = getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)

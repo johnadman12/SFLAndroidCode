@@ -16,7 +16,8 @@ public class BottonSheetPriceBreakup
     (
     val count: Int,
     var list: ArrayList<WinningList.Pricebreaklist>,
-    var activityPriceBreak: ActivityPriceBreak
+    var activityPriceBreak: ActivityPriceBreak,
+    var contestSizeWinner: String
 ) : BottomSheetDialogFragment() {
 
 
@@ -51,7 +52,7 @@ public class BottonSheetPriceBreakup
         val llm = LinearLayoutManager(activity)
         llm.orientation = LinearLayoutManager.VERTICAL
         dialog.rv_Prize!!.layoutManager = llm
-        dialog.rv_Prize!!.adapter = BottomSheetAdapter(activity!!, count, list, this)
+        dialog.rv_Prize!!.adapter = BottomSheetAdapter(activity!!, count, list, this, contestSizeWinner)
 
     }
 

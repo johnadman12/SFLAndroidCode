@@ -614,6 +614,15 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_home, R.color.textColorLightBlack);
 
+        } else if ((requestCode == StockConstant.REDIRECT_CREATED) && (resultCode == Activity.RESULT_OK)) {
+            var b = Bundle();
+            b.putString("flag", "")
+            setFragment(MyContestFragment(), b);
+            changetTextViewBackground(tv_contest, R.color.colorPrimary);
+            changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+            changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+
         } else if ((requestCode == 406) && (resultCode == Activity.RESULT_OK)) {
             val bundle = Bundle()
             bundle.putString("flag", "")

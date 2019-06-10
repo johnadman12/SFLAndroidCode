@@ -123,6 +123,11 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 position = 4
 
             }
+
+            R.id.ll_filter -> {
+                val intent = Intent(context, ActivityMarketFilter::class.java)
+                startActivityForResult(intent, StockConstant.RESULT_CODE_MARKET_FILTER)
+            }
         }
     }
 
@@ -138,6 +143,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         tv_commodity.setOnClickListener(this);
         tv_stocks.setOnClickListener(this);
         tv_crypto.setOnClickListener(this);
+        ll_filter.setOnClickListener(this);
 
 
 
@@ -160,7 +166,10 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         }
 
         ll_sort.setOnClickListener {
-            startActivityForResult(Intent(activity!!, ActivityMarketSort::class.java), StockConstant.RESULT_CODE_SORT_MARKET)
+            startActivityForResult(
+                Intent(activity!!, ActivityMarketSort::class.java),
+                StockConstant.RESULT_CODE_SORT_MARKET
+            )
         }
         getExchangeNamelist()
 
@@ -248,7 +257,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                         (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
 
 
-                }else if (data.getStringExtra("flag").equals("dayChange")) {
+                } else if (data.getStringExtra("flag").equals("dayChange")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                } else if (data.getStringExtra("flag").equals("price")) {
                     if (fragment is StocksFragment)
                         (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
                     else if (fragment is CryptoCurrencyFragment)
@@ -256,13 +272,20 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
 
                 }
-                else if (data.getStringExtra("flag").equals("price")) {
+            }
+        } else if (requestCode == StockConstant.RESULT_CODE_MARKET_FILTER) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                if (data.getStringExtra("resetfiltermarket").equals("0")) {
+                    //remove inactive like change percent is 0.00
                     if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                        (fragment as StocksFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
                     else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
+                        (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
+                } else if (data.getStringExtra("resetfiltermarket").equals("1")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
                 }
             }
         }

@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="02h 50m 20s"
-                android:id="@+id/timer"
+                android:id="@+id/timer1"
                 style="@style/TextStyleNormal"
                 android:drawableLeft="@mipmap/time_"
                 android:drawablePadding="@dimen/_10sdp"

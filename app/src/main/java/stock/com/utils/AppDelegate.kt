@@ -40,6 +40,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.irozon.sneaker.Sneaker
+import org.joda.time.DateTimeZone
+import org.joda.time.format.DateTimeFormat
 import stock.com.BuildConfig
 import stock.com.R
 import stock.com.constant.Tags
@@ -217,23 +219,23 @@ object AppDelegate {
     }
 
     //
-//    fun convertTimeFormatAndTimeZone(time: String, fromFormat: String, toFormat: String): String {
-//        var timea = ""
-//        try {
-//            val fromDateFormat = DateTimeFormat.forPattern(fromFormat).withZone(DateTimeZone.UTC!!)
-//
-//            val toDateFormat = DateTimeFormat.forPattern(toFormat).withZone(DateTimeZone.getDefault())
-//            val jodaTime = fromDateFormat.parseDateTime(time)
-//
-//            timea = jodaTime.toString(toDateFormat)
-//            return timea
-//        } catch (e: ParseException) {
-//            e.printStackTrace()
-//        }
-//
-//        return timea
-//    }
-//
+    fun convertTimeFormatAndTimeZone(time: String, fromFormat: String, toFormat: String): String {
+        var timea = ""
+        try {
+            val fromDateFormat = DateTimeFormat.forPattern(fromFormat).withZone(DateTimeZone.UTC!!)
+
+            val toDateFormat = DateTimeFormat.forPattern(toFormat).withZone(DateTimeZone.getDefault())
+            val jodaTime = fromDateFormat.parseDateTime(time)
+
+            timea = jodaTime.toString(toDateFormat)
+            return timea
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return timea
+    }
+
 
     private fun updateResourcesLocaleLegacy(context: Context, locale: Locale): Context {
         val resources = context.resources

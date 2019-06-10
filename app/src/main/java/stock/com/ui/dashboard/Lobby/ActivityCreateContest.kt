@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
@@ -272,10 +273,11 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         val myFormat = "dd-MM-yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         date.setText(sdf.format(myCalendar.time))
+
     }
 
     private fun updateTime(date: AppCompatTextView) {
-        val myFormat = "HH:mm a" //In which you need put here
+        val myFormat = "hh:mm a" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         date.setText(sdf.format(myCalendar.time))
     }
@@ -289,7 +291,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
 
     fun goToPercentage() {
         getTimeDifference()
-        startActivity(
+        startActivityForResult(
             Intent(this@ActivityCreateContest, ActivityPriceBreak::class.java)
                 .putExtra("spot", edtSports.text.toString())
                 .putExtra("winningamount", edtWinningAmount.text.toString())
@@ -301,7 +303,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 .putExtra("marketId", marketId)
                 .putExtra("exchangeId", exchangeId)
                 .putExtra("contestName", edtContestName.text.toString())
-                .putExtra("joinMultiple", joinMultiple.toString())
+                .putExtra("joinMultiple", joinMultiple.toString()), StockConstant.REDIRECT_CREATED
         )
     }
 
@@ -396,6 +398,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
 
 
     fun checkValidation(): Boolean {
+        var amount: String = edtWinningAmount.text.toString()
         if (TextUtils.isEmpty(startDate.text)) {
             showSneakBarRed("Please Select StartDate First", "error")
             return false
@@ -414,11 +417,25 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         } else if (TextUtils.isEmpty(edtWinningAmount.text.toString())) {
             showSneakBarRed("Please put some amount to create contest", "error")
             return false
+        } else if (amount.toLong() > (10000)) {
+            showSneakBarRed("Amount cannot be exceed from 10000", "error")
+            return false
         } else if (TextUtils.isEmpty(edtSports.text.toString())) {
             showSneakBarRed("Please provide contest size", "error")
             return false
         }
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.REDIRECT_CREATED) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }
     }
 
 }

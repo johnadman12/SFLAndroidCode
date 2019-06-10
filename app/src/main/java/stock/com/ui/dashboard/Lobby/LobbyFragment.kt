@@ -9,8 +9,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
@@ -26,6 +28,7 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockConstant.RESULT_CODE_FILTER
+import stock.com.utils.StockConstant.STOCKID
 import stock.com.utils.StockDialog
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,7 +55,7 @@ class LobbyFragment : BaseFragment() {
 
         ll_codejoin.setOnClickListener { showViewContestDialogue() }
         ll_createContest.setOnClickListener {
-            startActivity(Intent(activity, ActivityCreateContest::class.java))
+            startActivityForResult(Intent(activity, ActivityCreateContest::class.java), StockConstant.REDIRECT_CREATED)
         }
         ll_sort.setOnClickListener {
             startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
@@ -94,16 +97,22 @@ class LobbyFragment : BaseFragment() {
                     refreshLayout.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setContestType(" ")
-                        setMarketContest(" ")
-                        setCountryContest(" ")
+                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.CONTEST_TYPE))) {
+                            setContestType(" ")
+                        }
+                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.MARKET_TYPE))) {
+                            setMarketContest(" ")
+                        }
+                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.COUNTRY_TYPE))) {
+                            setCountryContest(" ")
+                        }
                         setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
@@ -112,7 +121,7 @@ class LobbyFragment : BaseFragment() {
                 if (refreshLayout != null)
                     refreshLayout.finishRefreshing()
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
 
@@ -183,37 +192,17 @@ class LobbyFragment : BaseFragment() {
                 /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
             }
+        }else  if (requestCode == StockConstant.REDIRECT_CREATED) {
+            if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+                var intent = Intent();
+                activity!!.startActivityForResult(intent,111);
+                /*activity!!.setResult(Activity.RESULT_OK, intent);
+                activity!!.finish();*/
+            }
         }
 
-        /*fun convertTime(time:String ): Long {
-            val inputPattern = "yyyy-MM-dd HH:mm:ss"
-            val inputFormat = SimpleDateFormat(inputPattern)
-            var date: Date? = null
-            date = inputFormat.parse(time)
-            val thatDay = Calendar.getInstance()
-            thatDay.setTime(date);
-            val today = Calendar.getInstance()
-            val diff =  thatDay.timeInMillis -today.timeInMillis
-            val days = diff / (24  60  60 * 1000)
-            val day = TimeUnit.SECONDS.toDays(diff).toInt()
-            val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
-            return hour
-        }*/
+
     }
-    /*fun convertTime(time:String ): Long {
-        val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        var date: Date? = null
-        date = inputFormat.parse(time)
-        val thatDay = Calendar.getInstance()
-        thatDay.setTime(date);
-        val today = Calendar.getInstance()
-        val diff =  thatDay.timeInMillis -today.timeInMillis
-        val days = diff / (24 * 60 * 60 * 1000)
-        val day = TimeUnit.SECONDS.toDays(diff).toInt()
-        val hour = TimeUnit.SECONDS.toHours(diff) - (day * 24)
-        return hour
-    }*/
 
 
     fun showViewContestDialogue() {

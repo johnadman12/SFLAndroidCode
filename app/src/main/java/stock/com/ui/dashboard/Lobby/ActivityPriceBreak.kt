@@ -1,7 +1,12 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_price_break.*
 import kotlinx.android.synthetic.main.include_back.*
@@ -14,6 +19,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.WinningList
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
@@ -60,8 +66,36 @@ class ActivityPriceBreak : BaseActivity() {
             ContestName = intent.getStringExtra("contestName")
             joinmultiple = intent.getStringExtra("joinMultiple")
         }
+
+       /* localToUTC(startDate + " " + startTime)
+        localToUTC(endDate + " " + endTime)*/
         if (contestName != null)
             contestName.setText(ContestName)
+
+        val stime = startDate +" "+ startTime
+        val etime = endDate+ " "+endTime
+
+        val startTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(stime)
+        val endTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(etime)
+        val diff = endTime.getTime() - startTime.getTime()
+        Log.d("show","onCreate1"+diff)
+
+        val timer = object: CountDownTimer(diff, 1000) {
+            override fun onTick(millisUntilFinished:Long) {
+                val diffSec = millisUntilFinished / 1000
+                val seconds = diffSec % 60
+                Log.d("show","onCreate"+seconds)
+                val minutes = diffSec / 60 % 60
+                Log.d("show","onCreate11"+minutes)
+                val hours = diffSec / 3600
+                Log.d("show","onCreate12"+hours)
+                timer1.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+            }
+            override fun onFinish() {
+                timer1.setText("Time Up")
+            }
+        }
+        timer.start()
 //        var list = ArrayList<String>();
 
         /*   if (sport!!.toInt() >= 2 && sport!!.toInt() < 7) {
@@ -99,7 +133,7 @@ class ActivityPriceBreak : BaseActivity() {
         }
 
         ll_winners.setOnClickListener {
-            val bottomSheetFragment = BottonSheetPriceBreakup(count, list!!, this)
+            val bottomSheetFragment = BottonSheetPriceBreakup(count, list!!, this, contestSizeWinner)
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.getTag())
         }
         tv_entryfee.setText(EntryFee)
@@ -130,10 +164,10 @@ class ActivityPriceBreak : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         list = response.body()!!.pricebreaklist
-                        tv_winner.setText(list!!.get(0).winner)
-                        setAdapter(list!!.get(0).winners)
                         contestSizeId = list!!.get(0).usercontestSizeId
                         contestSizeWinner = list!!.get(0).winner
+                        setAdapter(list!!.get(0).winners)
+
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()
@@ -152,6 +186,7 @@ class ActivityPriceBreak : BaseActivity() {
 
     @SuppressLint("WrongConstant")
     fun setAdapter(item: ArrayList<WinningList.Winner>) {
+        tv_winner.setText(contestSizeWinner)
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_listWinner!!.layoutManager = llm
@@ -168,8 +203,16 @@ class ActivityPriceBreak : BaseActivity() {
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 winningAmount,
                 getFromPrefsString(StockConstant.USERID).toString(),
-                exchangeId, marketId, contestSizeId, sport,
-                contestSizeWinner, joinmultiple, ContestName, "Paid", startDate + startTime, endDate + endTime
+                exchangeId,
+                marketId,
+                contestSizeId,
+                sport,
+                contestSizeWinner,
+                joinmultiple,
+                ContestName,
+                "Paid",/*"",""*/
+                localToUTC(startDate + " " + startTime),
+                localToUTC(endDate + " " + endTime)
                 ,
                 EntryFee
             )
@@ -179,8 +222,11 @@ class ActivityPriceBreak : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-
-
+                        AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
+                        var intent = Intent();
+                        intent.putExtra("flag", "1")
+                        setResult(Activity.RESULT_OK, intent);
+                        finish();
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()
@@ -197,11 +243,17 @@ class ActivityPriceBreak : BaseActivity() {
     }
 
 
-    fun localToGMT(): Date {
-        val date = Date()
-        val sdf = SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"))
-        return Date(sdf.format(date))
+    @Suppress("DEPRECATION")
+    fun localToUTC(inputdate: String): String {
+        val inputPattern = "dd-MM-yyyy hh:mm a"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        var date: Date? = null
+        date = inputFormat.parse(inputdate)
+        val formatterUTC = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+        formatterUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        val dateStr:Date= Date(formatterUTC.format(date))
+        val strDate: String = formatterUTC.format(date)
+        return strDate
     }
 
 }
