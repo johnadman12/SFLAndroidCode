@@ -15,6 +15,7 @@ import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
@@ -632,5 +633,16 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
             changetTextViewBackground(tv_home, R.color.textColorLightBlack);
         }
+    }
+
+    public fun test(){
+        //displayToast("dsada","error")
+        var b = Bundle();
+        b.putString("flag", "")
+        setFragment(MyContestFragment(), b);
+        changetTextViewBackground(tv_contest, R.color.colorPrimary);
+        changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+        changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+        changetTextViewBackground(tv_home, R.color.textColorLightBlack);
     }
 }

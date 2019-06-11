@@ -1,6 +1,5 @@
 package stock.com.ui.dashboard.Market
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -22,9 +21,8 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.Team.ActivitySortTeam
+import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.pojo.ExchangeList
-import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.StockConstant
@@ -35,6 +33,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     private var cryptoAdapter: CurrencyAdapter? = null;
     private var list: List<StockTeamPojo.Stock>? = null
+    var isMarket: Int = 0
 
 
     private var fragment: Fragment? = null;
@@ -107,6 +106,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 position = 3
             }
             R.id.tv_stocks -> {
+                isMarket = 1
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -125,7 +125,8 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
 
             R.id.ll_filter -> {
-                val intent = Intent(context, ActivityMarketFilter::class.java)
+                val intent = Intent(context, ActivityMarketTypeFilter::class.java)
+                    .putExtra("isMarket", isMarket)
                 startActivityForResult(intent, StockConstant.RESULT_CODE_MARKET_FILTER)
             }
         }
@@ -158,7 +159,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.colorbutton));
         changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
-
+        isMarket = 0
         setFragment(CryptoCurrencyFragment(), Bundle());
 
         ll_watchlist.setOnClickListener {

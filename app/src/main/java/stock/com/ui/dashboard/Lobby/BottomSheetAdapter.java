@@ -47,15 +47,13 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final FeatureListHolder holder, final int position) {
-        for (int i = 0; i < list.size(); i++) {
+       /* for (int i = 0; i < list.size(); i++) {
             if (contestSizeWinner.equalsIgnoreCase(list.get(i).winner)) {
-//                holder.txt_Winners.setText(Html.fromHtml(list.get(i).winner + text));
                 holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
             } else {
-//                holder.txt_Winners.setText(list.get(i).winner);
                 holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
             }
-        }
+        }*/
 
         String text = "<font color=#52DF45>(Recommended)</font>";
         if (position == 0) {
@@ -72,7 +70,16 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.recylerView.setLayoutManager(mLayoutManager);
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
         holder.recylerView.setAdapter(mAdapter);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+       /* holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.radioBtn.setChecked(true);
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+                breakup.callAdapter(list.get(position).winners, list.get(position).winner, list.get(position).usercontestSizeId);
+            }
+        });*/
+
+        holder.rel_lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 holder.radioBtn.setChecked(true);
@@ -80,6 +87,9 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
                 breakup.callAdapter(list.get(position).winners, list.get(position).winner, list.get(position).usercontestSizeId);
             }
         });
+
+
+
 
     }
 

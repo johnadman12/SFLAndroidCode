@@ -53,15 +53,15 @@ class AssetAdapter(
             if (currentItem.name.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.name);
+                onItemCheckListener.onItemCheck(currentItem.id);
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.name);
+                onItemCheckListener.onItemCheck(currentItem.id);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.name);
+                onItemCheckListener.onItemUncheck(currentItem.id);
                 checkedHolder!![position] = false;
             }
         }

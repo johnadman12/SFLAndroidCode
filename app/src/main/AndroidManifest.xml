@@ -383,7 +383,13 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
-                android:name=".ui.dashboard.Market.ActivityMarketFilter"
+                android:name=".ui.dashboard.home.ActivityMarketFilter"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
+                android:name=".ui.dashboard.Market.ActivityMarketTypeFilter"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>

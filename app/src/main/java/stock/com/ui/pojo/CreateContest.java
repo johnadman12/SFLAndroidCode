@@ -12,46 +12,60 @@ public class CreateContest extends BasePojo {
     public List<Usercontest> usercontest = null;
 
     public class Usercontest {
-
-        @SerializedName("userContestId")
+        @SerializedName("entry_fees")
         @Expose
-        public String userContestId;
-        @SerializedName("market_id")
-        @Expose
-        public String marketId;
+        public String entryFees;
         @SerializedName("exchange_id")
         @Expose
         public String exchangeId;
+        @SerializedName("userContestId")
+        @Expose
+        public String userContestId;
+        @SerializedName("slug")
+        @Expose
+        public String slug;
+        @SerializedName("total_winning")
+        @Expose
+        public String totalWinning;
+        @SerializedName("market_id")
+        @Expose
+        public String marketId;
+        @SerializedName("exchangename")
+        @Expose
+        public String exchangename;
+        @SerializedName("contest_size")
+        @Expose
+        public int contestSize;
+        @SerializedName("join_multiple")
+        @Expose
+        public String joinMultiple;
+        @SerializedName("name")
+        @Expose
+        public String name;
+        @SerializedName("exchangeimage")
+        @Expose
+        public String exchangeimage;
+        @SerializedName("contest_type")
+        @Expose
+        public String contestType;
+        @SerializedName("contests_winner")
+        @Expose
+        public String contestsWinner;
+        @SerializedName("schedule_end")
+        @Expose
+        public String scheduleEnd;
         @SerializedName("contest_size_id")
         @Expose
         public String contestSizeId;
         @SerializedName("ucontest_name")
         @Expose
         public String ucontestName;
-        @SerializedName("contests_winner")
-        @Expose
-        public String contestsWinner;
-        @SerializedName("contest_type")
-        @Expose
-        public String contestType;
-        @SerializedName("total_winning")
-        @Expose
-        public String totalWinning;
-        @SerializedName("contest_size")
-        @Expose
-        public String contestSize;
-        @SerializedName("entry_fees")
-        @Expose
-        public String entryFees;
-        @SerializedName("join_multiple")
-        @Expose
-        public String joinMultiple;
         @SerializedName("schedule_start")
         @Expose
         public String scheduleStart;
-        @SerializedName("schedule_end")
+        @SerializedName("team_joined")
         @Expose
-        public String scheduleEnd;
+        public int teamJoined;
 
     }
 }

@@ -3,6 +3,8 @@ package stock.com.ui.dashboard.Market
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +27,7 @@ import stock.com.utils.StockDialog
 class CryptoCurrencyFragment : BaseFragment() {
     private var cryptoAdapter: CurrencyAdapter? = null;
     private var cryptoList: ArrayList<MarketList.Crypto>? = null
+    private var cryptoListFiltered: ArrayList<MarketList.Crypto>? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,6 +37,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cryptoList = ArrayList()
+        cryptoListFiltered = ArrayList()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
@@ -70,16 +74,25 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+
                         if (flag.equals("1")) {
                             cryptoList = response.body()!!.crypto
                             setCryptoCurrencyAdapter(response.body()!!.crypto)
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
                         } else {
                             cryptoList = response.body()!!.crypto
                             for (i in 0 until cryptoList!!.size) {
-                                if (cryptoList!!.get(i).changeper.equals("0")) {
-                                    cryptoList!!.removeAt(i)
-                                }
+                                if (cryptoList!!.get(i).changeper != null)
+                                    if (!cryptoList!!.get(i).changeper.equals("0")) {
+                                        cryptoListFiltered!!.add(cryptoList!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", cryptoListFiltered!!.size.toString())
+                                    }
                             }
+                            cryptoList!!.clear()
+                            cryptoList = cryptoListFiltered
                             setCryptoCurrencyAdapter(cryptoList!!)
                         }
 

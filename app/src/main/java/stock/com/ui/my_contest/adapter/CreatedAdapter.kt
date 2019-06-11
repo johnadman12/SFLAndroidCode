@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 import stock.com.R
 import stock.com.ui.pojo.CreateContest
 import stock.com.utils.AppDelegate
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CreatedAdapter(
@@ -32,16 +35,23 @@ class CreatedAdapter(
         holder.itemView.tvContestType.setText(usercontest.get(position).ucontestName);
         holder.itemView.entry_fee.setText(usercontest.get(position).entryFees);
         holder.itemView.tvWinnersTotal.setText(usercontest.get(position).contestsWinner);
-        /* if (usercontest.get(position).marketname.equals("Equity")) {
-             Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + usercontest.get(position).exchangeimage.trim())
-                 .into(holder.itemView.ivStock)
-             holder.itemView.tvStockName.setText(usercontest.get(position).exchangename)
+        holder.itemView.tvTotalWinnings.setText("$ " + usercontest.get(position).totalWinning);
+        holder.itemView.tvTime.setText(parseDateToddMMyyyy(usercontest.get(position).scheduleEnd));
 
-         } else {
-             holder.itemView.tvStockName.setText(usercontest.get(position).marketname)
-             Glide.with(mContext).load(R.drawable.ic_business)
-                 .into(holder.itemView.ivStock)
-         }*/
+        var sports: Int =
+            usercontest.get(position).contestSize - usercontest.get(position).teamJoined
+        holder.itemView.tvSprortsLeft.setText(sports.toString() + " /" + usercontest.get(position).contestSize)
+
+
+        if (usercontest.get(position).name.equals("Equity")) {
+            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + usercontest.get(position).exchangeimage.trim())
+                .into(holder.itemView.ivStock)
+            holder.itemView.tvStockName.setText(usercontest.get(position).exchangename)
+        } else {
+            holder.itemView.tvStockName.setText(usercontest.get(position).name)
+            Glide.with(mContext).load(R.drawable.ic_business)
+                .into(holder.itemView.ivStock)
+        }
 
 
     }
@@ -49,7 +59,6 @@ class CreatedAdapter(
 
     override fun getItemCount(): Int {
         return usercontest.size;
-//        return 10;
     }
 
 
@@ -57,6 +66,22 @@ class CreatedAdapter(
 
     }
 
+    fun parseDateToddMMyyyy(time: String): String? {
+        val inputPattern = "yyyy-MM-dd HH:mm:ss"
+        val outputPattern = "dd MMM h:mm a"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+        var date: Date? = null
+        var str: String? = null
 
+        try {
+            date = inputFormat.parse(time)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return str
+    }
 }
 

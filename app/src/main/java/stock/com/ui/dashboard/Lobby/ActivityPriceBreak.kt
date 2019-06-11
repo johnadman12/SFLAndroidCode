@@ -167,7 +167,6 @@ class ActivityPriceBreak : BaseActivity() {
                         contestSizeId = list!!.get(0).usercontestSizeId
                         contestSizeWinner = list!!.get(0).winner
                         setAdapter(list!!.get(0).winners)
-
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()

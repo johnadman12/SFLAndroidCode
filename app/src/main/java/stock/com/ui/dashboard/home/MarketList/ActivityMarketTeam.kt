@@ -7,10 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.Html
-import android.text.SpannableStringBuilder
-import android.text.TextWatcher
+import android.text.*
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -28,6 +25,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
+import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.watch_list.WatchListActivity
@@ -42,11 +40,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     private var marketRemovedItems: ArrayList<MarketList.Crypto>? = null
     //    private var marketWizardSelectedItems: ArrayList<MarketList.Crypto>? = null
     private var list: ArrayList<MarketList.Crypto>? = null;
+    private var listFiltered: ArrayList<MarketList.Crypto>? = null;
     var flag: Boolean = false
     var flagCloning: Int = 0
     var teamId: Int = 0
     var contestFee: String = ""
     var contestId: Int = 0
+    var flagFilter: Boolean = false
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -70,6 +70,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             R.id.ll_watchlist -> {
                 startActivity(
                     Intent(this@ActivityMarketTeam, WatchListActivity::class.java)
+                )
+            }
+            R.id.ll_filter -> {
+                startActivityForResult(
+                    Intent(this@ActivityMarketTeam, ActivityMarketFilter::class.java), 10
                 )
             }
             R.id.ll_sort -> {
@@ -131,6 +136,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_create_team)
         StockConstant.ACTIVITIES.add(this)
         list = ArrayList();
+        listFiltered = ArrayList();
         marketRemovedItems = ArrayList();
         initView()
     }
@@ -257,10 +263,26 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
+                        if (flagFilter) {
+                            for (i in 0 until list!!.size) {
+                                if (list!!.get(i).changeper != null)
+                                    if (!list!!.get(i).changeper.equals("0")) {
+                                        listFiltered!!.add(list!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", listFiltered!!.size.toString())
+                                    }
+                            }
+                        } else
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
+
                         rv_Players!!.adapter = marketlistAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         setTeamText(marketSelectedItems!!.size.toString())
                         d.dismiss()
+
+
                     } else if (response.body()!!.status == "2") {
                         d.dismiss()
                         appLogout()
@@ -512,6 +534,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 }
 
             }
+        } else if (requestCode == 10) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("resetfiltermarket").equals("0")) {
+                    flagFilter = true
+                    getMarketTeamlist()
+                }
+
+            }
+
         }
     }
 }

@@ -163,10 +163,10 @@ class LobbyContestAdapter(
             mContext.startActivity(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(
                     StockConstant.CONTESTID,
-                    mContest.get(position).contestid
+                    mContest.get(position).contestid.toInt()
                 ).putExtra(
                     StockConstant.EXCHANGEID,
-                    mContest.get(position).exchangeid
+                    mContest.get(position).exchangeid.toInt()
                 )
             )
         }

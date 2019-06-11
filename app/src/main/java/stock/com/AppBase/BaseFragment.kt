@@ -161,6 +161,13 @@ open class BaseFragment : Fragment() {
         edit.apply()
     }
 
+    fun setActiveCurrencyType(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.ACTIVE_CURRENCY_TYPE, s)
+        edit.apply()
+    }
+
     fun setMarketContest(s: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()

@@ -25,6 +25,7 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockConstant.RESULT_CODE_FILTER
@@ -39,6 +40,8 @@ class LobbyFragment : BaseFragment() {
 
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
+    private var dashBoardActivity:DashBoardActivity?=null;
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews();
@@ -46,6 +49,7 @@ class LobbyFragment : BaseFragment() {
 
     private fun initViews() {
         contest = ArrayList();
+        dashBoardActivity= activity as DashBoardActivity?
         getContestlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
@@ -194,10 +198,13 @@ class LobbyFragment : BaseFragment() {
             }
         }else  if (requestCode == StockConstant.REDIRECT_CREATED) {
             if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                var intent = Intent();
-                activity!!.startActivityForResult(intent,111);
-                /*activity!!.setResult(Activity.RESULT_OK, intent);
+                /*var intent = Intent();
+                //activity!!.startActivityForResult(intent,111);
+
+                activity!!.setResult(Activity.RESULT_OK, intent);
                 activity!!.finish();*/
+                dashBoardActivity!!.test()
+
             }
         }
 

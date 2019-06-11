@@ -1,4 +1,4 @@
-package stock.com.ui.dashboard.Market
+package stock.com.ui.dashboard.home
 
 import android.app.Activity
 import android.content.Intent

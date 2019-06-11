@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Market
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class StocksFragment : BaseFragment() {
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
+    private var stockListFilter: ArrayList<StockTeamPojo.Stock>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stocks, container, false)
     }
@@ -35,6 +37,7 @@ class StocksFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stockList = ArrayList()
+        stockListFilter = ArrayList()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
@@ -71,14 +74,22 @@ class StocksFragment : BaseFragment() {
                         if (flag.equals("1")) {
                             stockList = response.body()!!.stock
                             setStockAdapter(stockList!!)
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
                         } else {
                             stockList = response.body()!!.stock
                             for (i in 0 until stockList!!.size) {
-                                if (stockList!!.get(i).changePercent.equals("0")) {
-                                    stockList!!.removeAt(i)
-                                }
+                                if (stockList!!.get(i).changePercent != null)
+                                    if (!stockList!!.get(i).changePercent.equals("0")) {
+                                        stockListFilter!!.add(stockList!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", stockListFilter!!.size.toString())
+                                    }
                             }
-                            setStockAdapter(stockList!!)
+                            stockList!!.clear()
+                            stockList = stockListFilter
+                            setStockAdapter(stockListFilter!!)
                         }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
