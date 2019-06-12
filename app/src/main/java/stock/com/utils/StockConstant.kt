@@ -54,6 +54,7 @@ object StockConstant {
    public final val FLAG = ""
     val USERNAME = "username"
     val USERPHONE = "userphone"
+    val USERCOUNTRYCODE = "usercountry"
     val USEREMAIL = "useremail"
     val USERIMG = "userimg"
     val USERLEVEL = "userlevel"
@@ -62,6 +63,7 @@ object StockConstant {
     val USERFIRSTTIME = "user_first_time"
     val ACCESSTOKEN = "x_access_token"
     val PASSWORD = "password"
+    val CONTESTCODE = "contestcode"
 
     val DEFAULT_VALUE_STRING = ""
 

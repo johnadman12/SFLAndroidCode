@@ -28,6 +28,7 @@ import stock.com.ui.dashboard.DashBoardActivity
 class OTPActivity : BaseActivity(), View.OnClickListener {
 
     var phoneNumber: String = ""
+    var countryCode: String = ""
     var username: String = ""
     var email: String = ""
     var userId: String = ""
@@ -46,9 +47,9 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     if (NetworkUtils.isConnected()) {
                         if (flag)
                             forgotVerifyOtp()
-                        else if(comingFromActivity.equals("profile")){
+                        else if (comingFromActivity.equals("profile")) {
                             verifyOTPApiContact()
-                        }else
+                        } else
                             verifyOTPApi()
 
                     } else {
@@ -73,7 +74,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     else
                         resendOTP()
                 } else {
-                    displayToast(getString(R.string.error_network_connection), "error")  }
+                    displayToast(getString(R.string.error_network_connection), "error")
+                }
 
             }
         }
@@ -88,20 +90,22 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             if (comingFromActivity.equals("reset")) {
                 flag = true
                 phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
+                countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
                 username = intent.getStringExtra(StockConstant.USERNAME);
                 email = intent.getStringExtra(StockConstant.USEREMAIL);
                 userId = intent.getStringExtra(StockConstant.USERID);
-            }else if(comingFromActivity.equals("profile")){
+            } else if (comingFromActivity.equals("profile")) {
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
+                countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
                 //displayToast(phoneNumber)
-            }
-            else {
+            } else {
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
+                countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
             }
         }
-       // println("Phone number is   " + phoneNumber)
+        // println("Phone number is   " + phoneNumber)
         initViews()
     }
 
@@ -129,7 +133,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<SignupPojo> = apiService.resendOtp(phoneNumber)
+        val call: Call<SignupPojo> = apiService.resendOtp(phoneNumber, countryCode)
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
@@ -139,31 +143,41 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
                                 resendOTPTv.isEnabled = false
-                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
-                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.red_fill_button))
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                                resendOTPTv.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        this@OTPActivity,
+                                        R.drawable.red_fill_button
+                                    )
+                                )
                                 //here you can have your logic to set text to edittext
                             }
 
                             override fun onFinish() {
                                 resendOTPTv.setText("RESEND")
-                                resendOTPTv.isEnabled=true
-                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18f)
-                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.blue_fill_button))
+                                resendOTPTv.isEnabled = true
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+                                resendOTPTv.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        this@OTPActivity,
+                                        R.drawable.blue_fill_button
+                                    )
+                                )
 
                             }
 
                         }.start()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -174,7 +188,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.resendRequestOtp(
-            phoneNumber,
+            phoneNumber, countryCode,
             username, email,
             userId
         )
@@ -187,31 +201,41 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
                                 resendOTPTv.isEnabled = false
-                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,12f)
-                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.red_fill_button))
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                                resendOTPTv.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        this@OTPActivity,
+                                        R.drawable.red_fill_button
+                                    )
+                                )
 
                                 //here you can have your logic to set text to edittext
                             }
 
                             override fun onFinish() {
                                 resendOTPTv.setText("RESEND")
-                                resendOTPTv.isEnabled=true
-                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP,18f)
-                                resendOTPTv.setBackgroundDrawable(ContextCompat.getDrawable(this@OTPActivity, R.drawable.blue_fill_button))
+                                resendOTPTv.isEnabled = true
+                                resendOTPTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+                                resendOTPTv.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        this@OTPActivity,
+                                        R.drawable.blue_fill_button
+                                    )
+                                )
                             }
 
                         }.start()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -234,28 +258,36 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java)
-                            )
+                        startActivity(
+                            Intent(this@OTPActivity, DashBoardActivity::class.java)
+                        )
                         finish()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
     }
+
     fun verifyOTPApiContact() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<SignupPojo> = apiService.verify_otp_new(getFromPrefsString(StockConstant.USERID).toString(),otp_view.text.toString(),phoneNumber)
+        val call: Call<SignupPojo> = apiService.verify_otp_new(
+            getFromPrefsString(StockConstant.USERID).toString(),
+            otp_view.text.toString(),
+            countryCode,
+            phoneNumber
+        )
         call.enqueue(object : Callback<SignupPojo> {
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>?) {
                 d.dismiss()
@@ -264,19 +296,21 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java)
+                        startActivity(
+                            Intent(this@OTPActivity, DashBoardActivity::class.java)
                         )
                         finish()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -300,16 +334,16 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                         startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
                         finish()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
 

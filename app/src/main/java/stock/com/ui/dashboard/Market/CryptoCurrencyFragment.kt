@@ -62,7 +62,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "crypto"
+                "crypto", "", "", "", ""
             )
         call.enqueue(object : Callback<MarketData> {
 

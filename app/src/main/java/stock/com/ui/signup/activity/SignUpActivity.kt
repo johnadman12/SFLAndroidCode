@@ -238,8 +238,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             et_Email.text.toString().trim(),
             et_Password.text.toString(),
             et_EnviteCode.text.toString().trim(),
-            countryCodeHolder.selectedCountryCode +
-                    et_Mobile.text.toString().trim(),
+            et_Mobile.text.toString().trim(),
+            countryCodeHolder.selectedCountryNameCode,
             et_dob.text.toString(),
             et_UserName.text.toString().trim(),
             et_UserNamefirst.text.toString(),
@@ -260,6 +260,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                                .putExtra(StockConstant.USERCOUNTRYCODE,  countryCodeHolder.selectedCountryNameCode)
                                 .putExtra("isReset", "signup")
                         )
                         finish()
@@ -287,8 +288,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             et_Email.text.toString().trim(),
             et_Password.text.toString(),
             et_EnviteCode.text.toString().trim(),
-            countryCodeHolder.selectedCountryCode +
                     et_Mobile.text.toString().trim(),
+            countryCodeHolder.selectedCountryNameCode,
             et_dob.text.toString(),
             et_UserName.text.toString().trim(),
             et_UserNamefirst.text.toString(),
@@ -311,6 +312,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                                .putExtra(StockConstant.USERCOUNTRYCODE,  countryCodeHolder.selectedCountryNameCode)
                                 .putExtra("isReset", "signup")
                         )
                         finish()

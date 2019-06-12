@@ -67,6 +67,7 @@
                     android:layout_gravity="center"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:id="@+id/ll_tap"
                     android:paddingLeft="@dimen/_15sdp"
                     android:paddingRight="@dimen/_15sdp"
                     android:background="@drawable/dashed_border"
@@ -87,6 +88,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_14ssp"
                         android:text="RETHBD345"
+                        android:id="@+id/textToCopy"
                         android:textColor="@color/white"
                         android:layout_marginTop="@dimen/_5sdp"/>
             </LinearLayout>

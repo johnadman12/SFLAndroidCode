@@ -18,6 +18,7 @@ interface ApiInterface {
         @Field("password") password: String,
         @Field("invite_code") invite_code: String,
         @Field("phone_number") phone_number: String,
+        @Field("country_id") country_id: String,
         @Field("dob") dob: String,
         @Field("username") name: String,
         @Field("first_name") first_name: String,
@@ -37,6 +38,7 @@ interface ApiInterface {
         @Field("password") password: String,
         @Field("invite_code") invite_code: String,
         @Field("phone_number") phone_number: String,
+        @Field("country_id") country_id: String,
         @Field("dob") dob: String,
         @Field("username") name: String,
         @Field("first_name") first_name: String,
@@ -62,13 +64,15 @@ interface ApiInterface {
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/resend_otp")
-    fun resendOtp(@Field("phone_number") phone_number: String): Call<SignupPojo>
+    fun resendOtp(@Field("phone_number") phone_number: String, @Field("country_id") country_id: String):
+            Call<SignupPojo>
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/resend_request_otp")
     fun resendRequestOtp(
         @Field("phone_number") phone_number: String,
+        @Field("country_id") country_id: String,
         @Field("username") username: String,
         @Field("email") email: String,
         @Field("user_id") userid: String
@@ -80,6 +84,7 @@ interface ApiInterface {
     fun forgot_pass(
         @Field("email") email: String
         , @Field("username") username: String,
+        @Field("country_id") country_id: String,
         @Field("phone_number") phonenumber: String
     ): Call<BasePojo>
 
@@ -102,7 +107,11 @@ interface ApiInterface {
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/new_verify_phone_otp")
-    fun verify_otp_new(@Field("user_id") userid: String, @Field("otp") otp: String, @Field("phone_number") phone_number: String): Call<SignupPojo>
+    fun verify_otp_new(
+        @Field("user_id") userid: String, @Field("otp") otp: String,
+        @Field("country_id") country_id: String,
+        @Field("phone_number") phone_number: String
+    ): Call<SignupPojo>
 
 
     @FormUrlEncoded
@@ -112,6 +121,7 @@ interface ApiInterface {
         @Field("user_id") userid: String,
         @Field("username") username: String,
         @Field("email") email: String,
+        @Field("country_id") country_id: String,
         @Field("phone_number") phone_number: String
     ): Call<SignupPojo>
 
@@ -148,6 +158,7 @@ interface ApiInterface {
     @POST("users/phone_login")
     fun phoneLogin(
         @Field("phone_number") email: String,
+        @Field("country_id") country_id: String,
         @Field("password") password: String,
         @Field("device_type") device_type: String,
         @Field("device_token") device_token: String
@@ -278,6 +289,13 @@ interface ApiInterface {
         @Field("user_id") user_id: String
     ): Call<WatchListFilterPojo>;
 
+    @FormUrlEncoded
+    @POST("stock/get_market_filter")
+    fun getMarketTypeFilter(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<MarketTypeFilters>;
+
 
     @FormUrlEncoded
     @POST("users/logout")
@@ -294,7 +312,8 @@ interface ApiInterface {
     fun updateProfileDetails(
         @Header("x-access-token") token: String, @Field("user_id") user_id: String, @Field("address") address: String, @Field(
             "zipcode"
-        ) zipcode: String, @Field("phone_number") phone_number: String, @Field("country_id") country_id: String?
+        ) zipcode: String,
+        @Field("phone_number") phone_number: String, @Field("country_id") country_id: String
     ): Call<BasePojo>
 
 
@@ -317,7 +336,10 @@ interface ApiInterface {
 
     @Multipart
     @POST("users/update_profile")
-    fun updateProfile(@Header("x-access-token") token: String, @Part("user_id") user_id: RequestBody, @Part("biography") biography: RequestBody, @Part file: MultipartBody.Part?): Call<BasePojo>
+    fun updateProfile(
+        @Header("x-access-token") token: String, @Part("user_id")
+        user_id: RequestBody, @Part("biography") biography: RequestBody, @Part file: MultipartBody.Part?
+    ): Call<BasePojo>
 
     @FormUrlEncoded
     @POST("stock/stock_list")
@@ -401,7 +423,11 @@ interface ApiInterface {
     fun getMarketData(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
-        @Field("market_status") marketStatus: String
+        @Field("market_status") marketStatus: String,
+        @Field("sector") sector: String,
+        @Field("exchanges") exchanges: String,
+        @Field("country_id") country_id: String,
+        @Field("name") name: String
     ): Call<MarketData>
 
 
@@ -467,6 +493,13 @@ interface ApiInterface {
         @Field("user_id") user_id: String,
         @Field("comments") comments: String
     ): Call<Comments>
+
+    @FormUrlEncoded
+    @POST("users/statistics_profile")
+    fun getStatistics(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<StatisticsPojo>
 
 
     @FormUrlEncoded

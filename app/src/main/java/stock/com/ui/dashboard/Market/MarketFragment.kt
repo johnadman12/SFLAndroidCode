@@ -21,7 +21,6 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.ui.watch_list.WatchListActivity
@@ -40,6 +39,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.tv_crypto -> {
+                isMarket = 0
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -57,6 +57,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
 
             R.id.tv_currency -> {
+                isMarket = 0
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -73,7 +74,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 position = 1
             }
             R.id.tv_commodity -> {
-
+                isMarket = 0
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -90,6 +91,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 position = 2
             }
             R.id.tv_indices -> {
+                isMarket = 0
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
@@ -278,17 +280,27 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 if (data.getStringExtra("resetfiltermarket").equals("0")) {
                     //remove inactive like change percent is 0.00
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
-                    else if (fragment is CryptoCurrencyFragment)
+                    if (fragment is CryptoCurrencyFragment)
                         (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
                 } else if (data.getStringExtra("resetfiltermarket").equals("1")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
-                    else if (fragment is CryptoCurrencyFragment)
+                    if (fragment is CryptoCurrencyFragment)
                         (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
+
+                } else if (data.getStringExtra("resetfiltermarket").equals("3")) {
+                    var sector: String = data.getStringExtra("sectorlist")
+                    var exchange: String = data.getStringExtra("exchangelist")
+                    var country: String = data.getStringExtra("countrylist")
+
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).applyFilter(sector, exchange, country)
+
+                } else if (data.getStringExtra("resetfiltermarket").equals("2")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).changePercentFilter("1")
+
                 }
             }
+
         }
     }
 }

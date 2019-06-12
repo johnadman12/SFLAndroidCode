@@ -47,7 +47,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
     private var dialog: Dialog? = null;
 
-    private var countryId: String? = ""
+    private var countryId: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_contact_info, container, false)

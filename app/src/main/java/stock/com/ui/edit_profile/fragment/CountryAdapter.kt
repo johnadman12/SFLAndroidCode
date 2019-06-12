@@ -29,6 +29,7 @@ class CountryAdapter(val mContext: Context, val mContest: ArrayList<Country.Coun
         holder.itemView.tvFlagName.setText(currentItem.name)
         Glide.with(mContext).load(currentItem.flagUrl6464).into(holder.itemView.ivFlag)
 
+        holder.itemView.tvFlagName.visibility=View.VISIBLE;
         holder.itemView.checkCountry.visibility=View.GONE;
 
         holder.itemView.llCheck.setOnClickListener {
@@ -41,8 +42,6 @@ class CountryAdapter(val mContext: Context, val mContest: ArrayList<Country.Coun
 
 
         }
-
-       // Log.d("AdapterCountry","*----"+currentItem.name);
 
 
     }

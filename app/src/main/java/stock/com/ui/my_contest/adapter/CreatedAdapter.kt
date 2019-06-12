@@ -2,6 +2,7 @@ package stock.com.ui.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 
 import stock.com.R
+import stock.com.ui.contest_invitation.ContestInvitationActivity
 import stock.com.ui.pojo.CreateContest
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +54,13 @@ class CreatedAdapter(
             holder.itemView.tvStockName.setText(usercontest.get(position).name)
             Glide.with(mContext).load(R.drawable.ic_business)
                 .into(holder.itemView.ivStock)
+        }
+
+        holder.itemView.tvInvite.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ContestInvitationActivity::class.java)
+                    .putExtra(StockConstant.CONTESTCODE, "")
+            )
         }
 
 

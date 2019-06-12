@@ -182,7 +182,26 @@ open class BaseFragment : Fragment() {
         edit.apply()
     }
 
+    fun setSectorWatchlistFilter(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.SECTOR_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
 
+    fun setMarketWatchlistFilter(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.MARKET_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
+
+    fun setCountryWatchlistFilter(s: String) {
+        val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString(StockConstant.COUNTRY_WATCHLIST_TYPE, s)
+        edit.apply()
+    }
     fun setSectorFilter(s: String, key: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()

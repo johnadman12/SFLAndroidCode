@@ -105,7 +105,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.phoneLogin(
-            countryCodelogin.selectedCountryCode + et_email.text.toString().trim(),
+            et_email.text.toString().trim(),
+            countryCodelogin.selectedCountryNameCode,
             et_pass.text.toString().trim(),
             "0",
             SessionManager.getInstance(this@LoginActivity).token
@@ -124,20 +125,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
                         else
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
-                        startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java)
-                           )
+                        startActivity(
+                            Intent(this@LoginActivity, DashBoardActivity::class.java)
+                        )
                         finish()
                     }
 //                    displayToast(response.body()!!.message)
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -174,16 +176,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         finish()
                     }*/
                     else
-                        displayToast(response.body()!!.message,"warning")
+                        displayToast(response.body()!!.message, "warning")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

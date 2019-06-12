@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg">
+
+    <include
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            layout="@layout/include_back"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextStyleSemiBold"
+            android:text="Code Join"
+            android:textSize="@dimen/_25ssp"
+            android:padding="@dimen/_10sdp"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1sp"
+          android:background="#3CA1D5"/>
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:gravity="center|left"
+                android:text="@string/enter_invite_code1"
+                style="@style/TextStyleLight"/>
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_code_join"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditTextStyle"
+                android:padding="@dimen/_10sdp"
+                android:hint="@string/enter_invite_code_here"
+                android:textColorHint="@color/colorTransparentBlack"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textSize="@dimen/_14ssp"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:capitalize="characters"
+                android:inputType="textCapCharacters"
+                android:background="@drawable/bg_white"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_Join"
+                style="@style/ButtonStylelogin"
+                android:text="Join"
+                android:background="@drawable/green_fill_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

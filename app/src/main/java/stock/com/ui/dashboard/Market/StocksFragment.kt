@@ -25,7 +25,9 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class StocksFragment : BaseFragment() {
-
+    var sector: String = ""
+    var exchange: String = ""
+    var country: String = ""
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
@@ -61,7 +63,8 @@ class StocksFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "Equity"
+                "Equity",
+                sector, exchange, country, ""
             )
         call.enqueue(object : Callback<MarketData> {
 
@@ -71,13 +74,13 @@ class StocksFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        if (flag.equals("1")) {
+//                        if (flag.equals("1")) {
                             stockList = response.body()!!.stock
                             setStockAdapter(stockList!!)
                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
                             }
-                        } else {
+                        /*else {
                             stockList = response.body()!!.stock
                             for (i in 0 until stockList!!.size) {
                                 if (stockList!!.get(i).changePercent != null)
@@ -86,11 +89,12 @@ class StocksFragment : BaseFragment() {
 //                                        stockList!!.remove(stockList!!.get(i))
                                         Log.d("stocklist", stockListFilter!!.size.toString())
                                     }
-                            }
+                            }*/
+
                             stockList!!.clear()
                             stockList = stockListFilter
                             setStockAdapter(stockListFilter!!)
-                        }
+//                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -200,8 +204,18 @@ class StocksFragment : BaseFragment() {
         if (type.equals("0")) {
             getStocks("0")
             rv_currencyList!!.adapter!!.notifyDataSetChanged()
+        }else{
+            getStocks(type)
+            rv_currencyList!!.adapter!!.notifyDataSetChanged()
         }
+    }
 
+    fun applyFilter(sector: String, exchange: String, country: String) {
+        this.sector = sector
+        this.exchange = exchange
+        this.country = country
+        getStocks("0")
+        rv_currencyList!!.adapter!!.notifyDataSetChanged()
     }
 
 }

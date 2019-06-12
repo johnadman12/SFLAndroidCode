@@ -27,10 +27,8 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.CountryListAdapter
 import stock.com.ui.watch_list.adapter.MarketAdapter
 import stock.com.ui.pojo.Country
-import stock.com.ui.pojo.WatchListFilterPojo
+import stock.com.ui.pojo.MarketTypeFilters
 import stock.com.ui.pojo.WatchlistPojo
-import stock.com.ui.watch_list.adapter.AssetAdapter
-import stock.com.ui.watch_list.adapter.SectorAdapter
 import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -39,21 +37,21 @@ import stock.com.utils.ViewAnimationUtils
 class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
     private var countrySelectedItems: ArrayList<String>? = null
     private var marketSelectedItems: ArrayList<String>? = null
-    private var assetsSelectedItems: ArrayList<String>? = null
     private var sectorSelectedItems: ArrayList<String>? = null
 
-    private var assetsTypeFilter: String? = "";
+    private var activeCurrencyFilter: String? = "";
     private var sectorTypeFilter: String? = "";
     private var marketTypeFilter: String? = "";
     private var countryTypeFilter: String? = "";
     var isMarket: Int = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_market_type_filter)
         reset.visibility = View.VISIBLE;
         countrySelectedItems = ArrayList()
         marketSelectedItems = ArrayList()
-        assetsSelectedItems = ArrayList()
         sectorSelectedItems = ArrayList()
         if (intent != null)
             isMarket = intent.getIntExtra("isMarket", 0);
@@ -63,7 +61,9 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
             ll_country_list.visibility = GONE
             ll_sector.visibility = GONE
             llMarket.visibility = GONE
-
+            activeCurrencyFilter = getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE);
+            if (activeCurrencyFilter!!.equals("0"))
+                checkBoxActive.isChecked = true
         } else {
             ll_active_currency.visibility = GONE
             ll_country_list.visibility = VISIBLE
@@ -90,10 +90,21 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         }
 
         reset.setOnClickListener {
-            val resultIntent = Intent()
-            resultIntent.putExtra("resetStockfilter", "1")
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+            if (isMarket == 0) {
+                setActiveCurrencyType("1")
+                val resultIntent = Intent()
+                resultIntent.putExtra("resetfiltermarket", "1")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            } else {
+                setSectorWatchlistFilter(" ")
+                setCountryWatchlistFilter(" ")
+                setMarketWatchlistFilter(" ")
+                val resultIntent = Intent()
+                resultIntent.putExtra("resetfiltermarket", "2")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
         }
         sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_WATCHLIST_TYPE);
         marketTypeFilter = getFromPrefsString(StockConstant.MARKET_WATCHLIST_TYPE);
@@ -102,7 +113,27 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         getFilterList();
 
         btn_apply.setOnClickListener {
-            setWatchlistFilters()
+            if (isMarket == 0) {
+                if (checkBoxActive.isChecked) {
+                    setActiveCurrencyType("0")
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("resetfiltermarket", "0")
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
+            } else {
+                val selectedSector: String = android.text.TextUtils.join(",", sectorSelectedItems)
+                val selectedExchange: String = android.text.TextUtils.join(",", marketSelectedItems)
+                val selectedCountry: String = android.text.TextUtils.join(",", countrySelectedItems)
+                Log.e("sectorlist", selectedSector)
+                var resultIntent = Intent()
+                resultIntent.putExtra("sectorlist", selectedSector)
+                resultIntent.putExtra("exchangelist", selectedExchange)
+                resultIntent.putExtra("countrylist", selectedCountry)
+                resultIntent.putExtra("resetfiltermarket", "3")
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
         }
     }
 
@@ -110,19 +141,19 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<WatchListFilterPojo> =
-            apiService.getWatchListFilter(
+        val call: Call<MarketTypeFilters> =
+            apiService.getMarketTypeFilter(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString()
             )
-        call.enqueue(object : Callback<WatchListFilterPojo> {
-            override fun onResponse(call: Call<WatchListFilterPojo>, response: Response<WatchListFilterPojo>) {
+        call.enqueue(object : Callback<MarketTypeFilters> {
+            override fun onResponse(call: Call<MarketTypeFilters>, response: Response<MarketTypeFilters>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         ll_main_filter.visibility = View.VISIBLE;
-                        setMarketAdapter(response.body()!!.marketList!!)
-                        setSectorAdapter(response.body()!!.sectorList!!)
+                        setMarketAdapter(response.body()!!.stocks.exchanges)
+                        setSectorAdapter(response.body()!!.stocks.sector)
                     } else if (response.body()!!.status == "2") {
                         appLogout();
                     }
@@ -132,7 +163,7 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                 }
             }
 
-            override fun onFailure(call: Call<WatchListFilterPojo>, t: Throwable) {
+            override fun onFailure(call: Call<MarketTypeFilters>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -141,12 +172,12 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setSectorAdapter(list: ArrayList<WatchListFilterPojo.sector>) {
+    private fun setSectorAdapter(list: MutableList<MarketTypeFilters.Sector>) {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_sector!!.layoutManager = llm
-        recycle_sector!!.adapter = SectorAdapter(applicationContext!!, list!!, sectorTypeFilter!!,
-            object : SectorAdapter.OnItemCheckListener {
+        recycle_sector!!.adapter = SectorMarketAdapter(applicationContext!!, list, sectorTypeFilter!!,
+            object : SectorMarketAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     sectorSelectedItems?.remove(item);
                     setSectorWatchlistFilter(TextUtils.join(",", sectorSelectedItems));
@@ -161,12 +192,12 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setMarketAdapter(list: ArrayList<WatchListFilterPojo.market>) {
+    private fun setMarketAdapter(list: MutableList<MarketTypeFilters.Exchange>) {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_market!!.layoutManager = llm
-        recycle_market!!.adapter = MarketAdapter(applicationContext!!, list, marketTypeFilter!!,
-            object : MarketAdapter.OnItemCheckListener {
+        recycle_market!!.adapter = MarketListFilterAdapter(applicationContext!!, list, marketTypeFilter!!,
+            object : MarketListFilterAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     marketSelectedItems?.remove(item);
                     setMarketWatchlistFilter(android.text.TextUtils.join(",", marketSelectedItems));
@@ -220,7 +251,11 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun clickPlusIcon(lin_child_title: RecyclerView, header_plus_icon: ImageView, relative: RelativeLayout) {
+    private fun clickPlusIcon(
+        lin_child_title: RecyclerView,
+        header_plus_icon: ImageView,
+        relative: RelativeLayout
+    ) {
         if (lin_child_title.visibility == View.GONE) {
             ViewAnimationUtils.expand(lin_child_title)
             header_plus_icon.setImageResource(R.mipmap.arrowdown)
@@ -232,63 +267,6 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
             lin_child_title.visibility = View.GONE
             relative.visibility = View.GONE
         }
-    }
-
-
-    private fun setWatchlistFilters() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<WatchlistPojo> =
-            apiService.getWatchList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                android.text.TextUtils.join(",", assetsSelectedItems),
-                android.text.TextUtils.join(",", sectorSelectedItems),
-                android.text.TextUtils.join(",", marketSelectedItems),
-                android.text.TextUtils.join(",", countrySelectedItems)
-            )
-        call.enqueue(object : Callback<WatchlistPojo> {
-            override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status.equals("1")) {
-                        if (response.body()!!.status == "1") {
-                            Handler().postDelayed(Runnable {
-                            }, 100)
-                            var testing = ArrayList<WatchlistPojo.WatchStock>()
-                            testing = response.body()!!.stock!!
-                            Log.e("nckshbj", testing.size.toString())
-
-                            if (testing != null && testing.size != 0) {
-                                val resultIntent = Intent()
-                                resultIntent.putExtra("stocklist", testing)
-                                resultIntent.putExtra("resetStockfilter", "0")
-                                setResult(Activity.RESULT_OK, resultIntent)
-                                finish()
-                            } else if (response.body()!!.status == "2") {
-                                appLogout();
-                            } else {
-                                displayToast("no data exist", "warning")
-                                finish()
-                            }
-                        }
-                    } else if (response.body()!!.status.equals("2")) {
-                        appLogout();
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {
-                println(t.toString())
-                Log.d("WatchList--", "" + t.localizedMessage)
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
     }
 
 

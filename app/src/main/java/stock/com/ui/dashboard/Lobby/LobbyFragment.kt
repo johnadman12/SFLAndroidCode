@@ -40,7 +40,7 @@ class LobbyFragment : BaseFragment() {
 
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
-    private var dashBoardActivity:DashBoardActivity?=null;
+    private var dashBoardActivity: DashBoardActivity? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +49,7 @@ class LobbyFragment : BaseFragment() {
 
     private fun initViews() {
         contest = ArrayList();
-        dashBoardActivity= activity as DashBoardActivity?
+        dashBoardActivity = activity as DashBoardActivity?
         getContestlist()
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
@@ -57,7 +57,10 @@ class LobbyFragment : BaseFragment() {
             startActivityForResult(intent, RESULT_CODE_FILTER)
         }
 
-        ll_codejoin.setOnClickListener { showViewContestDialogue() }
+        ll_codejoin.setOnClickListener {
+            //            showViewContestDialogue()
+            startActivity(Intent(activity!!, ActivityCodeJoin::class.java))
+        }
         ll_createContest.setOnClickListener {
             startActivityForResult(Intent(activity, ActivityCreateContest::class.java), StockConstant.REDIRECT_CREATED)
         }
@@ -196,7 +199,7 @@ class LobbyFragment : BaseFragment() {
                 /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
             }
-        }else  if (requestCode == StockConstant.REDIRECT_CREATED) {
+        } else if (requestCode == StockConstant.REDIRECT_CREATED) {
             if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
                 /*var intent = Intent();
                 //activity!!.startActivityForResult(intent,111);

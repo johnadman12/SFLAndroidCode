@@ -60,7 +60,7 @@ class ForgotPasswordActivity : BaseActivity() {
                         countryCode.visibility = GONE;
                     }
                 else
-                countryCode.visibility = GONE
+                    countryCode.visibility = GONE
             }
 
             override fun beforeTextChanged(
@@ -93,7 +93,7 @@ class ForgotPasswordActivity : BaseActivity() {
                 else
                     email = et_Email_.text.toString()
             } else if (Patterns.PHONE.matcher(text).matches()) {
-                phone = countryCode.selectedCountryCode + text;
+                phone = text;
             } else
                 username = et_Email_.text.toString()
             AppDelegate.hideKeyBoard(this)
@@ -108,7 +108,11 @@ class ForgotPasswordActivity : BaseActivity() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<BasePojo> = apiService.forgot_pass(email, username, phone)
+        val call: Call<BasePojo> = apiService.forgot_pass(
+            email, username,
+            countryCode.selectedCountryNameCode,
+            phone
+        )
         call.enqueue(object : Callback<BasePojo> {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>?) {
                 d.dismiss()
@@ -120,21 +124,21 @@ class ForgotPasswordActivity : BaseActivity() {
                                 .putExtra(StockConstant.USEREMAIL, email)
                                 .putExtra(StockConstant.USERNAME, username)
                                 .putExtra(StockConstant.USERPHONE, phone)
-                                .putExtra(StockConstant.USERID,  response.body()!!.user_id)
-                                .putExtra(StockConstant.FLAG,  "false")
+                                .putExtra(StockConstant.USERID, response.body()!!.user_id)
+                                .putExtra(StockConstant.FLAG, "false")
                         )
                         finish()
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

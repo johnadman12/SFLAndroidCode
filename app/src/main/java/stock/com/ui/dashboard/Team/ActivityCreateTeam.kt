@@ -167,14 +167,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             }
         }
-
-        /*val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Players!!.layoutManager = llm
-        rv_Players.visibility = View.VISIBLE
-        rv_Players!!.adapter
-        */
-        setTeamText(stockSelectedItems!!.size.toString())
+      setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = StockTeamAdapter(
             this, list as ArrayList,
             this@ActivityCreateTeam,

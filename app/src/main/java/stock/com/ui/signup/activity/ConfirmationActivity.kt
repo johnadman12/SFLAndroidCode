@@ -31,6 +31,7 @@ import java.util.*
 class ConfirmationActivity : BaseActivity() {
     val myCalendar = Calendar.getInstance()
     var phoneNumber: String = ""
+    var countrycode: String = ""
     var username: String = ""
     var email: String = ""
     var userId: String = ""
@@ -47,6 +48,7 @@ class ConfirmationActivity : BaseActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         if (intent != null) {
             phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
+            countrycode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
             username = intent.getStringExtra(StockConstant.USERNAME);
             email = intent.getStringExtra(StockConstant.USEREMAIL);
             userId = intent.getStringExtra(StockConstant.USERID);
@@ -146,7 +148,8 @@ class ConfirmationActivity : BaseActivity() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.requestOtp(
-            userId, username, email, phoneNumber)
+            userId, username, email, countrycode,phoneNumber
+            )
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
@@ -159,6 +162,7 @@ class ConfirmationActivity : BaseActivity() {
                             .putExtra(StockConstant.USEREMAIL, email)
                             .putExtra(StockConstant.USERNAME, username)
                             .putExtra(StockConstant.USERPHONE, phoneNumber)
+                            .putExtra(StockConstant.USERCOUNTRYCODE, countrycode)
                             .putExtra(StockConstant.USERID, userId)
                         )
                         finish()
