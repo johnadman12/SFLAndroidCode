@@ -66,6 +66,9 @@ public class CreateContest extends BasePojo {
         @SerializedName("team_joined")
         @Expose
         public int teamJoined;
+        @SerializedName("invited_code")
+        @Expose
+        public String invited_code;
 
     }
 }

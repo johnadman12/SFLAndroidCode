@@ -1,8 +1,6 @@
 package stock.com.ui.dashboard.ContestNewBottom
 
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +9,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_my_contest.*
-import kotlinx.android.synthetic.main.include_back.*
-import stock.com.AppBase.BaseActivity
 import stock.com.AppBase.BaseFragment
 import stock.com.R
-import stock.com.ui.dashboard.home.fragment.HomeFragment
-import stock.com.ui.edit_profile.fragment.ContactInfoFragment
-import stock.com.ui.my_contest.fragment.CreatedFragment
-import stock.com.ui.my_contest.fragment.FinishedFragment
-import stock.com.ui.my_contest.fragment.LiveFragment
-import stock.com.ui.my_contest.fragment.UpcomingFragment
+import stock.com.ui.dashboard.my_contest.fragment.CreatedFragment
+import stock.com.ui.dashboard.my_contest.fragment.FinishedFragment
+import stock.com.ui.dashboard.my_contest.fragment.LiveFragment
+import stock.com.ui.dashboard.my_contest.fragment.UpcomingFragment
 
 class MyContestFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
@@ -174,8 +166,6 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
 
         }
-
-
 
     }
 

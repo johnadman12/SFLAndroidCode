@@ -57,7 +57,6 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         et_email_address.isEnabled = false;
-
         country = Gson().fromJson(
             SessionManager.getInstance(context).getString(StockConstant.COUNTRYLIST),
             Country::class.java
@@ -86,14 +85,14 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                 else if (et_address.text.toString().equals(""))
                     displayToast(resources.getString(R.string.address_error), "warning");
                 else if (et_country.text.toString().equals("")) {
-                    displayToast(resources.getString(R.string.country_error),"warning");
+                    displayToast(resources.getString(R.string.country_error), "warning");
                 } else if (et_zip_code.text.toString().equals("")) {
                     displayToast(resources.getString(R.string.zip_coder_error), "warning");
                 } else {
                     if (NetworkUtils.isConnected()) {
                         callApiUpdateProfile();
                     } else {
-                        displayToast(resources.getString(R.string.error_network_connection),"error")
+                        displayToast(resources.getString(R.string.error_network_connection), "error")
                     }
                 }
             }
@@ -121,7 +120,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                         //ll_main_contact.visibility = View.VISIBLE;
                         if (!response.body()!!.otp.equals("")) {
                             var intent = Intent(context, OTPActivity::class.java);
-                           // intent.putExtra("otp", response.body()!!.otp);
+                            // intent.putExtra("otp", response.body()!!.otp);
                             intent.putExtra("isReset", "profile");
                             intent.putExtra("phoneNumber", et_number.text.toString().trim());
                             context!!.startActivity(intent)
@@ -129,18 +128,18 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                         } else {
                             displayToast(response.body()!!.message, "warning")
                         }
-                    }else if(response.body()!!.status.equals("2")){
+                    } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -162,18 +161,18 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                     if (response.body()!!.status.equals("1")) {
                         setData(response.body()!!.user!!)
                         ll_main_contact.visibility = View.VISIBLE;
-                    }else if (response.body()!!.status.equals("2")){
+                    } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<UserPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -181,6 +180,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
 
     private fun setData(user: UserPojo.User) {
         et_email_address.setText(user.email);
+        countryCodeHolder.setCountryForNameCode(user.country_id)
         et_number.setText(user.phone_number);
         et_address.setText(user.address);
         // et_country.setText(user.country_id);

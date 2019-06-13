@@ -1,4 +1,4 @@
-package stock.com.ui.my_contest.adapter
+package stock.com.ui.dashboard.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,9 +14,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_finished.view.*
 
 import stock.com.R
-import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.LiveScoreActivity
-import stock.com.ui.dashboard.Team.UpcomingContestDetailActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant

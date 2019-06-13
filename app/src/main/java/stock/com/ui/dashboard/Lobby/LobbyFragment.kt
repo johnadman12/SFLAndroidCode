@@ -236,4 +236,5 @@ class LobbyFragment : BaseFragment() {
             dialogue.dismiss()
         dialogue.show()
     }
+
 }

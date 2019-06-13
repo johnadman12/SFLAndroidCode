@@ -57,6 +57,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
 
     val myCalendar = Calendar.getInstance()
     var sSports: String = ""
+    var admission_comm: Long? = null
     var startdate: Long? = null
     var enddate: Long? = null
     var startmilisec: Long? = null
@@ -145,10 +146,10 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 var endtimeMilies = myCalendar.timeInMillis + enddate!!
                 val diff = myCalendar.timeInMillis - startTimemilisec!!
                 if (endtimeMilies > startmilisec!!) {
-                    if (diff > 3600000)
+                    if (diff > 7200000)
                         updateTime(endTime)
                     else
-                        displayToast("Time difference should be more than 1 hour ", "error")
+                        displayToast("Time difference should be more than 2 hour ", "error")
                 } else
                     displayToast("Time should be ahead from start time", "error")
             }
@@ -241,7 +242,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 var originalString = s.toString()
                 if (originalString.length != 0) {
                     //if (originalString.toInt() <= 100) {
-                    if (originalString.toInt() > 2 && originalString.toInt() <= 100) {
+                    if (originalString.toInt() >= 2 && originalString.toInt() <= 100) {
                         if (originalString.contains(",")) {
                             originalString = originalString.replace(",".toRegex(), "")
                         }
@@ -282,8 +283,16 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         date.setText(sdf.format(myCalendar.time))
     }
 
-    fun calculateContestFee(winAmount: String, s1: String) {
+   /* fun calculateContestFee(winAmount: String, s1: String) {
         val collection: Long = (winAmount.toLong() * 100) / 80
+        val entryFee: Long = collection / s1.toLong()
+        tvContestFee.setText("$" + entryFee.toString())
+    } */
+
+
+    fun calculateContestFee(winAmount: String, s1: String) {
+        admission_comm = winAmount.toLong() * 20 / 100
+        val collection: Long = (winAmount.toLong() * 100) / 100 - admission_comm!!
         val entryFee: Long = collection / s1.toLong()
         tvContestFee.setText("$" + entryFee.toString())
     }
@@ -303,6 +312,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 .putExtra("marketId", marketId)
                 .putExtra("exchangeId", exchangeId)
                 .putExtra("contestName", edtContestName.text.toString())
+                .putExtra("admission_commision", admission_comm)
                 .putExtra("joinMultiple", joinMultiple.toString()), StockConstant.REDIRECT_CREATED
         )
     }
@@ -399,6 +409,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
 
     fun checkValidation(): Boolean {
         var amount: String = edtWinningAmount.text.toString()
+        var spots: String = edtSports.text.toString()
         if (TextUtils.isEmpty(startDate.text)) {
             showSneakBarRed("Please Select StartDate First", "error")
             return false
@@ -417,11 +428,14 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         } else if (TextUtils.isEmpty(edtWinningAmount.text.toString())) {
             showSneakBarRed("Please put some amount to create contest", "error")
             return false
-        } else if (amount.toLong() > (10000)) {
-            showSneakBarRed("Amount cannot be exceed from 10000", "error")
+        } else if (amount.toLong() < 100 || amount.toLong() > (10000)) {
+            showSneakBarRed("Amount should be in 100 - 10000 range", "error")
             return false
         } else if (TextUtils.isEmpty(edtSports.text.toString())) {
             showSneakBarRed("Please provide contest size", "error")
+            return false
+        } else if (spots.toLong() < 2 || spots.toLong() > 100) {
+            showSneakBarRed("Spots should be between 2-100", "error")
             return false
         }
         return true

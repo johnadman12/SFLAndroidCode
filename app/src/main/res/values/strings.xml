@@ -583,4 +583,6 @@
     <string name="enter_invite_code1">Enter Invite Code</string>
     <string name="enter_invite_code_here">Enter Invite Code here</string>
     <string name="invite">Invite</string>
+    <string name="private_contest">Private Contest</string>
+    <string name="all_user">All User</string>
 </resources>

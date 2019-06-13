@@ -1,12 +1,9 @@
-package stock.com.ui.my_contest.adapter
+package stock.com.ui.dashboard.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.view.*
 import android.view.View.GONE
@@ -14,10 +11,8 @@ import android.view.View.VISIBLE
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 import stock.com.R
-import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.Team.UpcomingContestDetailActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate

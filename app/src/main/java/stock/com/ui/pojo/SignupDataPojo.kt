@@ -29,6 +29,7 @@ class SignupDataPojo() : Parcelable {
     var notification: String = ""
     var modified: String = ""
     var username: String = ""
+    var country_id: String = ""
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readString()
@@ -55,6 +56,7 @@ class SignupDataPojo() : Parcelable {
         notification = parcel.readString()
         modified = parcel.readString()
         username = parcel.readString()
+        country_id = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -82,6 +84,7 @@ class SignupDataPojo() : Parcelable {
         parcel.writeString(notification)
         parcel.writeString(modified)
         parcel.writeString(username)
+        parcel.writeString(country_id)
     }
 
     override fun describeContents(): Int {

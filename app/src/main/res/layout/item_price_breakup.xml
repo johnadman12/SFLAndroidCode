@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:id="@+id/ll_main"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
             android:id="@+id/rel_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/gray_empty_button"
             android:padding="@dimen/_5sdp"
-            android:clickable="false"
-            android:layout_margin="@dimen/_8sdp">
+            android:orientation="vertical"
+            android:layout_margin="@dimen/_10sdp">
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -46,9 +46,9 @@
                 android:layout_below="@+id/ll_head"
                 android:padding="@dimen/_5sdp"
                 android:id="@+id/recylerView"
-        />
+                android:focusable="false"/>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

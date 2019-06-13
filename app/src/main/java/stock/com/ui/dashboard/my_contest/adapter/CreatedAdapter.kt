@@ -1,4 +1,4 @@
-package stock.com.ui.my_contest.adapter
+package stock.com.ui.dashboard.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_my_contest.view.*
 
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.contest_invitation.ContestInvitationActivity
 import stock.com.ui.pojo.CreateContest
 import stock.com.utils.AppDelegate
@@ -57,12 +58,30 @@ class CreatedAdapter(
         }
 
         holder.itemView.tvInvite.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, ContestInvitationActivity::class.java)
-                    .putExtra(StockConstant.CONTESTCODE, "")
-            )
+            if (usercontest.get(position).invited_code != null) {
+                mContext.startActivity(
+                    Intent(mContext, ContestInvitationActivity::class.java)
+                        .putExtra(StockConstant.CONTESTCODE, usercontest.get(position).invited_code)
+                )
+            } else {
+                mContext.startActivity(
+                    Intent(mContext, ContestInvitationActivity::class.java)
+                        .putExtra(StockConstant.CONTESTCODE, "")
+                )
+            }
         }
 
+        /*holder.itemView.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(
+                    StockConstant.CONTESTID,
+                    usercontest.get(position).userContestId.toInt()
+                ).putExtra(
+                    StockConstant.EXCHANGEID,
+                    usercontest.get(position).exchangeId.toInt()
+                )
+            )
+        }*/
 
     }
 

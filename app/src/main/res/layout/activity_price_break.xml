@@ -22,20 +22,21 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_38sdp"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_8sdp"
+            android:padding="@dimen/_5sdp"
             android:background="@drawable/ll_search">
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="My Contest"
+                android:text="@string/private_contest"
                 android:id="@+id/contestName"
                 style="@style/TextStyleSemiBold"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/_10sdp"
-                android:textAllCaps="true"/>
+                android:textAllCaps="false"/>
 
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                     android:id="@+id/tv_contest"
                     android:gravity="center_horizontal"
                     style="@style/TextStyleSemiBold"
-                    android:textColor="@color/textColorLightBlack"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,7 +112,7 @@
                     android:id="@+id/tv_prizepool"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/textColorBlack"
+                    android:textColor="@color/black"
                     android:text="@string/Rs1000"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -140,10 +141,8 @@
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/_12sdp"
                     style="@style/TextStyleSemiBold"
-                    android:textColor="@color/textColorLightBlack"
+                    android:textColor="@color/black"
             />
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

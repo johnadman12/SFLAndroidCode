@@ -1,4 +1,4 @@
-package stock.com.ui.my_contest.adapter
+package stock.com.ui.dashboard.my_contest.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context

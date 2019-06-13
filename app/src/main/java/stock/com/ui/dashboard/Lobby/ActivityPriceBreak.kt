@@ -32,6 +32,7 @@ class ActivityPriceBreak : BaseActivity() {
     private var winningAmount: String = "";
     private var Time: String? = null;
     private var EntryFee: String = "";
+    private var admission_comm: Long? = null;
     private var startTime: String = "";
     private var endTime: String = "";
     private var startDate: String = "";
@@ -65,32 +66,37 @@ class ActivityPriceBreak : BaseActivity() {
             exchangeId = intent.getStringExtra("exchangeId")
             ContestName = intent.getStringExtra("contestName")
             joinmultiple = intent.getStringExtra("joinMultiple")
+            admission_comm = intent.getLongExtra("admission_commision", 0)
         }
 
-       /* localToUTC(startDate + " " + startTime)
-        localToUTC(endDate + " " + endTime)*/
+        /* localToUTC(startDate + " " + startTime)
+         localToUTC(endDate + " " + endTime)*/
         if (contestName != null)
             contestName.setText(ContestName)
+        else
+            contestName.setText(getString(R.string.private_contest))
 
-        val stime = startDate +" "+ startTime
-        val etime = endDate+ " "+endTime
+
+        val stime = startDate + " " + startTime
+        val etime = endDate + " " + endTime
 
         val startTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(stime)
         val endTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(etime)
         val diff = endTime.getTime() - startTime.getTime()
-        Log.d("show","onCreate1"+diff)
+        Log.d("show", "onCreate1" + diff)
 
-        val timer = object: CountDownTimer(diff, 1000) {
-            override fun onTick(millisUntilFinished:Long) {
+        val timer = object : CountDownTimer(diff, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
                 val diffSec = millisUntilFinished / 1000
                 val seconds = diffSec % 60
-                Log.d("show","onCreate"+seconds)
+                Log.d("show", "onCreate" + seconds)
                 val minutes = diffSec / 60 % 60
-                Log.d("show","onCreate11"+minutes)
+                Log.d("show", "onCreate11" + minutes)
                 val hours = diffSec / 3600
-                Log.d("show","onCreate12"+hours)
+                Log.d("show", "onCreate12" + hours)
                 timer1.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
             }
+
             override fun onFinish() {
                 timer1.setText("Time Up")
             }
@@ -189,7 +195,7 @@ class ActivityPriceBreak : BaseActivity() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_listWinner!!.layoutManager = llm
-        rv_listWinner!!.adapter = PriceBreakUpAdapter(this@ActivityPriceBreak, item)
+        rv_listWinner!!.adapter = PriceBreakupPerAdapter(this@ActivityPriceBreak, item)
     }
 
 
@@ -213,7 +219,8 @@ class ActivityPriceBreak : BaseActivity() {
                 localToUTC(startDate + " " + startTime),
                 localToUTC(endDate + " " + endTime)
                 ,
-                EntryFee
+                EntryFee,
+                admission_comm.toString()
             )
         call.enqueue(object : Callback<BasePojo> {
 

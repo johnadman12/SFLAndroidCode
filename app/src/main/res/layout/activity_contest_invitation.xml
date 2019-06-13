@@ -134,6 +134,7 @@
                         android:layout_height="@dimen/_85sdp"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:id="@+id/ll_invite"
                         android:orientation="vertical"
                         android:visibility="visible"
                         android:background="@drawable/white_circle"

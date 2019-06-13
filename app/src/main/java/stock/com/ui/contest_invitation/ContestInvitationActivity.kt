@@ -8,26 +8,45 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
+import stock.com.ui.dashboard.my_contest.ActivityInviteUser
+import stock.com.utils.StockConstant
 
 
 class ContestInvitationActivity : BaseActivity() {
-
+    var inviteCode: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contest_invitation)
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
+
+        if (intent != null)
+            inviteCode = intent.getStringExtra(StockConstant.CONTESTCODE)
         ll_share.setOnClickListener {
             shareIntent()
         }
+        if (!TextUtils.isEmpty(inviteCode))
+            textToCopy.setText(inviteCode)
+
         ll_tap.setOnClickListener {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("label", textToCopy.text)
-            clipboard.setPrimaryClip(clip)
+            val sdk = android.os.Build.VERSION.SDK_INT
+            if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.text.ClipboardManager
+                clipboard.text = textToCopy.text
+            } else {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                val clip = android.content.ClipData.newPlainText("text label", textToCopy.text)
+                clipboard.primaryClip = clip
+            }
             displayToast("Text Copied!!! " + textToCopy.text, "warning")
+        }
+
+        ll_invite.setOnClickListener {
+            startActivity(Intent(this@ContestInvitationActivity, ActivityInviteUser::class.java))
         }
 
     }

@@ -48,7 +48,7 @@
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:textSize="@dimen/_11sdp"
-                        android:hint="@string/search_by_news"
+                        android:hint="Search by Username or Asset name / symbol"
                         android:textColorHint="@color/white"
                         android:inputType="textCapSentences"
                         android:textColor="@color/white"
@@ -65,7 +65,7 @@
                         android:layout_marginRight="@dimen/_8sdp"
                         android:padding="@dimen/_3sdp"
                         android:tint="@color/white"/>
-            </LinearLayout>
+            </LinearLayout>n
 
          <!--   <android.support.v7.widget.Toolbar
                     android:layout_width="match_parent"

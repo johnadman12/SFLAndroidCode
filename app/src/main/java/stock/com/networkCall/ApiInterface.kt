@@ -529,7 +529,8 @@ interface ApiInterface {
         @Field("contest_type") contest_type: String,
         @Field("schedule_start") schedule_start: String,
         @Field("schedule_end") schedule_end: String,
-        @Field("entry_fees") entry_fee: String
+        @Field("entry_fees") entry_fee: String,
+        @Field("admin_commission") admin_commission: String
     ): Call<BasePojo>
 
 
