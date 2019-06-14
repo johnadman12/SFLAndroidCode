@@ -65,6 +65,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
     var exchangeId: String = ""
     var marketId: String = ""
     var joinMultiple: Int = 1
+    var entryFee: Long? = null
     var list1: ArrayList<ContestList.Market>? = null
     var list2: ArrayList<ContestList.Exchangelist>? = null
     var exchangeAdapter: ExchangespinAdapter? = null
@@ -283,17 +284,17 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         date.setText(sdf.format(myCalendar.time))
     }
 
-   /* fun calculateContestFee(winAmount: String, s1: String) {
-        val collection: Long = (winAmount.toLong() * 100) / 80
-        val entryFee: Long = collection / s1.toLong()
-        tvContestFee.setText("$" + entryFee.toString())
-    } */
+    /* fun calculateContestFee(winAmount: String, s1: String) {
+         val collection: Long = (winAmount.toLong() * 100) / 80
+         val entryFee: Long = collection / s1.toLong()
+         tvContestFee.setText("$" + entryFee.toString())
+     } */
 
 
     fun calculateContestFee(winAmount: String, s1: String) {
         admission_comm = winAmount.toLong() * 20 / 100
         val collection: Long = (winAmount.toLong() * 100) / 100 - admission_comm!!
-        val entryFee: Long = collection / s1.toLong()
+        entryFee= collection / s1.toLong()
         tvContestFee.setText("$" + entryFee.toString())
     }
 

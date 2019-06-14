@@ -198,6 +198,7 @@ class ActivityPriceBreak : BaseActivity() {
         rv_listWinner!!.adapter = PriceBreakupPerAdapter(this@ActivityPriceBreak, item)
     }
 
+    //admission comiision always will be 20%
 
     fun createContest() {
         val d = StockDialog.showLoading(this)
@@ -219,8 +220,8 @@ class ActivityPriceBreak : BaseActivity() {
                 localToUTC(startDate + " " + startTime),
                 localToUTC(endDate + " " + endTime)
                 ,
-                EntryFee,
-                admission_comm.toString()
+                EntryFee.substring(1),
+                "20"
             )
         call.enqueue(object : Callback<BasePojo> {
 
@@ -255,7 +256,7 @@ class ActivityPriceBreak : BaseActivity() {
         val inputFormat = SimpleDateFormat(inputPattern)
         var date: Date? = null
         date = inputFormat.parse(inputdate)
-        val formatterUTC = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+        val formatterUTC = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         formatterUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
 //        val dateStr:Date= Date(formatterUTC.format(date))
         val strDate: String = formatterUTC.format(date)

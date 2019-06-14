@@ -40,13 +40,13 @@
                     android:focusable="false"
                     android:id="@+id/radioBtn"/>
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
+        <stock.com.ui.dashboard.Lobby.UntouchableRecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_head"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_3sdp"
                 android:id="@+id/recylerView"
-                android:focusable="false"/>
+                />
 
 
     </LinearLayout>

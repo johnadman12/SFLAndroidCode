@@ -29,6 +29,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     private SparseBooleanArray checkedHolder = null;
     BottonSheetPriceBreakup breakup;
     String contestSizeWinner = "";
+    Boolean flag;
 
 
     public BottomSheetAdapter(Context mContext, int count, ArrayList<WinningList.Pricebreaklist> list, BottonSheetPriceBreakup breakup, String userContestId) {
@@ -48,22 +49,23 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final FeatureListHolder holder, final int position) {
-        /*for (int i = 0; i < list.size(); i++) {
+       /* for (int i = 0; i < list.size(); i++) {
             if (contestSizeWinner.equalsIgnoreCase(list.get(i).winner)) {
-                holder.radioBtn.setChecked(true);
-                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+                flag = true;
+               *//* holder.radioBtn.setChecked(true);
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));*//*
             } else {
-                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
+                flag = false;
+               *//* holder.radioBtn.setChecked(false);
+                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));*//*
             }
         }*/
 
         String text = "<font color=#52DF45>(Recommended)</font>";
         if (position == 0) {
             holder.txt_Winners.setText(Html.fromHtml(list.get(position).winner + text));
-//            holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
         } else {
             holder.txt_Winners.setText(list.get(position).winner);
-//            holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
 
         }
 
@@ -73,14 +75,12 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
         holder.recylerView.setItemAnimator(new DefaultItemAnimator());
         holder.recylerView.setAdapter(mAdapter);
 
-      /*  holder.radioBtn.setOnClickListener(new View.OnClickListener() {
+        holder.radioBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.radioBtn.setChecked(true);
-                holder.rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
-                breakup.callAdapter(list.get(position).winners, list.get(position).winner, list.get(position).usercontestSizeId);
+                holder.rel_lay.performClick();
             }
-        });*/
+        });
 
 
     }
@@ -91,7 +91,7 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     }
 
     class FeatureListHolder extends RecyclerView.ViewHolder {
-        public RecyclerView recylerView;
+        public UntouchableRecyclerView recylerView;
         public AppCompatTextView txt_Winners;
 
         public RadioButton radioBtn;
@@ -105,22 +105,30 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
             radioBtn = itemView.findViewById(R.id.radioBtn);
             rel_lay = itemView.findViewById(R.id.rel_lay);
 
-        /*radioBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-               radioBtn.setChecked(true);
+        /*    if (flag) {
+                radioBtn.setChecked(true);
                 rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
-                breakup.callAdapter(list.get(getAdapterPosition()).winners, list.get(getAdapterPosition()).winner, list.get(getAdapterPosition()).usercontestSizeId);
-            }
-        }); */
+            } else {
+                radioBtn.setChecked(false);
+                rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
+            }*/
 
-            recylerView.setOnClickListener(new View.OnClickListener() {
+           /* for (int i = 0; i < list.size(); i++) {
+                if (contestSizeWinner.equalsIgnoreCase(list.get(i).winner)) {
+                   radioBtn.setChecked(true);
+                    rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
+                } else {
+                   radioBtn.setChecked(false);
+                    rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.gray_empty_button));
+                }
+            }*/
+
+            rel_lay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     radioBtn.setChecked(true);
                     rel_lay.setBackground(ContextCompat.getDrawable(mContext, R.drawable.green_empty_layout));
                     breakup.callAdapter(list.get(getAdapterPosition()).winners, list.get(getAdapterPosition()).winner, list.get(getAdapterPosition()).usercontestSizeId);
-
                 }
             });
         }
