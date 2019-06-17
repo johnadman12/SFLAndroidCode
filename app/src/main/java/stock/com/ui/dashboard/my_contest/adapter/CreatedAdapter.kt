@@ -36,32 +36,32 @@ class CreatedAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        holder.itemView.tvContestType.setText(usercontest.get(position).ucontestName);
+        holder.itemView.tvContestType.setText(usercontest.get(position).catname);
         holder.itemView.entry_fee.setText(usercontest.get(position).entryFees);
-        holder.itemView.tvWinnersTotal.setText(usercontest.get(position).contestsWinner);
-        holder.itemView.tvTotalWinnings.setText("$ " + usercontest.get(position).totalWinning);
+        holder.itemView.tvWinnersTotal.setText(usercontest.get(position).totalWinners);
+        holder.itemView.tvTotalWinnings.setText(usercontest.get(position).winningAmount);
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(usercontest.get(position).scheduleEnd));
 
         var sports: Int =
-            usercontest.get(position).contestSize - usercontest.get(position).teamJoined
+            usercontest.get(position).contestSize - usercontest.get(position).teamsJoined
         holder.itemView.tvSprortsLeft.setText(sports.toString() + " /" + usercontest.get(position).contestSize)
 
 
-        if (usercontest.get(position).name.equals("Equity")) {
+        if (usercontest.get(position).marketname.equals("Equity")) {
             Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + usercontest.get(position).exchangeimage.trim())
                 .into(holder.itemView.ivStock)
             holder.itemView.tvStockName.setText(usercontest.get(position).exchangename)
         } else {
-            holder.itemView.tvStockName.setText(usercontest.get(position).name)
+            holder.itemView.tvStockName.setText(usercontest.get(position).marketname)
             Glide.with(mContext).load(R.drawable.ic_business)
                 .into(holder.itemView.ivStock)
         }
 
         holder.itemView.tvInvite.setOnClickListener {
-            if (usercontest.get(position).invited_code != null) {
+            if (usercontest.get(position).invitedCode != null) {
                 mContext.startActivity(
                     Intent(mContext, ContestInvitationActivity::class.java)
-                        .putExtra(StockConstant.CONTESTCODE, usercontest.get(position).invited_code)
+                        .putExtra(StockConstant.CONTESTCODE, usercontest.get(position).invitedCode)
                 )
             } else {
                 mContext.startActivity(

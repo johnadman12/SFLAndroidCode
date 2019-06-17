@@ -6,4 +6,5 @@ open class BasePojo {
     var team_id: Int = 0
     var message: String = ""
     var otp: String = ""
+    var contestid: String = ""
 }

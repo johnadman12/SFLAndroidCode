@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
-            android:padding="@dimen/_5sdp"
+            android:padding="@dimen/_8sdp"
             android:background="@drawable/ll_search">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -35,6 +35,7 @@
                 style="@style/TextStyleSemiBold"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
+                android:textSize="@dimen/_12ssp"
                 android:paddingLeft="@dimen/_10sdp"
                 android:textAllCaps="false"/>
 
@@ -47,6 +48,7 @@
                 android:drawableLeft="@mipmap/time_"
                 android:drawablePadding="@dimen/_10sdp"
                 android:gravity="center_vertical"
+                android:textSize="@dimen/_12ssp"
                 android:paddingRight="@dimen/_10sdp"
                 android:textAllCaps="true"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -54,9 +56,10 @@
     <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_first"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3"
+            android:padding="@dimen/_5sdp"
             android:background="@color/light_white">
 
         <androidx.appcompat.widget.LinearLayoutCompat

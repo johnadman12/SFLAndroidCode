@@ -96,7 +96,7 @@ class LiveAdapter(
             if (diff.toString().contains("-")) {
                 holder.itemView.tvTime.setText("00H:00M:00S")
             } else if (diff.equals("3600000")) {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis

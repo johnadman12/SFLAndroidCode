@@ -157,12 +157,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             Glide.with(this).load(R.drawable.ic_business)
                 .into(ivStock)
         }
-
         ll_Circular.setOnClickListener {
             if (flag)
                 AppDelegate.showSneakBarRed(this@ContestDetailActivity, "Contest is not live yet.", "DFX")
             else
                 if (contest.marketname.equals("Equity")) {
+                    exchangeid = contest.exchangeid
                     var intent = Intent(this, ActivityCreateTeam::class.java)
                     intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
                     intent.putExtra(StockConstant.CONTESTID, contestid)
@@ -232,7 +232,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
@@ -248,7 +248,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 newtimer.start()
 
             } else {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis

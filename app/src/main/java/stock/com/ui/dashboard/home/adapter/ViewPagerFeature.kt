@@ -128,7 +128,7 @@ class ViewPagerFeature(
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
             } else if (diff.equals("3600000")) {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis

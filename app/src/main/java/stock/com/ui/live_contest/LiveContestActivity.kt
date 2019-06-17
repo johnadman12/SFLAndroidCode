@@ -199,7 +199,7 @@ class LiveContestActivity : BaseActivity() {
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
             } else {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis

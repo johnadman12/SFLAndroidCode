@@ -12,63 +12,92 @@ public class CreateContest extends BasePojo {
     public List<Usercontest> usercontest = null;
 
     public class Usercontest {
-        @SerializedName("entry_fees")
-        @Expose
-        public String entryFees;
-        @SerializedName("exchange_id")
-        @Expose
-        public String exchangeId;
-        @SerializedName("userContestId")
-        @Expose
-        public String userContestId;
-        @SerializedName("slug")
-        @Expose
-        public String slug;
-        @SerializedName("total_winning")
-        @Expose
-        public String totalWinning;
-        @SerializedName("market_id")
-        @Expose
-        public String marketId;
-        @SerializedName("exchangename")
-        @Expose
-        public String exchangename;
-        @SerializedName("contest_size")
-        @Expose
-        public int contestSize;
-        @SerializedName("join_multiple")
-        @Expose
-        public String joinMultiple;
-        @SerializedName("name")
-        @Expose
-        public String name;
-        @SerializedName("exchangeimage")
-        @Expose
-        public String exchangeimage;
-        @SerializedName("contest_type")
-        @Expose
-        public String contestType;
-        @SerializedName("contests_winner")
-        @Expose
-        public String contestsWinner;
         @SerializedName("schedule_end")
         @Expose
         public String scheduleEnd;
-        @SerializedName("contest_size_id")
+        @SerializedName("exchangeid")
         @Expose
-        public String contestSizeId;
-        @SerializedName("ucontest_name")
+        public String exchangeid;
+        @SerializedName("catname")
         @Expose
-        public String ucontestName;
+        public String catname;
+        @SerializedName("category_id")
+        @Expose
+        public String categoryId;
+        @SerializedName("winning_amount")
+        @Expose
+        public String winningAmount;
+        @SerializedName("mid")
+        @Expose
+        public String mid;
+        @SerializedName("price_break")
+        @Expose
+        public List<PriceBreak> priceBreak = null;
+        @SerializedName("total_winners")
+        @Expose
+        public String totalWinners;
+        @SerializedName("marketname")
+        @Expose
+        public String marketname;
+        @SerializedName("invited_code")
+        @Expose
+        public String invitedCode;
+        @SerializedName("description")
+        @Expose
+        public String description;
+        @SerializedName("entry_fees")
+        @Expose
+        public String entryFees;
+        @SerializedName("contestid")
+        @Expose
+        public String contestid;
+        @SerializedName("scheduleid")
+        @Expose
+        public String scheduleid;
+        @SerializedName("contest_teamremaining")
+        @Expose
+        public String contestTeamremaining;
+        @SerializedName("join_multiple")
+        @Expose
+        public String joinMultiple;
+        @SerializedName("exchangeimage")
+        @Expose
+        public String exchangeimage;
+        @SerializedName("teams_joined")
+        @Expose
+        public int teamsJoined;
+        @SerializedName("exchangename")
+        @Expose
+        public String exchangename;
+        @SerializedName("schedule_name")
+        @Expose
+        public String scheduleName;
+        @SerializedName("contest_type")
+        @Expose
+        public String contestType;
         @SerializedName("schedule_start")
         @Expose
         public String scheduleStart;
-        @SerializedName("team_joined")
+        @SerializedName("contest_size")
         @Expose
-        public int teamJoined;
-        @SerializedName("invited_code")
+        public int contestSize;
+
+
+    }
+    public class PriceBreak {
+
+        @SerializedName("start_num")
         @Expose
-        public String invited_code;
+        public Integer startNum;
+        @SerializedName("contest_id")
+        @Expose
+        public Integer contestId;
+        @SerializedName("price_each")
+        @Expose
+        public String priceEach;
+        @SerializedName("end_num")
+        @Expose
+        public Integer endNum;
 
     }
 }

@@ -12,10 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_my_contest.*
 import stock.com.AppBase.BaseFragment
 import stock.com.R
-import stock.com.ui.dashboard.my_contest.fragment.CreatedFragment
-import stock.com.ui.dashboard.my_contest.fragment.FinishedFragment
-import stock.com.ui.dashboard.my_contest.fragment.LiveFragment
-import stock.com.ui.dashboard.my_contest.fragment.UpcomingFragment
+import stock.com.ui.dashboard.my_contest.fragment.*
 
 class MyContestFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
@@ -55,7 +52,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_live, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
 
-
+                setFragment(InvitedFragment(), Bundle())
             }
             R.id.tv_upcoming -> {
 //                ll_my_team.visibility = View.GONE
@@ -72,7 +69,6 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_finished, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(UpcomingFragment(), Bundle())
-
 
 
             }
@@ -133,7 +129,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
         val args = arguments;
 
-        if(args!!.getString("flag").equals("true")){
+        if (args!!.getString("flag").equals("true")) {
 
             changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
             changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -149,7 +145,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 
             setFragment(UpcomingFragment(), Bundle());
 
-        }else{
+        } else {
             changeTextColor(tv_created, ContextCompat.getColor(activity!!, R.color.white));
             changeTextColor(tv_invited, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
             changeTextColor(tv_upcoming, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));

@@ -512,6 +512,14 @@ interface ApiInterface {
         @Field("entry_fee") entry_fee: String
     ): Call<WinningList>
 
+    @FormUrlEncoded
+    @POST("usercontest/user_code_join")
+    fun codeJoinContest(
+        @Header("x-access-token") token: String,
+//        @Field("user_id") user_id: String,
+        @Field("invitecode") comments: String
+    ): Call<BasePojo>
+
 
     @FormUrlEncoded
     @POST("usercontest/user_contestcreate")

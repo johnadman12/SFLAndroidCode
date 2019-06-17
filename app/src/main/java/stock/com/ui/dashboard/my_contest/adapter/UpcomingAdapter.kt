@@ -38,6 +38,7 @@ class UpcomingAdapter(
         holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
         holder.itemView.tvContestType.setText(contest.get(position).catname)
+        holder.itemView.tvInvite.visibility = GONE
         var amount: String = contest.get(position).entryFees.substring(1)
         if (amount.equals("0") && contest.get(position).priceBreak.size <= 0) {
             holder.itemView.tvTotalWinnings.setText("Free")
@@ -97,7 +98,7 @@ class UpcomingAdapter(
                 newtimer.start()
 
             } else {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis

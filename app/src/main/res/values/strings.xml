@@ -580,7 +580,7 @@
         overall consensus is Moderate Buy
     </string>
     <string name="login_default">please Sign Up to Continue use of App Services and Join Contests</string>
-    <string name="enter_invite_code1">Enter Invite Code</string>
+    <string name="enter_invite_code1">Enter Invitation Code</string>
     <string name="enter_invite_code_here">Enter Invite Code here</string>
     <string name="invite">Invite</string>
     <string name="private_contest">Private Contest</string>

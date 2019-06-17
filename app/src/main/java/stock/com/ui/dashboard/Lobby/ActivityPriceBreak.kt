@@ -69,8 +69,6 @@ class ActivityPriceBreak : BaseActivity() {
             admission_comm = intent.getLongExtra("admission_commision", 0)
         }
 
-        /* localToUTC(startDate + " " + startTime)
-         localToUTC(endDate + " " + endTime)*/
         if (contestName != null)
             contestName.setText(ContestName)
         else
@@ -80,29 +78,37 @@ class ActivityPriceBreak : BaseActivity() {
         val stime = startDate + " " + startTime
         val etime = endDate + " " + endTime
 
-        val startTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(stime)
-        val endTime = SimpleDateFormat("dd-MM-yyyy HH:mm a").parse(etime)
-        val diff = endTime.getTime() - startTime.getTime()
-        Log.d("show", "onCreate1" + diff)
+        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm a")
+        val startTime = simpleDateFormat.parse(stime)
+        val thatDay = Calendar.getInstance()
+        thatDay.setTime(startTime);
+        val today = Calendar.getInstance()
+        val diff = thatDay.timeInMillis - today.timeInMillis
+        if (diff.toString().contains("-")) {
+            timer1.setText("Times Up")
+        } else {
+            /*   val endTime = simpleDateFormat.parse(etime)
+           val diff = (endTime.time - startTime.time);
+           Log.d("show", "onCreate1" + diff)*/
 
-        val timer = object : CountDownTimer(diff, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val diffSec = millisUntilFinished / 1000
-                val seconds = diffSec % 60
-                Log.d("show", "onCreate" + seconds)
-                val minutes = diffSec / 60 % 60
-                Log.d("show", "onCreate11" + minutes)
-                val hours = diffSec / 3600
-                Log.d("show", "onCreate12" + hours)
-                timer1.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
-            }
+            val timer = object : CountDownTimer(diff, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    val diffSec = millisUntilFinished / 1000
+                    val seconds = diffSec % 60
+                    Log.d("show", "onCreate" + seconds)
+                    val minutes = diffSec / 60 % 60
+                    Log.d("show", "onCreate11" + minutes)
+                    val hours = diffSec / 3600
+                    Log.d("show", "onCreate12" + hours)
+                    timer1.setText("Time Left :" + hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                }
 
-            override fun onFinish() {
-                timer1.setText("Time Up")
+                override fun onFinish() {
+                    timer1.setText("Times Up")
+                }
             }
+            timer.start()
         }
-        timer.start()
-//        var list = ArrayList<String>();
 
         /*   if (sport!!.toInt() >= 2 && sport!!.toInt() < 7) {
                count = 5;
