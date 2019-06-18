@@ -1,85 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:background="@mipmap/bg"
+        android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+
+    <include
+            android:id="@+id/header"
+            layout="@layout/include_back"/>
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
+            android:layout_below="@+id/header"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/ll_search"
+                android:visibility="visible"
+                android:padding="@dimen/_8sdp"
+                android:id="@+id/ll_search">
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    app:srcCompat="@mipmap/search"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:padding="@dimen/_3sdp"
+                    android:tint="@color/white"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_11sdp"
+                    android:hint="Search by Username or Asset name / symbol"
+                    android:textColorHint="@color/white"
+                    android:inputType="textCapSentences"
+                    android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:id="@+id/et_search_stock"/>
+            <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/imgcross"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    app:srcCompat="@mipmap/cross"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="@dimen/_8sdp"
+                    android:padding="@dimen/_3sdp"
+                    android:tint="@color/white"/>
+        </LinearLayout>
 
-    <!--    <android.support.design.widget.CollapsingToolbarLayout
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                tools:listitem="@layout/row_latest_news"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </LinearLayout>
 
-           -->
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/view"
-                    android:layout_marginRight="@dimen/_15sdp"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:background="@drawable/ll_search"
-                    android:visibility="visible"
-                    android:padding="@dimen/_8sdp"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    android:id="@+id/ll_search">
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/imgSearch"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        app:srcCompat="@mipmap/search"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:padding="@dimen/_3sdp"
-                        android:tint="@color/white"/>
-                <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/_11sdp"
-                        android:hint="Search by Username or Asset name / symbol"
-                        android:textColorHint="@color/white"
-                        android:inputType="textCapSentences"
-                        android:textColor="@color/white"
-                        android:singleLine="true"
-                        android:id="@+id/et_search_stock"/>
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/imgcross"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        app:srcCompat="@mipmap/cross"
-                        android:layout_gravity="center"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:layout_marginRight="@dimen/_8sdp"
-                        android:padding="@dimen/_3sdp"
-                        android:tint="@color/white"/>
-            </LinearLayout>n
+    <!--   <android.support.v7.widget.Toolbar
+               android:layout_width="match_parent"
+               android:layout_height="?attr/actionBarSize"
+               app:layout_collapseMode="pin"/>
 
-         <!--   <android.support.v7.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"/>
+   </android.support.design.widget.CollapsingToolbarLayout>-->
 
-        </android.support.design.widget.CollapsingToolbarLayout>-->
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_news"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/row_latest_news"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>
 

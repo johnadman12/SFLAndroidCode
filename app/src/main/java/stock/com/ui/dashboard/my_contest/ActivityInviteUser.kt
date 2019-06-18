@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_invite_user.*
+import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 
@@ -26,6 +27,9 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
                 changeBackGroundColor(tv_friends, ContextCompat.getColor(this, R.color.colorbutton));
                 changeBackGroundColor(tv_Alluser, ContextCompat.getColor(this, R.color.white));
             }
+            R.id.img_btn_back -> {
+                finish()
+            }
         }
 
     }
@@ -35,6 +39,7 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_invite_user)
         tv_friends.setOnClickListener(this)
         tv_Alluser.setOnClickListener(this)
+        img_btn_back.setOnClickListener(this)
         changeTextColor(tv_Alluser, ContextCompat.getColor(this, R.color.white));
         changeTextColor(tv_friends, ContextCompat.getColor(this, R.color.textColorLightBlack));
         changeBackGroundColor(tv_Alluser, ContextCompat.getColor(this, R.color.colorbutton));

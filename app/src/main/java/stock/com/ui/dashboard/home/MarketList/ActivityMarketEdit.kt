@@ -56,6 +56,7 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
                                 marketSelectedItems!!.get(i).cryptocurrencyid.toString()
                             );
                             postData1.addProperty("price", marketSelectedItems!!.get(i).latestPrice.toString());
+                            postData1.addProperty("change_percent", marketSelectedItems!!.get(i).changeper.toString());
                             postData1.addProperty("stock_type", marketSelectedItems!!.get(i).cryptoType);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {

@@ -88,6 +88,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("crypto_id", marketSelectedItem!!.get(i).cryptocurrencyid.toString());
                             postData1.addProperty("price", marketSelectedItem!!.get(i).latestPrice.toString());
+                            postData1.addProperty("change_percent", marketSelectedItem!!.get(i).changeper.toString());
                             postData1.addProperty("stock_type", marketSelectedItem!!.get(i).cryptoType);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
@@ -245,6 +246,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 try {
                     postData.addProperty("crypto_id", marketSelectedItem!!.get(i).cryptocurrencyid.toString());
                     postData.addProperty("price", marketSelectedItem!!.get(i).latestPrice.toString());
+                    postData.addProperty("change_percent", marketSelectedItem!!.get(i).changeper.toString());
                     postData.addProperty("stock_type", marketSelectedItem!!.get(i).cryptoType);
 
                 } catch (e: Exception) {

@@ -13,6 +13,9 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
             R.id.btn_join -> {
                 finish()
             }
+            R.id.img_btn_back -> {
+                finish()
+            }
         }
     }
 

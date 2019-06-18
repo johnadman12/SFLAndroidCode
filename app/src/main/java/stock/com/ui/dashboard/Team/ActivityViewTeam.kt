@@ -95,6 +95,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                            postData1.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent.toString());
                             postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
@@ -256,6 +257,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 try {
                     postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                     postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                    postData.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent.toString());
                     postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
 
                 } catch (e: Exception) {

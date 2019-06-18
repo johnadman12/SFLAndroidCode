@@ -431,6 +431,22 @@ interface ApiInterface {
     ): Call<MarketData>
 
 
+    @FormUrlEncoded
+    @POST("usercontest/user_friend_list")
+    fun getFriendsList(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<FriendsList>
+
+    @FormUrlEncoded
+    @POST("usercontest/user_friend_list")
+    fun addToFriends(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("friend_id") friend_id: String
+    ): Call<BasePojo>
+
+
     /*  @FormUrlEncoded
       @POST("team/create_team")
       fun saveTeam(
