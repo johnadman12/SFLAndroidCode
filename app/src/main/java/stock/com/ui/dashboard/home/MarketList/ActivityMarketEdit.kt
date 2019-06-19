@@ -74,6 +74,7 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityMarketEdit, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
             R.id.ll_watchlist -> {

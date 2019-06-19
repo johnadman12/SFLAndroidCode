@@ -109,11 +109,13 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                        .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
             }

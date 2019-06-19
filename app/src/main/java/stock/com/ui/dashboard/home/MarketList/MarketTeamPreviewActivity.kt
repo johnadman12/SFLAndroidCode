@@ -15,6 +15,7 @@ import stock.com.utils.StockConstant
 
 class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<MarketList.Crypto>? = null;
+    var totalChange: String = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_back -> {
@@ -30,8 +31,10 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_preview)
         list = ArrayList()
-        if (intent != null)
+        if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+            totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
+        }
         initViews()
     }
 

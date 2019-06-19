@@ -114,6 +114,9 @@ public class ContestDetail extends BasePojo {
         @SerializedName("rank")
         @Expose
         public String rank;
+        @SerializedName("totalchange_Per")
+        @Expose
+        public String totalchange_Per;
         @SerializedName("points")
         @Expose
         public String points;

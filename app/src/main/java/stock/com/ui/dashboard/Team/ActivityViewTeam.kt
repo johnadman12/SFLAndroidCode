@@ -76,6 +76,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, list)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
             R.id.ivedit -> {

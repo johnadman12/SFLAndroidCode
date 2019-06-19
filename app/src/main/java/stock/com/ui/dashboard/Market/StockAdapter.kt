@@ -36,18 +36,28 @@ class StockAdapter(
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.name.setText(searchList!!.get(position).symbol)
         holder.itemView.tv_company.setText(searchList!!.get(position).companyName)
-        holder.itemView.tv_latest_price.setText(searchList!!.get(position).latestPrice + " %")
+        holder.itemView.tv_latest_price.setText(searchList!!.get(position).latestPrice)
 
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.img_market)
+
+
+      /*  val marketopen: Long = searchList!!.get(position).marketopen.toLong()
+        if (marketopen == searchList!!.get(position).latestPrice.toLong())
+            holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+        else if (marketopen > searchList!!.get(position).latestPrice.toLong())
+            holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
+        else if (marketopen < searchList!!.get(position).latestPrice.toLong())
+            holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+*/
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
             if (searchList!!.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent)
+                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent + " %")
             } else {
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changePercent)
+                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changePercent + " %")
             }
 
         if (searchList!!.get(position).stock_type.equals("1")) {

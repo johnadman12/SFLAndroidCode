@@ -81,6 +81,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityEditTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
             R.id.ll_watchlist -> {

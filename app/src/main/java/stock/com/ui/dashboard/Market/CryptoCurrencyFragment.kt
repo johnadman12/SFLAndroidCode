@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Market
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,7 +51,19 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
         })
 
-        getCurrency("1")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                getCurrency("1")
+                mainHandler.postDelayed(this, 20000)
+            }
+        })
     }
 
 

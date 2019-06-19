@@ -14,6 +14,9 @@ public class Scores extends BasePojo {
         @SerializedName("team_id")
         @Expose
         public int teamId;
+        @SerializedName("totalchange_Per")
+        @Expose
+        public String totalchange_Per;
         @SerializedName("contestId")
         @Expose
         public int contestId;

@@ -16,6 +16,7 @@ import stock.com.utils.StockConstant
 
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
+    var totalChange: String = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_back -> {
@@ -31,8 +32,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team_preview)
         list = ArrayList()
-        if (intent != null)
+        if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
+        }
         initViews()
     }
 

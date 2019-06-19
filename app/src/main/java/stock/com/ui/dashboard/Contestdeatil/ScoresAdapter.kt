@@ -46,10 +46,12 @@ class ScoresAdapter(
                     mContext.startActivity(
                         Intent(mContext, TeamPreviewActivity::class.java)
                             .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                     ) else
                     mContext.startActivity(
                         Intent(mContext, MarketTeamPreviewActivity::class.java)
                             .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                     )
             } else {
 

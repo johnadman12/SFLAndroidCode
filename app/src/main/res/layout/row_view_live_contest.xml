@@ -71,8 +71,9 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="@dimen/_5sdp"
+                    android:id="@+id/tvTotalChange"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"/>
+                    android:textSize="@dimen/_9ssp"/>
         </LinearLayout>
 
         <LinearLayout

@@ -29,7 +29,7 @@ class LiveScoreAdapter(
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
-//        holder.itemView.tvPercentage.setText(scores.get(position).)
+        holder.itemView.tvPercentage.setText(scores.get(position).totalchange_Per)
         holder.itemView.tvRank.setText(scores.get(position).rank)
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
@@ -39,6 +39,7 @@ class LiveScoreAdapter(
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                        .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
             } else {
 

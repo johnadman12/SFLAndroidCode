@@ -15,7 +15,7 @@ public class MyTeamsPojo extends BasePojo {
 
         @SerializedName("totalchangePercentage")
         @Expose
-        public int totalchangePercentage;
+        public String totalchangePercentage;
         @SerializedName("contestjoinId")
         @Expose
         public int contestjoinId;

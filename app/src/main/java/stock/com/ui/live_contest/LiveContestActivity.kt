@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,15 +64,32 @@ class LiveContestActivity : BaseActivity() {
                 startActivity(
                     Intent(this@LiveContestActivity, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, crptoList)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 ) else
                 startActivity(
                     Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockList)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
         }
-        getContestDetail()
+
+//        getContestDetail()
 
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                getContestDetail()
+                mainHandler.postDelayed(this, 20000)
+            }
+        })
+    }
+
 
     @SuppressLint("WrongConstant")
     fun setLiveAdapter(scores: MutableList<ContestDetail.Score>) {
@@ -93,6 +111,7 @@ class LiveContestActivity : BaseActivity() {
             , scores, object : RecycleTeamAdapter.ItemClickListner {
                 override fun onItemClick(item: ContestDetail.Score) {
                     tvRank.setText(item.rank)
+                    totalChange.setText(item.totalchange_Per + "%")
                     tvRankLable.setText(getString(R.string.rank) + " (" + item.teamNameCount + ")")
                     if (item.stock.size == 0) {
                         flagCrypto = true
@@ -137,6 +156,7 @@ class LiveContestActivity : BaseActivity() {
                         }, 100)
                         setLiveAdapter(response.body()!!.scores)
                         tvcontesttype.setText(response.body()!!.contest.get(0).catname)
+
                         for (i in 0 until response.body()!!.scores.size)
                             if (response.body()!!.scores.get(i).userid.toString().equals(
                                     getFromPrefsString(
@@ -152,6 +172,7 @@ class LiveContestActivity : BaseActivity() {
                             if (filterTeamList!!.size == 1) {
                                 recycle_myteam.visibility = View.GONE
                                 tvRank.setText(filterTeamList!!.get(0).rank)
+                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
                                 stockList!!.clear()
                                 crptoList!!.clear()
                                 if (filterTeamList!!.get(0).stock.size == 0) {
@@ -161,6 +182,7 @@ class LiveContestActivity : BaseActivity() {
                                     stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
                             } else {
                                 tvRank.setText(filterTeamList!!.get(0).rank)
+                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
                                 stockList!!.clear()
                                 stockList!!.addAll(filterTeamList!!.get(0).stock)
                                 setLiveTeamAdapter(filterTeamList!!)
@@ -203,7 +225,6 @@ class LiveContestActivity : BaseActivity() {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
-
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
                         val minutes = diffSec / 60 % 60
@@ -211,6 +232,7 @@ class LiveContestActivity : BaseActivity() {
 
                         tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
                     }
+
                     override fun onFinish() {
                     }
                 }

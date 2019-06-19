@@ -29,6 +29,7 @@ class LiveContestAdapter(
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
         holder.itemView.tvRank.setText("Rank :" + scores.get(position).rank)
+        holder.itemView.tvTotalChange.setText(scores.get(position).totalchange_Per+"%")
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.profile_image)
 
@@ -40,10 +41,12 @@ class LiveContestAdapter(
                     mContext.startActivity(
                         Intent(mContext, MarketTeamPreviewActivity::class.java)
                             .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                     ) else
                     mContext.startActivity(
                         Intent(mContext, TeamPreviewActivity::class.java)
                             .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                     )
             }/* else {
 //                Toast.makeText(mContext, "Contest is not live yet.", 10000).show()

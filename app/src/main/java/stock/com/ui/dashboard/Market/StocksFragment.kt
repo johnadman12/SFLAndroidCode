@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Market
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import stock.com.ui.pojo.MarketData
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.util.*
 
 class StocksFragment : BaseFragment() {
     var sector: String = ""
@@ -51,9 +53,42 @@ class StocksFragment : BaseFragment() {
                 getStocks("1")
             }
         })
+
+
         getStocks("1")
 
+
+        /*   val thread = Thread(object : Runnable {
+                var lastMinute: Int = 0
+                var currentMinute: Int = 0
+               override fun run() {
+                   lastMinute = currentMinute
+                   while (true) {
+                       val calendar = Calendar.getInstance()
+                       calendar.timeInMillis = System.currentTimeMillis()
+                       currentMinute = calendar.get(Calendar.MINUTE)
+                       if (currentMinute != lastMinute) {
+                           lastMinute = currentMinute
+                           getStocks("1")
+                       }
+                   }
+               }
+           })
+           thread.run()*/
     }
+
+    override fun onResume() {
+        super.onResume()
+        val mainHandler = Handler(Looper.getMainLooper())
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                getStocks("1")
+                mainHandler.postDelayed(this, 20000)
+            }
+        })
+    }
+
 
     fun getStocks(flag: String) {
         val d = StockDialog.showLoading(activity!!)
@@ -74,27 +109,17 @@ class StocksFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-//                        if (flag.equals("1")) {
+                        if (flag.equals("1")) {
                             stockList = response.body()!!.stock
                             setStockAdapter(stockList!!)
-                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                            /* if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
-                            }
-                        /*else {
-                            stockList = response.body()!!.stock
-                            for (i in 0 until stockList!!.size) {
-                                if (stockList!!.get(i).changePercent != null)
-                                    if (!stockList!!.get(i).changePercent.equals("0")) {
-                                        stockListFilter!!.add(stockList!!.get(i))
-//                                        stockList!!.remove(stockList!!.get(i))
-                                        Log.d("stocklist", stockListFilter!!.size.toString())
-                                    }
                             }*/
-
+                        } else {
                             stockList!!.clear()
                             stockList = stockListFilter
                             setStockAdapter(stockListFilter!!)
-//                        }
+                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -204,7 +229,7 @@ class StocksFragment : BaseFragment() {
         if (type.equals("0")) {
             getStocks("0")
             rv_currencyList!!.adapter!!.notifyDataSetChanged()
-        }else{
+        } else {
             getStocks(type)
             rv_currencyList!!.adapter!!.notifyDataSetChanged()
         }

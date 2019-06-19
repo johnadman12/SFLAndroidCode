@@ -42,8 +42,8 @@ class CurrencyAdapter(
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.name.setText(search!!.get(position).symbol)
         holder.itemView.tv_company.setText(search!!.get(position).name)
-        holder.itemView.tv_latest_price.setText(search!!.get(position).latestPrice + " %")
-        holder.itemView.tv_change_percentage.setText(search!!.get(position).changeper)
+        holder.itemView.tv_latest_price.setText(search!!.get(position).latestPrice)
+        holder.itemView.tv_change_percentage.setText(search!!.get(position).changeper + " %")
 
         Glide.with(mContext).load(search!!.get(position).image).into(holder.itemView.img_market)
 
