@@ -33,7 +33,7 @@
                     android:orientation="vertical">
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="CLMT"
+                          android:text=""
                           android:textSize="@dimen/_12sdp"
                           android:id="@+id/name"
                           style="@style/TextStyleSemiBold"
@@ -41,7 +41,7 @@
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Calumet speciality"
+                          android:text=""
                           android:textSize="@dimen/_11sdp"
                           style="@style/TextStyleSemiBold"
                           android:id="@+id/tv_company"
@@ -49,7 +49,7 @@
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="Vol: 48.2 m"
+                          android:text=""
                           android:visibility="gone"
                           android:drawableRight="@mipmap/heartblue"
                           android:drawablePadding="@dimen/_5sdp"
@@ -74,7 +74,7 @@
                     android:orientation="vertical">
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="88%"
+                          android:text=""
                           android:textSize="@dimen/_14sdp"
                           android:id="@+id/tv_latest_price"
                           style="@style/TextStyleSemiBold"
@@ -82,7 +82,7 @@
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="-202(-1.06)"
+                          android:text=""
                           android:textSize="@dimen/_11sdp"
                           android:id="@+id/tv_change_percentage"
                           style="@style/TextStyleNormal"
@@ -90,7 +90,7 @@
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="-202(-1.06)"
+                          android:text=""
                           android:visibility="gone"
                           android:drawableRight="@mipmap/heartblue"
                           android:drawablePadding="@dimen/_5sdp"

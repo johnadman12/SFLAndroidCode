@@ -12,7 +12,7 @@
             android:id="@+id/refreshData"
             android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_currencyList"
+                android:id="@+id/rv_stockList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </com.madapps.liquid.LiquidRefreshLayout>

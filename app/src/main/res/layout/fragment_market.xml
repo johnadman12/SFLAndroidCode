@@ -118,7 +118,6 @@
                     android:id="@+id/rvstock"
                     android:layout_width="match_parent"
                     android:background="@color/white"
-                    tools:listitem="@layout/row_view_stock_name"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal"
                     android:padding="@dimen/_5sdp"

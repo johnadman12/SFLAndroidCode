@@ -40,6 +40,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         when (v!!.id) {
             R.id.tv_crypto -> {
                 isMarket = 0
+                et_search.setText("")
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -109,6 +110,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_stocks -> {
                 isMarket = 1
+                et_search.setText("")
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -236,7 +238,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         fragment!!.arguments = bundle;
         val fragmentManager: FragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentManager
-//            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
+            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
             .replace(R.id.container, fragment)
             .commitAllowingStateLoss()
     }
