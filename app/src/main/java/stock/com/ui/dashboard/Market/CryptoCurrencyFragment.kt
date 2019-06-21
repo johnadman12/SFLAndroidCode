@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Market
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -31,7 +32,10 @@ class CryptoCurrencyFragment : BaseFragment() {
     private var cryptoList: ArrayList<MarketList.Crypto>? = null
     private var cryptoListNew: ArrayList<MarketList.Crypto>? = null
     private var cryptoListFiltered: ArrayList<MarketList.Crypto>? = null
-
+    var flagAlphaSort: Boolean = false
+    var flagPriceSort: Boolean = false
+    var flagDaySort: Boolean = false
+    var flagHTLSort: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
@@ -60,6 +64,11 @@ class CryptoCurrencyFragment : BaseFragment() {
                 if (isVisible) {
                     getCurrencyAgain("1")
                     mainHandler.postDelayed(this, 8000)
+                } else {
+                    flagAlphaSort = false
+                    flagPriceSort = false
+                    flagDaySort = false
+                    flagHTLSort = false
                 }
             }
         })
@@ -134,8 +143,6 @@ class CryptoCurrencyFragment : BaseFragment() {
 
 
     fun getCurrencyAgain(flag: String) {
-//        val d = StockDialog.showLoading(activity!!)
-//        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketData> =
             apiService.getMarketData(
@@ -146,18 +153,49 @@ class CryptoCurrencyFragment : BaseFragment() {
         call.enqueue(object : Callback<MarketData> {
 
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
-//                d.dismiss()
                 if (refreshData != null)
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
                             cryptoListNew = response.body()!!.crypto
-                            cryptoAdapter!!.notifyDataSetChanged()
+                            if (flagAlphaSort) {
+                                val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
+                                for (obj in sortedList) {
+                                    cryptoListNew!!.clear()
+                                    cryptoListNew!!.addAll(sortedList)
+                                }
+                            } else if (flagPriceSort) {
+                                val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                                for (obj in sortedList) {
+                                    cryptoListNew!!.clear()
+                                    cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                                }
 
-                            Handler().postDelayed(Runnable {
-                                setCryptoCurrencyAdapter()
-                            }, 100)
+                            } else if (flagDaySort) {
+                                val sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
+                                for (obj in sortedList) {
+                                    cryptoListNew!!.clear()
+                                    cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                                }
+                            } else if (flagHTLSort) {
+                                val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+                                for (obj in sortedList) {
+                                    cryptoListNew!!.clear()
+                                    cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                                }
+
+                            } /*else {
+                                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }*/
+
+                            if (rv_currencyList != null)
+                                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            setCryptoCurrencyAdapter()
+
 
                         }
 
@@ -184,7 +222,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     fun setCryptoCurrencyAdapter(/*item: MutableList<MarketList.Crypto>*/) {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
-        if (rv_currencyList!=null) {
+        if (rv_currencyList != null) {
             rv_currencyList!!.layoutManager = llm
             rv_currencyList.visibility = View.VISIBLE
             cryptoAdapter = CurrencyAdapter(context!!, cryptoList!!, this, cryptoListNew!!);
@@ -211,7 +249,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        AppDelegate.showAlert(activity!!,response.body()!!.message)
+                        AppDelegate.showAlert(activity!!, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
@@ -239,22 +277,41 @@ class CryptoCurrencyFragment : BaseFragment() {
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
-            var sortedList = cryptoList!!.sortedBy { it.symbol?.toString() }
+            flagAlphaSort = true
+            var sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
             for (obj in sortedList) {
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("dayChange")) {
-            var sortedList = cryptoList!!.sortedBy { it.changeper?.toDouble() }
+            flagDaySort = true
+            var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
             for (obj in sortedList) {
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("price")) {
-            var sortedList = cryptoList!!.sortedBy { it.latestPrice?.toDouble() }
+            flagPriceSort = true
+            var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
             for (obj in sortedList) {
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("HighToLow")) {
+            flagHTLSort = true
+            val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+            for (obj in sortedList) {
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
@@ -266,6 +323,16 @@ class CryptoCurrencyFragment : BaseFragment() {
         if (type.equals("0")) {
             getCurrency("0")
             rv_currencyList!!.adapter!!.notifyDataSetChanged()
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 410 && data != null) {
+            getCurrencyAgain("1")
+            rv_currencyList.adapter!!.notifyDataSetChanged()
+
         }
 
     }

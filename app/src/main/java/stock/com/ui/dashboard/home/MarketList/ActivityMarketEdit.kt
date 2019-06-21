@@ -21,6 +21,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.MarketList
@@ -123,16 +124,16 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
             this, this@ActivityMarketEdit, list as ArrayList,
             object : MarketEditAdapter.OnItemCheckListener {
                 override fun onItemClick(item: MarketList.Crypto) {
-                    /*startActivityForResult(
+                    startActivityForResult(
                         Intent(
-                            this@ActivityEditTeam,
-                            ActivityStockDetail::class.java
+                            this@ActivityMarketEdit,
+                            ActivityMarketDetail::class.java
                         )
-                            .putExtra("Stockid", item.stockid)
-                            .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra(StockConstant.MARKETLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_EDIT_MARKET
-                    )*/
+                    )
                 }
 
                 override fun onItemUncheck(item: MarketList.Crypto) {
@@ -294,6 +295,7 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
                 setTeamText(marketSelectedItems!!.size.toString())
             }
         }
+
     }
 
     fun saveTeamList() {

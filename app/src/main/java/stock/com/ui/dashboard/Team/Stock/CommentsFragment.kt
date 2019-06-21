@@ -72,104 +72,107 @@ class CommentsFragment : BaseFragment() {
             override fun onResponse(call: Call<Comments>, response: Response<Comments>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    d.dismiss()
-                    list = response.body()!!.commentlist
-                    setCommentsAdapter(list!!)
+                    if (response.body()!!.status == "1") {
+                        d.dismiss()
+                        list = response.body()!!.commentlist
+                        setCommentsAdapter(list!!)
+                    } else if (response.body()!!.status == "0") {
+                            displayToast(response.body()!!.message, "error")
+                    }
                 }
             }
-
-            override fun onFailure(call: Call<Comments>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
-    }
-
-
-    fun postComment(textComment: String) {
-        val d = StockDialog.showLoading(activity!!)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<Comments> =
-            apiService.postComments(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                stockId.toInt(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                textComment
-            )
-        call.enqueue(object : Callback<Comments> {
-            override fun onResponse(call: Call<Comments>, response: Response<Comments>) {
-                d.dismiss()
-                if (response.body() != null) {
+                override fun onFailure(call: Call<Comments>, t: Throwable) {
+                    println(t.toString())
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
-                    AppDelegate.showAlert(activity!!, response.body()!!.message)
-                    if (list != null)
-                        list!!.clear()
-                    list!!.addAll(response.body()!!.commentlist)
-//                    list!!.sortByDescending { it.createdAt };
-                    setCommentsAdapter(list!!)
-                    et_comment.setText("")
-                    AppDelegate.hideKeyBoard(activity!!)
-
                 }
-            }
-
-            override fun onFailure(call: Call<Comments>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
-    }
-
-
-    fun likeComment(commentId: Int) {
-        val d = StockDialog.showLoading(activity!!)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<BasePojo> =
-            apiService.likeComment(
-                commentId,
-                getFromPrefsString(StockConstant.USERID).toString()
-            )
-        call.enqueue(object : Callback<BasePojo> {
-            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    d.dismiss()
-                    displayToast("You liked this post", "sucess")
-//                    rvComments.adapter!!.notifyDataSetChanged()
-                }
-            }
-
-            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
-    }
-
-    fun shareIntent() {
-        val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "");
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
-    }
-
-    fun parseDateToddMMyyyy(time: String): Long? {
-        val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        var dateInMillis: Long = 0
-        try {
-            val date = outputPattern.parse(time)
-            dateInMillis = date.getTime()
-            return dateInMillis
-        } catch (e: ParseException) {
-            e.printStackTrace()
+            })
         }
-        return 0
+
+
+            fun postComment (textComment: String) {
+            val d = StockDialog.showLoading(activity!!)
+            d.setCanceledOnTouchOutside(false)
+            val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+            val call: Call<Comments> =
+                apiService.postComments(
+                    getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                    stockId.toInt(),
+                    getFromPrefsString(StockConstant.USERID).toString(),
+                    textComment
+                )
+            call.enqueue(object : Callback<Comments> {
+                override fun onResponse(call: Call<Comments>, response: Response<Comments>) {
+                    d.dismiss()
+                    if (response.body() != null) {
+                        d.dismiss()
+                        AppDelegate.showAlert(activity!!, response.body()!!.message)
+                        if (list != null)
+                            list!!.clear()
+                        list!!.addAll(response.body()!!.commentlist)
+//                    list!!.sortByDescending { it.createdAt };
+                        setCommentsAdapter(list!!)
+                        et_comment.setText("")
+                        AppDelegate.hideKeyBoard(activity!!)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<Comments>, t: Throwable) {
+                    println(t.toString())
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            })
+        }
+
+
+        fun likeComment(commentId: Int) {
+            val d = StockDialog.showLoading(activity!!)
+            d.setCanceledOnTouchOutside(false)
+            val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+            val call: Call<BasePojo> =
+                apiService.likeComment(
+                    commentId,
+                    getFromPrefsString(StockConstant.USERID).toString()
+                )
+            call.enqueue(object : Callback<BasePojo> {
+                override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                    d.dismiss()
+                    if (response.body() != null) {
+                        d.dismiss()
+                        displayToast("You liked this post", "sucess")
+//                    rvComments.adapter!!.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                    println(t.toString())
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            })
+        }
+
+        fun shareIntent() {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "");
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
+        }
+
+        fun parseDateToddMMyyyy(time: String): Long? {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            var dateInMillis: Long = 0
+            try {
+                val date = outputPattern.parse(time)
+                dateInMillis = date.getTime()
+                return dateInMillis
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return 0
+        }
     }
-}

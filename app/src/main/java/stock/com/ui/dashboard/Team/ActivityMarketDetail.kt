@@ -1,4 +1,4 @@
-package stock.com.ui.dashboard.Team.Stock
+package stock.com.ui.dashboard.Team
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,8 +9,6 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -24,15 +22,16 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Team.Stock.*
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-
-class ActivityStockDetail : BaseActivity(), View.OnClickListener {
-    private var list: ArrayList<StockTeamPojo.Stock>? = null;
+class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
+    private var list: ArrayList<MarketList.Crypto>? = null;
     private var selectedItems: Int = 0
     private var fragment: Fragment? = null;
     var stockId: Int = 0
@@ -40,26 +39,22 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stock_detail_page)
+        setContentView(R.layout.activity_market_detail)
         list = ArrayList()
         StockConstant.ACTIVITIES.add(this)
         if (intent != null) {
-            stockId = intent.getIntExtra("Stockid", 0);
-            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            stockId = intent.getIntExtra("cryptoId", 0);
+            list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
             selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
         }
 
         if (list!!.size > 0)
             for (i in 0 until list!!.size) {
-                if (stockId.equals(list!!.get(i).stockid))
+                if (stockId.equals(list!!.get(i).cryptocurrencyid))
                     position = i
             }
         setStockData()
 
-        /*  if (list!!.get(position).getAddedStock().equals("0")) {
-              list!!.get(position).addedStock = "1";
-          } else if (list!!.get(position).getAddedStock().equals("1"))
-              list!!.get(position).addedStock = "0";*/
 
         setFragment(ChartFragment(), Bundle());
         ll_news.setOnClickListener(this);
@@ -85,16 +80,16 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             }
 
             R.id.ivTeam -> {
-                if (list!!.get(position).getAddedToList() == 1) {
+                if (list!!.get(position).addedToList == 1) {
                     //show green button
-                    AppDelegate.showAlert(this, "already added to stock")
-                } else if (list!!.get(position).getAddedToList() == 0) {
+                    AppDelegate.showAlert(this, "already added to Crypto")
+                } else if (list!!.get(position).addedToList == 0) {
                     if (selectedItems >= 12) {
-                        displayToast("You have selected maximum number of stocks for your team.", "error")
+                        displayToast("You have selected maximum number of Crypto for your team.", "error")
                     } else {
                         list!!.get(position).addedToList = 1
                         //show red button
-                        AppDelegate.showAlert(this, "added to stock")
+                        AppDelegate.showAlert(this, "added to Crypto")
                         var intent = Intent();
                         intent.putExtra("list", list)
                         setResult(Activity.RESULT_OK, intent);
@@ -236,13 +231,15 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
     fun setStockData() {
         if (position != -1) {
             stock_name.setText(list!!.get(position).symbol)
-            tv_stockcomp.setText(list!!.get(position).companyName)
-            tvStockPercentage.setText(list!!.get(position).previousClose)
+            tv_stockcomp.setText(list!!.get(position).name)
+            tvStockPercentage.setText(list!!.get(position).marketcapital)
             tvVol.setText(list!!.get(position).latestVolume)
             tvlatestPrice.setText(list!!.get(position).latestPrice)
             Glide.with(this).load(list!!.get(position).image).into(iv_stock_img)
-            if (!TextUtils.isEmpty(list!!.get(position).changePercent))
-                if (list!!.get(position).changePercent.contains("-"))
+
+
+            if (!TextUtils.isEmpty(list!!.get(position).changeper))
+                if (list!!.get(position).changeper.contains("-"))
                     Glide.with(this).load(R.mipmap.downred).into(stockgraph)
                 else
                     Glide.with(this).load(R.mipmap.upgraph).into(stockgraph)
@@ -256,10 +253,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> =
-            apiService.addStockWatch(
+            apiService.addCurrencyToWatch(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 stockId,
-                getFromPrefsString(StockConstant.USERID).toString()
+                getFromPrefsString(StockConstant.USERID).toString(), "crypto"
             )
         call.enqueue(object : Callback<BasePojo> {
 
@@ -270,7 +267,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        displayToast(response.body()!!.message, "sucess")
+                        AppDelegate.showAlert(this@ActivityMarketDetail, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
@@ -305,5 +302,4 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             .replace(R.id.container1, fragment)
             .commitAllowingStateLoss()
     }
-
 }

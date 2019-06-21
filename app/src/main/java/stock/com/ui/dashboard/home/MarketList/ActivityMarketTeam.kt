@@ -25,6 +25,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
+import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.MarketList
@@ -173,16 +174,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             this@ActivityMarketTeam,
             object : MarketListAdapter.OnItemCheckListener {
                 override fun onItemClick(item: MarketList.Crypto) {
-                    /*startActivityForResult(
+                    startActivityForResult(
                         Intent(
                             this@ActivityMarketTeam,
-                            ActivityStockDetail::class.java
+                            ActivityMarketDetail::class.java
                         )
-                            .putExtra("Stockid", item.stockid)
-                            .putExtra(StockConstant.STOCKLIST, list)
-                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
+                            .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra(StockConstant.MARKETLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
-                    )*/
+                    )
 
                 }
 
@@ -521,6 +522,25 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+        if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                /* if (getTeamText() > 12) {
+                     Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                 } else {*/
+
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+                marketSelectedItems!!.clear();
+                for (i in 0 until list!!.size) {
+                    if (list!!.get(i).addedToList == 1) {
+                        marketSelectedItems!!.add(list!!.get(i))
+                    }
+                }
+                setTeamText(marketSelectedItems!!.size.toString())
+            }
+        }
+
 
         if (requestCode == StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {

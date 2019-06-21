@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Market
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -275,4 +276,12 @@ class StocksFragment : BaseFragment() {
         rv_stockList!!.adapter!!.notifyDataSetChanged()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 411 && data != null) {
+            getStocksAgain("1")
+            rv_stockList.adapter!!.notifyDataSetChanged()
+        }
+
+    }
 }

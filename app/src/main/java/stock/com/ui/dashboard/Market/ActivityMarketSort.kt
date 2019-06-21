@@ -21,6 +21,7 @@ class ActivityMarketSort : BaseActivity() {
             if (isChecked) {
                 checkBoxVolume.isChecked = false;
                 checkBoxAlpha.isChecked = false;
+                checkBoxHTL.isChecked = false;
             }
         }
         checkBoxVolume?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -28,6 +29,7 @@ class ActivityMarketSort : BaseActivity() {
             if (isChecked) {
                 checkBoxPrize.isChecked = false;
                 checkBoxAlpha.isChecked = false;
+                checkBoxHTL.isChecked = false;
             }
         }
         checkBoxAlpha?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -35,6 +37,15 @@ class ActivityMarketSort : BaseActivity() {
             if (isChecked) {
                 checkBoxVolume.isChecked = false;
                 checkBoxPrize.isChecked = false;
+                checkBoxHTL.isChecked = false;
+            }
+        }
+        checkBoxHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
+            //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+            if (isChecked) {
+                checkBoxVolume.isChecked = false;
+                checkBoxPrize.isChecked = false;
+                checkBoxAlpha.isChecked = false;
             }
         }
     }
@@ -58,6 +69,9 @@ class ActivityMarketSort : BaseActivity() {
             }
             if (checkBoxAlpha.isChecked) {
                 temp = "Alpha"
+            }
+            if (checkBoxHTL.isChecked) {
+                temp = "HighToLow"
             }
             var intent = Intent();
             intent.putExtra("flag", temp)

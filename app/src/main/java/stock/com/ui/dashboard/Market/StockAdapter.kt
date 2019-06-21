@@ -1,6 +1,8 @@
 package stock.com.ui.dashboard.Market
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.util.Log
@@ -11,12 +13,16 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_currency_market.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Team.ActivityMarketDetail
+import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.StockConstant
 
 class StockAdapter(
     val mContext: Context,
@@ -45,13 +51,13 @@ class StockAdapter(
         anim.repeatCount = Animation.REVERSE
 
 
-        holder.itemView.name.setText(searchList!!.get(position).symbol)
-        holder.itemView.tv_company.setText(searchList!!.get(position).companyName)
-        holder.itemView.tv_latest_price.setText(searchList!!.get(position).latestPrice)
+        holder.itemView.name.setText(stockListNew!!.get(position).symbol)
+        holder.itemView.tv_company.setText(stockListNew!!.get(position).companyName)
+        holder.itemView.tv_latest_price.setText("$" + searchList!!.get(position).latestPrice)
 
 
         if (!TextUtils.isEmpty(stockListNew.get(position).latestPrice)) {
-             priceText = stockListNew.get(position).latestPrice;
+            priceText = stockListNew.get(position).latestPrice;
         } else {
             priceText = "0";
         }
@@ -64,7 +70,7 @@ class StockAdapter(
                     if (priceText.equals(searchList!!.get(position).latestPrice)) {
                         holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black))
                     } else if (priceText.toDouble() > searchList!!.get(position).latestPrice.toDouble()) {
-                        val newtimer = object : CountDownTimer(2000, 2000) {
+                        val newtimer = object : CountDownTimer(500, 500) {
                             override fun onTick(millisUntilFinished: Long) {
                                 Log.e("timeerror", millisUntilFinished.toString())
                                 holder.itemView.tv_latest_price.setTextColor(
@@ -77,7 +83,7 @@ class StockAdapter(
                             }
 
                             override fun onFinish() {
-                                holder.itemView.tv_latest_price.setText(stockListNew.get(position).latestPrice)
+                                holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
                                 searchList!!.get(position).latestPrice = stockListNew.get(position).latestPrice
                                 searchList!!.get(position).changePercent = stockListNew.get(position).changePercent
                                 holder.itemView.tv_latest_price.setTextColor(
@@ -91,7 +97,7 @@ class StockAdapter(
                         newtimer.start()
 
                     } else if (priceText.toDouble() < searchList!!.get(position).latestPrice.toDouble()) {
-                        val newtimer = object : CountDownTimer(2000, 2000) {
+                        val newtimer = object : CountDownTimer(500, 500) {
                             override fun onTick(millisUntilFinished: Long) {
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
@@ -103,7 +109,7 @@ class StockAdapter(
                             }
 
                             override fun onFinish() {
-                                holder.itemView.tv_latest_price.setText(stockListNew.get(position).latestPrice)
+                                holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
                                 searchList!!.get(position).latestPrice = stockListNew.get(position).latestPrice
                                 searchList!!.get(position).changePercent = stockListNew.get(position).changePercent
                                 holder.itemView.tv_latest_price.setTextColor(
@@ -116,14 +122,22 @@ class StockAdapter(
                         }
                         newtimer.start()
                     }
-                }
-                else {
-                    holder.itemView.tv_latest_price.setText(stockListNew.get(position).latestPrice)
+                } else {
+                    holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
                 }
             }
         }
 
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.img_market)
+
+
+        holder.itemView.setOnClickListener {
+            var intent = Intent(mContext, ActivityStockDetail::class.java);
+            intent.putExtra("cryptoId", stockListNew.get(position).stockid)
+            intent.putExtra(StockConstant.STOCKLIST, stockListNew)
+            intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+            ActivityCompat.startActivityForResult(mContext as Activity, intent, 411, null);
+        }
 
 
         if (!TextUtils.isEmpty(stockListNew!!.get(position).changePercent))

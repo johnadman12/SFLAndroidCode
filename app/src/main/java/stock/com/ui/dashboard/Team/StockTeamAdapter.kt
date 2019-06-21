@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_view_contest.*
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
-import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate

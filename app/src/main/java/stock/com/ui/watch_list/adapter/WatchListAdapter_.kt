@@ -43,7 +43,7 @@ class WatchListAdapter_(
         viewBinderHelper.bind(holder.itemView.swipeRevealLayout, "" + position);
         holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
         holder.itemView.tv_sector.setText(searchList!!.get(position).companyName);
-        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
+        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent+"%");
         holder.itemView.tv_market_open.setText(searchList!!.get(position).latestPrice);
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
         holder.itemView.img_btn_remove.setOnClickListener {

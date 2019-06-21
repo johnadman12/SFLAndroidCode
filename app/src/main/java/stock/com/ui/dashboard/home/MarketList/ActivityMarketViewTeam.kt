@@ -31,6 +31,7 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Lobby.ActivityAddCash
+import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.ContestDetail
@@ -193,17 +194,16 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 }
 
                 override fun onItemClick(item: MarketList.Crypto) {
-
-                    /*startActivityForResult(
+                    startActivityForResult(
                         Intent(
-                            this@ActivityViewTeam,
-                            ActivityStockDetail::class.java
+                            this@ActivityMarketViewTeam,
+                            ActivityMarketDetail::class.java
                         )
-                            .putExtra("Stockid", item.stockid)
-                            .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra(StockConstant.MARKETLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItem!!.size)
-                        , StockConstant.RESULT_CODE_VIEW_TEAM
-                    )*/
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
                 }
 
                 override fun onItemCheck(item: Int, itemcontest: MarketList.Crypto) {
@@ -348,6 +348,18 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+
+        if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                /* if (getTeamText() > 12) {
+                     Toast.makeText(this, "You have selected maximum number of stocks for your team.", 10000).show()
+                 } else {*/
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_team!!.adapter!!.notifyDataSetChanged()
+            }
+        }
+
     }
 
 

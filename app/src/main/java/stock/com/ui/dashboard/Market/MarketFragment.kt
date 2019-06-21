@@ -277,6 +277,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
 
                 }
+                else if (data.getStringExtra("flag").equals("HighToLow")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                }
             }
         } else if (requestCode == StockConstant.RESULT_CODE_MARKET_FILTER) {
             if (resultCode == Activity.RESULT_OK && data != null) {
