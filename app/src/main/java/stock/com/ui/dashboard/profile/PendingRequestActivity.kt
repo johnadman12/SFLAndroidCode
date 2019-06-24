@@ -1,13 +1,10 @@
-package stock.com.ui.friends
+package stock.com.ui.dashboard.profile
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_friends.*
+import kotlinx.android.synthetic.main.activity_pending_request.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,78 +13,42 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.dashboard.profile.PendingRequestActivity
 import stock.com.ui.pojo.BasePojo
-import stock.com.ui.pojo.FriendsList
+import stock.com.ui.pojo.PendingList
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class FriendsActivity : BaseActivity() {
-    var list: ArrayList<FriendsList.UserDatum>? = null
-    var friendsAdapter: FriendAdapter? = null
+class PendingRequestActivity : BaseActivity() {
+    var list: ArrayList<PendingList.UserDatum>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends)
+        setContentView(R.layout.activity_pending_request)
         StockConstant.ACTIVITIES.add(this)
-        list = ArrayList()
-        tv_title.visibility = View.VISIBLE;
-
-        tv_title.setText(getFromPrefsString(StockConstant.USERNAME));
-
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
         getFriendsList()
-        setAdapter();
-        et_search.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                friendsAdapter!!.getFilter().filter(s);
-            }
-        })
-
-        rl_pending.setOnClickListener {
-            startActivity(Intent(this@FriendsActivity, PendingRequestActivity::class.java))
-        }
     }
-
-    @SuppressLint("WrongConstant")
-    private fun setAdapter() {
-        val llm = LinearLayoutManager(applicationContext)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_friend!!.layoutManager = llm
-        recyclerView_friend.visibility = View.VISIBLE
-        friendsAdapter = FriendAdapter(applicationContext, list!!, this@FriendsActivity)
-        recyclerView_friend!!.adapter = friendsAdapter
-    }
-
 
     fun getFriendsList() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<FriendsList> =
-            apiService.getFriendsList(
+        val call: Call<PendingList> =
+            apiService.getPendingFriends(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString()
             )
-        call.enqueue(object : Callback<FriendsList> {
+        call.enqueue(object : Callback<PendingList> {
 
-            override fun onResponse(call: Call<FriendsList>, response: Response<FriendsList>) {
+            override fun onResponse(call: Call<PendingList>, response: Response<PendingList>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        tv_request_count.setText(response.body()!!.pending_requests)
                         list = response.body()!!.userData
-                        setAdapter()
+                        setPendingAdapter()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -95,7 +56,7 @@ class FriendsActivity : BaseActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<FriendsList>, t: Throwable) {
+            override fun onFailure(call: Call<PendingList>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
@@ -108,9 +69,9 @@ class FriendsActivity : BaseActivity() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> =
-            apiService.addToFriends(
+            apiService.acceptRequest(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(), friendId, status
+                friendId, status
             )
         call.enqueue(object : Callback<BasePojo> {
 
@@ -118,7 +79,7 @@ class FriendsActivity : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        AppDelegate.showAlert(this@FriendsActivity, response.body()!!.message)
+                        AppDelegate.showAlert(this@PendingRequestActivity, response.body()!!.message)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -132,5 +93,16 @@ class FriendsActivity : BaseActivity() {
                 d.dismiss()
             }
         })
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setPendingAdapter() {
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        if (rvRequest != null) {
+            rvRequest!!.layoutManager = llm
+            rvRequest.visibility = View.VISIBLE
+            rvRequest!!.adapter = PendingRequestAdapter(this@PendingRequestActivity, list, this);
+        }
     }
 }

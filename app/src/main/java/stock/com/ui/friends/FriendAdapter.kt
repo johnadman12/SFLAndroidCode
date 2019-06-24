@@ -2,6 +2,7 @@ package stock.com.ui.friends
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -37,14 +38,47 @@ class FriendAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
+
         holder.itemView.tv_username.setText(list!!.get(position).username)
         holder.itemView.tv_user_level.setText(list!!.get(position).levelType)
+        holder.itemView.tv_add.setText(list!!.get(position).invite_status)
         Glide.with(mContext).load(list!!.get(position).profileImage).into(holder.itemView.profile_image)
-        holder.itemView.llADD.setOnClickListener {
-            holder.itemView.tv_add.setText("Added")
-            holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check_white))
-            activity.addTofriendList(list!!.get(position).id)
+        if (list!!.get(position).invite_status.equals("pending")) {
+            holder.itemView.llADD.isEnabled = false
+            holder.itemView.add.visibility = View.GONE
+            holder.itemView.llADD.setBackgroundDrawable(
+                ContextCompat.getDrawable(
+                    mContext,
+                    R.drawable.button_backgroun_light_blue
+                )
+            )
+
+        } else if (list!!.get(position).invite_status.equals("remove")) {
+            holder.itemView.llADD.isEnabled = true
+            holder.itemView.llADD.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.red_fill_button))
+
+        } else {
+            holder.itemView.llADD.isEnabled = true
+            holder.itemView.llADD.setBackgroundDrawable(
+                ContextCompat.getDrawable(
+                    mContext,
+                    R.drawable.green_fill_button
+                )
+            )
         }
+        holder.itemView.llADD.setOnClickListener {
+            activity.addTofriendList(list!!.get(position).id, list!!.get(position).invite_status)
+            if (list!!.get(position).invite_status.equals("Add")) {
+                holder.itemView.tv_add.setText("Added")
+                holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check_white))
+
+            } else if (list!!.get(position).invite_status.equals("remove")) {
+                holder.itemView.tv_add.setText("Removed")
+                holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check_white))
+            }
+
+        }
+
 
     }
 

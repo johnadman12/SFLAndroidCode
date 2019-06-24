@@ -54,7 +54,7 @@
                     android:layout_gravity="center"
                     android:id="@+id/tv_username"/>
             <LinearLayout
-                    android:layout_width="@dimen/_70sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -63,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/level"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/_12ssp"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
                         android:id="@+id/tv_level"/>
@@ -71,15 +71,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="PRO"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/_10sdp"
+                        android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorGray"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:background="@drawable/ll_pro"
+                        android:paddingTop="@dimen/_5sdp"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingRight="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
-                        android:paddingBottom="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:id="@+id/tv_pro"/>

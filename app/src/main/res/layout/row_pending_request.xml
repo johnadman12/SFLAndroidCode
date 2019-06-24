@@ -6,17 +6,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_marginTop="0.1dp">
+        android:layout_marginTop="0.5dp">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_8sdp"
             android:orientation="horizontal">
         <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@mipmap/ic_launcher_round"
                 app:civ_border_width="0dp"
                 app:civ_border_color="#007FB0"/>
@@ -24,14 +24,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/_5sdp"
+                android:padding="@dimen/_2sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
                 android:layout_weight="1">
             <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleSemiBold"
+                    style="@style/TextStyleNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Steve0308 "
-                    android:textSize="@dimen/_13sdp"
+                    android:textSize="@dimen/_10ssp"
                     android:textColor="@color/textColorLightBlack"
                     android:id="@+id/tv_username"/>
             <androidx.appcompat.widget.AppCompatTextView
@@ -40,43 +41,43 @@
                     android:layout_height="wrap_content"
                     android:text="PRO"
                     android:id="@+id/tv_user_level"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_9ssp"
                     android:textColor="@color/textColorLightBlack"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:alpha="0.6"/>
         </LinearLayout>
-        <LinearLayout
-                android:layout_width="@dimen/_80sdp"
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleSemiBold"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/llADD"
+                android:text="@string/accept"
                 android:paddingLeft="@dimen/_12sdp"
                 android:paddingRight="@dimen/_12sdp"
-                android:gravity="center"
                 android:paddingTop="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_6sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/green_add_button">
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_9sdp"
-                    android:layout_height="@dimen/_9sdp"
-                    android:src="@mipmap/addsign"
-                    android:background="@null"
-                    android:tint="@color/white"
-                    android:clickable="false"
-                    android:id="@+id/add"
-                    android:layout_gravity="center"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleSemiBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add"
-                    android:textSize="@dimen/_9ssp"
-                    android:id="@+id/tv_add"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:textAllCaps="true"
-                    android:layout_gravity="center"/>
-        </LinearLayout>
+                android:textSize="@dimen/_9ssp"
+                android:background="@drawable/green_add_button"
+                android:id="@+id/tv_accept"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:textAllCaps="true"
+                android:layout_gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyleSemiBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reject"
+                android:paddingLeft="@dimen/_12sdp"
+                android:paddingRight="@dimen/_12sdp"
+                android:paddingTop="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:textSize="@dimen/_9ssp"
+                android:textColor="@color/textColorGray"
+                android:background="@drawable/button_rounded_background_white_black"
+                android:id="@+id/tv_reject"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:textAllCaps="true"
+                android:layout_gravity="center"/>
     </LinearLayout>
     <View
             android:layout_width="match_parent"

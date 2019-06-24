@@ -439,12 +439,29 @@ interface ApiInterface {
     ): Call<FriendsList>
 
     @FormUrlEncoded
-    @POST("usercontest/user_friend_list")
+    @POST("usercontest/add_friend")
     fun addToFriends(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
-        @Field("friend_id") friend_id: String
+        @Field("friend_id") friend_id: String,
+        @Field("friend_status") friend_status: String
     ): Call<BasePojo>
+
+    @FormUrlEncoded
+    @POST("usercontest/friend_accept")
+    fun acceptRequest(
+        @Header("x-access-token") token: String,
+        @Field("manage_friend_Id") user_id: String,
+        @Field("friend_status") friend_status: String
+    ): Call<BasePojo>
+
+
+    @FormUrlEncoded
+    @POST("usercontest/user_pending_list")
+    fun getPendingFriends(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<PendingList>
 
 
     /*  @FormUrlEncoded
