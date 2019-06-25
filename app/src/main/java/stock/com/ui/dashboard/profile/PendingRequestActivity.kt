@@ -2,8 +2,10 @@ package stock.com.ui.dashboard.profile
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_pending_request.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -30,6 +32,18 @@ class PendingRequestActivity : BaseActivity() {
             onBackPressed();
         }
         getFriendsList()
+        refreshD.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                //TODO make api call here
+                Handler().postDelayed({
+                }, 5000)
+                getFriendsList()
+            }
+        })
+
     }
 
     fun getFriendsList() {
@@ -46,6 +60,8 @@ class PendingRequestActivity : BaseActivity() {
             override fun onResponse(call: Call<PendingList>, response: Response<PendingList>) {
                 d.dismiss()
                 if (response.body() != null) {
+                    if (refreshD != null)
+                        refreshD.finishRefreshing()
                     if (response.body()!!.status == "1") {
                         list = response.body()!!.userData
                         setPendingAdapter()
@@ -57,6 +73,8 @@ class PendingRequestActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<PendingList>, t: Throwable) {
+                if (refreshD != null)
+                    refreshD.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
@@ -80,6 +98,7 @@ class PendingRequestActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         AppDelegate.showAlert(this@PendingRequestActivity, response.body()!!.message)
+                        getFriendsList()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")

@@ -3,10 +3,12 @@ package stock.com.ui.friends
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_friends.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -36,11 +38,22 @@ class FriendsActivity : BaseActivity() {
 
         tv_title.setText(getFromPrefsString(StockConstant.USERNAME));
 
+        refreshD.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+            override fun completeRefresh() {
+            }
+
+            override fun refreshing() {
+                //TODO make api call here
+                Handler().postDelayed({
+                }, 5000)
+                getFriendsList()
+            }
+        })
+
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
         getFriendsList()
-        setAdapter();
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -83,6 +96,8 @@ class FriendsActivity : BaseActivity() {
 
             override fun onResponse(call: Call<FriendsList>, response: Response<FriendsList>) {
                 d.dismiss()
+                if (refreshD != null)
+                    refreshD.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         tv_request_count.setText(response.body()!!.pending_requests)
@@ -96,6 +111,8 @@ class FriendsActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<FriendsList>, t: Throwable) {
+                if (refreshD != null)
+                    refreshD.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
@@ -119,6 +136,7 @@ class FriendsActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         AppDelegate.showAlert(this@FriendsActivity, response.body()!!.message)
+                        getFriendsList()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")

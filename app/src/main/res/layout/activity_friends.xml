@@ -112,13 +112,22 @@
                 android:padding="@dimen/_3sdp"
                 android:tint="@color/white"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_friend"
+
+    <com.madapps.liquid.LiquidRefreshLayout
+            android:id="@+id/refreshD"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:nestedScrollingEnabled="false"
-            android:fillViewport="true"
-            tools:listitem="@layout/row_view_friends"/>
+            app:AniBackColor="@color/colorPrimary"
+            app:AniForeColor="@color/white"
+            app:CircleSmaller="6"
+            android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_friend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:nestedScrollingEnabled="false"
+                android:fillViewport="true"
+                tools:listitem="@layout/row_view_friends"/>
+    </com.madapps.liquid.LiquidRefreshLayout>
 
 </LinearLayout>

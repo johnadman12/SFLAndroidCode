@@ -286,6 +286,10 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
                 }
             }
+
+            // 1- change percent filter for market
+            //2- change percent filter for stocks
+            //3-
         } else if (requestCode == StockConstant.RESULT_CODE_MARKET_FILTER) {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 if (data.getStringExtra("resetfiltermarket").equals("0")) {

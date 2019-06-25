@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import stock.com.R
 import stock.com.ui.pojo.HomeSearchPojo
 
-class NewsItemAdapter(
+class CryptoHomeAdapter(
     val mContext: Context,
-    users: ArrayList<HomeSearchPojo.User>
+    crypto: ArrayList<HomeSearchPojo.Crypto>
 ) :
-    RecyclerView.Adapter<NewsItemAdapter.FeatureListHolder>() {
+    RecyclerView.Adapter<CryptoHomeAdapter.FeatureListHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemAdapter.FeatureListHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoHomeAdapter.FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_search_items, parent, false)
         return FeatureListHolder(view)
     }
@@ -32,5 +32,4 @@ class NewsItemAdapter(
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
-
 }

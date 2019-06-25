@@ -11,6 +11,7 @@
             android:textSize="@dimen/_15ssp"
             style="@style/TextStyleSemiBold"
             android:background="@color/green"
+            android:id="@+id/tv_header"
             android:textColor="@color/white"
             android:text="Stock"/>
 

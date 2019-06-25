@@ -51,7 +51,7 @@
                     android:inputType="textCapSentences"
                     android:textColor="@color/white"
                     android:singleLine="true"
-                    android:id="@+id/et_search_stock"/>
+                    android:id="@+id/et_search"/>
             <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/imgcross"
                     android:layout_width="@dimen/_15sdp"

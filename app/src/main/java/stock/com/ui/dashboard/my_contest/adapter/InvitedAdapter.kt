@@ -22,7 +22,7 @@ class InvitedAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_finished, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_invited, parent, false)
 
         return FeatureListHolder(view)
     }
@@ -30,7 +30,7 @@ class InvitedAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.tvTimeLeft.setText("Invited")
-        holder.itemView.tvScore.setText("Accept Invitation")
+        holder.itemView.tvScore.setText("Accept")
         holder.itemView.lin_rank.visibility = View.GONE
         /* holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvTotalWinnings.setText(contest.get(position).winningAmount)

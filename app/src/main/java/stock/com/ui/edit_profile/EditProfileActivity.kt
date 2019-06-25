@@ -12,7 +12,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.edit_profile.fragment.ContactInfoFragment
 import stock.com.ui.edit_profile.fragment.CredentialsFragment
-import stock.com.ui.edit_profile.fragment.ProfileFragment
+import stock.com.ui.edit_profile.fragment.EdProfileFragment
 
 class EditProfileActivity : BaseActivity(), View.OnClickListener {
 
@@ -23,7 +23,7 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        setFragment(ProfileFragment());
+        setFragment(EdProfileFragment());
 
         ll_profile.setOnClickListener(this);
         ll_contact_info.setOnClickListener(this);
@@ -35,10 +35,10 @@ class EditProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.ll_profile -> {
-                if (fragment is ProfileFragment)
+                if (fragment is EdProfileFragment)
                     return;
 
-                setFragment(ProfileFragment());
+                setFragment(EdProfileFragment());
                 setLinearLayoutColor(ll_contact_info, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_profile, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_credentials, ContextCompat.getColor(this, R.color.white));

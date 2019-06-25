@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:background="@mipmap/bg"
@@ -25,14 +26,21 @@
         <View android:layout_width="match_parent"
               android:layout_height="@dimen/_1ssp"
               android:background="@color/GrayColor"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRequest"
+        <com.madapps.liquid.LiquidRefreshLayout
+                android:id="@+id/refreshD"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-        >
+                app:AniBackColor="@color/colorPrimary"
+                app:AniForeColor="@color/white"
+                app:CircleSmaller="6"
+                android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            >
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
+        </com.madapps.liquid.LiquidRefreshLayout>
     </LinearLayout>
 
 

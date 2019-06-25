@@ -57,7 +57,7 @@ import java.net.URI
 import java.net.URISyntaxException
 
 
-class ProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterface {
+class EdProfileFragment : BaseFragment(), View.OnClickListener, SelectDialogInterface {
 
 
     //image
