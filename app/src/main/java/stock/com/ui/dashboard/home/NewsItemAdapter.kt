@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.row_search_items.view.*
 import stock.com.R
+import stock.com.ui.pojo.Demo
 import stock.com.ui.pojo.HomeSearchPojo
 
 class NewsItemAdapter(
     val mContext: Context,
-    users: ArrayList<HomeSearchPojo.User>
+    val users: ArrayList<Demo>
 ) :
     RecyclerView.Adapter<NewsItemAdapter.FeatureListHolder>() {
 
@@ -21,12 +23,11 @@ class NewsItemAdapter(
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-
-
+        holder.itemView.name.setText(users.get(position).name)
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return users.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

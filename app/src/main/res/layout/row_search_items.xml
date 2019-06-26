@@ -9,11 +9,13 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
             android:textSize="@dimen/_12ssp"
+            android:id="@+id/name"
             style="@style/TextStyleNormal"
             android:textColor="@color/textColorGray"
             android:text="items"/>
 
-    <View android:layout_width="match_parent" android:layout_height="@dimen/_1ssp"
-    android:background="@color/textColorOffWhite"/>
+    <View android:layout_width="match_parent"
+          android:layout_height="@dimen/_1ssp"
+          android:background="@color/textColorOffWhite"/>
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import stock.com.utils.StockConstant
 
 class ContestInvitationActivity : BaseActivity() {
     var inviteCode: String = ""
+    var contestId: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contest_invitation)
@@ -24,8 +25,10 @@ class ContestInvitationActivity : BaseActivity() {
             onBackPressed();
         }
 
-        if (intent != null)
+        if (intent != null) {
             inviteCode = intent.getStringExtra(StockConstant.CONTESTCODE)
+            contestId = intent.getStringExtra(StockConstant.CONTESTID)
+        }
         ll_share.setOnClickListener {
             shareIntent()
         }
@@ -46,7 +49,10 @@ class ContestInvitationActivity : BaseActivity() {
         }
 
         ll_invite.setOnClickListener {
-            startActivity(Intent(this@ContestInvitationActivity, ActivityInviteUser::class.java))
+            startActivity(
+                Intent(this@ContestInvitationActivity, ActivityInviteUser::class.java)
+                    .putExtra(StockConstant.CONTESTID, contestId)
+            )
         }
 
     }

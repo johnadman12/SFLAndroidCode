@@ -23,10 +23,9 @@ import stock.com.R
 import stock.com.data.Prefs
 import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
-import stock.com.ui.dashboard.home.ActivityNewsSearch
+import stock.com.ui.dashboard.home.ActivityHomeSearch
 import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.pojo.SignupDataPojo
-import stock.com.ui.signup.activity.SignUpActivity
 import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -89,7 +88,7 @@ open class BaseActivity : AppCompatActivity() {
                         this, getResources().getString(R.string.app_name), getString(R.string.login_default)
                     )
                 } else {
-                    startActivity(Intent(this, ActivityNewsSearch::class.java))
+                    startActivity(Intent(this, ActivityHomeSearch::class.java))
                 }
                 return true
             }

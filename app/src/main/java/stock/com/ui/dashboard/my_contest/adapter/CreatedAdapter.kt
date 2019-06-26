@@ -62,11 +62,13 @@ class CreatedAdapter(
                 mContext.startActivity(
                     Intent(mContext, ContestInvitationActivity::class.java)
                         .putExtra(StockConstant.CONTESTCODE, usercontest.get(position).invitedCode)
+                        .putExtra(StockConstant.CONTESTID, usercontest.get(position).contestid)
                 )
             } else {
                 mContext.startActivity(
                     Intent(mContext, ContestInvitationActivity::class.java)
                         .putExtra(StockConstant.CONTESTCODE, "")
+                        .putExtra(StockConstant.CONTESTID, usercontest.get(position).contestid)
                 )
             }
         }

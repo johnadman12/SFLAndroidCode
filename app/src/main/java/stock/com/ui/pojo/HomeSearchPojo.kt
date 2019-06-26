@@ -10,9 +10,12 @@ class HomeSearchPojo : BasePojo() {
     @SerializedName("data")
     @Expose
     var data: Data? = null
+    @SerializedName("results")
+    @Expose
+    private val result: Map<String, Data>? = null
 
     inner class Data {
-        @SerializedName("users")
+        /*@SerializedName("users")
         @Expose
         var users: ArrayList<User>? = null
         @SerializedName("stocks")
@@ -26,76 +29,24 @@ class HomeSearchPojo : BasePojo() {
         var crypto: ArrayList<Crypto>? = null
         @SerializedName("contests")
         @Expose
-        var contests: ArrayList<Contests>? = null
+        var contests: ArrayList<Contests>? = null*/
+
+        @SerializedName("users")
+        @Expose
+        var users: ArrayList<Demo>? = null;
+
+        @SerializedName("stocks")
+        @Expose
+        var stocks: ArrayList<Demo>? = null;
+        @SerializedName("currency")
+        @Expose
+        var currency: ArrayList<Demo>? = null
+        @SerializedName("crypto")
+        @Expose
+        var crypto: ArrayList<Demo>? = null
+        @SerializedName("contests")
+        @Expose
+        var contests: ArrayList<Demo>? = null
     }
 
-    inner class Stock {
-
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("id")
-        @Expose
-        var id: String = ""
-        @SerializedName("type")
-        @Expose
-        var type: String = ""
-
-    }
-
-    inner class User {
-
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("id")
-        @Expose
-        var id: String = ""
-        @SerializedName("type")
-        @Expose
-        var type: String = ""
-
-    }
-
-    inner class Crypto {
-
-        @SerializedName("id")
-        @Expose
-        var id: String = ""
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("type")
-        @Expose
-        var type: String = ""
-
-    }
-
-    inner class Currency {
-
-        @SerializedName("id")
-        @Expose
-        var id: String = ""
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("type")
-        @Expose
-        var type: String = ""
-
-    }
-
-    inner class Contests {
-
-        @SerializedName("id")
-        @Expose
-        var id: String = ""
-        @SerializedName("name")
-        @Expose
-        var name: String = ""
-        @SerializedName("type")
-        @Expose
-        var type: String = ""
-
-    }
 }

@@ -3,6 +3,7 @@ package stock.com.networkCall
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
@@ -409,6 +410,21 @@ interface ApiInterface {
         @Field("user_id") user_id: String
     ): Call<CreateContest>
 
+    @FormUrlEncoded
+    @POST("usercontest/GetMyInvitedList")
+    fun getInvitedContest(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String
+    ): Call<InvitedList>
+
+    @FormUrlEncoded
+    @POST("usercontest/invitation_accept")
+    fun acceptInvitation(
+        @Header("x-access-token") token: String,
+        @Field("manage_invitation_Id") manage_invitation_Id: String,
+        @Field("invitation_status") invitation_status: String
+    ): Call<BasePojo>
+
 
     @FormUrlEncoded
     @POST("marketteam/my_team")
@@ -468,7 +484,27 @@ interface ApiInterface {
     fun getHomeSearch(
         @Header("x-access-token") token: String,
         @Field("search") search: String
-    ): Call<HomeSearchPojo>
+    ): Call<JSONObject>
+
+
+    @FormUrlEncoded
+    @POST("usercontest/user_invited_list")
+    fun getAllUserToInvite(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("contest_id") contest_id: String
+    ): Call<InviteData>
+
+
+    @FormUrlEncoded
+    @POST("usercontest/send_invitation")
+    fun sendInvitation(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("friend_id") friend_id: String,
+        @Field("contest_id") contest_id: String,
+        @Field("contest_by") contest_by: String
+    ): Call<BasePojo>
 
 
     /*  @FormUrlEncoded

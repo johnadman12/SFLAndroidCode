@@ -101,7 +101,7 @@
     <string name="how_to_play_">How to Play</string>
 
     <string name="about">About</string>
-    <string name="time_left">Time Left</string>
+    <string name="time_left">Time Left :</string>
     <string name="rules">Rules</string>
     <string name="support">Support</string>
     <string name="logout">Logout</string>
