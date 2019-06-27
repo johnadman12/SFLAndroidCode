@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_invited.view.*
 import stock.com.R
+import stock.com.ui.contest.activity.ContestDetailActivity
 import stock.com.ui.dashboard.my_contest.fragment.InvitedFragment
 import stock.com.ui.pojo.InvitedList
 import stock.com.utils.AppDelegate
@@ -50,6 +51,7 @@ class InvitedAdapter(
             holder.itemView.llAccept.visibility = View.GONE
         }
 
+
         var amount: String = contest.get(position).entryFees.substring(1)
         if (amount.equals("0") && contest.get(position).priceBreak!!.size <= 0) {
             holder.itemView.tvTotalWinnings.setText("Free")
@@ -76,6 +78,20 @@ class InvitedAdapter(
             contest.get(position).contestSize.toInt() - contest.get(position).contestTeamremaining.toInt()
 
         holder.itemView.tvSprortsLeft.setText(sports.toString() + " Participants")
+
+        holder.itemView.setOnClickListener {
+            if (contest.get(position).inviteStatus.equals("1")) {
+                mContext.startActivity(
+                    Intent(mContext, ContestDetailActivity::class.java).putExtra(
+                        StockConstant.CONTESTID,
+                        contest.get(position).contestid.toInt()
+                    ).putExtra(
+                        StockConstant.EXCHANGEID,
+                        0
+                    )
+                )
+            }
+        }
 //        contest.get(position).setCalculatePosition(sports.toInt())
 //        holder.itemView.tvRank.setText(contest.get(position).ra)
 
@@ -134,6 +150,7 @@ class InvitedAdapter(
         holder.itemView.tv_reject.setOnClickListener {
             fragment.acceptInvitation(contest.get(position).manageInvitedId, "0")
         }
+
 
     }
 

@@ -47,13 +47,15 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
             selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
         }
+        if (list != null) {
 
-        if (list!!.size > 0)
-            for (i in 0 until list!!.size) {
-                if (stockId.equals(list!!.get(i).cryptocurrencyid))
-                    position = i
-            }
-        setStockData()
+            if (list!!.size > 0)
+                for (i in 0 until list!!.size) {
+                    if (stockId.equals(list!!.get(i).cryptocurrencyid))
+                        position = i
+                }
+            setStockData()
+        }
 
 
         setFragment(ChartFragment(), Bundle());
@@ -80,23 +82,25 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             }
 
             R.id.ivTeam -> {
-                if (list!!.get(position).addedToList == 1) {
-                    //show green button
-                    AppDelegate.showAlert(this, "already added to Crypto")
-                } else if (list!!.get(position).addedToList == 0) {
-                    if (selectedItems >= 12) {
-                        displayToast("You have selected maximum number of Crypto for your team.", "error")
-                    } else {
-                        list!!.get(position).addedToList = 1
-                        //show red button
-                        AppDelegate.showAlert(this, "added to Crypto")
-                        var intent = Intent();
-                        intent.putExtra("list", list)
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+                if (list != null)
 
+                    if (list!!.get(position).addedToList == 1) {
+                        //show green button
+                        AppDelegate.showAlert(this, "already added to Crypto")
+                    } else if (list!!.get(position).addedToList == 0) {
+                        if (selectedItems >= 12) {
+                            displayToast("You have selected maximum number of Crypto for your team.", "error")
+                        } else {
+                            list!!.get(position).addedToList = 1
+                            //show red button
+                            AppDelegate.showAlert(this, "added to Crypto")
+                            var intent = Intent();
+                            intent.putExtra("list", list)
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+
+                        }
                     }
-                }
 
                 Log.e("updatedlist", list!!.get(position).addedToList.toString())
             }
@@ -130,7 +134,10 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment: NewsFragment = NewsFragment()
                 var nd: Bundle = Bundle()
-                nd.putString("Stockname", list!!.get(position).symbol)
+                if (list != null)
+                    nd.putString("Stockname", list!!.get(position).symbol)
+                else
+                    nd.putString("Stockname", "")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))

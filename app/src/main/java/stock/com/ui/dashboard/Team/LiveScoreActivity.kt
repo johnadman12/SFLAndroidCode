@@ -21,6 +21,7 @@ import stock.com.utils.StockDialog
 
 class LiveScoreActivity : BaseActivity() {
     var contestid: Int = 0
+    var mid: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.live_score_activity)
@@ -29,8 +30,10 @@ class LiveScoreActivity : BaseActivity() {
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
-        if (intent != null)
+        if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
+            mid = intent.getIntExtra(StockConstant.MARKETID, 0)
+        }
         getScores()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
@@ -52,7 +55,8 @@ class LiveScoreActivity : BaseActivity() {
         val call: Call<Scores> =
             apiService.getContestScore(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString()
+                , getFromPrefsString(StockConstant.USERID).toString(),mid.toString()
+
             )
         call.enqueue(object : Callback<Scores> {
 

@@ -3,7 +3,7 @@ package stock.com.ui.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Demo {
+class Demo : BasePojo() {
 
     @SerializedName("name")
     @Expose

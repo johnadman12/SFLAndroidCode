@@ -21,10 +21,9 @@ import java.util.ArrayList
 import android.content.Intent.getIntent
 
 
-
 class NewsFragment : BaseFragment() {
-    var bd:Bundle= Bundle()
-//    var identifires: String = "AAPL,TSLA,FTSE"
+    var bd: Bundle = Bundle()
+    //    var identifires: String = "AAPL,TSLA,FTSE"
     var identifires: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,9 +32,11 @@ class NewsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (arguments!=null)
-            identifires= arguments!!.getString("Stockname")
-        getNewslist()
+        if (arguments != null)
+            identifires = arguments!!.getString("Stockname")
+
+        if (identifires != null)
+            getNewslist()
     }
 
 
@@ -62,7 +63,7 @@ class NewsFragment : BaseFragment() {
 
             override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -78,6 +79,6 @@ class NewsFragment : BaseFragment() {
         llm.orientation = LinearLayoutManager.VERTICAL
         rvNews!!.layoutManager = llm
         rvNews.visibility = View.VISIBLE
-        rvNews!!.adapter = StockNewsAdapter(context!!, news,identifires);
+        rvNews!!.adapter = StockNewsAdapter(context!!, news, identifires);
     }
 }

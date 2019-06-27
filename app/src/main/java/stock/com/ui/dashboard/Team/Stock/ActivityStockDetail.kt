@@ -48,14 +48,14 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
             selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
         }
-
-        if (list!!.size > 0)
-            for (i in 0 until list!!.size) {
-                if (stockId.equals(list!!.get(i).stockid))
-                    position = i
-            }
-        setStockData()
-
+        if (list != null) {
+            if (list!!.size > 0)
+                for (i in 0 until list!!.size) {
+                    if (stockId.equals(list!!.get(i).stockid))
+                        position = i
+                }
+            setStockData()
+        }
         /*  if (list!!.get(position).getAddedStock().equals("0")) {
               list!!.get(position).addedStock = "1";
           } else if (list!!.get(position).getAddedStock().equals("1"))
@@ -85,23 +85,24 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             }
 
             R.id.ivTeam -> {
-                if (list!!.get(position).getAddedToList() == 1) {
-                    //show green button
-                    AppDelegate.showAlert(this, "already added to stock")
-                } else if (list!!.get(position).getAddedToList() == 0) {
-                    if (selectedItems >= 12) {
-                        displayToast("You have selected maximum number of stocks for your team.", "error")
-                    } else {
-                        list!!.get(position).addedToList = 1
-                        //show red button
-                        AppDelegate.showAlert(this, "added to stock")
-                        var intent = Intent();
-                        intent.putExtra("list", list)
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+                if (list != null)
+                    if (list!!.get(position).getAddedToList() == 1) {
+                        //show green button
+                        AppDelegate.showAlert(this, "already added to stock")
+                    } else if (list!!.get(position).getAddedToList() == 0) {
+                        if (selectedItems >= 12) {
+                            displayToast("You have selected maximum number of stocks for your team.", "error")
+                        } else {
+                            list!!.get(position).addedToList = 1
+                            //show red button
+                            AppDelegate.showAlert(this, "added to stock")
+                            var intent = Intent();
+                            intent.putExtra("list", list)
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
 
+                        }
                     }
-                }
 
                 Log.e("updatedlist", list!!.get(position).addedToList.toString())
             }
@@ -135,7 +136,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment: NewsFragment = NewsFragment()
                 var nd: Bundle = Bundle()
-                nd.putString("Stockname", list!!.get(position).symbol)
+                if (list != null)
+                    nd.putString("Stockname", list!!.get(position).symbol)
+                else
+                    nd.putString("Stockname", "")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))

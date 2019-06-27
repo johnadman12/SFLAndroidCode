@@ -2,6 +2,7 @@ package stock.com.ui.friends
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,9 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_friends.view.*
 
 import stock.com.R
+import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.FriendsList
+import stock.com.utils.StockConstant
 
 
 class FriendAdapter(
@@ -66,20 +69,30 @@ class FriendAdapter(
                 )
             )
         }
+
+        holder.itemView.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityOtherUserProfile::class.java)
+                    .putExtra(StockConstant.FRIENDID, list!!.get(position).id)
+            )
+        }
+
         holder.itemView.llADD.setOnClickListener {
             if (list!!.get(position).invite_status.equals("remove")) {
                 activity.addTofriendList(list!!.get(position).id, "0")
             } else if (list!!.get(position).invite_status.equals("Add")) {
                 activity.addTofriendList(list!!.get(position).id, "1")
             }
-           /* if (list!!.get(position).invite_status.equals("Add")) {
-                holder.itemView.tv_add.setText("Added")
-                holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check))
 
-            } else if (list!!.get(position).invite_status.equals("remove")) {
-                holder.itemView.tv_add.setText("Removed")
-                holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_close))
-            }*/
+
+            /* if (list!!.get(position).invite_status.equals("Add")) {
+                 holder.itemView.tv_add.setText("Added")
+                 holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check))
+
+             } else if (list!!.get(position).invite_status.equals("remove")) {
+                 holder.itemView.tv_add.setText("Removed")
+                 holder.itemView.add.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_close))
+             }*/
 
         }
 

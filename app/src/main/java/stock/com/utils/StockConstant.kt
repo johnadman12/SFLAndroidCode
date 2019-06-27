@@ -18,6 +18,7 @@ object StockConstant {
     val NEWSLIST = "newslist"
     val SELECTEDSTOCK = "selectedstock"
     val TEAMID = "teamid"
+    val FRIENDID = "friend_id"
     val TOTALCHANGE = "totalchange"
 
     val IMAG_BASE_PATH = "http://18.188.34.216/webadmin/uploads/user/"

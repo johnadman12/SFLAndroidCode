@@ -3,6 +3,7 @@ package stock.com.networkCall
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
@@ -236,7 +237,9 @@ interface ApiInterface {
     @POST("contest/GetContestsStatus")
     fun getContestScore(
         @Header("x-access-token") token: String,
-        @Field("contest_id") contest_id: String, @Field("user_id") user_id: String
+        @Field("contest_id") contest_id: String,
+        @Field("user_id") user_id: String,
+        @Field("market_id") market_id: String
     ): Call<Scores>
 
     /* @Headers("Content-Type: application/json")
@@ -484,7 +487,7 @@ interface ApiInterface {
     fun getHomeSearch(
         @Header("x-access-token") token: String,
         @Field("search") search: String
-    ): Call<JSONObject>
+    ): Call<ResponseBody>
 
 
     @FormUrlEncoded
@@ -505,6 +508,15 @@ interface ApiInterface {
         @Field("contest_id") contest_id: String,
         @Field("contest_by") contest_by: String
     ): Call<BasePojo>
+
+
+    @FormUrlEncoded
+    @POST("users/get_otheruser_profile")
+    fun getOthersProfile(
+        @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
+        @Field("friend_id") friend_id: String
+    ): Call<OtherProfile>
 
 
     /*  @FormUrlEncoded
