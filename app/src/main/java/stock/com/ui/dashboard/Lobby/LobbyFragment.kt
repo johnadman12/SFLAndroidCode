@@ -2,7 +2,6 @@ package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -29,14 +28,12 @@ import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.StockConstant
 import stock.com.utils.StockConstant.RESULT_CODE_FILTER
-import stock.com.utils.StockConstant.STOCKID
 import stock.com.utils.StockDialog
-import java.util.*
 import kotlin.collections.ArrayList
 
 
 class LobbyFragment : BaseFragment() {
-
+    var categoryId: String = ""
 
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
@@ -49,8 +46,20 @@ class LobbyFragment : BaseFragment() {
 
     private fun initViews() {
         contest = ArrayList();
+
+        if (arguments!!.getString("id") != null)
+            categoryId = arguments!!.getString("id");
+
         dashBoardActivity = activity as DashBoardActivity?
-        getContestlist()
+
+        if (!TextUtils.isEmpty(categoryId)) {
+            setFilters(categoryId)
+        } else {
+            getContestlist()
+
+        }
+
+
         ll_filter.setOnClickListener {
             //            startActivity(Intent(context, ActivityFilter::class.java))
             val intent = Intent(context, ActivityFilter::class.java)
@@ -235,6 +244,46 @@ class LobbyFragment : BaseFragment() {
         if (dialogue.isShowing)
             dialogue.dismiss()
         dialogue.show()
+    }
+
+    fun setFilters(categoryId: String) {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<LobbyContestPojo> =
+            apiService.setContestFilter(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                categoryId,
+                "", "",
+                "",
+                ""
+            )
+        call.enqueue(object : Callback<LobbyContestPojo> {
+            override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        contest = response.body()!!.contest
+                        setContestAdapter(contest!!)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout();
+                    } else {
+                        displayToast("no data exist", "warning")
+
+                    }
+                } else {
+                    displayToast(resources.getString(stock.com.R.string.internal_server_error), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
     }
 
 }

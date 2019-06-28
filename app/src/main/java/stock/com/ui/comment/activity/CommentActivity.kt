@@ -28,7 +28,7 @@ class CommentActivity : BaseActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText("Comment")
         setAdapter()
-        setMenu(false, false, false, false, false, false, false)
+//        setMenu(false, false, false, false, false, false, false)
     }
 
     private fun setListener() {

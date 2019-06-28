@@ -1,11 +1,14 @@
 package stock.com.ui.dashboard.home
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_searchbar.*
 import kotlinx.android.synthetic.main.include_back.*
@@ -59,7 +62,7 @@ class ActivityHomeSearch : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_home!!.layoutManager = llm
         recycle_home.visibility = View.VISIBLE
-        recycle_home!!.adapter = HomeNewsAdapter(this@ActivityHomeSearch, data);
+        recycle_home!!.adapter = HomeNewsAdapter(this@ActivityHomeSearch, data, this);
     }
 
 
@@ -78,36 +81,42 @@ class ActivityHomeSearch : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     // Log.d("dsdad", "---" + response.body()!!.string())
-                    try {
-                        var objects: JSONObject = JSONObject(response.body()!!.string());
-                        val main = ArrayList<HomeSearchPojo>()
-                        val iterator = objects.getJSONObject("data").keys();
-                        var homeSearch: HomeSearchPojo? = null
-                        while (iterator.hasNext()) {
+                    var objects: JSONObject = JSONObject(response.body()!!.string());
+                    if (objects.getInt("status") == 1) {
 
-                            var key = iterator.next();
-                            var list = ArrayList<Demo>();
-                            var array = objects.getJSONObject("data").getJSONArray(key);
-                            Log.d("465464646---", "" + array);
-                            if (array.length() != 0) {
-                                for (i in 0 until array.length()) {
-                                    var jsonObject = array.getJSONObject(i);
-                                    var demo = Demo();
-                                    demo.name = jsonObject.getString("name")
-                                    demo.id = jsonObject.getString("id")
-                                    demo.type = jsonObject.getString("type")
-                                    list.add(demo);
+                        try {
+                            val main = ArrayList<HomeSearchPojo>()
+                            val iterator = objects.getJSONObject("data").keys();
+                            var homeSearch: HomeSearchPojo? = null
+                            while (iterator.hasNext()) {
+
+                                var key = iterator.next();
+                                var list = ArrayList<Demo>();
+                                var array = objects.getJSONObject("data").getJSONArray(key);
+                                Log.d("465464646---", "" + array);
+                                if (array.length() != 0) {
+                                    for (i in 0 until array.length()) {
+                                        var jsonObject = array.getJSONObject(i);
+                                        var demo = Demo();
+                                        demo.name = jsonObject.getString("name")
+                                        demo.id = jsonObject.getString("id")
+                                        demo.type = jsonObject.getString("type")
+                                        list.add(demo);
+                                    }
                                 }
-                            }
-                            homeSearch = HomeSearchPojo()
-                            homeSearch!!.title = key
-                            homeSearch.users = list!!
+                                homeSearch = HomeSearchPojo()
+                                homeSearch!!.title = key
+                                homeSearch.users = list!!
 
-                            main.add(homeSearch)
+                                main.add(homeSearch)
+                            }
+                            setHomeAdapter(main)
+                        } catch (e: Exception) {
+                            Log.d("dsdasd", "---" + e.localizedMessage)
                         }
-                        setHomeAdapter(main)
-                    } catch (e: Exception) {
-                        Log.d("dsdasd", "---" + e.localizedMessage)
+                    } else if (objects.getInt("status") == 2) {
+
+                        appLogout()
                     }
                     /* if (response.body()!!.get("status").asInt == 1) {
                          displayToast("parsed", "error")
@@ -146,7 +155,16 @@ class ActivityHomeSearch : BaseActivity() {
             }
         })
     }
+
+    public fun setIntent(id: String) {
+        var intent = Intent();
+        intent.putExtra("id", id);
+        setResult(Activity.RESULT_OK, intent);
+        finish()
+
+    }
 }
+
 
 /*
 val obj: JSONObject = response.body()!!.getJSONObject("data")

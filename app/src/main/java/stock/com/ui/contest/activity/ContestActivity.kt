@@ -48,7 +48,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.contest)
-        setMenu(false, true, true, false, false, false, false)
+//        setMenu(false, true, true, false, false, false, false)
        // setAdapter()
         rl_enterContestCode.setOnClickListener(this)
         rl_createContest.setOnClickListener(this)

@@ -48,7 +48,7 @@ class StockAdapter(
         val anim = AlphaAnimation(0.5f, 1.0f)
         anim.duration = 100 //You can manage the blinking time with this parameter
         anim.startOffset = 20
-        anim.repeatCount = Animation.REVERSE
+//        anim.repeatCount = Animation.REVERSE
 
 
         holder.itemView.name.setText(stockListNew!!.get(position).symbol)

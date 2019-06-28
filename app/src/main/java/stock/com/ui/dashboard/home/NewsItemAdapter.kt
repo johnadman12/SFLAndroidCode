@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.home
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +11,19 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_search_items.view.*
 import stock.com.R
+import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.Demo
 import stock.com.utils.StockConstant
+import androidx.appcompat.app.AppCompatActivity
+
 
 class NewsItemAdapter(
     val mContext: Context,
     val users: ArrayList<Demo>,
-    val title: String
-) :
+    val title: String,val activityHomeSearch: ActivityHomeSearch) :
     RecyclerView.Adapter<NewsItemAdapter.FeatureListHolder>() {
 
 
@@ -33,7 +36,9 @@ class NewsItemAdapter(
         holder.itemView.name.setText(users.get(position).name)
 
         holder.itemView.setOnClickListener {
-            if (title.equals("Contest", true)) {
+            if (title.contentEquals("Contests")) {
+                if(activityHomeSearch!=null)
+                    activityHomeSearch.setIntent("1")
             } else if (title.equals("Stocks", true)) {
                 var intent = Intent(mContext, ActivityStockDetail::class.java);
                 intent.putExtra("cryptoId", users.get(position).id)

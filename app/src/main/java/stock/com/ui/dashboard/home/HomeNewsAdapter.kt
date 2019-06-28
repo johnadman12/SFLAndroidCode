@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.row_search_header.view.*
 import stock.com.ui.pojo.HomeSearchPojo
 
 
-class HomeNewsAdapter(val mContext: Context, val data: ArrayList<HomeSearchPojo>) :
+class HomeNewsAdapter(val mContext: Context, val data: ArrayList<HomeSearchPojo>,val activityHomeSearch: ActivityHomeSearch) :
     RecyclerView.Adapter<HomeNewsAdapter.FeatureListHolder>() {
 
 
@@ -25,16 +26,15 @@ class HomeNewsAdapter(val mContext: Context, val data: ArrayList<HomeSearchPojo>
 
         if (data.get(position).users!!.size > 0) {
             holder.itemView.tv_header.setText(data.get(position).title)
-            val mAdapter = NewsItemAdapter(mContext, data.get(position).users!!, data.get(position).title)
+            val mAdapter = NewsItemAdapter(mContext, data.get(position).users!!, data.get(position).title,activityHomeSearch)
             val mLayoutManager = LinearLayoutManager(mContext)
             holder.itemView.recycle_search_items.setLayoutManager(mLayoutManager)
             holder.itemView.recycle_search_items.setItemAnimator(DefaultItemAnimator())
             holder.itemView.recycle_search_items.setAdapter(mAdapter)
 
-        }
-        else{
-            holder.itemView.tv_header.visibility= View.GONE
-            holder.itemView.recycle_search_items.visibility= View.GONE
+        } else {
+            holder.itemView.tv_header.visibility = View.GONE
+            holder.itemView.recycle_search_items.visibility = View.GONE
         }
         // you code here
 

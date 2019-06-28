@@ -31,7 +31,7 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.invite_friends)
-        setMenu(false, false, false, false, false, false, false)
+//        setMenu(false, false, false, false, false, false, false)
         txt_Invite.setOnClickListener(this)
         txt_label.setText("kick off your friends " + getString(R.string.app_name) + " Journey!")
     }

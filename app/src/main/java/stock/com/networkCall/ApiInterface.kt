@@ -658,6 +658,17 @@ interface ApiInterface {
         @Query("access_token") access_token: String
     ): Call<CityfalconNewsPojo>
 
+
+    @GET("v1/cryptocurrency/ohlcv/historical")
+    fun getChartApi(
+        @Header("Accepts") Accepts: String,
+        @Header("X-CMC_PRO_API_KEY") api_key: String,
+        @Query("symbol") symbol: String,
+        @Query("time_start") time_start: String,
+        @Query("time_end") min_cityfalcon_score: String
+
+    ): Call<CandlesticChartmarket>
+
     /* @Headers("Content-Type: application/json")
 
      @POST(ApiConstant.social_signup)

@@ -1,5 +1,6 @@
 package stock.com.AppBase
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -14,6 +15,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.irozon.sneaker.Sneaker
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
@@ -66,7 +68,7 @@ open class BaseActivity : AppCompatActivity() {
 
 
     /* */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+   /* override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_filter -> {
             }
@@ -88,7 +90,7 @@ open class BaseActivity : AppCompatActivity() {
                         this, getResources().getString(R.string.app_name), getString(R.string.login_default)
                     )
                 } else {
-                    startActivity(Intent(this, ActivityHomeSearch::class.java))
+                    startActivityForResult(Intent(this, ActivityHomeSearch::class.java),StockConstant.RESULT_CODE_HOME_SEARCH)
                 }
                 return true
             }
@@ -102,7 +104,7 @@ open class BaseActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
+*/
 
     fun displayToast(message: String, type: String) {
         if (type.equals("error")) {
@@ -188,12 +190,12 @@ open class BaseActivity : AppCompatActivity() {
         return str
     }
 
-    var menu: Menu? = null
+    /*var menu: Menu? = null
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        /* set layout of menu*/
+        *//* set layout of menu*//*
         menuInflater.inflate(R.menu.action_menu, menu)
         this.menu = menu
-        /* if child activity is product activity then visible filer menu icon*/
+        *//* if child activity is product activity then visible filer menu icon*//*
         menu.findItem(R.id.menu_filter).isVisible = filter
         menu.findItem(R.id.menu_sort).isVisible = sor_icon
         menu.findItem(R.id.menu_notification).isVisible = notif
@@ -206,7 +208,7 @@ open class BaseActivity : AppCompatActivity() {
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
         getViewOfCartMenuItem(menu)
-        /* se click listener of toolbar cart icon*/
+        *//* se click listener of toolbar cart icon*//*
         notificationView.setOnClickListener {
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
@@ -218,9 +220,9 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
         return true
-    }
+    }*/
 
-    fun setMenu(
+    /*fun setMenu(
         notif: Boolean,
         search: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
         info_icon: Boolean
@@ -243,32 +245,32 @@ open class BaseActivity : AppCompatActivity() {
             menu!!.findItem(R.id.menu_comment).isVisible = comment
             menu!!.findItem(R.id.menu_info).isVisible = info_icon
         }
-    }
+    }*/
 
-    private var walletPopupWindow: PopupWindow? = null
+   /* private var walletPopupWindow: PopupWindow? = null
 
     private lateinit var popupWindowView: View
     fun initWalletPopUp(anchorView: View) {
         try {
-            /* set view for filter popup window*/
+            *//* set view for filter popup window*//*
             walletPopupWindow = PopupWindow(this)
             popupWindowView = layoutInflater.inflate(R.layout.dialogue_wallet_new, null) as View
             walletPopupWindow!!.contentView = popupWindowView
-            /* set visibility of brands list*/
+            *//* set visibility of brands list*//*
             popupWindowView.img_close.setOnClickListener {
                 walletPopupWindow!!.dismiss()
             }
             popupWindowView.ll_bottom.setOnClickListener {
                 walletPopupWindow!!.dismiss()
             }
-            /* show popup window*/
+            *//* show popup window*//*
             showWalletPopUp(anchorView)
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
+    }*/
 
-    private fun showWalletPopUp(anchorView: View) {
+ /*   private fun showWalletPopUp(anchorView: View) {
         walletPopupWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
         walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
         walletPopupWindow!!.isOutsideTouchable = true
@@ -286,7 +288,7 @@ open class BaseActivity : AppCompatActivity() {
         val window = window
         window.decorView.getWindowVisibleDisplayFrame(rectangle)
         walletPopupWindow!!.showAsDropDown(anchorView)
-    }
+    }*/
 
     /* get view of cart menu item*/
     private fun getViewOfCartMenuItem(menu: Menu): View {
@@ -519,6 +521,8 @@ open class BaseActivity : AppCompatActivity() {
         }
         dialog.show()
     }
+
+
 
 
 }

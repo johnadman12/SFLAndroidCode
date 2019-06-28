@@ -28,7 +28,7 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.invite_code)
-        setMenu(false, false, false, false, false, false, false)
+//        setMenu(false, false, false, false, false, false, false)
         btn_join.setOnClickListener(this)
     }
 

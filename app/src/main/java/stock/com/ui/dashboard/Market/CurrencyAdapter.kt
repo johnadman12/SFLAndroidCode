@@ -55,9 +55,9 @@ class CurrencyAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val anim = AlphaAnimation(0.5f, 1.0f)
-        anim.duration = 150 //You can manage the blinking time with this parameter
+        anim.duration = 50 //You can manage the blinking time with this parameter
 //        anim.startOffset = 20
-        anim.repeatCount = Animation.REVERSE
+//        anim.repeatCount = Animation.REVERSE
 
         holder.itemView.name.setText(cryptoListNew.get(position).symbol)
         holder.itemView.tv_company.setText(cryptoListNew.get(position).name)

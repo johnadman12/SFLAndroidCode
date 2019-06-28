@@ -117,6 +117,7 @@
 
         <LinearLayout android:layout_width="0dp"
                       android:layout_weight="1"
+                      android:id="@+id/llMessage"
                       android:layout_height="wrap_content"
                       android:gravity="center">
             <androidx.appcompat.widget.AppCompatImageButton
@@ -132,6 +133,7 @@
               android:background="@color/colorbutton"/>
         <LinearLayout android:layout_width="0dp"
                       android:layout_weight="1"
+                      android:id="@+id/llContest"
                       android:gravity="center"
                       android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatImageButton

@@ -12,49 +12,52 @@ import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
 import kotlinx.android.synthetic.main.activity_stock_chart.*
 import stock.com.R
+import stock.com.ui.pojo.CandlesticChartmarket
+import stock.com.utils.StockConstant
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StockChartActivity : AppCompatActivity(), View.OnClickListener {
+    var list: ArrayList<CandlesticChartmarket.Quote>? = null
+    val yValsCandleStick = ArrayList<CandleEntry>()
     override fun onClick(v: View?) {
-        when(v!!.id){
+        when (v!!.id) {
             R.id.back_arrow ->
-            onBackPressed()
+                onBackPressed()
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_chart)
         back_arrow.setOnClickListener(this)
-        initView()
+        if (intent != null) {
+//            list = intent.getParcelableExtra(StockConstant.PREF_NAME)
+        }
+        if (list != null)
+            initView()
     }
+
     private fun initView() {
-        val yValsCandleStick = ArrayList<CandleEntry>()
-        yValsCandleStick.add(CandleEntry(0.0F, 225.0f, 219.84f, 224.94f, 221.07f))
-        yValsCandleStick.add(CandleEntry(1F, 228.35f, 222.57f, 223.52f, 226.41f))
-        yValsCandleStick.add(CandleEntry(2F, 226.84f, 222.52f, 225.75f, 237.84f))
-        yValsCandleStick.add(CandleEntry(3F, 230.95f, 217.27f, 226.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(4F, 219.56f, 217.28f, 227.15f, 207.88f))
-        yValsCandleStick.add(CandleEntry(5F, 233.90f, 218.29f, 227.15f, 235.88f))
-        yValsCandleStick.add(CandleEntry(6F, 220.92f, 219.30f, 228.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(7F, 221.94f, 220.47f, 229.15f, 252.88f))
-        yValsCandleStick.add(CandleEntry(8F, 240.45f, 217.42f, 230.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(9F, 223.67f, 233.54f, 231.15f, 223.88f))
-        yValsCandleStick.add(CandleEntry(10F, 242.90f, 220.47f, 232.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(11F, 245.68f, 217.237f, 222.15f, 213.88f))
-        yValsCandleStick.add(CandleEntry(12F, 220.57f, 224.67f, 222.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(13F, 250.22f, 243.87f, 222.15f, 246.88f))
-        yValsCandleStick.add(CandleEntry(14F, 247.95f, 217.87f, 224.15f, 227.88f))
-        yValsCandleStick.add(CandleEntry(15F, 248.49f, 243.45f, 222.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(16F, 219.50f, 224.43f, 250.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(17F, 226.60f, 225.29f, 222.15f, 220.88f))
-        yValsCandleStick.add(CandleEntry(18F, 222.51f, 216.28f, 246.15f, 239.88f))
-        yValsCandleStick.add(CandleEntry(19F, 220.42f, 218.69f, 222.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(20F, 240.55f, 239.59f, 249.15f, 217.88f))
-        yValsCandleStick.add(CandleEntry(21F, 232.93f, 240.66f, 222.15f, 240.88f))
-        yValsCandleStick.add(CandleEntry(22F, 235.44f, 245.25f, 240.15f, 217.88f))
+        for (i in 0 until list!!.size) {
+            var usd = list!!.get(i).quote!!.uSD
+            if (usd != null)
+                yValsCandleStick.add(
+                    CandleEntry(
+                        parseDateToddMMyyyy(usd.timestamp),
+                        usd.high,
+                        usd.low,
+                        usd.open,
+                        usd.close
+                    )
+                )
+        }
 
         val set1 = CandleDataSet(yValsCandleStick, "")
 //        val data_candle = CandleData(xVals_earnings, barDataSetCandle)
@@ -89,6 +92,39 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         val rightAxis_candle = chart11.axisRight
         rightAxis_candle.setDrawLabels(false)
 
+    }
+
+    fun getdate(): String {
+        val c = Calendar.getInstance().getTime()
+        println("Current time => $c")
+
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        val formattedDate = df.format(c)
+        return formattedDate
+    }
+
+    fun getdateOld(): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, -6)
+        val date = calendar.time
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        val formattedDate = df.format(date)
+        return formattedDate
+    }
+
+    fun parseDateToddMMyyyy(time: String): Float {
+//        val inputPattern = "EEE MMM dd HH:mm:ss zzz yyyy"
+        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+        outputPattern.setTimeZone(TimeZone.getTimeZone("UTC"));
+        var dateInMillis: Long = 0
+        try {
+            val date = outputPattern.parse(time)
+            dateInMillis = date.getTime()
+            return dateInMillis.toFloat()
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return 0.0f
     }
 }
 

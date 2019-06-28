@@ -54,7 +54,7 @@
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_8sdp"
-                        android:id="@+id/ll_filter"
+                        android:id="@+id/ll_message"
                         android:visibility="visible">
                     <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/_35sdp"

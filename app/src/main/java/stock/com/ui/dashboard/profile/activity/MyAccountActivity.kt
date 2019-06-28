@@ -31,7 +31,7 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.my_account)
-        setMenu(false, false, false, false, false, false,  false)
+//        setMenu(false, false, false, false, false, false,  false)
         cv_transactions.setOnClickListener(this)
         cv_payments.setOnClickListener(this)
     }

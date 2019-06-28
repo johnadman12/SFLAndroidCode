@@ -120,7 +120,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 maxprice
             )
         call.enqueue(object : Callback<LobbyContestPojo> {
-
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
                 d.dismiss()
                 if (response.body() != null) {

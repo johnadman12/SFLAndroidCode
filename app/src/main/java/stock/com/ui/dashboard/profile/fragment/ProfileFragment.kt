@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.fragment_myprofile.*
 import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.ui.dashboard.DashBoardActivity
+import stock.com.ui.dashboard.profile.MessageActivity
 import stock.com.ui.dashboard.profile.activity.MyAccountActivity
 import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.friends.FriendsActivity
@@ -48,6 +49,9 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.ll_edit -> {
                 startActivity(Intent(activity, EditProfileActivity::class.java))
+            }
+            R.id.ll_message -> {
+                startActivity(Intent(activity, MessageActivity::class.java))
             }
         }
     }
@@ -104,6 +108,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
         ll_friend.setOnClickListener(this);
         ll_wallet.setOnClickListener(this);
         ll_edit.setOnClickListener(this);
+        ll_message.setOnClickListener(this);
         showDialog();
     }
 

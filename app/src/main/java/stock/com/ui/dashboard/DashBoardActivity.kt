@@ -14,7 +14,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.content.ContextCompat
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
@@ -27,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.bottom_navigation.*
 import com.specyci.residemenu.ResideMenu
 import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,15 +38,21 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.comment.activity.CommentActivity
 import stock.com.ui.company.CompanyActivity
+import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.ContestNewBottom.MyContestFragment
 import stock.com.ui.dashboard.Lobby.LobbyFragment
 import stock.com.ui.dashboard.Market.MarketFragment
+import stock.com.ui.dashboard.home.ActivityHomeSearch
 import stock.com.ui.dashboard.home.InterfaceHome
 import stock.com.ui.dashboard.home.fragment.HomeFragment
+import stock.com.ui.dashboard.profile.MessageActivity
 import stock.com.ui.dashboard.profile.fragment.ProfileFragment
 import stock.com.ui.edit_profile.EditProfileActivity
 import stock.com.ui.feedback.FeedBackActivity
+import stock.com.ui.friends.FriendsActivity
+import stock.com.ui.notification.activity.NotificationActivity
 import stock.com.ui.offer_list.OfferListActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.rules_and_scoring.RulesScoringActivity
@@ -51,6 +60,7 @@ import stock.com.ui.setting.SettingActivity
 import stock.com.ui.share.ShareActivity
 import stock.com.ui.social_network.SocialNetworkActivity
 import stock.com.ui.support.SupportActivity
+import stock.com.ui.wallet.WalletActivity
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -313,16 +323,24 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         var tv_level = parentLayout.findViewById<AppCompatTextView>(R.id.tv_level);
         var tv_pro = parentLayout.findViewById<AppCompatTextView>(R.id.tv_pro);
         var profile_image = parentLayout.findViewById<CircleImageView>(R.id.profile_image);
+        var llMessage = parentLayout.findViewById<LinearLayout>(R.id.llMessage);
 
         var ll_Friends = parentLayout.findViewById<LinearLayout>(R.id.ll_Friends);
         var ll_wallet = parentLayout.findViewById<LinearLayout>(R.id.ll_wallet);
+        var llContest = parentLayout.findViewById<LinearLayout>(R.id.llContest);
 
 
         ll_wallet.setOnClickListener {
 
-            // var intent = Intent(this, WalletActivity::class.java);
-            //startActivity(intent);
+            var intent = Intent(this, WalletActivity::class.java);
+            startActivity(intent);
         }
+
+        llContest.setOnClickListener {
+            startActivity(Intent(this, ActivityMyTeam::class.java))
+        }
+
+
         ll_Friends.setOnClickListener {
             // var intent = Intent(this, FriendsActivity::class.java);
             //startActivity(intent);
@@ -332,10 +350,14 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                     getString(R.string.login_default)
                 )
             } else {
-                var intent = Intent(this, ShareActivity::class.java);
+                var intent = Intent(this, FriendsActivity::class.java);
                 startActivity(intent);
             }
 
+        }
+
+        llMessage.setOnClickListener {
+            startActivity(Intent(this, MessageActivity::class.java))
         }
 
         img_my_contest.setOnClickListener {
@@ -622,9 +644,23 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
             changetTextViewBackground(tv_home, R.color.textColorLightBlack);
         }
+        if (requestCode == StockConstant.RESULT_CODE_HOME_SEARCH) {
+            if (resultCode == Activity.RESULT_OK) {
+                var id = data!!.getStringExtra("id");
+                val bundle = Bundle()
+                bundle.putString("flag", "")
+                bundle.putString("id", id)
+                setFragment(LobbyFragment(), bundle)
+                changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
+                changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+
+            }
+        }
     }
 
-    public fun test(){
+    public fun test() {
         //displayToast("dsada","error")
         var b = Bundle();
         b.putString("flag", "")
@@ -634,4 +670,147 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
         changetTextViewBackground(tv_home, R.color.textColorLightBlack);
     }
+
+
+    var menu: Menu? = null
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        /* set layout of menu*/
+        menuInflater.inflate(R.menu.action_menu, menu)
+        this.menu = menu
+        /* if child activity is product activity then visible filer menu icon*/
+        menu.findItem(R.id.menu_filter).isVisible = filter
+        menu.findItem(R.id.menu_sort).isVisible = sor_icon
+        menu.findItem(R.id.menu_notification).isVisible = notif
+//        menu.findItem(R.id.menu_Search).isVisible = search
+        menu.findItem(R.id.menu_wallet).isVisible = wallet
+        menu.findItem(R.id.menu_edit).isVisible = edit
+        menu.findItem(R.id.menu_comment).isVisible = comment
+        menu.findItem(R.id.menu_info).isVisible = info_icon
+//        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
+//        if (driveActivityName == ProductActivity().javaClass.name){
+//        }
+        getViewOfCartMenuItem(menu)
+        /* se click listener of toolbar cart icon*/
+        notificationView.setOnClickListener {
+            if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                AppDelegate.showAlertRegister(
+                    this, getResources().getString(R.string.app_name), getString(R.string.login_default)
+                )
+
+            } else {
+                startActivity(Intent(this, NotificationActivity::class.java))
+            }
+        }
+        return true
+    }
+
+    fun setMenu(
+        notif: Boolean,
+        search: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, comment: Boolean,
+        info_icon: Boolean
+    ) {
+//        this.search = serach
+        this.notif = notif
+        this.wallet = wallet
+        this.filter = filter
+        this.edit = edit
+        this.comment = comment
+        this.info_icon = info_icon
+        this.sor_icon = search
+        if (menu != null) {
+//            menu!!.findItem(R.id.menu_Search).isVisible = search
+            menu!!.findItem(R.id.menu_filter).isVisible = filter
+            menu!!.findItem(R.id.menu_sort).isVisible = search
+            menu!!.findItem(R.id.menu_notification).isVisible = notif
+            menu!!.findItem(R.id.menu_wallet).isVisible = wallet
+            menu!!.findItem(R.id.menu_edit).isVisible = edit
+            menu!!.findItem(R.id.menu_comment).isVisible = comment
+            menu!!.findItem(R.id.menu_info).isVisible = info_icon
+        }
+    }
+
+    private fun getViewOfCartMenuItem(menu: Menu): View {
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            if (item.itemId == R.id.menu_notification) {
+                notificationView = item.actionView
+                /* get cart item quantity and set it*/
+//                val cartQuantity = pref!!.getStringValue(PrefConstant.KEY_CART_ITEM_COUNT, "")
+                val cartQuantity = "1"
+                notificationView.notifItemCountTv.text = cartQuantity
+                setDynamicallyParam(cartQuantity)
+//                if (pref!!.storeIdMatch() || !AppDelegate.isValidString(pref!!.getStringValue(PrefConstant.KEY_STORE_ID, "")))
+//                    cartItemView.cartItemCountTv.text = cartQuantity
+//                else
+//                    cartItemView.cartItemCountTv.text = "X"
+                if (cartQuantity == "0" || cartQuantity.isEmpty())
+                    notificationView.notifItemCountTv.visibility = View.GONE
+                else
+                    notificationView.notifItemCountTv.visibility = View.VISIBLE
+
+                return notificationView
+            } /*else if (item.itemId == R.id.menu_sort) {
+                searchView = item.ac
+                return searchView
+
+            }*/
+        }
+        return notificationView
+    }
+
+    /* change height width of cart item count*/
+    private fun setDynamicallyParam(cartItemQuantity: String) {
+        if (cartItemQuantity.length > 2) {
+            notificationView.notifItemCountTv.measure(0, 0)
+            val width = notificationView.notifItemCountTv.measuredWidth
+
+            val linearPram = RelativeLayout.LayoutParams(width, width)
+            val marginInDp = -5
+            val marginInPx = marginInDp * resources.displayMetrics.density
+            linearPram.setMargins(marginInPx.toInt(), marginInPx.toInt(), 0, 0)
+            linearPram.addRule(RelativeLayout.END_OF, R.id.notif_icon)
+            notificationView.notifItemCountTv.layoutParams = linearPram
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_filter -> {
+            }
+//            R.id.menu_notification -> {
+////                startActivity(Intent(this,ContestDetailActivity::class.java))
+//                return true
+//            }
+            /*R.id.menu_wallet -> {
+                val view = findViewById<View>(R.id.menu_wallet)
+                if (walletPopupWindow == null)
+                    initWalletPopUp(view)
+                else
+                    showWalletPopUp(view)
+                return true
+            }*/
+            R.id.menu_sort -> {
+                if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
+                    AppDelegate.showAlertRegister(
+                        this, getResources().getString(R.string.app_name), getString(R.string.login_default)
+                    )
+                } else {
+                    startActivityForResult(
+                        Intent(this, ActivityHomeSearch::class.java),
+                        StockConstant.RESULT_CODE_HOME_SEARCH
+                    )
+                }
+                return true
+            }
+            R.id.menu_comment -> {
+                startActivity(Intent(this, CommentActivity::class.java))
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
