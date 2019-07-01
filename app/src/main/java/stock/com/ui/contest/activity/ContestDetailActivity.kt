@@ -239,7 +239,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {
@@ -254,7 +254,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
                         if (diff < 900000) {
                             ll_Circular.isEnabled = false
-                            txtjoin.setTextSize(20.00f)
+                            txtjoin.setTextSize(16.00f)
                             txtjoin.setText(getString(R.string.live_now))
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
@@ -269,7 +269,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n " + seconds.toString() + "S")
                     }
 
                     override fun onFinish() {

@@ -105,7 +105,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
-                //setMenu(true, false, false, false, false, false, false)
+                setMenu(false, false, false, false, false, false, false)
                 setTitleVisibility(false, true)
                 setTitleText(getString(R.string.my_contest))
                 //setFragment(MyContestFragment(), Bundle());
@@ -121,7 +121,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         }
         ll_home.setOnClickListener {
             toolbar.visibility = View.VISIBLE
-            //setMenu(true, false, false, false, false, false, false)
+            setMenu(true, true, false, false, false, false, false)
             setTitleVisibility(false, true)
             setFragment(HomeFragment(), Bundle());
             changetTextViewBackground(tv_home, R.color.colorPrimary);
@@ -138,8 +138,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
-                setTitleVisibility(true, false)
-                // setMenu(false, false, false, true, false, false, false)
+                setTitleVisibility(false, true)
+                 setMenu(false, false, false, true, false, false, false)
                 setTitleText(getString(R.string.profile))
                 setFragment(ProfileFragment(), Bundle())
                 changetTextViewBackground(tv_profile, R.color.colorPrimary);
@@ -158,8 +158,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 )
             } else {
                 toolbar.visibility = View.VISIBLE
-                setTitleVisibility(true, false)
-                // setMenu(false, false, false, true, false, false, false)
+                setTitleVisibility(false, true)
+                 setMenu(false, false, false, true, false, false, false)
                 setFragment(MarketFragment(), Bundle())
 
                 changetTextViewBackground(tv_market, R.color.colorPrimary);
@@ -176,8 +176,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 )
             } else {
                 toolbar.visibility = VISIBLE
-                setTitleVisibility(true, false)
-                // setMenu(false, false, false, true, false, false, false)
+                setTitleVisibility(false, true)
+                 setMenu(false, false, false, true, false, false, false)
                 val bundle = Bundle()
                 bundle.putString("flag", "")
                 setFragment(LobbyFragment(), bundle)
@@ -192,6 +192,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             val bundle = Bundle()
             bundle.putString("flag", "")
             setFragment(LobbyFragment(), bundle)
+            setTitleVisibility(false, true)
+            setMenu(false, false, false, true, false, false, false)
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
@@ -233,8 +235,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         supportActionBar!!.setDisplayShowHomeEnabled(false)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu);
-
-
         toolbar.visibility = View.VISIBLE
         setTitleVisibility(false, true)
         // setMenu(true, false, false, false, false, false, false)

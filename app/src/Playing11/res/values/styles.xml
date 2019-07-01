@@ -63,6 +63,11 @@
         <item name="android:textSize">@dimen/_14ssp</item>
         <item name="android:textColor">@color/textColorOffWhite</item>
     </style>
+    <style name="TextStyleBold" parent="Theme.AppCompat.Light">
+        <item name="android:fontFamily">@fonts/faktpro_bold</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:textColor">@color/textColorOffWhite</item>
+    </style>
     <style name="TextStyleLight" parent="Theme.AppCompat.Light">
         <item name="android:fontFamily">@fonts/faktpro_light</item>
         <item name="android:textSize">@dimen/_14ssp</item>

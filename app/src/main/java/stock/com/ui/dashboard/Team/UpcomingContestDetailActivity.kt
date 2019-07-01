@@ -226,7 +226,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {
@@ -256,7 +256,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n " + seconds.toString() + "S")
                     }
 
                     override fun onFinish() {

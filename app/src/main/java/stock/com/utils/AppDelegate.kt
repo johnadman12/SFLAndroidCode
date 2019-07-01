@@ -46,6 +46,7 @@ import stock.com.BuildConfig
 import stock.com.R
 import stock.com.constant.Tags
 import stock.com.ui.signup.activity.SignUpActivity
+import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.networkUtils.NetworkUtils
 import java.io.*
 import java.security.MessageDigest
@@ -1435,7 +1436,7 @@ object AppDelegate {
         val tv_cancel: TextView = dialog.findViewById(R.id.tv_cancel)
         tv_yes.setOnClickListener {
             mContext.startActivity(
-                Intent(mContext, SignUpActivity::class.java).putExtra(
+                Intent(mContext, WelcomeActivity::class.java).putExtra(
                     StockConstant.FLAG,
                     "false"
                 )

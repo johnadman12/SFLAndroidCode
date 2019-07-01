@@ -99,7 +99,7 @@
                                     android:gravity="center"
                                     android:id="@+id/entry_fee"
                                     android:layout_weight=".5"
-                                    android:textSize="@dimen/_12sdp"
+                                    android:textSize="@dimen/_14ssp"
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
                                     android:layout_height="0dp"
@@ -157,18 +157,19 @@
                                 android:background="@mipmap/circlebg"
                                 android:gravity="center"
                                 android:weightSum="1"
+                                android:id="@+id/llbgTime"
                                 android:orientation="vertical">
                             <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/TextStyleNormal"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:textSize="@dimen/_9ssp"
+                                    android:textSize="@dimen/_11ssp"
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
                                     android:layout_height="0dp"
                                     android:text="$50"
+                                    android:gravity="top"
+                                    android:layout_marginTop="@dimen/_5sdp"
                                     android:id="@+id/tvTimeLeft"
-                                    android:layout_weight=".5"
+                                    android:layout_weight=".7"
                                     android:textStyle="bold"/>
                             <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/TextStyleNormal"
@@ -176,6 +177,8 @@
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
                                     android:paddingTop="@dimen/_2sdp"
+                                    android:id="@+id/tvHint"
+                                    android:layout_weight=".3"
                                     android:layout_height="wrap_content"
                                     android:text="@string/time_left"/>
                         </LinearLayout>
@@ -195,6 +198,7 @@
                             android:orientation="vertical"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_height="wrap_content"
+                            android:id="@+id/llSportsLeft"
                             android:layout_gravity="center"
                             android:gravity="center">
                         <androidx.appcompat.widget.AppCompatTextView
@@ -229,17 +233,17 @@
 
                         <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
                                 android:id="@+id/circular_progress"
-                                android:layout_width="@dimen/_85sdp"
-                                android:layout_height="@dimen/_85sdp"
+                                android:layout_width="@dimen/_70sdp"
+                                android:layout_height="@dimen/_70sdp"
                                 android:layout_gravity="center"
                                 card_view:fillBackground="true"
                                 card_view:progressColor="@color/light_blue_color"
                                 card_view:progressCap="round"
                                 android:outlineProvider="paddedBounds"
-                                card_view:progressBackgroundStrokeWidth="@dimen/_8sdp"
+                                card_view:progressBackgroundStrokeWidth="@dimen/_12sdp"
                                 card_view:textSize="@dimen/_16ssp"
                                 card_view:textColor="@color/white"
-                                style="@style/TextStyleSemiBold"
+                                style="@style/TextStyleBold"
                                 card_view:direction="clockwise"
                                 card_view:progressBackgroundColor="@color/green"
                                 android:layout_marginBottom="8dp"
@@ -251,12 +255,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:textSize="@dimen/_22ssp"
+                                android:textSize="@dimen/_16ssp"
                                 android:textColor="@color/white"
                                 android:background="@null"
                                 android:gravity="center"
                                 android:lineSpacingExtra="@dimen/_2sdp"
-                                style="@style/TextStyleSemiBold"
+                                style="@style/TextStyleBold"
+                                android:textStyle="bold"
                                 android:text="@string/join_now"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -271,13 +276,13 @@
                                       android:orientation="vertical">
                             <androidx.appcompat.widget.AppCompatImageButton
                                     android:id="@+id/ivStock"
-                                    android:layout_width="@dimen/_25sdp"
-                                    android:layout_height="@dimen/_25sdp"
+                                    android:layout_width="@dimen/_30sdp"
+                                    android:layout_height="@dimen/_30sdp"
                                     android:src="@mipmap/home_icon"
                                     android:layout_gravity="center"
                                     android:background="@null"/>
                             <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/TextStyleNormal"
+                                    style="@style/TextStyleSemiBold"
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:textSize="@dimen/_12ssp"

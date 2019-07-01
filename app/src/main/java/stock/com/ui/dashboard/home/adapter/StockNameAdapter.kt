@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.home.adapter
 
 import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.row_view_stock_name.view.*
 import stock.com.R
 import stock.com.ui.pojo.HomePojo
+import androidx.core.os.HandlerCompat.postDelayed
+
+
 
 class StockNameAdapter(val mContext: Context, val mContest: List<HomePojo.Exchange>) :
     RecyclerView.Adapter<StockNameAdapter.FeatureListHolder>() {
@@ -29,6 +33,7 @@ class StockNameAdapter(val mContext: Context, val mContest: List<HomePojo.Exchan
 
         }
         holder.itemView.tvValue.setText(mContest.get(position).latestPrice)
+
 
     }
 

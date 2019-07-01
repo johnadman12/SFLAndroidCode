@@ -139,7 +139,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        object : CountDownTimer(30000, 1000) {
+                        object : CountDownTimer(90000, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
                                 resendOTPTv.isEnabled = false
@@ -197,7 +197,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        object : CountDownTimer(30000, 1000) {
+                        object : CountDownTimer(90000, 1000) {
                             override fun onTick(millisUntilFinished: Long) {
                                 resendOTPTv.setText("seconds remaining: " + millisUntilFinished / 1000)
                                 resendOTPTv.isEnabled = false

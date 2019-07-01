@@ -49,7 +49,7 @@
                             android:layout_weight="1"
                             android:textSize="@dimen/_12ssp"
                             android:textColor="@color/white"
-                            android:text="Sign Up"
+                            android:text="@string/login"
                             android:gravity="center"
                             style="@style/TextStyleSemiBold"
                             android:background="#31E15A"

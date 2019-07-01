@@ -399,12 +399,23 @@
                     <androidx.appcompat.widget.AppCompatCheckBox
                             android:id="@+id/accept_term_condition"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:checked="true"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
                             android:buttonTint="@color/com_facebook_blue"
-                            android:textColor="@color/com_facebook_blue"
-                            android:text="@string/tc_agree_txt"
                             android:textSize="@dimen/_10ssp"/>
+
+                    <TextView android:layout_width="match_parent"
+                              android:layout_toRightOf="@+id/accept_term_condition"
+                              style="@style/TextStyleNormal"
+                              android:text="@string/tc_agree_txt"
+                              android:gravity="center_vertical"
+                              android:autoLink="web"
+                              android:id="@+id/tvagree"
+                              android:layout_marginTop="@dimen/_3sdp"
+                              android:textColor="@color/com_facebook_blue"
+                              android:layout_height="wrap_content"
+                              android:textSize="@dimen/_11ssp"
+                    />
 
                 </RelativeLayout>
 

@@ -75,6 +75,7 @@
             android:gravity="left"
             android:layout_width="match_parent"
             android:textSize="@dimen/_11sdp"
+            android:textAllCaps="false"
             android:textColor="@color/textColorLightBlack"
             android:text="@string/note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions"
             android:layout_height="wrap_content"/>

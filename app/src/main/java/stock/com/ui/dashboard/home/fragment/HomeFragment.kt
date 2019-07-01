@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -23,6 +24,8 @@ import stock.com.ui.dashboard.home.adapter.*
 import stock.com.ui.pojo.*
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import com.rd.PageIndicatorView
+import androidx.viewpager.widget.ViewPager
 
 
 class HomeFragment : BaseFragment(), View.OnClickListener {
@@ -30,6 +33,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     var identifires: String = ""
     private var dashBoradACtivity: DashBoardActivity? = null;
     var dataExchange: ArrayList<String>? = null;
+    var exchangeList: List<HomePojo.Exchange>? = null;
     var newsStories: ArrayList<CityfalconNewsPojo.Story>? = null
 
     override fun onClick(view: View?) {
@@ -68,6 +72,20 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
+        /*val speedScroll = 1500
+        val handler = Handler()
+        val runnable = object : Runnable {
+            internal var count = 0
+            override fun run() {
+                if (count < exchangeList!!.size) {
+                    recyclerView_stock_name.scrollToPosition(++count)
+                    handler.postDelayed(this, speedScroll.toLong())
+                }
+
+
+            }
+        }
+        handler.postDelayed(runnable, speedScroll.toLong())*/
     }
 
     private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
@@ -112,11 +130,24 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_features.setPageMargin(10);
 
 
-        val adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
+        var adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_features.setAdapter(adapter)
 
-        tab_layout_features.visibility = VISIBLE;
-        tab_layout_features.setupWithViewPager(viewPager_features);
+        /* tab_layout_features.visibility = VISIBLE;
+         tab_layout_features.setupWithViewPager(viewPager_features);*/
+        pageIndicatorView.visibility = VISIBLE
+        pageIndicatorView.setCount(5) // specify total count of indicators
+        viewPager_features.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
+            }
+
+            override fun onPageSelected(position: Int) {
+                pageIndicatorView.selection = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {/*empty*/
+            }
+        });
 
 
     }
@@ -127,7 +158,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         recyclerView_stock_name!!.layoutManager = llm
         recyclerView_stock_name.visibility = View.VISIBLE
         recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList)
-        //recyclerView_stock_name.addItemDecoration(CirclePagerIndicatorDecoration(activity))
     }
 
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
@@ -140,8 +170,24 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ViewPagerTraining(context!!, traniningContest, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_training.setAdapter(adapter)
 
+
+        pageIndicatorTraining.visibility = VISIBLE
+        pageIndicatorTraining.setCount(5) // specify total count of indicators
+        viewPager_training.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
+            }
+
+            override fun onPageSelected(position: Int) {
+                pageIndicatorTraining.selection = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {/*empty*/
+            }
+        });
+
+/*
         tab_layout_training.visibility = VISIBLE;
-        tab_layout_training.setupWithViewPager(viewPager_training);
+        tab_layout_training.setupWithViewPager(viewPager_training);*/
 
     }
 
@@ -193,6 +239,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 //                        progressBar.visibility = GONE
                         setHomeBannerAdapter(response.body()!!.banner!!)
                         setFeatureContestAdapter(response.body()!!.featureContest!!)
+
+                        exchangeList = response.body()!!.exchange!!
 
                         setStockNameAdapter(response.body()!!.exchange!!)
 

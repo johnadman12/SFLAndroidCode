@@ -76,6 +76,9 @@ class ViewPagerFeature(
         val tvConfirmWin: TextView = view.findViewById(R.id.tvConfirmWin)
         val tvMulJoin: TextView = view.findViewById(R.id.tvMulJoin)
         val tvContestType: TextView = view.findViewById(R.id.tvContestType)
+        val llbgTime: LinearLayout = view.findViewById(R.id.llbgTime)
+        val llSportsLeft: LinearLayout = view.findViewById(R.id.llSportsLeft)
+        val tvHint: TextView = view.findViewById(R.id.tvHint)
 
         entry_fee.setText(list.get(position).entryFees)
         tvWinnersTotal.setText(list.get(position).totalwinners)
@@ -124,9 +127,12 @@ class ViewPagerFeature(
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
-                tvTimeLeft.setText("00H:00M:00S")
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(context, R.color.GrayColor)
+                ll_Circular.isEnabled = false
+                llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                tvTimeLeft.setText("Contest \n Started")
+                tvHint.visibility = GONE
             } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -135,7 +141,7 @@ class ViewPagerFeature(
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {
@@ -144,22 +150,28 @@ class ViewPagerFeature(
                 newtimer.start()
 
             } else {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
                         if (diff < 900000) {
-                            txtjoin.setTextSize(22.00f)
+                            txtjoin.setTextSize(16.00f)
                             txtjoin.setText(context.getString(R.string.live_now))
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
-                        }
-                        val diffSec = diff / 1000
-                        val seconds = diffSec % 60
-                        val minutes = diffSec / 60 % 60
-                        val hours = diffSec / 3600
+                            ll_Circular.isEnabled = false
+                            llSportsLeft.visibility= GONE
+                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            tvTimeLeft.setText("Contest \n Started")
+                            tvHint.visibility = GONE
+                        } else {
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        }
                     }
 
                     override fun onFinish() {

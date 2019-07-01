@@ -92,7 +92,7 @@
                                 android:gravity="center"
                                 android:id="@+id/entry_fee"
                                 android:layout_weight=".5"
-                                android:textSize="@dimen/_12sdp"
+                                android:textSize="@dimen/_14ssp"
                                 android:layout_width="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_height="0dp"
@@ -223,18 +223,19 @@
 
                     <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
                             android:id="@+id/circular_progress"
-                            android:layout_width="@dimen/_80sdp"
-                            android:layout_height="@dimen/_80sdp"
+                            android:layout_width="@dimen/_70sdp"
+                            android:layout_height="@dimen/_70sdp"
                             android:layout_gravity="center"
                             card_view:fillBackground="true"
                             card_view:progressColor="@color/light_blue_color"
                             card_view:progressCap="round"
-                            android:outlineProvider="paddedBounds"
-                            card_view:progressBackgroundStrokeWidth="@dimen/_8sdp"
+                            android:outlineProvider="bounds"
+                            card_view:progressBackgroundStrokeWidth="@dimen/_10sdp"
                             card_view:textSize="@dimen/_16ssp"
                             card_view:textColor="@color/white"
                             card_view:direction="clockwise"
-                            style="@style/TextStyleSemiBold"
+                            android:textStyle="bold"
+                            style="@style/TextStyleBold"
                             card_view:progressBackgroundColor="@color/green"
                             android:layout_marginBottom="8dp"
                             android:layout_marginTop="8dp"/>
@@ -245,12 +246,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:textSize="@dimen/_22ssp"
+                            android:textSize="@dimen/_16ssp"
                             android:textColor="@color/white"
                             android:background="@null"
                             android:gravity="center"
+                            android:textStyle="bold"
                             android:lineSpacingExtra="@dimen/_2sdp"
-                            style="@style/TextStyleSemiBold"
+                            style="@style/TextStyleBold"
                             android:text="@string/join_now"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -265,12 +267,12 @@
                                   android:orientation="vertical">
                         <androidx.appcompat.widget.AppCompatImageButton
                                 android:id="@+id/ivStock"
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
+                                android:layout_width="@dimen/_30sdp"
+                                android:layout_height="@dimen/_30sdp"
                                 android:layout_gravity="center"
                                 android:background="@null"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/TextStyleNormal"
+                                style="@style/TextStyleSemiBold"
                                 android:layout_gravity="center"
                                 android:gravity="center"
                                 android:textSize="@dimen/_12sdp"

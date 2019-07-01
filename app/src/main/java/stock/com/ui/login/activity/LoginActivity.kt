@@ -3,6 +3,7 @@ package stock.com.ui.login.activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.MenuItem
@@ -32,6 +33,7 @@ import stock.com.utils.StockDialog
 import stock.com.utils.networkUtils.NetworkUtils
 import androidx.annotation.StyleRes
 import com.jesusm.kfingerprintmanager.KFingerprintManager
+import io.michaelrocks.libphonenumber.android.Phonenumber
 
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
@@ -160,12 +162,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         socialModel = SocialModel()
                         socialModel.isSocial = "1"
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        if (pass_remembered == 1)
+                        if (pass_remembered == 1) {
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
-                        else
+                        } else
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
@@ -192,6 +194,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     }
 
 
+    /* saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+     saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+     saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+     if (pass_remembered == 1)
+     saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
+     else
+     saveIntoPrefsString(StockConstant.PASSWORD, "")
+ */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -212,7 +222,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 pass_remembered = 1
             }
         }
-        /*if (checkRemebered.isChecked) {
+        //before functionality
+       /* if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
             et_email.setText(getUserData().email)
             et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
         }*/
@@ -227,11 +238,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 if (s.length != 0)
                     if (isNumeric(s.toString())) {
                         countryCodelogin.visibility = VISIBLE
+                        et_email.inputType = InputType.TYPE_CLASS_PHONE
                     } else {
                         countryCodelogin.visibility = GONE;
+                        et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     }
-                else
+                else {
                     countryCodelogin.visibility = GONE
+                    et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+
+                }
             }
 
             override fun beforeTextChanged(

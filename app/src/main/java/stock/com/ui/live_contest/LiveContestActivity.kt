@@ -85,7 +85,7 @@ class LiveContestActivity : BaseActivity() {
         mainHandler.post(object : Runnable {
             override fun run() {
                 getContestDetail()
-                mainHandler.postDelayed(this, 20000)
+                mainHandler.postDelayed(this, 10000)
             }
         })
     }
@@ -156,7 +156,6 @@ class LiveContestActivity : BaseActivity() {
                         }, 100)
                         setLiveAdapter(response.body()!!.scores)
                         tvcontesttype.setText(response.body()!!.contest.get(0).catname)
-
                         for (i in 0 until response.body()!!.scores.size)
                             if (response.body()!!.scores.get(i).userid.toString().equals(
                                     getFromPrefsString(

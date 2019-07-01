@@ -386,6 +386,7 @@ open class BaseActivity : AppCompatActivity() {
 //        saveIntoPrefsString(StockConstant.USERPHONE, "")
 //        saveIntoPrefsString(StockConstant.USEREMAIL, "")
         saveIntoPrefsString(StockConstant.USERIMG, "")
+        saveIntoPrefsString(StockConstant.PASSWORD, "")
         val intent = Intent(this, WelcomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent);

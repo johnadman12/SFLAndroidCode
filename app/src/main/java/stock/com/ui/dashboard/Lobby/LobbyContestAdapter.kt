@@ -109,7 +109,7 @@ class LobbyContestAdapter(
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                        holder.itemView.tvTime.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {
@@ -122,12 +122,24 @@ class LobbyContestAdapter(
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        if (diff < 900000) {
+                            holder.itemView.txtjoin.setTextSize(16.00f)
+                            holder.itemView.txtjoin.setText(mContext.getString(R.string.live_now))
+                            holder.itemView.circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(mContext, R.color.GrayColor)
+                            holder.itemView.ll_Circular.isEnabled = false
+                            holder.itemView.llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.circle))
+                            holder.itemView.tvTimeLeft.setText("Contest \n Started")
+                            holder.itemView.tvHint.visibility = View.GONE
+                        } else {
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
 
-                        val diffSec = diff / 1000
-                        val seconds = diffSec % 60
-                        val minutes = diffSec / 60 % 60
-                        val hours = diffSec / 3600
-                        holder.itemView.tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        }
+
                     }
 
                     override fun onFinish() {

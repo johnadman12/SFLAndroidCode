@@ -101,7 +101,7 @@
     <string name="how_to_play_">How to Play</string>
 
     <string name="about">About</string>
-    <string name="time_left">Time Left :</string>
+    <string name="time_left">Time Left</string>
     <string name="rules">Rules</string>
     <string name="support">Support</string>
     <string name="logout">Logout</string>
@@ -152,8 +152,9 @@
     <string name="winning_list">Winning List</string>
     <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions">
         <b>Note:-</b>
-        The actual prize money may be different than the prize money mentioned above if there is a tie for any of
-        the winning positions.
+        ACTUAL PRIZE AMOUNT MAY VARY THAN WHAT IS MENTIONED PER RANKING IF THERE WAS A TIE IN SCORES AND RESULTS. REFER
+        TO RULES AND SCORING FOR MORE DETAILS.
+        <u>(RULES AND SCORING SHOULD BE HYPERLINK TO ITS SCREEN)</u>
     </string>
     <string name="view_teams">View Team</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
@@ -342,7 +343,13 @@
     <string name="password_txt">Password</string>
     <string name="already_account">already have an account yet?</string>
     <string name="recieve_noti">Receive Offers &amp; Notification</string>
-    <string name="tc_agree_txt">By registring, I agree to SFL T&amp;C and Privacy Policy</string>
+    <string name="tc_agree_txt">By registring, I agree to DFX
+        <u>"Terms &amp; Conditions and Privacy Policy"</u>
+    </string>
+
+
+    <!--<string name="tc_agree_txt">User Guide <a href="http://www.cleverfinger.com.au/user-guide/">cleverfinger</a></string>-->
+
     <string name="start">Start</string>
     <string name="cancel">Cancel</string>
 
@@ -394,15 +401,15 @@
     <string name="deposit_funds">DEPOSIT FUNDS</string>
     <string name="join_contest">JOIN CONTEST</string>
     <string name="win_cash">WIN CASH</string>
-    <string name="reffral_bonus">Referral Bonus </string>
+    <string name="reffral_bonus">Referral Bonus</string>
     <string name="form_team">Form A Team</string>
     <string name="intro2">We added a variety of contest in different markets for you to join!</string>
     <string name="intro3">Win up to *1000 your entry fee!*</string>
-    <string name="intro3_1"> depends on contest total winnings  </string>
-    <string name="intro4"> choose your formation of assets and make a winning team!  </string>
-    <string name="intro5"> Invite your friend to join contests and win bonus!  </string>
-    <string name="intro5_1"> *Terms and condition apply </string>
-    <string name="intro6"> Start winning! </string>
+    <string name="intro3_1">depends on contest total winnings</string>
+    <string name="intro4">choose your formation of assets and make a winning team!</string>
+    <string name="intro5">Invite your friend to join contests and win bonus!</string>
+    <string name="intro5_1">*Terms and condition apply</string>
+    <string name="intro6">Start winning!</string>
 
     <string name="logout_msg">Are you sure you want to Logout?</string>
     <string name="yes">Yes</string>
@@ -416,7 +423,7 @@
 
     <string name="search_by_market">Search by market symbol or name</string>
     <string name="search_by_news">Search by Exchange symbol or name</string>
-    <string name="search_by_user_name">  Search by username</string>
+    <string name="search_by_user_name">Search by username</string>
 
     <string name="social_network">Social Network</string>
 
@@ -579,7 +586,7 @@
     <string name="dummy_txt_analystis">Based on 36 analysts offering recommendations for APPL in the last 3 mothes, the
         overall consensus is Moderate Buy
     </string>
-    <string name="login_default">please Sign Up to Continue use of App Services and Join Contests</string>
+    <string name="login_default">Please sign up or Login to access all functions and be able to join contests</string>
     <string name="enter_invite_code1">Enter Invitation Code</string>
     <string name="enter_invite_code_here">Enter Invite Code here</string>
     <string name="invite">Invite</string>
@@ -589,4 +596,5 @@
     <string name="pending_requests">Pending Requests</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
+    <string name="doesnot_match">password does not match</string>
 </resources>

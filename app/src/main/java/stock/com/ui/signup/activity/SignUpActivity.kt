@@ -30,6 +30,8 @@ import stock.com.ui.signup.apiRequest.SignUpRequest
 import stock.com.ui.signup.pojo.CountryDataPojo
 import stock.com.utils.networkUtils.NetworkUtils
 import android.app.DatePickerDialog
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View.GONE
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
@@ -38,16 +40,21 @@ import stock.com.ui.splash.activity.WelcomeActivity
 import stock.com.utils.*
 import java.util.*
 import java.text.SimpleDateFormat
+import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.R.id
+import android.widget.TextView
 
 
 class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.OnCountryChangeListener {
     lateinit var countrycodeList: ArrayList<CountryDataPojo>
     var countryCodePicker: CountryCodePicker? = null;
     val myCalendar = Calendar.getInstance()
-    private var term_condition_accept: Int = 1
+    private var term_condition_accept: Int = 0
     private var notification_accept: Int = 0
     private var socialId: String = "";
     lateinit var socialmodel: SocialModel
+    val regexStr = "^.*(?=.*\\d)(?=.*[a-zA-Z]).*$"
 
     private var flag: String = "";
 
@@ -135,15 +142,73 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
         et_dob.setOnClickListener(this)
-//        txt_TC.setOnClickListener(this)
+        tvagree.isClickable = true
+        tvagree.movementMethod = LinkMovementMethod.getInstance()
+//        val text = "<a href='http://www.google.com'> Google </a>"
+//        tvagree.text = Html.fromHtml(text)
         countryCodePicker!!.setOnCountryChangeListener(this)
+
+        et_Password.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (s.length != 0) {
+                    et_conf_Password.isEnabled = true
+                }
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })
+
+        et_conf_Password.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+//                val regexStr = "/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\$/"
+                if (s.length != 0) {
+                    if (et_Password.text.toString().length < 6) {
+                        AppDelegate.showToast(this@SignUpActivity, getString(R.string.short_password))
+                        et_Password.setError(getString(R.string.short_password))
+                        et_conf_Password.isEnabled = false
+                    } else if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
+                        AppDelegate.showToast(this@SignUpActivity, getString(R.string.invalid_password))
+                        et_Password.setError(getString(R.string.invalid_password))
+                        et_conf_Password.isEnabled = false
+                    } else if (!et_conf_Password.text.toString().equals(et_Password.text.toString())) {
+                        et_conf_Password.isEnabled = true
+                        et_conf_Password.setError(getString(R.string.doesnot_match))
+                    }
+                }
+
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                val regexStr = "^[0-9]*$"
+            }
+        })
+
+
 
 
         if (intent.extras != null) {
             flag = intent!!.getStringExtra(StockConstant.FLAG)
         }
-
-
 
         try {
             userData = intent.getParcelableExtra(IntentConstant.DATA)
@@ -211,14 +276,10 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             AppDelegate.showToast(this, getString(R.string.valid_email))
         else if (et_Password.text.toString().length < 6)
             AppDelegate.showToast(this, getString(R.string.short_password))
-        else if (!(et_Password.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_Password.text.toString().matches(
-                ".*[0-9]+.*[A-Za-z]+.*".toRegex()
-            ))
-
-        )
+        else if (!(et_Password.text.toString().matches(regexStr.toRegex())))
             AppDelegate.showToast(this, getString(R.string.invalid_password))
         else if (!et_conf_Password.text.toString().equals(et_Password.text.toString()))
-            AppDelegate.showToast(this, "password does not match")
+            AppDelegate.showToast(this, getString(R.string.doesnot_match))
         else if (term_condition_accept == 0) {
             AppDelegate.showToast(this, "Please accept term and condition")
         } else {
@@ -260,7 +321,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
-                                .putExtra(StockConstant.USERCOUNTRYCODE,  countryCodeHolder.selectedCountryNameCode)
+                                .putExtra(StockConstant.USERCOUNTRYCODE, countryCodeHolder.selectedCountryNameCode)
                                 .putExtra("isReset", "signup")
                         )
                         finish()
@@ -288,7 +349,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             et_Email.text.toString().trim(),
             et_Password.text.toString(),
             et_EnviteCode.text.toString().trim(),
-                    et_Mobile.text.toString().trim(),
+            et_Mobile.text.toString().trim(),
             countryCodeHolder.selectedCountryNameCode,
             et_dob.text.toString(),
             et_UserName.text.toString().trim(),
@@ -312,7 +373,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
-                                .putExtra(StockConstant.USERCOUNTRYCODE,  countryCodeHolder.selectedCountryNameCode)
+                                .putExtra(StockConstant.USERCOUNTRYCODE, countryCodeHolder.selectedCountryNameCode)
                                 .putExtra("isReset", "signup")
                         )
                         finish()

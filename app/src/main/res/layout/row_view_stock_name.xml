@@ -18,6 +18,8 @@
                 android:id="@+id/tvExchangeName"
                 android:textSize="@dimen/_13ssp"
                 android:layout_width="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
                 android:textColor="@color/textColorLightBlack"
                 android:layout_height="wrap_content"
                 android:text="NASDAQ"/>
@@ -35,6 +37,8 @@
                 style="@style/TextStyleNormal"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit ="marquee_forever"
                 android:id="@+id/tvExchangePercentage"
                 android:textSize="@dimen/_10ssp"
                 android:layout_width="wrap_content"

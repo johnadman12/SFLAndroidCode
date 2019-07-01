@@ -19,12 +19,14 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ValidationUtil
 import stock.com.utils.networkUtils.NetworkUtils
 import android.text.Editable
+import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import kotlinx.android.synthetic.main.content_login.*
 
 
 class ForgotPasswordActivity : BaseActivity() {
@@ -56,11 +58,16 @@ class ForgotPasswordActivity : BaseActivity() {
                 if (s.length != 0)
                     if (isNumeric(s.toString())) {
                         countryCode.visibility = VISIBLE
+                        et_email.inputType = InputType.TYPE_CLASS_PHONE
                     } else {
                         countryCode.visibility = GONE;
+                        et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     }
-                else
+                else {
                     countryCode.visibility = GONE
+                    et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                }
+
             }
 
             override fun beforeTextChanged(
