@@ -36,7 +36,7 @@
                             android:layout_weight="1"
                             style="@style/TextStyleSemiBold"
                             android:textColor="@color/black"
-                            android:text="Entry"
+                            android:text="Entry Fee"
                             android:textSize="@dimen/_12ssp"
                             android:layout_height="wrap_content"/>
 
@@ -65,7 +65,7 @@
                             android:layout_weight="1"
                             style="@style/TextStyleMedium"
                             android:textColor="@color/green"
-                            android:text="To Pay"
+                            android:text="Amount To Pay"
                             android:textSize="@dimen/_12ssp"
                             android:layout_height="wrap_content"/>
 

@@ -18,6 +18,9 @@ import androidx.core.content.ContextCompat
 import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.AppDelegate
+import android.view.MotionEvent
+
+
 
 class WatchListAdapter_(
     val mContext: Context,

@@ -321,6 +321,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                         startActivity(
                             Intent(this@SignUpActivity, OTPActivity::class.java)
                                 .putExtra("phoneNumber", et_Mobile.text.toString().trim())
+                                .putExtra("userId", response.body()!!.user_data!!.id)
                                 .putExtra(StockConstant.USERCOUNTRYCODE, countryCodeHolder.selectedCountryNameCode)
                                 .putExtra("isReset", "signup")
                         )

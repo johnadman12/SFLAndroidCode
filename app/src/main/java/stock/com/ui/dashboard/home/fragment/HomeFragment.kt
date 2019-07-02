@@ -68,6 +68,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         getFeatureContentlist();
         getTrainingContentlist()
 //        getNewslist()
+        exchangeList = ArrayList()
         dataExchange =
             ArrayList()
         newsStories = ArrayList()
@@ -118,12 +119,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
-        /* val llm = LinearLayoutManager(context)
-         llm.orientation = LinearLayoutManager.HORIZONTAL
-         recyclerView_features!!.layoutManager = llm
-         recyclerView_features.visibility = View.VISIBLE
-         recyclerView_features!!.adapter = FeatureContestAdapter(context!!, listItem)
-         recyclerView_features.addItemDecoration(CirclePagerIndicatorDecoration(activity));*/
         viewPager_features.visibility = View.VISIBLE
         viewPager_features.setClipToPadding(false);
         viewPager_features.setPadding(30, 0, 30, 0);
@@ -135,8 +130,19 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
         /* tab_layout_features.visibility = VISIBLE;
          tab_layout_features.setupWithViewPager(viewPager_features);*/
-        pageIndicatorView.visibility = VISIBLE
-        pageIndicatorView.setCount(5) // specify total count of indicators
+
+
+        if (listItem.size > 5) {
+            pageIndicatorView.visibility = VISIBLE
+            // specify total count of indicators
+            pageIndicatorView.setCount(5)
+        } else if (listItem.size == 0) {
+            pageIndicatorTraining.visibility = GONE
+        } else {
+            pageIndicatorView.visibility = VISIBLE
+            // specify total count of indicators
+            pageIndicatorView.setCount(listItem.size)
+        }
         viewPager_features.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
             }
@@ -170,9 +176,17 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ViewPagerTraining(context!!, traniningContest, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_training.setAdapter(adapter)
 
+        if (exchangeList!!.size > 5) {
+            pageIndicatorTraining.visibility = VISIBLE
+            // specify total count of indicators
+            pageIndicatorTraining.setCount(5)
+        } else if (exchangeList!!.size == 0) {
+            pageIndicatorTraining.visibility = GONE
+        } else {
+            pageIndicatorTraining.visibility = VISIBLE
+            pageIndicatorTraining.setCount(exchangeList!!.size)
+        }
 
-        pageIndicatorTraining.visibility = VISIBLE
-        pageIndicatorTraining.setCount(5) // specify total count of indicators
         viewPager_training.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {/*empty*/
             }

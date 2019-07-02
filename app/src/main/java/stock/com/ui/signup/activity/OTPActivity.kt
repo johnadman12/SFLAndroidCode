@@ -102,6 +102,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             } else {
                 flag = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
+                userId = intent.getStringExtra("userId")
                 countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
             }
         }
@@ -115,6 +116,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         img_back.setOnClickListener(this)
         btn_Submit.setOnClickListener(this)
         resendOTPTv.setOnClickListener(this)
+
         /*btn_Submit.setOnClickListener(this)
         otp = intent.getStringExtra(IntentConstant.OTP)
         phone = intent.getStringExtra(IntentConstant.MOBILE)
@@ -247,7 +249,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.otpVerify(
-            getFromPrefsString(StockConstant.USERID).toString(),
+           userId,
             otp_view.text.toString()
         )
         call.enqueue(object : Callback<SignupPojo> {

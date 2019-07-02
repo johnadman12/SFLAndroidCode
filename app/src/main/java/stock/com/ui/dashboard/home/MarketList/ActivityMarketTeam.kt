@@ -497,8 +497,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
-
-                    var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
+                    var sortedList = list!!.sortedByDescending {  it.latestVolume.toDouble() }
 
                     for (obj in sortedList) {
                         list!!.clear()
@@ -507,6 +506,27 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                    }
+                }else if (data.getStringExtra("flag").equals("priceHTL")) {
+                    var sortedList =  list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                    }
+                }else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    var sortedList =  list!!.sortedBy { it.changeper?.toDouble() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                    }
+                } else if (data.getStringExtra("flag").equals("dayHTL")) {
+                    var sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)

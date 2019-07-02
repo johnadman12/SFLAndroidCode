@@ -22,6 +22,7 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxVolume.isChecked = false;
                 checkBoxAlpha.isChecked = false;
                 checkBoxHTL.isChecked = false;
+                checkBoxDayHTL.isChecked=false
             }
         }
         checkBoxVolume?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -30,6 +31,7 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxPrize.isChecked = false;
                 checkBoxAlpha.isChecked = false;
                 checkBoxHTL.isChecked = false;
+                checkBoxDayHTL.isChecked=false
             }
         }
         checkBoxAlpha?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -38,6 +40,7 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxVolume.isChecked = false;
                 checkBoxPrize.isChecked = false;
                 checkBoxHTL.isChecked = false;
+                checkBoxDayHTL.isChecked=false
             }
         }
         checkBoxHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -46,6 +49,16 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxVolume.isChecked = false;
                 checkBoxPrize.isChecked = false;
                 checkBoxAlpha.isChecked = false;
+                checkBoxDayHTL.isChecked=false
+            }
+        }
+        checkBoxDayHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
+            //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+            if (isChecked) {
+                checkBoxVolume.isChecked = false;
+                checkBoxPrize.isChecked = false;
+                checkBoxAlpha.isChecked = false;
+                checkBoxHTL.isChecked=false
             }
         }
     }
@@ -72,6 +85,9 @@ class ActivityMarketSort : BaseActivity() {
             }
             if (checkBoxHTL.isChecked) {
                 temp = "HighToLow"
+            }
+            if (checkBoxDayHTL.isChecked) {
+                temp = "DayHighToLow"
             }
             var intent = Intent();
             intent.putExtra("flag", temp)

@@ -1,11 +1,17 @@
 package stock.com.ui.dashboard.home.MarketList
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_team_preview.*
+import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.outside_toolbar.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -36,6 +42,12 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
         initViews()
+        if (totalChange != null)
+            if (totalChange.contains("-"))
+                rel.setBackgroundResource(R.mipmap.redcircle)
+            else
+                rel.setBackgroundResource(R.mipmap.greencircle)
+
     }
 
 
@@ -44,7 +56,9 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         img_close.setOnClickListener(this)
         if (list != null)
             setData()
-
+        iv_info.setOnClickListener {
+            showInfoDialogue(getString(R.string.totalchangeinfo))
+        }
     }
 
     private fun setData() {
@@ -228,5 +242,24 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
             }
     }
 
+    fun showInfoDialogue(textView: String) {
+        var dialogue = Dialog(this)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_information)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        dialogue.tvInfo.setText(textView)
+        dialogue.btnOK.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+        }
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
+    }
 }
 

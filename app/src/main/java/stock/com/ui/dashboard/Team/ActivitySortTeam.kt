@@ -22,6 +22,9 @@ class ActivitySortTeam : BaseActivity() {
             if (isChecked) {
                 checkBoxVolume.isChecked = false;
                 checkBoxAlpha.isChecked = false;
+                checkBoxPrizeHTL.isChecked = false;
+                checkBoxDayHTL.isChecked = false;
+                checkBoxDayLTH.isChecked = false;
             }
         }
         checkBoxVolume?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -29,6 +32,9 @@ class ActivitySortTeam : BaseActivity() {
             if (isChecked) {
                 checkBoxPrize.isChecked = false;
                 checkBoxAlpha.isChecked = false;
+                checkBoxPrizeHTL.isChecked = false;
+                checkBoxDayHTL.isChecked = false;
+                checkBoxDayLTH.isChecked = false;
             }
         }
         checkBoxAlpha?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -36,6 +42,39 @@ class ActivitySortTeam : BaseActivity() {
             if (isChecked) {
                 checkBoxVolume.isChecked = false;
                 checkBoxPrize.isChecked = false;
+                checkBoxPrizeHTL.isChecked = false;
+                checkBoxDayHTL.isChecked = false;
+                checkBoxDayLTH.isChecked = false;
+            }
+        }
+        checkBoxPrizeHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
+            //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+            if (isChecked) {
+                checkBoxVolume.isChecked = false;
+                checkBoxPrize.isChecked = false;
+                checkBoxAlpha.isChecked = false;
+                checkBoxDayHTL.isChecked = false;
+                checkBoxDayLTH.isChecked = false;
+            }
+        }
+        checkBoxDayHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
+            //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+            if (isChecked) {
+                checkBoxVolume.isChecked = false;
+                checkBoxPrize.isChecked = false;
+                checkBoxAlpha.isChecked = false;
+                checkBoxDayLTH.isChecked = false;
+                checkBoxPrizeHTL.isChecked = false;
+            }
+        }
+        checkBoxDayLTH?.setOnCheckedChangeListener { buttonView, isChecked ->
+            //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+            if (isChecked) {
+                checkBoxVolume.isChecked = false;
+                checkBoxPrize.isChecked = false;
+                checkBoxAlpha.isChecked = false;
+                checkBoxDayHTL.isChecked = false;
+                checkBoxPrizeHTL.isChecked = false;
             }
         }
     }
@@ -59,6 +98,15 @@ class ActivitySortTeam : BaseActivity() {
             }
             if (checkBoxAlpha.isChecked) {
                 temp = "Alpha"
+            }
+            if (checkBoxPrizeHTL.isChecked) {
+                temp = "priceHTL"
+            }
+            if (checkBoxDayLTH.isChecked) {
+                temp = "dayLTH"
+            }
+            if (checkBoxDayHTL.isChecked) {
+                temp = "dayHTL"
             }
 
 

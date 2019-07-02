@@ -9,8 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.text.TextUtils
 import android.view.*
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -160,7 +159,7 @@ class ViewPagerFeature(
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false
-                            llSportsLeft.visibility= GONE
+                            llSportsLeft.visibility= INVISIBLE
                             llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
                             tvTimeLeft.setText("Contest \n Started")
                             tvHint.visibility = GONE

@@ -42,12 +42,11 @@ class MarketListAdapter(
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper))
             if (searchList!!.get(position).changeper.contains("-")) {
-                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper)
-            }
-            else {
-                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
-                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+            } else {
+                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
+//                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changeper)
             }
@@ -152,7 +151,7 @@ class MarketListAdapter(
                     for (row in mContest) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
-                        } else if(row.name!!.toLowerCase().contains(charString.toLowerCase()))
+                        } else if (row.name!!.toLowerCase().contains(charString.toLowerCase()))
                             filteredList.add(row)
                     }
                     searchList = filteredList

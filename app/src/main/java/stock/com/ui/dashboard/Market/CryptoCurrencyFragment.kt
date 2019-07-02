@@ -36,6 +36,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagPriceSort: Boolean = false
     var flagDaySort: Boolean = false
     var flagHTLSort: Boolean = false
+    var flagDHTLSort: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
@@ -188,6 +189,14 @@ class CryptoCurrencyFragment : BaseFragment() {
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                                 }
 
+                            }else if (flagDHTLSort) {
+                                val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
+                                for (obj in sortedList) {
+                                    cryptoListNew!!.clear()
+                                    cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                                }
+
                             } /*else {
                                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }*/
@@ -309,6 +318,17 @@ class CryptoCurrencyFragment : BaseFragment() {
         } else if (type.equals("HighToLow")) {
             flagHTLSort = true
             val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+            for (obj in sortedList) {
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+            }
+        }
+        else if (type.equals("DayHighToLow")) {
+            flagDHTLSort = true
+            val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
                 cryptoListNew!!.addAll(sortedList)

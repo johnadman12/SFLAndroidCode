@@ -147,10 +147,10 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 var endtimeMilies = myCalendar.timeInMillis + enddate!!
                 val diff = myCalendar.timeInMillis - startTimemilisec!!
                 if (endtimeMilies > startmilisec!!) {
-                    if (diff > 7200000)
+                    if (diff > 3600000)
                         updateTime(endTime)
                     else
-                        displayToast("Time difference should be more than 2 hour ", "error")
+                        displayToast("Time difference should be more than 1 hour ", "error")
                 } else
                     displayToast("Time should be ahead from start time", "error")
             }

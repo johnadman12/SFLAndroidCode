@@ -531,9 +531,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
-
-                    var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
-
+                    var sortedList = list!!.sortedByDescending {  it.latestVolume.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
@@ -550,7 +548,31 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
-                } else if (data.getStringExtra("flag").equals("Alpha")) {
+                } else if (data.getStringExtra("flag").equals("priceHTL")) {
+                    var sortedList =  list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+                    }
+                }else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    var sortedList =  list!!.sortedBy { it.changePercent?.toDouble() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                    }
+                } else if (data.getStringExtra("flag").equals("dayHTL")) {
+                    var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                    for (obj in sortedList) {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                    }
+                }
+                else if (data.getStringExtra("flag").equals("Alpha")) {
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
                     for (obj in sortedList) {
                         list!!.clear()

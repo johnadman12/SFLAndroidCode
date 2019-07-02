@@ -24,6 +24,9 @@ import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.adapter.WatchListAdapter_
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.thesurix.gesturerecycler.GestureManager
+
 
 class WatchListActivity : BaseActivity() {
     private var watchListAdapter: WatchListAdapter_? = null;
@@ -39,6 +42,7 @@ class WatchListActivity : BaseActivity() {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_watch_list!!.layoutManager = llm
+
         recyclerView_watch_list!!.adapter = watchListAdapter;
 
 
@@ -79,6 +83,18 @@ class WatchListActivity : BaseActivity() {
     private fun setWatchListAdapter() {
         recyclerView_watch_list.visibility = View.VISIBLE
         recyclerView_watch_list.adapter!!.notifyDataSetChanged();
+      /*  val gestureManager = GestureManager.Builder(recyclerView_watch_list)
+            // Enable swipe
+            .setSwipeEnabled(true)
+            // Enable long press drag and drop
+            .setLongPressDragEnabled(true)
+            // Enable manual drag from the beginning, you need to provide View inside your GestureViewHolder
+            .setManualDragEnabled(true)
+            // Use custom gesture flags
+            // Do not use those methods if you want predefined flags for RecyclerView layout manager
+            .setSwipeFlags(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            .setDragFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN)
+            .build()*/
     }
 
     private fun getWatchList() {

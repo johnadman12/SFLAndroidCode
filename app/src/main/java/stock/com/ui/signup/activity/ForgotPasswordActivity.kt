@@ -58,14 +58,14 @@ class ForgotPasswordActivity : BaseActivity() {
                 if (s.length != 0)
                     if (isNumeric(s.toString())) {
                         countryCode.visibility = VISIBLE
-                        et_email.inputType = InputType.TYPE_CLASS_PHONE
+                        et_Email_.inputType = InputType.TYPE_CLASS_PHONE
                     } else {
                         countryCode.visibility = GONE;
-                        et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                        et_Email_.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                     }
                 else {
                     countryCode.visibility = GONE
-                    et_email.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+                    et_Email_.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 }
 
             }
@@ -130,6 +130,7 @@ class ForgotPasswordActivity : BaseActivity() {
                             Intent(this@ForgotPasswordActivity, ConfirmationActivity::class.java)
                                 .putExtra(StockConstant.USEREMAIL, email)
                                 .putExtra(StockConstant.USERNAME, username)
+                                .putExtra(StockConstant.USERCOUNTRYCODE, countryCode.selectedCountryNameCode)
                                 .putExtra(StockConstant.USERPHONE, phone)
                                 .putExtra(StockConstant.USERID, response.body()!!.user_id)
                                 .putExtra(StockConstant.FLAG, "false")

@@ -41,6 +41,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             R.id.tv_crypto -> {
                 isMarket = 0
                 et_search.setText("")
+                filtertext.text = "Crypto \n Filter"
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -59,6 +60,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
             R.id.tv_currency -> {
                 isMarket = 0
+                filtertext.text = "Currency \n Filter"
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -76,6 +78,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_commodity -> {
                 isMarket = 0
+                filtertext.text = "Commodity \n Filter"
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -93,6 +96,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.tv_indices -> {
                 isMarket = 0
+                filtertext.text = "Indices \n Filter"
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
@@ -111,6 +115,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             R.id.tv_stocks -> {
                 isMarket = 1
                 et_search.setText("")
+                filtertext.text = "Stocks \n Filter"
                 changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -151,7 +156,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         ll_filter.setOnClickListener(this);
 
 
-
+        filtertext.text = "Crypto \n Filter"
         changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
         changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
         changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
@@ -278,6 +283,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
                 }
                 else if (data.getStringExtra("flag").equals("HighToLow")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                }
+                else if (data.getStringExtra("flag").equals("DayHighToLow")) {
                     if (fragment is StocksFragment)
                         (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
                     else if (fragment is CryptoCurrencyFragment)

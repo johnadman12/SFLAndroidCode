@@ -142,11 +142,11 @@ class StockAdapter(
 
         if (!TextUtils.isEmpty(stockListNew!!.get(position).changePercent))
             if (stockListNew!!.get(position).changePercent.contains("-")) {
-                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.graph)
+                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 holder.itemView.tv_change_percentage.setText(stockListNew!!.get(position).changePercent + " %")
             } else {
-                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.graph)
+                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setText("+" + stockListNew!!.get(position).changePercent + " %")
             }

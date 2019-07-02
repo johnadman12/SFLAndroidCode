@@ -138,8 +138,8 @@ class LiveContestActivity : BaseActivity() {
     }
 
     fun getContestDetail() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+//        val d = StockDialog.showLoading(this)
+//        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
@@ -149,7 +149,7 @@ class LiveContestActivity : BaseActivity() {
         call.enqueue(object : Callback<ContestDetail> {
 
             override fun onResponse(call: Call<ContestDetail>, response: Response<ContestDetail>) {
-                d.dismiss()
+//                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -193,14 +193,14 @@ class LiveContestActivity : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<ContestDetail>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }

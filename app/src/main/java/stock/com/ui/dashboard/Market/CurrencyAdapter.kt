@@ -85,138 +85,139 @@ class CurrencyAdapter(
         val priceText: String = cryptoListNew.get(position).latestPrice;
 
 
-        if (marketData.size == cryptoListNew.size) {
-            if (!TextUtils.isEmpty(priceText)) {
-                if (priceText.equals("$" + search!!.get(position).latestPrice)) {
-                    holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black))
-                } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
-                    val newtimer = object : CountDownTimer(500, 500) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            Log.e("timeerror", millisUntilFinished.toString())
-                            holder.itemView.tv_latest_price.setTextColor(
-                                ContextCompat.getColor(
-                                    mContext,
-                                    R.color.green
-                                )
-                            )
-                            holder.itemView.tv_latest_price.animation = anim
-                        }
-
-                        override fun onFinish() {
-                            try {
-                                if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.6f",
-                                            cryptoListNew.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                else
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.2f",
-                                            cryptoListNew.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                                search!!.get(position).changeper = cryptoListNew.get(position).changeper
+        try {
+            if (marketData.size == cryptoListNew.size) {
+                if (!TextUtils.isEmpty(priceText)) {
+                    if (priceText.equals("$" + search!!.get(position).latestPrice)) {
+                        holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+                    } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
+                        val newtimer = object : CountDownTimer(500, 500) {
+                            override fun onTick(millisUntilFinished: Long) {
+                                Log.e("timeerror", millisUntilFinished.toString())
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.green
                                     )
                                 )
-                            } catch (e: Exception) {
-
+                                holder.itemView.tv_latest_price.animation = anim
                             }
 
-                        }
-                    }
-                    newtimer.start()
-                    holder.itemView.tv_latest_price.setTextColor(
-                        ContextCompat.getColor(
-                            mContext,
-                            R.color.black
-                        )
-                    )
+                            override fun onFinish() {
+                                try {
+                                    if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f",
+                                                cryptoListNew.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                cryptoListNew.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                                    search!!.get(position).changeper = cryptoListNew.get(position).changeper
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.green
+                                        )
+                                    )
+                                } catch (e: Exception) {
 
-                } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
-                    val newtimer = object : CountDownTimer(500, 500) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            holder.itemView.tv_latest_price.setTextColor(
-                                ContextCompat.getColor(
-                                    mContext,
-                                    R.color.redcolor
-                                )
+                                }
+
+                            }
+                        }
+                        newtimer.start()
+                        holder.itemView.tv_latest_price.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
                             )
-                            holder.itemView.tv_latest_price.animation = anim
-                        }
+                        )
 
-                        override fun onFinish() {
-                            try {
-                                if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.6f",
-                                            cryptoListNew.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                else
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.2f",
-                                            cryptoListNew.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                                search!!.get(position).changeper = cryptoListNew.get(position).changeper
+                    } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
+                        val newtimer = object : CountDownTimer(500, 500) {
+                            override fun onTick(millisUntilFinished: Long) {
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.redcolor
                                     )
                                 )
-                            } catch (e: Exception) {
+                                holder.itemView.tv_latest_price.animation = anim
                             }
 
-                        }
-                    }
-                    newtimer.start()
-                    holder.itemView.tv_latest_price.setTextColor(
-                        ContextCompat.getColor(
-                            mContext,
-                            R.color.black
-                        )
-                    )
-                }
-            } else {
-                if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
-                    holder.itemView.tv_latest_price.setText(
-                        "$" + String.format(
-                            "%.6f",
-                            cryptoListNew.get(position).latestPrice.toDouble()
-                        )
-                    )
-                else
-                    holder.itemView.tv_latest_price.setText(
-                        "$" + String.format(
-                            "%.2f",
-                            cryptoListNew.get(position).latestPrice.toDouble()
-                        )
-                    )
-            }
-        }
+                            override fun onFinish() {
+                                try {
+                                    if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f",
+                                                cryptoListNew.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                cryptoListNew.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                                    search!!.get(position).changeper = cryptoListNew.get(position).changeper
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.redcolor
+                                        )
+                                    )
+                                } catch (e: Exception) {
+                                }
 
+                            }
+                        }
+                        newtimer.start()
+                        holder.itemView.tv_latest_price.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
+                    }
+                } else {
+                    if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.6f",
+                                cryptoListNew.get(position).latestPrice.toDouble()
+                            )
+                        )
+                    else
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.2f",
+                                cryptoListNew.get(position).latestPrice.toDouble()
+                            )
+                        )
+                }
+            }
+        }catch (e:java.lang.Exception){}
 
         Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
 
         if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper))
             if (cryptoListNew.get(position).changeper.contains("-")) {
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.graph)
+                Glide.with(mContext).load( R.drawable.ic_down_arrow).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setText(cryptoListNew!!.get(position).changeper + " %")
             } else {
-                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.graph)
+                Glide.with(mContext).load( R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setText("+" + cryptoListNew!!.get(position).changeper + " %")
             }
@@ -260,10 +261,10 @@ class CurrencyAdapter(
             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
                 val charString = charSequence.toString()
                 if (charString.isEmpty()) {
-                    search = marketData
+                    search = cryptoListNew
                 } else {
                     val filteredList = ArrayList<MarketList.Crypto>()
-                    for (row in marketData) {
+                    for (row in cryptoListNew) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
                         } else if (row.name!!.toLowerCase().contains(charString.toLowerCase()))

@@ -96,11 +96,15 @@ class LobbyContestAdapter(
             val diff = thatDay.timeInMillis - today.timeInMillis
             mContest.get(position).setDate(diff.toInt())
             if (diff.toString().contains("-")) {
-                holder.itemView.tvTimeLeft.setText("00H:00M:00S")
-                /*holder.itemView.txtjoin.setTextSize(20.00f)
-                holder.itemView.txtjoin.setText(mContext.getString(R.string.Finished))*/
+                holder.itemView.txtjoin.setTextSize(16.00f)
+                holder.itemView.txtjoin.setText(mContext.getString(R.string.live_now))
+                holder.itemView.llSportsLeft.visibility= View.INVISIBLE
                 holder.itemView.circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(mContext, R.color.GrayColor)
+                holder.itemView.ll_Circular.isEnabled = false
+                holder.itemView.llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.circle))
+                holder.itemView.tvTimeLeft.setText("Contest \n Started")
+                holder.itemView.tvHint.visibility = View.GONE
             } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -125,6 +129,7 @@ class LobbyContestAdapter(
                         if (diff < 900000) {
                             holder.itemView.txtjoin.setTextSize(16.00f)
                             holder.itemView.txtjoin.setText(mContext.getString(R.string.live_now))
+                            holder.itemView.llSportsLeft.visibility= View.INVISIBLE
                             holder.itemView.circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(mContext, R.color.GrayColor)
                             holder.itemView.ll_Circular.isEnabled = false
@@ -171,7 +176,7 @@ class LobbyContestAdapter(
             )
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
-        holder.itemView.ll_Circular.setOnClickListener {
+        holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(
                     StockConstant.CONTESTID,

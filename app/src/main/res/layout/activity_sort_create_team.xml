@@ -31,9 +31,24 @@
                     style="@style/TextStyleNormal"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:textColor="@color/black"
-                    android:text="Prize Total (High To Low)"
+                    android:text="Price (Low To High)"
                     android:padding="@dimen/_10sdp"
                     android:buttonTint="@color/colorPrimary"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxPrizeHTL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleNormal"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:text="Price (High To Low)"
+                    android:padding="@dimen/_10sdp"
+                    android:buttonTint="@color/colorPrimary"/>
+
             <View android:layout_width="match_parent"
                   android:layout_height="@dimen/_1sdp"
                   android:background="@color/GrayColor"/>
@@ -45,7 +60,36 @@
                     android:padding="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     style="@style/TextStyleNormal"
-                    android:text="BY Volume"
+                    android:text="Volume (High to Low)"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/colorPrimary"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxDayHTL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:text="Day Change % (High to Low)"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/colorPrimary"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxDayLTH"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:text="Day Change % (Low To High)"
                     android:textColor="@color/black"
                     android:buttonTint="@color/colorPrimary"/>
 

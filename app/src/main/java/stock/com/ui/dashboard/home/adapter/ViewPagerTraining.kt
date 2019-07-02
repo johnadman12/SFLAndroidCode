@@ -171,7 +171,7 @@ class ViewPagerTraining(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
 
-                            tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n " + seconds.toString() + "S")
+                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n " + seconds.toString() + "S")
                         }
                     }
 

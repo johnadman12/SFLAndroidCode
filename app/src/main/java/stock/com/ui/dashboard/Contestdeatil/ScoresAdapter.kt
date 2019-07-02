@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.row_contest_score.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
+import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.ContestDetail
 import stock.com.utils.StockConstant
 
@@ -39,6 +40,14 @@ class ScoresAdapter(
         holder.itemView.tvRank.setText(scores.get(position).rank)
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
+
+        holder.itemView.ll_n_r.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                    StockConstant.FRIENDID, scores.get(position).userid
+                )
+            )
+        }
 //        if (flag == 0) {
         holder.itemView.setOnClickListener {
             if (userId == scores.get(position).userid) {

@@ -7,60 +7,63 @@
               android:background="@color/white"
               android:padding="@dimen/_3sdp"
               android:gravity="center_vertical">
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_user"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/cricketer"/>
-
-    <LinearLayout
-            android:id="@+id/ll_n_r"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:layout_marginLeft="@dimen/_3sdp"
-            android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dummy_name"
-                style="@style/TextStyleSemiBold"
-                android:textSize="@dimen/_11ssp"
-                android:textColor="@color/blue"
-                android:padding="@dimen/_2sdp"/>
+    <LinearLayout android:layout_width="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/ll_n_r"
+                  android:layout_weight=".5"
+                  android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_user"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@mipmap/cricketer"/>
 
         <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dummy_rank"
-                    style="@style/TextStyleNormal"
-                    android:textSize="@dimen/_10ssp"
-                    android:textColor="@color/textColorLightBlack"
+                    android:text="@string/dummy_name"
+                    style="@style/TextStyleSemiBold"
+                    android:textSize="@dimen/_11ssp"
+                    android:textColor="@color/blue"
                     android:padding="@dimen/_2sdp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvRank"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    style="@style/TextStyleNormal"
-                    android:textSize="@dimen/_10ssp"
-                    android:layout_weight="1"
-                    android:textColor="@color/textColorLightBlack"
-                    android:padding="@dimen/_2sdp"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dummy_rank"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorLightBlack"
+                        android:padding="@dimen/_2sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRank"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        style="@style/TextStyleNormal"
+                        android:textSize="@dimen/_10ssp"
+                        android:layout_weight="1"
+                        android:textColor="@color/textColorLightBlack"
+                        android:padding="@dimen/_2sdp"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
-
-
     </LinearLayout>
-
     <LinearLayout
             android:id="@+id/ll_totalChange"
             android:layout_width="wrap_content"
@@ -94,7 +97,6 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/_10sdp"
             android:layout_toRightOf="@+id/ll_totalChange">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -122,6 +124,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/gray_circle"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:visibility="gone"
                 android:gravity="center">
             <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
