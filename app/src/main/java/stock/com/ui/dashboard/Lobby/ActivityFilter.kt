@@ -210,7 +210,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         }, 100)
                         setMarketAdapter(response.body()!!.market)
                         setContestAdapter(response.body()!!.category!!)
-                        setRangebar(response.body()!!.entryFees)
+                        setRangebar(/*response.body()!!.entryFees*/)
                     }
                 } else {
                    displayToast(response.body()!!.message,"error")
@@ -227,16 +227,18 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun setRangebar(entryFees: List<FilterPojo.EntryFee>?) {
-        if (entryFees != null) {
-            rangeSeekbar1.setMinValue(entryFees.get(0).minValue!!.toFloat())
-            rangeSeekbar1.setMaxValue(entryFees.get(0).maxValue!!.toFloat())
-            tvMin.setText(entryFees.get(0).minValue!!.toString())
-            tvMax.setText(entryFees.get(0).maxValue!!.toString())
+    fun setRangebar(/*entryFees: List<FilterPojo.EntryFee>?*/) {
+         var minValue= 1.0f
+        var maxValue=3000.0f
+//        if (entryFees != null) {
+            rangeSeekbar1.setMinValue(minValue)
+            rangeSeekbar1.setMaxValue(maxValue)
+            tvMin.setText(minValue.toString()+"$")
+            tvMax.setText(maxValue.toString()+"$")
 
-            maxprice = entryFees.get(0).maxValue!!.toString()
-            canSelect = entryFees.get(0).maxValue!!.toString()
-        }
+            maxprice = minValue.toString()
+            canSelect = maxValue.toString()
+//        }
     }
 
     @SuppressLint("WrongConstant")

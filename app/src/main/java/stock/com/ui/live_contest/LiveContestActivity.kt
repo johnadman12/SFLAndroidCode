@@ -133,10 +133,6 @@ class LiveContestActivity : BaseActivity() {
     }
 
 
-    public fun setIntent() {
-        displayToast("asdadad", "error")
-    }
-
     fun getContestDetail() {
 //        val d = StockDialog.showLoading(this)
 //        d.setCanceledOnTouchOutside(false)
@@ -152,8 +148,6 @@ class LiveContestActivity : BaseActivity() {
 //                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         setLiveAdapter(response.body()!!.scores)
                         tvcontesttype.setText(response.body()!!.contest.get(0).catname)
                         for (i in 0 until response.body()!!.scores.size)
@@ -163,32 +157,32 @@ class LiveContestActivity : BaseActivity() {
                                     )
                                 )
                             ) {
+                                filterTeamList!!.clear()
                                 filterTeamList!!.add(response.body()!!.scores.get(i))
-                            }
-                        if (response.body()!!.contest.size > 0)
-                            setTimer(response.body()!!.contest.get(0))
-                        if (filterTeamList!!.size > 0) {
-                            if (filterTeamList!!.size == 1) {
-                                recycle_myteam.visibility = View.GONE
-                                tvRank.setText(filterTeamList!!.get(0).rank)
-                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                stockList!!.clear()
-                                crptoList!!.clear()
-                                if (filterTeamList!!.get(0).stock.size == 0) {
-                                    flagCrypto = true
-                                    crptoList!!.addAll(filterTeamList!!.get(0).crypto)
-                                } else
-                                    stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
-                            } else {
-                                tvRank.setText(filterTeamList!!.get(0).rank)
-                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                stockList!!.clear()
-                                stockList!!.addAll(filterTeamList!!.get(0).stock)
-                                setLiveTeamAdapter(filterTeamList!!)
-                            }
+                            } else if (response.body()!!.contest.size > 0)
+                                setTimer(response.body()!!.contest.get(0))
+                            else if (filterTeamList!!.size > 0) {
+                                if (filterTeamList!!.size == 1) {
+                                    recycle_myteam.visibility = View.GONE
+                                    tvRank.setText(filterTeamList!!.get(0).rank)
+                                    totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                    stockList!!.clear()
+                                    crptoList!!.clear()
+                                    if (filterTeamList!!.get(0).stock.size == 0) {
+                                        flagCrypto = true
+                                        crptoList!!.addAll(filterTeamList!!.get(0).crypto)
+                                    } else
+                                        stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
+                                } else {
+                                    tvRank.setText(filterTeamList!!.get(0).rank)
+                                    totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                    stockList!!.clear()
+                                    stockList!!.addAll(filterTeamList!!.get(0).stock)
+                                    setLiveTeamAdapter(filterTeamList!!)
+                                }
 
-                        } else {
-                        }
+                            } else {
+                            }
 
                     }
                 } else {

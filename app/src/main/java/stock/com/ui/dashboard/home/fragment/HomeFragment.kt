@@ -105,8 +105,24 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
           tab_layout.visibility = VISIBLE;
           tab_layout.setupWithViewPager(viewPager_Banner);*/
         hicvp.adapter = HorizontalPagerAdapter(context, listImage!!, this, getFromPrefsString(StockConstant.USERID))
+//        recyclerView_stock_namesszzs
     }
 
+
+    private fun setStockNameAdapter(exchangeList: List<HomePojo.Exchange>) {
+     /*   val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView_stock_name!!.layoutManager = llm
+        recyclerView_stock_name.visibility = View.VISIBLE
+        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList)*/
+
+        if (!isAdded)
+            return
+        recyclerView_stock_name.adapter = StockNameAdapter(context, exchangeList!!, this)
+        recyclerView_stock_name.setScrollDuration(1500);
+        recyclerView_stock_name.startAutoScroll(true);
+
+    }
 
     fun setintent() {
         dashBoradACtivity!!.changeFragment(LobbyFragment())
@@ -158,13 +174,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     }
 
-    private fun setStockNameAdapter(exchangeList: List<HomePojo.Exchange>) {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView_stock_name!!.layoutManager = llm
-        recyclerView_stock_name.visibility = View.VISIBLE
-        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList)
-    }
+
 
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
         viewPager_training.visibility = View.VISIBLE

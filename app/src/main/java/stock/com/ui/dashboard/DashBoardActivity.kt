@@ -97,7 +97,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         initView()
 
         ll_contest.setOnClickListener {
-
             if (getFromPrefsString(StockConstant.USERID).toString().equals("")) {
                 AppDelegate.showAlertRegister(
                     this, getResources().getString(R.string.app_name),

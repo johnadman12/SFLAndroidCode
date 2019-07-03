@@ -231,11 +231,11 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
     }
 
     fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.HORIZONTAL
-        rvstock!!.layoutManager = llm
-        rvstock.visibility = View.VISIBLE
-        rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList)
+        if (!isAdded)
+            return
+        rvstock.adapter = ExchangeAdapter(context, exchangeList!!)
+        rvstock.setScrollDuration(1000);
+        rvstock.startAutoScroll(true);
     }
 
     private fun setFragment(fragment: Fragment, bundle: Bundle) {

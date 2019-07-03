@@ -52,15 +52,18 @@ class ConfirmationActivity : BaseActivity() {
             username = intent.getStringExtra(StockConstant.USERNAME);
             email = intent.getStringExtra(StockConstant.USEREMAIL);
             userId = intent.getStringExtra(StockConstant.USERID);
+//            flag = intent.getStringExtra(StockConstant.FLAG);
         }
 
         img_back.setOnClickListener {
             onBackPressed()
         }
         tv_requestOtp.setOnClickListener {
+            AppDelegate.hideKeyBoard(this@ConfirmationActivity)
             requestOTP()
         }
         bt_next.setOnClickListener {
+            AppDelegate.hideKeyBoard(this@ConfirmationActivity)
             checkValidation()
         }
         bt_cancel.setOnClickListener {
@@ -115,7 +118,7 @@ class ConfirmationActivity : BaseActivity() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> =
-            apiService.dob_verify(getFromPrefsString(StockConstant.USERID).toString(), et_dob.text.toString().trim())
+            apiService.dob_verify(userId, et_dob.text.toString().trim())
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
@@ -123,20 +126,22 @@ class ConfirmationActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
+                        startActivity(
+                            Intent(this@ConfirmationActivity, ActivityResetPassword::class.java)
+                                .putExtra(StockConstant.USERID, userId)
                         )
                         finish()
                     }
-                    displayToast(response.body()!!.message,"warning")
+                    displayToast(response.body()!!.message, "warning")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
 
@@ -148,8 +153,8 @@ class ConfirmationActivity : BaseActivity() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.requestOtp(
-            userId, username, email, countrycode,phoneNumber
-            )
+            userId, username, email, countrycode, phoneNumber
+        )
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
@@ -157,26 +162,27 @@ class ConfirmationActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@ConfirmationActivity, OTPActivity::class.java)
-                            .putExtra("isReset","reset")
-                            .putExtra(StockConstant.USEREMAIL, email)
-                            .putExtra(StockConstant.USERNAME, username)
-                            .putExtra(StockConstant.USERPHONE, phoneNumber)
-                            .putExtra(StockConstant.USERCOUNTRYCODE, countrycode)
-                            .putExtra(StockConstant.USERID, userId)
+                        startActivity(
+                            Intent(this@ConfirmationActivity, OTPActivity::class.java)
+                                .putExtra("isReset", "reset")
+                                .putExtra(StockConstant.USEREMAIL, email)
+                                .putExtra(StockConstant.USERNAME, username)
+                                .putExtra(StockConstant.USERPHONE, phoneNumber)
+                                .putExtra(StockConstant.USERCOUNTRYCODE, countrycode)
+                                .putExtra(StockConstant.USERID, userId)
                         )
                         finish()
                     }
-                    displayToast(response.body()!!.message,"warning")
+                    displayToast(response.body()!!.message, "warning")
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SignupPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
 

@@ -45,7 +45,6 @@ class WatchListActivity : BaseActivity() {
 
         recyclerView_watch_list!!.adapter = watchListAdapter;
 
-
         img_btn_back.setOnClickListener {
             onBackPressed();
         }

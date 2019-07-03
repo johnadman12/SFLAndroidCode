@@ -174,7 +174,8 @@ open class BaseActivity : AppCompatActivity() {
 
     open fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern = "dd MMM h:mm a"
+        val outputPattern = "dd MMM HH:mm:ss"
+//        val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
         var timeZone: String = Calendar.getInstance().getTimeZone().getID();

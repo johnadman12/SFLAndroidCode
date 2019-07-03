@@ -46,6 +46,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (totalChange != null)
             if (totalChange.contains("-"))
                 rel.setBackgroundResource(R.mipmap.redcircle)
+            else if (totalChange.equals("0.0", true))
+                rel.setBackgroundResource(R.mipmap.graycircle)
             else
                 rel.setBackgroundResource(R.mipmap.greencircle)
         initViews()

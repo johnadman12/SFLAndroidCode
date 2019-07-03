@@ -41,12 +41,15 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
-        initViews()
+
         if (totalChange != null)
             if (totalChange.contains("-"))
                 rel.setBackgroundResource(R.mipmap.redcircle)
+            else if (totalChange.equals("0.0", true))
+                rel.setBackgroundResource(R.mipmap.graycircle)
             else
                 rel.setBackgroundResource(R.mipmap.greencircle)
+        initViews()
 
     }
 

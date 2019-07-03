@@ -128,14 +128,17 @@ class LobbyContestAdapter(
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
                         if (diff < 900000) {
                             holder.itemView.txtjoin.setTextSize(16.00f)
-                            holder.itemView.txtjoin.setText(mContext.getString(R.string.live_now))
-                            holder.itemView.llSportsLeft.visibility= View.INVISIBLE
+                            holder.itemView.txtjoin.setText("Starts \n Soon")
                             holder.itemView.circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(mContext, R.color.GrayColor)
                             holder.itemView.ll_Circular.isEnabled = false
-                            holder.itemView.llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.circle))
-                            holder.itemView.tvTimeLeft.setText("Contest \n Started")
-                            holder.itemView.tvHint.visibility = View.GONE
+                            holder.itemView.llSportsLeft.visibility = View.INVISIBLE
+//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                         } else {
                             val diffSec = diff / 1000
                             val seconds = diffSec % 60
@@ -207,7 +210,7 @@ class LobbyContestAdapter(
 
     fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern = "dd MMM h:mm a"
+        val outputPattern = "dd MMM HH:mm:ss"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
         var timeZone: String = Calendar.getInstance().getTimeZone().getID();

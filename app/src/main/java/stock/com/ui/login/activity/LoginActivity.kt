@@ -123,16 +123,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
                         saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
                         saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        if (pass_remembered == 1)
+                        if (pass_remembered == 1) {
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
-                        else
+                        } else {
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
+                        }
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
-                        finish()
+                        finish();
                     }
-//                    displayToast(response.body()!!.message)
+                    displayToast(response.body()!!.message, "warning")
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
@@ -162,13 +163,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         socialModel = SocialModel()
                         socialModel.isSocial = "1"
+                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1) {
-                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                             saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
-                        } else
+                        } else {
                             saveIntoPrefsString(StockConstant.PASSWORD, "")
+                        }
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
@@ -223,10 +225,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
         }
         //before functionality
-       /* if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
-            et_email.setText(getUserData().email)
-            et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
-        }*/
+        /* if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
+             et_email.setText(getUserData().email)
+             et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
+         }*/
 
         if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
             et_email.setText(getUserData().email)

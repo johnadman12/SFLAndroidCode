@@ -180,7 +180,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
         }
 
-        tvTime.setText(contest.exchangename)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
         var amount: String = contest.entryFees.substring(1)
@@ -269,7 +268,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
 
-                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n " + seconds.toString() + "S")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n" + seconds.toString() + "S")
                     }
 
                     override fun onFinish() {

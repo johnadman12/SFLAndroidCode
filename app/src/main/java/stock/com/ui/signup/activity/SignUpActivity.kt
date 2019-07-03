@@ -152,6 +152,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             override fun afterTextChanged(s: Editable) {
                 if (s.length != 0) {
                     et_conf_Password.isEnabled = true
+                    et_conf_Password.setText("")
                 }
 
             }
@@ -173,11 +174,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             override fun afterTextChanged(s: Editable) {
 //                val regexStr = "/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\$/"
                 if (s.length != 0) {
-                    if (et_Password.text.toString().length < 6) {
-                        AppDelegate.showToast(this@SignUpActivity, getString(R.string.short_password))
-                        et_Password.setError(getString(R.string.short_password))
-                        et_conf_Password.isEnabled = false
-                    } else if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
+                    if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
                         AppDelegate.showToast(this@SignUpActivity, getString(R.string.invalid_password))
                         et_Password.setError(getString(R.string.invalid_password))
                         et_conf_Password.isEnabled = false

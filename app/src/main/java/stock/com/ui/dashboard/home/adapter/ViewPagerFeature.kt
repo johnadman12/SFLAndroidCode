@@ -155,20 +155,22 @@ class ViewPagerFeature(
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
                         if (diff < 900000) {
                             txtjoin.setTextSize(16.00f)
-                            txtjoin.setText(context.getString(R.string.live_now))
+                            txtjoin.setText("Starts \n Soon")
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false
-                            llSportsLeft.visibility= INVISIBLE
-                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                            tvTimeLeft.setText("Contest \n Started")
-                            tvHint.visibility = GONE
+                            llSportsLeft.visibility = INVISIBLE
+//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                         } else {
                             val diffSec = diff / 1000
                             val seconds = diffSec % 60
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
-
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                         }
                     }
@@ -238,7 +240,8 @@ class ViewPagerFeature(
 
     fun parseDateToddMMyyyy(time: String): String? {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern = "dd MMM h:mm a"
+        val outputPattern = "dd MMM HH:mm:ss "
+//        val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
         val outputFormat = SimpleDateFormat(outputPattern)
         var timeZone: String = Calendar.getInstance().getTimeZone().getID();

@@ -61,7 +61,14 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
           } else if (list!!.get(position).getAddedStock().equals("1"))
               list!!.get(position).addedStock = "0";*/
 
-        setFragment(ChartFragment(), Bundle());
+        val fragment: ChartFragment = ChartFragment()
+        var nd: Bundle = Bundle()
+        if (list != null)
+            nd.putString("Stockname", list!!.get(position).symbol)
+        else
+            nd.putString("Stockname", "")
+        setFragment(fragment, nd);
+
         ll_news.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
         ll_data.setOnClickListener(this);
@@ -115,7 +122,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 if (list != null)
                     nd.putString("Stockname", list!!.get(position).symbol)
                 else
-                    nd.putString("Stockname", "")
+                    nd.putString("Stockname", "0")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))

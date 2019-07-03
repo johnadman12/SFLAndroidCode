@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:textSize="@dimen/_12sdp"
             android:textColor="@color/textColorBlack"
-            android:text="@string/prize_pool"
+            android:text="@string/total_winnings"
             android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_prizeMoney"

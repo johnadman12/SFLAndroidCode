@@ -48,6 +48,7 @@ class ForgotPasswordActivity : BaseActivity() {
             onBackPressed()
         }
         btn_submit_.setOnClickListener {
+            AppDelegate.hideKeyBoard(this@ForgotPasswordActivity)
             checkValidation()
         }
         btnCancle.setOnClickListener {
@@ -133,7 +134,7 @@ class ForgotPasswordActivity : BaseActivity() {
                                 .putExtra(StockConstant.USERCOUNTRYCODE, countryCode.selectedCountryNameCode)
                                 .putExtra(StockConstant.USERPHONE, phone)
                                 .putExtra(StockConstant.USERID, response.body()!!.user_id)
-                                .putExtra(StockConstant.FLAG, "false")
+//                                .putExtra(StockConstant.FLAG, "false")
                         )
                         finish()
                     }

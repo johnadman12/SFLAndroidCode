@@ -40,6 +40,7 @@ class NewsItemAdapter(
                 if(activityHomeSearch!=null)
                     activityHomeSearch.setIntent("1")
             } else if (title.equals("Stocks", true)) {
+
                 var intent = Intent(mContext, ActivityStockDetail::class.java);
                 intent.putExtra("cryptoId", users.get(position).id)
                 intent.putExtra(StockConstant.STOCKLIST, "")

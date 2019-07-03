@@ -38,6 +38,7 @@
                                   android:layout_marginTop="@dimen/_8sdp"
                                   android:orientation="horizontal">
                         <ImageView android:layout_width="wrap_content"
+                                   android:layout_gravity="center"
                                    android:layout_height="wrap_content"
                                    android:src="@mipmap/hotcontest"/>
 
@@ -230,7 +231,7 @@
                             card_view:progressColor="@color/light_blue_color"
                             card_view:progressCap="round"
                             android:outlineProvider="bounds"
-                            card_view:progressBackgroundStrokeWidth="@dimen/_10sdp"
+                            card_view:progressBackgroundStrokeWidth="0dp"
                             card_view:textSize="@dimen/_16ssp"
                             card_view:textColor="@color/white"
                             card_view:direction="clockwise"

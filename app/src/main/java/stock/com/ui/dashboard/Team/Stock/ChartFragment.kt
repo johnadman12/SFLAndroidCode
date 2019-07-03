@@ -53,6 +53,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         if (arguments != null)
             symbol = arguments!!.getString("Stockname")
+
         if (symbol != null) {
             getChartData(symbol)
         }

@@ -22,6 +22,7 @@ import stock.com.utils.networkUtils.NetworkUtils
 import android.os.CountDownTimer
 import android.util.TypedValue
 import androidx.core.content.ContextCompat
+import stock.com.ui.Reset.ActivityResetPassword
 import stock.com.ui.dashboard.DashBoardActivity
 
 
@@ -44,6 +45,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 if (otp_view.text.toString().isEmpty()) {
                     AppDelegate.showToast(this, "Please enter OTP")
                 } else {
+                    AppDelegate.hideKeyBoard(this@OTPActivity)
                     if (NetworkUtils.isConnected()) {
                         if (flag)
                             forgotVerifyOtp()
@@ -69,7 +71,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.resendOTPTv -> {
                 if (NetworkUtils.isConnected()) {
-                    if (flag)
+                    if (flagResend)
                         resendRequestOTP()
                     else
                         resendOTP()
@@ -80,6 +82,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+    //TODO: sign up flow ->  resend otp
+    //TODO: forgot password flow -> resend request otp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +93,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
             comingFromActivity = intent.getStringExtra("isReset")
             if (comingFromActivity.equals("reset")) {
                 flag = true
+                flagResend = true
                 phoneNumber = intent.getStringExtra(StockConstant.USERPHONE);
                 countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
                 username = intent.getStringExtra(StockConstant.USERNAME);
@@ -96,11 +101,13 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 userId = intent.getStringExtra(StockConstant.USERID);
             } else if (comingFromActivity.equals("profile")) {
                 flag = false
+                flagResend = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
                 countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
                 //displayToast(phoneNumber)
             } else {
                 flag = false
+                flagResend = false
                 phoneNumber = intent.getStringExtra("phoneNumber")
                 userId = intent.getStringExtra("userId")
                 countryCode = intent.getStringExtra(StockConstant.USERCOUNTRYCODE);
@@ -249,7 +256,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.otpVerify(
-           userId,
+            userId,
             otp_view.text.toString()
         )
         call.enqueue(object : Callback<SignupPojo> {
@@ -285,7 +292,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> = apiService.verify_otp_new(
-            getFromPrefsString(StockConstant.USERID).toString(),
+            userId,
             otp_view.text.toString(),
             countryCode,
             phoneNumber
@@ -323,17 +330,20 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<SignupPojo> =
-            apiService.forgot_verify_otp(getFromPrefsString(StockConstant.USERID).toString(), otp_view.text.toString())
+            apiService.forgot_verify_otp(userId, otp_view.text.toString())
         call.enqueue(object : Callback<SignupPojo> {
 
             override fun onResponse(call: Call<SignupPojo>, response: Response<SignupPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                        startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+//                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+//                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+//                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                        startActivity(
+                            Intent(this@OTPActivity, ActivityResetPassword::class.java)
+                                .putExtra(StockConstant.USERID, userId)
+                        )
                         finish()
                     }
                     displayToast(response.body()!!.message, "sucess")
