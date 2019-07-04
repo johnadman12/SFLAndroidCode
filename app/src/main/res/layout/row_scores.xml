@@ -121,6 +121,7 @@
                 android:orientation="vertical"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_3sdp"
+                android:visibility="gone"
                 android:padding="@dimen/_5sdp">
 
             <RelativeLayout

@@ -8,9 +8,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_watch_list.*
 import kotlinx.android.synthetic.main.include_back.*
+import me.rishabhkhanna.recyclerswipedrag.OnDragListener
+import me.rishabhkhanna.recyclerswipedrag.RecyclerHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,16 +23,16 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
-import stock.com.ui.pojo.StockPojo
 import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.adapter.WatchListAdapter_
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import androidx.recyclerview.widget.ItemTouchHelper
-import com.thesurix.gesturerecycler.GestureManager
 
 
 class WatchListActivity : BaseActivity() {
+
+
+
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
 
@@ -42,8 +46,27 @@ class WatchListActivity : BaseActivity() {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_watch_list!!.layoutManager = llm
-
         recyclerView_watch_list!!.adapter = watchListAdapter;
+
+
+
+        val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(list!!, watchListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        touchHelper.setRecyclerItemDragEnabled(true);
+        touchHelper.setRecyclerItemSwipeEnabled(false);
+
+
+        touchHelper.setOnDragItemListener(object : OnDragListener {
+            override fun onDragItemListener(fromPosition: Int, toPosition: Int) {
+                Log.d("4564646464", "--"+fromPosition+"----"+toPosition);
+            }
+        })
+
+
+        val itemTouchHelper = ItemTouchHelper(touchHelper)
+        itemTouchHelper.attachToRecyclerView(recyclerView_watch_list)
+
+
+
 
         img_btn_back.setOnClickListener {
             onBackPressed();
@@ -60,6 +83,7 @@ class WatchListActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
                 watchListAdapter!!.getFilter().filter(s);
             }
         })
@@ -79,21 +103,10 @@ class WatchListActivity : BaseActivity() {
 
     }
 
+
     private fun setWatchListAdapter() {
         recyclerView_watch_list.visibility = View.VISIBLE
         recyclerView_watch_list.adapter!!.notifyDataSetChanged();
-      /*  val gestureManager = GestureManager.Builder(recyclerView_watch_list)
-            // Enable swipe
-            .setSwipeEnabled(true)
-            // Enable long press drag and drop
-            .setLongPressDragEnabled(true)
-            // Enable manual drag from the beginning, you need to provide View inside your GestureViewHolder
-            .setManualDragEnabled(true)
-            // Use custom gesture flags
-            // Do not use those methods if you want predefined flags for RecyclerView layout manager
-            .setSwipeFlags(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
-            .setDragFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN)
-            .build()*/
     }
 
     private fun getWatchList() {

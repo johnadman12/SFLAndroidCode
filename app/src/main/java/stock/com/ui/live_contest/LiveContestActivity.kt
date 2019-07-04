@@ -73,13 +73,6 @@ class LiveContestActivity : BaseActivity() {
                 )
         }
 
-//        getContestDetail()
-
-    }
-
-
-    override fun onResume() {
-        super.onResume()
         val mainHandler = Handler(Looper.getMainLooper())
 
         mainHandler.post(object : Runnable {
@@ -88,8 +81,10 @@ class LiveContestActivity : BaseActivity() {
                 mainHandler.postDelayed(this, 10000)
             }
         })
-    }
 
+//        getContestDetail()
+
+    }
 
     @SuppressLint("WrongConstant")
     fun setLiveAdapter(scores: MutableList<ContestDetail.Score>) {
@@ -151,39 +146,36 @@ class LiveContestActivity : BaseActivity() {
                         setLiveAdapter(response.body()!!.scores)
                         tvcontesttype.setText(response.body()!!.contest.get(0).catname)
                         for (i in 0 until response.body()!!.scores.size)
-                            if (response.body()!!.scores.get(i).userid.toString().equals(
-                                    getFromPrefsString(
-                                        StockConstant.USERID
-                                    )
-                                )
-                            ) {
-                                filterTeamList!!.clear()
+                            if (response.body()!!.scores.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
+//                                filterTeamList!!.clear()
                                 filterTeamList!!.add(response.body()!!.scores.get(i))
-                            } else if (response.body()!!.contest.size > 0)
+                                tvRank.setText(filterTeamList!!.get(0).rank)
+                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                            } else if (response.body()!!.contest.size > 0) {
                                 setTimer(response.body()!!.contest.get(0))
-                            else if (filterTeamList!!.size > 0) {
-                                if (filterTeamList!!.size == 1) {
-                                    recycle_myteam.visibility = View.GONE
-                                    tvRank.setText(filterTeamList!!.get(0).rank)
-                                    totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                    stockList!!.clear()
-                                    crptoList!!.clear()
-                                    if (filterTeamList!!.get(0).stock.size == 0) {
-                                        flagCrypto = true
-                                        crptoList!!.addAll(filterTeamList!!.get(0).crypto)
-                                    } else
-                                        stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
-                                } else {
-                                    tvRank.setText(filterTeamList!!.get(0).rank)
-                                    totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                    stockList!!.clear()
-                                    stockList!!.addAll(filterTeamList!!.get(0).stock)
-                                    setLiveTeamAdapter(filterTeamList!!)
-                                }
-
-                            } else {
                             }
 
+                        if (filterTeamList!!.size > 0) {
+                            if (filterTeamList!!.size == 1) {
+                                recycle_myteam.visibility = View.GONE
+                                tvRank.setText(filterTeamList!!.get(0).rank)
+                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                stockList!!.clear()
+                                crptoList!!.clear()
+                                if (filterTeamList!!.get(0).stock.size == 0) {
+                                    flagCrypto = true
+                                    crptoList!!.addAll(filterTeamList!!.get(0).crypto)
+                                } else
+                                    stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
+                            } else {
+                                tvRank.setText(filterTeamList!!.get(0).rank)
+                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                stockList!!.clear()
+                                stockList!!.addAll(filterTeamList!!.get(0).stock)
+                                setLiveTeamAdapter(filterTeamList!!)
+                            }
+
+                        }
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -198,6 +190,7 @@ class LiveContestActivity : BaseActivity() {
             }
         })
     }
+
 
     fun setTimer(contest: ContestDetail.Contest) {
         if (!contest.schedule_end.equals(" ")) {

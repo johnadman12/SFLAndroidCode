@@ -159,6 +159,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
+                            cryptoList!!.clear();
+                            cryptoList!!.addAll(cryptoListNew!!);
                             cryptoListNew = response.body()!!.crypto
                             if (flagAlphaSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
@@ -189,7 +191,7 @@ class CryptoCurrencyFragment : BaseFragment() {
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                                 }
 
-                            }else if (flagDHTLSort) {
+                            } else if (flagDHTLSort) {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
                                 for (obj in sortedList) {
                                     cryptoListNew!!.clear()
@@ -325,8 +327,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
-        }
-        else if (type.equals("DayHighToLow")) {
+        } else if (type.equals("DayHighToLow")) {
             flagDHTLSort = true
             val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
             for (obj in sortedList) {

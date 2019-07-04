@@ -46,20 +46,20 @@
                             android:src="@mipmap/editteam"/>
 
                 </LinearLayout>
-                <RelativeLayout android:layout_width="@dimen/_60sdp"
-                                android:layout_height="@dimen/_60sdp"
+                <RelativeLayout android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
                                 android:id="@+id/rel"
                                 android:background="@mipmap/greencircle"
                                 android:layout_marginRight="@dimen/_10sdp"
                 >
                     <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Total"
-                            android:textSize="@dimen/_12ssp"
+                            android:id="@+id/tv"
+                            android:textSize="@dimen/_10ssp"
                             android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_centerHorizontal="true"
                             android:textColor="@color/textColorOffWhite"
                             style="@style/TextStyleNormal"
@@ -70,9 +70,10 @@
                             android:layout_height="wrap_content"
                             android:text="@string/percentage"
                             android:gravity="center"
-                            android:layout_below="@+id/tvTotal"
                             android:layout_centerVertical="true"
                             android:textSize="@dimen/_10ssp"
+                            android:id="@+id/tvTotal"
+                            android:layout_below="@id/tv"
                             android:layout_centerInParent="true"
                             android:textColor="@color/textColorOffWhite"
                             style="@style/TextStyleSemiBold"
@@ -104,7 +105,6 @@
                 <RelativeLayout
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                 >
@@ -130,26 +130,40 @@
                                   android:layout_marginTop="-5dp"
                                   android:layout_centerHorizontal="true">
 
-                        <ImageView android:id="@+id/arrow1" android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:layout_gravity="center_vertical"
-                                   android:src="@drawable/ic_down_arrow"/>
-
+                        <!-- <ImageView android:id="@+id/arrow1"
+                                    android:layout_width="@dimen/_25sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@mipmap/toggleon"/>
+                                    -->
                         <LinearLayout android:layout_width="0dp"
                                       android:layout_weight="1"
                                       android:padding="@dimen/_2sdp"
                                       android:layout_height="wrap_content"
                                       android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/price1"
-                                    android:singleLine="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="172.2$"
-                                    style="@style/TextStyleSemiBold"
-                                    android:textColor="@color/colorRed"
-                                    android:textSize="@dimen/_9ssp"/>
+                            <LinearLayout android:layout_width="wrap_content"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="horizontal">
+                                <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/price1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="172.2$"
+                                        style="@style/TextStyleSemiBold"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_9ssp"/>
+
+                                <ImageView
+                                        android:id="@+id/arrow1"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_15sdp"
+                                        android:src="@drawable/buy"
+                                />
+                            </LinearLayout>
+
+
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/percentage1"
                                     android:singleLine="true"
@@ -157,9 +171,9 @@
                                     android:layout_height="wrap_content"
                                     android:text="-202(1.16%)"
                                     android:padding="@dimen/_2sdp"
-                                    style="@style/TextStyleSemiBold"
-                                    android:textColor="@color/colorRed"
-                                    android:textSize="@dimen/_7ssp"/>
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/textColorBlack"
+                                    android:textSize="@dimen/_10ssp"/>
 
                         </LinearLayout>
 
@@ -171,6 +185,7 @@
                                 android:id="@+id/stockname1"
                                 android:minLines="1"
                                 android:minWidth="@dimen/_10sdp"
+                                android:visibility="gone"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/black"
@@ -183,7 +198,7 @@
 
 
                 <LinearLayout
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:weightSum="3"
@@ -219,27 +234,34 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow2"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price2"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow2"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage2"
                                         android:singleLine="true"
@@ -247,9 +269,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -260,6 +282,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
+                                    android:visibility="gone"
                                     android:minWidth="@dimen/_10sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
@@ -302,27 +325,34 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow3"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price3"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price3"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow3"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage3"
                                         android:singleLine="true"
@@ -330,9 +360,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -344,6 +374,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -384,27 +415,34 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow4"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price4"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price4"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow4"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage4"
                                         android:singleLine="true"
@@ -412,9 +450,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -426,6 +464,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -439,7 +478,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:weightSum="3"
@@ -475,27 +514,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView
-                                    android:id="@+id/arrow5" android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price5"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price5"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow5"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage5"
                                         android:singleLine="true"
@@ -503,9 +550,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -516,6 +563,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
+                                    android:visibility="gone"
                                     android:minWidth="@dimen/_10sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
@@ -558,26 +606,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow6" android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price6"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price6"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow6"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage6"
                                         android:singleLine="true"
@@ -585,12 +642,11 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
-
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/stockname6"
                                     android:singleLine="true"
@@ -599,6 +655,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -639,28 +696,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView
-                                    android:id="@+id/arrow7"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price7"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price7"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow7"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage7"
                                         android:singleLine="true"
@@ -668,9 +732,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -681,6 +745,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
+                                    android:visibility="gone"
                                     android:minWidth="@dimen/_10sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
@@ -695,7 +760,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:weightSum="3"
@@ -730,27 +795,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView
-                                    android:id="@+id/arrow8" android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price8"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price8"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow8"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage8"
                                         android:singleLine="true"
@@ -758,9 +831,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -772,7 +845,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
-
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -814,26 +887,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow9" android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price9"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price9"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow9"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage9"
                                         android:singleLine="true"
@@ -841,9 +923,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -855,7 +937,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
-
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -896,27 +978,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow10"
-                                       android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price10"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price10"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow10"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage10"
                                         android:singleLine="true"
@@ -924,12 +1014,11 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
-
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/stockname10"
                                     android:singleLine="true"
@@ -938,7 +1027,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
-
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -988,26 +1077,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView android:id="@+id/arrow11" android:layout_width="wrap_content"
-                                       android:layout_height="wrap_content"
-                                       android:layout_gravity="center_vertical"
-                                       android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price11"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price11"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow11"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage11"
                                         android:singleLine="true"
@@ -1015,9 +1113,9 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
 
@@ -1029,7 +1127,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
                                     android:minWidth="@dimen/_10sdp"
-
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/black"
@@ -1070,28 +1168,35 @@
                                       android:layout_marginTop="-5dp"
                                       android:layout_centerHorizontal="true">
 
-                            <ImageView
-                                    android:id="@+id/arrow12"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:src="@drawable/ic_down_arrow"/>
-
                             <LinearLayout android:layout_width="0dp"
                                           android:layout_weight="1"
                                           android:padding="@dimen/_2sdp"
                                           android:layout_height="wrap_content"
                                           android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/price12"
-                                        android:singleLine="true"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="172.2$"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_9ssp"/>
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price12"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            android:layout_marginTop="@dimen/_2sdp"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow12"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
                                 <androidx.appcompat.widget.AppCompatTextView
                                         android:id="@+id/percentage12"
                                         android:singleLine="true"
@@ -1099,12 +1204,11 @@
                                         android:layout_height="wrap_content"
                                         android:text="-202(1.16%)"
                                         android:padding="@dimen/_2sdp"
-                                        style="@style/TextStyleSemiBold"
-                                        android:textColor="@color/colorRed"
-                                        android:textSize="@dimen/_7ssp"/>
+                                        style="@style/TextStyleNormal"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_10ssp"/>
 
                             </LinearLayout>
-
                             <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/stockname12"
                                     android:singleLine="true"
@@ -1112,6 +1216,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AAPL"
+                                    android:visibility="gone"
                                     android:minWidth="@dimen/_10sdp"
                                     android:layout_marginTop="@dimen/_2sdp"
                                     style="@style/TextStyleNormal"

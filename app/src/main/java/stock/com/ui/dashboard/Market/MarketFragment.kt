@@ -43,49 +43,26 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 et_search.setText("")
                 filtertext.text = "Crypto \n Filter"
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
-                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_forex, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
                 changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.colorbutton));
-                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(CryptoCurrencyFragment(), Bundle())
                 position = 0
             }
-
-            R.id.tv_currency -> {
-                isMarket = 0
-                filtertext.text = "Currency \n Filter"
-                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
-                changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-
-                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.colorbutton));
-                changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
-
-                setFragment(CurrencyFragment(), Bundle())
-                position = 1
-            }
             R.id.tv_commodity -> {
                 isMarket = 0
                 filtertext.text = "Commodity \n Filter"
-                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_forex, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
-                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
@@ -94,19 +71,17 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 setFragment(CommodityFragment(), Bundle())
                 position = 2
             }
-            R.id.tv_indices -> {
+            R.id.tv_forex -> {
                 isMarket = 0
-                filtertext.text = "Indices \n Filter"
-                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                filtertext.text = "Forex \n Filter"
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeTextColor(tv_forex, ContextCompat.getColor(activity!!, R.color.white));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
-                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.colorbutton));
+                changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(IndicesFragment(), Bundle())
@@ -116,16 +91,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 isMarket = 1
                 et_search.setText("")
                 filtertext.text = "Stocks \n Filter"
-                changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-                changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+                changeTextColor(tv_forex, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
                 changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
-                changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.colorbutton));
 
                 setFragment(StocksFragment(), Bundle());
@@ -147,9 +120,8 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_currency.setOnClickListener(this);
         list = ArrayList()
-        tv_indices.setOnClickListener(this);
+        tv_forex.setOnClickListener(this);
         tv_commodity.setOnClickListener(this);
         tv_stocks.setOnClickListener(this);
         tv_crypto.setOnClickListener(this);
@@ -158,14 +130,12 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
         filtertext.text = "Crypto \n Filter"
         changeTextColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_indices, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
-        changeTextColor(tv_currency, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
+        changeTextColor(tv_forex, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
         changeTextColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
         changeTextColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.textColorLightBlack));
 
-        changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.white));
-        changeBackGroundColor(tv_currency, ContextCompat.getColor(activity!!, R.color.white));
+        changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.white));
         changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.colorbutton));
         changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
         isMarket = 0

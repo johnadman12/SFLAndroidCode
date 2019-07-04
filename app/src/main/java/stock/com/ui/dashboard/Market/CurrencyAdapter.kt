@@ -54,9 +54,9 @@ class CurrencyAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        val anim = AlphaAnimation(0.5f, 1.0f)
+        val anim = AlphaAnimation(0.1f, 1.0f)
         anim.duration = 50 //You can manage the blinking time with this parameter
-//        anim.startOffset = 20
+        anim.startOffset = 20
 //        anim.repeatCount = Animation.REVERSE
 
         holder.itemView.name.setText(cryptoListNew.get(position).symbol)
@@ -80,32 +80,32 @@ class CurrencyAdapter(
         } catch (e: Exception) {
 
         }
-
-        val priceText: String = cryptoListNew.get(position).latestPrice;
+        var priceText = ""
+        try {
+            priceText = marketData.get(position).latestPrice;
+        } catch (e: java.lang.Exception) {
+        }
 
 
         if (marketData.size == cryptoListNew.size) {
-            Log.d("sddasdasdad", "-------1111--" + priceText + "--" + search!!.get(position).latestPrice)
-
             if (!TextUtils.isEmpty(priceText)) {
                 if (priceText.equals("$" + search!!.get(position).latestPrice)) {
                     holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                    Log.e("sddasdasdad", "-------0000000--")
                 } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
 
-
-                    Log.d("sddasdasdad", "-------22222222--")
-
-                    val newtimer = object : CountDownTimer(500, 500) {
+                    val newtimer = object : CountDownTimer(1000, 500) {
                         override fun onTick(millisUntilFinished: Long) {
                             Log.e("timeerror", millisUntilFinished.toString())
                             holder.itemView.tv_latest_price.setTextColor(
-                                ContextCompat.getColor(
+                                ContextCompat.getColor(mContext, R.color.white)
+                            )
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
                                     mContext,
-                                    R.color.green
+                                    R.drawable.gray_green_fill
                                 )
                             )
-                            holder.itemView.tv_latest_price.animation = anim
+                            holder.itemView.llPrice.animation = anim
                         }
 
                         override fun onFinish() {
@@ -113,8 +113,7 @@ class CurrencyAdapter(
                                 if (search!!.get(position).latestPrice.toDouble() < 1)
                                     holder.itemView.tv_latest_price.setText(
                                         "$" + String.format(
-                                            "%.6f",
-                                            search!!.get(position).latestPrice.toDouble()
+                                            "%.6f", search!!.get(position).latestPrice.toDouble()
                                         )
                                     )
                                 else
@@ -124,13 +123,24 @@ class CurrencyAdapter(
                                             search!!.get(position).latestPrice.toDouble()
                                         )
                                     )
-                                /*  marketData!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                             marketData!!.get(position).changeper = cryptoListNew.get(position).changeper
-                           */
+                                /*  search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                             search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
-                                        R.color.green
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_green_fill
                                     )
                                 )
                             } catch (e: Exception) {
@@ -155,10 +165,16 @@ class CurrencyAdapter(
                             holder.itemView.tv_latest_price.setTextColor(
                                 ContextCompat.getColor(
                                     mContext,
-                                    R.color.redcolor
+                                    R.color.white
                                 )
                             )
-                            holder.itemView.tv_latest_price.animation = anim
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_red_fill
+                                )
+                            )
+                            holder.itemView.llPrice.animation = anim
                         }
 
                         override fun onFinish() {
@@ -178,13 +194,24 @@ class CurrencyAdapter(
                                             search!!.get(position).latestPrice.toDouble()
                                         )
                                     )
-                                /*marketData!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                             marketData!!.get(position).changeper = cryptoListNew.get(position).changeper*/
-
+                                /* search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                              search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
-                                        R.color.redcolor
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_red_fill
                                     )
                                 )
                             } catch (e: Exception) {
@@ -228,10 +255,10 @@ class CurrencyAdapter(
         if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper))
             if (cryptoListNew.get(position).changeper.contains("-")) {
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                Glide.with(mContext).load( R.drawable.ic_down_arrow).into(holder.itemView.graph)
+                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setText(cryptoListNew!!.get(position).changeper + " %")
             } else {
-                Glide.with(mContext).load( R.drawable.ic_arrow_up).into(holder.itemView.graph)
+                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setText("+" + cryptoListNew!!.get(position).changeper + " %")
             }

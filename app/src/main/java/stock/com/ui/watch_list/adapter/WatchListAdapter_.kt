@@ -11,32 +11,25 @@ import com.bumptech.glide.Glide
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import kotlinx.android.synthetic.main.row_view_watch_list.view.*
 import stock.com.R
-import stock.com.ui.pojo.StockPojo
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
+
 import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.WatchListActivity
-import stock.com.utils.AppDelegate
-import android.view.MotionEvent
 
-
-
-class WatchListAdapter_(
+class WatchListAdapter_ (
     val mContext: Context,
     val mContest: MutableList<WatchlistPojo.WatchStock>,
-    val activity: WatchListActivity
-) :
+    val activity: WatchListActivity ):
     RecyclerView.Adapter<WatchListAdapter_.WatchListHolder>(), Filterable {
 
     private var searchList: List<WatchlistPojo.WatchStock>? = null
-
     init {
         this.searchList = mContest;
     }
 
     private val viewBinderHelper = ViewBinderHelper()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_watch_list, parent, false)
         return WatchListHolder(view)
@@ -45,13 +38,14 @@ class WatchListAdapter_(
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
         viewBinderHelper.bind(holder.itemView.swipeRevealLayout, "" + position);
         holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
+        holder.itemView.tv_id.setText(searchList!!.get(position).id);
         holder.itemView.tv_sector.setText(searchList!!.get(position).companyName);
-        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent+"%");
+        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
         holder.itemView.tv_market_open.setText(searchList!!.get(position).latestPrice);
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
         holder.itemView.img_btn_remove.setOnClickListener {
             if (activity != null) {
-                activity.callApiRemoveWatch(searchList!!.get(position).id)
+                activity.callApiRemoveWatch(holder.itemView.tv_id.text.toString())
             }
         }
 

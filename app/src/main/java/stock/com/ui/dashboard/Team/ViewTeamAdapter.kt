@@ -42,7 +42,9 @@ class ViewTeamAdapter(
         holder.itemView.tvlatestVolume.setText(mContest.get(position).latestVolume)
         holder.itemView.tvPercentage.setText(mContest.get(position).changePercent)
         Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.ivsTOCK)
-
+        holder.itemView.llVol.visibility = View.GONE
+        holder.itemView.llPrice.visibility = View.GONE
+        holder.itemView.img_graph.visibility = View.GONE
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
         mContest.get(position).addedToList = 1

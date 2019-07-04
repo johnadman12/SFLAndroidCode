@@ -130,7 +130,5 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            android:nestedScrollingEnabled="false"
-            android:fillViewport="true"
             tools:listitem="@layout/row_view_watch_list"/>
 </LinearLayout>

@@ -48,10 +48,7 @@ class LiveContestAdapter(
                             .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
                             .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                     )
-            }/* else {
-//                Toast.makeText(mContext, "Contest is not live yet.", 10000).show()
-
-            }*/
+            }
 
     }
 

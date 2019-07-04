@@ -85,12 +85,12 @@ class StockTeamAdapter(
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
             if (searchList!!.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent+ " %")
+                holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent+ "%")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
 //                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changePercent+ " %")
+                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changePercent+ "%")
             }
 
 
