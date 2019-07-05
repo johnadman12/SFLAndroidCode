@@ -1,10 +1,13 @@
 package stock.com.ui.dashboard.home.MarketList
 
 import android.content.Context
+import android.os.CountDownTimer
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
@@ -16,16 +19,228 @@ import stock.com.ui.pojo.MarketList
 import stock.com.utils.AppDelegate
 
 class MarketListAdapter(
-    val mContext: Context, val mContest: MutableList<MarketList.Crypto>,
+    val mContext: Context,
+    val mContest: MutableList<MarketList.Crypto>,
+    val mContestOld: MutableList<MarketList.Crypto>,
     val activity: ActivityMarketTeam,
     val onItemCheckListener: OnItemCheckListener
 ) :
     RecyclerView.Adapter<MarketListAdapter.FeatureListHolder>(), Filterable {
 
 
+    override fun getItemCount(): Int {
+        return mContestOld.size
+    }
+
+    var checkedHolder: BooleanArray? = null;
+
+
+    private var searchList: List<MarketList.Crypto>? = null
+//    var list: ArrayList<MarketList.Crypto> = ArrayList()
+
+
+    private fun createCheckedHolder() {
+        checkedHolder = BooleanArray(mContest.size)
+    }
+
+    init {
+        this.searchList = mContest;
+        createCheckedHolder();
+    }
+
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        list = ArrayList()
-        list = mContest as ArrayList
+//        list = ArrayList()
+//        list = mContest as ArrayList
+
+        val anim = AlphaAnimation(0.1f, 1.0f)
+        anim.duration = 50 //You can manage the blinking time with this parameter
+        anim.startOffset = 20
+        try {
+            if (mContestOld!!.get(position).latestPrice != null)
+                if (mContestOld!!.get(position).latestPrice.toDouble() < 1)
+                    holder.itemView.tvPercentage.setText(
+                        "$" + String.format(
+                            "%.6f",
+                            mContestOld!!.get(position).latestPrice.toDouble()
+                        )
+                    )
+                else
+                    holder.itemView.tvPercentage.text = "$" + String.format(
+                        "%.2f",
+                        mContestOld!!.get(position).latestPrice.toDouble()
+                    )
+        } catch (e: Exception) {
+
+        }
+        var priceText = ""
+        try {
+            priceText = mContestOld.get(position).latestPrice;
+        } catch (e: java.lang.Exception) {
+        }
+
+        if (mContestOld.size == mContest.size) {
+            if (!TextUtils.isEmpty(priceText)) {
+                if (priceText.equals("$" + mContest.get(position).latestPrice)) {
+                    holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                } else if (priceText.toDouble() > mContest.get(position).latestPrice.toDouble()) {
+                    val newtimer = object : CountDownTimer(1000, 500) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            Log.e("timeerror", millisUntilFinished.toString())
+                            holder.itemView.tvPercentage.setTextColor(
+                                ContextCompat.getColor(mContext, R.color.white)
+                            )
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_green_fill
+                                )
+                            )
+                            holder.itemView.llPrice.animation = anim
+                        }
+
+                        override fun onFinish() {
+                            try {
+                                if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.6f", mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                else
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.2f",
+                                            mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                /*  search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                             search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
+                                holder.itemView.tvPercentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_green_fill
+                                    )
+                                )
+                            } catch (e: Exception) {
+
+                            }
+
+                        }
+                    }
+                    newtimer.start()
+                    holder.itemView.tvPercentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.black
+                        )
+                    )
+
+
+                } else if (priceText.toDouble() < mContest.get(position).latestPrice.toDouble()) {
+                    Log.d("sddasdasdad", "-------3333333--")
+                    val newtimer = object : CountDownTimer(500, 500) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            holder.itemView.tvPercentage.setTextColor(
+                                ContextCompat.getColor(
+                                    mContext,
+                                    R.color.white
+                                )
+                            )
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_red_fill
+                                )
+                            )
+                            holder.itemView.llPrice.animation = anim
+                        }
+
+                        override fun onFinish() {
+
+                            try {
+                                if (mContest.get(position).latestPrice.toDouble() < 1)
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.6f",
+                                            mContest.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                else
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.2f",
+                                            mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                /* search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                              search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
+                                holder.itemView.tvPercentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_red_fill
+                                    )
+                                )
+                            } catch (e: Exception) {
+                            }
+
+                        }
+                    }
+                    newtimer.start()
+                    holder.itemView.tvPercentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.black
+                        )
+                    )
+                }
+            } else {
+                try {
+                    if (mContest!!.get(position).latestPrice != null)
+                        if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                            holder.itemView.tvPercentage.setText(
+                                "$" + String.format(
+                                    "%.6f",
+                                    mContest!!.get(position).latestPrice.toDouble()
+                                )
+                            )
+                        else
+                            holder.itemView.tvPercentage.setText(
+                                String.format(
+                                    "%.2f",
+                                    mContest!!.get(position).latestPrice.toDouble()
+                                )
+                            )
+                } catch (e: Exception) {
+
+                }
+            }
+
+        }
+
         holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
         holder.itemView.tvCompanyName.setText(searchList!!.get(position).name)
         holder.itemView.market.setText("marketCap :" + searchList!!.get(position).marketcapital)
@@ -33,24 +248,18 @@ class MarketListAdapter(
         holder.itemView.prev.visibility = View.GONE
         holder.itemView.img_time.visibility = View.GONE
         holder.itemView.tvPrevClose.visibility = View.GONE
-//        holder.itemView.tvPrevClose.setText(searchList!!.get(position).marketcapital)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
-        holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
-        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
-
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper))
             if (searchList!!.get(position).changeper.contains("-")) {
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper)
+                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper + "%")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
-//                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changeper)
+                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changeper + "%")
             }
-
 
 
         holder.itemView.img_add.setOnClickListener {
@@ -94,31 +303,15 @@ class MarketListAdapter(
 //        1-sell,0-buy
 
         holder.itemView.toggleButton1.setOnClickListener {
-            if (holder.itemView.toggleButton1.isChecked)
-                searchList!!.get(position).cryptoType = "0";
-            else
-                searchList!!.get(position).cryptoType = "1";
+            if (holder.itemView.toggleButton1.isChecked) {
+                onItemCheckListener.onToggleCheck(searchList!!.get(position))
+//                searchList!!.get(position).cryptoType = "0";
+            } else {
+                onItemCheckListener.onToggleUncheck(searchList!!.get(position))
+//                searchList!!.get(position).cryptoType = "1";
+
+            }
         }
-    }
-
-    override fun getItemCount(): Int {
-        return searchList!!.size
-    }
-
-    var checkedHolder: BooleanArray? = null;
-
-
-    private var searchList: List<MarketList.Crypto>? = null
-    var list: ArrayList<MarketList.Crypto> = ArrayList()
-
-
-    private fun createCheckedHolder() {
-        checkedHolder = BooleanArray(mContest.size)
-    }
-
-    init {
-        this.searchList = mContest;
-        createCheckedHolder();
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -130,6 +323,8 @@ class MarketListAdapter(
         fun onItemCheck(item: MarketList.Crypto)
         fun onItemUncheck(item: MarketList.Crypto)
         fun onItemClick(item: MarketList.Crypto)
+        fun onToggleCheck(item: MarketList.Crypto)
+        fun onToggleUncheck(item: MarketList.Crypto)
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

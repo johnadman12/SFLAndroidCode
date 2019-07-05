@@ -32,7 +32,6 @@ import stock.com.utils.StockDialog
 class WatchListActivity : BaseActivity() {
 
 
-
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
 
@@ -49,15 +48,17 @@ class WatchListActivity : BaseActivity() {
         recyclerView_watch_list!!.adapter = watchListAdapter;
 
 
-
-        val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(list!!, watchListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>)
+        val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(
+            list!!,
+            watchListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
+        )
         touchHelper.setRecyclerItemDragEnabled(true);
         touchHelper.setRecyclerItemSwipeEnabled(false);
 
 
         touchHelper.setOnDragItemListener(object : OnDragListener {
             override fun onDragItemListener(fromPosition: Int, toPosition: Int) {
-                Log.d("4564646464", "--"+fromPosition+"----"+toPosition);
+                Log.d("4564646464", "--" + fromPosition + "----" + toPosition);
             }
         })
 
@@ -215,13 +216,25 @@ class WatchListActivity : BaseActivity() {
                 if (data != null) {
                     var flag = data.getStringExtra("flag");
                     if (flag.equals("high")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice })).asReversed();
+                        var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);
                         setWatchListAdapter();
                     } else if (flag.equals("low")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice }));
+                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice.toDouble() }));
+                        list!!.clear();
+                        setWatchListAdapter();
+                        list!!.addAll(sortedList);
+                        setWatchListAdapter();
+                    } else if (flag.equals("daily")) {
+                        var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                        list!!.clear();
+                        setWatchListAdapter();
+                        list!!.addAll(sortedList);
+                        setWatchListAdapter();
+                    } else if (flag.equals("dailyLTH")) {
+                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);

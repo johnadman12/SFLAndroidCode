@@ -450,7 +450,8 @@
 
     <string name="sector">Sector</string>
 
-    <string name="daily_changes">Daily Change</string>
+    <string name="daily_changes">Daily Change(High To Low)</string>
+    <string name="dailyLTH">Daily Change(Low To High)</string>
     <string name="weekly_changes">Weekly Change</string>
     <string name="monthly_changes">Monthly Change</string>
     <string name="price_low">Price(Low to High)</string>

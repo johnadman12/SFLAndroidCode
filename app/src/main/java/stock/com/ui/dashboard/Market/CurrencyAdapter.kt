@@ -80,6 +80,7 @@ class CurrencyAdapter(
         } catch (e: Exception) {
 
         }
+
         var priceText = ""
         try {
             priceText = marketData.get(position).latestPrice;

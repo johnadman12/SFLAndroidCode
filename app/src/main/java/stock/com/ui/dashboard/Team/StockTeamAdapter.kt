@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.CountDownTimer
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.animation.AlphaAnimation
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.Toast
@@ -27,6 +29,7 @@ import stock.com.utils.StockConstant
 
 class StockTeamAdapter(
     val mContext: Context,
+    val mContestOld: MutableList<StockTeamPojo.Stock>,
     val mContest: MutableList<StockTeamPojo.Stock>,
     val activity: ActivityCreateTeam,
     val onItemCheckListener: OnItemCheckListener
@@ -35,14 +38,6 @@ class StockTeamAdapter(
     RecyclerView.Adapter<StockTeamAdapter.FeatureListHolder>(), Filterable {
     var checkedHolder: BooleanArray? = null;
 
-    /*data class StockTeamAdapter(
-        val mContext: Context,
-        val mContest: List<StockTeamPojo.Stock>,
-        val activity: ActivityCreateTeam,
-        val other:String
-    )
-
-*/
 
     private var searchList: List<StockTeamPojo.Stock>? = null
     var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
@@ -72,8 +67,198 @@ class StockTeamAdapter(
 
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        list = ArrayList()
-        list = mContest as ArrayList
+
+        val anim = AlphaAnimation(0.1f, 1.0f)
+        anim.duration = 50 //You can manage the blinking time with this parameter
+        anim.startOffset = 20
+        try {
+            if (mContestOld!!.get(position).latestPrice != null)
+                if (mContestOld!!.get(position).latestPrice.toDouble() < 1)
+                    holder.itemView.tvPercentage.setText(
+                        "$" + String.format(
+                            "%.6f",
+                            mContestOld!!.get(position).latestPrice.toDouble()
+                        )
+                    )
+                else
+                    holder.itemView.tvPercentage.text = "$" + String.format(
+                        "%.2f",
+                        mContestOld!!.get(position).latestPrice.toDouble()
+                    )
+        } catch (e: Exception) {
+
+        }
+        var priceText = ""
+        try {
+            priceText = mContestOld.get(position).latestPrice;
+        } catch (e: java.lang.Exception) {
+        }
+
+        if (mContestOld.size == mContest.size) {
+            if (!TextUtils.isEmpty(priceText)) {
+                if (priceText.equals("$" + mContest.get(position).latestPrice)) {
+                    holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                } else if (priceText.toDouble() > mContest.get(position).latestPrice.toDouble()) {
+                    val newtimer = object : CountDownTimer(1000, 500) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            Log.e("timeerror", millisUntilFinished.toString())
+                            holder.itemView.tvPercentage.setTextColor(
+                                ContextCompat.getColor(mContext, R.color.white)
+                            )
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_green_fill
+                                )
+                            )
+                            holder.itemView.llPrice.animation = anim
+                        }
+
+                        override fun onFinish() {
+                            try {
+                                if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.6f", mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                else
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.2f",
+                                            mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                /*  search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                             search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
+                                holder.itemView.tvPercentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_green_fill
+                                    )
+                                )
+                            } catch (e: Exception) {
+
+                            }
+
+                        }
+                    }
+                    newtimer.start()
+                    holder.itemView.tvPercentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.black
+                        )
+                    )
+
+
+                } else if (priceText.toDouble() < mContest.get(position).latestPrice.toDouble()) {
+                    Log.d("sddasdasdad", "-------3333333--")
+                    val newtimer = object : CountDownTimer(500, 500) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            holder.itemView.tvPercentage.setTextColor(
+                                ContextCompat.getColor(
+                                    mContext,
+                                    R.color.white
+                                )
+                            )
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_red_fill
+                                )
+                            )
+                            holder.itemView.llPrice.animation = anim
+                        }
+
+                        override fun onFinish() {
+
+                            try {
+                                if (mContest.get(position).latestPrice.toDouble() < 1)
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.6f",
+                                            mContest.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                else
+                                    holder.itemView.tvPercentage.setText(
+                                        "$" + String.format(
+                                            "%.2f",
+                                            mContest!!.get(position).latestPrice.toDouble()
+                                        )
+                                    )
+                                /* search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
+                              search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
+                                holder.itemView.tvPercentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.tv_change_percentage.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.white
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_red_fill
+                                    )
+                                )
+                            } catch (e: Exception) {
+                            }
+
+                        }
+                    }
+                    newtimer.start()
+                    holder.itemView.tvPercentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.black
+                        )
+                    )
+                }
+            } else {
+                try {
+                    if (mContest!!.get(position).latestPrice != null)
+                        if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                            holder.itemView.tvPercentage.setText(
+                                "$" + String.format(
+                                    "%.6f",
+                                    mContest!!.get(position).latestPrice.toDouble()
+                                )
+                            )
+                        else
+                            holder.itemView.tvPercentage.setText(
+                                String.format(
+                                    "%.2f",
+                                    mContest!!.get(position).latestPrice.toDouble()
+                                )
+                            )
+                } catch (e: Exception) {
+
+                }
+            }
+
+        }
+
+
+
         holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
         holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
@@ -146,7 +331,7 @@ class StockTeamAdapter(
 
 
     override fun getItemCount(): Int {
-        return searchList!!.size
+        return mContestOld.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

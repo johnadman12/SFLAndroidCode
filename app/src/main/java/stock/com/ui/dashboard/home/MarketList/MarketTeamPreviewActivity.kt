@@ -224,7 +224,8 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogue.setCancelable(true)
         dialogue.setCanceledOnTouchOutside(true)
-        dialogue.tvInfo.setText(textView)
+        var text = textView.replace(",", "\n-")
+        dialogue.tvInfo.setText("-" + text)
         dialogue.btnOK.setOnClickListener {
             if (dialogue.isShowing)
                 dialogue.dismiss()

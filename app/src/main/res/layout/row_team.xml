@@ -80,14 +80,14 @@
                         android:layout_weight=".3"
                         android:gravity="center"
                         android:id="@+id/llPrice"
+                        android:background="@drawable/gray_empty_rect"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
                     <TextView
                             android:id="@+id/tvPercentage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="88%"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_12ssp"
                             style="@style/TextStyleSemiBold"
                             android:textColor="@color/textColorBlack"/>
 
@@ -96,7 +96,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="-202(-1.06)"
-                            android:textSize="@dimen/_11sdp"
+                            android:textSize="@dimen/_10ssp"
                             style="@style/TextStyleNormal"
                             android:textColor="@color/colorRed"/>
 

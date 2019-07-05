@@ -48,6 +48,14 @@ class WatchSortActivity : BaseActivity(),CompoundButton.OnCheckedChangeListener 
                 temp="low";
             }
 
+            if(checkBoxDailyChanges.isChecked){
+                temp="daily";
+            }
+
+            if(cb_monthly.isChecked){
+                temp="dailyLTH";
+            }
+
             var intent=Intent();
             intent.putExtra("flag",temp)
             setResult(Activity.RESULT_OK,intent);

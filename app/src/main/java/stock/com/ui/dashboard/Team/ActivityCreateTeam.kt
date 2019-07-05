@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.*
 import android.util.Log
 import android.view.View
@@ -46,13 +47,15 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     //    private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockRemovedItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockTeamAdapter: StockTeamAdapter? = null;
+    private var listOld: ArrayList<StockTeamPojo.Stock>? = null;
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     private var parseList: ArrayList<StockTeamPojo.Stock>? = null;
     val RESULT_DATA = 1003
     var flag: Boolean = false
     var flagCloning: Int = 0
     var sector: String = ""
-
+    var flagFilter: Boolean = false
+    private var flagSearch: Boolean = true;
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -141,6 +144,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_create_team)
         StockConstant.ACTIVITIES.add(this)
         list = ArrayList();
+        listOld = ArrayList();
         initView()
     }
 
@@ -167,9 +171,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             }
         }
-      setTeamText(stockSelectedItems!!.size.toString())
+        setTeamText(stockSelectedItems!!.size.toString())
         stockTeamAdapter = StockTeamAdapter(
-            this, list as ArrayList,
+            this, listOld as ArrayList,
+            list as ArrayList,
             this@ActivityCreateTeam,
             object : StockTeamAdapter.OnItemCheckListener {
                 override fun onItemClick(item: StockTeamPojo.Stock) {
@@ -213,7 +218,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                stockTeamAdapter!!.getFilter().filter(s);
+                callSearch(s.toString())
             }
         })
 
@@ -223,60 +228,26 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter = stockTeamAdapter;
 
+
         getTeamlist()
+
+        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (flagSearch) {
+                    getTeamlist()
+
+                }
+                mainHandler.postDelayed(this, 8000)
+            }
+
+        })
     }
 
-    //    fun getTeamlist() {
-//        val d = StockDialog.showLoading(this)
-//        d.setCanceledOnTouchOutside(false)
-//        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-//        val call: Call<StockTeamPojo> =
-//            apiService.getStockList(
-//                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-//                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/
-//            )
-//        call.enqueue(object : Callback<StockTeamPojo> {
-//            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
-//                d.dismiss()
-//                if (response.body() != null) {
-//                    if (response.body()!!.status == "1") {
-//                        Handler().postDelayed(Runnable {
-//                        }, 100)
-//                        list!!.addAll(response.body()!!.stock!!);
-////                        displayToast(list!!.size.toString())
-//                        rv_Players.adapter!!.notifyDataSetChanged();
-//
-//                        //  setStockTeamAdapter(response.body()!!.stock!!)
-//
-//                    } else if (response.body()!!.status == "2") {
-//                        appLogout()
-//                    }
-//                } else {
-//                    Toast.makeText(
-//                        this@ActivityCreateTeam,
-//                        resources.getString(R.string.internal_server_error),
-//                        Toast.LENGTH_LONG
-//                    ).show()
-//                    d.dismiss()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
-//                println(t.toString())
-//                Toast.makeText(
-//                    this@ActivityCreateTeam,
-//                    resources.getString(R.string.something_went_wrong),
-//                    Toast.LENGTH_LONG
-//                ).show()
-//                displayToast(resources.getString(R.string.something_went_wrong))
-//                d.dismiss()
-//            }
-//        })
-//    }
     fun getTeamlist() {
-        val d = StockDialog.showLoading(this)
+      /*  val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+      */  val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
@@ -290,6 +261,17 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             llMyTeam.visibility = VISIBLE
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = GONE
+                        if (response.body()!!.myteam.equals("1"))
+                            llMyTeam.visibility = View.VISIBLE
+                        else if (response.body()!!.myteam.equals("0"))
+                            llMyTeam.visibility = View.GONE
+                        if (listOld!!.size > 0) {
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                            list!!.clear()
+                        } else {
+                            listOld!!.addAll(response.body()!!.stock!!);
+                        }
 
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
@@ -314,21 +296,21 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         }
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
-                        d.dismiss()
+//                        d.dismiss()
                     } else if (response.body()!!.status == "2") {
-                        d.dismiss()
+//                        d.dismiss()
                         appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }
@@ -493,6 +475,102 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         return stockSelectedItems!!.size.toInt()
     }
 
+    fun callSearch(c: CharSequence) {
+        Log.d("dsadada", "sdada--" + c);
+        if (c.toString().length >= 3) {
+            flagSearch = false;
+            Log.d("dsadada", "111111--");
+            callApiSearch(c);
+        } else {
+            flagSearch = true;
+            Log.d("dsadada", "sdada--");
+        }
+    }
+
+    private fun callApiSearch(c: CharSequence) {
+        Log.d("dsadada", "22222--");
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.searchExchange(
+                exchangeId.toString(), c.toString(), getFromPrefsString(StockConstant.USERID).toString(),
+                "Equity"
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    // displayToast(response.body()!!.message, "sucess")
+
+                    if (response.body()!!.status == "1") {
+                        if (response.body()!!.myteam.equals("1"))
+                            llMyTeam.visibility = View.VISIBLE
+                        else if (response.body()!!.myteam.equals("0"))
+                            llMyTeam.visibility = View.GONE
+
+                        list!!.clear()
+                        listOld!!.clear()
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        list!!.addAll(response.body()!!.stock!!);
+                        listOld!!.addAll(response.body()!!.stock!!);
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+//                            listOld!!.get(i).addedToList = 0
+
+                        }
+//                        rv_Players.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until stockSelectedItems!!.size) {
+                                if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
+                                    list!!.get(i).stockid = stockSelectedItems!!.get(j).stockid
+                                }
+                            }
+                        }
+                        /* if (flagFilter) {
+                             for (i in 0 until list!!.size) {
+                                 if (list!!.get(i).changePercent != null)
+                                     if (!list!!.get(i).changePercent.equals("0")) {
+                                         listFiltered!!.add(list!!.get(i))
+ //                                        stockList!!.remove(stockList!!.get(i))
+                                         Log.d("stocklist", listFiltered!!.size.toString())
+                                     }
+                             }
+                         } else
+                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                 setActiveCurrencyType("")
+                             }
+ */
+                        rv_Players!!.adapter = stockTeamAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(stockSelectedItems!!.size.toString())
+                        d.dismiss()
+
+                    } else if (response.body()!!.status == "2") {
+                        d.dismiss()
+                        appLogout()
+                    }
+                } else {
+                    displayToast(response.body()!!.message, "warning")
+                }
+
+            }
+
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                Log.d("serach_error", "---" + t.localizedMessage);
+                d.dismiss()
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
     /*fun setWizardAdapter() {
         rv_Players!!.adapter = WizardStockTeamAdapter(
             this,
@@ -531,7 +609,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
-                    var sortedList = list!!.sortedByDescending {  it.latestVolume.toDouble() }
+                    var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
@@ -549,7 +627,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
-                    var sortedList =  list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                    var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
@@ -557,8 +635,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
                     }
-                }else if (data.getStringExtra("flag").equals("dayLTH")) {
-                    var sortedList =  list!!.sortedBy { it.changePercent?.toDouble() }
+                } else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    var sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
@@ -571,8 +649,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
-                }
-                else if (data.getStringExtra("flag").equals("Alpha")) {
+                } else if (data.getStringExtra("flag").equals("Alpha")) {
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
                     for (obj in sortedList) {
                         list!!.clear()

@@ -23,6 +23,20 @@
                       android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cb_monthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:textColor="@color/black"
+                    android:text="@string/dailyLTH"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:buttonTint="@color/colorPrimary"/>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColor"/>
+            <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxDailyChanges"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -41,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextStyleNormal"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:textColor="@color/black"
                     android:padding="@dimen/_10sdp"
@@ -48,22 +63,9 @@
                     android:buttonTint="@color/colorPrimary"/>
             <View android:layout_width="match_parent"
                   android:layout_height="@dimen/_1ssp"
+                  android:visibility="gone"
                   android:background="@color/GrayColor"/>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/cb_monthly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    style="@style/TextStyleNormal"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:text="@string/monthly_changes"
-                    android:buttonTint="@color/colorPrimary"/>
-
-            <View android:layout_width="match_parent"
-                  android:layout_height="@dimen/_1ssp"
-                  android:background="@color/GrayColor"/>
 
 
             <androidx.appcompat.widget.AppCompatCheckBox

@@ -32,7 +32,7 @@
                     android:padding="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:textColor="@color/black"
-                    android:text="   Prize Total (High To Low)"
+                    android:text="   Price (High To Low)"
                     android:buttonTint="@color/colorPrimary"/>
 
 
@@ -44,7 +44,7 @@
                     android:id="@+id/checkBoxEntry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="    BY Entry Fee"
+                    android:text="    By Entry Fee"
                     android:padding="@dimen/_10sdp"
                     style="@style/TextStyleNormal"
                     android:layout_marginLeft="@dimen/_10sdp"

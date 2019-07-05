@@ -37,6 +37,8 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagDaySort: Boolean = false
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
+    private var  flag:Boolean=true;
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
@@ -63,9 +65,11 @@ class CryptoCurrencyFragment : BaseFragment() {
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (isVisible) {
-                    getCurrencyAgain("1")
+                    if (flag) {
+                        getCurrencyAgain("1")
+                    }
                     mainHandler.postDelayed(this, 8000)
-                } else {
+                }    else {
                     flagAlphaSort = false
                     flagPriceSort = false
                     flagDaySort = false
@@ -76,6 +80,19 @@ class CryptoCurrencyFragment : BaseFragment() {
         setCryptoCurrencyAdapter()
     }
 
+    fun setFilter(c: CharSequence) {
+        /*if (cryptoAdapter != null)
+            cryptoAdapter!!.getFilter().filter(c)*/
+        Log.d("dsadada","sdada--"+c);
+        if(c.toString().length>=3){
+            flag=false;
+            Log.d("dsadada","111111--");
+            callApiSearch(c);
+        }else{
+            flag=true;
+            Log.d("dsadada","sdada--");
+        }
+    }
 
     fun getCurrency(flag: String) {
         val d = StockDialog.showLoading(activity!!)
@@ -241,6 +258,43 @@ class CryptoCurrencyFragment : BaseFragment() {
         }
     }
 
+    private fun callApiSearch(c: CharSequence){
+        Log.d("dsadada","22222--");
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<MarketList> = apiService.searchCrypto("crypto",c.toString(),getFromPrefsString(StockConstant.USERID).toString())
+        call.enqueue(object : Callback<MarketList> {
+            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    // displayToast(response.body()!!.message, "sucess")
+                    if (response.body()!!.status == "1") {
+                        Log.d("dsadada","sdada--4646464646464");
+                        cryptoList!!.clear();
+                        cryptoListNew!!.clear();
+                        cryptoList = response.body()!!.crypto;
+                        cryptoListNew = response.body()!!.crypto;
+                        setCryptoCurrencyAdapter()
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    } else {
+                        displayToast(response.body()!!.message, "warning")
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                }
+            }
+            override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                Log.d("serach_error","---"+t.localizedMessage);
+                d.dismiss()
+                if(activity!=null)
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
+
     fun saveToWatchList(cryptoId: Int) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
@@ -281,10 +335,7 @@ class CryptoCurrencyFragment : BaseFragment() {
         })
     }
 
-    fun setFilter(c: CharSequence) {
-        if (cryptoAdapter != null)
-            cryptoAdapter!!.getFilter().filter(c)
-    }
+
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
