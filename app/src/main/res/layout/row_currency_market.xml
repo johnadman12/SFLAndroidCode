@@ -31,25 +31,41 @@
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
-                <TextView android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text=""
-                          android:textSize="@dimen/_12sdp"
-                          android:id="@+id/name"
-                          style="@style/TextStyleSemiBold"
-                          android:textColor="@color/black"/>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="hidhcinfrf"
+                              android:textSize="@dimen/_12ssp"
+                              android:id="@+id/name"
+                              android:gravity="center"
+                              style="@style/TextStyleSemiBold"
+                              android:textStyle="bold"
+                              android:textColor="@color/black"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="match_parent"
+                              android:text="chjchihch"
+                              android:textSize="@dimen/_12ssp"
+                              android:layout_marginLeft="@dimen/_7sdp"
+                              style="@style/TextStyleNormal"
+                              android:maxLines="1"
+                              android:id="@+id/tv_company"
+                              android:textColor="@color/textColorGray"/>
+                </LinearLayout>
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text=""
-                          android:textSize="@dimen/_11sdp"
-                          style="@style/TextStyleSemiBold"
-                          android:id="@+id/tv_company"
-                          android:textColor="@color/GrayColor"/>
+                          android:textSize="@dimen/_10ssp"
+                          android:id="@+id/tv_change_percentage"
+                          style="@style/TextStyleNormal"
+                          android:textColor="@color/colorRed"/>
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text=""
+                          android:text="jckjciciojcfmo"
                           android:visibility="gone"
                           android:drawableRight="@mipmap/heartblue"
                           android:drawablePadding="@dimen/_5sdp"
@@ -59,8 +75,9 @@
 
             </LinearLayout>
             <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center"
                     android:id="@+id/graph"/>
 
             <LinearLayout
@@ -77,16 +94,9 @@
                           android:layout_height="wrap_content"
                           android:textSize="@dimen/_12ssp"
                           android:id="@+id/tv_latest_price"
+                          android:padding="@dimen/_3sdp"
                           style="@style/TextStyleSemiBold"
                           android:textColor="@color/black"/>
-
-                <TextView android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text=""
-                          android:textSize="@dimen/_10ssp"
-                          android:id="@+id/tv_change_percentage"
-                          style="@style/TextStyleNormal"
-                          android:textColor="@color/colorRed"/>
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"

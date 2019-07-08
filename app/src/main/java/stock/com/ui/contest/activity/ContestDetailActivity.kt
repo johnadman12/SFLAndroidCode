@@ -194,7 +194,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         }
 
         iv_info.setOnClickListener {
-            showInfoDialogue(contest.description);
+            AppDelegate.showInfoDialogue(contest.description, this);
         }
 
         if (TextUtils.isEmpty(contest.confirm_winning))
@@ -294,26 +294,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         tvTime.setText(parseDateToddMMyyyy(contest.scheduleStart))
     }
 
-    fun showInfoDialogue(textView: String) {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_information)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        var text = textView.replace(",", "\n-")
-        dialogue.tvInfo.setText("-" + text)
-        dialogue.btnOK.setOnClickListener {
-            if (dialogue.isShowing)
-                dialogue.dismiss()
-        }
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
+
 
 
     fun showJoinTeamDialogue() {

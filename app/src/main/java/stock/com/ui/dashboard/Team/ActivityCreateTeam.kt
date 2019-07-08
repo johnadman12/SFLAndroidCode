@@ -54,7 +54,15 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var flag: Boolean = false
     var flagCloning: Int = 0
     var sector: String = ""
+    lateinit var mainHandler: Handler;
     var flagFilter: Boolean = false
+    var flagSort: String = ""
+    var flagAlphaSort: Boolean = false
+    var flagPriceHTL: Boolean = false
+    var flagDayLTH: Boolean = false
+    var flagPriceLTH: Boolean = false
+    var flagVolume: Boolean = false
+    var flagDayHTL: Boolean = false
     private var flagSearch: Boolean = true;
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -90,7 +98,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.ll_sort -> {
                 startActivityForResult(
-                    Intent(this@ActivityCreateTeam, ActivitySortTeam::class.java),
+                    Intent(this@ActivityCreateTeam, ActivitySortTeam::class.java)
+                        .putExtra("flagStatus", flagSort),
                     StockConstant.RESULT_CODE_SORT_CREATE_TEAM
                 )
             }
@@ -231,7 +240,22 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
         getTeamlist()
 
-        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (flagSearch) {
+                    getTeamlist()
+
+                }
+                mainHandler.postDelayed(this, 8000)
+            }
+
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (flagSearch) {
@@ -245,9 +269,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     }
 
     fun getTeamlist() {
-      /*  val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-      */  val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        /*  val d = StockDialog.showLoading(this)
+          d.setCanceledOnTouchOutside(false)
+        */
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
@@ -276,6 +301,53 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         list!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.stock!!);
+
+
+                        //sortingConcept
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                            }
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                            }
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        }
+
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
@@ -534,20 +606,19 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
-                        /* if (flagFilter) {
-                             for (i in 0 until list!!.size) {
-                                 if (list!!.get(i).changePercent != null)
-                                     if (!list!!.get(i).changePercent.equals("0")) {
-                                         listFiltered!!.add(list!!.get(i))
- //                                        stockList!!.remove(stockList!!.get(i))
-                                         Log.d("stocklist", listFiltered!!.size.toString())
-                                     }
-                             }
-                         } else
-                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                 setActiveCurrencyType("")
-                             }
- */
+                        /*if (flagFilter) {
+                            for (i in 0 until list!!.size) {
+                                if (list!!.get(i).changePercent != null)
+                                    if (!list!!.get(i).changePercent.equals("0")) {
+                                        listFiltered!!.add(list!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", listFiltered!!.size.toString())
+                                    }
+                            }
+                        } else
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }*/
                         rv_Players!!.adapter = stockTeamAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         setTeamText(stockSelectedItems!!.size.toString())
@@ -608,34 +679,36 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
+                flagSort = (data.getStringExtra("flag"))
                 if (data.getStringExtra("flag").equals("Volume")) {
+                    flagVolume=true
                     var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
-                        /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
+                    flagPriceLTH=true
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
+                    flagPriceHTL=true
                     var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                     }
                 } else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    flagDayLTH=true
                     var sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -643,6 +716,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayHTL")) {
+                    flagDayHTL=true
                     var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -650,15 +724,18 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
+                    flagAlphaSort=true
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                     }
+                } else if (data.getStringExtra("flag").equals("nodata")) {
+                    getTeamlist()
                 }
+
             }
         }
 
@@ -708,7 +785,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
-
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null);
+    }
 }
 
 

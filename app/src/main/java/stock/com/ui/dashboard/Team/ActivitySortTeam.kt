@@ -15,6 +15,33 @@ class ActivitySortTeam : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sort_create_team)
         StockConstant.ACTIVITIES.add(this)
+        reset.visibility = View.VISIBLE
+        var getFlag: String = ""
+
+        if (intent != null)
+            getFlag = intent.getStringExtra("flagStatus")
+
+        if (getFlag.equals("price", true)) {
+            makecheckbox(false, false, true, false, false, false)
+
+        } else if (getFlag.equals("Alpha", true)) {
+            makecheckbox(false, true, false, false, false, false)
+
+        } else if (getFlag.equals("priceHTL", true)) {
+            makecheckbox(false, false, false, false, false, true)
+
+        } else if (getFlag.equals("dayLTH", true)) {
+            makecheckbox(false, false, false, true, false, false)
+
+        } else if (getFlag.equals("dayHTL", true)) {
+            makecheckbox(false, false, false, false, true, false)
+
+        } else if (getFlag.equals("Volume", true)) {
+            makecheckbox(true, false, false, false, false, false)
+        } else {
+            makecheckbox(false, false, false, false, false, false)
+        }
+
         initViews()
 
         checkBoxPrize?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -77,12 +104,28 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxPrizeHTL.isChecked = false;
             }
         }
-    }
 
-    private fun initViews() {
-        img_btn_close.setOnClickListener {
+
+        reset.setOnClickListener {
+            var intent = Intent();
+            intent.putExtra("flag", "nodata")
+            setResult(Activity.RESULT_OK, intent);
             finish();
         }
+    }
+
+
+    fun makecheckbox(fV: Boolean, fA: Boolean, fP: Boolean, fDLTH: Boolean, fDHTL: Boolean, fPHTL: Boolean) {
+        checkBoxVolume.isChecked = fV;
+        checkBoxAlpha.isChecked = fA;
+        checkBoxPrize.isChecked = fP;
+        checkBoxDayLTH.isChecked = fDLTH;
+        checkBoxDayHTL.isChecked = fDHTL;
+        checkBoxPrizeHTL.isChecked = fPHTL;
+    }
+
+
+    private fun initViews() {
 
         img_btn_back.setOnClickListener {
             finish();

@@ -106,7 +106,9 @@ class CurrencyAdapter(
                                     R.drawable.gray_green_fill
                                 )
                             )
-                            holder.itemView.llPrice.animation = anim
+                            holder.itemView.llPrice.blink(3)
+                            holder.itemView.llPrice.clearAnimation()
+//                            holder.itemView.llPrice.animation = anim
                         }
 
                         override fun onFinish() {
@@ -132,12 +134,12 @@ class CurrencyAdapter(
                                         R.color.white
                                     )
                                 )
-                                holder.itemView.tv_change_percentage.setTextColor(
+                               /* holder.itemView.tv_change_percentage.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.white
                                     )
-                                )
+                                )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -175,7 +177,9 @@ class CurrencyAdapter(
                                     R.drawable.gray_red_fill
                                 )
                             )
-                            holder.itemView.llPrice.animation = anim
+//                            holder.itemView.llPrice.animation = anim
+                            holder.itemView.llPrice.blink(3)
+                            holder.itemView.llPrice.clearAnimation()
                         }
 
                         override fun onFinish() {
@@ -324,5 +328,22 @@ class CurrencyAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+
+    fun View.blink(
+        times: Int = Animation.INFINITE,
+        duration: Long = 50L,
+        offset: Long = 20L,
+        minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f,
+        repeatMode: Int = Animation.REVERSE
+    ) {
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+            it.repeatCount = times
+        })
     }
 }

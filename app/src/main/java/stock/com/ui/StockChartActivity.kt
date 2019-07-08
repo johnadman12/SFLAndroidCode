@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StockChartActivity : AppCompatActivity(), View.OnClickListener {
-    var list: ArrayList<CandlesticChartmarket.Quote>? = null
+    var data: CandlesticChartmarket.Data? = null
+    var list: ArrayList<CandlesticChartmarket.Data.Quote>? = null
     val yValsCandleStick = ArrayList<CandleEntry>()
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -28,25 +29,27 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-    }
-
+    /*  override fun onBackPressed() {
+          super.onBackPressed()
+          finish()
+      }
+  */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stock_chart)
         back_arrow.setOnClickListener(this)
-        if (intent != null) {
-//            list = intent.getParcelableExtra(StockConstant.PREF_NAME)
-        }
-        if (list != null)
+        if (intent != null)
+            data = intent.getSerializableExtra(StockConstant.CHART) as CandlesticChartmarket.Data?
+
+        if (data != null) {
+            list = data!!.quotes
             initView()
+        }
     }
 
     private fun initView() {
         for (i in 0 until list!!.size) {
-            var usd = list!!.get(i).quote!!.uSD
+            val usd = list!!.get(i).quote!!.uSD
             if (usd != null)
                 yValsCandleStick.add(
                     CandleEntry(
@@ -94,23 +97,6 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    fun getdate(): String {
-        val c = Calendar.getInstance().getTime()
-        println("Current time => $c")
-
-        val df = SimpleDateFormat("yyyy-MM-dd")
-        val formattedDate = df.format(c)
-        return formattedDate
-    }
-
-    fun getdateOld(): String {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MONTH, -6)
-        val date = calendar.time
-        val df = SimpleDateFormat("yyyy-MM-dd")
-        val formattedDate = df.format(date)
-        return formattedDate
-    }
 
     fun parseDateToddMMyyyy(time: String): Float {
 //        val inputPattern = "EEE MMM dd HH:mm:ss zzz yyyy"

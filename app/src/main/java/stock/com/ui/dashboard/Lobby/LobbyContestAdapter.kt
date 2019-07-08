@@ -98,7 +98,7 @@ class LobbyContestAdapter(
             if (diff.toString().contains("-")) {
                 holder.itemView.txtjoin.setTextSize(16.00f)
                 holder.itemView.txtjoin.setText(mContext.getString(R.string.live_now))
-                holder.itemView.llSportsLeft.visibility= View.INVISIBLE
+                holder.itemView.llSportsLeft.visibility = View.INVISIBLE
                 holder.itemView.circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(mContext, R.color.GrayColor)
                 holder.itemView.ll_Circular.isEnabled = false
@@ -158,7 +158,7 @@ class LobbyContestAdapter(
         }
 
         holder.itemView.iv_info.setOnClickListener {
-            showInfoDialogue(mContest.get(position).description);
+            AppDelegate.showInfoDialogue(mContest.get(position).description, mContext);
         }
 
         val contestLeft: Double =
@@ -226,24 +226,6 @@ class LobbyContestAdapter(
         return str
     }
 
-    fun showInfoDialogue(textView: String) {
-        var dialogue = Dialog(mContext)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_information)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        var text = textView.replace(",", "\n-")
-        dialogue.tvInfo.setText("-" + text)
-        dialogue.btnOK.setOnClickListener {
-            if (dialogue.isShowing)
-                dialogue.dismiss()
-        }
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
+
 }
 

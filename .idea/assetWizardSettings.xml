@@ -170,8 +170,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_down_arrow" />
-                            <entry key="sourceFile" value="C:\Users\Emizen\Desktop\arrow-pointing-down.svg" />
+                            <entry key="outputName" value="ic_arrow_up" />
+                            <entry key="sourceFile" value="C:\Users\Emizen\Desktop\up-arrow.svg" />
                           </map>
                         </option>
                       </PersistentState>

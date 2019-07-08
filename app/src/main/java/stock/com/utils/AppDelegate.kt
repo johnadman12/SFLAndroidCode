@@ -28,10 +28,7 @@ import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -40,6 +37,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.irozon.sneaker.Sneaker
+import kotlinx.android.synthetic.main.dialog_information.*
 import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
 import stock.com.BuildConfig
@@ -150,6 +148,27 @@ object AppDelegate {
         }
 
         return timestamp
+    }
+
+    fun showInfoDialogue(textView: String, context: Context) {
+        var dialogue = Dialog(context)
+        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogue.setContentView(R.layout.dialog_information)
+        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
+        var text = textView.replace(",", "\n-")
+        dialogue.tvInfo.setText("-" + text)
+        dialogue.btnOK.setOnClickListener {
+            if (dialogue.isShowing)
+                dialogue.dismiss()
+        }
+        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setTitle(null)
+        if (dialogue.isShowing)
+            dialogue.dismiss()
+        dialogue.show()
     }
 
 

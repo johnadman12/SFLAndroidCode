@@ -37,7 +37,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagDaySort: Boolean = false
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
-    private var  flag:Boolean=true;
+    private var flag: Boolean = true;
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,7 +69,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                         getCurrencyAgain("1")
                     }
                     mainHandler.postDelayed(this, 8000)
-                }    else {
+                } else {
                     flagAlphaSort = false
                     flagPriceSort = false
                     flagDaySort = false
@@ -83,14 +83,14 @@ class CryptoCurrencyFragment : BaseFragment() {
     fun setFilter(c: CharSequence) {
         /*if (cryptoAdapter != null)
             cryptoAdapter!!.getFilter().filter(c)*/
-        Log.d("dsadada","sdada--"+c);
-        if(c.toString().length>=3){
-            flag=false;
-            Log.d("dsadada","111111--");
+        Log.d("dsadada", "sdada--" + c);
+        if (c.toString().length >= 3) {
+            flag = false;
+            Log.d("dsadada", "111111--");
             callApiSearch(c);
-        }else{
-            flag=true;
-            Log.d("dsadada","sdada--");
+        } else {
+            flag = true;
+            Log.d("dsadada", "sdada--");
         }
     }
 
@@ -216,15 +216,21 @@ class CryptoCurrencyFragment : BaseFragment() {
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                                 }
 
-                            } /*else {
+                            } else {
                                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }*/
+                            }
 
                             if (rv_currencyList != null)
                                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             setCryptoCurrencyAdapter()
 
 
+                        } else {
+                            cryptoList!!.clear()
+                            cryptoListNew!!.clear()
+                            cryptoListNew = response.body()!!.crypto
+                            cryptoList!!.addAll(cryptoListNew!!)
+                            setCryptoCurrencyAdapter()
                         }
 
                     } else if (response.body()!!.status == "2") {
@@ -258,19 +264,20 @@ class CryptoCurrencyFragment : BaseFragment() {
         }
     }
 
-    private fun callApiSearch(c: CharSequence){
-        Log.d("dsadada","22222--");
+    private fun callApiSearch(c: CharSequence) {
+        Log.d("dsadada", "22222--");
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<MarketList> = apiService.searchCrypto("crypto",c.toString(),getFromPrefsString(StockConstant.USERID).toString())
+        val call: Call<MarketList> =
+            apiService.searchCrypto("crypto", c.toString(), getFromPrefsString(StockConstant.USERID).toString())
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
-                        Log.d("dsadada","sdada--4646464646464");
+                        Log.d("dsadada", "sdada--4646464646464");
                         cryptoList!!.clear();
                         cryptoListNew!!.clear();
                         cryptoList = response.body()!!.crypto;
@@ -285,10 +292,11 @@ class CryptoCurrencyFragment : BaseFragment() {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
                 }
             }
+
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
-                Log.d("serach_error","---"+t.localizedMessage);
+                Log.d("serach_error", "---" + t.localizedMessage);
                 d.dismiss()
-                if(activity!=null)
+                if (activity != null)
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
             }
         })
@@ -334,7 +342,6 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
         })
     }
-
 
 
     fun setSorting(type: String) {
@@ -388,6 +395,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoList!!.addAll(sortedList)
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
+        } else if (type.equals("nodata")) {
+            getCurrencyAgain("0")
         }
     }
 

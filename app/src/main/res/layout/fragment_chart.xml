@@ -8,6 +8,7 @@
 
     <include
             android:id="@+id/inc"
+            android:visibility="gone"
             layout="@layout/chart_top_menu_bar"/>
     <RelativeLayout
             android:layout_width="match_parent"
@@ -27,7 +28,8 @@
                 android:background="@color/white"/>
 
         <LinearLayout
-                android:id="@+id/llshare" android:layout_width="match_parent"
+                android:id="@+id/llshare"
+                android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="@dimen/_100sdp"
                 android:layout_height="wrap_content"
@@ -45,10 +47,12 @@
                         android:layout_height="@dimen/_20sdp"
                         android:src="@mipmap/addsign"
                         android:padding="@dimen/_2sdp"
+                        android:id="@+id/imgPlus"
                         android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                 />
                 <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgMinus"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:src="@drawable/ic_substract"

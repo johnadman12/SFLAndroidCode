@@ -17,6 +17,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 
 class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
@@ -61,7 +62,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if (list != null)
             setData()
         iv_info.setOnClickListener {
-            showInfoDialogue(getString(R.string.totalchangeinfo))
+            AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
         }
     }
 
@@ -216,25 +217,6 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
             }
     }
 
-    fun showInfoDialogue(textView: String) {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_information)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        var text = textView.replace(",", "\n-")
-        dialogue.tvInfo.setText("-" + text)
-        dialogue.btnOK.setOnClickListener {
-            if (dialogue.isShowing)
-                dialogue.dismiss()
-        }
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
+
 }
 

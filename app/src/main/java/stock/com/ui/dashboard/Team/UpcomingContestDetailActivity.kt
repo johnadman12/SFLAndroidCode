@@ -36,6 +36,7 @@ import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
+import stock.com.utils.AppDelegate.showInfoDialogue
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
@@ -183,7 +184,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         }
 
         iv_info.setOnClickListener {
-            showInfoDialogue(contest.description);
+            AppDelegate.showInfoDialogue(contest.description, this);
         }
         if (TextUtils.isEmpty(contest.confirm_winning))
             tvConfirmWin.visibility = View.GONE
@@ -280,27 +281,6 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         }
 
         tvTime.setText(parseDateToddMMyyyy(contest.scheduleStart))
-    }
-
-    fun showInfoDialogue(textView: String) {
-        var dialogue = Dialog(this)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_information)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        var text = textView.replace(",", "\n-")
-        dialogue.tvInfo.setText("-" + text)
-        dialogue.btnOK.setOnClickListener {
-            if (dialogue.isShowing)
-                dialogue.dismiss()
-        }
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
     }
 
 

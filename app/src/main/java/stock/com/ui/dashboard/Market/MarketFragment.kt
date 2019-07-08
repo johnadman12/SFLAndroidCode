@@ -33,7 +33,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
     private var cryptoAdapter: CurrencyAdapter? = null;
     private var list: List<StockTeamPojo.Stock>? = null
     var isMarket: Int = 0
-
+    var flagData: String = ""
 
     private var fragment: Fragment? = null;
     override fun onClick(v: View?) {
@@ -147,7 +147,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
         ll_sort.setOnClickListener {
             startActivityForResult(
-                Intent(activity!!, ActivityMarketSort::class.java),
+                Intent(activity!!, ActivityMarketSort::class.java).putExtra("flagStatus", flagData),
                 StockConstant.RESULT_CODE_SORT_MARKET
             )
         }
@@ -230,6 +230,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET) {
             if (resultCode == Activity.RESULT_OK && data != null) {
+                flagData = (data.getStringExtra("flag"));
                 if (data.getStringExtra("flag").equals("Alpha")) {
                     if (fragment is StocksFragment)
                         (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
@@ -251,16 +252,21 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                         (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
 
 
-                }
-                else if (data.getStringExtra("flag").equals("HighToLow")) {
+                } else if (data.getStringExtra("flag").equals("HighToLow")) {
                     if (fragment is StocksFragment)
                         (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
                     else if (fragment is CryptoCurrencyFragment)
                         (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
 
 
-                }
-                else if (data.getStringExtra("flag").equals("DayHighToLow")) {
+                } else if (data.getStringExtra("flag").equals("DayHighToLow")) {
+                    if (fragment is StocksFragment)
+                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                    else if (fragment is CryptoCurrencyFragment)
+                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+                } else if (data.getStringExtra("flag").equals("nodata", true)) {
                     if (fragment is StocksFragment)
                         (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
                     else if (fragment is CryptoCurrencyFragment)

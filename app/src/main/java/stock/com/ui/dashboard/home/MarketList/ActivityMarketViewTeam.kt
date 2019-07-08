@@ -173,7 +173,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         ivRight.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
-
+        ll_sort.visibility = View.GONE
         marketSelectedItem = list
         viewTeamAdapter = MarketViewTeamAdapter(
             this, list as ArrayList, object : MarketViewTeamAdapter.OnItemCheckListener {

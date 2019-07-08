@@ -56,11 +56,12 @@ class MyTeamAdapter(
         holder.itemView.txt_team.setOnClickListener {
             if (myteam.get(position).stock.size == 0) {
                 mContext.startActivity(
-                    Intent(mContext, ActivityMarketEdit::class.java)
+                    Intent(mContext, ActivityMarketTeam::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                        .putExtra("isCloning", 2)
                 )
             } else {
                 mContext.startActivity(

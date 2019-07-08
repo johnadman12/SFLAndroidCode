@@ -12,10 +12,13 @@ import android.os.Looper
 import android.text.*
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_create_team.*
 import kotlinx.android.synthetic.main.dialog_join_wizard.*
 import kotlinx.android.synthetic.main.include_back.*
@@ -30,9 +33,11 @@ import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.dashboard.Team.ActivitySortTeam
+import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.MarketData
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.util.ArrayList
@@ -50,9 +55,22 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var flagCloning: Int = 0
     var teamId: Int = 0
     var contestFee: String = ""
+    var flagSort: String = ""
     var contestId: Int = 0
     var flagFilter: Boolean = false
+    lateinit var mainHandler: Handler;
     private var flagSearch: Boolean = true;
+    var flagAlphaSort: Boolean = false
+    var flagPriceHTL: Boolean = false
+    var flagDayLTH: Boolean = false
+    var flagPriceLTH: Boolean = false
+    var flagVolume: Boolean = false
+    var flagDayHTL: Boolean = false
+    var array: JsonArray = JsonArray()
+    var jsonparams: JsonObject = JsonObject()
+
+    var flagScreen: Boolean = false
+
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -85,53 +103,82 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.ll_sort -> {
                 startActivityForResult(
-                    Intent(this@ActivityMarketTeam, ActivitySortTeam::class.java),
+                    Intent(this@ActivityMarketTeam, ActivitySortTeam::class.java).putExtra("flagStatus", flagSort),
                     StockConstant.RESULT_CODE_SORT_MARKET_TEAM
                 )
             }
             R.id.tvViewteam -> {
-                if (flag) {
-                    startActivityForResult(
-                        Intent(this@ActivityMarketTeam, ActivityMarketViewTeam::class.java)
-                            .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
-                            .putExtra(
-                                StockConstant.TEAMID,
-                                teamId
-                            ).putExtra(
-                                StockConstant.CONTESTID,
-                                contestId
-                            ).putExtra(
-                                StockConstant.MARKETID,
-                                marketId
-                            ).putExtra(
-                                StockConstant.CONTESTFEE,
-                                contestFee
-                            ).putExtra(
-                                "isCloning",
-                                flagCloning
-                            ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
-                    )
+
+                if (flagCloning == 2) {
+                    if (marketSelectedItems!!.size > 0) {
+                        for (i in 0 until marketSelectedItems!!.size) {
+                            var postData1 = JsonObject();
+                            try {
+                                postData1.addProperty(
+                                    "crypto_id",
+                                    marketSelectedItems!!.get(i).cryptocurrencyid.toString()
+                                );
+                                postData1.addProperty("price", marketSelectedItems!!.get(i).latestPrice.toString());
+                                postData1.addProperty(
+                                    "change_percent",
+                                    marketSelectedItems!!.get(i).changeper.toString()
+                                );
+                                postData1.addProperty("stock_type", marketSelectedItems!!.get(i).cryptoType);
+                                Log.e("savedlist", postData1.toString())
+                            } catch (e: Exception) {
+
+                            }
+                            Log.d("finaldata", array.toString())
+                            array.add(postData1)
+                        }
+                        saveTeamList()
+                    } else {
+                        displayToast("please select Crypto first", "warning")
+                    }
                 } else {
-                    startActivityForResult(
-                        Intent(this@ActivityMarketTeam, ActivityMarketViewTeam::class.java)
-                            .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
-                            .putExtra(
-                                StockConstant.TEAMID,
-                                teamId
-                            ).putExtra(
-                                StockConstant.CONTESTID,
-                                contestId
-                            ).putExtra(
-                                StockConstant.MARKETID,
-                                marketId
-                            ).putExtra(
-                                StockConstant.CONTESTFEE,
-                                contestFee
-                            ).putExtra(
-                                "isCloning",
-                                flagCloning
-                            ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
-                    )
+                    if (flag) {
+                        startActivityForResult(
+                            Intent(this@ActivityMarketTeam, ActivityMarketViewTeam::class.java)
+                                .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                                .putExtra(
+                                    StockConstant.TEAMID,
+                                    teamId
+                                ).putExtra(
+                                    StockConstant.CONTESTID,
+                                    contestId
+                                ).putExtra(
+                                    StockConstant.MARKETID,
+                                    marketId
+                                ).putExtra(
+                                    StockConstant.CONTESTFEE,
+                                    contestFee
+                                ).putExtra(
+                                    "isCloning",
+                                    flagCloning
+                                ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
+                        )
+                    } else {
+                        startActivityForResult(
+                            Intent(this@ActivityMarketTeam, ActivityMarketViewTeam::class.java)
+                                .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                                .putExtra(
+                                    StockConstant.TEAMID,
+                                    teamId
+                                ).putExtra(
+                                    StockConstant.CONTESTID,
+                                    contestId
+                                ).putExtra(
+                                    StockConstant.MARKETID,
+                                    marketId
+                                ).putExtra(
+                                    StockConstant.CONTESTFEE,
+                                    contestFee
+                                ).putExtra(
+                                    "isCloning",
+                                    flagCloning
+                                ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
+                        )
+                    }
                 }
             }
         }
@@ -144,6 +191,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         list = ArrayList();
         listOld = ArrayList();
         listFiltered = ArrayList();
+        array = JsonArray()
+        jsonparams = JsonObject()
         marketRemovedItems = ArrayList();
         initView()
     }
@@ -167,11 +216,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
             if (flagCloning == 1) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+            } else if (flagCloning == 2) {
+                marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                ll_filter.visibility = GONE
+                tvViewteam.setText("  Save Team  ")
+                textTeam.setText("Edit Team")
             } else {
                 contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             }
-
 
         }
 
@@ -251,8 +305,12 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         rv_Players!!.adapter = marketlistAdapter;
 
         getMarketTeamlist()
+    }
 
-        val mainHandler = Handler(Looper.getMainLooper())
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (flagSearch) {
@@ -262,9 +320,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
         })
-
     }
-
 
     fun callSearch(c: CharSequence) {
         Log.d("dsadada", "sdada--" + c);
@@ -363,9 +419,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
     fun getMarketTeamlist() {
-       /* val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-       */ val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
@@ -375,10 +429,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        if (response.body()!!.myteam.equals("1"))
-                            llMyTeam.visibility = View.VISIBLE
-                        else if (response.body()!!.myteam.equals("0"))
+                        if (flagCloning == 2)
                             llMyTeam.visibility = View.GONE
+                        else {
+                            if (response.body()!!.myteam.equals("1"))
+                                llMyTeam.visibility = View.VISIBLE
+                            else if (response.body()!!.myteam.equals("0"))
+                                llMyTeam.visibility = View.GONE
+                        }
                         if (listOld!!.size > 0) {
                             listOld!!.clear()
                             listOld!!.addAll(list!!)
@@ -394,7 +452,64 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 //                            listOld!!.get(i).addedToList = 0
 
                         }
-//                        rv_Players.adapter!!.notifyDataSetChanged();
+                        //sortingConcept
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                            }
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                            }
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            for (obj in sortedList) {
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                            }
+                        }
+                        //filter
+                        if (flagFilter) {
+                            for (i in 0 until list!!.size) {
+                                if (list!!.get(i).changeper != null)
+                                    if (!list!!.get(i).changeper.equals("0")) {
+                                        listFiltered!!.add(list!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", listFiltered!!.size.toString())
+                                    }
+                            }
+                        } else
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
                         for (i in 0 until list!!.size) {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
@@ -409,19 +524,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
-                        if (flagFilter) {
-                            for (i in 0 until list!!.size) {
-                                if (list!!.get(i).changeper != null)
-                                    if (!list!!.get(i).changeper.equals("0")) {
-                                        listFiltered!!.add(list!!.get(i))
-//                                        stockList!!.remove(stockList!!.get(i))
-                                        Log.d("stocklist", listFiltered!!.size.toString())
-                                    }
-                            }
-                        } else
-                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                setActiveCurrencyType("")
-                            }
 
                         rv_Players!!.adapter = marketlistAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
@@ -551,7 +653,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
 
-
     fun getTeamAgainlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -610,7 +711,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
+                flagSort = data.getStringExtra("flag")
                 if (data.getStringExtra("flag").equals("Volume")) {
+                    flagVolume = true
                     var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
 
                     for (obj in sortedList) {
@@ -619,6 +722,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
+                    flagPriceLTH = true
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                     for (obj in sortedList) {
                         list!!.clear()
@@ -626,6 +730,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
+                    flagPriceHTL = true
                     var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -633,6 +738,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    flagDayLTH = true
                     var sortedList = list!!.sortedBy { it.changeper?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -640,6 +746,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayHTL")) {
+                    flagDayHTL = true
                     var sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -647,18 +754,22 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
+                    flagAlphaSort = true
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
+
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
+                } else if (data.getStringExtra("flag").equals("nodata")) {
+                    getTeamAgainlist()
                 }
             }
         }
         if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
-                    list!!.clear()
+                list!!.clear()
                 list!!.addAll(data.getParcelableArrayListExtra("list"))
                 rv_Players!!.adapter!!.notifyDataSetChanged()
                 marketSelectedItems!!.clear();
@@ -694,5 +805,58 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
         }
+    }
+
+    fun saveTeamList() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("marketdatas", array)
+
+        Log.e("savedlist", array.toString())
+
+        val call: Call<BasePojo> =
+            apiService.editMarketTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
+
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+//                        finish()
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null);
     }
 }

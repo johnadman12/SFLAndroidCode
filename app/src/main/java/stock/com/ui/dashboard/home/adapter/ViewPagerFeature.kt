@@ -182,7 +182,7 @@ class ViewPagerFeature(
             }
         }
         iv_info.setOnClickListener {
-            showInfoDialogue(list.get(position).description);
+            AppDelegate.showInfoDialogue(list.get(position).description,context);
         }
         ll_Circular.setOnClickListener {
             if (userid.equals("")) {
@@ -280,26 +280,7 @@ class ViewPagerFeature(
     }
 
 
-    fun showInfoDialogue(textView: String) {
-        var dialogue = Dialog(context)
-        dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialog_information)
-        dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(true)
-        dialogue.setCanceledOnTouchOutside(true)
-        var text = textView.replace(",", "\n-")
-        dialogue.tvInfo.setText("-" + text)
-        dialogue.btnOK.setOnClickListener {
-            if (dialogue.isShowing)
-                dialogue.dismiss()
-        }
-        dialogue.setCanceledOnTouchOutside(false)
-        dialogue.setTitle(null)
-        if (dialogue.isShowing)
-            dialogue.dismiss()
-        dialogue.show()
-    }
+
 
 
 }

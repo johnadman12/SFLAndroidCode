@@ -83,4 +83,5 @@ object StockConstant {
     val ASSETS_WATCHLIST_TYPE = "assetwatchlist"
     val MARKET_WATCHLIST_TYPE = "marketwatchlist"
     val STOCKID= "stock_id"
+    val CHART="chart"
 }

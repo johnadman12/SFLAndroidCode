@@ -7,20 +7,35 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-class CandlesticChartmarket() : Parcelable {
+class CandlesticChartmarket() {
 
-    @SerializedName("status")
-    @Expose
-    var statuss: Status? = null
+    /*    @SerializedName("status")
+        @Expose
+        var statuss: Status? = null*/
     @SerializedName("data")
     @Expose
     var data: Data? = null
 
-    constructor(parcel: Parcel) : this() {
+    class Data() :Serializable {
 
-    }
+        @SerializedName("id")
+        @Expose
+        var id: Int = 0
+        @SerializedName("name")
+        @Expose
+        var name: String? = null
+        @SerializedName("symbol")
+        @Expose
+        var symbol: String? = null
+        @SerializedName("quotes")
+        @Expose
+        var quotes: ArrayList<Quote>? = null
 
-    inner class Quote {
+
+
+
+
+    class Quote():Serializable   {
 
         @SerializedName("time_open")
         @Expose
@@ -32,34 +47,19 @@ class CandlesticChartmarket() : Parcelable {
         @Expose
         var quote: Quote_? = null
 
-    }
-
-    inner class Data {
-
-        @SerializedName("id")
-        @Expose
-        var id: Int? = null
-        @SerializedName("name")
-        @Expose
-        var name: String? = null
-        @SerializedName("symbol")
-        @Expose
-        var symbol: String? = null
-        @SerializedName("quotes")
-        @Expose
-        var quotes: ArrayList<Quote>? = null
 
     }
 
-    inner class Quote_ {
+    class Quote_() :Serializable {
 
         @SerializedName("USD")
         @Expose
         var uSD: USD? = null
 
+
     }
 
-    inner class Status {
+    class Status():Serializable  {
 
         @SerializedName("timestamp")
         @Expose
@@ -77,9 +77,10 @@ class CandlesticChartmarket() : Parcelable {
         @Expose
         var creditCount: Int? = null
 
+
     }
 
-    inner class USD {
+    class USD():Serializable  {
 
         @SerializedName("open")
         @Expose
@@ -103,23 +104,8 @@ class CandlesticChartmarket() : Parcelable {
         @Expose
         var timestamp: String = ""
 
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
 
     }
+}
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<CandlesticChartmarket> {
-        override fun createFromParcel(parcel: Parcel): CandlesticChartmarket {
-            return CandlesticChartmarket(parcel)
-        }
-
-        override fun newArray(size: Int): Array<CandlesticChartmarket?> {
-            return arrayOfNulls(size)
-        }
-    }
 }

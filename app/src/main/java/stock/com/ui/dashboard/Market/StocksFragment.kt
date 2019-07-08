@@ -37,6 +37,12 @@ class StocksFragment : BaseFragment() {
     private var stockListNew: ArrayList<StockTeamPojo.Stock>? = null
     private var stockListFilter: ArrayList<StockTeamPojo.Stock>? = null
 
+    var flagAlphaSort: Boolean = false
+    var flagPriceSort: Boolean = false
+    var flagDaySort: Boolean = false
+    var flagHTLSort: Boolean = false
+    var flagDHTLSort: Boolean = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stocks, container, false)
     }
@@ -254,6 +260,28 @@ class StocksFragment : BaseFragment() {
                 stockList!!.addAll(sortedList)
                 rv_stockList!!.adapter!!.notifyDataSetChanged()
             }
+        } else if (type.equals("HighToLow")) {
+            flagHTLSort = true
+            val sortedList = stockList!!.sortedByDescending { it.latestPrice?.toDouble() }
+            for (obj in sortedList) {
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                rv_stockList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("DayHighToLow")) {
+            flagDHTLSort = true
+            val sortedList = stockList!!.sortedByDescending { it.changePercent?.toDouble() }
+            for (obj in sortedList) {
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                stockList!!.clear()
+                stockList!!.addAll(sortedList)
+                rv_stockList!!.adapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("nodata")) {
+            getStocks("1")
         }
 
     }

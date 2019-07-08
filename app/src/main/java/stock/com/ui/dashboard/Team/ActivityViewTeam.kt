@@ -177,6 +177,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
+        ll_sort.visibility= GONE
+
         relFieldView.setOnClickListener(this)
 
         stockSelectedItems = list

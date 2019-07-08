@@ -53,20 +53,7 @@
                   android:layout_height="@dimen/_1sdp"
                   android:background="@color/GrayColor"/>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                    android:id="@+id/checkBoxVolume"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    style="@style/TextStyleNormal"
-                    android:text="Volume (High to Low)"
-                    android:textColor="@color/black"
-                    android:buttonTint="@color/colorPrimary"/>
 
-            <View android:layout_width="match_parent"
-                  android:layout_height="@dimen/_1sdp"
-                  android:background="@color/GrayColor"/>
             <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkBoxDayLTH"
                     android:layout_width="match_parent"
@@ -92,6 +79,20 @@
                     android:text="Day Change % (High to Low)"
                     android:textColor="@color/black"
                     android:buttonTint="@color/colorPrimary"/>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1sdp"
+                  android:background="@color/GrayColor"/>
+            <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBoxVolume"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    style="@style/TextStyleNormal"
+                    android:text="Volume (High to Low)"
+                    android:textColor="@color/black"
+                    android:buttonTint="@color/colorPrimary"/>
+
 
             <View android:layout_width="match_parent"
                   android:layout_height="@dimen/_1sdp"

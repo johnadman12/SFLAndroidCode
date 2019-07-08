@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import retrofit2.Response
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.CandlesticChartmarket
+import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,7 +31,7 @@ import kotlin.collections.ArrayList
 
 
 class ChartFragment : BaseFragment(), View.OnClickListener {
-    var list: ArrayList<CandlesticChartmarket.Quote>? = null
+    var data: CandlesticChartmarket.Data? = null
     var type = "application/json"
     var chartToken = "1efc85ca-e723-4546-9f72-cf795e499eaf"
     var symbol: String = ""
@@ -37,10 +39,17 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.chart11 -> {
-                /*startActivity(
+                startActivity(
                     Intent(activity, StockChartActivity::class.java)
-                        .putParcelableArrayListExtra("chartdata", list)
-                )*/
+                        .putExtra(StockConstant.CHART, data)
+                )
+            }
+
+            R.id.imgPlus -> {
+               chart11.zoomOut()
+            }
+            R.id.imgMinus -> {
+               chart11.zoomIn()
             }
         }
     }
@@ -74,7 +83,8 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     val yValsCandleStick = ArrayList<CandleEntry>()
-                    list = response.body()!!.data!!.quotes!!
+                    data = response.body()!!.data
+                    var list = response.body()!!.data!!.quotes!!
                     for (i in 0 until list!!.size) {
                         var usd = list!!.get(i).quote!!.uSD
                         if (usd != null)
@@ -171,7 +181,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
 
     fun getdateOld(): String {
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MONTH, -6)
+        calendar.add(Calendar.MONTH, -11)
         val date = calendar.time
         val df = SimpleDateFormat("yyyy-MM-dd")
         val formattedDate = df.format(date)
@@ -194,3 +204,4 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     }
 
 }
+

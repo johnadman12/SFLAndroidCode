@@ -34,6 +34,7 @@ import kotlin.collections.ArrayList
 
 class LobbyFragment : BaseFragment() {
     var categoryId: String = ""
+    var flag: String = ""
 
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
@@ -74,7 +75,10 @@ class LobbyFragment : BaseFragment() {
             startActivityForResult(Intent(activity, ActivityCreateContest::class.java), StockConstant.REDIRECT_CREATED)
         }
         ll_sort.setOnClickListener {
-            startActivityForResult(Intent(context, ActivitySort::class.java), StockConstant.RESULT_CODE_SORT)
+            startActivityForResult(
+                Intent(context, ActivitySort::class.java).putExtra("flagStatus", flag),
+                StockConstant.RESULT_CODE_SORT
+            )
         }
 
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
@@ -158,6 +162,7 @@ class LobbyFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == StockConstant.RESULT_CODE_SORT) {
             if (resultCode == Activity.RESULT_OK && data != null) {
+                flag = data.getStringExtra("flag")
                 if (data.getStringExtra("flag").equals("Entry")) {
                     var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
                     for (obj in sortedList) {
@@ -166,6 +171,7 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("time")) {
+
                     var sortedList = contest!!.sortedWith(compareBy { it.getDate() })
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
@@ -173,6 +179,7 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
+
                     /* var tempList = ArrayList<LobbyContestPojo.Contest>();
                      for (obj in contest!!) {
                          obj.setWinningAmount_temp(obj.winningAmount.replace(",", ""));
@@ -191,6 +198,8 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
+                } else if (data.getStringExtra("flag").equals("nodata")) {
+                    getContestlist()
                 }
             }
         } else if (requestCode == RESULT_CODE_FILTER) {
