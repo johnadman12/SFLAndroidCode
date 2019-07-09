@@ -44,7 +44,7 @@ class ScoresAdapter(
         holder.itemView.ll_n_r.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
-                    StockConstant.FRIENDID, scores.get(position).userid
+                    StockConstant.FRIENDID, scores.get(position).userid.toString()
                 )
             )
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ll_main"
         android:orientation="vertical"
@@ -14,8 +14,8 @@
             android:orientation="horizontal">
         <ImageView
                 android:id="@+id/ivsTOCK"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:src="@mipmap/rewards"/>
@@ -29,31 +29,62 @@
                     android:id="@+id/ll_stock_detial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="1"
-                    android:layout_marginStart="@dimen/_2sdp"
+                    android:padding="@dimen/_2sdp"
                     android:orientation="horizontal">
 
                 <LinearLayout
-                        android:layout_width="0sp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
-                    <TextView android:id="@+id/tvSymbol"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="Apple"
-                              android:textSize="@dimen/_14ssp"
-                              style="@style/TextStyleSemiBold"
-                              android:textColor="@color/black"/>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
 
-                    <TextView android:id="@+id/tvCompanyName"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="Apple INC"
-                              android:textSize="@dimen/_11ssp"
-                              style="@style/TextStyleSemiBold"
-                              android:textColor="@color/textColorGray"/>
+                        <TextView android:id="@+id/tvSymbol"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Apple"
+                                  android:textSize="@dimen/_12ssp"
+                                  android:textStyle="bold"
+                                  style="@style/TextStyleSemiBold"
+                                  android:textColor="@color/black"/>
+
+                        <TextView android:id="@+id/tvCompanyName"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:text="Apple INC"
+                                  android:maxLines="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
+                                  android:textSize="@dimen/_12ssp"
+                                  style="@style/TextStyleSemiBold"
+                                  android:textColor="@color/textColorGray"/>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
+                        <TextView
+                                android:id="@+id/tv_price_decimal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-202(-1.06)"
+                                android:textSize="@dimen/_10ssp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/textColorBlack"/>
+                        <TextView
+                                android:id="@+id/tv_change_percentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-202(-1.06)"
+                                android:layout_marginLeft="@dimen/_3sdp"
+                                android:textSize="@dimen/_10ssp"
+                                android:padding="@dimen/_2sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/colorRed"/>
+
+                    </LinearLayout>
+
 
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -66,51 +97,100 @@
                               android:textColor="@color/colorbutton"/>
 
                 </LinearLayout>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/img_graph"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:src="@mipmap/downred"/>
 
-                <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_weight=".3"
-                        android:gravity="center"
-                        android:id="@+id/llPrice"
-                        android:background="@drawable/gray_empty_rect"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
-                    <TextView
-                            android:id="@+id/tvPercentage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_12ssp"
-                            style="@style/TextStyleSemiBold"
-                            android:textColor="@color/textColorBlack"/>
-
-                    <TextView
-                            android:id="@+id/tv_change_percentage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="-202(-1.06)"
-                            android:textSize="@dimen/_10ssp"
-                            style="@style/TextStyleNormal"
-                            android:textColor="@color/colorRed"/>
-
-                    <TextView android:layout_width="wrap_content"
+                <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:text="-202(-1.06)"
-                              android:visibility="gone"
-                              android:drawableRight="@mipmap/heartblue"
-                              android:drawablePadding="@dimen/_5sdp"
-                              android:textSize="@dimen/_11sdp"
-                              style="@style/TextStyleSemiBold"
-                              android:textColor="@color/colorbutton"/>
+                              android:weightSum="1"
+                              android:orientation="vertical">
 
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:gravity="right"
+                                  android:orientation="horizontal">
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/img_graph"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:src="@mipmap/downred"/>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:id="@+id/llPrice"
+                                android:background="@drawable/gray_empty_rect"
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+                            <TextView
+                                    android:id="@+id/tvPercentage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/_12ssp"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textStyle="bold"
+                                    android:padding="@dimen/_3sdp"
+                                    android:textColor="@color/textColorBlack"/>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:gravity="right"
+                            android:layout_gravity="right"
+                            android:orientation="vertical">
+
+
+                        <ToggleButton
+                                android:id="@+id/toggleButton1"
+                                android:layout_width="@dimen/_35sdp"
+                                android:layout_height="@dimen/_25sdp"
+                                android:background="@drawable/bgtoggle"
+                                android:button="@null"
+                                android:gravity="right"
+                                android:checked="true"
+                                android:textOff=""
+                                android:textOn=""/>
+
+                        <LinearLayout
+                                android:layout_width="@dimen/_55sdp"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_marginTop="-5dp">
+
+                            <TextView android:layout_width="0dp"
+                                      android:layout_height="wrap_content"
+                                      android:text="sell"
+                                      android:gravity="right"
+                                      android:layout_weight="1"
+                                      android:textSize="@dimen/_11ssp"
+                                      style="@style/TextStyleNormal"
+                                      android:textColor="@color/textColorGray"
+                            />
+
+                            <TextView android:layout_width="0dp"
+                                      android:layout_height="wrap_content"
+                                      android:text="buy"
+                                      android:gravity="right"
+                                      android:layout_weight="1"
+                                      android:textSize="@dimen/_11ssp"
+                                      style="@style/TextStyleSemiBold"
+                                      android:textColor="@color/textColorGray"
+                            />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
+
+
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
@@ -119,12 +199,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:orientation="vertical">
 
                     <LinearLayout android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
                                   android:id="@+id/llVol"
+                                  android:visibility="gone"
                                   android:orientation="horizontal">
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
@@ -185,52 +267,7 @@
                                 android:textColor="@color/textColorLightBlack"/>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".1"
-                        android:orientation="vertical">
 
-
-                    <ToggleButton
-                            android:id="@+id/toggleButton1"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:background="@drawable/bgtoggle"
-                            android:button="@null"
-                            android:layout_gravity="right"
-                            android:checked="true"
-                            android:layout_marginRight="@dimen/_5sdp"
-                            android:textOff=""
-                            android:textOn=""/>
-
-                    <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-5dp">
-
-                        <TextView android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="sell"
-                                  android:textSize="@dimen/_12ssp"
-                                  android:layout_alignParentLeft="true"
-                                  style="@style/TextStyleNormal"
-                                  android:textColor="@color/textColorGray"
-                        />
-
-                        <TextView android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="buy"
-                                  android:layout_marginRight="@dimen/_5sdp"
-                                  android:textSize="@dimen/_11sdp"
-                                  android:layout_alignParentRight="true"
-                                  style="@style/TextStyleSemiBold"
-                                  android:textColor="@color/textColorGray"
-                        />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

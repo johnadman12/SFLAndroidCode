@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_my_team.view.*
 import stock.com.R
-import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
-import stock.com.ui.dashboard.Team.ActivityEditTeam
-import stock.com.ui.dashboard.home.MarketList.ActivityMarketEdit
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.MyTeamsPojo
@@ -28,7 +25,8 @@ import java.util.*
 class MyTeamAdapter(
     val mContext: Context,
     val myteam: MutableList<MyTeamsPojo.Myteam>,
-    val activityMyTeam: ActivityMyTeam
+    val activityMyTeam: ActivityMyTeam,
+    val contestId: Int
 ) :
     RecyclerView.Adapter<MyTeamAdapter.FeatureListHolder>() {
 
@@ -43,9 +41,9 @@ class MyTeamAdapter(
 
         if (myteam.get(position).stock.size == 0) {
             holder.itemView.stockName.setText(myteam.get(position).marketname)
-           /* if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
-                Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
-                    .into(holder.itemView.ivStock)*/
+            /* if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
+                 Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
+                     .into(holder.itemView.ivStock)*/
         } else {
             holder.itemView.stockName.setText(myteam.get(position).exchangename)
             if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
@@ -65,11 +63,12 @@ class MyTeamAdapter(
                 )
             } else {
                 mContext.startActivity(
-                    Intent(mContext, ActivityEditTeam::class.java)
+                    Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+                        .putExtra("isCloning", 2)
                 )
             }
         }
@@ -87,7 +86,7 @@ class MyTeamAdapter(
                     Intent(mContext, ActivityMarketTeam::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.CONTESTID, contestId)
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
@@ -96,7 +95,7 @@ class MyTeamAdapter(
                     Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.CONTESTID, contestId)
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
                 )

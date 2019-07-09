@@ -3,8 +3,6 @@ package stock.com.ui.dashboard.ContestNewBottom
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonObject
@@ -27,6 +25,7 @@ import stock.com.utils.StockDialog
 class ActivityMyTeam : BaseActivity() {
     var exchangeId: Int = 0
     var marketId: Int = 0
+    var contestId: Int = 0
     var jsonparams: JsonObject = JsonObject()
     var flagMarket: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +33,18 @@ class ActivityMyTeam : BaseActivity() {
         setContentView(R.layout.activity_my_team)
         StockConstant.ACTIVITIES.add(this)
         if (intent != null)
+            contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             flagMarket = intent.getBooleanExtra("flagMarket", false)
         if (flagMarket)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         else
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
 
+//        initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         initView()
     }
 
@@ -161,7 +166,7 @@ class ActivityMyTeam : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         rvMYTeam!!.layoutManager = llm
         rvMYTeam?.itemAnimator = DefaultItemAnimator()
-        rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam)
+        rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam,contestId)
     }
 
 

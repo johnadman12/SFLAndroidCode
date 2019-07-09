@@ -37,8 +37,13 @@ import android.text.style.ForegroundColorSpan
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.TextView
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
+import stock.com.ui.pojo.BasePojo
+import stock.com.utils.AppDelegate
 import java.util.*
 
 
@@ -63,6 +68,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var flagPriceLTH: Boolean = false
     var flagVolume: Boolean = false
     var flagDayHTL: Boolean = false
+    var array: JsonArray = JsonArray()
+    var jsonparams: JsonObject = JsonObject()
     private var flagSearch: Boolean = true;
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -76,6 +83,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             StockConstant.EXCHANGEID,
                             exchangeId
                         ).putExtra(
+                            StockConstant.CONTESTID,
+                            contestId
+                        ).putExtra(
                             "flagMarket",
                             false
                         )
@@ -83,6 +93,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
+            }
+            R.id.relFieldView -> {
+                startActivity(
+                    Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
+                )
             }
             R.id.ll_watchlist -> {
                 startActivity(
@@ -104,42 +121,66 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.tvViewteam -> {
-                if (flag) {
-                    startActivityForResult(
-                        Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
-                            .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
-                            .putExtra(
-                                StockConstant.EXCHANGEID,
-                                exchangeId
-                            ).putExtra(
-                                StockConstant.CONTESTID,
-                                contestId
-                            ).putExtra(
-                                StockConstant.TEAMID,
-                                teamId
-                            ).putExtra(
-                                "isCloning",
-                                flagCloning
-                            ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
-                    )
+                if (flagCloning == 2) {
+                    if (stockSelectedItems!!.size > 0) {
+                        for (i in 0 until stockSelectedItems!!.size) {
+                            var postData1 = JsonObject();
+                            try {
+                                postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
+                                postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                                postData1.addProperty(
+                                    "change_percent",
+                                    stockSelectedItems!!.get(i).changePercent.toString()
+                                );
+                                postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
+                                Log.e("savedlist", postData1.toString())
+                            } catch (e: Exception) {
+
+                            }
+                            array.add(postData1)
+                        }
+                        saveTeamList()
+                    } else {
+                        displayToast("please select Crypto first", "warning")
+                    }
                 } else {
-                    startActivityForResult(
-                        Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
-                            .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
-                            .putExtra(
-                                StockConstant.EXCHANGEID,
-                                exchangeId
-                            ).putExtra(
-                                StockConstant.CONTESTID,
-                                contestId
-                            ).putExtra(
-                                StockConstant.TEAMID,
-                                teamId
-                            ).putExtra(
-                                "isCloning",
-                                flagCloning
-                            ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
-                    )
+                    if (flag) {
+                        startActivityForResult(
+                            Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
+                                .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                                .putExtra(
+                                    StockConstant.EXCHANGEID,
+                                    exchangeId
+                                ).putExtra(
+                                    StockConstant.CONTESTID,
+                                    contestId
+                                ).putExtra(
+                                    StockConstant.TEAMID,
+                                    teamId
+                                ).putExtra(
+                                    "isCloning",
+                                    flagCloning
+                                ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
+                        )
+                    } else {
+                        startActivityForResult(
+                            Intent(this@ActivityCreateTeam, ActivityViewTeam::class.java)
+                                .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                                .putExtra(
+                                    StockConstant.EXCHANGEID,
+                                    exchangeId
+                                ).putExtra(
+                                    StockConstant.CONTESTID,
+                                    contestId
+                                ).putExtra(
+                                    StockConstant.TEAMID,
+                                    teamId
+                                ).putExtra(
+                                    "isCloning",
+                                    flagCloning
+                                ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
+                        )
+                    }
                 }
             }
         }
@@ -153,6 +194,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_create_team)
         StockConstant.ACTIVITIES.add(this)
         list = ArrayList();
+        array = JsonArray()
+        jsonparams = JsonObject()
         listOld = ArrayList();
         initView()
     }
@@ -169,6 +212,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         ll_filter.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
         llMyTeam.setOnClickListener(this)
+        relFieldView.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
@@ -177,6 +221,15 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             flagCloning = intent.getIntExtra("isCloning", 0)
             if (flagCloning == 1) {
                 stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+            } else if (flagCloning == 2) {
+                stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                ll_filter.visibility = GONE
+                tvViewteam.setText("  Save Team  ")
+                textTeam.setText("Edit Team")
+                relFieldView.visibility = VISIBLE
+            } else {
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             }
         }
@@ -240,18 +293,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
         getTeamlist()
 
-        mainHandler = Handler(Looper.getMainLooper())
-        mainHandler.post(object : Runnable {
-            override fun run() {
-                if (flagSearch) {
-                    getTeamlist()
-
-                }
-                mainHandler.postDelayed(this, 8000)
-            }
-
-        })
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -282,14 +325,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        if (response.body()!!.myteam.equals("1"))
-                            llMyTeam.visibility = VISIBLE
-                        else if (response.body()!!.myteam.equals("0"))
-                            llMyTeam.visibility = GONE
-                        if (response.body()!!.myteam.equals("1"))
-                            llMyTeam.visibility = View.VISIBLE
-                        else if (response.body()!!.myteam.equals("0"))
+                        if (flagCloning == 2)
                             llMyTeam.visibility = View.GONE
+                        else {
+                            if (response.body()!!.myteam.equals("1"))
+                                llMyTeam.visibility = View.VISIBLE
+                            else if (response.body()!!.myteam.equals("0"))
+                                llMyTeam.visibility = View.GONE
+                        }
                         if (listOld!!.size > 0) {
                             listOld!!.clear()
                             listOld!!.addAll(list!!)
@@ -681,7 +724,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 flagSort = (data.getStringExtra("flag"))
                 if (data.getStringExtra("flag").equals("Volume")) {
-                    flagVolume=true
+                    flagVolume = true
                     var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -690,7 +733,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
-                    flagPriceLTH=true
+                    flagPriceLTH = true
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                     for (obj in sortedList) {
                         list!!.clear()
@@ -699,7 +742,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
-                    flagPriceHTL=true
+                    flagPriceHTL = true
                     var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -708,7 +751,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                     }
                 } else if (data.getStringExtra("flag").equals("dayLTH")) {
-                    flagDayLTH=true
+                    flagDayLTH = true
                     var sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -716,7 +759,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayHTL")) {
-                    flagDayHTL=true
+                    flagDayHTL = true
                     var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -724,7 +767,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
-                    flagAlphaSort=true
+                    flagAlphaSort = true
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -788,6 +831,57 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     override fun onPause() {
         super.onPause()
         mainHandler.removeCallbacksAndMessages(null);
+    }
+
+
+    fun saveTeamList() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("stocks", array)
+
+        Log.e("savedlist", array.toString())
+
+        val call: Call<BasePojo> =
+            apiService.editTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        AppDelegate.showAlert(this@ActivityCreateTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityCreateTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                        }, 1000)
+                    } else if (response.body()!!.status == "2") {
+                        AppDelegate.showAlert(this@ActivityCreateTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
+                    }
+                } else {
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
     }
 }
 

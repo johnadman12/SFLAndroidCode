@@ -70,15 +70,19 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
         activity = DashBoardActivity()
+        if (intent != null) {
+            contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
+            exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         initViews()
     }
 
 
     private fun initViews() {
-        if (intent != null) {
-            contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
-        }
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
         getContestDetail()
@@ -293,8 +297,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
         tvTime.setText(parseDateToddMMyyyy(contest.scheduleStart))
     }
-
-
 
 
     fun showJoinTeamDialogue() {

@@ -121,12 +121,12 @@ class MarketListAdapter(
                                         R.color.white
                                     )
                                 )
-                                holder.itemView.tv_change_percentage.setTextColor(
+                               /* holder.itemView.tv_change_percentage.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.white
                                     )
-                                )
+                                )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -192,12 +192,12 @@ class MarketListAdapter(
                                         R.color.white
                                     )
                                 )
-                                holder.itemView.tv_change_percentage.setTextColor(
+                               /* holder.itemView.tv_change_percentage.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.white
                                     )
-                                )
+                                )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,

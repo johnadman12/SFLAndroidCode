@@ -37,7 +37,8 @@ class ActivityOtherUserProfile : BaseActivity() {
         if (intent != null)
             friendId = intent.getStringExtra(StockConstant.FRIENDID)
 
-        getFriendsList()
+        if (friendId != null)
+            getFriendsList()
 
         llADD.setOnClickListener {
             if (flag)

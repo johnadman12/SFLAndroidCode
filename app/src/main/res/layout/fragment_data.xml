@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:layout_height="wrap_content">
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:background="@color/colorContestItemBackground"
+                          android:padding="@dimen/_3sdp"
+                          android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:src="@mipmap/crypto"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bitcoin"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleBold"/>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="1sp"
+                  android:background="@color/colorPrimary"/>
+
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Price (24 Hr)"
+                        android:textSize="@dimen/_12ssp"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"/>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Open "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Close "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" High "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Low "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Average "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Change "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/green"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Market Status"
+                        android:textSize="@dimen/_12ssp"
+                        android:padding="@dimen/_5sdp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleSemiBold"/>
+
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" MarketCap "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" 24Hr Volume "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Circulating "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Max Supply "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Rank "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorGray"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp"
+                                  android:layout_weight="1"
+                                  android:visibility="invisible"
+                                  android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text=" Change "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/green"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" $2639398 "
+                                android:layout_weight="1"
+                                android:textSize="@dimen/_10ssp"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                android:layout_gravity="center_vertical"
+                                style="@style/TextStyleNormal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View android:layout_width="match_parent"
+                      android:layout_height="@dimen/_1ssp"
+                      android:background="@color/GrayColorOTP"/>
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About Bitcoin"
+                    android:textSize="@dimen/_12ssp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/textColorBlack"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_gravity="center_vertical"
+                    style="@style/TextStyleSemiBold"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dummy"
+                    android:textSize="@dimen/_10ssp"
+                    android:lineSpacingExtra="@dimen/_2sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:textColor="@color/textColorLightBlack"
+                    android:layout_gravity="center_vertical"
+                    style="@style/TextStyleNormal"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Website"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://bitcoin.org"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reddit"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://reddit.com/r/bitcoin"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Message Board"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://bitcointalk.org"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Source Code"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://github.com/bitcoin/"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Explorer"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="https://blockchain.coinmarketcap.com/chain/bitcoin"
+                        android:textSize="@dimen/_10ssp"
+                        android:gravity="center"
+                        android:linksClickable="true"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

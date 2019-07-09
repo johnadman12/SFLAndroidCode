@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
 import stock.com.R
-import stock.com.ui.dashboard.Team.ActivityEditTeam
-import stock.com.ui.dashboard.Team.EditTeamAdapter
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate

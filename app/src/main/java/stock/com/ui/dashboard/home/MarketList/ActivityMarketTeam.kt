@@ -13,6 +13,7 @@ import android.text.*
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
@@ -83,6 +84,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             StockConstant.MARKETID,
                             marketId
                         ).putExtra(
+                            StockConstant.CONTESTID,
+                            contestId
+                        ).putExtra(
                             "flagMarket",
                             true
                         )
@@ -105,6 +109,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 startActivityForResult(
                     Intent(this@ActivityMarketTeam, ActivitySortTeam::class.java).putExtra("flagStatus", flagSort),
                     StockConstant.RESULT_CODE_SORT_MARKET_TEAM
+                )
+            }
+            R.id.relFieldView -> {
+                startActivity(
+                    Intent(this@ActivityMarketTeam, MarketTeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
             R.id.tvViewteam -> {
@@ -207,6 +218,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         ll_filter.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
         llMyTeam.setOnClickListener(this)
+        relFieldView.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
@@ -216,12 +228,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
             if (flagCloning == 1) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+
             } else if (flagCloning == 2) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 ll_filter.visibility = GONE
                 tvViewteam.setText("  Save Team  ")
                 textTeam.setText("Edit Team")
+                relFieldView.visibility = VISIBLE
             } else {
                 contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
@@ -838,9 +852,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                        }, 1000)
 //                        finish()
                     } else if (response.body()!!.status == "2") {
-                        appLogout()
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
                     }
                 } else {
                     d.dismiss()

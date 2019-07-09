@@ -63,7 +63,6 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val set1 = CandleDataSet(yValsCandleStick, "")
-//        val data_candle = CandleData(xVals_earnings, barDataSetCandle)
         set1.setColor(Color.rgb(80, 80, 80));
         set1.setShadowColor(getResources().getColor(R.color.colorASPrimary));
         set1.setShadowWidth(0.9f);
@@ -80,12 +79,12 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         chart11.setData(data)
         chart11.invalidate()
         chart11.animateXY(500, 500)
+        chart11.getDescription().setEnabled(false);
         chart11.legend.isEnabled = false
         chart11.setTouchEnabled(true)
         chart11.isDoubleTapToZoomEnabled = false
         chart11.setMaxVisibleValueCount(0)
         chart11.setBorderColor(Color.GREEN)
-//        barDataSet.color = ContextCompat.getColor(activity!!, R.color.colorPrimary)
         val xAxis_candle = chart11.xAxis
         xAxis_candle.position = XAxis.XAxisPosition.BOTTOM
         chart11.axisLeft.setDrawGridLines(false)

@@ -281,4 +281,39 @@
             android:background="@null"
             android:src="@mipmap/teamwizard"
     />
+
+
+    <RelativeLayout
+            android:id="@+id/relFieldView"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_65sdp"
+            android:visibility="gone"
+            android:background="@drawable/circle_dark_blue"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/_10sdp">
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgfield"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:srcCompat="@mipmap/fieldview"
+        />
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/field_view"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/_10ssp"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/imgfield"
+                android:textColor="@color/textColorOffWhite"
+                style="@style/TextStyleNormal"
+
+        />
+    </RelativeLayout>
 </RelativeLayout>
