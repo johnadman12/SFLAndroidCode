@@ -16,6 +16,7 @@
                           android:layout_height="wrap_content"
                           android:background="@color/colorContestItemBackground"
                           android:padding="@dimen/_3sdp"
+                          android:visibility="gone"
                           android:orientation="horizontal">
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_25sdp"
@@ -33,11 +34,6 @@
                         style="@style/TextStyleBold"/>
             </LinearLayout>
 
-            <View android:layout_width="match_parent"
-                  android:layout_height="1sp"
-                  android:background="@color/colorPrimary"/>
-
-
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
@@ -46,6 +42,7 @@
                         android:layout_height="wrap_content"
                         android:text="Price (24 Hr)"
                         android:textSize="@dimen/_12ssp"
+                        android:textStyle="bold"
                         android:padding="@dimen/_5sdp"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:textColor="@color/textColorBlack"
@@ -61,19 +58,20 @@
                                   android:layout_weight="1"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Open "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:id="@+id/tvOpen"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_gravity="center_vertical"
@@ -82,22 +80,24 @@
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp"
                                   android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Close "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
+                                android:id="@+id/tvClose"
                                 android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="center"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_gravity="center_vertical"
@@ -118,19 +118,20 @@
                                   android:layout_weight="1"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" High "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:id="@+id/tvHigh"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_gravity="center_vertical"
@@ -139,15 +140,15 @@
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp"
                                   android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Low "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -155,6 +156,8 @@
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="center"
+                                android:id="@+id/tvLow"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_gravity="center_vertical"
@@ -175,20 +178,21 @@
                                   android:layout_weight="1"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Average "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
+                                android:id="@+id/tvAverage"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_gravity="center_vertical"
@@ -197,21 +201,23 @@
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp"
                                   android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="0dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Change "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/green"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:gravity="center"
+                                android:id="@+id/tvChange"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
@@ -237,6 +243,7 @@
                         android:text="Market Status"
                         android:textSize="@dimen/_12ssp"
                         android:padding="@dimen/_5sdp"
+                        android:textStyle="bold"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleSemiBold"/>
@@ -253,16 +260,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" MarketCap "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:id="@+id/tvMarketCap"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
@@ -272,21 +280,23 @@
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp"
                                   android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" 24Hr Volume "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=" $2639398 "
+                                android:text=" $263939 "
                                 android:layout_weight="1"
+                                android:gravity="center"
+                                android:id="@+id/tvVolume"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
@@ -311,16 +321,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Circulating "
-                                android:layout_weight="1"
                                 android:textSize="@dimen/_10ssp"
+                                android:gravity="top"
                                 android:textColor="@color/textColorGray"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text=" $2639398 "
+                                android:text=" $2639gdgd "
                                 android:layout_weight="1"
+                                android:id="@+id/tvCirculating"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
@@ -330,12 +341,13 @@
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp"
                                   android:layout_weight="1"
+                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Max Supply "
-                                android:layout_weight="1"
+                                android:gravity="top"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorGray"
                                 android:layout_gravity="center_vertical"
@@ -345,10 +357,11 @@
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:gravity="center"
+                                android:id="@+id/tvmaxSupply"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_marginLeft="@dimen/_5sdp"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
 
                     </LinearLayout>
@@ -369,7 +382,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" Rank "
-                                android:layout_weight="1"
+                                android:gravity="top"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorGray"
                                 android:layout_gravity="center_vertical"
@@ -379,9 +392,9 @@
                                 android:layout_height="wrap_content"
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
+                                android:id="@+id/tvRank"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
-                                android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>
 
                     </LinearLayout>
@@ -419,27 +432,42 @@
                       android:background="@color/GrayColorOTP"/>
 
             </LinearLayout>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="@dimen/_5sdp"
+                          android:layout_gravity="center_vertical"
+                          android:orientation="horizontal">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About Bitcoin"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_12ssp"
+                        android:id="@+id/tvCrypto"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/textColorBlack"
+                        style="@style/TextStyleSemiBold"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="About Bitcoin"
-                    android:textSize="@dimen/_12ssp"
-                    android:padding="@dimen/_5sdp"
-                    android:textColor="@color/textColorBlack"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_gravity="center_vertical"
-                    style="@style/TextStyleSemiBold"/>
-
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_gravity="center"
+                        android:id="@+id/logo"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:src="@mipmap/crypto"/>
+            </LinearLayout>
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dummy"
                     android:textSize="@dimen/_10ssp"
                     android:lineSpacingExtra="@dimen/_2sdp"
+                    android:id="@+id/tvAbout"
                     android:padding="@dimen/_5sdp"
                     android:textColor="@color/textColorLightBlack"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="center_vertical|top"
                     style="@style/TextStyleNormal"/>
 
             <LinearLayout android:layout_width="match_parent"
@@ -451,7 +479,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Website"
-                        android:layout_weight="1"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
@@ -461,7 +488,9 @@
                         android:layout_height="wrap_content"
                         android:text="https://bitcoin.org"
                         android:textSize="@dimen/_10ssp"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/tvWebsite"
                         android:linksClickable="true"
                         android:textColor="@color/colorPrimary"
                         android:drawableRight="@mipmap/arrowright"
@@ -483,7 +512,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reddit"
-                        android:layout_weight="1"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
@@ -493,7 +521,9 @@
                         android:layout_height="wrap_content"
                         android:text="https://reddit.com/r/bitcoin"
                         android:textSize="@dimen/_10ssp"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/tvReddit"
                         android:linksClickable="true"
                         android:textColor="@color/colorPrimary"
                         android:drawableRight="@mipmap/arrowright"
@@ -515,7 +545,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Message Board"
-                        android:layout_weight="1"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
@@ -525,8 +554,10 @@
                         android:layout_height="wrap_content"
                         android:text="https://bitcointalk.org"
                         android:textSize="@dimen/_10ssp"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:linksClickable="true"
+                        android:id="@+id/tvMessageBoard"
                         android:textColor="@color/colorPrimary"
                         android:drawableRight="@mipmap/arrowright"
                         android:drawablePadding="@dimen/_5sdp"
@@ -548,7 +579,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Source Code"
-                        android:layout_weight="1"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
@@ -558,7 +588,9 @@
                         android:layout_height="wrap_content"
                         android:text="https://github.com/bitcoin/"
                         android:textSize="@dimen/_10ssp"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/tvSourceCode"
                         android:linksClickable="true"
                         android:textColor="@color/colorPrimary"
                         android:drawableRight="@mipmap/arrowright"
@@ -579,7 +611,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Explorer"
-                        android:layout_weight="1"
                         android:textSize="@dimen/_10ssp"
                         android:textColor="@color/textColorBlack"
                         android:layout_gravity="center_vertical"
@@ -589,7 +620,9 @@
                         android:layout_height="wrap_content"
                         android:text="https://blockchain.coinmarketcap.com/chain/bitcoin"
                         android:textSize="@dimen/_10ssp"
-                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/tvExplorer"
                         android:linksClickable="true"
                         android:textColor="@color/colorPrimary"
                         android:drawableRight="@mipmap/arrowright"

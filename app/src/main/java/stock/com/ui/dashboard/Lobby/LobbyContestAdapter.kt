@@ -132,6 +132,7 @@ class LobbyContestAdapter(
                             holder.itemView.circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(mContext, R.color.GrayColor)
                             holder.itemView.ll_Circular.isEnabled = false
+                            holder.itemView.isEnabled = false
                             holder.itemView.llSportsLeft.visibility = View.INVISIBLE
 //                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
                             val diffSec = diff / 1000

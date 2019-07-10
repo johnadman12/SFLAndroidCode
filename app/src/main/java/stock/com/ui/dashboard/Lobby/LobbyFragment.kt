@@ -99,10 +99,7 @@ class LobbyFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_lobby, container, false)
     }
 
-    inline fun <reified T : Activity> Activity.myStartActivityForResult(requestCode: Int) {
-        val intent = Intent(this, T::class.java)
-        startActivityForResult(intent, requestCode)
-    }
+
 
     fun getContestlist() {
         val d = StockDialog.showLoading(activity!!)

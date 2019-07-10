@@ -207,7 +207,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                             this@ActivityViewTeam,
                             ActivityStockDetail::class.java
                         )
-                            .putExtra("Stockid", item.stockid)
+                            .putExtra(StockConstant.STOCKID, item.stockid)
+                            .putExtra("flag", 1)
                             .putExtra(StockConstant.STOCKLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_VIEW_TEAM

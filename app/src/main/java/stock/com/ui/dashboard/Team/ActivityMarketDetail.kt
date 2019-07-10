@@ -8,6 +8,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
@@ -23,9 +24,9 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Team.Stock.*
+import stock.com.ui.pojo.AssestData
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.MarketList
-import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
@@ -36,6 +37,8 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
     private var fragment: Fragment? = null;
     var stockId: Int = 0
     var position: Int = -1
+    var flagData: Int = 0
+    var symbol: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,26 +47,27 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         StockConstant.ACTIVITIES.add(this)
         if (intent != null) {
             stockId = intent.getIntExtra("cryptoId", 0);
-            list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
-            selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
+            flagData = intent.getIntExtra("flag", 0);
+            if (flagData == 1) {
+                list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
+            }
         }
-        if (list != null) {
 
-            if (list!!.size > 0)
-                for (i in 0 until list!!.size) {
-                    if (stockId.equals(list!!.get(i).cryptocurrencyid))
-                        position = i
-                }
-            setStockData()
-
-            val fragment: ChartFragment = ChartFragment()
-            var nd: Bundle = Bundle()
-            if (list != null)
-                nd.putString("Stockname", list!!.get(position).symbol)
-            else
-                nd.putString("Stockname", "")
-            setFragment(fragment, nd);
+        if (flagData == 1) {
+            if (list != null) {
+                if (list!!.size > 0)
+                    for (i in 0 until list!!.size) {
+                        if (stockId.equals(list!!.get(i).cryptocurrencyid))
+                            position = i
+                        symbol = list!!.get(position).name
+                    }
+            }
+        } else {
+            ivTeam.visibility = GONE
         }
+
+        getData(stockId.toString())
 
         ll_news.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
@@ -76,6 +80,42 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
 
     }
 
+    fun getData(assestId: String) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<AssestData> =
+            apiService.getAssestData(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                assestId, "crypto"
+            )
+        call.enqueue(object : Callback<AssestData> {
+            override fun onResponse(call: Call<AssestData>, response: Response<AssestData>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        symbol=response.body()!!.stock!!.get(0).symbol
+
+                        val fragment: ChartFragment = ChartFragment()
+                        var nd: Bundle = Bundle()
+                        nd.putString("Stockname", response.body()!!.stock!!.get(0).symbol)
+                        setFragment(fragment, nd);
+                        setStockData(response.body()!!.stock)
+                        d.dismiss()
+
+                    } else if (response.body()!!.status == "0") {
+                        displayToast(response.body()!!.message, "error")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<AssestData>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
 
     @SuppressLint("WrongConstant")
     override fun onClick(v: View?) {
@@ -89,7 +129,6 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
 
             R.id.ivTeam -> {
                 if (list != null)
-
                     if (list!!.get(position).addedToList == 1) {
                         //show green button
                         AppDelegate.showAlert(this, "already added to Crypto")
@@ -117,7 +156,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 val fragment: ChartFragment = ChartFragment()
                 var nd: Bundle = Bundle()
                 if (list != null)
-                    nd.putString("Stockname", list!!.get(position).symbol)
+                    nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
                 setFragment(fragment, nd);
@@ -147,7 +186,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 val fragment: NewsFragment = NewsFragment()
                 var nd: Bundle = Bundle()
                 if (list != null)
-                    nd.putString("Stockname", list!!.get(position).symbol)
+                    nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
                 setFragment(fragment, nd);
@@ -195,7 +234,11 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_data -> {
                 if (fragment is DataFragment)
                     return;
-                setFragment(DataFragment(), Bundle());
+                val fragment: DataFragment = DataFragment()
+                var nd: Bundle = Bundle()
+                nd.putInt(StockConstant.MARKETID, stockId)
+                nd.putString(StockConstant.MARKET_TYPE, "crypto")
+                setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
                 setLinearLayoutColor(ll_analystics, ContextCompat.getColor(this, R.color.white));
@@ -247,23 +290,21 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         tv.setTextColor(color);
     }
 
-    fun setStockData() {
-        if (position != -1) {
-            stock_name.setText(list!!.get(position).symbol)
-            tv_stockcomp.setText(list!!.get(position).name)
-            tvStockPercentage.setText(list!!.get(position).marketcapital)
-            tvVol.setText(list!!.get(position).latestVolume)
-            tvlatestPrice.setText(list!!.get(position).latestPrice)
-            Glide.with(this).load(list!!.get(position).image).into(iv_stock_img)
-
-
-            if (!TextUtils.isEmpty(list!!.get(position).changeper))
-                if (list!!.get(position).changeper.contains("-"))
-                    Glide.with(this).load(R.mipmap.downred).into(stockgraph)
-                else
-                    Glide.with(this).load(R.mipmap.upgraph).into(stockgraph)
-        }
-
+    fun setStockData(stock: ArrayList<AssestData.Stock>?) {
+        stock_name.setText(stock!!.get(0).symbol)
+        tv_stockcomp.setText(stock.get(0).companyName)
+        tvStockPercentage.setText(stock.get(0).changePercent)
+        tvVol.setText(stock.get(0).latestVolume)
+        tvlatestPrice.setText(stock.get(0).latestPrice)
+        Glide.with(this).load(stock.get(0).image).into(iv_stock_img)
+        if (!TextUtils.isEmpty(stock.get(0).changePercent))
+            if (stock.get(0).changePercent.contains("-")) {
+                Glide.with(this).load(R.drawable.ic_down_arrow).into(stockgraph)
+                tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
+            } else {
+                Glide.with(this).load(R.drawable.ic_arrow_up).into(stockgraph)
+                tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
+            }
     }
 
 

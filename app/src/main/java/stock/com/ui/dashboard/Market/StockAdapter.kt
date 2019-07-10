@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_currency_market.view.*
 import stock.com.R
-import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
@@ -133,9 +132,10 @@ class StockAdapter(
 
         holder.itemView.setOnClickListener {
             var intent = Intent(mContext, ActivityStockDetail::class.java);
-            intent.putExtra("cryptoId", stockListNew.get(position).stockid)
+            intent.putExtra(StockConstant.STOCKID, stockListNew.get(position).stockid)
             intent.putExtra(StockConstant.STOCKLIST, stockListNew)
             intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+            intent.putExtra("flag", 1)
             ActivityCompat.startActivityForResult(mContext as Activity, intent, 411, null);
         }
 

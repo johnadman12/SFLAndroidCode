@@ -42,7 +42,8 @@ class NewsItemAdapter(
             } else if (title.equals("Stocks", true)) {
 
                 var intent = Intent(mContext, ActivityStockDetail::class.java);
-                intent.putExtra("cryptoId", users.get(position).id)
+                intent.putExtra(StockConstant.STOCKID, users.get(position).id.toInt())
+                intent.putExtra("flag", 2)
                 intent.putExtra(StockConstant.STOCKLIST, "")
                 intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
                 ActivityCompat.startActivityForResult(mContext as Activity, intent, 411, null);
@@ -54,9 +55,8 @@ class NewsItemAdapter(
                 )
             } else if (title.equals("Cryptocurrency", true)) {
                 var intent = Intent(mContext, ActivityMarketDetail::class.java);
-                intent.putExtra("cryptoId", users.get(position).id)
-                intent.putExtra(StockConstant.MARKETLIST, "")
-                intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+                intent.putExtra("cryptoId", users.get(position).id.toInt())
+                intent.putExtra("flag", 2)
                 ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
 
             }

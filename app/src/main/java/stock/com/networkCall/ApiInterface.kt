@@ -75,8 +75,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("search/stock")
-    fun searchExchange(@Field("exchange_id") exchange_id: String, @Field("search") search: String, @Field("user_id") user_id: String,
-                       @Field("market_type") market_type: String): Call<StockTeamPojo>
+    fun searchExchange(
+        @Field("exchange_id") exchange_id: String, @Field("search") search: String, @Field("user_id") user_id: String,
+        @Field("market_type") market_type: String
+    ): Call<StockTeamPojo>
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
@@ -616,6 +618,14 @@ interface ApiInterface {
 //        @Field("user_id") user_id: String,
         @Field("invitecode") comments: String
     ): Call<BasePojo>
+
+    @FormUrlEncoded
+    @POST("marketdata/asset_detail")
+    fun getAssestData(
+        @Header("x-access-token") token: String,
+        @Field("asset_id") comments: String,
+        @Field("market_type") market_type: String
+    ): Call<AssestData>
 
 
     @FormUrlEncoded

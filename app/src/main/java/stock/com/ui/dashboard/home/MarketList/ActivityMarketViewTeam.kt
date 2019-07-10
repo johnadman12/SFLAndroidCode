@@ -200,6 +200,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                             ActivityMarketDetail::class.java
                         )
                             .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra("flag", 1)
                             .putExtra(StockConstant.MARKETLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItem!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM

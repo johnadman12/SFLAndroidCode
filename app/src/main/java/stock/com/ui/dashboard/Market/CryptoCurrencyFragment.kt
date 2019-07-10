@@ -217,7 +217,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                                 }
 
                             } else {
-                                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                                if (rv_currencyList != null)
+                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
 
                             if (rv_currencyList != null)

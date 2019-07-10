@@ -284,6 +284,7 @@ class CurrencyAdapter(
             intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
             intent.putExtra(StockConstant.MARKETLIST, cryptoListNew)
             intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+            intent.putExtra("flag", 1)
             startActivityForResult(mContext as Activity, intent, 410, null);
         }
 

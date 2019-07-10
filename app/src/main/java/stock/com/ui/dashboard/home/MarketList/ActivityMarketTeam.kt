@@ -276,6 +276,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             ActivityMarketDetail::class.java
                         )
                             .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra("flag", 1)
                             .putExtra(StockConstant.MARKETLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_CREATE_TEAM
@@ -360,8 +361,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
-
-
                     if (response.body()!!.status == "1") {
                         if (response.body()!!.myteam.equals("1"))
                             llMyTeam.visibility = View.VISIBLE

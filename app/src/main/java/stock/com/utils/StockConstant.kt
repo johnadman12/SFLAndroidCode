@@ -17,6 +17,7 @@ object StockConstant {
     val MARKETLIST = "marketlist"
     val NEWSLIST = "newslist"
     val SELECTEDSTOCK = "selectedstock"
+    val SYMBOL = "symbol"
     val TEAMID = "teamid"
     val FRIENDID = "friend_id"
     val TOTALCHANGE = "totalchange"

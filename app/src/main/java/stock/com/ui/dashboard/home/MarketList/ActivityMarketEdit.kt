@@ -130,6 +130,7 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
                             ActivityMarketDetail::class.java
                         )
                             .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra("flag", 1)
                             .putExtra(StockConstant.MARKETLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_EDIT_MARKET

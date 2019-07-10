@@ -135,7 +135,8 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                             this@ActivityEditTeam,
                             ActivityStockDetail::class.java
                         )
-                            .putExtra("Stockid", item.stockid)
+                            .putExtra(StockConstant.STOCKID, item.stockid)
+                            .putExtra("flag", 1)
                             .putExtra(StockConstant.STOCKLIST, list)
                             .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
                         , StockConstant.RESULT_CODE_EDIT_TEAM
