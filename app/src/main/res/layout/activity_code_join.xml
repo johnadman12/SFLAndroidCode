@@ -50,7 +50,6 @@
                 android:paddingLeft="@dimen/_5sdp"
                 android:textSize="@dimen/_14ssp"
                 android:maxLines="1"
-                android:text="1560427284779"
                 android:imeOptions="actionDone"
                 android:capitalize="characters"
                 android:inputType="phone"

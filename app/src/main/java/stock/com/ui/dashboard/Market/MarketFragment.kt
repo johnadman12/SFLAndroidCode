@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Market
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_market.*
 import retrofit2.Call
@@ -200,12 +203,60 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
     }
 
+    /* fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
+         if (!isAdded)
+             return
+         rvstock.adapter = ExchangeAdapter(context, exchangeList!!)
+         rvstock.setScrollDuration(1000);
+         rvstock.startAutoScroll(true);
+     } */
+
     fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
-        if (!isAdded)
-            return
-        rvstock.adapter = ExchangeAdapter(context, exchangeList!!)
-        rvstock.setScrollDuration(1000);
-        rvstock.startAutoScroll(true);
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        rvstock!!.layoutManager = llm
+        rvstock.visibility = View.VISIBLE
+
+        rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList!!)
+
+        // call function news
+        autoScrollNews()
+
+        //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
+        rvstock.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+        rvstock.setItemAnimator(DefaultItemAnimator())
+        rvstock!!.adapter!!.notifyDataSetChanged();
+
+    }
+
+    fun autoScrollNews() {
+        val handler = Handler()
+        val runnable = object : Runnable {
+            var count = 0
+            var flag = true
+            override fun run() {
+                if (rvstock == null)
+                    return
+                if (count < rvstock!!.adapter!!.getItemCount()) {
+                    if (count == rvstock!!.adapter!!.getItemCount() - 1) {
+                        flag = false;
+                    } else
+                        if (count == 0) {
+                            flag = true;
+                        }
+                    if (flag)
+                        count++;
+                    else
+                        count--;
+
+                    rvstock.smoothScrollToPosition(count);
+                    handler.postDelayed(this, 1500);
+
+                }
+            }
+        }
+        handler.postDelayed(runnable, 300);
+
     }
 
     private fun setFragment(fragment: Fragment, bundle: Bundle) {

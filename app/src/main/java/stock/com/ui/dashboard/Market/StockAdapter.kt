@@ -140,17 +140,21 @@ class StockAdapter(
         }
 
 
-        if (!TextUtils.isEmpty(stockListNew!!.get(position).changePercent))
+        if (!TextUtils.isEmpty(stockListNew!!.get(position).changePercent)) {
+            var priceText: Double = (stockListNew!!.get(position).changePercent).toDouble() * 0.01
+            var price = (priceText.toString())
+            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+
             if (stockListNew!!.get(position).changePercent.contains("-")) {
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                holder.itemView.tv_change_percentage.setText(stockListNew!!.get(position).changePercent + " %")
+                holder.itemView.tv_change_percentage.setText(price.toString() + " (" + stockListNew!!.get(position).changePercent + " %)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + stockListNew!!.get(position).changePercent + " %")
+                holder.itemView.tv_change_percentage.setText(price.toString() + " (+" + stockListNew!!.get(position).changePercent + " %)")
             }
-
+        }
         if (searchList!!.get(position).stock_type.equals("1")) {
             holder.itemView.llAdd.visibility = View.GONE
             holder.itemView.img_check.visibility = View.VISIBLE

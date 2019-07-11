@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Lobby
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.view.View
 import android.widget.Switch
 import kotlinx.android.synthetic.main.activity_code_join.*
@@ -28,7 +29,10 @@ class ActivityCodeJoin : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.btn_Join -> {
-                codeJoinForContest()
+                if (TextUtils.isEmpty(et_code_join.text.toString())) {
+                    et_code_join.setError("Please input invite code")
+                } else
+                    codeJoinForContest()
             }
         }
     }
@@ -43,7 +47,6 @@ class ActivityCodeJoin : BaseActivity(), View.OnClickListener {
 
     private fun initViews() {
         img_btn_back.setOnClickListener(this)
-        et_code_join.setOnClickListener(this)
         btn_Join.setOnClickListener(this)
 
     }
@@ -56,7 +59,6 @@ class ActivityCodeJoin : BaseActivity(), View.OnClickListener {
         val call: Call<BasePojo> =
             apiService.codeJoinContest(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-//                getFromPrefsString(StockConstant.USERID).toString(),
                 et_code_join.text.toString()
 
             )

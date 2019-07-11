@@ -306,11 +306,12 @@
     <string name="my_account">My Account</string>
     <string name="ok">OK</string>
     <string name="error_network_connection">You are not connected with an active internet connection.</string>
-    <string name="enter_phone_number">Please enter phone number.</string>
-    <string name="valid_phone_number">Please enter valid phone number.</string>
-    <string name="enter_email">Please enter email address.</string>
-    <string name="valid_email">Please enter valid email address.</string>
-    <string name="enter_password">Please enter password.</string>
+    <string name="enter_phone_number">Please enter Mobile Number.</string>
+    <string name="valid_phone_number">Please enter valid Mobile Number.</string>
+    <string name="enter_email">Please enter Email Address.</string>
+    <string name="valid_email">Please enter valid Email Address.</string>
+    <string name="enter_password">Please enter Password.</string>
+    <string name="enter_conifpassword">Please enter Confirm Password.</string>
     <string name="short_password">Password must be 6 characters long.</string>
     <string name="invalid_password">Password must contain atleast one alphabet and numeric character</string>
     <string name="resend_otp">Resend OTP</string>
@@ -407,7 +408,7 @@
     <string name="intro3">Win up to *1000 your entry fee!*</string>
     <string name="intro3_1">depends on contest total winnings</string>
     <string name="intro4">choose your formation of assets and make a winning team!</string>
-    <string name="intro5">Invite your friend to join contests and win bonus!</string>
+    <string name="intro5">Invite your friends to join contests and win bonus!</string>
     <string name="intro5_1">*Terms and condition apply</string>
     <string name="intro6">Start winning!</string>
 
@@ -576,7 +577,7 @@
 
     <string name="verified">Verified</string>
     <string name="contest_total_price">Contest Total Prize</string>
-    <string name="intro1">Add Funds into your wallet using different payment method to start joining contests and WIN!
+    <string name="intro1">Add Funds into your wallet using different payment methods to start joining contests and WIN!
     </string>
     <string name="contestfee">
         <![CDATA[Contest entry fee is calculated is based on total winning amount & Contest Joining Spots.]]></string>
@@ -599,6 +600,6 @@
     <string name="reject">Reject</string>
     <string name="doesnot_match">password does not match</string>
     <string name="exchange">Exchange</string>
-    <string name="totalchangeinfo">Total change percent will be calculated when contest starts until it ends.</string>
+    <string name="totalchangeinfo">Total change percentage will be calculated when contest starts until it ends.</string>
     <string name="dummy">Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency. Powered by its users, it is a peer to peer payment network that requires no central authority to operate. On October 31st, 2008, an individual or group of individuals operating under the pseudonym \"Satoshi Nakamoto\" published the Bitcoin Whitepaper and described it as: \"a purely peer-to-peer version of electronic cash, which would allow online payments to be sent directly from one party to another without going through a financial institution.</string>
 </resources>

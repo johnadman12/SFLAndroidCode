@@ -19,7 +19,7 @@ class HomePojo : BasePojo() {
     var news: List<News>? = null
     @SerializedName("exchange")
     @Expose
-    var exchange: List<Exchange>? = null
+    var exchange: ArrayList<Exchange>? = null
 
     inner class Banner {
 

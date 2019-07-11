@@ -386,7 +386,7 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/conf_password"
                                 android:inputType="textPassword"
-                                android:imeOptions="actionNext"/>
+                                android:imeOptions="actionDone"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
 

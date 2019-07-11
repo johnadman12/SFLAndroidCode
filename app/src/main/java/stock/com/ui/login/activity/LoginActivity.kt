@@ -120,18 +120,22 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         socialModel = SocialModel()
                         socialModel.isSocial = "1"
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1) {
-                            saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
-                        } else {
-                            saveIntoPrefsString(StockConstant.PASSWORD, "")
+                            if (pass_remembered == 1) {
+                                saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                                saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                                saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                                saveIntoPrefsString(StockConstant.PASSWORD, response.body()!!.user_data!!.password)
+                            } else {
+                                saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                                saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                                saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                            }
+                            startActivity(
+                                Intent(this@LoginActivity, DashBoardActivity::class.java)
+                            )
+                            finish()
                         }
-                        startActivity(
-                            Intent(this@LoginActivity, DashBoardActivity::class.java)
-                        )
-                        finish();
                     }
                     displayToast(response.body()!!.message, "warning")
                 } else {
@@ -163,13 +167,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         socialModel = SocialModel()
                         socialModel.isSocial = "1"
-                        saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                        saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         if (pass_remembered == 1) {
-                            saveIntoPrefsString(StockConstant.PASSWORD, et_pass.text.toString().trim())
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                            saveIntoPrefsString(StockConstant.PASSWORD, response.body()!!.user_data!!.password)
                         } else {
-                            saveIntoPrefsString(StockConstant.PASSWORD, "")
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         }
                         startActivity(
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
@@ -230,10 +236,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
              et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
          }*/
 
-        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
+        /*if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD))) {
             et_email.setText(getUserData().email)
             et_pass.setText(getFromPrefsString(StockConstant.PASSWORD))
-        }
+        }*/
 
         et_email.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {

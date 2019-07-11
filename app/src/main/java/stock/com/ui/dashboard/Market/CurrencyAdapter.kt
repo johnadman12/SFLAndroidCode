@@ -134,12 +134,12 @@ class CurrencyAdapter(
                                         R.color.white
                                     )
                                 )
-                               /* holder.itemView.tv_change_percentage.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )*/
+                                /* holder.itemView.tv_change_percentage.setTextColor(
+                                     ContextCompat.getColor(
+                                         mContext,
+                                         R.color.white
+                                     )
+                                 )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -257,17 +257,24 @@ class CurrencyAdapter(
 
         Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
 
-        if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper))
+
+
+        if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
+            var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
+            var price = (priceText.toString())
+            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+
+
             if (cryptoListNew.get(position).changeper.contains("-")) {
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setText(cryptoListNew!!.get(position).changeper + " %")
+                holder.itemView.tv_change_percentage.setText(price + " (" + cryptoListNew!!.get(position).changeper + " %)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + cryptoListNew!!.get(position).changeper + " %")
+                holder.itemView.tv_change_percentage.setText(price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
             }
-
+        }
 
         if (cryptoListNew.get(position).cryptoType.equals("1")) {
             holder.itemView.llAdd.visibility = View.GONE

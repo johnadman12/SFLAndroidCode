@@ -121,12 +121,12 @@ class MarketListAdapter(
                                         R.color.white
                                     )
                                 )
-                               /* holder.itemView.tv_change_percentage.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )*/
+                                /* holder.itemView.tv_change_percentage.setTextColor(
+                                     ContextCompat.getColor(
+                                         mContext,
+                                         R.color.white
+                                     )
+                                 )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -192,12 +192,12 @@ class MarketListAdapter(
                                         R.color.white
                                     )
                                 )
-                               /* holder.itemView.tv_change_percentage.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )*/
+                                /* holder.itemView.tv_change_percentage.setTextColor(
+                                     ContextCompat.getColor(
+                                         mContext,
+                                         R.color.white
+                                     )
+                                 )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -251,17 +251,21 @@ class MarketListAdapter(
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
-        if (!TextUtils.isEmpty(searchList!!.get(position).changeper))
+        if (!TextUtils.isEmpty(searchList!!.get(position).changeper)) {
+            var priceText: Double = (searchList!!.get(position).changeper).toDouble() * 0.01
+            var price = (priceText.toString())
+            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+
             if (searchList!!.get(position).changeper.contains("-")) {
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changeper + "%")
+                holder.itemView.tv_change_percentage.setText(price+" (" + searchList!!.get(position).changeper + "%)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + searchList!!.get(position).changeper + "%")
+                holder.itemView.tv_change_percentage.setText(price+" (+" + searchList!!.get(position).changeper + "%)")
             }
 
-
+        }
         holder.itemView.img_add.setOnClickListener {
             if (activity.getTeamText() > 11) {
                 AppDelegate.showSneakBarRed(

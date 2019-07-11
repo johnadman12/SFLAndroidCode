@@ -17,6 +17,7 @@ import stock.com.ui.splash.activity.WelcomeActivity;
 import stock.com.utils.StockConstant;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class ActivityGoThrough1 extends BaseActivity {
@@ -38,14 +39,16 @@ public class ActivityGoThrough1 extends BaseActivity {
 
         list = new ArrayList<>();
 
+        Drawable drawable0 = ContextCompat.getDrawable(this, R.mipmap.intro0);
         Drawable drawable1 = ContextCompat.getDrawable(this, R.mipmap.intro1);
         Drawable drawable2 = ContextCompat.getDrawable(this, R.mipmap.intro2);
-        Drawable drawable3 = ContextCompat.getDrawable(this, R.mipmap.intro3);
-        Drawable drawable4 = ContextCompat.getDrawable(this, R.mipmap.intro4);
+        Drawable drawable3 = ContextCompat.getDrawable(this, R.mipmap.intro4);
+        Drawable drawable4 = ContextCompat.getDrawable(this, R.mipmap.intro3);
         Drawable drawable5 = ContextCompat.getDrawable(this, R.mipmap.intro5);
         Drawable drawable6 = ContextCompat.getDrawable(this, R.mipmap.intro6);
 
 
+        list.add(drawable0);
         list.add(drawable1);
         list.add(drawable2);
         list.add(drawable3);
@@ -85,36 +88,47 @@ public class ActivityGoThrough1 extends BaseActivity {
                 if (position == 0) {
                     btn_Skip.setVisibility(View.VISIBLE);
                     btn_Next.setText("Next");
+                    tv_title.setAllCaps(false);
+                    tv_title.setText("Let us show you how it works ");
+                    into_des.setText("");
+                    into_des_small.setText("");
+                } else if (position == 1) {
+                    btn_Skip.setVisibility(View.INVISIBLE);
+                    btn_Next.setText("Next");
                     tv_title.setText(getResources().getString(R.string.deposit_funds));
                     into_des.setText(getResources().getString(R.string.intro1));
-                } else {
+                    into_des_small.setText("");
+                } else if (position == 6) {
                     btn_Skip.setVisibility(View.INVISIBLE);
-                }
-                if (position == 5) {
                     b = true;
                     btn_Next.setText("Finish");
                     tv_title.setText(getResources().getString(R.string.intro6));
                     into_des.setText("");
                     into_des_small.setText("");
-                } else if (position == 1) {
+                } else if (position == 2) {
+                    btn_Skip.setVisibility(View.INVISIBLE);
                     b = false;
                     btn_Next.setText("Next");
                     tv_title.setText(getResources().getString(R.string.join_contest));
                     into_des.setText(getResources().getString(R.string.intro2));
                     into_des_small.setText("");
-                } else if (position == 2) {
-                    b = false;
-                    btn_Next.setText("Next");
-                    tv_title.setText(getResources().getString(R.string.win_cash));
-                    into_des.setText(getResources().getString(R.string.intro3));
-                    into_des_small.setText(getResources().getString(R.string.intro3_1));
                 } else if (position == 3) {
+                    btn_Skip.setVisibility(View.INVISIBLE);
                     b = false;
                     btn_Next.setText("Next");
                     tv_title.setText(getResources().getString(R.string.form_team));
                     into_des.setText(getResources().getString(R.string.intro4));
                     into_des_small.setText("");
+
                 } else if (position == 4) {
+                    btn_Skip.setVisibility(View.INVISIBLE);
+                    b = false;
+                    btn_Next.setText("Next");
+                    tv_title.setText(getResources().getString(R.string.win_cash));
+                    into_des.setText(getResources().getString(R.string.intro3));
+                    into_des_small.setText(getResources().getString(R.string.intro3_1));
+                } else if (position == 5) {
+                    btn_Skip.setVisibility(View.INVISIBLE);
                     b = false;
                     btn_Next.setText("Next");
                     tv_title.setText(getResources().getString(R.string.reffral_bonus));

@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.home_fragment.*
 import retrofit2.Call
@@ -24,7 +25,6 @@ import stock.com.ui.dashboard.home.adapter.*
 import stock.com.ui.pojo.*
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import com.rd.PageIndicatorView
 import androidx.viewpager.widget.ViewPager
 
 
@@ -110,18 +110,54 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
 
-    private fun setStockNameAdapter(exchangeList: List<HomePojo.Exchange>) {
-     /*   val llm = LinearLayoutManager(context)
+    private fun setStockNameAdapter(exchangeList: ArrayList<HomePojo.Exchange>) {
+        val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_stock_name!!.layoutManager = llm
         recyclerView_stock_name.visibility = View.VISIBLE
-        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList)*/
 
-        if (!isAdded)
-            return
-        recyclerView_stock_name.adapter = StockNameAdapter(context, exchangeList!!, this)
-        recyclerView_stock_name.setScrollDuration(1500);
-        recyclerView_stock_name.startAutoScroll(true);
+        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList!!)
+
+        // call function news
+        autoScrollNews(llm)
+
+        //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
+//        recyclerView_stock_name.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+        recyclerView_stock_name.setItemAnimator(DefaultItemAnimator())
+        recyclerView_stock_name!!.adapter!!.notifyDataSetChanged();
+
+    }
+
+    fun autoScrollNews(llm: LinearLayoutManager) {
+        val handler = Handler()
+        val runnable = object : Runnable {
+            var count = 0
+            var flag = true
+            override fun run() {
+                if (recyclerView_stock_name == null)
+                    return
+                if (count < recyclerView_stock_name!!.adapter!!.getItemCount()) {
+                    if (count == recyclerView_stock_name!!.adapter!!.getItemCount() - 1) {
+                        flag = false;
+                    } else
+                        if (count == 0) {
+                            flag = true;
+                        }
+                    if (flag)
+                        count++;
+                    else
+                        count--;
+                    var visibleItemCount = recyclerView_stock_name.getChildCount();
+                    var totalItemCount = llm.getItemCount();
+//                    recyclerView_stock_name.smoothScrollToPosition(count);
+                    var dx = count
+                    recyclerView_stock_name.scrollBy(count, visibleItemCount + totalItemCount)
+                    handler.postDelayed(this, 500);
+
+                }
+            }
+        }
+        handler.postDelayed(runnable, 400);
 
     }
 
@@ -154,7 +190,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             // specify total count of indicators
             pageIndicatorView.setCount(5)
         } else if (listItem.size == 0) {
-            pageIndicatorTraining.visibility = GONE
+            pageIndicatorView.visibility = GONE
         } else {
             pageIndicatorView.visibility = VISIBLE
             // specify total count of indicators
@@ -176,7 +212,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
 
-
     private fun setTrainingContestAdapter(traniningContest: List<TrainingPojo.TraniningContest>) {
         viewPager_training.visibility = View.VISIBLE
         viewPager_training.setClipToPadding(false);
@@ -187,11 +222,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ViewPagerTraining(context!!, traniningContest, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_training.setAdapter(adapter)
 
-        if (exchangeList!!.size > 5) {
+        if (traniningContest!!.size > 5) {
             pageIndicatorTraining.visibility = VISIBLE
             // specify total count of indicators
             pageIndicatorTraining.setCount(5)
-        } else if (exchangeList!!.size == 0) {
+        } else if (traniningContest!!.size == 0) {
             pageIndicatorTraining.visibility = GONE
         } else {
             pageIndicatorTraining.visibility = VISIBLE

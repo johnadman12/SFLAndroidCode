@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.View.GONE
@@ -138,7 +139,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             } else {
                 toolbar.visibility = View.VISIBLE
                 setTitleVisibility(false, true)
-                 setMenu(false, false, false, true, false, false, false)
+                setMenu(false, false, false, true, false, false, false)
                 setTitleText(getString(R.string.profile))
                 setFragment(ProfileFragment(), Bundle())
                 changetTextViewBackground(tv_profile, R.color.colorPrimary);
@@ -158,7 +159,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             } else {
                 toolbar.visibility = View.VISIBLE
                 setTitleVisibility(false, true)
-                 setMenu(false, false, false, true, false, false, false)
+                setMenu(false, false, false, true, false, false, false)
                 setFragment(MarketFragment(), Bundle())
 
                 changetTextViewBackground(tv_market, R.color.colorPrimary);
@@ -176,7 +177,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             } else {
                 toolbar.visibility = VISIBLE
                 setTitleVisibility(false, true)
-                 setMenu(false, false, false, true, false, false, false)
+                setMenu(false, false, false, true, false, false, false)
                 val bundle = Bundle()
                 bundle.putString("flag", "")
                 setFragment(LobbyFragment(), bundle)
@@ -469,6 +470,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             (0 until StockConstant.ACTIVITIES.size)
                 .filter { StockConstant.ACTIVITIES[it] != null }
                 .forEach { StockConstant.ACTIVITIES[it]?.finish() }
+            if (TextUtils.isEmpty(getFromPrefsString(StockConstant.PASSWORD)))
+                appLogout()
             finish()
             return
         }
@@ -527,6 +530,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                         appLogout();
                         displayToast(response.body()!!.message, "error");
                     } else if (response.body()!!.status.equals("2")) {
+                        appLogout();
+                    } else if (response.body()!!.status.equals("0")) {
                         appLogout();
                     } else {
                         displayToast(response.body()!!.message, "warning")

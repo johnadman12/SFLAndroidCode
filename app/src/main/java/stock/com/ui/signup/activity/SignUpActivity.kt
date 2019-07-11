@@ -43,6 +43,7 @@ import java.text.SimpleDateFormat
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.R.id
+import android.text.TextUtils
 import android.widget.TextView
 
 
@@ -148,7 +149,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
 //        tvagree.text = Html.fromHtml(text)
         countryCodePicker!!.setOnCountryChangeListener(this)
 
-        et_Password.addTextChangedListener(object : TextWatcher {
+        /*et_Password.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 if (s.length != 0) {
                     et_conf_Password.isEnabled = true
@@ -168,37 +169,37 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
                 before: Int, count: Int
             ) {
             }
-        })
+        })*/
 
-        et_conf_Password.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-//                val regexStr = "/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\$/"
-                if (s.length != 0) {
-                    if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
-                        AppDelegate.showToast(this@SignUpActivity, getString(R.string.invalid_password))
-                        et_Password.setError(getString(R.string.invalid_password))
-                        et_conf_Password.isEnabled = false
-                    } else if (!et_conf_Password.text.toString().equals(et_Password.text.toString())) {
-                        et_conf_Password.isEnabled = true
-                        et_conf_Password.setError(getString(R.string.doesnot_match))
-                    }
-                }
+        /*  et_conf_Password.addTextChangedListener(object : TextWatcher {
+              override fun afterTextChanged(s: Editable) {
+  //                val regexStr = "/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)\$/"
+                  if (s.length != 0) {
+                      if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
+                          AppDelegate.showToast(this@SignUpActivity, getString(R.string.invalid_password))
+                          et_Password.setError(getString(R.string.invalid_password))
+                          et_conf_Password.isEnabled = false
+                      } else if (!et_conf_Password.text.toString().equals(et_Password.text.toString())) {
+                          et_conf_Password.isEnabled = true
+                          et_conf_Password.setError(getString(R.string.doesnot_match))
+                      }
+                  }
 
-            }
+              }
 
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
-            }
+              override fun beforeTextChanged(
+                  s: CharSequence, start: Int,
+                  count: Int, after: Int
+              ) {
+              }
 
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-                val regexStr = "^[0-9]*$"
-            }
-        })
+              override fun onTextChanged(
+                  s: CharSequence, start: Int,
+                  before: Int, count: Int
+              ) {
+                  val regexStr = "^[0-9]*$"
+              }
+          })*/
 
 
 
@@ -256,13 +257,13 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     private fun checkValidation() {
         println("Term and condition" + term_condition_accept)
         if (et_UserNamefirst.text.toString().trim().isEmpty()) {
-            AppDelegate.showToast(this, "Please enter first name");
+            AppDelegate.showToast(this, "Please enter First Name");
         } else if (et_UserNamelast.text.toString().trim().isEmpty()) {
-            AppDelegate.showToast(this, "Please enter last name");
+            AppDelegate.showToast(this, "Please enter Last Name");
         } else if (et_UserName.text.toString().trim().isEmpty()) {
-            AppDelegate.showToast(this, "Please enter user name")
+            AppDelegate.showToast(this, "Please enter Username")
         } else if (et_dob.text.toString().trim().isEmpty()) {
-            AppDelegate.showToast(this, "Please enter date of birth")
+            AppDelegate.showToast(this, "Please enter Date Of Birth")
         } else if (et_Mobile.text.toString().isEmpty())
             AppDelegate.showToast(this, getString(R.string.enter_phone_number))
         else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString()))
@@ -271,14 +272,18 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             AppDelegate.showToast(this, getString(R.string.enter_email))
         else if (!ValidationUtil.isEmailValid(et_Email.text.toString()))
             AppDelegate.showToast(this, getString(R.string.valid_email))
+        else if (TextUtils.isEmpty(et_Password.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.enter_password))
         else if (et_Password.text.toString().length < 6)
             AppDelegate.showToast(this, getString(R.string.short_password))
         else if (!(et_Password.text.toString().matches(regexStr.toRegex())))
             AppDelegate.showToast(this, getString(R.string.invalid_password))
+        else if (TextUtils.isEmpty(et_conf_Password.text.toString()))
+            AppDelegate.showToast(this, getString(R.string.enter_confirm_password))
         else if (!et_conf_Password.text.toString().equals(et_Password.text.toString()))
             AppDelegate.showToast(this, getString(R.string.doesnot_match))
         else if (term_condition_accept == 0) {
-            AppDelegate.showToast(this, "Please accept term and condition")
+            AppDelegate.showToast(this, "Please check the box to confirm agreement to DFXchange T&C and Privacy Policy.")
         } else {
             if (NetworkUtils.isConnected()) {
                 register("normal", "2")

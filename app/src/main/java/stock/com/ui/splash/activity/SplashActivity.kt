@@ -22,8 +22,8 @@ class SplashActivity : BaseActivity() {
         Handler().postDelayed({
             try {
                 if (getFromPrefsString(StockConstant.USERFIRSTTIME).toString().equals("no")) {
-                    // if (getFromPrefsString(StockConstant.USERID).toString() != "") {
-                    if (!getFromPrefsString(StockConstant.PASSWORD).toString().equals("")) {
+                     if (getFromPrefsString(StockConstant.USERID).toString() != "") {
+//                    if (!getFromPrefsString(StockConstant.PASSWORD).toString().equals("")) {
                         startActivity(Intent(this@SplashActivity, DashBoardActivity::class.java))
                         finish()
                     } else {

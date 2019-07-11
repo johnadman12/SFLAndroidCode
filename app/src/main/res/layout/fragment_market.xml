@@ -115,25 +115,25 @@
             <View android:layout_width="match_parent"
                   android:layout_height="1sp"
                   android:background="#38A1DA"/>
-            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+            <!--  <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                      android:id="@+id/rvstock"
+                      android:layout_width="match_parent"
+                      android:layout_height="@dimen/_30sdp"
+                      app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                      app:icvp_scroll_duration="250"
+                      android:background="@color/white"
+                      app:icvp_medium_scaled="false"
+              />-->
+            <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvstock"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-                    app:icvp_scroll_duration="250"
                     android:background="@color/white"
-                    app:icvp_medium_scaled="false"
-            />
-            <!-- <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_height="wrap_content">
 
-                     android:layout_width="match_parent"
-                     android:background="@color/white"
-                     android:layout_marginTop="@dimen/_5sdp"
-                     android:orientation="horizontal"
-                     android:padding="@dimen/_5sdp"
-                     android:layout_height="wrap_content">
-
-             </androidx.recyclerview.widget.RecyclerView>-->
+            </androidx.recyclerview.widget.RecyclerView>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="42dp"
