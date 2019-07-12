@@ -239,6 +239,37 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             list as ArrayList,
             this@ActivityCreateTeam,
             object : StockTeamAdapter.OnItemCheckListener {
+                override fun onToggleUncheck(item: StockTeamPojo.Stock) {
+                    for (j in 0 until list!!.size) {
+                        if (item.stockid.equals(list!!.get(j).stockid)) {
+                            item.stock_type = "1";
+                            if (stockSelectedItems!!.size > 0) {
+                                for (i in 0 until stockSelectedItems!!.size)
+                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
+                                        stockSelectedItems!!.get(j).stock_type = item.stock_type
+
+                            } else
+                                list!!.get(j).stock_type = item.stock_type
+                            break;
+                        }
+                    }
+                }
+
+                override fun onToggleCheck(item: StockTeamPojo.Stock) {
+                    for (j in 0 until list!!.size) {
+                        if (item.stockid.equals(list!!.get(j).stockid)) {
+                            item.stock_type = "0";
+                            if (stockSelectedItems!!.size > 0) {
+                                for (i in 0 until stockSelectedItems!!.size)
+                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
+                                        stockSelectedItems!!.get(j).stock_type = item.stock_type
+                            } else
+                                list!!.get(j).stock_type = item.stock_type
+                            break;
+                        }
+                    }
+                }
+
                 override fun onItemClick(item: StockTeamPojo.Stock) {
                     startActivityForResult(
                         Intent(

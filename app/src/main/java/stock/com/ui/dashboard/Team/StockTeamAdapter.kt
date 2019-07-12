@@ -62,6 +62,8 @@ class StockTeamAdapter(
         fun onItemCheck(item: StockTeamPojo.Stock)
         fun onItemUncheck(item: StockTeamPojo.Stock)
         fun onItemClick(item: StockTeamPojo.Stock)
+        fun onToggleCheck(item:StockTeamPojo.Stock)
+        fun onToggleUncheck(item: StockTeamPojo.Stock)
     }
 
 
@@ -263,22 +265,21 @@ class StockTeamAdapter(
         holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
-        holder.itemView.tvPercentage.setText(searchList!!.get(position).latestPrice)
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent)) {
             var priceText: Double = (searchList!!.get(position).changePercent).toDouble() * 0.01
             var price = (priceText.toString())
-            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
             if (searchList!!.get(position).changePercent.contains("-")) {
+                price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changePercent + " %)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
 //                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText(price + " (+" + searchList!!.get(position).changePercent + " %)")
+                holder.itemView.tv_change_percentage.setText("$" + price + " (+" + searchList!!.get(position).changePercent + " %)")
             }
         }
 
@@ -325,11 +326,14 @@ class StockTeamAdapter(
 //        1-sell,0-buy
 
         holder.itemView.toggleButton1.setOnClickListener {
-            if (holder.itemView.toggleButton1.isChecked)
-                searchList!!.get(position).stock_type = "0";
-            else
-                searchList!!.get(position).stock_type = "1";
+            if (holder.itemView.toggleButton1.isChecked) {
+                onItemCheckListener.onToggleCheck(searchList!!.get(position))
+//                searchList!!.get(position).cryptoType = "0";
+            } else {
+                onItemCheckListener.onToggleUncheck(searchList!!.get(position))
+//                searchList!!.get(position).cryptoType = "1";
 
+            }
         }
     }
 

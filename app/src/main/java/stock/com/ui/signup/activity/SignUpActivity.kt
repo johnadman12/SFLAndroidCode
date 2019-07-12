@@ -63,7 +63,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(stock.com.R.layout.activity_signup)
-        StockConstant.ACTIVITIES.add(this)
         initViews()
 
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
@@ -109,7 +108,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             }
             R.id.txt_Login -> {
                 startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                this.finish()
             }
             R.id.img_back -> {
                 onBackPressed()
@@ -274,16 +273,27 @@ class SignUpActivity : BaseActivity(), View.OnClickListener, CountryCodePicker.O
             AppDelegate.showToast(this, getString(R.string.valid_email))
         else if (TextUtils.isEmpty(et_Password.text.toString()))
             AppDelegate.showToast(this, getString(R.string.enter_password))
-        else if (et_Password.text.toString().length < 6)
+        else if (et_Password.text.toString().length < 6) {
+            et_Password.setError(getString(R.string.short_password))
             AppDelegate.showToast(this, getString(R.string.short_password))
-        else if (!(et_Password.text.toString().matches(regexStr.toRegex())))
+        }
+        else if (!(et_Password.text.toString().matches(regexStr.toRegex()))) {
+            et_Password.setError(getString(R.string.invalid_password))
             AppDelegate.showToast(this, getString(R.string.invalid_password))
-        else if (TextUtils.isEmpty(et_conf_Password.text.toString()))
+        }
+        else if (TextUtils.isEmpty(et_conf_Password.text.toString())) {
+            et_conf_Password.setError(getString(R.string.enter_confirm_password))
             AppDelegate.showToast(this, getString(R.string.enter_confirm_password))
-        else if (!et_conf_Password.text.toString().equals(et_Password.text.toString()))
-            AppDelegate.showToast(this, getString(R.string.doesnot_match))
+        }
+        else if (!et_conf_Password.text.toString().equals(et_Password.text.toString())) {
+            et_conf_Password.setError(getString(R.string.doesnot_match))
+        AppDelegate.showToast(this, getString(R.string.doesnot_match))
+        }
         else if (term_condition_accept == 0) {
-            AppDelegate.showToast(this, "Please check the box to confirm agreement to DFXchange T&C and Privacy Policy.")
+            AppDelegate.showToast(
+                this,
+                "Please check the box to confirm agreement to DFXchange T&C and Privacy Policy."
+            )
         } else {
             if (NetworkUtils.isConnected()) {
                 register("normal", "2")

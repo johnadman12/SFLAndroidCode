@@ -252,7 +252,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     for (j in 0 until list!!.size) {
                         if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
                             item.cryptoType = "1";
-                            list!!.get(j).cryptoType = item.cryptoType
+                            if (marketSelectedItems!!.size > 0) {
+                                for (i in 0 until marketSelectedItems!!.size)
+                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
+                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
                             break;
                         }
                     }
@@ -263,7 +269,12 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     for (j in 0 until list!!.size) {
                         if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
                             item.cryptoType = "0";
-                            list!!.get(j).cryptoType = item.cryptoType
+                            if (marketSelectedItems!!.size > 0) {
+                                for (i in 0 until marketSelectedItems!!.size)
+                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
+                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
                             break;
                         }
                     }
@@ -605,67 +616,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun getWizardStocklist() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<MarketList> =
-            apiService.getMarketWizardList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-                getFromPrefsString(StockConstant.USERID).toString()
-            )
-        call.enqueue(object : Callback<MarketList> {
-
-            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        flag = true
-                        marketSelectedItems!!.clear()
-                        marketSelectedItems!!.addAll(response.body()!!.crypto!!);
-                        setTeamText(marketSelectedItems!!.size.toString())
-                        for (i in 0 until list!!.size) {
-                            list!!.get(i).addedToList = 0
-                        }
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        for (i in 0 until list!!.size) {
-                            for (j in 0 until marketSelectedItems!!.size) {
-                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                    list!!.get(i).addedToList = 1
-                                }
-                            }
-                        }
-                        for (i in 0 until list!!.size) {
-                            for (j in 0 until marketSelectedItems!!.size) {
-                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                    list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
-                                }
-                            }
-                        }
-
-                        rv_Players!!.adapter = marketlistAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        setTeamText(marketSelectedItems!!.size.toString())
-
-
-                    } else if (response.body()!!.status == "2") {
-                        appLogout()
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<MarketList>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
-    }
-
-
     fun getTeamAgainlist() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -866,6 +816,66 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getWizardStocklist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<MarketList> =
+            apiService.getMarketWizardList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+                getFromPrefsString(StockConstant.USERID).toString()
+            )
+        call.enqueue(object : Callback<MarketList> {
+
+            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        flag = true
+                        marketSelectedItems!!.clear()
+                        marketSelectedItems!!.addAll(response.body()!!.crypto!!);
+                        setTeamText(marketSelectedItems!!.size.toString())
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
+                                }
+                            }
+                        }
+
+                        rv_Players!!.adapter = marketlistAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(marketSelectedItems!!.size.toString())
+
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<MarketList>, t: Throwable) {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()

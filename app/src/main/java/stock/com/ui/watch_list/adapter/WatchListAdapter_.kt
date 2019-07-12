@@ -18,13 +18,15 @@ import androidx.core.content.ContextCompat
 import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.WatchListActivity
 
-class WatchListAdapter_ (
+class WatchListAdapter_(
     val mContext: Context,
     val mContest: MutableList<WatchlistPojo.WatchStock>,
-    val activity: WatchListActivity ):
+    val activity: WatchListActivity
+) :
     RecyclerView.Adapter<WatchListAdapter_.WatchListHolder>(), Filterable {
 
     private var searchList: List<WatchlistPojo.WatchStock>? = null
+
     init {
         this.searchList = mContest;
     }
@@ -51,11 +53,11 @@ class WatchListAdapter_ (
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
             if (searchList!!.get(position).changePercent.contains("-")) {
-                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
                 holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
             } else {
-                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green));
                 holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.green));
             }

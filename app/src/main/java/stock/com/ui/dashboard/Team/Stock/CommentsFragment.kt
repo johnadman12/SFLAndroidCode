@@ -77,7 +77,7 @@ class CommentsFragment : BaseFragment() {
                         list = response.body()!!.commentlist
                         setCommentsAdapter(list!!)
                     } else if (response.body()!!.status == "0") {
-                            displayToast(response.body()!!.message, "error")
+                            displayToast(response.body()!!.message, "warning")
                     }
                 }
             }

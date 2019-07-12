@@ -234,8 +234,8 @@ class StocksFragment : BaseFragment() {
     }
 
     fun setFilter(c: CharSequence) {
-        if (stockAdapter != null)
-            stockAdapter!!.getFilter().filter(c)
+        /*if (stockAdapter != null)
+            stockAdapter!!.getFilter().filter(c)*/
     }
 
     fun setSorting(type: String) {

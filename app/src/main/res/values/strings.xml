@@ -22,7 +22,7 @@
     <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
     <string name="sign_up_now">Sign Up Now</string>
     <string name="verify_your_number">Verify Your Number</string>
-    <string name="otp_has_been_sent_to_your_mobile_number">OTP has been sent to your Mobile Number</string>
+    <string name="otp_has_been_sent_to_your_mobile_number">Your one-time Password (OTP) has been sent. Please check your Email and Mobile SMS.</string>
     <string name="submit">Submit</string>
     <string name="_100_just_a_step_away">5 just a step away</string>
     <string name="claim_your_bonus_on_registration">Claim your bonus on registration</string>

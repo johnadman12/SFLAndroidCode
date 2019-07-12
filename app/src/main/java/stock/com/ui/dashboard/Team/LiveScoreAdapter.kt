@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.Team
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_scores.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
+import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.Scores
 import stock.com.utils.StockConstant
 
@@ -29,21 +32,34 @@ class LiveScoreAdapter(
     @SuppressLint("WrongConstant")
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
-        holder.itemView.tvPercentage.setText(scores.get(position).totalchange_Per)
+        holder.itemView.tvPercentage.setText(scores.get(position).totalchange_Per + "%")
         holder.itemView.tvRank.setText(scores.get(position).rank)
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
 //        if (flag == 0) {
         holder.itemView.setOnClickListener {
-            if (userId == scores.get(position).userid) {
+            //            if (userId == scores.get(position).userid) {
+            if (scores.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
                         .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
-            } else {
+            } else
+                mContext.startActivity(
+                    Intent(mContext, MarketTeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                        .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
+                )
 
-            }
+        }
+
+        holder.itemView.ll_n_r.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                    StockConstant.FRIENDID, scores.get(position).userid.toString()
+                )
+            )
         }
 //        }
 

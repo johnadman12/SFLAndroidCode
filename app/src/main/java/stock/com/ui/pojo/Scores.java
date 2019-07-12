@@ -44,5 +44,8 @@ public class Scores extends BasePojo {
         @SerializedName("stock")
         @Expose
         public ArrayList<StockTeamPojo.Stock> stock = null;
+        @SerializedName("crypto")
+        @Expose
+        public ArrayList<MarketList.Crypto> crypto = null;
     }
 }

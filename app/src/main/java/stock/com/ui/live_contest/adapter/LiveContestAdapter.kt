@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.row_view_live_contest.view.*
 import stock.com.R
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
+import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.ContestDetail
 import stock.com.utils.StockConstant
 
@@ -29,26 +30,34 @@ class LiveContestAdapter(
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
         holder.itemView.tvPoints.setText(scores.get(position).points)
         holder.itemView.tvRank.setText("Rank :" + scores.get(position).rank)
-        holder.itemView.tvTotalChange.setText(scores.get(position).totalchange_Per+"%")
+        holder.itemView.tvTotalChange.setText(scores.get(position).totalchange_Per + "%")
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.profile_image)
 
 
 
         holder.itemView.setOnClickListener {
-//            if (userId == scores.get(position).userid) {
-                if (scores.get(position).stock.size == 0)
-                    mContext.startActivity(
-                        Intent(mContext, MarketTeamPreviewActivity::class.java)
-                            .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
-                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
-                    ) else
-                    mContext.startActivity(
-                        Intent(mContext, TeamPreviewActivity::class.java)
-                            .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
-                    )
-            }
+            //            if (userId == scores.get(position).userid) {
+            if (scores.get(position).stock.size == 0)
+                mContext.startActivity(
+                    Intent(mContext, MarketTeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                        .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
+                ) else
+                mContext.startActivity(
+                    Intent(mContext, TeamPreviewActivity::class.java)
+                        .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                        .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
+                )
+        }
+
+        holder.itemView.llprofile.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                    StockConstant.FRIENDID, scores.get(position).userid.toString()
+                )
+            )
+        }
 
     }
 

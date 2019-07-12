@@ -48,10 +48,12 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_EnterCode -> {
-                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG,"true"))
+                startActivity(Intent(this, SignUpActivity::class.java).putExtra(StockConstant.FLAG, "true"))
+                finish()
             }
             R.id.txt_Login -> {
                 startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
             R.id.btn_LetsPlay -> {
                 var intent = (Intent(this, DashBoardActivity::class.java))
@@ -71,7 +73,6 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_welcome)
-        StockConstant.ACTIVITIES.add(this)
         initViews()
 
     }
@@ -234,18 +235,18 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                             startActivity(
                                 Intent(this@WelcomeActivity, SignUpActivity::class.java)
                                     .putExtra(IntentConstant.DATA, socialModel)
-                                    .putExtra(StockConstant.FLAG,"true")
+                                    .putExtra(StockConstant.FLAG, "true")
                             )
                         }
 
 
                     }
-                    displayToast(response.body()!!.message,"sucess")
+                    displayToast(response.body()!!.message, "sucess")
                 } else {
                     startActivity(
                         Intent(this@WelcomeActivity, SignUpActivity::class.java)
                             .putExtra(IntentConstant.DATA, socialModel)
-                            .putExtra(StockConstant.FLAG,"true")
+                            .putExtra(StockConstant.FLAG, "true")
                     )
                     d.dismiss()
                 }
@@ -253,7 +254,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
 
             override fun onFailure(call: Call<SignupPojo>?, t: Throwable?) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -342,22 +343,27 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.On
                         val json = gson.toJson(country); // myObject - instance of MyObject
                         SessionManager.getInstance(this@WelcomeActivity).putString(StockConstant.COUNTRYLIST, json);
                         Log.e("list", json.toString())
-                    }else if (response.body()!!.status == "2") {
+                    } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<Country>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
 
         })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
 }

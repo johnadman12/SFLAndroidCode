@@ -262,17 +262,17 @@ class CurrencyAdapter(
         if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
             var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
             var price = (priceText.toString())
-            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
 
 
             if (cryptoListNew.get(position).changeper.contains("-")) {
+                price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setText(price + " (" + cryptoListNew!!.get(position).changeper + " %)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText(price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
+                holder.itemView.tv_change_percentage.setText("$" +price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
             }
         }
 
@@ -291,7 +291,7 @@ class CurrencyAdapter(
             intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
             intent.putExtra(StockConstant.MARKETLIST, cryptoListNew)
             intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
-            intent.putExtra("flag", 1)
+            intent.putExtra("flag", 2)
             startActivityForResult(mContext as Activity, intent, 410, null);
         }
 

@@ -11,39 +11,46 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp">
-        <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                app:civ_border_width="1dp"
-                android:src="@mipmap/ic_launcher_round"
-                app:civ_border_color="@color/white"
-                android:layout_gravity="center"/>
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:paddingRight="@dimen/_5sdp"
-                android:layout_weight="1">
-            <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleSemiBold"
-                    android:layout_width="match_parent"
+        <LinearLayout android:layout_width="wrap_content"
+                      android:id="@+id/llprofile"
+                      android:layout_height="wrap_content"
+                      android:layout_weight=".5"
+                      android:layout_gravity="center"
+                      android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:civ_border_width="1dp"
+                    android:src="@mipmap/ic_launcher_round"
+                    app:civ_border_color="@color/white"
+                    android:layout_gravity="center"/>
+            <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/username"
-                    android:text="Satyesh 46546 "
-                    android:textSize="@dimen/_11ssp"
-                    android:textColor="@color/colorPrimary"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleNormal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rank:1"
-                    android:id="@+id/tvRank"
-                    android:textSize="@dimen/_11ssp"
-                    android:textColor="@color/textColorLightBlack"/>
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+            >
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/username"
+                        android:text="Satyesh 46546 "
+                        android:textSize="@dimen/_11ssp"
+                        android:textColor="@color/colorPrimary"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleNormal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Rank:1"
+                        android:id="@+id/tvRank"
+                        android:textSize="@dimen/_11ssp"
+                        android:textColor="@color/textColorLightBlack"/>
+            </LinearLayout>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatTextView
                 style="@style/TextStyleNormal"

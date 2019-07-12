@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,8 @@ class LiveContestActivity : BaseActivity() {
     private var crptoList: ArrayList<MarketList.Crypto>? = null;
     private var filterTeamList: ArrayList<ContestDetail.Score>? = null;
     var flagCrypto = false;
+    lateinit var mainHandler: Handler;
+    var idTeam: Int = 0
     private var liveAdapter: LiveContestAdapter? = null;
     private var teamAdapter: RecycleTeamAdapter? = null;
 
@@ -73,17 +76,21 @@ class LiveContestActivity : BaseActivity() {
                 )
         }
 
-        val mainHandler = Handler(Looper.getMainLooper())
 
+
+        getContestDetail()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
                 getContestDetail()
                 mainHandler.postDelayed(this, 10000)
             }
         })
-
-//        getContestDetail()
-
     }
 
     @SuppressLint("WrongConstant")
@@ -96,15 +103,16 @@ class LiveContestActivity : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL;
         recyclerView_Live!!.layoutManager = llm;
         recyclerView_Live!!.adapter = liveAdapter;
-
     }
 
     @SuppressLint("WrongConstant")
     fun setLiveTeamAdapter(scores: MutableList<ContestDetail.Score>) {
+        recycle_myteam.visibility = View.VISIBLE;
         teamAdapter = RecycleTeamAdapter(
             this@LiveContestActivity
             , scores, object : RecycleTeamAdapter.ItemClickListner {
                 override fun onItemClick(item: ContestDetail.Score) {
+                    idTeam= item.teamId
                     tvRank.setText(item.rank)
                     totalChange.setText(item.totalchange_Per + "%")
                     tvRankLable.setText(getString(R.string.rank) + " (" + item.teamNameCount + ")")
@@ -124,9 +132,7 @@ class LiveContestActivity : BaseActivity() {
         llm.orientation = LinearLayoutManager.HORIZONTAL;
         recycle_myteam!!.layoutManager = llm;
         recycle_myteam!!.adapter = teamAdapter;
-
     }
-
 
     fun getContestDetail() {
 //        val d = StockDialog.showLoading(this)
@@ -145,37 +151,48 @@ class LiveContestActivity : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         setLiveAdapter(response.body()!!.scores)
                         tvcontesttype.setText(response.body()!!.contest.get(0).catname)
-                        for (i in 0 until response.body()!!.scores.size)
-                            if (response.body()!!.scores.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
-//                                filterTeamList!!.clear()
-                                filterTeamList!!.add(response.body()!!.scores.get(i))
+                        filterTeamList!!.clear();
+                        for (i in 0 until response.body()!!.scores.size) {
+                            if (response.body()!!.scores.get(i).userid.toString().equals(
+                                    getFromPrefsString(
+                                        StockConstant.USERID
+                                    )
+                                )
+                            ) {
+                                filterTeamList!!.add(response.body()!!.scores.get(i));
+                                //Log.d("filterTeamList","---"+filterTeamList!!.size)
+                                // setLiveTeamAdapter(filterTeamList!!)
                                 tvRank.setText(filterTeamList!!.get(0).rank)
                                 totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                if (filterTeamList!!.size > 0) {
+//                                    setLiveTeamAdapter(filterTeamList!!)
+                                    if (filterTeamList!!.size == 1) {
+                                        recycle_myteam.visibility = View.GONE
+                                        tvRank.setText(filterTeamList!!.get(0).rank)
+                                        totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                        stockList!!.clear()
+                                        crptoList!!.clear()
+                                        if (filterTeamList!!.get(0).stock.size == 0) {
+                                            flagCrypto = true
+                                            crptoList!!.addAll(filterTeamList!!.get(0).crypto)
+                                        } else
+                                            stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
+                                    } else {
+                                        tvRank.setText(filterTeamList!!.get(0).rank)
+                                        totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                        stockList!!.clear()
+                                        stockList!!.addAll(filterTeamList!!.get(0).stock)
+                                        //setLiveTeamAdapter(filterTeamList!!)
+                                    }
+
+                                }
                             } else if (response.body()!!.contest.size > 0) {
                                 setTimer(response.body()!!.contest.get(0))
                             }
-
-                        if (filterTeamList!!.size > 0) {
-                            if (filterTeamList!!.size == 1) {
-                                recycle_myteam.visibility = View.GONE
-                                tvRank.setText(filterTeamList!!.get(0).rank)
-                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                stockList!!.clear()
-                                crptoList!!.clear()
-                                if (filterTeamList!!.get(0).stock.size == 0) {
-                                    flagCrypto = true
-                                    crptoList!!.addAll(filterTeamList!!.get(0).crypto)
-                                } else
-                                    stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
-                            } else {
-                                tvRank.setText(filterTeamList!!.get(0).rank)
-                                totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
-                                stockList!!.clear()
-                                stockList!!.addAll(filterTeamList!!.get(0).stock)
-                                setLiveTeamAdapter(filterTeamList!!)
-                            }
-
                         }
+                        setLiveTeamAdapter(filterTeamList!!)
+
+
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -225,5 +242,10 @@ class LiveContestActivity : BaseActivity() {
                 newtimer.start()
             }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null);
     }
 }

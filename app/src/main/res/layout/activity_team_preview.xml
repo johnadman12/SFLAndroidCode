@@ -49,7 +49,7 @@
                 <RelativeLayout android:layout_width="@dimen/_50sdp"
                                 android:layout_height="@dimen/_50sdp"
                                 android:id="@+id/rel"
-                                android:background="@mipmap/greencircle"
+                                android:background="@mipmap/graycircle"
                                 android:layout_marginRight="@dimen/_10sdp"
                 >
                     <androidx.appcompat.widget.AppCompatTextView

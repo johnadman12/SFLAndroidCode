@@ -254,15 +254,15 @@ class MarketListAdapter(
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper)) {
             var priceText: Double = (searchList!!.get(position).changeper).toDouble() * 0.01
             var price = (priceText.toString())
-            price = price.substring(0, 1) + "$" + price.substring(4, price.length)
 
             if (searchList!!.get(position).changeper.contains("-")) {
+                price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setText(price+" (" + searchList!!.get(position).changeper + "%)")
+                holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changeper + "%)")
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText(price+" (+" + searchList!!.get(position).changeper + "%)")
+                holder.itemView.tv_change_percentage.setText("$" +price + " (+" + searchList!!.get(position).changeper + "%)")
             }
 
         }

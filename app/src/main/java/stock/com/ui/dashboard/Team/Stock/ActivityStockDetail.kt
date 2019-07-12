@@ -28,6 +28,7 @@ import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.lang.Exception
 
 
 class ActivityStockDetail : BaseActivity(), View.OnClickListener {
@@ -60,9 +61,14 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             if (list != null) {
                 if (list!!.size > 0)
                     for (i in 0 until list!!.size) {
-                        if (stockId.equals(list!!.get(i).stockid))
-                            position = i
-                        symbol = list!!.get(position).companyName
+                        try {
+                            if (stockId.equals(list!!.get(i).stockid))
+                                position = i
+                            symbol = list!!.get(position).companyName
+                        } catch (e: Exception) {
+
+                        }
+
                     }
             }
         } else {
@@ -276,7 +282,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        symbol=response.body()!!.stock!!.get(0).symbol
+                        symbol = response.body()!!.stock!!.get(0).symbol
                         val fragment: ChartFragment = ChartFragment()
                         var nd: Bundle = Bundle()
                         nd.putString("Stockname", response.body()!!.stock!!.get(position).symbol)

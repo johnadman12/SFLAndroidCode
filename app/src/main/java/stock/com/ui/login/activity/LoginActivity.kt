@@ -81,7 +81,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.text_forgot -> {
                 startActivity(Intent(this, ForgotPasswordActivity::class.java))
-                finish()
             }
             R.id.faceimg -> {
                 startActivity(Intent(this, FingerPrintActivity::class.java))
@@ -121,23 +120,25 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                         socialModel = SocialModel()
                         socialModel.isSocial = "1"
                         if (pass_remembered == 1) {
-                            if (pass_remembered == 1) {
-                                saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                                saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                                saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                                saveIntoPrefsString(StockConstant.PASSWORD, response.body()!!.user_data!!.password)
-                            } else {
-                                saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
-                                saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
-                                saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
-                            }
-                            startActivity(
-                                Intent(this@LoginActivity, DashBoardActivity::class.java)
-                            )
-                            finish()
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
+                            saveIntoPrefsString(StockConstant.PASSWORD, response.body()!!.user_data!!.password)
+                        } else {
+                            saveIntoPrefsString(StockConstant.USERID, response.body()!!.user_data!!.id)
+                            saveIntoPrefsString(StockConstant.ACCESSTOKEN, response.body()!!.token!!)
+                            saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         }
+                        startActivity(
+                            Intent(this@LoginActivity, DashBoardActivity::class.java)
+                        )
+                        finish()
+
+                    } else if (response.body()!!.status == "0") {
+                        displayToast(response.body()!!.message, "warning")
+
                     }
-                    displayToast(response.body()!!.message, "warning")
+
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
@@ -228,6 +229,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         checkRemebered.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 pass_remembered = 1
+            }else{
+                pass_remembered = 0
             }
         }
         //before functionality
@@ -288,6 +291,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         startActivity(Intent(this@LoginActivity, WelcomeActivity::class.java))
         finish()
     }
+
 }
 
 /*  private fun checkUserVerify(socialModel: SocialModel) {

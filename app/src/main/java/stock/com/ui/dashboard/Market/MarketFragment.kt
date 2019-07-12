@@ -68,7 +68,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
                 changeBackGroundColor(tv_commodity, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_crypto, ContextCompat.getColor(activity!!, R.color.white));
-                changeBackGroundColor(tv_indices, ContextCompat.getColor(activity!!, R.color.white));
+                changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.white));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
                 setFragment(CommodityFragment(), Bundle())
@@ -220,16 +220,16 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList!!)
 
         // call function news
-        autoScrollNews()
+        autoScrollNews(llm)
 
         //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
-        rvstock.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
-        rvstock.setItemAnimator(DefaultItemAnimator())
+//        rvstock.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+//        rvstock.setItemAnimator(DefaultItemAnimator())
         rvstock!!.adapter!!.notifyDataSetChanged();
 
     }
 
-    fun autoScrollNews() {
+    fun autoScrollNews(llm: LinearLayoutManager) {
         val handler = Handler()
         val runnable = object : Runnable {
             var count = 0
@@ -248,14 +248,17 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                         count++;
                     else
                         count--;
-
-                    rvstock.smoothScrollToPosition(count);
-                    handler.postDelayed(this, 1500);
+                    var visibleItemCount = rvstock.getChildCount();
+                    var totalItemCount = llm.getItemCount();
+//                    recyclerView_stock_name.smoothScrollToPosition(count);
+                    var dx = count
+                    rvstock.scrollBy(count, visibleItemCount + totalItemCount)
+                    handler.postDelayed(this, 300);
 
                 }
             }
         }
-        handler.postDelayed(runnable, 300);
+        handler.postDelayed(runnable, 0);
 
     }
 

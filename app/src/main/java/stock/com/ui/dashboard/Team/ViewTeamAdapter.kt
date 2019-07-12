@@ -22,7 +22,7 @@ class ViewTeamAdapter(
     var list: ArrayList<StockTeamPojo.Stock> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_team, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_team, parent, false)
         return FeatureListHolder(view)
     }
 

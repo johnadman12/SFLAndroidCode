@@ -58,9 +58,14 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             if (list != null) {
                 if (list!!.size > 0)
                     for (i in 0 until list!!.size) {
-                        if (stockId.equals(list!!.get(i).cryptocurrencyid))
-                            position = i
-                        symbol = list!!.get(position).name
+                        try {
+                            if (stockId.equals(list!!.get(i).cryptocurrencyid))
+                                position = i
+                            symbol = list!!.get(position).name
+                        } catch (e: Exception) {
+
+                        }
+
                     }
             }
         } else {
@@ -94,7 +99,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        symbol=response.body()!!.stock!!.get(0).symbol
+                        symbol = response.body()!!.stock!!.get(0).symbol
 
                         val fragment: ChartFragment = ChartFragment()
                         var nd: Bundle = Bundle()

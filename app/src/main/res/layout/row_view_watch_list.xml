@@ -8,148 +8,148 @@
         android:background="@color/white"
         android:layout_marginTop="@dimen/_3sdp">
     <com.chauthai.swipereveallayout.SwipeRevealLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:mode="same_level"
-                app:dragEdge="right"
-                android:id="@+id/swipeRevealLayout">
-   <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_50sdp">
-        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:mode="same_level"
+            app:dragEdge="right"
+            android:id="@+id/swipeRevealLayout">
+        <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_50sdp"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                android:layout_height="@dimen/_50sdp">
             <LinearLayout
-                    android:layout_width="@dimen/_55sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/_50sdp"
-                    android:background="@color/green"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:visibility="gone">
-                <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        app:srcCompat="@mipmap/edit_"
-                        android:background="@null"
-                        android:scaleType="fitCenter"
-                        android:layout_gravity="center"/>
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+                <LinearLayout
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@color/green"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:visibility="gone">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            app:srcCompat="@mipmap/edit_"
+                            android:background="@null"
+                            android:scaleType="fitCenter"
+                            android:layout_gravity="center"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:layout_width="@dimen/_55sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@color/colorRed"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            app:srcCompat="@mipmap/close"
+                            android:background="@null"
+                            android:scaleType="fitCenter"
+                            android:layout_gravity="center"
+                            android:id="@+id/img_btn_remove"/>
+                </LinearLayout>
             </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <LinearLayout
-                    android:layout_width="@dimen/_55sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:background="@color/colorRed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:padding="@dimen/_3sdp">
                 <androidx.appcompat.widget.AppCompatImageButton
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
-                        app:srcCompat="@mipmap/close"
+                        app:srcCompat="@mipmap/more"
                         android:background="@null"
                         android:scaleType="fitCenter"
                         android:layout_gravity="center"
-                        android:id="@+id/img_btn_remove"/>
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:padding="@dimen/_2sdp">
-            <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    app:srcCompat="@mipmap/more"
-                    android:background="@null"
-                    android:scaleType="fitCenter"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/_5sdp"/>
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:id="@+id/imageView"
-                    android:layout_gravity="center"/>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="@dimen/_2sdp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center">
-                <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
-                        android:textSize="@dimen/_12ssp"
-                        android:layout_width="wrap_content"
-                        android:textColor="@color/textColorBlack"
-                        android:text="CLMAT dfsfsfsfsfdsfs"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:id="@+id/tv_company_name"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleNormal"
-                        android:textSize="@dimen/_10ssp"
-                        android:layout_width="wrap_content"
-                        android:textColor="@color/textColorGray"
-                        android:text="sdasdasda fdf"
-                        android:maxLines="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:id="@+id/tv_sector"/>
-            </LinearLayout>
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_graph"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@mipmap/upgraph"
-                    android:background="@null"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/_5sdp"/>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1.2"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/_1sdp">
-                <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
-                        android:textSize="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/_3sdp"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:id="@+id/imageView"
+                        android:layout_gravity="center"/>
+                <LinearLayout
                         android:layout_width="match_parent"
-                        android:textColor="@color/textColorBlack"
-                        android:text="172.00"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_12ssp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="CLMAT dfsfsfsfsfdsfs"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:id="@+id/tv_company_name"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:textSize="@dimen/_10ssp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorGray"
+                            android:text="sdasdasda fdf"
+                            android:maxLines="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_2sdp"
+                            android:id="@+id/tv_sector"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_graph"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@mipmap/upgraph"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:singleLine="true"
-                        android:gravity="right"
-                        android:id="@+id/tv_market_open"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleNormal"
-                        android:textSize="@dimen/_8sdp"
+                        android:background="@null"
+                        android:layout_marginRight="@dimen/_5sdp"/>
+                <LinearLayout
                         android:layout_width="match_parent"
-                        android:textColor="@color/green"
-                        android:text="-20.2461313213"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:id="@+id/tv_change_percentage"
-                        android:layout_marginTop="@dimen/_5sdp"/>
+                        android:orientation="vertical"
+                        android:layout_weight="1.2"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_5sdp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_width="match_parent"
+                            android:textColor="@color/textColorBlack"
+                            android:text="172.00"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:singleLine="true"
+                            android:gravity="right"
+                            android:id="@+id/tv_market_open"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextStyleNormal"
+                            android:textSize="@dimen/_8sdp"
+                            android:layout_width="match_parent"
+                            android:textColor="@color/green"
+                            android:text="-20.2461313213"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:id="@+id/tv_change_percentage"
+                            android:layout_marginTop="@dimen/_5sdp"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                android:id="@+id/tv_id"
-                android:visibility="gone"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_id"
+                            android:visibility="gone"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        </FrameLayout>
     </com.chauthai.swipereveallayout.SwipeRevealLayout>
 
 

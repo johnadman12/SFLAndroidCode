@@ -61,6 +61,7 @@ public class ActivityGoThrough1 extends BaseActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(this, list);
         viewPager.setAdapter(adapter);
         tab.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(0);
 
 
         btn_Next = findViewById(R.id.btn_Next);
@@ -68,6 +69,8 @@ public class ActivityGoThrough1 extends BaseActivity {
         tv_title = findViewById(R.id.tv_title);
         into_des = findViewById(R.id.into_des);
         into_des_small = findViewById(R.id.into_des_small);
+        tv_title.setAllCaps(false);
+        tv_title.setText("Let us show you how it works ");
         btn_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

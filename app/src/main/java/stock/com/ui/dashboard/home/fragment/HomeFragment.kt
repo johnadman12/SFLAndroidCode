@@ -74,20 +74,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
-        /*val speedScroll = 1500
-        val handler = Handler()
-        val runnable = object : Runnable {
-            internal var count = 0
-            override fun run() {
-                if (count < exchangeList!!.size) {
-                    recyclerView_stock_name.scrollToPosition(++count)
-                    handler.postDelayed(this, speedScroll.toLong())
-                }
 
-
-            }
-        }
-        handler.postDelayed(runnable, speedScroll.toLong())*/
     }
 
     private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
@@ -157,7 +144,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 }
             }
         }
-        handler.postDelayed(runnable, 400);
+        handler.postDelayed(runnable, 100);
 
     }
 
@@ -222,15 +209,15 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ViewPagerTraining(context!!, traniningContest, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_training.setAdapter(adapter)
 
-        if (traniningContest!!.size > 5) {
+        if (traniningContest.size > 5) {
             pageIndicatorTraining.visibility = VISIBLE
             // specify total count of indicators
             pageIndicatorTraining.setCount(5)
-        } else if (traniningContest!!.size == 0) {
+        } else if (traniningContest.size == 0) {
             pageIndicatorTraining.visibility = GONE
         } else {
             pageIndicatorTraining.visibility = VISIBLE
-            pageIndicatorTraining.setCount(exchangeList!!.size)
+            pageIndicatorTraining.setCount(traniningContest!!.size)
         }
 
         viewPager_training.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -346,7 +333,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setTrainingContestAdapter(response.body()!!.traniningContest!!)
-//                        getLatestNewslist();
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
