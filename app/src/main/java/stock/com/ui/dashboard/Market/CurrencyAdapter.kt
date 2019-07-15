@@ -66,7 +66,7 @@ class CurrencyAdapter(
                 if (search!!.get(position).latestPrice.toDouble() < 1)
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
-                            "%.6f",
+                            "%.4f",
                             search!!.get(position).latestPrice.toDouble()
                         )
                     )
@@ -116,7 +116,7 @@ class CurrencyAdapter(
                                 if (search!!.get(position).latestPrice.toDouble() < 1)
                                     holder.itemView.tv_latest_price.setText(
                                         "$" + String.format(
-                                            "%.6f", search!!.get(position).latestPrice.toDouble()
+                                            "%.4f", search!!.get(position).latestPrice.toDouble()
                                         )
                                     )
                                 else
@@ -188,7 +188,7 @@ class CurrencyAdapter(
                                 if (search!!.get(position).latestPrice.toDouble() < 1)
                                     holder.itemView.tv_latest_price.setText(
                                         "$" + String.format(
-                                            "%.6f",
+                                            "%.4f",
                                             search!!.get(position).latestPrice.toDouble()
                                         )
                                     )
@@ -237,7 +237,7 @@ class CurrencyAdapter(
                 if (search!!.get(position).latestPrice.toDouble() < 1) {
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
-                            "%.6f",
+                            "%.4f",
                             search!!.get(position).latestPrice.toDouble()
                         )
                     )

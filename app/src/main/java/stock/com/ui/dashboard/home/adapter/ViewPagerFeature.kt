@@ -166,6 +166,13 @@ class ViewPagerFeature(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        } else if (diff.toString().contains("-")) {
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(context, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            tvTimeLeft.setText("Contest \n Started")
+                            tvHint.visibility = GONE
                         } else {
                             val diffSec = diff / 1000
                             val seconds = diffSec % 60
@@ -181,8 +188,11 @@ class ViewPagerFeature(
                 newtimer.start()
             }
         }
+
+
+
         iv_info.setOnClickListener {
-            AppDelegate.showInfoDialogue(list.get(position).description,context);
+            AppDelegate.showInfoDialogue(list.get(position).description, context);
         }
         ll_Circular.setOnClickListener {
             if (userid.equals("")) {
@@ -278,9 +288,6 @@ class ViewPagerFeature(
             days, hours, minutes, seconds
         )
     }
-
-
-
 
 
 }

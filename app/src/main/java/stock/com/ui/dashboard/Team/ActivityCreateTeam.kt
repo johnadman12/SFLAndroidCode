@@ -808,6 +808,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
+                    flagPriceLTH = false
+                    flagDayHTL = false
+                    flagAlphaSort = false
+                    flagDayLTH = false
+                    flagPriceLTH = false
+                    flagPriceHTL = false
+                    flagVolume = false
                     getTeamlist()
                 }
 

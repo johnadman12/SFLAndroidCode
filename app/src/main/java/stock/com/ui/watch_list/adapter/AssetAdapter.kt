@@ -50,7 +50,7 @@ class AssetAdapter(
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
         val parts = filter.split(",")
         for (i in 0 until parts.size) {
-            if (currentItem.name.equals(parts[i])) {
+            if (currentItem.id.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
                 onItemCheckListener.onItemCheck(currentItem.id);

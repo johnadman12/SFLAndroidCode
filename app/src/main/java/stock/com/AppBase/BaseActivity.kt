@@ -121,13 +121,14 @@ open class BaseActivity : AppCompatActivity() {
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
+            .setIconSize(40)
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
                     this.getAssets(),
-                    "fonts/faktpro_medium.ttf"
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)
@@ -136,16 +137,17 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showSneakBarOrange(message: String, type: String) {
         Sneaker.with(this) // Activity, Fragment or ViewGroup
-            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
+            .setIconSize(40)
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
                     this.getAssets(),
-                    "fonts/faktpro_medium.ttf"
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)
@@ -154,8 +156,9 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showSneakBarRed(message: String, type: String) {
         Sneaker.with(this) // Activity, Fragment or ViewGroup
-            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+            .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
+            .setIconSize(40)
             .setDuration(4000) // Time duration to show
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
@@ -163,7 +166,7 @@ open class BaseActivity : AppCompatActivity() {
             .setTypeface(
                 Typeface.createFromAsset(
                     this.getAssets(),
-                    "fonts/faktpro_medium.ttf"
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)

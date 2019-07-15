@@ -28,7 +28,7 @@
             <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".6"
+                    android:layout_weight=".5"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
 
@@ -77,7 +77,7 @@
 
             <LinearLayout android:layout_width="0dp"
                           android:layout_height="wrap_content"
-                          android:layout_weight=".4"
+                          android:layout_weight=".5"
                           android:orientation="horizontal">
                 <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_20sdp"
@@ -96,7 +96,7 @@
                         android:orientation="vertical">
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:textSize="@dimen/_12ssp"
+                              android:textSize="@dimen/_11ssp"
                               android:id="@+id/tv_latest_price"
                               android:padding="@dimen/_3sdp"
                               android:gravity="right"

@@ -52,10 +52,11 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             if (flagData == 1) {
                 list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
                 selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
-            } else {
+            } /*else {
                 symbol = intent.getStringExtra(StockConstant.SYMBOL)
-            }
+            }*/
         }
+        getData(stockId.toString())
 
         if (flagData == 1) {
             if (list != null) {
@@ -75,7 +76,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             ivTeam.visibility = View.GONE
         }
 
-        getData(stockId.toString())
+
         /*  if (list!!.get(position).getAddedStock().equals("0")) {
               list!!.get(position).addedStock = "1";
           } else if (list!!.get(position).getAddedStock().equals("1"))
@@ -164,7 +165,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 val fragment: NewsFragment = NewsFragment()
                 var nd: Bundle = Bundle()
                 if (list != null)
-                    nd.putString("Stockname", list!!.get(position).symbol)
+                    nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
                 setFragment(fragment, nd);
@@ -285,7 +286,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                         symbol = response.body()!!.stock!!.get(0).symbol
                         val fragment: ChartFragment = ChartFragment()
                         var nd: Bundle = Bundle()
-                        nd.putString("Stockname", response.body()!!.stock!!.get(position).symbol)
+                        nd.putString("Stockname", symbol)
                         setFragment(fragment, nd);
                         setStockData(response.body()!!.stock)
                         d.dismiss()

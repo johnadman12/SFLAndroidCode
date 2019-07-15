@@ -45,12 +45,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         }
 
         if (totalChange != null) {
-            if (totalChange.contains("-"))
+            val totalChange1: Double = totalChange.substring(0, totalChange.length - 1).toDouble()
+            if (totalChange1 < 0.0)
                 rel.setBackgroundResource(R.mipmap.redcircle)
-            else if (totalChange.equals("0.0", true))
-                rel.setBackgroundResource(R.mipmap.graycircle)
-            else
+            else if (totalChange1 > 0.0)
                 rel.setBackgroundResource(R.mipmap.greencircle)
+            else
+                rel.setBackgroundResource(R.mipmap.graycircle)
             tvTotal.setText(totalChange)
         }
         initViews()

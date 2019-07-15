@@ -53,6 +53,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
             }
         }
+        getData(stockId.toString())
 
         if (flagData == 1) {
             if (list != null) {
@@ -72,7 +73,6 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             ivTeam.visibility = GONE
         }
 
-        getData(stockId.toString())
 
         ll_news.setOnClickListener(this);
         img_btn_back.setOnClickListener(this);
@@ -103,7 +103,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
 
                         val fragment: ChartFragment = ChartFragment()
                         var nd: Bundle = Bundle()
-                        nd.putString("Stockname", response.body()!!.stock!!.get(0).symbol)
+                        nd.putString("Stockname",symbol)
                         setFragment(fragment, nd);
                         setStockData(response.body()!!.stock)
                         d.dismiss()

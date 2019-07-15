@@ -39,17 +39,18 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.chart11 -> {
-                startActivity(
-                    Intent(activity, StockChartActivity::class.java)
-                        .putExtra(StockConstant.CHART, data)
-                )
+                if (data != null)
+                    startActivity(
+                        Intent(activity, StockChartActivity::class.java)
+                            .putExtra(StockConstant.CHART, data)
+                    )
             }
 
             R.id.imgPlus -> {
-               chart11.zoomOut()
+                chart11.zoomOut()
             }
             R.id.imgMinus -> {
-               chart11.zoomIn()
+                chart11.zoomIn()
             }
         }
     }

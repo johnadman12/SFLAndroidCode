@@ -115,6 +115,7 @@ class ViewPagerTraining(
         )
 
         tvTime.setText(parseDateToddMMyyyy(list.get(position).scheduleStart))
+
         if (!list.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
@@ -133,7 +134,6 @@ class ViewPagerTraining(
                 llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
                 tvTimeLeft.setText("Contest \n Started")
                 tvHint.visibility = GONE
-
             } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -142,7 +142,7 @@ class ViewPagerTraining(
                         val diffSec = diff / 1000
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
-                        tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: ")
+                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                     }
 
                     override fun onFinish() {
@@ -151,7 +151,7 @@ class ViewPagerTraining(
                 newtimer.start()
 
             } else {
-                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val cTime = Calendar.getInstance()
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
@@ -168,12 +168,18 @@ class ViewPagerTraining(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        } else if (diff.toString().contains("-")) {
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(context, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            tvTimeLeft.setText("Contest \n Started")
+                            tvHint.visibility = GONE
                         } else {
                             val diffSec = diff / 1000
                             val seconds = diffSec % 60
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
-
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                         }
                     }
@@ -184,6 +190,7 @@ class ViewPagerTraining(
                 newtimer.start()
             }
         }
+
         val contestLeft: Double =
             list.get(position).contestSize.toDouble() - list.get(position).contest_teamremaining.toDouble()
         circular_progress.isAnimationEnabled

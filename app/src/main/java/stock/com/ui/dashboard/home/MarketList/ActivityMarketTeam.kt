@@ -726,7 +726,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
-                    getTeamAgainlist()
+                    flagPriceLTH=false
+                    flagDayHTL=false
+                    flagAlphaSort=false
+                    flagDayLTH=false
+                    flagPriceLTH=false
+                    flagPriceHTL=false
+                    flagVolume=false
+                    getMarketTeamlist()
                 }
             }
         }

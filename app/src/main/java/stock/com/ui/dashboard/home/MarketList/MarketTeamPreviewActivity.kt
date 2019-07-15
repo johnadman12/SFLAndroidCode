@@ -43,14 +43,16 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 
-        if (totalChange != null)
-            if (totalChange.contains("-"))
+        if (totalChange != null) {
+            val totalChange1: Double = totalChange.substring(0, totalChange.length - 1).toDouble()
+            if (totalChange1 < 0.0)
                 rel.setBackgroundResource(R.mipmap.redcircle)
-            else if (totalChange.equals("0.0", true))
-                rel.setBackgroundResource(R.mipmap.graycircle)
-            else
+            else if (totalChange1 > 0.0)
                 rel.setBackgroundResource(R.mipmap.greencircle)
-        tvTotal.setText(totalChange)
+            else
+                rel.setBackgroundResource(R.mipmap.graycircle)
+            tvTotal.setText(totalChange)
+        }
         initViews()
 
     }
@@ -102,8 +104,8 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
                 arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            /*    price3.setTextColor(ContextCompat.getColor(this, R.color.green))
-                percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))*/
+                /*    price3.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))*/
             }
 
 

@@ -68,10 +68,10 @@ class FilterPojo : BasePojo() {
     inner class EntryFee {
         @SerializedName("min_value")
         @Expose
-        var minValue: Int? = null
+        var minValue: String? = null
         @SerializedName("max_value")
         @Expose
-        var maxValue: Int? = null
+        var maxValue: String? = null
 
     }
 }

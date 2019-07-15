@@ -8,7 +8,13 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.security.cert.CertificateException
 import java.util.concurrent.TimeUnit
+import android.annotation.SuppressLint
+import java.security.SecureRandom
+import java.security.cert.X509Certificate
+import javax.net.ssl.*
+
 
 object ApiClient {
 
@@ -80,7 +86,12 @@ object ApiClient {
             .addInterceptor(logging)
             .build()
     }
+
+
+
 }
+
+
 /*class ApiClient {
     companion object {
         *//**

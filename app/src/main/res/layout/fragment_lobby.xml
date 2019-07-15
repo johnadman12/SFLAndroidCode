@@ -48,6 +48,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Browse Contests"
                                 android:padding="@dimen/_2sdp"
+                                android:textSize="@dimen/_12ssp"
                                 android:textColor="@color/textColorOffWhite"
                                 style="@style/TextStyleNormal"/>
                     </LinearLayout>

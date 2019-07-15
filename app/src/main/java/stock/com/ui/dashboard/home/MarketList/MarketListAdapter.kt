@@ -60,7 +60,7 @@ class MarketListAdapter(
                 if (mContestOld!!.get(position).latestPrice.toDouble() < 1)
                     holder.itemView.tvPercentage.setText(
                         "$" + String.format(
-                            "%.6f",
+                            "%.4f",
                             mContestOld!!.get(position).latestPrice.toDouble()
                         )
                     )
@@ -103,7 +103,7 @@ class MarketListAdapter(
                                 if (mContest!!.get(position).latestPrice.toDouble() < 1)
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
-                                            "%.6f", mContest!!.get(position).latestPrice.toDouble()
+                                            "%.4f", mContest!!.get(position).latestPrice.toDouble()
                                         )
                                     )
                                 else
@@ -173,7 +173,7 @@ class MarketListAdapter(
                                 if (mContest.get(position).latestPrice.toDouble() < 1)
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
-                                            "%.6f",
+                                            "%.4f",
                                             mContest.get(position).latestPrice.toDouble()
                                         )
                                     )
@@ -223,7 +223,7 @@ class MarketListAdapter(
                         if (mContest!!.get(position).latestPrice.toDouble() < 1)
                             holder.itemView.tvPercentage.setText(
                                 "$" + String.format(
-                                    "%.6f",
+                                    "%.4f",
                                     mContest!!.get(position).latestPrice.toDouble()
                                 )
                             )

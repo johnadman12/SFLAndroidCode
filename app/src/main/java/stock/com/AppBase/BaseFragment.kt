@@ -34,17 +34,18 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBar(message: String, type: String) {
-        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
+            .setIconSize(40)
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
-                    activity!!.assets,
-                    "fonts/faktpro_medium.ttf"
+                    activity!!.getAssets(),
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)
@@ -52,17 +53,18 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBarOrange(message: String, type: String) {
-        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
+            .setIconSize(40)
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
-                    activity!!.assets,
-                    "fonts/faktpro_medium.ttf"
+                    activity!!.getAssets(),
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)
@@ -70,22 +72,25 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBarRed(message: String, type: String) {
-        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
-            .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
+        Sneaker.with(this) // Activity, Fragment or ViewGroup
+            .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
+            .setIconSize(40)
             .setDuration(4000) // Time duration to show
             .autoHide(true) // Auto hide Sneaker view
             .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
             .setIcon(R.mipmap.ic_launcher, R.color.transparent, false) // Icon, icon tint color and circular icon view
             .setTypeface(
                 Typeface.createFromAsset(
-                    activity!!.assets,
-                    "fonts/faktpro_medium.ttf"
+                    activity!!.getAssets(),
+                    "fonts/faktpro_semibold.ttf"
                 )
             )
             .setCornerRadius(10, 2)
             .sneak(R.color.redcolorTrans) // Sneak with background color
     }
+
+
 //    fun isNetworkAvailable() : Boolean{
 //        if (NetworkUtils.isConnected()) {
 //            return true
@@ -202,6 +207,7 @@ open class BaseFragment : Fragment() {
         edit.putString(StockConstant.COUNTRY_WATCHLIST_TYPE, s)
         edit.apply()
     }
+
     fun setSectorFilter(s: String, key: String) {
         val prefs = activity!!.getSharedPreferences(StockConstant.PREF_NAME, Context.MODE_PRIVATE)
         val edit = prefs.edit()

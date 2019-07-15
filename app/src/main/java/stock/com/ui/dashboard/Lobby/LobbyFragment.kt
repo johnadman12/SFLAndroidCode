@@ -62,13 +62,11 @@ class LobbyFragment : BaseFragment() {
 
 
         ll_filter.setOnClickListener {
-            //            startActivity(Intent(context, ActivityFilter::class.java))
             val intent = Intent(context, ActivityFilter::class.java)
             startActivityForResult(intent, RESULT_CODE_FILTER)
         }
 
         ll_codejoin.setOnClickListener {
-            //            showViewContestDialogue()
             startActivity(Intent(activity!!, ActivityCodeJoin::class.java))
         }
         ll_createContest.setOnClickListener {
@@ -88,7 +86,7 @@ class LobbyFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                }, 5000)
+                }, 1500)
                 getContestlist()
             }
         })

@@ -139,12 +139,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 //                    recyclerView_stock_name.smoothScrollToPosition(count);
                     var dx = count
                     recyclerView_stock_name.scrollBy(count, visibleItemCount + totalItemCount)
-                    handler.postDelayed(this, 500);
+                    handler.postDelayed(this, 100);
 
                 }
             }
         }
-        handler.postDelayed(runnable, 100);
+        handler.postDelayed(runnable, 0);
 
     }
 
