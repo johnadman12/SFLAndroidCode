@@ -126,10 +126,10 @@ class WatchListActivity : BaseActivity() {
                     if (response.body()!!.status.equals("1")) {
                         // displayToast("dsdadadadada"+""+response.body()!!.stockList!!.size);
                         if (response.body()!!.stock!!.size != 0) {
-                          /*  setAssetWatchlistFilter(" ")
+                            setAssetWatchlistFilter(" ")
                             setSectorWatchlistFilter(" ")
                             setCountryWatchlistFilter(" ")
-                            setMarketWatchlistFilter(" ")*/
+                            setMarketWatchlistFilter(" ")
                             //setWatchListAdapter(response.body()!!.stockList!!);
                             list!!.clear()
                             list!!.addAll(response.body()!!.stock!!);

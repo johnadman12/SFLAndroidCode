@@ -80,8 +80,8 @@ object AppDelegate {
     var displayMetrics: DisplayMetrics? = null
     val LIKE = 1
     val DISLIKE = 2
-    var BANNER_URL = "http://18.188.34.216/webadmin/uploads/banner/"
-    var EXCHANGE_URL = "http://18.188.34.216/webadmin/uploads/exchange/"
+    var BANNER_URL = "https://www.dfxchange.com/dfxchange/webadmin/webroot/uploads/banner/"
+    var EXCHANGE_URL = "https://www.dfxchange.com/dfxchange/webadmin/webroot/uploads/exchange/"
     private var builder: Dialog? = null
     private var mInstance: AppDelegate? = null
 

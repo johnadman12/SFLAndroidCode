@@ -13,6 +13,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +46,10 @@ import java.util.*
 class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var flag: Boolean = false
+    var marketname: String = ""
     var exchangeid: String = ""
+    var listScores: MutableList<ContestDetail.Score>? = null
+    var listMy: MutableList<ContestDetail.Score>? = null
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_btn_close -> {
@@ -54,6 +58,34 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
+            R.id.tvTeams -> {
+                changeTextColor(tvTeams, ContextCompat.getColor(this, R.color.white))
+                changeBackGroundColor(tvTeams, ContextCompat.getColor(this, R.color.colorbutton))
+
+                changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.textColorLightBlack))
+                changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
+                if (listScores!!.size > 0) {
+                    setScoreAdapter(listScores!!, marketname)
+                }
+
+            }
+            R.id.tvTeamsMy -> {
+                changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
+                changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.colorbutton))
+
+                changeTextColor(tvTeams, ContextCompat.getColor(this, R.color.textColorLightBlack))
+                changeBackGroundColor(tvTeams, ContextCompat.getColor(this, R.color.white))
+                if (listScores!!.size > 0) {
+                    listMy!!.clear()
+                    for (i in 0 until listScores!!.size) {
+                        if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
+                            listMy!!.add(listScores!!.get(i))
+                        }
+                    }
+                    tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
+                    setScoreAdapter(listMy!!, marketname)
+                }
+            }
         }
     }
 
@@ -61,19 +93,23 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.upcoming_contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
-        initViews()
-    }
-
-
-    private fun initViews() {
         if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getStringExtra(StockConstant.EXCHANGEID)
         }
-        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        initViews()
+    }
+
+    private fun initViews() {
         getContestDetail()
+        circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
     }
 
     @SuppressLint("WrongConstant")
@@ -108,18 +144,26 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         if (response.body()!!.scores.size == 0)
-                            tvTeams.setText("0 Team")
+                            tvTeams.setText("Team Joined (0)")
                         else if (response.body()!!.scores.size == 1)
-                            tvTeams.setText("1 Team")
+                            tvTeams.setText("Team Joined (1)")
                         else
-                            tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
+                            tvTeams.setText(" Teams Joined (" + response.body()!!.scores.size.toString() + ")")
+
                         if (response.body()!!.rules.size == 0)
                             tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
-                        setScoreAdapter(response.body()!!.scores, response.body()!!.contest.get(0).marketname)
+                        listScores = response.body()!!.scores
+                        marketname = response.body()!!.contest.get(0).marketname
+
+                        for (i in 0 until listScores!!.size) {
+                            if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
+                                listMy!!.add(listScores!!.get(i))
+                            }
+                        }
+                        tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
+                        setScoreAdapter(listScores!!, marketname)
                         setData(response.body()!!.contest.get(0))
                     }
                 } else {
@@ -140,7 +184,6 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         entry_fee.setText(contest.entryFees)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
-
         var amount: String = contest.entryFees.substring(1)
         if (amount.equals("0") && contest.priceBreak.size <= 0) {
             tvTotalWinnings.visibility = View.GONE
@@ -171,7 +214,6 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                     startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
                 }
         }
-
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
         if (contest.marketname.equals("Equity")) {
             Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
@@ -339,5 +381,13 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             }
         }
 
+    }
+
+    private fun changeTextColor(textView: TextView, color: Int) {
+        textView.setTextColor(color)
+    }
+
+    private fun changeBackGroundColor(textView: TextView, color: Int) {
+        textView.setBackgroundColor(color);
     }
 }

@@ -42,6 +42,12 @@ class WatchListAdapter_(
         holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
         holder.itemView.tv_id.setText(searchList!!.get(position).id);
         holder.itemView.tv_sector.setText(searchList!!.get(position).companyName);
+        if(searchList!!.get(position).marketname.contains("Cryptocurrencies")){
+            holder.itemView.marketName.setText("Crypto");
+        }else{
+            holder.itemView.marketName.setText(searchList!!.get(position).changePercent);
+        }
+
         holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
         holder.itemView.tv_market_open.setText(searchList!!.get(position).latestPrice);
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)

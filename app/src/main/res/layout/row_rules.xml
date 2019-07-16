@@ -7,8 +7,8 @@
               android:layout_height="wrap_content">
     <!--@drawable/srh_cate_checkbox_select-->
     <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_5sdp"
-            android:layout_height="@dimen/_5sdp"
+            android:layout_width="@dimen/_8sdp"
+            android:layout_height="@dimen/_8sdp"
             android:layout_gravity="center"
             android:src="@drawable/default_dot"/>
     <androidx.appcompat.widget.AppCompatTextView

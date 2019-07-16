@@ -113,6 +113,8 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                         setSectorAdapter(response.body()!!.sectorList!!)
                     } else if (response.body()!!.status == "2") {
                         appLogout();
+                    } else if (response.body()!!.status == "0") {
+                        displayToast("No Filters", "error")
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -265,34 +267,31 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    if (response.body()!!.status.equals("1")) {
-                        if (response.body()!!.status == "1") {
-                            Handler().postDelayed(Runnable {
-                            }, 100)
-                            var testing = ArrayList<WatchlistPojo.WatchStock>()
-                            testing = response.body()!!.stock!!
-                            Log.e("nckshbj", testing.size.toString())
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                        }, 100)
+                        var testing = ArrayList<WatchlistPojo.WatchStock>()
+                        testing = response.body()!!.stock!!
+                        Log.e("nckshbj", testing.size.toString())
 
-                            if (testing != null && testing.size != 0) {
-                                val resultIntent = Intent()
-                                resultIntent.putExtra("stocklist", testing)
-                                resultIntent.putExtra("resetStockfilter", "0")
-                                setResult(Activity.RESULT_OK, resultIntent)
-                                finish()
-                            } else if (response.body()!!.status == "2") {
-                                appLogout();
-                            } else {
-                                displayToast("no data exist","warning")
-                                finish()
-                            }
+                        if (testing != null && testing.size != 0) {
+                            val resultIntent = Intent()
+                            resultIntent.putExtra("stocklist", testing)
+                            resultIntent.putExtra("resetStockfilter", "0")
+                            setResult(Activity.RESULT_OK, resultIntent)
+                            finish()
                         }
-                    } else if (response.body()!!.status.equals("2")) {
+                    } else if (response.body()!!.status == "2") {
                         appLogout();
+                    } else if (response.body()!!.status == "0") {
+                        displayToast("No Filters", "error")
+                        finish()
+                    } else {
+                        displayToast("no data exist", "warning")
+                        finish()
                     }
-                } else {
-                    displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
                 }
+
             }
 
             override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {

@@ -16,43 +16,64 @@
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
             <include
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_5sdp"
                     layout="@layout/row_contest_detail"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvContestRules"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     style="@style/TextStyleSemiBold"
+                    android:id="@+id/tvContestRules"
                     android:textSize="@dimen/_14ssp"
                     android:paddingTop="@dimen/_5sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:text="Contest Rules"
             />
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_rules"
                     android:layout_width="match_parent"
-
-                    android:layout_margin="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTeams"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    style="@style/TextStyleSemiBold"
-                    android:textSize="@dimen/_14ssp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:text="Teams"
-                    android:layout_marginLeft="@dimen/_10sdp"
-            />
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_12ssp"
+                        android:gravity="center"
+                        android:background="@color/colorbutton"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="Teams Joined"
+                        android:id="@+id/tvTeams"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorLightBlack"
+                        style="@style/TextStyleSemiBold"
+                        android:textSize="@dimen/_12ssp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:text="My Team(0)"
+                        android:gravity="center"
+                        android:id="@+id/tvTeamsMy"/>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_score"
                     android:layout_width="match_parent"

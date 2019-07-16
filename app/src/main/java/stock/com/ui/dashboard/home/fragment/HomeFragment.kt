@@ -308,8 +308,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<HomePojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
+//                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -321,15 +320,15 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     fun getTrainingContentlist() {
-        val d = StockDialog.showLoading(activity!!)
-        d.setCanceledOnTouchOutside(false)
+       /* val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<TrainingPojo> =
             apiService.getTrainingContest()
         call.enqueue(object : Callback<TrainingPojo> {
 
             override fun onResponse(call: Call<TrainingPojo>, response: Response<TrainingPojo>) {
-                d.dismiss()
+//                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setTrainingContestAdapter(response.body()!!.traniningContest!!)
@@ -338,14 +337,13 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<TrainingPojo>, t: Throwable) {
-                println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }

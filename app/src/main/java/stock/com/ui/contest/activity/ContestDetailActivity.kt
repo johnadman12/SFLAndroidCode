@@ -15,6 +15,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -47,12 +48,16 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var exchangeid: Int = 0
+    var marketname: String = ""
     var flag: Boolean = false
+    var listScores: MutableList<ContestDetail.Score>? = null
+    var listMy: MutableList<ContestDetail.Score>? = null
     var activity: DashBoardActivity = DashBoardActivity()
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -62,6 +67,34 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
+            R.id.tvTeams -> {
+                changeTextColor(tvTeams, ContextCompat.getColor(this, R.color.white))
+                changeBackGroundColor(tvTeams, ContextCompat.getColor(this, R.color.colorbutton))
+
+                changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.textColorLightBlack))
+                changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
+                if (listScores!!.size > 0) {
+                    setScoreAdapter(listScores!!, marketname)
+                }
+
+            }
+            R.id.tvTeamsMy -> {
+                changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
+                changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.colorbutton))
+
+                changeTextColor(tvTeams, ContextCompat.getColor(this, R.color.textColorLightBlack))
+                changeBackGroundColor(tvTeams, ContextCompat.getColor(this, R.color.white))
+                if (listScores!!.size > 0) {
+                    listMy!!.clear()
+                    for (i in 0 until listScores!!.size) {
+                        if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
+                            listMy!!.add(listScores!!.get(i))
+                        }
+                    }
+                    tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
+                    setScoreAdapter(listMy!!, marketname)
+                }
+            }
         }
     }
 
@@ -70,10 +103,23 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
         activity = DashBoardActivity()
+        changeTextColor(tvTeams, ContextCompat.getColor(this, R.color.white))
+        changeBackGroundColor(tvTeams, ContextCompat.getColor(this, R.color.colorbutton))
+
+
+        changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.textColorLightBlack))
+        changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
+
+        listScores = ArrayList()
+        listMy = ArrayList()
         if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
+        img_btn_back.setOnClickListener(this)
+        img_btn_close.setOnClickListener(this)
+        tvTeams.setOnClickListener(this)
+        tvTeamsMy.setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -83,12 +129,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun initViews() {
-        img_btn_back.setOnClickListener(this)
-        img_btn_close.setOnClickListener(this)
         getContestDetail()
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
-
-
     }
 
     @SuppressLint("WrongConstant")
@@ -124,16 +166,25 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (response.body()!!.scores.size == 0)
-                            tvTeams.setText("0 Team")
+                            tvTeams.setText("Team Joined (0)")
                         else if (response.body()!!.scores.size == 1)
-                            tvTeams.setText("1 Team")
+                            tvTeams.setText("Team Joined (1)")
                         else
-                            tvTeams.setText(response.body()!!.scores.size.toString() + " Teams")
+                            tvTeams.setText(" Teams Joined (" + response.body()!!.scores.size.toString() + ")")
 
                         if (response.body()!!.rules.size == 0)
                             tvContestRules.visibility = View.GONE
                         setRulesAdapter(response.body()!!.rules)
-                        setScoreAdapter(response.body()!!.scores, response.body()!!.contest.get(0).marketname)
+                        listScores = response.body()!!.scores
+                        marketname = response.body()!!.contest.get(0).marketname
+
+                        for (i in 0 until listScores!!.size) {
+                            if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
+                                listMy!!.add(listScores!!.get(i))
+                            }
+                        }
+                        tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
+                        setScoreAdapter(listScores!!, marketname)
                         setData(response.body()!!.contest.get(0))
                     }
                 } else {
@@ -353,6 +404,14 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             }
         }
 
+    }
+
+    private fun changeTextColor(textView: TextView, color: Int) {
+        textView.setTextColor(color)
+    }
+
+    private fun changeBackGroundColor(textView: TextView, color: Int) {
+        textView.setBackgroundColor(color);
     }
 
 }

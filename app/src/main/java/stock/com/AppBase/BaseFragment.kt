@@ -34,7 +34,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun showSneakBar(message: String, type: String) {
-        Sneaker.with(this) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
@@ -52,8 +52,9 @@ open class BaseFragment : Fragment() {
             .sneak(R.color.green_trans) // Sneak with background color
     }
 
+
     fun showSneakBarOrange(message: String, type: String) {
-        Sneaker.with(this) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setDuration(4000) // Time duration to show
@@ -70,9 +71,8 @@ open class BaseFragment : Fragment() {
             .setCornerRadius(10, 2)
             .sneak(R.color.orange) // Sneak with background color
     }
-
     fun showSneakBarRed(message: String, type: String) {
-        Sneaker.with(this) // Activity, Fragment or ViewGroup
+        Sneaker.with(activity!!) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
             .setIconSize(40)
@@ -89,7 +89,6 @@ open class BaseFragment : Fragment() {
             .setCornerRadius(10, 2)
             .sneak(R.color.redcolorTrans) // Sneak with background color
     }
-
 
 //    fun isNetworkAvailable() : Boolean{
 //        if (NetworkUtils.isConnected()) {
