@@ -20,8 +20,7 @@ import stock.com.ui.watch_list.WatchListActivity
 class SectorAdapter(
     val mContext: Context,
     val searchList: List<WatchListFilterPojo.sector>
-    , val filter: String,
-    val onItemCheckListener: OnItemCheckListener
+    , val filter: String
 ) :
     RecyclerView.Adapter<SectorAdapter.WatchListHolder>() {
     var checkedHolder: BooleanArray? = null;
@@ -34,10 +33,10 @@ class SectorAdapter(
         createCheckedHolder();
     }
 
-    interface OnItemCheckListener {
+  /*  interface OnItemCheckListener {
         fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
+        fun onItemUncheck(item: Int)
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_contest_list, parent, false)
@@ -53,15 +52,16 @@ class SectorAdapter(
             if (currentItem.sector.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.sector);
+                    checkedHolder!![position] = true;
+                //onItemCheckListener.onItemCheck(currentItem.sector);
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.sector);
+                //onItemCheckListener.onItemCheck(currentItem.sector);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.sector);
+                //onItemCheckListener.onItemUncheck(position);
                 checkedHolder!![position] = false;
             }
         }
@@ -77,6 +77,17 @@ class SectorAdapter(
             itemView.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
+    }
+
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until searchList.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) searchList.get(i).sector else ids + "," + searchList.get(i).sector;
+            }
+        }
+        Log.d("SelectedIds","----"+ids)
+        return ids;
     }
 
 }

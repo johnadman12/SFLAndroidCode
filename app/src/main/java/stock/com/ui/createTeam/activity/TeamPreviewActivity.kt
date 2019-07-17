@@ -24,6 +24,7 @@ import stock.com.utils.StockConstant
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     var totalChange: String = ""
+    var totalChange1: Double = 0.0
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_back -> {
@@ -44,8 +45,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 
-        if (totalChange != null) {
-            val totalChange1: Double = totalChange.substring(0, totalChange.length - 1).toDouble()
+        if (!TextUtils.isEmpty(totalChange)) {
+            if (totalChange.contains("$"))
+                totalChange1 = totalChange.substring(0, totalChange.length - 1).toDouble()
+            else
+                totalChange1 = totalChange.toDouble()
             if (totalChange1 < 0.0)
                 rel.setBackgroundResource(R.mipmap.redcircle)
             else if (totalChange1 > 0.0)

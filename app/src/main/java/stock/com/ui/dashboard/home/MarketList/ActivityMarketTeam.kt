@@ -45,6 +45,8 @@ import java.util.ArrayList
 
 class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var marketId: Int = 0
+    var page: Int = 0
+    var limit: Int = 50
     var marketlistAdapter: MarketListAdapter? = null
     private var marketSelectedItems: ArrayList<MarketList.Crypto>? = null
     private var marketRemovedItems: ArrayList<MarketList.Crypto>? = null
@@ -324,6 +326,12 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 callSearch(s.toString())
             }
         })
+        srl_layout.setOnRefreshListener {
+//            page++
+            limit = limit + 50
+            getMarketTeamlist()
+        }
+
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Players!!.layoutManager = llm
@@ -336,16 +344,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        mainHandler = Handler(Looper.getMainLooper())
-        mainHandler.post(object : Runnable {
-            override fun run() {
-                if (flagSearch) {
-                    getMarketTeamlist()
-                }
-                mainHandler.postDelayed(this, 8000)
-            }
+         mainHandler = Handler(Looper.getMainLooper())
+         mainHandler.post(object : Runnable {
+             override fun run() {
+                 if (flagSearch) {
+                     getMarketTeamlist()
+                 }
+                 mainHandler.postDelayed(this, 8000)
+             }
 
-        })
+         })
     }
 
     fun callSearch(c: CharSequence) {
@@ -366,7 +374,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
-            apiService.searchCrypto("crypto", c.toString(), getFromPrefsString(StockConstant.USERID).toString())
+            apiService.searchCrypto(
+                "crypto",
+                c.toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                "0",
+                "50"
+            )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()
@@ -443,15 +457,19 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
     fun getMarketTeamlist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!
+                getFromPrefsString(StockConstant.USERID)!!, page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                srl_layout.isRefreshing = false
                 if (response.body() != null) {
+                    //for show my team
                     if (response.body()!!.status == "1") {
                         if (flagCloning == 2)
                             llMyTeam.visibility = View.GONE
@@ -461,6 +479,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             else if (response.body()!!.myteam.equals("0"))
                                 llMyTeam.visibility = View.GONE
                         }
+                        //flickering
                         if (listOld!!.size > 0) {
                             listOld!!.clear()
                             listOld!!.addAll(list!!)
@@ -469,11 +488,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             listOld!!.addAll(response.body()!!.crypto!!);
                         }
                         list!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.crypto!!);
+//                        listOld!!.addAll(response.body()!!.crypto!!);
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
-//                            listOld!!.get(i).addedToList = 0
 
                         }
                         //sortingConcept
@@ -552,22 +571,23 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter = marketlistAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         setTeamText(marketSelectedItems!!.size.toString())
-//                        d.dismiss()
+                        d.dismiss()
 
                     } else if (response.body()!!.status == "2") {
-//                        d.dismiss()
+                        d.dismiss()
                         appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                    d.dismiss()
+                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                d.dismiss()
+                d.dismiss()
             }
         })
     }
@@ -623,7 +643,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!
+                getFromPrefsString(StockConstant.USERID)!!, "0", "50"
             )
         call.enqueue(object : Callback<MarketList> {
 
@@ -726,13 +746,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
-                    flagPriceLTH=false
-                    flagDayHTL=false
-                    flagAlphaSort=false
-                    flagDayLTH=false
-                    flagPriceLTH=false
-                    flagPriceHTL=false
-                    flagVolume=false
+                    flagPriceLTH = false
+                    flagDayHTL = false
+                    flagAlphaSort = false
+                    flagDayLTH = false
+                    flagPriceLTH = false
+                    flagPriceHTL = false
+                    flagVolume = false
                     getMarketTeamlist()
                 }
             }
@@ -892,6 +912,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        mainHandler.removeCallbacksAndMessages(null);
+//        mainHandler.removeCallbacksAndMessages(null);
     }
 }

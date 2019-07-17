@@ -20,9 +20,7 @@ import stock.com.ui.watch_list.WatchListActivity
 class MarketAdapter(
     val mContext: Context
     , val searchList: List<WatchListFilterPojo.market>
-    , val filter: String,
-    val onItemCheckListener: OnItemCheckListener
-) :
+    , val filter: String) :
     RecyclerView.Adapter<MarketAdapter.WatchListHolder>() {
     var checkedHolder: BooleanArray? = null;
 
@@ -34,10 +32,7 @@ class MarketAdapter(
         createCheckedHolder();
     }
 
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_contest_list, parent, false)
@@ -53,15 +48,13 @@ class MarketAdapter(
             if (currentItem.name.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.name);
+                checkedHolder!![position] = true;
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.name);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.name);
                 checkedHolder!![position] = false;
             }
         }
@@ -78,6 +71,15 @@ class MarketAdapter(
             notifyDataSetChanged()
         }
     }
-
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until searchList.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) searchList.get(i).name else ids + "," + searchList.get(i).name;
+            }
+        }
+        Log.d("SelectedIds","----"+ids)
+        return ids;
+    }
 }
 

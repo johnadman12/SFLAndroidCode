@@ -102,7 +102,7 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
             apiService.getAllUserToInvite(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                contestId
+                contestId, "0", "50"
             )
         call.enqueue(object : Callback<InviteData> {
 

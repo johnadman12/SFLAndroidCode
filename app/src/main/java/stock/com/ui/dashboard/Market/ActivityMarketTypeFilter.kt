@@ -35,7 +35,6 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
 
 class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
-    private var countrySelectedItems: ArrayList<String>? = null
     private var marketSelectedItems: ArrayList<String>? = null
     private var sectorSelectedItems: ArrayList<String>? = null
 
@@ -46,11 +45,13 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
     var isMarket: Int = 0
 
 
+    private var countryAdapter: CountryListAdapter? = null;
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_market_type_filter)
         reset.visibility = View.VISIBLE;
-        countrySelectedItems = ArrayList()
         marketSelectedItems = ArrayList()
         sectorSelectedItems = ArrayList()
         if (intent != null)
@@ -124,7 +125,11 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
             } else {
                 val selectedSector: String = android.text.TextUtils.join(",", sectorSelectedItems)
                 val selectedExchange: String = android.text.TextUtils.join(",", marketSelectedItems)
-                val selectedCountry: String = android.text.TextUtils.join(",", countrySelectedItems)
+
+                var selectedCountry: String="";
+                if(countryAdapter!=null) {
+                     selectedCountry= countryAdapter!!.getSeletedtIds();
+                }
                 Log.e("sectorlist", selectedSector)
                 var resultIntent = Intent()
                 resultIntent.putExtra("sectorlist", selectedSector)
@@ -216,21 +221,23 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
-        recycle_country!!.adapter =
-            CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    countrySelectedItems!!.remove(item);
-                    setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
-                }
 
-                override fun onItemCheck(item: String) {
-                    countrySelectedItems!!.add(item);
-                    setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
-                    Log.e("value", item)
-                }
-            })
+        recycle_country!!.adapter = CountryListAdapter(this, country, countryTypeFilter!!);
+        recycle_country!!.adapter = countryAdapter;
+
+                /*recycle_country!!.adapter =
+                    CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
+                        override fun onItemUncheck(item: String) {
+                            countrySelectedItems!!.remove(item);
+                            setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
+                        }
+                        override fun onItemCheck(item: String) {
+                            countrySelectedItems!!.add(item);
+                            setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
+                            Log.e("value", item)
+                        }
+                    })*/
     }
-
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.llMarket -> {

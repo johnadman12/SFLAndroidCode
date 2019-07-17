@@ -642,7 +642,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.searchExchange(
                 exchangeId.toString(), c.toString(), getFromPrefsString(StockConstant.USERID).toString(),
-                "Equity"
+                "Equity", "0", "50"
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {

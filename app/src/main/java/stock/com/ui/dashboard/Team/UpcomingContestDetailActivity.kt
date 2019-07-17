@@ -48,6 +48,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var flag: Boolean = false
     var marketname: String = ""
     var exchangeid: String = ""
+    var diff: Long = 0
     var listScores: MutableList<ContestDetail.Score>? = null
     var listMy: MutableList<ContestDetail.Score>? = null
     override fun onClick(view: View?) {
@@ -126,7 +127,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
         rv_score!!.adapter =
-            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0, marketname)
+            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 0, marketname, diff)
     }
 
     fun getContestDetail() {
@@ -163,8 +164,8 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                             }
                         }
                         tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
-                        setScoreAdapter(listScores!!, marketname)
                         setData(response.body()!!.contest.get(0))
+                        setScoreAdapter(listScores!!, marketname)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -182,6 +183,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
+        tvContestType.setText(contest.catname)
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
         var amount: String = contest.entryFees.substring(1)
@@ -251,13 +253,13 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
-            val diff = thatDay.timeInMillis - today.timeInMillis
+            diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
                 flag = true
                 AppDelegate.showSneakBarRed(
                     this@UpcomingContestDetailActivity,
-                    "Contest is not live yet.", "DFX"
+                    "Contest is not live yet.", "error"
                 )
                 circular_progress.progressBackgroundColor =
                     ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)

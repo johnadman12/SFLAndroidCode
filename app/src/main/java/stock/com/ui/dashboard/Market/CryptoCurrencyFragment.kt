@@ -271,7 +271,7 @@ class CryptoCurrencyFragment : BaseFragment() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
-            apiService.searchCrypto("crypto", c.toString(), getFromPrefsString(StockConstant.USERID).toString())
+            apiService.searchCrypto("crypto", c.toString(), getFromPrefsString(StockConstant.USERID).toString(), "0", "50")
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()

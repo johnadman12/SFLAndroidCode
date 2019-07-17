@@ -13,6 +13,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -37,24 +38,22 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
 
 class WatchFilterActivity : BaseActivity(), View.OnClickListener {
-    private var countrySelectedItems: ArrayList<String>? = null
-    private var marketSelectedItems: ArrayList<String>? = null
-    private var assetsSelectedItems: ArrayList<String>? = null
-    private var sectorSelectedItems: ArrayList<String>? = null
 
     private var assetsTypeFilter: String? = "";
     private var sectorTypeFilter: String? = "";
     private var marketTypeFilter: String? = "";
     private var countryTypeFilter: String? = "";
+
+    private var sectorAdapter: SectorAdapter? = null;
+    private var assetAdapter: AssetAdapter? = null;
+    private var marketAdapter: MarketAdapter? = null;
+    private var countryAdapter: CountryListAdapter? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_filter)
 
         reset.visibility = View.VISIBLE;
-        countrySelectedItems = ArrayList()
-        marketSelectedItems = ArrayList()
-        assetsSelectedItems = ArrayList()
-        sectorSelectedItems = ArrayList()
         llMarket.setOnClickListener(this);
         ll_assettype.setOnClickListener(this);
         ll_country_list.setOnClickListener(this);
@@ -69,17 +68,25 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                 Country::class.java
             )
         Log.e("json", country.country.toString())
-        setCountryAdapter(country)
+
 
         img_btn_close.setOnClickListener {
             finish()
         }
 
         reset.setOnClickListener {
+
+            setSectorWatchlistFilter("");
+            setAssetWatchlistFilter("");
+            setMarketWatchlistFilter("");
+            setCountryWatchlistFilter("");
+
             val resultIntent = Intent()
             resultIntent.putExtra("resetStockfilter", "1")
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
+
+
         }
         assetsTypeFilter = getFromPrefsString(StockConstant.ASSETS_WATCHLIST_TYPE);
         sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_WATCHLIST_TYPE);
@@ -87,9 +94,23 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE);
 
         getFilterList();
-
+        setCountryAdapter(country)
         btn_apply.setOnClickListener {
-            setWatchlistFilters()
+            if (sectorAdapter != null) {
+                setSectorWatchlistFilter(sectorAdapter!!.getSeletedtIds());
+            }
+            if (assetAdapter != null) {
+                setAssetWatchlistFilter(assetAdapter!!.getSeletedtIds());
+            }
+            if (marketAdapter != null) {
+                setMarketWatchlistFilter(marketAdapter!!.getSeletedtIds());
+            }
+            if (countryAdapter != null) {
+                Log.d("546546464adadad","---"+countryAdapter!!.getSeletedtIds())
+                setCountryWatchlistFilter(countryAdapter!!.getSeletedtIds());
+                Log.d("546546464adadad","---"+getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE))
+            }
+            setWatchlistFilters();
         }
     }
 
@@ -134,20 +155,9 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
     private fun setSectorAdapter(list: ArrayList<WatchListFilterPojo.sector>) {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
-        recycle_sector!!.layoutManager = llm
-        recycle_sector!!.adapter = SectorAdapter(applicationContext!!, list, sectorTypeFilter!!,
-            object : SectorAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    sectorSelectedItems?.remove(item);
-                    setSectorWatchlistFilter(android.text.TextUtils.join(",", sectorSelectedItems));
-
-                }
-
-                override fun onItemCheck(item: String) {
-                    sectorSelectedItems?.add(item)
-                    setSectorWatchlistFilter(android.text.TextUtils.join(",", sectorSelectedItems));
-                }
-            })
+        recycle_sector!!.layoutManager = llm;
+        sectorAdapter = SectorAdapter(applicationContext!!, list, sectorTypeFilter!!)
+        recycle_sector!!.adapter = sectorAdapter;
     }
 
     @SuppressLint("WrongConstant")
@@ -155,19 +165,9 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_market!!.layoutManager = llm
-        recycle_market!!.adapter = MarketAdapter(applicationContext!!, list, marketTypeFilter!!,
-            object : MarketAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    marketSelectedItems?.remove(item);
-                    setMarketWatchlistFilter(android.text.TextUtils.join(",", marketSelectedItems));
+        marketAdapter = MarketAdapter(applicationContext!!, list, marketTypeFilter!!)
+        recycle_market!!.adapter = marketAdapter;
 
-                }
-
-                override fun onItemCheck(item: String) {
-                    marketSelectedItems?.add(item)
-                    setMarketWatchlistFilter(android.text.TextUtils.join(",", marketSelectedItems));
-                }
-            })
     }
 
     @SuppressLint("WrongConstant")
@@ -175,19 +175,10 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_asset_type!!.layoutManager = llm
-        recycle_asset_type!!.adapter = AssetAdapter(applicationContext!!, list, assetsTypeFilter!!,
-            object : AssetAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    assetsSelectedItems?.remove(item);
-                    setAssetWatchlistFilter(android.text.TextUtils.join(",", assetsSelectedItems));
 
-                }
+        assetAdapter = AssetAdapter(applicationContext!!, list, assetsTypeFilter!!)
+        recycle_asset_type!!.adapter = assetAdapter;
 
-                override fun onItemCheck(item: String) {
-                    assetsSelectedItems?.add(item)
-                    setAssetWatchlistFilter(android.text.TextUtils.join(",", assetsSelectedItems));
-                }
-            })
     }
 
     @SuppressLint("WrongConstant")
@@ -195,19 +186,9 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
-        recycle_country!!.adapter =
-            CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    countrySelectedItems!!.remove(item);
-                    setCountryWatchlistFilter(android.text.TextUtils.join(",", countrySelectedItems));
-                }
-
-                override fun onItemCheck(item: String) {
-                    countrySelectedItems!!.add(item);
-                    setCountryWatchlistFilter(android.text.TextUtils.join(",", countrySelectedItems));
-                    Log.e("value", item)
-                }
-            })
+        Log.d("sdadadad646464--","---"+countryTypeFilter)
+        countryAdapter = CountryListAdapter(this, country, countryTypeFilter!!)
+        recycle_country!!.adapter = countryAdapter;
     }
 
     override fun onClick(v: View?) {
@@ -251,6 +232,17 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun setWatchlistFilters() {
+        sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_WATCHLIST_TYPE);
+        assetsTypeFilter = getFromPrefsString(StockConstant.ASSETS_WATCHLIST_TYPE);
+        marketTypeFilter = getFromPrefsString(StockConstant.MARKET_WATCHLIST_TYPE);
+        countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE);
+
+        Log.d("sectorTypeFilter", "---" + sectorTypeFilter);
+        Log.d("sectorTypeFilter", "---" + assetsTypeFilter);
+        Log.d("sectorTypeFilter", "---" + marketTypeFilter);
+        Log.d("sectorTypeFilter", "---" + countryTypeFilter);
+
+
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -258,10 +250,10 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
             apiService.getWatchList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                android.text.TextUtils.join(",", assetsSelectedItems),
-                android.text.TextUtils.join(",", sectorSelectedItems),
-                android.text.TextUtils.join(",", marketSelectedItems),
-                android.text.TextUtils.join(",", countrySelectedItems)
+                assetsTypeFilter!!,
+                sectorTypeFilter!!,
+                marketTypeFilter!!,
+                countryTypeFilter!!
             )
         call.enqueue(object : Callback<WatchlistPojo> {
             override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {

@@ -56,6 +56,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var exchangeid: Int = 0
     var marketname: String = ""
     var flag: Boolean = false
+    var diff: Long = 0
     var listScores: MutableList<ContestDetail.Score>? = null
     var listMy: MutableList<ContestDetail.Score>? = null
     var activity: DashBoardActivity = DashBoardActivity()
@@ -74,7 +75,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 changeTextColor(tvTeamsMy, ContextCompat.getColor(this, R.color.textColorLightBlack))
                 changeBackGroundColor(tvTeamsMy, ContextCompat.getColor(this, R.color.white))
                 if (listScores!!.size > 0) {
-                    setScoreAdapter(listScores!!, marketname)
+                    setScoreAdapter(listScores!!, marketname,diff)
                 }
 
             }
@@ -92,7 +93,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         }
                     }
                     tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
-                    setScoreAdapter(listMy!!, marketname)
+                    setScoreAdapter(listMy!!, marketname,diff)
                 }
             }
         }
@@ -142,12 +143,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>, marketname: String) {
+    private fun setScoreAdapter(scores: MutableList<ContestDetail.Score>, marketname: String, difference: Long) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_score!!.layoutManager = llm
         rv_score!!.adapter =
-            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1, marketname)
+            ScoresAdapter(this, getFromPrefsString(StockConstant.USERID)!!.toInt(), scores, 1, marketname, difference)
     }
 
     fun getContestDetail() {
@@ -184,8 +185,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             }
                         }
                         tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
-                        setScoreAdapter(listScores!!, marketname)
                         setData(response.body()!!.contest.get(0))
+                        setScoreAdapter(listScores!!, marketname, diff)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -203,6 +204,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
+        tvContestType.setText(contest.catname)
         if (contest.marketname.equals("Equity")) {
             Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
                 .into(ivStock)
@@ -277,7 +279,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             val thatDay = Calendar.getInstance()
             thatDay.setTime(date);
             val today = Calendar.getInstance()
-            val diff = thatDay.timeInMillis - today.timeInMillis
+            diff = thatDay.timeInMillis - today.timeInMillis
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
 //                ll_Circular.isEnabled = false

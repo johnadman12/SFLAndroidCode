@@ -108,15 +108,15 @@ open class BaseActivity : AppCompatActivity() {
 
     fun displayToast(message: String, type: String) {
         if (type.equals("error")) {
-            showSneakBarRed(message, type)
+            showSneakBarRed(message)
         } else if (type.equals("sucess")) {
-            showSneakBar(message, type)
+            showSneakBar(message)
         } else if (type.equals("warning")) {
-            showSneakBarOrange(message, type)
+            showSneakBarOrange(message)
         }
     }
 
-    fun showSneakBar(message: String, type: String) {
+    fun showSneakBar(message: String) {
         Sneaker.with(this) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorPrimary) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
@@ -135,7 +135,7 @@ open class BaseActivity : AppCompatActivity() {
             .sneak(R.color.green_trans) // Sneak with background color
     }
 
-    fun showSneakBarOrange(message: String, type: String) {
+    fun showSneakBarOrange(message: String) {
         Sneaker.with(this) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color
@@ -154,7 +154,7 @@ open class BaseActivity : AppCompatActivity() {
             .sneak(R.color.orange) // Sneak with background color
     }
 
-    fun showSneakBarRed(message: String, type: String) {
+    fun showSneakBarRed(message: String) {
         Sneaker.with(this) // Activity, Fragment or ViewGroup
             .setTitle(getString(R.string.app_name), R.color.colorbutton) // Title and title color
             .setMessage(message, R.color.white) // Message and message color

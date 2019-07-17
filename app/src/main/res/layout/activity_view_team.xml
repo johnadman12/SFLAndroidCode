@@ -161,6 +161,7 @@
                         android:layout_height="@dimen/_65sdp"
                         android:background="@mipmap/greencircle"
                         android:layout_alignParentRight="true"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/_10sdp"
                 >
                     <androidx.appcompat.widget.AppCompatTextView

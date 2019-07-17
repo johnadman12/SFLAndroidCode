@@ -26,6 +26,8 @@ class ActivityMyTeam : BaseActivity() {
     var exchangeId: Int = 0
     var marketId: Int = 0
     var contestId: Int = 0
+    var page: Int = 0
+    var limit: Int = 50
     var jsonparams: JsonObject = JsonObject()
     var flagMarket: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,7 @@ class ActivityMyTeam : BaseActivity() {
         StockConstant.ACTIVITIES.add(this)
         if (intent != null)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            flagMarket = intent.getBooleanExtra("flagMarket", false)
+        flagMarket = intent.getBooleanExtra("flagMarket", false)
         if (flagMarket)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         else
@@ -54,7 +56,7 @@ class ActivityMyTeam : BaseActivity() {
             onBackPressed();
         }
 
-        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
+        /*sr2_layout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
 
@@ -67,7 +69,21 @@ class ActivityMyTeam : BaseActivity() {
                 else
                     getTeamlist()
             }
-        })
+        })*/
+        sr2_layout.setOnRefreshListener {
+            Handler().postDelayed({
+            }, 5000)
+            if (flagMarket) {
+                limit=limit+50
+                getMarketTeamlist()
+            }
+            else {
+                limit=limit+50
+                getTeamlist()
+            }
+
+        }
+
         if (flagMarket)
             getMarketTeamlist()
         else
@@ -82,14 +98,13 @@ class ActivityMyTeam : BaseActivity() {
             apiService.getMyTeams(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID)!!,
-                exchangeId.toString()
+                exchangeId.toString(), page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
 
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                sr2_layout.isRefreshing=false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -108,8 +123,7 @@ class ActivityMyTeam : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                sr2_layout.isRefreshing=false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -125,14 +139,13 @@ class ActivityMyTeam : BaseActivity() {
             apiService.getMyMarketTeams(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID)!!,
-                marketId.toString()
+                marketId.toString(), page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
 
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                sr2_layout.isRefreshing=false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -151,8 +164,7 @@ class ActivityMyTeam : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                sr2_layout.isRefreshing=false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -166,7 +178,7 @@ class ActivityMyTeam : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         rvMYTeam!!.layoutManager = llm
         rvMYTeam?.itemAnimator = DefaultItemAnimator()
-        rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam,contestId)
+        rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam, contestId)
     }
 
 

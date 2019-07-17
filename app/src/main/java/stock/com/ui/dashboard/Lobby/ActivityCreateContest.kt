@@ -63,6 +63,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
     var startmilisec: Long? = null
     var startTimemilisec: Long? = null
     var exchangeId: String = ""
+    var flagStartTime: Boolean = false
     var marketId: String = ""
     var joinMultiple: Int = 1
     var entryFee: Long? = null
@@ -133,6 +134,8 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 timePicker.hour = hours.toInt()
                 if (diff.toString().contains("-"))
                     displayToast("you can't select previous time", "warning")
+                else if (diff < 1800000)
+                    displayToast("Oops! Start time should be 30 min later from current time", "warning")
                 else
                     updateTime(startTime)
 
@@ -179,6 +182,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
             )
             dialog.datePicker.minDate = System.currentTimeMillis()
             dialog.show()
+            startTime.setText("")
         }
 
         startTime.setOnClickListener {
@@ -196,9 +200,9 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                     myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false
                 )
                 dialog.updateTime(myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE))
-//                dialog.setMinTime( myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE));
                 dialog.show()
             }
+            endTime.setText("")
         }
         edtWinningAmount.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -211,17 +215,23 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
             override fun afterTextChanged(s: Editable) {
                 var original = s.toString()
                 sSports = edtSports.text.toString()
-                if (original.length != 0) {
-                    if (original.toInt() <= 10000) {
-                        if (!TextUtils.isEmpty(sSports) && sSports.toInt() == 0) {
-                            calculateContestFee(edtWinningAmount.text.toString(), sSports)
-                        } else {
-                            edtSports.setText("")
+                try {
+                    if (!TextUtils.isEmpty(original))
+                        if (original.length > 0.0) {
+                            if (original.toDouble() <= 10000) {
+                                if (!TextUtils.isEmpty(sSports) && sSports.toDouble() == 0.0) {
+                                    calculateContestFee(edtWinningAmount.text.toString(), sSports)
+                                } else {
+                                    edtSports.setText("")
+                                }
+                            } else {
+                                displayToast("Amount cannot be exceed from 10k", "error")
+                            }
                         }
-                    } else {
-                        displayToast("Amount cannot be exceed from 10k", "error")
-                    }
+                } catch (e: Exception) {
+
                 }
+
             }
         })
 
@@ -294,7 +304,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
     fun calculateContestFee(winAmount: String, s1: String) {
         admission_comm = winAmount.toLong() * 20 / 100
         val collection: Long = (winAmount.toLong() * 100) / 100 - admission_comm!!
-        entryFee= collection / s1.toLong()
+        entryFee = collection / s1.toLong()
         tvContestFee.setText("$" + entryFee.toString())
     }
 
@@ -412,31 +422,31 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
         var amount: String = edtWinningAmount.text.toString()
         var spots: String = edtSports.text.toString()
         if (TextUtils.isEmpty(startDate.text)) {
-            showSneakBarRed("Please Select StartDate First", "error")
+            displayToast("Please Select StartDate First", "error")
             return false
         } else if (TextUtils.isEmpty(startTime.text)) {
-            showSneakBarRed("Please Select StartTime First", "error")
+            displayToast("Please Select StartTime First", "error")
             return false
         } else if (TextUtils.isEmpty(endDate.text)) {
-            showSneakBarRed("Please Select EndDate First", "error")
+            displayToast("Please Select EndDate First", "error")
             return false
         } else if (TextUtils.isEmpty(endTime.text)) {
-            showSneakBarRed("Please Select EndTime First", "error")
+            displayToast("Please Select EndTime First", "error")
             return false
         } else if (TextUtils.isEmpty(spinText1.text)) {
-            showSneakBarRed("Please Select Market First", "error")
+            displayToast("Please Select Market First", "error")
             return false
         } else if (TextUtils.isEmpty(edtWinningAmount.text.toString())) {
-            showSneakBarRed("Please put some amount to create contest", "error")
+            displayToast("Please put some amount to create contest", "error")
             return false
         } else if (amount.toLong() < 100 || amount.toLong() > (10000)) {
-            showSneakBarRed("Amount should be in 100 - 10000 range", "error")
+            displayToast("Amount should be in 100 - 10000 range", "error")
             return false
         } else if (TextUtils.isEmpty(edtSports.text.toString())) {
-            showSneakBarRed("Please provide contest size", "error")
+            displayToast("Please provide contest size", "error")
             return false
         } else if (spots.toLong() < 2 || spots.toLong() > 100) {
-            showSneakBarRed("Spots should be between 2-100", "error")
+            displayToast("Spots should be between 2-100", "error")
             return false
         }
         return true

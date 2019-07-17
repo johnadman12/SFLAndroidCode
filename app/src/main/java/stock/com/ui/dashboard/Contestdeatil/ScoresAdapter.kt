@@ -18,6 +18,7 @@ import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.ContestDetail
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 
 class ScoresAdapter(
@@ -25,7 +26,8 @@ class ScoresAdapter(
     val userId: Int,
     val scores: MutableList<ContestDetail.Score>,
     val flag: Int,
-    val marketName: String
+    val marketName: String,
+    val difference: Long
 ) : RecyclerView.Adapter<ScoresAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -42,32 +44,36 @@ class ScoresAdapter(
         Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
 
         holder.itemView.ll_n_r.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
-                    StockConstant.FRIENDID, scores.get(position).userid.toString()
+            if (userId != scores.get(position).userid) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                        StockConstant.FRIENDID, scores.get(position).userid.toString()
+                    )
                 )
-            )
+            }
         }
 //        if (flag == 0) {
         holder.itemView.setOnClickListener {
-            if (userId == scores.get(position).userid) {
-                if (!TextUtils.isEmpty(marketName) && marketName.equals("Equity"))
-                    mContext.startActivity(
-                        Intent(mContext, TeamPreviewActivity::class.java)
-                            .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
-                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
-                    ) else
-                    mContext.startActivity(
-                        Intent(mContext, MarketTeamPreviewActivity::class.java)
-                            .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
-                            .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
-                    )
+            if (difference > 0) {
+                if (userId == scores.get(position).userid) {
+                    if (!TextUtils.isEmpty(marketName) && marketName.equals("Equity"))
+                        mContext.startActivity(
+                            Intent(mContext, TeamPreviewActivity::class.java)
+                                .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                                .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
+                        ) else
+                        mContext.startActivity(
+                            Intent(mContext, MarketTeamPreviewActivity::class.java)
+                                .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                                .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
+                        )
+                }
             } else {
-
+                AppDelegate.showToast(mContext, "contest not started yet")
             }
-        }
 //        }
 
+        }
     }
 
 

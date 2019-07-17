@@ -16,9 +16,7 @@ import stock.com.ui.pojo.FilterPojo
 class CountryListAdapter(
     val mContext: Context,
     val mContest: Country,
-    val filters:String,
-    val onItemCheckListener: OnItemCheckListener
-) :
+    val filters:String) :
     RecyclerView.Adapter<CountryListAdapter.Countryclass>() {
 
     var checkedHolder: BooleanArray?=null;
@@ -36,10 +34,7 @@ class CountryListAdapter(
         return Countryclass(view)
     }
 
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
+
 
     override fun onBindViewHolder(holder: Countryclass, position: Int) {
         val currentItem: Country.CountryPojo = mContest.country!!.get(position);
@@ -53,15 +48,13 @@ class CountryListAdapter(
             if (currentItem.id.toString().equals(parts[i])) {
                 Log.e("NUMBER------", parts[i].toString())
                 holder.itemView.checkCountry.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.id.toString());
+                checkedHolder!![position] = true;
             }
         }
         holder.itemView.checkCountry.setOnClickListener {
             if (holder.itemView.checkCountry.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkCountry.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.id.toString());
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.id.toString());
                 checkedHolder!![position] = false;
             }
         }
@@ -77,5 +70,14 @@ class CountryListAdapter(
             notifyDataSetChanged()
         }
     }
-
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until mContest.country!!.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) mContest.country!!.get(i).id.toString() else ids + "," + mContest.country!!.get(i).id.toString();
+            }
+        }
+        Log.d("SelectedIdsCountry","----"+ids)
+        return ids;
+    }
 }

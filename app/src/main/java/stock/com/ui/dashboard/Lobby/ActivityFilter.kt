@@ -42,7 +42,8 @@ import java.lang.reflect.Type
 class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var currentSelectedItems: ArrayList<String>? = null
     private var marketSelectedItems: ArrayList<String>? = null
-    private var countrySelectedItems: ArrayList<String>? = null
+
+    private var countryAdapter: CountryListAdapter? = null;
     var maxprice: String = "";
     var canSelect: String = "";
     private var contestTypeFilter: String? = "";
@@ -89,6 +90,10 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 } else {
                     maxprice = tvMax.text.toString();
                 }
+
+                if(countryAdapter!=null) {
+                    setCountryContest(countryAdapter!!.getSeletedtIds());
+                }
                 setFilters()
             }
         }
@@ -106,6 +111,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     fun setFilters() {
+
+        countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
+
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -115,7 +123,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 getFromPrefsString(StockConstant.USERID).toString(),
                 android.text.TextUtils.join(",", currentSelectedItems),
                 android.text.TextUtils.join(",", marketSelectedItems),
-                android.text.TextUtils.join(",", countrySelectedItems),
+                countryTypeFilter!!,
                 tvMin.text.toString(),
                 maxprice
             )
@@ -139,26 +147,25 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         } else if (response.body()!!.status == "2") {
                             appLogout();
                         } else {
-                            displayToast("no data exist","warning")
+                            displayToast("no data exist", "warning")
                             finish()
                         }
                     }
                 } else {
-                    displayToast(resources.getString(stock.com.R.string.internal_server_error),"error")
+                    displayToast(resources.getString(stock.com.R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
     }
 
     private fun initViews() {
-        countrySelectedItems = ArrayList();
         currentSelectedItems = ArrayList();
         marketSelectedItems = ArrayList();
         img_btn_back.setOnClickListener(this)
@@ -213,14 +220,14 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                         setRangebar(/*response.body()!!.entryFees*/)
                     }
                 } else {
-                   displayToast(response.body()!!.message,"error")
+                    displayToast(response.body()!!.message, "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<FilterPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -228,16 +235,16 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
 
 
     fun setRangebar(/*entryFees: List<FilterPojo.EntryFee>?*/) {
-         var minValue= 1.0f
-        var maxValue=3000.0f
+        var minValue = 1.0f
+        var maxValue = 3000.0f
 //        if (entryFees != null) {
-            rangeSeekbar1.setMinValue(minValue)
-            rangeSeekbar1.setMaxValue(maxValue)
-            tvMin.setText(minValue.toString()+"$")
-            tvMax.setText(maxValue.toString()+"$")
+        rangeSeekbar1.setMinValue(minValue)
+        rangeSeekbar1.setMaxValue(maxValue)
+        tvMin.setText(minValue.toString() + "$")
+        tvMax.setText(maxValue.toString() + "$")
 
-            maxprice = minValue.toString()
-            canSelect = maxValue.toString()
+        maxprice = minValue.toString()
+        canSelect = maxValue.toString()
 //        }
     }
 
@@ -246,8 +253,10 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
-        recycle_country!!.adapter =
-            CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
+        countryAdapter = CountryListAdapter(this, country, countryTypeFilter!!)
+        recycle_country!!.adapter = countryAdapter;
+
+        /*recycle_country!!.adapter = CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
                 override fun onItemUncheck(item: String) {
                     countrySelectedItems!!.remove(item);
                     setCountryContest(android.text.TextUtils.join(",", countrySelectedItems));
@@ -258,7 +267,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     setCountryContest(android.text.TextUtils.join(",", countrySelectedItems));
                     Log.e("value", item)
                 }
-            })
+            })*/
     }
 
     @SuppressLint("WrongConstant")

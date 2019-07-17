@@ -187,7 +187,7 @@ class ActivityMarketEdit : BaseActivity(), View.OnClickListener {
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-                getFromPrefsString(StockConstant.USERID)!!
+                getFromPrefsString(StockConstant.USERID)!!, "0", "50"
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {

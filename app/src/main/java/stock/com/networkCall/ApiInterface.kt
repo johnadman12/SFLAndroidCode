@@ -71,13 +71,17 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("search/market")
-    fun searchCrypto(@Field("market_type") market_type: String, @Field("search") search: String, @Field("user_id") user_id: String): Call<MarketList>
+    fun searchCrypto(@Field("market_type") market_type: String, @Field("search") search: String, @Field("user_id") user_id: String
+                     ,
+                     @Field("page") page: String, @Field("limit") limit: String): Call<MarketList>
 
     @FormUrlEncoded
     @POST("search/stock")
     fun searchExchange(
         @Field("exchange_id") exchange_id: String, @Field("search") search: String, @Field("user_id") user_id: String,
         @Field("market_type") market_type: String
+        ,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<StockTeamPojo>
 
     @FormUrlEncoded
@@ -375,7 +379,8 @@ interface ApiInterface {
     @POST("marketdata/marketdata_list")
     fun getMarketList(
         @Header("x-access-token") token: String, @Field("market_id") exchange_id: String,
-        @Field("user_id") user_id: String
+        @Field("user_id") user_id: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<MarketList>
 
     @FormUrlEncoded
@@ -414,7 +419,8 @@ interface ApiInterface {
     fun getMyTeams(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
-        @Field("exchange_id") exchange_id: String
+        @Field("exchange_id") exchange_id: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<MyTeamsPojo>
 
     @FormUrlEncoded
@@ -445,7 +451,8 @@ interface ApiInterface {
     fun getMyMarketTeams(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
-        @Field("market_id") marketId: String
+        @Field("market_id") marketId: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<MyTeamsPojo>
 
     @FormUrlEncoded
@@ -507,6 +514,8 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("contest_id") contest_id: String
+        ,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<InviteData>
 
 
