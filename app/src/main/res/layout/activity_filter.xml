@@ -8,6 +8,10 @@
     <include
             android:id="@+id/include_cross"
             layout="@layout/include_back"/>
+    <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+                                           android:layout_height="wrap_content"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical">
@@ -234,4 +238,5 @@
                 android:layout_height="@dimen/_35sdp"/>
 
     </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -31,6 +31,8 @@ class StocksFragment : BaseFragment() {
     var sector: String = ""
     var exchange: String = ""
     var country: String = ""
+    var page: Int = 0
+    var limit: Int = 50
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
@@ -90,7 +92,7 @@ class StocksFragment : BaseFragment() {
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
                 "Equity",
-                sector, exchange, country, ""
+                sector, exchange, country, "", page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
 
@@ -141,7 +143,7 @@ class StocksFragment : BaseFragment() {
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
                 "Equity",
-                sector, exchange, country, ""
+                sector, exchange, country, "", page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
 

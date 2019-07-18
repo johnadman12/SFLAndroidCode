@@ -23,15 +23,13 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class ActivitySectorFilter : BaseActivity() {
-    private var sectorSelected: ArrayList<String>? = null
-
+    private var sectorAdapter: SectorAdapter? = null;
     private var sectorTypeFilter: String? = "";
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sector_listing)
         StockConstant.ACTIVITIES.add(this)
-        sectorSelected = ArrayList()
         sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_TYPE);
         reset.visibility = View.VISIBLE
         img_btn_back.setOnClickListener {
@@ -45,9 +43,12 @@ class ActivitySectorFilter : BaseActivity() {
             finish()
 
         }
+        var selectedSector: String = "";
 
         btn_filterApply.setOnClickListener {
-            val selectedSector: String = android.text.TextUtils.join(",", sectorSelected)
+            if (sectorAdapter != null) {
+                selectedSector = sectorAdapter!!.getSeletedtIds();
+            }
             Log.e("sectorlist", selectedSector)
             var resultIntent = Intent()
             resultIntent.putExtra("sectorlist", selectedSector)
@@ -77,14 +78,14 @@ class ActivitySectorFilter : BaseActivity() {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<SectorListPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -95,18 +96,8 @@ class ActivitySectorFilter : BaseActivity() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_sector!!.layoutManager = llm
-        recycle_sector!!.adapter =
-            SectorAdapter(this, sector, sectorTypeFilter!!, object : SectorAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    sectorSelected?.remove(item);
-                    setSectorFilter(android.text.TextUtils.join(",", sectorSelected))
-                }
-
-                override fun onItemCheck(item: String) {
-                    sectorSelected?.add(item)
-                    setSectorFilter(android.text.TextUtils.join(",", sectorSelected))
-                }
-            })
+        sectorAdapter = SectorAdapter(this, sector, sectorTypeFilter!!)
+        recycle_sector!!.adapter = sectorAdapter
 
     }
 

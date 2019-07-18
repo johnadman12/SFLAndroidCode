@@ -2,6 +2,7 @@ package stock.com.application
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.AssetManager
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
 import androidx.multidex.MultiDex
@@ -19,7 +20,11 @@ import stock.com.data.Prefs
 import stock.com.utils.AppDelegate
 import stock.com.utils.networkUtils.Utils
 import retrofit2.Retrofit
-import java.security.SecureRandom
+import java.io.IOException
+import java.security.*
+import java.security.cert.Certificate
+import java.security.cert.CertificateException
+import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
@@ -27,6 +32,7 @@ class FantasyApplication : MultiDexApplication() {
 
     var options: DisplayImageOptions? = null
     private var retrofit: Retrofit? = null
+    var httpsURLConnection: HttpsURLConnection? = null
 
     companion object {
         lateinit var fantasyApplication: FantasyApplication
@@ -44,7 +50,10 @@ class FantasyApplication : MultiDexApplication() {
         super.onCreate()
 
         fantasyApplication = this
-        handleSSLHandshake()
+
+//        httpsURLConnection!!.setSSLSocketFactory(trustCert().getSocketFactory());
+
+//        handleSSLHandshake()
 
         /* initialize joda Time*/
         JodaTimeAndroid.init(this)
@@ -61,6 +70,7 @@ class FantasyApplication : MultiDexApplication() {
             .build()
         Utils.init(this)
     }
+
 
     private fun initImageLoader(context: Context) {
         val config = ImageLoaderConfiguration.Builder(context)
@@ -86,6 +96,32 @@ class FantasyApplication : MultiDexApplication() {
             language
     }
 
+    /*  @SuppressLint("TrulyRandom")
+      fun handleSSLHandshake() {
+          try {
+              val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+                  override fun getAcceptedIssuers(): Array<X509Certificate?> {
+                      return arrayOfNulls<X509Certificate>(0)
+                  }
+
+                  override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
+
+                  override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
+              })
+
+              val sc = SSLContext.getInstance("SSL")
+              sc.init(null, trustAllCerts, SecureRandom())
+              HttpsURLConnection.setDefaultSSLSocketFactory(sc.socketFactory)
+              HttpsURLConnection.setDefaultHostnameVerifier(object : HostnameVerifier {
+                  override fun verify(arg0: String, arg1: SSLSession): Boolean {
+                      return true
+                  }
+              })
+          } catch (ignored: Exception) {
+          }
+
+      }
+      */
     @SuppressLint("TrulyRandom")
     fun handleSSLHandshake() {
         try {

@@ -28,6 +28,9 @@ import stock.com.utils.StockDialog
 class FriendsActivity : BaseActivity() {
     var list: ArrayList<FriendsList.UserDatum>? = null
     var friendsAdapter: FriendAdapter? = null
+    var page: Int = 0
+    var limit: Int = 50
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +93,8 @@ class FriendsActivity : BaseActivity() {
         val call: Call<FriendsList> =
             apiService.getFriendsList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString()
-            )
+                getFromPrefsString(StockConstant.USERID).toString(),page.toString(), limit.toString()
+        )
         call.enqueue(object : Callback<FriendsList> {
 
             override fun onResponse(call: Call<FriendsList>, response: Response<FriendsList>) {

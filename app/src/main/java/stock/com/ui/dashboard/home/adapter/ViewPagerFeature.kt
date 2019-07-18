@@ -112,82 +112,90 @@ class ViewPagerFeature(
                     list.get(position).contestSize
         )
 
-
-        tvTime.setText(parseDateToddMMyyyy(list.get(position).scheduleStart))
-        if (!list.get(position).scheduleStart.equals(" ")) {
-            val inputPattern = "yyyy-MM-dd HH:mm:ss"
-            val inputFormat = SimpleDateFormat(inputPattern)
-            var date: Date? = null
-            date = inputFormat.parse(list.get(position).scheduleStart)
-            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
-            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
-            val thatDay = Calendar.getInstance()
-            thatDay.setTime(date);
-            val today = Calendar.getInstance()
-            val diff = thatDay.timeInMillis - today.timeInMillis
-            if (diff.toString().contains("-")) {
-                circular_progress.progressBackgroundColor =
-                    ContextCompat.getColor(context, R.color.GrayColor)
-                ll_Circular.isEnabled = false
-                llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                tvTimeLeft.setText("Contest \n Started")
-                tvHint.visibility = GONE
-            } else if (diff.equals("3600000")) {
-                val newtimer = object : CountDownTimer(diff, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        val cTime = Calendar.getInstance()
-                        val diff = thatDay.timeInMillis - cTime.timeInMillis
-                        val diffSec = diff / 1000
-                        val minutes = diffSec / 60 % 60
-                        val hours = diffSec / 3600
-                        tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
-                    }
-
-                    override fun onFinish() {
-                    }
-                }
-                newtimer.start()
-
-            } else {
-                val newtimer = object : CountDownTimer(diff, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        val cTime = Calendar.getInstance()
-                        val diff = thatDay.timeInMillis - cTime.timeInMillis
-                        if (diff < 900000) {
-                            txtjoin.setTextSize(16.00f)
-                            txtjoin.setText("Starts \n Soon")
-                            circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(context, R.color.GrayColor)
-                            ll_Circular.isEnabled = false
-                            llSportsLeft.visibility = INVISIBLE
-//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+        try {
+            tvTime.setText(parseDateToddMMyyyy(list.get(position).scheduleStart))
+            if (!list.get(position).scheduleStart.equals(" ")) {
+                val inputPattern = "yyyy-MM-dd HH:mm:ss"
+                val inputFormat = SimpleDateFormat(inputPattern)
+                var date: Date? = null
+                date = inputFormat.parse(list.get(position).scheduleStart)
+                var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+                date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+                val thatDay = Calendar.getInstance()
+                thatDay.setTime(date);
+                val today = Calendar.getInstance()
+                val diff = thatDay.timeInMillis - today.timeInMillis
+                if (diff.toString().contains("-")) {
+                    circular_progress.progressBackgroundColor =
+                        ContextCompat.getColor(context, R.color.GrayColor)
+                    ll_Circular.isEnabled = false
+                    llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                    tvTimeLeft.setText("Contest \nStarted")
+                    txtjoin.setText("Now \nLive")
+                    tvHint.visibility = GONE
+                } else if (diff.equals("3600000")) {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
                             val diffSec = diff / 1000
-                            val seconds = diffSec % 60
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
-                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                        } else if (diff.toString().contains("-")) {
-                            circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(context, R.color.GrayColor)
-                            ll_Circular.isEnabled = false
-                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                            tvTimeLeft.setText("Contest \n Started")
-                            tvHint.visibility = GONE
-                        } else {
-                            val diffSec = diff / 1000
-                            val seconds = diffSec % 60
-                            val minutes = diffSec / 60 % 60
-                            val hours = diffSec / 3600
-                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                            tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+                        }
+
+                        override fun onFinish() {
                         }
                     }
+                    newtimer.start()
 
-                    override fun onFinish() {
+                } else {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            if (diff < 900000) {
+                                txtjoin.setTextSize(16.00f)
+                                txtjoin.setText("Starts \nSoon")
+                                txtjoin.setText("Now \nLive")
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(context, R.color.GrayColor)
+                                ll_Circular.isEnabled = false
+                                llSportsLeft.visibility = INVISIBLE
+//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                                val diffSec = diff / 1000
+                                val seconds = diffSec % 60
+                                val minutes = diffSec / 60 % 60
+                                val hours = diffSec / 3600
+                                tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                            } else if (diff.toString().contains("-")) {
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(context, R.color.GrayColor)
+                                ll_Circular.isEnabled = false
+                                llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                                tvTimeLeft.setText("Contest \nStarted")
+                                txtjoin.setText("Now \nLive")
+                                tvHint.visibility = GONE
+                            } else {
+                                val diffSec = diff / 1000
+                                val seconds = diffSec % 60
+                                val minutes = diffSec / 60 % 60
+                                val hours = diffSec / 3600
+                                tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                            }
+                        }
+
+                        override fun onFinish() {
+                        }
                     }
+                    newtimer.start()
                 }
-                newtimer.start()
             }
+
+        } catch (E: Exception) {
+
         }
+
 
 
 

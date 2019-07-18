@@ -13,8 +13,7 @@ import stock.com.ui.pojo.MarketTypeFilters
 class MarketListFilterAdapter (
     val mContext: Context
     , val searchList: List<MarketTypeFilters.Exchange>
-    , val filter: String,
-    val onItemCheckListener: OnItemCheckListener
+    , val filter: String
 ) :
     RecyclerView.Adapter<MarketListFilterAdapter.WatchListHolder>() {
     var checkedHolder: BooleanArray? = null;
@@ -25,11 +24,6 @@ class MarketListFilterAdapter (
 
     init {
         createCheckedHolder();
-    }
-
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
@@ -46,15 +40,14 @@ class MarketListFilterAdapter (
             if (currentItem.name.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.name);
+                checkedHolder!![position] = true;
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.name);
+
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.name);
                 checkedHolder!![position] = false;
             }
         }
@@ -70,5 +63,16 @@ class MarketListFilterAdapter (
             itemView.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
+    }
+
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until searchList.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) searchList.get(i).name.toString() else ids + "," + searchList.get(i).name.toString();
+            }
+        }
+        Log.d("SelectedIdsCountry","----"+ids)
+        return ids;
     }
 }

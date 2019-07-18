@@ -98,7 +98,6 @@ class LobbyFragment : BaseFragment() {
     }
 
 
-
     fun getContestlist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
@@ -112,15 +111,20 @@ class LobbyFragment : BaseFragment() {
                     refreshLayout.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.CONTEST_TYPE))) {
-                            setContestType(" ")
+                        try {
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.CONTEST_TYPE))) {
+                                setContestType(" ")
+                            }
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.MARKET_TYPE))) {
+                                setMarketContest(" ")
+                            }
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.COUNTRY_TYPE))) {
+                                setCountryContest(" ")
+                            }
+                        } catch (e: Exception) {
+
                         }
-                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.MARKET_TYPE))) {
-                            setMarketContest(" ")
-                        }
-                        if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.COUNTRY_TYPE))) {
-                            setCountryContest(" ")
-                        }
+
                         setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
                     } else if (response.body()!!.status == "2") {

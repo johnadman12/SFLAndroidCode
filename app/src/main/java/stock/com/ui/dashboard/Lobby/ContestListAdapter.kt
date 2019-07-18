@@ -15,8 +15,7 @@ import android.util.Log
 class ContestListAdapter(
     val mContext: Context,
     val mContest: List<FilterPojo.Category>
-    , val filter: String,
-    val onItemCheckListener: OnItemCheckListener
+    , val filter: String
 ) :
 
     RecyclerView.Adapter<ContestListAdapter.FeatureListHolder>() {
@@ -35,10 +34,6 @@ class ContestListAdapter(
         return FeatureListHolder(view)
     }
 
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val currentItem: FilterPojo.Category = mContest.get(position);
@@ -50,15 +45,12 @@ class ContestListAdapter(
             if (currentItem.id.toString().equals(parts[i])) {
                 Log.e("NUMBER------", parts[i].toString())
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.id.toString());
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.id.toString());
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.id.toString());
                 checkedHolder!![position] = false;
             }
         }
@@ -75,5 +67,16 @@ class ContestListAdapter(
             itemView.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
+    }
+
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until mContest.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) mContest.get(i).id.toString() else ids + "," + mContest.get(i).id.toString();
+            }
+        }
+        Log.d("SelectedIdsCountry","----"+ids)
+        return ids;
     }
 }

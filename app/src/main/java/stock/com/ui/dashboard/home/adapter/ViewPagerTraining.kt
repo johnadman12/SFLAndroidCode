@@ -132,7 +132,8 @@ class ViewPagerTraining(
                     ContextCompat.getColor(context, R.color.GrayColor)
                 ll_Circular.isEnabled = false
                 llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                tvTimeLeft.setText("Contest \n Started")
+                tvTimeLeft.setText("Contest \nStarted")
+                txtjoin.setText("Now \nLive")
                 tvHint.visibility = GONE
             } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
@@ -157,7 +158,8 @@ class ViewPagerTraining(
                         val diff = thatDay.timeInMillis - cTime.timeInMillis
                         if (diff < 900000) {
                             txtjoin.setTextSize(16.00f)
-                            txtjoin.setText("Starts \n Soon")
+                            txtjoin.setText("Starts \nSoon")
+                            txtjoin.setText("Now \nLive")
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false
@@ -173,7 +175,8 @@ class ViewPagerTraining(
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false
                             llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                            tvTimeLeft.setText("Contest \n Started")
+                            tvTimeLeft.setText("Contest \nStarted")
+                            txtjoin.setText("Now \nLive")
                             tvHint.visibility = GONE
                         } else {
                             val diffSec = diff / 1000

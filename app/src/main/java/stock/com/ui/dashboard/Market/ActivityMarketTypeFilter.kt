@@ -35,8 +35,6 @@ import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
 
 class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
-    private var marketSelectedItems: ArrayList<String>? = null
-    private var sectorSelectedItems: ArrayList<String>? = null
 
     private var activeCurrencyFilter: String? = "";
     private var sectorTypeFilter: String? = "";
@@ -46,14 +44,15 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
 
 
     private var countryAdapter: CountryListAdapter? = null;
+    private var marketListAdapter: MarketListFilterAdapter? = null;
+    private var sectorMarketAdapter: SectorMarketAdapter? = null;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_market_type_filter)
         reset.visibility = View.VISIBLE;
-        marketSelectedItems = ArrayList()
-        sectorSelectedItems = ArrayList()
+
         if (intent != null)
             isMarket = intent.getIntExtra("isMarket", 0);
 
@@ -123,14 +122,24 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                     finish()
                 }
             } else {
-                val selectedSector: String = android.text.TextUtils.join(",", sectorSelectedItems)
-                val selectedExchange: String = android.text.TextUtils.join(",", marketSelectedItems)
+                /* val selectedSector: String = android.text.TextUtils.join(",", sectorSelectedItems)
+                 val selectedExchange: String = android.text.TextUtils.join(",", marketSelectedItems)
+ */
+                var selectedCountry: String = "";
+                var selectedSector: String = "";
+                var selectedExchange: String = "";
 
-                var selectedCountry: String="";
-                if(countryAdapter!=null) {
-                     selectedCountry= countryAdapter!!.getSeletedtIds();
+                if (countryAdapter != null) {
+                    selectedCountry = countryAdapter!!.getSeletedtIds();
+                }
+                if (sectorMarketAdapter != null) {
+                    selectedSector = sectorMarketAdapter!!.getSeletedtIds();
+                }
+                if (marketListAdapter != null) {
+                    selectedExchange = marketListAdapter!!.getSeletedtIds();
                 }
                 Log.e("sectorlist", selectedSector)
+
                 var resultIntent = Intent()
                 resultIntent.putExtra("sectorlist", selectedSector)
                 resultIntent.putExtra("exchangelist", selectedExchange)
@@ -181,19 +190,8 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_sector!!.layoutManager = llm
-        recycle_sector!!.adapter = SectorMarketAdapter(applicationContext!!, list, sectorTypeFilter!!,
-            object : SectorMarketAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    sectorSelectedItems?.remove(item);
-                    setSectorWatchlistFilter(TextUtils.join(",", sectorSelectedItems));
-
-                }
-
-                override fun onItemCheck(item: String) {
-                    sectorSelectedItems?.add(item)
-                    setSectorWatchlistFilter(TextUtils.join(",", sectorSelectedItems));
-                }
-            })
+        sectorMarketAdapter = SectorMarketAdapter(applicationContext!!, list, sectorTypeFilter!!);
+        recycle_sector!!.adapter = sectorMarketAdapter
     }
 
     @SuppressLint("WrongConstant")
@@ -201,19 +199,8 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_market!!.layoutManager = llm
-        recycle_market!!.adapter = MarketListFilterAdapter(applicationContext!!, list, marketTypeFilter!!,
-            object : MarketListFilterAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    marketSelectedItems?.remove(item);
-                    setMarketWatchlistFilter(android.text.TextUtils.join(",", marketSelectedItems));
-
-                }
-
-                override fun onItemCheck(item: String) {
-                    marketSelectedItems?.add(item)
-                    setMarketWatchlistFilter(android.text.TextUtils.join(",", marketSelectedItems));
-                }
-            })
+        marketListAdapter = MarketListFilterAdapter(this, list, marketTypeFilter!!);
+        recycle_market!!.adapter = marketListAdapter
     }
 
     @SuppressLint("WrongConstant")
@@ -222,22 +209,23 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
 
-        recycle_country!!.adapter = CountryListAdapter(this, country, countryTypeFilter!!);
+        countryAdapter = CountryListAdapter(this, country, countryTypeFilter!!);
         recycle_country!!.adapter = countryAdapter;
 
-                /*recycle_country!!.adapter =
-                    CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
-                        override fun onItemUncheck(item: String) {
-                            countrySelectedItems!!.remove(item);
-                            setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
-                        }
-                        override fun onItemCheck(item: String) {
-                            countrySelectedItems!!.add(item);
-                            setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
-                            Log.e("value", item)
-                        }
-                    })*/
+        /*recycle_country!!.adapter =
+            CountryListAdapter(this, country, countryTypeFilter!!, object : CountryListAdapter.OnItemCheckListener {
+                override fun onItemUncheck(item: String) {
+                    countrySelectedItems!!.remove(item);
+                    setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
+                }
+                override fun onItemCheck(item: String) {
+                    countrySelectedItems!!.add(item);
+                    setCountryWatchlistFilter(TextUtils.join(",", countrySelectedItems));
+                    Log.e("value", item)
+                }
+            })*/
     }
+
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.llMarket -> {

@@ -38,6 +38,8 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
     private var flag: Boolean = true;
+    var page: Int = 0
+    var limit: Int = 50
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -102,7 +104,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "crypto", "", "", "", ""
+                "crypto", "", "", "", "", page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
 
@@ -166,7 +168,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "crypto", "", "", "", ""
+                "crypto", "", "", "", "", page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
 
@@ -271,7 +273,13 @@ class CryptoCurrencyFragment : BaseFragment() {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
-            apiService.searchCrypto("crypto", c.toString(), getFromPrefsString(StockConstant.USERID).toString(), "0", "50")
+            apiService.searchCrypto(
+                "crypto",
+                c.toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                "0",
+                "50"
+            )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()

@@ -61,6 +61,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var flagSort: String = ""
     var contestId: Int = 0
     var flagFilter: Boolean = false
+    var flagRefresh: Boolean = false
     lateinit var mainHandler: Handler;
     private var flagSearch: Boolean = true;
     var flagAlphaSort: Boolean = false
@@ -327,7 +328,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
         })
         srl_layout.setOnRefreshListener {
-//            page++
+            flagRefresh= true
             limit = limit + 50
             getMarketTeamlist()
         }
@@ -487,6 +488,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         } else {
                             listOld!!.addAll(response.body()!!.crypto!!);
                         }
+
                         list!!.clear()
                         list!!.addAll(response.body()!!.crypto!!);
 //                        listOld!!.addAll(response.body()!!.crypto!!);

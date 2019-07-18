@@ -13,8 +13,7 @@ import stock.com.ui.pojo.MarketTypeFilters
 class SectorMarketAdapter (
     val mContext: Context,
     val searchList: List<MarketTypeFilters.Sector>
-    , val filter: String,
-    val onItemCheckListener: OnItemCheckListener
+    , val filter: String
 ) :
     RecyclerView.Adapter<SectorMarketAdapter.WatchListHolder>() {
     var checkedHolder: BooleanArray? = null;
@@ -27,10 +26,6 @@ class SectorMarketAdapter (
         createCheckedHolder();
     }
 
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WatchListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_contest_list, parent, false)
@@ -46,15 +41,12 @@ class SectorMarketAdapter (
             if (currentItem.sector.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.sector);
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.sector);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.sector);
                 checkedHolder!![position] = false;
             }
         }
@@ -70,5 +62,16 @@ class SectorMarketAdapter (
             itemView.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
+    }
+
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until searchList.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) searchList.get(i).sector.toString() else ids + "," + searchList.get(i).sector.toString();
+            }
+        }
+        Log.d("SelectedIdsCountry","----"+ids)
+        return ids;
     }
 }

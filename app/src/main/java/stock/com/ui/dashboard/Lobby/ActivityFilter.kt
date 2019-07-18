@@ -40,10 +40,12 @@ import java.lang.reflect.Type
 
 
 class ActivityFilter : BaseActivity(), View.OnClickListener {
-    private var currentSelectedItems: ArrayList<String>? = null
-    private var marketSelectedItems: ArrayList<String>? = null
-
     private var countryAdapter: CountryListAdapter? = null;
+    private var contestListAdapter: ContestListAdapter? = null;
+    private var marketListAdapter: MarketListAdapter? = null;
+    var selectedCountry: String = "";
+    var selectedMarket: String = "";
+    var selectedConstent: String = "";
     var maxprice: String = "";
     var canSelect: String = "";
     private var contestTypeFilter: String? = "";
@@ -91,8 +93,15 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     maxprice = tvMax.text.toString();
                 }
 
-                if(countryAdapter!=null) {
-                    setCountryContest(countryAdapter!!.getSeletedtIds());
+                if (countryAdapter != null) {
+                    selectedCountry= countryAdapter!!.getSeletedtIds()
+//                    setCountryContest(countryAdapter!!.getSeletedtIds());
+                }
+                if (marketListAdapter != null) {
+                    selectedMarket=marketListAdapter!!.getSeletedtIds();
+                }
+                if (contestListAdapter != null) {
+                    selectedConstent =contestListAdapter!!.getSeletedtIds();
                 }
                 setFilters()
             }
@@ -111,9 +120,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     fun setFilters() {
-
-        countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
-
+        /*  countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
+          contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
+          marketTypeFilter = getFromPrefsString(StockConstant.MARKET_TYPE);*/
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -121,9 +130,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
             apiService.setContestFilter(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                android.text.TextUtils.join(",", currentSelectedItems),
-                android.text.TextUtils.join(",", marketSelectedItems),
-                countryTypeFilter!!,
+                selectedConstent,
+                selectedMarket,
+                selectedCountry,
                 tvMin.text.toString(),
                 maxprice
             )
@@ -166,8 +175,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     private fun initViews() {
-        currentSelectedItems = ArrayList();
-        marketSelectedItems = ArrayList();
         img_btn_back.setOnClickListener(this)
         reset.setOnClickListener(this)
         reset.visibility = VISIBLE
@@ -275,19 +282,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_market!!.layoutManager = llm
-        recycle_market!!.adapter =
-            MarketListAdapter(this, market!!, marketTypeFilter!!, object : MarketListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    marketSelectedItems!!.remove(item)
-                    setMarketContest(android.text.TextUtils.join(",", marketSelectedItems));
-//                Log.e("valueremove", item.name.toString())
-                }
-
-                override fun onItemCheck(item: String) {
-                    marketSelectedItems!!.add(item);
-                    setMarketContest(android.text.TextUtils.join(",", marketSelectedItems));
-                }
-            })
+        marketListAdapter = MarketListAdapter(this, market!!, marketTypeFilter!!)
+        recycle_market!!.adapter = marketListAdapter
     }
 
 
@@ -296,19 +292,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_contest!!.layoutManager = llm
-        recycle_contest!!.adapter =
-            ContestListAdapter(this, contest, contestTypeFilter!!, object : ContestListAdapter.OnItemCheckListener {
-                override fun onItemUncheck(item: String) {
-                    currentSelectedItems?.remove(item);
-                    setContestType(android.text.TextUtils.join(",", currentSelectedItems));
-
-                }
-
-                override fun onItemCheck(item: String) {
-                    currentSelectedItems?.add(item)
-                    setContestType(android.text.TextUtils.join(",", currentSelectedItems));
-                }
-            })
+        contestListAdapter = ContestListAdapter(this, contest, contestTypeFilter!!)
+        recycle_contest!!.adapter = contestListAdapter
 
     }
 

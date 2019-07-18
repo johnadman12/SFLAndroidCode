@@ -11,13 +11,17 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.security.cert.CertificateException
 import java.util.concurrent.TimeUnit
 import android.annotation.SuppressLint
-import java.security.SecureRandom
+import android.content.Context
+import java.io.IOException
+import java.io.InputStream
+import java.security.*
+import java.security.AccessController.getContext
+import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 
 object ApiClient {
-
     @JvmStatic
     private var BASE_URL = ApiConstant.BASE_URL
     @JvmStatic
@@ -28,16 +32,33 @@ object ApiClient {
     private var retrofit: Retrofit? = null
     @JvmStatic
     private var retrofit2: Retrofit? = null
-  @JvmStatic
+    @JvmStatic
     private var retrofit3: Retrofit? = null
 
-    @JvmStatic
-    fun getClient(): Retrofit? {
+  /*  @JvmStatic
+    fun getClient(context: Context): Retrofit? {
+
+       this.context=context;
 
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                //.client(UnsafeOkHttpClient.unsafeOkHttpClient)
+//                .client(httpsURLConnection!!.setSSLSocketFactory(trustCert().getSocketFactory()))
+                .client(ApiClient.okClient())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
+        return retrofit
+    }*/
+
+
+    @JvmStatic
+    fun getClient(): Retrofit? {
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+//                .client(httpsURLConnection!!.setSSLSocketFactory(trustCert().getSocketFactory()))
                 .client(ApiClient.okClient())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -81,12 +102,50 @@ object ApiClient {
         logging.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
+            //.sslSocketFactory(trustCert()!!.socketFactory)
             .writeTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(logging)
             .build()
     }
 
+    /* @JvmStatic
+     private fun urlConnection():HttpsURLConnection{
+         val urlConnection = url.openConnection() as HttpsURLConnection
+         urlConnection.sslSocketFactory = sslSF
+         val `in` = urlConnection.inputStream
+         copyInputStreamToOutputStream(`in`, System.out)
+     }*/
+
+   /* @Throws(
+        CertificateException::class,
+        IOException::class,
+        KeyStoreException::class,
+        NoSuchAlgorithmException::class,
+        KeyManagementException::class
+    )
+
+    private fun trustCert(): SSLContext? {
+        val assetManager = context!!.assets
+        val cf = CertificateFactory.getInstance("X.509")
+        val ca = cf.generateCertificate(assetManager.open("COMODORSADomainValidationSecureServerCA.crt"))
+
+        // Create a KeyStore containing our trusted CAs
+        val keyStoreType = KeyStore.getDefaultType()
+        val keyStore = KeyStore.getInstance(keyStoreType)
+        keyStore.load(null, null)
+        keyStore.setCertificateEntry("ca", ca)
+
+        // Create a TrustManager that trusts the CAs in our KeyStore
+        val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
+        val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
+        tmf.init(keyStore)
+
+        // Create an SSLContext that uses our TrustManager
+        val context = SSLContext.getInstance("TLS")
+        context.init(null, tmf.trustManagers, null)
+        return context
+    }*/
 
 
 }
@@ -94,9 +153,10 @@ object ApiClient {
 
 /*class ApiClient {
     companion object {
-        *//**
-         * create singleton for accessing variables
-         *//*
+        */
+/**
+ * create singleton for accessing variables
+ *//*
         var mApiClient: ApiClient? = null
         var retrofit: Retrofit? = null
 
@@ -110,9 +170,10 @@ object ApiClient {
             }
 
     }
-    *//**
-     * this method will return instance ApiInterface
-     *//*
+    */
+/**
+ * this method will return instance ApiInterface
+ *//*
     fun getRetrofitService(): ApiInterface {
 //        var httpClient = OkHttpClient.Builder()
 //        val interceptor = HttpLoggingInterceptor()

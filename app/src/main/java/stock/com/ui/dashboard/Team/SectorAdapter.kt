@@ -14,8 +14,7 @@ import stock.com.ui.pojo.SectorListPojo
 class SectorAdapter(
     val mContext: Context,
     val mContest: List<SectorListPojo.Sector>,
-    val filter: String,
-    val onItemCheckListener: OnItemCheckListener
+    val filter: String
 ) :
 
     RecyclerView.Adapter<SectorAdapter.FeatureListHolder>() {
@@ -34,10 +33,6 @@ class SectorAdapter(
         return FeatureListHolder(view)
     }
 
-    interface OnItemCheckListener {
-        fun onItemCheck(item: String)
-        fun onItemUncheck(item: String)
-    }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         val currentItem: SectorListPojo.Sector = mContest.get(position);
@@ -49,15 +44,12 @@ class SectorAdapter(
             if (currentItem.sector.equals(parts[i])) {
                 Log.e("NUMBER------", parts[i])
                 holder.itemView.checkboxContest.isChecked = true;
-                onItemCheckListener.onItemCheck(currentItem.sector);
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {
             if (holder.itemView.checkboxContest.isChecked()) {
                 checkedHolder!![position] = holder.itemView.checkboxContest.isChecked();
-                onItemCheckListener.onItemCheck(currentItem.sector);
             } else {
-                onItemCheckListener.onItemUncheck(currentItem.sector);
                 checkedHolder!![position] = false;
             }
         }
@@ -75,5 +67,16 @@ class SectorAdapter(
             itemView.setOnClickListener(onClickListener)
             notifyDataSetChanged()
         }
+    }
+
+    fun getSeletedtIds():String {
+        var ids:String="";
+        for (i in 0 until mContest.size) {
+            if (checkedHolder!!.get(i)){
+                ids = if (ids.equals("")) mContest.get(i).sector.toString() else ids + "," + mContest.get(i).sector.toString();
+            }
+        }
+        Log.d("SelectedIdsCountry","----"+ids)
+        return ids;
     }
 }

@@ -71,9 +71,11 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @POST("search/market")
-    fun searchCrypto(@Field("market_type") market_type: String, @Field("search") search: String, @Field("user_id") user_id: String
-                     ,
-                     @Field("page") page: String, @Field("limit") limit: String): Call<MarketList>
+    fun searchCrypto(
+        @Field("market_type") market_type: String, @Field("search") search: String, @Field("user_id") user_id: String
+        ,
+        @Field("page") page: String, @Field("limit") limit: String
+    ): Call<MarketList>
 
     @FormUrlEncoded
     @POST("search/stock")
@@ -464,7 +466,9 @@ interface ApiInterface {
         @Field("sector") sector: String,
         @Field("exchanges") exchanges: String,
         @Field("country_id") country_id: String,
-        @Field("name") name: String
+        @Field("name") name: String,
+        @Field("page") page: String,
+        @Field("limit") limit: String
     ): Call<MarketData>
 
 
@@ -472,7 +476,8 @@ interface ApiInterface {
     @POST("usercontest/user_friend_list")
     fun getFriendsList(
         @Header("x-access-token") token: String,
-        @Field("user_id") user_id: String
+        @Field("user_id") user_id: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<FriendsList>
 
     @FormUrlEncoded
