@@ -29,10 +29,19 @@ class StockAdapter(
     val fragment: StocksFragment,
     val stockListNew: java.util.ArrayList<StockTeamPojo.Stock>
 ) :
-    RecyclerView.Adapter<StockAdapter.FeatureListHolder>(), Filterable {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_market, parent, false)
-        return FeatureListHolder(view)
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+    val VIEW_TYPE_ITEM = 0
+    val VIEW_TYPE_LOADING = 1
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == VIEW_TYPE_ITEM) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_market, parent, false)
+            return FeatureListHolder(view)
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.progress_loading, parent, false)
+            return FeatureListHolder1(view)
+        }
+        return null!!
     }
 
     private var searchList: List<StockTeamPojo.Stock>? = null
@@ -42,7 +51,7 @@ class StockAdapter(
         this.searchList = list;
     }
 
-    override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val anim = AlphaAnimation(0.5f, 1.0f)
         anim.duration = 100 //You can manage the blinking time with this parameter
@@ -173,11 +182,15 @@ class StockAdapter(
     }
 
     override fun getItemCount(): Int {
-        return searchList!!.size
+       // return searchList!!.size
+        return if (searchList == null) 0 else searchList!!.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
+    inner class FeatureListHolder1(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    }
+
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -209,5 +222,9 @@ class StockAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (searchList!!.get(position) == null) VIEW_TYPE_LOADING else VIEW_TYPE_ITEM
     }
 }

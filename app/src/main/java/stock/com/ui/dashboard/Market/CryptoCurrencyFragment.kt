@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.madapps.liquid.LiquidRefreshLayout
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import kotlinx.android.synthetic.main.fragment_currency.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +26,7 @@ import stock.com.ui.pojo.MarketList
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+
 
 class CryptoCurrencyFragment : BaseFragment() {
     private var cryptoAdapter: CurrencyAdapter? = null;
@@ -51,18 +52,16 @@ class CryptoCurrencyFragment : BaseFragment() {
         cryptoList = ArrayList()
         cryptoListNew = ArrayList()
         cryptoListFiltered = ArrayList()
-        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
-            override fun completeRefresh() {
-            }
 
-            override fun refreshing() {
-                //TODO make api call here
-                Handler().postDelayed({
-                }, 5000)
-                getCurrency("1")
-            }
+       /* swipyr.setOnRefreshListener({ direction ->
+            limit = limit + 50
+            getCurrency("1")
         })
+
+*/
+
         getCurrency("1")
+
         val mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
@@ -80,13 +79,15 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
         })
         setCryptoCurrencyAdapter()
+
+
     }
 
     fun setFilter(c: CharSequence) {
         /*if (cryptoAdapter != null)
             cryptoAdapter!!.getFilter().filter(c)*/
         Log.d("dsadada", "sdada--" + c);
-        if (c.toString().length >= 3) {
+        if (c.toString().length >= 2) {
             flag = false;
             Log.d("dsadada", "111111--");
             callApiSearch(c);
@@ -110,8 +111,7 @@ class CryptoCurrencyFragment : BaseFragment() {
 
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
                 d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                // srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -152,8 +152,6 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<MarketData>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -173,8 +171,7 @@ class CryptoCurrencyFragment : BaseFragment() {
         call.enqueue(object : Callback<MarketData> {
 
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+//                srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
@@ -246,8 +243,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<MarketData>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+//                srl_layout.isRefreshing = false
                 println(t.toString())
 //                displayToast(resources.getString(R.string.something_went_wrong), "error")
 //                d.dismiss()

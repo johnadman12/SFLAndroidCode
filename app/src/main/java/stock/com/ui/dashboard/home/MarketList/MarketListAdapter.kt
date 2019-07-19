@@ -11,7 +11,6 @@ import android.view.animation.AlphaAnimation
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_team.view.*
@@ -48,8 +47,6 @@ class MarketListAdapter(
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-//        list = ArrayList()
-//        list = mContest as ArrayList
         val anim = AlphaAnimation(0.1f, 1.0f)
         anim.duration = 50 //You can manage the blinking time with this parameter
         anim.startOffset = 20

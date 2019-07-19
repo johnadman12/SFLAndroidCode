@@ -45,6 +45,7 @@ class CurrencyAdapter(
     init {
         this.search = cryptoListNew;
         createCheckedHolder();
+        Log.d("gugugugugu","---5465466---"+search!!.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -54,6 +55,8 @@ class CurrencyAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
+
+        Log.d("gugugugugu","---5465466")
         val anim = AlphaAnimation(0.1f, 1.0f)
         anim.duration = 50 //You can manage the blinking time with this parameter
         anim.startOffset = 20

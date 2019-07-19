@@ -18,6 +18,7 @@
                 style="@style/TextStyleBold"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:text="cjkdjhdklcjkld"
                 android:textStyle="bold"
                 android:id="@+id/tvExchangeName"
                 android:textSize="@dimen/_11ssp"

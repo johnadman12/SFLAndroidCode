@@ -366,7 +366,8 @@ interface ApiInterface {
     @POST("stock/stock_list")
     fun getStockList(
         @Header("x-access-token") token: String, @Field("exchange_id") exchange_id: Int,
-        @Field("user_id") user_id: Int, @Field("sector") Sector: String
+        @Field("user_id") user_id: Int, @Field("sector") Sector: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<StockTeamPojo>
 
     @FormUrlEncoded

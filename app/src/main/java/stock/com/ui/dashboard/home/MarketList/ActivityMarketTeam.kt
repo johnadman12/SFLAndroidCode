@@ -458,8 +458,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
     fun getMarketTeamlist() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+        /*val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
             apiService.getMarketList(
@@ -573,15 +573,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter = marketlistAdapter;
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         setTeamText(marketSelectedItems!!.size.toString())
-                        d.dismiss()
+//                        d.dismiss()
 
                     } else if (response.body()!!.status == "2") {
-                        d.dismiss()
+//                        d.dismiss()
                         appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
@@ -589,7 +589,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }

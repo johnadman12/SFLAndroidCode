@@ -140,7 +140,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
 //        val data_candle = CandleData(xVals_earnings, barDataSetCandle)
         set1.setColor(Color.rgb(80, 80, 80));
         set1.setShadowColor(getResources().getColor(R.color.colorASPrimary));
-        set1.setShadowWidth(0.9f);
+        set1.setShadowWidth(2.9f);
         set1.setDecreasingColor(getResources().getColor(R.color.red_candle));
         set1.setDecreasingPaintStyle(Paint.Style.FILL_AND_STROKE);
         set1.setIncreasingColor(getResources().getColor(R.color.green_candle));
@@ -161,6 +161,9 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
         chart11.setMaxVisibleValueCount(0)
 //        barDataSet.color = ContextCompat.getColor(activity!!, R.color.colorPrimary)
         val xAxis_candle = chart11.xAxis
+        xAxis_candle.setValueFormatter { value, _ ->
+            SimpleDateFormat("yyyy/MM/dd", Locale.US).format(value.toLong())
+        }
         xAxis_candle.position = XAxis.XAxisPosition.BOTTOM
         chart11.axisLeft.setDrawGridLines(false)
         xAxis_candle.textColor = ContextCompat.getColor(activity!!, R.color.black)

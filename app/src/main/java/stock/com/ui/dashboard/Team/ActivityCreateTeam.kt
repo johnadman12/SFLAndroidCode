@@ -67,6 +67,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var flagDayLTH: Boolean = false
     var flagPriceLTH: Boolean = false
     var flagVolume: Boolean = false
+    var page: Int = 0
+    var limit: Int = 50
     var flagDayHTL: Boolean = false
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
@@ -350,8 +352,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, sector
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                exchangeId/*.toString()*/,
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/,
+                sector,
+                page.toString(),
+                limit.toString()
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
@@ -469,7 +475,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, ""
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, "",
+                page.toString(),
+                limit.toString()
             )
         call.enqueue(object : Callback<StockTeamPojo> {
 

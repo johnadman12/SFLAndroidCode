@@ -146,7 +146,7 @@ dependencies {
 
     //like animation
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
-    implementation "android.arch.paging:runtime:1.0.1"
+    implementation 'com.github.orangegangsters:swipy:1.2.3@aar'
     implementation project(':swiperefreshlayoutbottomlib')
 
 }

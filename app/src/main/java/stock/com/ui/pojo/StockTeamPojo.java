@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockTeamPojo extends BasePojo implements Parcelable {
@@ -12,7 +13,7 @@ public class StockTeamPojo extends BasePojo implements Parcelable {
 
     @SerializedName("stock")
     @Expose
-    public List<Stock> stock = null;
+    public ArrayList<Stock> stock = null;
 
     protected StockTeamPojo(Parcel in) {
     }

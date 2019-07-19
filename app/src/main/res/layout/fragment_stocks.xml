@@ -6,16 +6,22 @@
               android:layout_height="wrap_content"
               android:layout_marginTop="@dimen/_3sdp">
 
-
-    <com.madapps.liquid.LiquidRefreshLayout
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvstock"
             android:layout_width="match_parent"
-            android:id="@+id/refreshData"
-            android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_stockList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </com.madapps.liquid.LiquidRefreshLayout>
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_stockList"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 
 </LinearLayout>

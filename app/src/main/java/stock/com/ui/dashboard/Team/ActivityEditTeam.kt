@@ -63,7 +63,10 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                            postData1.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent.toString());
+                            postData1.addProperty(
+                                "change_percent",
+                                stockSelectedItems!!.get(i).changePercent.toString()
+                            );
                             postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
@@ -74,7 +77,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                     }
                     saveTeamList()
                 } else {
-                    displayToast("please select Stock first","warning")
+                    displayToast("please select Stock first", "warning")
                 }
             }
             R.id.relFieldView -> {
@@ -193,7 +196,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, ""
+                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, "", "", ""
             )
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
@@ -229,14 +232,14 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.something_went_wrong),"error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -342,7 +345,7 @@ class ActivityEditTeam : BaseActivity(), View.OnClickListener {
 
             override fun onFailure(call: Call<BasePojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong),"error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })

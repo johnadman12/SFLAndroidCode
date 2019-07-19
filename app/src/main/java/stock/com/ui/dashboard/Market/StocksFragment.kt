@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.fragment_stocks.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +18,10 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.Market.listener.OnLoadMoreListener
+import stock.com.ui.dashboard.Market.listener.RecyclerViewLoadMoreScroll
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.MarketData
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
@@ -33,17 +35,22 @@ class StocksFragment : BaseFragment() {
     var country: String = ""
     var page: Int = 0
     var limit: Int = 50
+    var exchangeId: Int = 0
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
     private var stockListNew: ArrayList<StockTeamPojo.Stock>? = null
     private var stockListFilter: ArrayList<StockTeamPojo.Stock>? = null
+    private var scrollListener: RecyclerViewLoadMoreScroll? = null
 
     var flagAlphaSort: Boolean = false
     var flagPriceSort: Boolean = false
     var flagDaySort: Boolean = false
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
+    var llm: LinearLayoutManager? = null
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stocks, container, false)
@@ -54,25 +61,16 @@ class StocksFragment : BaseFragment() {
         stockList = ArrayList()
         stockListNew = ArrayList()
         stockListFilter = ArrayList()
-        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
-            override fun completeRefresh() {
-            }
-
-            override fun refreshing() {
-                //TODO make api call here
-                Handler().postDelayed({
-                }, 5000)
-                getStocks("1")
-            }
-        })
-        getStocks("1")
+        llm = LinearLayoutManager(context)
+        getExchangeNamelist()
+        getStocks("1",exchangeId)
 
         val mainHandler = Handler(Looper.getMainLooper())
 
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (isVisible) {
-                    getStocksAgain("1")
+                    getStocksAgain("1",exchangeId)
                     mainHandler.postDelayed(this, 20000)
                 }
             }
@@ -80,35 +78,125 @@ class StocksFragment : BaseFragment() {
 
         setStockAdapter()
 
+       /* scrollListener = RecyclerViewLoadMoreScroll(llm)
+        scrollListener!!.setOnLoadMoreListener(object : OnLoadMoreListener {
+            override fun onLoadMore() {
+                getStocks("1",exchangeId)
+            }
+        })*/
+
     }
 
-
-    fun getStocks(flag: String) {
+    fun getExchangeNamelist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<MarketData> =
-            apiService.getMarketData(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                "Equity",
-                sector, exchange, country, "", page.toString(), limit.toString()
-            )
-        call.enqueue(object : Callback<MarketData> {
-
-            override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
+        val call: Call<ExchangeList> =
+            apiService.getExchangelist()
+        call.enqueue(object : Callback<ExchangeList> {
+            override fun onResponse(call: Call<ExchangeList>, response: Response<ExchangeList>) {
                 d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        setStockNameAdapter(response.body()!!.exchange)
+                        exchangeId = response.body()!!.exchange.get(0).id
+                    } else {
+                        displayToast(resources.getString(R.string.internal_server_error), "error")
+                        d.dismiss()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+
+    }
+
+    fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        rvstock!!.layoutManager = llm
+        rvstock.visibility = View.VISIBLE
+
+        rvstock!!.adapter = MarketStockAdapter(context!!, exchangeList!!, this)
+
+        // call function news
+        autoScrollNews(llm)
+
+        //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
+//        rvstock.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
+//        rvstock.setItemAnimator(DefaultItemAnimator())
+        rvstock!!.adapter!!.notifyDataSetChanged();
+
+    }
+
+    fun autoScrollNews(llm: LinearLayoutManager) {
+        val handler = Handler()
+        val runnable = object : Runnable {
+            var count = 0
+            var flag = true
+            override fun run() {
+                if (rvstock == null)
+                    return
+                if (count < rvstock!!.adapter!!.getItemCount()) {
+                    if (count == rvstock!!.adapter!!.getItemCount() - 1) {
+                        flag = false;
+                    } else
+                        if (count == 0) {
+                            flag = true;
+                        }
+                    if (flag)
+                        count++;
+                    else
+                        count--;
+                    var visibleItemCount = rvstock.getChildCount();
+                    var totalItemCount = llm.getItemCount();
+//                    recyclerView_stock_name.smoothScrollToPosition(count);
+                    var dx = count
+                    rvstock.scrollBy(count, visibleItemCount + totalItemCount)
+                    handler.postDelayed(this, 300);
+
+                }
+            }
+        }
+        handler.postDelayed(runnable, 0);
+
+    }
+
+    fun getStocks(flag: String, exchangeId: Int) {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.getStockList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                exchangeId,
+                getFromPrefsString(StockConstant.USERID)!!.toInt(),
+                sector, page.toString(), limit.toString()
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                isLoading = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
                             stockList = response.body()!!.stock
                             stockListNew = response.body()!!.stock
                             setStockAdapter()
-                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                setActiveCurrencyType("")
+                            try {
+                                if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                    setActiveCurrencyType("")
+                                }
+                            } catch (e: Exception) {
+
                             }
+
                         } else {
                             stockList!!.clear()
                             stockList = stockListFilter
@@ -124,9 +212,8 @@ class StocksFragment : BaseFragment() {
                 }
             }
 
-            override fun onFailure(call: Call<MarketData>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -134,23 +221,22 @@ class StocksFragment : BaseFragment() {
         })
     }
 
-    fun getStocksAgain(flag: String) {
-        /*  val d = StockDialog.showLoading(activity!!)
-          d.setCanceledOnTouchOutside(false)*/
+    fun getStocksAgain(flag: String, exchangeId: Int) {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<MarketData> =
-            apiService.getMarketData(
+        val call: Call<StockTeamPojo> =
+            apiService.getStockList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                "Equity",
-                sector, exchange, country, "", page.toString(), limit.toString()
+                exchangeId,
+                getFromPrefsString(StockConstant.USERID)!!.toInt(),
+                sector, page.toString(), limit.toString()
             )
-        call.enqueue(object : Callback<MarketData> {
+        call.enqueue(object : Callback<StockTeamPojo> {
 
-            override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
-//                d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
@@ -165,25 +251,23 @@ class StocksFragment : BaseFragment() {
                     }
                 } else {
 //                    displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                    d.dismiss()
+                    d.dismiss()
                 }
             }
 
-            override fun onFailure(call: Call<MarketData>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+
                 println(t.toString())
 //                displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                d.dismiss()
+                d.dismiss()
             }
         })
     }
 
     @SuppressLint("WrongConstant")
     fun setStockAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
         if (rv_stockList != null) {
+            llm!!.orientation = LinearLayoutManager.VERTICAL
             rv_stockList!!.layoutManager = llm
             rv_stockList.visibility = View.VISIBLE
             stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
@@ -241,6 +325,7 @@ class StocksFragment : BaseFragment() {
     }
 
     fun setSorting(type: String) {
+        getExchangeNamelist()
         if (type.equals("Alpha")) {
             var sortedList = stockList!!.sortedBy { it.symbol?.toString() }
             for (obj in sortedList) {
@@ -283,33 +368,36 @@ class StocksFragment : BaseFragment() {
                 rv_stockList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("nodata")) {
-            getStocks("1")
+            getStocks("1",exchangeId)
         }
 
     }
 
     fun changePercentFilter(type: String) {
+        getExchangeNamelist()
         if (type.equals("0")) {
-            getStocks("0")
+            getStocks("0",exchangeId)
             rv_stockList!!.adapter!!.notifyDataSetChanged()
         } else {
-            getStocks(type)
+            getStocks(type,exchangeId)
             rv_stockList!!.adapter!!.notifyDataSetChanged()
         }
     }
 
     fun applyFilter(sector: String, exchange: String, country: String) {
+        getExchangeNamelist()
         this.sector = sector
         this.exchange = exchange
         this.country = country
-        getStocks("0")
+        getStocks("0",exchangeId)
         rv_stockList!!.adapter!!.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 411 && data != null) {
-            getStocksAgain("1")
+            getExchangeNamelist()
+            getStocksAgain("1",exchangeId)
             rv_stockList.adapter!!.notifyDataSetChanged()
         }
 

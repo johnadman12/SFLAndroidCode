@@ -45,7 +45,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         }
 
         if (!TextUtils.isEmpty(totalChange)) {
-            if (totalChange.contains("$"))
+            if (totalChange.contains("%") || totalChange.contains("$"))
                 totalChange1 = totalChange.substring(0, totalChange.length - 1).toDouble()
             else
                 totalChange1 = totalChange.toDouble()
