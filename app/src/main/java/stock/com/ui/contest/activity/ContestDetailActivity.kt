@@ -178,7 +178,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         setRulesAdapter(response.body()!!.rules)
                         listScores = response.body()!!.scores
                         marketname = response.body()!!.contest.get(0).marketname
-
+                        listMy!!.clear()
                         for (i in 0 until listScores!!.size) {
                             if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
                                 listMy!!.add(listScores!!.get(i))

@@ -328,8 +328,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
         })
         srl_layout.setOnRefreshListener {
-            flagRefresh= true
-            limit = limit + 50
+            flagRefresh = true
             getMarketTeamlist()
         }
 
@@ -345,16 +344,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-         mainHandler = Handler(Looper.getMainLooper())
-         mainHandler.post(object : Runnable {
-             override fun run() {
-                 if (flagSearch) {
-                     getMarketTeamlist()
-                 }
-                 mainHandler.postDelayed(this, 8000)
-             }
+        mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (flagSearch) {
+                    getMarketTeamlist()
+                }
+                mainHandler.postDelayed(this, 8000)
+            }
 
-         })
+        })
     }
 
     fun callSearch(c: CharSequence) {
@@ -468,7 +467,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
-                srl_layout.isRefreshing = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
@@ -480,17 +480,26 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             else if (response.body()!!.myteam.equals("0"))
                                 llMyTeam.visibility = View.GONE
                         }
-                        //flickering
-                        if (listOld!!.size > 0) {
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                        if (flagRefresh) {
+                            limit = limit + 50
                             list!!.clear()
-                        } else {
-                            listOld!!.addAll(response.body()!!.crypto!!);
-                        }
+                            list!!.addAll(response.body()!!.crypto!!)
+                            listOld!!.clear()
+                            listOld!!.addAll(response.body()!!.crypto!!)
 
-                        list!!.clear()
-                        list!!.addAll(response.body()!!.crypto!!);
+                        } else {
+                            //flickering
+                            if (listOld!!.size > 0) {
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                                list!!.clear()
+                            } else {
+                                listOld!!.addAll(response.body()!!.crypto!!);
+                            }
+
+                            list!!.clear()
+                            list!!.addAll(response.body()!!.crypto!!);
+                        }
 //                        listOld!!.addAll(response.body()!!.crypto!!);
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
@@ -586,7 +595,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
-                srl_layout.isRefreshing = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
 //                d.dismiss()
@@ -914,6 +924,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-//        mainHandler.removeCallbacksAndMessages(null);
+        mainHandler.removeCallbacksAndMessages(null);
     }
 }

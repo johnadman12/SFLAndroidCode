@@ -36,6 +36,7 @@ class StocksFragment : BaseFragment() {
     var page: Int = 0
     var limit: Int = 50
     var exchangeId: Int = 0
+    lateinit var mainHandler: Handler;
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
@@ -63,28 +64,30 @@ class StocksFragment : BaseFragment() {
         stockListFilter = ArrayList()
         llm = LinearLayoutManager(context)
         getExchangeNamelist()
-        getStocks("1",exchangeId)
 
-        val mainHandler = Handler(Looper.getMainLooper())
+        setStockAdapter()
+
+        /* scrollListener = RecyclerViewLoadMoreScroll(llm)
+         scrollListener!!.setOnLoadMoreListener(object : OnLoadMoreListener {
+             override fun onLoadMore() {
+                 getStocks("1",exchangeId)
+             }
+         })*/
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler = Handler(Looper.getMainLooper())
 
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (isVisible) {
-                    getStocksAgain("1",exchangeId)
+                    getStocksAgain("1", exchangeId)
                     mainHandler.postDelayed(this, 20000)
                 }
             }
         })
-
-        setStockAdapter()
-
-       /* scrollListener = RecyclerViewLoadMoreScroll(llm)
-        scrollListener!!.setOnLoadMoreListener(object : OnLoadMoreListener {
-            override fun onLoadMore() {
-                getStocks("1",exchangeId)
-            }
-        })*/
-
     }
 
     fun getExchangeNamelist() {
@@ -100,6 +103,7 @@ class StocksFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         setStockNameAdapter(response.body()!!.exchange)
                         exchangeId = response.body()!!.exchange.get(0).id
+                        getStocks("1", exchangeId)
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()
@@ -368,7 +372,7 @@ class StocksFragment : BaseFragment() {
                 rv_stockList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("nodata")) {
-            getStocks("1",exchangeId)
+            getStocks("1", exchangeId)
         }
 
     }
@@ -376,10 +380,10 @@ class StocksFragment : BaseFragment() {
     fun changePercentFilter(type: String) {
         getExchangeNamelist()
         if (type.equals("0")) {
-            getStocks("0",exchangeId)
+            getStocks("0", exchangeId)
             rv_stockList!!.adapter!!.notifyDataSetChanged()
         } else {
-            getStocks(type,exchangeId)
+            getStocks(type, exchangeId)
             rv_stockList!!.adapter!!.notifyDataSetChanged()
         }
     }
@@ -389,7 +393,7 @@ class StocksFragment : BaseFragment() {
         this.sector = sector
         this.exchange = exchange
         this.country = country
-        getStocks("0",exchangeId)
+        getStocks("0", exchangeId)
         rv_stockList!!.adapter!!.notifyDataSetChanged()
     }
 
@@ -397,9 +401,14 @@ class StocksFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 411 && data != null) {
             getExchangeNamelist()
-            getStocksAgain("1",exchangeId)
+            getStocksAgain("1", exchangeId)
             rv_stockList.adapter!!.notifyDataSetChanged()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null)
     }
 }

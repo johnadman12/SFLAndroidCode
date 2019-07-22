@@ -44,7 +44,7 @@
                     android:id="@+id/checkBoxEntry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="    By Entry Fee"
+                    android:text="    By Entry Fee (Low To High)"
                     android:padding="@dimen/_10sdp"
                     style="@style/TextStyleNormal"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -63,7 +63,7 @@
                     android:padding="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@color/white"
-                    android:text="   Time Left"
+                    android:text="   Time Left (Low To High)"
                     android:textColor="@color/black"
                     android:buttonTint="@color/colorPrimary"/>
 

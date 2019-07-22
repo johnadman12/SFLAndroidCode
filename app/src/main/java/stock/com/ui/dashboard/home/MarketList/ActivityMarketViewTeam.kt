@@ -390,14 +390,23 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 500)
-                        teamId = response.body()!!.team_id
-                        finish()
+                            teamId = response.body()!!.team_id
+                            finish()
+                        }, 1500)
                     } else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                        }, 1500)
                     } else if (response.body()!!.status == "2") {
+                        Handler().postDelayed(
+                            Runnable {
+                                AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                            },
+                            1500
+                        )
+
                         appLogout()
+
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -439,16 +448,21 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 500)
+                        }, 1000)
                         teamId = response.body()!!.team_id
                         var intent = Intent();
                         intent.putExtra("flag", "2")
                         setResult(Activity.RESULT_OK, intent);
                         finish()
                     } else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                        }, 1000)
 
                     } else if (response.body()!!.status == "2") {
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                        }, 1000)
                         appLogout()
                     }
                 } else {

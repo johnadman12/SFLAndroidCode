@@ -337,7 +337,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun run() {
                 if (flagSearch) {
                     getTeamlist()
-
                 }
                 mainHandler.postDelayed(this, 8000)
             }

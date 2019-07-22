@@ -33,6 +33,7 @@ import stock.com.utils.SessionManager
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import stock.com.utils.ViewAnimationUtils
+import java.lang.Exception
 
 class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
 
@@ -117,26 +118,34 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                 if (checkBoxActive.isChecked) {
                     setActiveCurrencyType("0")
                     val resultIntent = Intent()
+                    try {
+                        setSectorWatchlistFilter("")
+                        setCountryWatchlistFilter("")
+                        setMarketWatchlistFilter("")
+                    } catch (e: Exception) {
+
+                    }
+
                     resultIntent.putExtra("resetfiltermarket", "0")
                     setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 }
             } else {
-                /* val selectedSector: String = android.text.TextUtils.join(",", sectorSelectedItems)
-                 val selectedExchange: String = android.text.TextUtils.join(",", marketSelectedItems)
- */
                 var selectedCountry: String = "";
                 var selectedSector: String = "";
                 var selectedExchange: String = "";
 
                 if (countryAdapter != null) {
-                    selectedCountry = countryAdapter!!.getSeletedtIds();
+                    setCountryWatchlistFilter(countryAdapter!!.getSeletedtIds())
+//                    selectedCountry = countryAdapter!!.getSeletedtIds();
                 }
                 if (sectorMarketAdapter != null) {
-                    selectedSector = sectorMarketAdapter!!.getSeletedtIds();
+                    setSectorWatchlistFilter(sectorMarketAdapter!!.getSeletedtIds())
+//                    selectedSector = sectorMarketAdapter!!.getSeletedtIds();
                 }
                 if (marketListAdapter != null) {
-                    selectedExchange = marketListAdapter!!.getSeletedtIds();
+                    setMarketWatchlistFilter(marketListAdapter!!.getSeletedtIds())
+//                    selectedExchange = marketListAdapter!!.getSeletedtIds();
                 }
                 Log.e("sectorlist", selectedSector)
 

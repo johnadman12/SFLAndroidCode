@@ -142,7 +142,6 @@ class ActivityMyTeam : BaseActivity() {
                 marketId.toString(), page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
-
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
                 sr2_layout.isRefreshing=false

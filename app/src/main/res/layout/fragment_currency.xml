@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_marginTop="@dimen/_3sdp">
-   <!-- <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-            android:id="@+id/swipyr"
+    <android.support.library21.custom.SwipeRefreshLayoutBottom
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srl_direction="bottom">-->
+            android:id="@+id/srl_layout">
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_currencyList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-    <!--</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>-->
+    </android.support.library21.custom.SwipeRefreshLayoutBottom>
 
 </LinearLayout>

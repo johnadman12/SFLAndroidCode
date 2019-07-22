@@ -19,6 +19,7 @@ import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
+import java.lang.Exception
 
 class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<MarketList.Crypto>? = null;
@@ -57,7 +58,13 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 rel.setBackgroundResource(R.mipmap.graycircle)
             tvTotal.setText(totalChange)
         }
-        initViews()
+
+        try {
+            initViews()
+
+        } catch (e: Exception) {
+
+        }
 
     }
 

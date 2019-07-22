@@ -38,9 +38,8 @@ class NewsItemAdapter(
         holder.itemView.setOnClickListener {
             if (title.contentEquals("Contests")) {
                 if(activityHomeSearch!=null)
-                    activityHomeSearch.setIntent("1")
+                    activityHomeSearch.setIntent(users.get(position).id)
             } else if (title.equals("Stocks", true)) {
-
                 var intent = Intent(mContext, ActivityStockDetail::class.java);
                 intent.putExtra(StockConstant.STOCKID, users.get(position).id.toInt())
                 intent.putExtra("flag", 2)

@@ -26,6 +26,8 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
     var contestId: String = ""
     var listUser: ArrayList<InviteData.UserDatum>? = null
     var listFriends: ArrayList<InviteData.FriendDatum>? = null
+    var page: Int = 0
+    var limit: Int = 50
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -67,6 +69,12 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
         changeBackGroundColor(tv_friends, ContextCompat.getColor(this, R.color.white));
         getFriendsList()
         tv_Alluser.performClick()
+
+
+        srl_layout.setOnRefreshListener {
+            limit = limit + 50
+            getFriendsList()
+        }
     }
 
     private fun changeTextColor(textView: TextView, color: Int) {
@@ -102,14 +110,13 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
             apiService.getAllUserToInvite(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                contestId, "0", "50"
+                contestId, page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<InviteData> {
 
             override fun onResponse(call: Call<InviteData>, response: Response<InviteData>) {
                 d.dismiss()
-                /* if (refreshD != null)
-                     refreshD.finishRefreshing()*/
+                srl_layout.isRefreshing= false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         listUser = response.body()!!.userData
@@ -124,8 +131,7 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<InviteData>, t: Throwable) {
-                /* if (refreshD != null)
-                     refreshD.finishRefreshing()*/
+                srl_layout.isRefreshing= false
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()

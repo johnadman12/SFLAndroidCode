@@ -20,6 +20,7 @@ import stock.com.R
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
+import java.lang.Exception
 
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
@@ -58,7 +59,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 rel.setBackgroundResource(R.mipmap.graycircle)
             tvTotal.setText(totalChange)
         }
-        initViews()
+        try {
+            initViews()
+
+        } catch (e: Exception) {
+
+        }
     }
 
 

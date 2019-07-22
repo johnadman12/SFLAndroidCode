@@ -266,7 +266,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                         testing = response.body()!!.stock!!
                         Log.e("nckshbj", testing.size.toString())
 
-                        if (testing != null && testing.size != 0) {
+                        if (testing != null /*&& testing.size != 0*/) {
                             val resultIntent = Intent()
                             resultIntent.putExtra("stocklist", testing)
                             resultIntent.putExtra("resetStockfilter", "0")

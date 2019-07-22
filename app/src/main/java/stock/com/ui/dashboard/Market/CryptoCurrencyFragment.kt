@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import kotlinx.android.synthetic.main.fragment_currency.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,9 +37,12 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagDaySort: Boolean = false
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
+    var flagPagination: Boolean = false
+
     private var flag: Boolean = true;
     var page: Int = 0
     var limit: Int = 50
+    lateinit var mainHandler: Handler;
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,16 +55,20 @@ class CryptoCurrencyFragment : BaseFragment() {
         cryptoListNew = ArrayList()
         cryptoListFiltered = ArrayList()
 
-       /* swipyr.setOnRefreshListener({ direction ->
-            limit = limit + 50
-            getCurrency("1")
-        })
-
-*/
+        srl_layout.setOnRefreshListener {
+            getCurrency("2")
+        }
 
         getCurrency("1")
+        setCryptoCurrencyAdapter()
 
-        val mainHandler = Handler(Looper.getMainLooper())
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (isVisible) {
@@ -78,9 +84,6 @@ class CryptoCurrencyFragment : BaseFragment() {
                 }
             }
         })
-        setCryptoCurrencyAdapter()
-
-
     }
 
     fun setFilter(c: CharSequence) {
@@ -111,7 +114,8 @@ class CryptoCurrencyFragment : BaseFragment() {
 
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
                 d.dismiss()
-                // srl_layout.isRefreshing = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -125,6 +129,10 @@ class CryptoCurrencyFragment : BaseFragment() {
                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
                             }
+                        } else if (flag.equals("2")) {
+                            limit = limit + 50
+                            cryptoList = response.body()!!.crypto
+                            cryptoListNew = response.body()!!.crypto
                         } else {
                             cryptoList = response.body()!!.crypto
                             for (i in 0 until cryptoList!!.size) {
@@ -152,6 +160,8 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<MarketData>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -171,7 +181,8 @@ class CryptoCurrencyFragment : BaseFragment() {
         call.enqueue(object : Callback<MarketData> {
 
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
-//                srl_layout.isRefreshing = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
@@ -243,7 +254,8 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<MarketData>, t: Throwable) {
-//                srl_layout.isRefreshing = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
 //                displayToast(resources.getString(R.string.something_went_wrong), "error")
 //                d.dismiss()
@@ -421,6 +433,11 @@ class CryptoCurrencyFragment : BaseFragment() {
 
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null)
     }
 
 }

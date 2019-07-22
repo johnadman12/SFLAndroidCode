@@ -17,11 +17,18 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_stockList"
-            android:layout_marginTop="@dimen/_5sdp"
+
+    <android.support.library21.custom.SwipeRefreshLayoutBottom
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/srl_layout">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stockList"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </android.support.library21.custom.SwipeRefreshLayoutBottom>
 
 
 </LinearLayout>

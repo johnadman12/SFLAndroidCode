@@ -117,9 +117,55 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
-
     private fun setChart(yValsCandleStick: ArrayList<CandleEntry>) {
-        /*  val yValsCandleStick = ArrayList<CandleEntry>()
+        val set1 = CandleDataSet(yValsCandleStick, "")
+        set1.setShadowColor(Color.GRAY);
+        set1.setShadowWidth(1.5f);
+
+
+
+        set1.decreasingColor = Color.rgb(191, 39, 12)
+        set1.setDecreasingPaintStyle(Paint.Style.FILL_AND_STROKE);
+        set1.increasingColor = Color.rgb(148, 196, 116)
+        set1.setIncreasingPaintStyle(Paint.Style.FILL_AND_STROKE);
+        set1.setNeutralColor(Color.MAGENTA);
+        set1.setHighlightLineWidth(0.5f)
+
+
+        set1.setDrawValues(false);
+        chart11.animateX(2000)
+
+       /* for (set in chart11.getData().getDataSets())
+            set.setDrawValues(!set.isDrawValuesEnabled())*/
+
+        chart11.setOnClickListener(this)
+
+        chart11.legend.isEnabled = false
+        chart11.setTouchEnabled(true)
+        chart11.isDoubleTapToZoomEnabled = false
+
+        //chart11.setMaxVisibleValueCount(0)
+
+        val xAxis_candle = chart11.xAxis
+        xAxis_candle.setValueFormatter { value, _ ->
+            SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH).format(value.toLong())
+        }
+
+        xAxis_candle.position = XAxis.XAxisPosition.BOTTOM
+        chart11.axisLeft.setDrawGridLines(false)
+        xAxis_candle.textColor = ContextCompat.getColor(activity!!, R.color.black)
+
+        val yAxis_candle = chart11.axisLeft
+        yAxis_candle.textColor = ContextCompat.getColor(activity!!, R.color.black)
+        val rightAxis_candle = chart11.axisRight
+        rightAxis_candle.setDrawLabels(false)
+        val data = CandleData(set1)
+        // set data
+        chart11.setData(data)
+        chart11.invalidate()
+    }
+   /* private fun setChart(yValsCandleStick: ArrayList<CandleEntry>) {
+        *//*  val yValsCandleStick = ArrayList<CandleEntry>()
           yValsCandleStick.add(CandleEntry(0.0F, 225.0f, 219.84f, 224.94f, 221.07f))
           yValsCandleStick.add(CandleEntry(1F, 228.35f, 222.57f, 223.52f, 226.41f))
           yValsCandleStick.add(CandleEntry(2F, 226.84f, 222.52f, 225.75f, 287.84f))
@@ -134,7 +180,9 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
           yValsCandleStick.add(CandleEntry(11F, 245.68f, 217.237f, 222.15f, 213.88f))
           yValsCandleStick.add(CandleEntry(12F, 220.57f, 224.67f, 222.15f, 217.88f))
           yValsCandleStick.add(CandleEntry(13F, 250.22f, 243.87f, 222.15f, 266.88f))
-          yValsCandleStick.add(CandleEntry(14F, 247.95f, 217.87f, 224.15f, 300.88f))*/
+          yValsCandleStick.add(CandleEntry(14F, 247.95f, 217.87f, 224.15f, 300.88f))*//*
+
+
 
         val set1 = CandleDataSet(yValsCandleStick, "")
 //        val data_candle = CandleData(xVals_earnings, barDataSetCandle)
@@ -172,7 +220,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
         val rightAxis_candle = chart11.axisRight
         rightAxis_candle.setDrawLabels(false)
 
-    }
+    }*/
 
     fun getdate(): String {
         val c = Calendar.getInstance().getTime()

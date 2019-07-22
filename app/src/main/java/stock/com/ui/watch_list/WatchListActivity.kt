@@ -25,8 +25,10 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.WatchlistPojo
 import stock.com.ui.watch_list.adapter.WatchListAdapter_
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.lang.Exception
 
 
 class WatchListActivity : BaseActivity() {
@@ -203,10 +205,24 @@ class WatchListActivity : BaseActivity() {
                 var flagreset = data.getStringExtra("resetStockfilter")
                 if (flagreset.equals("0")) {
                     var testing = data.getSerializableExtra("stocklist") as ArrayList<WatchlistPojo.WatchStock>;
-                    Log.d("sdadada---Filter", "--" + testing.size)
-                    list!!.clear()
-                    list!!.addAll(testing)
-                    recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
+                    try {
+                        if (testing.size > 0) {
+                            Log.d("sdadada---Filter", "--" + testing.size)
+                            list!!.clear()
+                            list!!.addAll(testing)
+                            recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
+                        } else {
+                            list!!.clear()
+                            recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
+                            AppDelegate.showAlert(
+                                this@WatchListActivity,
+                                "No result Found\n Please Reset Filter to Get Data"
+                            )
+                        }
+                    } catch (e: Exception) {
+
+                    }
+
                 } else {
                     setAssetWatchlistFilter(" ")
                     setSectorWatchlistFilter(" ")

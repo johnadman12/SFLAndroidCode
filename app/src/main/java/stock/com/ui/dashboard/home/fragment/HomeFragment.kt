@@ -61,14 +61,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews() {
         ll_expandable_view.visibility = View.VISIBLE
-        ll_matchSelector.visibility = View.GONE
-        txt_Fixtures.setOnClickListener(this)
-        txt_Live.setOnClickListener(this)
-        txt_Results.setOnClickListener(this)
         seeall.setOnClickListener(this)
         getFeatureContentlist();
         getTrainingContentlist()
-        getNewslist()
+//        getNewslist()
         exchangeList = ArrayList()
         dataExchange =
             ArrayList()
@@ -152,11 +148,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         dashBoradACtivity!!.changeFragment(LobbyFragment())
     }
 
-    private var LIVE = 1
-    private var FIXTURES = 2
-    private var RESULTS = 3
-
-
     @SuppressLint("WrongConstant")
     private fun setFeatureContestAdapter(listItem: List<HomePojo.FeatureContest>) {
         viewPager_features.visibility = View.VISIBLE
@@ -168,11 +159,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         var adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_features.setAdapter(adapter)
 
-        /* tab_layout_features.visibility = VISIBLE;
-         tab_layout_features.setupWithViewPager(viewPager_features);*/
-
-
-        if (listItem.size > 5) {
+          if (listItem.size > 5) {
             pageIndicatorView.visibility = VISIBLE
             // specify total count of indicators
             pageIndicatorView.setCount(5)

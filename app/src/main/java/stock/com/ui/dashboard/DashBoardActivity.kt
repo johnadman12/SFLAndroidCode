@@ -616,6 +616,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             var b = Bundle();
             b.putString("flag", "true")
             setFragment(MyContestFragment(), b);
+            setMenu(false, false, false, false, false, false, false)
             changetTextViewBackground(tv_contest, R.color.colorPrimary);
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
@@ -625,6 +626,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             var b = Bundle();
             b.putString("flag", "true")
             setFragment(MyContestFragment(), b);
+            setMenu(false, false, false, false, false, false, false)
             changetTextViewBackground(tv_contest, R.color.colorPrimary);
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
@@ -634,6 +636,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             var b = Bundle();
             b.putString("flag", "")
             setFragment(MyContestFragment(), b);
+            setMenu(false, false, false, false, false, false, false)
             changetTextViewBackground(tv_contest, R.color.colorPrimary);
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
@@ -643,6 +646,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
             val bundle = Bundle()
             bundle.putString("flag", "")
             setFragment(LobbyFragment(), bundle)
+            setMenu(false, false, false, false, false, false, false)
             changetTextViewBackground(tv_market, R.color.textColorLightBlack);
             changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
             changetTextViewBackground(tv_contest, R.color.textColorLightBlack);
@@ -655,6 +659,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 bundle.putString("flag", "")
                 bundle.putString("id", id)
                 setFragment(LobbyFragment(), bundle)
+                setMenu(false, false, false, false, false, false, false)
                 changetTextViewBackground(tv_market, R.color.textColorLightBlack);
                 changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
                 changetTextViewBackground(tv_contest, R.color.textColorLightBlack);

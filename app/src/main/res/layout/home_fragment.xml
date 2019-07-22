@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--&gt;-->
 <com.amar.library.ui.StickyScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:stickyHeader="@+id/cl_main"
+        app:stickyHeader="@+id/rl_banner"
         android:background="@mipmap/bg">
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,47 +16,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/homeBannerRecyclerView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/_160sdp"-->
-        <!--/>-->
-        <!-- <RelativeLayout
-                 app:layout_constraintTop_toTopOf="parent"
-                 app:layout_constraintStart_toStartOf="parent"
-                 app:layout_constraintEnd_toEndOf="parent"
-                 android:id="@+id/rl_banner"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/_136sdp"
-         >-->
-        <LinearLayout
+        <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+                android:id="@+id/hicvp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+                app:icvp_scroll_duration="250"
+                app:icvp_medium_scaled="false"
+                android:layout_marginTop="-8dp"
+                android:layout_marginBottom="-8dp"
+        />
+        <LinearLayout
+                app:layout_constraintTop_toBottomOf="@+id/hicvp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/rl_banner"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-                    android:id="@+id/hicvp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150sdp"
-                    app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-                    app:icvp_scroll_duration="250"
-                    app:icvp_medium_scaled="false"
-                    android:layout_marginTop="-8dp"
-                    android:layout_marginBottom="-8dp"
-            />
 
-            <!--<com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
-                    android:id="@+id/recyclerView_stock_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-                    app:icvp_scroll_duration="250"
-                    android:background="@color/white"
-                    app:icvp_medium_scaled="false"
-            />-->
             <androidx.recyclerview.widget.RecyclerView
                     android:paddingTop="@dimen/_6sdp"
                     android:id="@+id/recyclerView_stock_name"
@@ -74,115 +49,8 @@
                     android:fillViewport="true"
                     tools:listitem="@layout/item_match"
                     android:paddingBottom="@dimen/_5sdp"/>
-            <!-- <android.support.v4.view.ViewPager
-             android:id="@+id/productImagePager"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content" />-->
-
-            <!--<com.rd.PageIndicatorView-->
-            <!--android:id="@+id/pageIndicatorView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:padding="@dimen/_8sdp"-->
-            <!--app:piv_radius="@dimen/_4sdp"-->
-            <!--app:piv_selectedColor="@color/colorASPrimary"-->
-            <!--app:piv_unselectedColor="@color/button_gray_background" />-->
-
-            <!--<com.yuyakaido.android.cardstackview.CardStackView-->
-            <!--android:id="@+id/activity_main_card_stack_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:clipToPadding="false"-->
-            <!--app:visibleCount="5"-->
-            <!--app:swipeThreshold="0.75"-->
-            <!--app:translationDiff="12"-->
-            <!--app:scaleDiff="0.02"-->
-            <!--app:stackFrom="top"-->
-            <!--app:elevationEnabled="true"-->
-            <!--app:swipeEnabled="true"-->
-            <!--app:swipeDirection="freedom_no_bottom"-->
-            <!--/>-->
 
         </LinearLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_main"
-                app:layout_constraintTop_toBottomOf="@+id/rl_banner"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone"
-                android:layout_height="match_parent">
-
-            <LinearLayout
-                    android:id="@+id/ll_matchSelector"
-                    android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/button_rounded_background"
-                    android:layout_height="@dimen/_28sdp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:visibility="visible"
-                    tools:layout_editor_absoluteY="13dp"
-                    tools:layout_editor_absoluteX="26dp">
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_Fixtures"
-                        style="@style/TextStyleMedium"
-                        android:background="@drawable/match_selector"
-                        android:gravity="center"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="0dp"
-                        android:textColor="@color/home_color_selector"
-                        android:text="@string/fixtures"
-                        android:layout_height="match_parent"/>
-
-                <View
-                        android:id="@+id/view1"
-                        android:layout_width="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="@color/white"
-                        android:layout_height="match_parent"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_Live"
-                        android:layout_weight="1"
-                        style="@style/TextStyleMedium"
-                        android:background="@drawable/match_selector"
-                        android:gravity="center"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="0dp"
-                        android:textColor="@color/home_color_selector"
-                        android:text="@string/live"
-                        android:layout_height="match_parent"/>
-
-                <View
-                        android:id="@+id/view2"
-                        android:layout_width="@dimen/_1sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="@color/white"
-                        android:layout_height="match_parent"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_Results"
-                        android:layout_weight="1"
-                        style="@style/TextStyleMedium"
-                        android:background="@drawable/match_selector"
-                        android:gravity="center"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="0dp"
-                        android:textColor="@color/home_color_selector"
-                        android:text="@string/results"
-                        android:layout_height="match_parent"/>
-
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_title"
                 style="@style/TextStyleSemiBold"
@@ -193,24 +61,12 @@
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cl_main"
+                app:layout_constraintTop_toBottomOf="@+id/rl_banner"
                 android:layout_width="match_parent"
                 android:textColor="@color/white"
                 android:text="@string/enter_contest"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
-        <androidx.appcompat.widget.AppCompatTextView
-                android:paddingTop="@dimen/_5sdp"
-                android:id="@+id/entry_fee"
-                style="@style/TextStyleSemiBold"
-                android:gravity="right"
-                android:textSize="@dimen/_11sdp"
-                android:layout_width="match_parent"
-                android:textColor="@color/colorBackgroundTermsAndConditions"
-                android:text="@string/doller_entry_fee"
-                android:visibility="gone"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteY="239dp"/>
         <LinearLayout
                 android:id="@+id/ll_expandable_view"
                 android:layout_width="match_parent"
@@ -236,7 +92,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_10sdp"
                     app:tabMaxWidth="@dimen/_50sdp"
-                    android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
                     app:tabMode="fixed"
@@ -259,7 +114,7 @@
                     app:piv_viewPager="@id/viewPager"
                     attrs:piv_padding="8dp"
                     android:visibility="gone"
-                    attrs:piv_radius="4dp" />
+                    attrs:piv_radius="4dp"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"
@@ -273,17 +128,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_tranning_contest"
                     android:visibility="gone"/>
-            <!--<androidx.recyclerview.widget.RecyclerView
-                    android:paddingTop="@dimen/_6sdp"
-                    android:id="@+id/recyclerView_tranning_contest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:visibility="gone"
-                    android:nestedScrollingEnabled="false"
-                    android:fillViewport="true"
-                    tools:listitem="@layout/item_match"/>-->
 
             <androidx.viewpager.widget.ViewPager
                     android:layout_width="match_parent"
@@ -297,7 +141,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_10sdp"
                     app:tabMaxWidth="@dimen/_100sdp"
-                    android:layout_below="@+id/viewPager_Banner"
                     app:tabBackground="@drawable/tab_selector"
                     app:tabGravity="center"
                     android:layout_marginTop="-5dp"
@@ -320,7 +163,7 @@
                     app:piv_viewPager="@id/viewPager"
                     attrs:piv_padding="8dp"
                     android:visibility="gone"
-                    attrs:piv_radius="4dp" />
+                    attrs:piv_radius="4dp"/>
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -394,6 +237,6 @@
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/view6"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-    <!--</androidx.core.widget.NestedScrollView>-->
 </com.amar.library.ui.StickyScrollView>
+
+

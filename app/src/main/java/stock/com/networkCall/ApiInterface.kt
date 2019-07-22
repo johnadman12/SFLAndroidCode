@@ -520,8 +520,7 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("contest_id") contest_id: String
-        ,
-        @Field("page") page: String, @Field("limit") limit: String
+        ,@Field("page") page: String, @Field("limit") limit: String
     ): Call<InviteData>
 
 

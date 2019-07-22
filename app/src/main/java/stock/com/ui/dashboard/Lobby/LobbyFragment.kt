@@ -26,6 +26,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.LobbyContestPojo
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockConstant.RESULT_CODE_FILTER
 import stock.com.utils.StockDialog
@@ -163,7 +164,7 @@ class LobbyFragment : BaseFragment() {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 flag = data.getStringExtra("flag")
                 if (data.getStringExtra("flag").equals("Entry")) {
-                    var sortedList = contest!!.sortedWith(compareBy({ it.fees }))
+                    var sortedList = contest!!.sortedWith(compareBy({ it.fees.toDouble() }))
                     for (obj in sortedList) {
                         Log.d("sdadada---", "--" + obj.fees)
                         recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, sortedList)
@@ -179,12 +180,6 @@ class LobbyFragment : BaseFragment() {
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
 
-                    /* var tempList = ArrayList<LobbyContestPojo.Contest>();
-                     for (obj in contest!!) {
-                         obj.setWinningAmount_temp(obj.winningAmount.replace(",", ""));
-                         obj.setWinningAmount_temp(obj.getWinningAmount_temp().replace("$", ""));
-                         tempList.add(obj)
-                     }*/
                     contest!!.sortByDescending { it.win_amount.toDouble() };
                     //var sortedList1 = tempList!!.sortByDescending { it.getWinningAmount_temp().toDouble() };
                     recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
@@ -207,9 +202,22 @@ class LobbyFragment : BaseFragment() {
                 var flagreset = data.getStringExtra("resetfilter")
                 if (flagreset.equals("0")) {
                     var testing = data.getSerializableExtra("contestlist") as ArrayList<LobbyContestPojo.Contest>;
-                    Log.d("sdadada---Filter", "--" + testing.size)
-                    recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
-                    recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+                    try {
+                        if (testing.size > 0) {
+                            Log.d("sdadada---Filter", "--" + testing.size)
+                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
+                            recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+                        } else {
+                            testing.clear()
+                            recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, testing)
+                            recyclerView_contest!!.adapter!!.notifyDataSetChanged();
+                            AppDelegate.showAlert(activity!!, "No result Found\n Please Pull down to get Contests")
+                        }
+                    } catch (e: java.lang.Exception) {
+
+                    }
+
+
                 } else {
                     getContestlist()
                 }

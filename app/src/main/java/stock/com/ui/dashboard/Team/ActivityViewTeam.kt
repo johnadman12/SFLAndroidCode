@@ -345,9 +345,14 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         teamId = response.body()!!.team_id
                         finish()
                     } else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        }, 1000)
 
                     } else if (response.body()!!.status == "2") {
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        }, 1000)
                         appLogout()
                     }
                 } else {
@@ -390,13 +395,16 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
-                        }, 500)
-                        var intent = Intent();
-                        intent.putExtra("flag", "2")
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+                            var intent = Intent();
+                            intent.putExtra("flag", "2")
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+                        }, 1500)
+
                     } else if (response.body()!!.status == "0") {
-                        AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
+                        }, 1500)
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")

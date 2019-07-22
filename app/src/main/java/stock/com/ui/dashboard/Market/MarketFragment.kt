@@ -32,7 +32,6 @@ import stock.com.utils.StockDialog
 
 class MarketFragment : BaseFragment(), View.OnClickListener {
     var position: Int = 0
-
     private var cryptoAdapter: CurrencyAdapter? = null;
     private var list: List<StockTeamPojo.Stock>? = null
     var isMarket: Int = 0
@@ -216,8 +215,8 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.HORIZONTAL
         rvstock!!.layoutManager = llm
         rvstock.visibility = View.VISIBLE
-
-        rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList!!)
+        if (rvstock != null)
+            rvstock!!.adapter = ExchangeAdapter(context!!, exchangeList!!)
 
         // call function news
         autoScrollNews(llm)

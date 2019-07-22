@@ -45,6 +45,7 @@ class ContestListAdapter(
             if (currentItem.id.toString().equals(parts[i])) {
                 Log.e("NUMBER------", parts[i].toString())
                 holder.itemView.checkboxContest.isChecked = true;
+                checkedHolder!![position] = true;
             }
         }
         holder.itemView.checkboxContest.setOnClickListener {

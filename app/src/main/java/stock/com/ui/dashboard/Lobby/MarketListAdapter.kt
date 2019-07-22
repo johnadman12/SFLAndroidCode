@@ -48,6 +48,7 @@ class MarketListAdapter(
             if (currentItem.id.toString().equals(parts[i])) {
                 Log.e("NUMBER------", parts[i].toString())
                 holder.itemView.checkCountry.isChecked = true;
+                checkedHolder!![position] = true;
             }
         }
 

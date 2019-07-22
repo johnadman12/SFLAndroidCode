@@ -113,14 +113,18 @@
 
 
     </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.library21.custom.SwipeRefreshLayoutBottom
             android:layout_width="match_parent"
-            android:id="@+id/recyle_invite_list"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/srl_layout">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recyle_invite_list"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </android.support.library21.custom.SwipeRefreshLayoutBottom>
 
 </LinearLayout>
