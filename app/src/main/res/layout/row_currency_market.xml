@@ -35,6 +35,7 @@
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="wrap_content"
                               android:orientation="horizontal">
+
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:text="hidhcinfrf"
@@ -44,13 +45,14 @@
                               style="@style/TextStyleSemiBold"
                               android:textStyle="bold"
                               android:textColor="@color/black"/>
+
                     <TextView android:layout_width="wrap_content"
-                              android:layout_height="match_parent"
-                              android:text="chjchihch"
-                              android:textSize="@dimen/_12ssp"
-                              android:layout_marginLeft="@dimen/_7sdp"
+                              android:layout_height="wrap_content"
+                              android:text="chjchihchbbcccchffrhffjf"
+                              android:textSize="@dimen/_11ssp"
+                              android:maxLines="2"
+                              android:layout_marginLeft="@dimen/_5sdp"
                               style="@style/TextStyleNormal"
-                              android:maxLines="1"
                               android:id="@+id/tv_company"
                               android:textColor="@color/textColorGray"/>
                 </LinearLayout>
@@ -94,25 +96,14 @@
                         android:background="@drawable/gray_empty_rect"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content"
+                    <TextView android:layout_width="match_parent"
                               android:layout_height="wrap_content"
                               android:textSize="@dimen/_11ssp"
                               android:id="@+id/tv_latest_price"
                               android:padding="@dimen/_3sdp"
-                              android:gravity="right"
+                              android:gravity="center"
                               style="@style/TextStyleSemiBold"
                               android:textColor="@color/black"/>
-
-                    <TextView android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text=""
-                              android:visibility="gone"
-                              android:drawableRight="@mipmap/heartblue"
-                              android:drawablePadding="@dimen/_5sdp"
-                              android:textSize="@dimen/_11sdp"
-                              style="@style/TextStyleSemiBold"
-                              android:textColor="@color/colorbutton"/>
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

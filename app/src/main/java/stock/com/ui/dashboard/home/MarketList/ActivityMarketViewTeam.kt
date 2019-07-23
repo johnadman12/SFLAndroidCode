@@ -390,22 +390,25 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                            teamId = response.body()!!.team_id
-                            finish()
-                        }, 1500)
+                            teamId = response.body()!!.team_id.toInt()
+                            var intent = Intent();
+                            intent.putExtra("flag", "3")
+                            intent.putExtra(StockConstant.TEAMID, teamId)
+                            setResult(Activity.RESULT_OK, intent);
+                        }, 1000)
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 1500)
+                        }, 1000)
                     } else if (response.body()!!.status == "2") {
                         Handler().postDelayed(
                             Runnable {
                                 AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                                appLogout()
                             },
-                            1500
+                            1000
                         )
 
-                        appLogout()
 
                     }
                 } else {
@@ -427,7 +430,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
-        jsonparams.addProperty("team_id", "")
+        jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -448,22 +451,21 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 1000)
-                        teamId = response.body()!!.team_id
-                        var intent = Intent();
-                        intent.putExtra("flag", "2")
-                        setResult(Activity.RESULT_OK, intent);
-                        finish()
+                            var intent = Intent();
+                            intent.putExtra("flag", "2")
+                            setResult(Activity.RESULT_OK, intent);
+                            finish()
+                        }, 500)
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 1000)
+                        }, 500)
 
                     } else if (response.body()!!.status == "2") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
-                        }, 1000)
-                        appLogout()
+                            appLogout()
+                        }, 500)
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -484,7 +486,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
-        jsonparams.addProperty("team_id", "")
+        jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -505,17 +507,23 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                            var intent = Intent();
+                            intent.putExtra("flag", "2")
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
                         }, 500)
-                        teamId = response.body()!!.team_id
-                        var intent = Intent();
-                        intent.putExtra("flag", "2")
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+
                     } else if (response.body()!!.status == "0") {
+                        Handler().postDelayed(Runnable {
                         AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                        }, 500)
 
                     } else if (response.body()!!.status == "2") {
-                        appLogout()
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                            appLogout()
+                        }, 500)
+
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")

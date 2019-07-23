@@ -62,10 +62,10 @@ class LobbyContestAdapter(
             }
 
 
-        var sports: Double =
-            (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt()).toDouble()
+        var sports: Int =
+            (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt())
 
-
+        mContest.get(position).setCalculatePosition(sports.toInt())
         holder.itemView.tvSprortsLeft.setText(
             mContest.get(position).contest_teamremaining.toString() + "/" +
                     mContest.get(position).contestSize

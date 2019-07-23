@@ -29,19 +29,13 @@ class StockAdapter(
     val fragment: StocksFragment,
     val stockListNew: java.util.ArrayList<StockTeamPojo.Stock>
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
-    val VIEW_TYPE_ITEM = 0
-    val VIEW_TYPE_LOADING = 1
+    RecyclerView.Adapter<StockAdapter.FeatureListHolder>(), Filterable {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_ITEM) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_market, parent, false)
-            return FeatureListHolder(view)
-        } else if (viewType == VIEW_TYPE_LOADING) {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.progress_loading, parent, false)
-            return FeatureListHolder1(view)
-        }
-        return null!!
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockAdapter.FeatureListHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_market, parent, false)
+        return FeatureListHolder(view)
+
     }
 
     private var searchList: List<StockTeamPojo.Stock>? = null
@@ -51,7 +45,7 @@ class StockAdapter(
         this.searchList = list;
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StockAdapter.FeatureListHolder, position: Int) {
 
         val anim = AlphaAnimation(0.5f, 1.0f)
         anim.duration = 100 //You can manage the blinking time with this parameter
@@ -161,7 +155,11 @@ class StockAdapter(
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("$" +price.toString() + " (+" + stockListNew!!.get(position).changePercent + " %)")
+                holder.itemView.tv_change_percentage.setText(
+                    "$" + price.toString() + " (+" + stockListNew!!.get(
+                        position
+                    ).changePercent + " %)"
+                )
             }
         }
         if (searchList!!.get(position).stock_type.equals("1")) {
@@ -182,12 +180,13 @@ class StockAdapter(
     }
 
     override fun getItemCount(): Int {
-       // return searchList!!.size
+        // return searchList!!.size
         return if (searchList == null) 0 else searchList!!.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
+
     inner class FeatureListHolder1(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
@@ -224,7 +223,5 @@ class StockAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (searchList!!.get(position) == null) VIEW_TYPE_LOADING else VIEW_TYPE_ITEM
-    }
+
 }

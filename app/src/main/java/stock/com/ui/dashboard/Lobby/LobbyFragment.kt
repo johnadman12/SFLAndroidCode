@@ -58,10 +58,7 @@ class LobbyFragment : BaseFragment() {
             setFilters(categoryId)
         } else {
             getContestlist()
-
         }
-
-
         ll_filter.setOnClickListener {
             val intent = Intent(context, ActivityFilter::class.java)
             startActivityForResult(intent, RESULT_CODE_FILTER)
@@ -83,7 +80,6 @@ class LobbyFragment : BaseFragment() {
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
-
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
@@ -97,7 +93,6 @@ class LobbyFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_lobby, container, false)
     }
-
 
     fun getContestlist() {
         val d = StockDialog.showLoading(activity!!)
@@ -235,10 +230,7 @@ class LobbyFragment : BaseFragment() {
 
             }
         }
-
-
     }
-
 
     fun showViewContestDialogue() {
         var dialogue = Dialog(activity!!)

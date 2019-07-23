@@ -81,6 +81,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                     flagPriceSort = false
                     flagDaySort = false
                     flagHTLSort = false
+                    flagDHTLSort = false
                 }
             }
         })
@@ -363,7 +364,7 @@ class CryptoCurrencyFragment : BaseFragment() {
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
-            flagAlphaSort = true
+            setFlag(true, false, false, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
@@ -373,7 +374,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("dayChange")) {
-            flagDaySort = true
+            setFlag(false, false, true, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
@@ -383,7 +384,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("price")) {
-            flagPriceSort = true
+            setFlag(false, true, false, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
@@ -393,7 +394,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("HighToLow")) {
-            flagHTLSort = true
+            setFlag(false, false, false, true, false)
             val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
@@ -403,7 +404,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 rv_currencyList!!.adapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("DayHighToLow")) {
-            flagDHTLSort = true
+            setFlag(false, false, false, false, true)
             val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
             for (obj in sortedList) {
                 cryptoListNew!!.clear()
@@ -433,6 +434,14 @@ class CryptoCurrencyFragment : BaseFragment() {
 
         }
 
+    }
+
+    fun setFlag(fAl: Boolean, fP: Boolean, fD: Boolean, fHTL: Boolean, fDHTL: Boolean) {
+        flagAlphaSort = fAl
+        flagPriceSort = fP
+        flagDaySort = fD
+        flagHTLSort = fHTL
+        flagDHTLSort = fDHTL
     }
 
     override fun onPause() {

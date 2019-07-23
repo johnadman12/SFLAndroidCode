@@ -35,8 +35,8 @@ class CreatedFragment : BaseFragment() {
                 //TODO make api call here
                 Handler().postDelayed({
                     refreshData.finishRefreshing()
+                    getContests()
                 }, 5000)
-                getContests()
             }
         })
         getContests()
@@ -60,8 +60,8 @@ class CreatedFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
+                            setAdapter(response.body()!!.usercontest)
                         }, 100)
-                        setAdapter(response.body()!!.usercontest)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -85,7 +85,8 @@ class CreatedFragment : BaseFragment() {
     private fun setAdapter(usercontest: MutableList<CreateContest.Usercontest>) {
         val llm = GridLayoutManager(context, 2)
         //llm.orientation = GridLayoutManager(applicationContext,2)
-        recycler_my_contest!!.layoutManager = llm
+        if (recycler_my_contest != null)
+            recycler_my_contest!!.layoutManager = llm
         recycler_my_contest!!.adapter = CreatedAdapter(context!!, usercontest);
     }
 

@@ -111,10 +111,10 @@
                     app:piv_interactiveAnimation="true"
                     app:piv_selectedColor="@color/blue"
                     app:piv_unselectedColor="@color/white"
-                    app:piv_viewPager="@id/viewPager"
+                    app:piv_viewPager="@id/viewPager_features"
                     attrs:piv_padding="8dp"
                     android:visibility="gone"
-                    attrs:piv_radius="4dp"/>
+                    attrs:piv_radius="4dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"
@@ -160,11 +160,10 @@
                     app:piv_interactiveAnimation="true"
                     app:piv_selectedColor="@color/blue"
                     app:piv_unselectedColor="@color/white"
-                    app:piv_viewPager="@id/viewPager"
+                    app:piv_viewPager="@id/viewPager_training"
                     attrs:piv_padding="8dp"
                     android:visibility="gone"
-                    attrs:piv_radius="4dp"/>
-
+                    attrs:piv_radius="4dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleSemiBold"

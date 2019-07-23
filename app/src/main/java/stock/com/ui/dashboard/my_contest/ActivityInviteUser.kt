@@ -2,6 +2,8 @@ package stock.com.ui.dashboard.my_contest
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -28,23 +30,28 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
     var listFriends: ArrayList<InviteData.FriendDatum>? = null
     var page: Int = 0
     var limit: Int = 50
+    var flagRefresh: Boolean = false
+    var pageScreen: Int = 0
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.tv_Alluser -> {
+                pageScreen = 0
                 changeTextColor(tv_Alluser, ContextCompat.getColor(this, R.color.white));
                 changeTextColor(tv_friends, ContextCompat.getColor(this, R.color.textColorLightBlack));
                 changeBackGroundColor(tv_Alluser, ContextCompat.getColor(this, R.color.colorbutton));
                 changeBackGroundColor(tv_friends, ContextCompat.getColor(this, R.color.white));
-                setInviteAdapter(listUser!!)
-
+                et_search_news.setText("")
+                getFriendsList()
             }
             R.id.tv_friends -> {
+                pageScreen = 1
                 changeTextColor(tv_friends, ContextCompat.getColor(this, R.color.white));
                 changeTextColor(tv_Alluser, ContextCompat.getColor(this, R.color.textColorLightBlack));
                 changeBackGroundColor(tv_friends, ContextCompat.getColor(this, R.color.colorbutton));
                 changeBackGroundColor(tv_Alluser, ContextCompat.getColor(this, R.color.white));
-                setInviteFriendsAdapter(listFriends!!)
+                et_search_news.setText("")
+                getFriendsList()
             }
             R.id.img_btn_back -> {
                 finish()
@@ -69,12 +76,32 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
         changeBackGroundColor(tv_friends, ContextCompat.getColor(this, R.color.white));
         getFriendsList()
         tv_Alluser.performClick()
-
-
+        imgcross.setOnClickListener {
+            et_search_news.setText("")
+            AppDelegate.hideKeyBoard(this@ActivityInviteUser)
+        }
+        pageScreen = 0
         srl_layout.setOnRefreshListener {
-            limit = limit + 50
+            flagRefresh = true
             getFriendsList()
         }
+
+        et_search_news.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s!!.length >= 2) {
+                    getUserSearchList(s.toString())
+                    AppDelegate.hideKeyBoard(this@ActivityInviteUser)
+                }
+            }
+        })
+
     }
 
     private fun changeTextColor(textView: TextView, color: Int) {
@@ -116,13 +143,24 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
 
             override fun onResponse(call: Call<InviteData>, response: Response<InviteData>) {
                 d.dismiss()
-                srl_layout.isRefreshing= false
+                srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        listUser!!.clear()
+                        listFriends!!.clear()
                         listUser = response.body()!!.userData
                         listFriends = response.body()!!.friendData
-                        setInviteAdapter(response.body()!!.userData)
-//                        setInviteFriendsAdapter(response.body()!!.friendData)
+                        if (pageScreen == 0)
+                            setInviteAdapter(response.body()!!.userData)
+                        else
+                            setInviteFriendsAdapter(response.body()!!.friendData)
+                        if (flagRefresh) {
+                            limit = limit + 50
+                            if (pageScreen == 0)
+                                setInviteAdapter(response.body()!!.userData)
+                            else
+                                setInviteFriendsAdapter(response.body()!!.friendData)
+                        }
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -131,7 +169,48 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<InviteData>, t: Throwable) {
-                srl_layout.isRefreshing= false
+                srl_layout.isRefreshing = false
+                println(t.toString())
+                displayToast(resources.getString(R.string.internal_server_error), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+
+    fun getUserSearchList(search: String) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<InviteData> =
+            apiService.getAllUserSearch(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                contestId, page.toString(), limit.toString(), search
+            )
+        call.enqueue(object : Callback<InviteData> {
+            override fun onResponse(call: Call<InviteData>, response: Response<InviteData>) {
+                d.dismiss()
+                srl_layout.isRefreshing = false
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        listUser!!.clear()
+                        listFriends!!.clear()
+                        listUser = response.body()!!.userData
+                        listFriends = response.body()!!.friendData
+                        if (pageScreen == 0)
+                            setInviteAdapter(response.body()!!.userData)
+                        else
+                            setInviteFriendsAdapter(response.body()!!.friendData)
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<InviteData>, t: Throwable) {
+                srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()

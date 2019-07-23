@@ -126,7 +126,6 @@ class WatchListActivity : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
-                        // displayToast("dsdadadadada"+""+response.body()!!.stockList!!.size);
                         if (response.body()!!.stock!!.size != 0) {
                             setAssetWatchlistFilter(" ")
                             setSectorWatchlistFilter(" ")
@@ -254,7 +253,7 @@ class WatchListActivity : BaseActivity() {
                         list!!.addAll(sortedList);
                         setWatchListAdapter();
                     } else if (flag.equals("dailyLTH")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
+                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble()}));
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);

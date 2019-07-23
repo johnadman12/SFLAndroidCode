@@ -122,7 +122,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.tvViewteam -> {
-
                 if (flagCloning == 2) {
                     if (marketSelectedItems!!.size > 0) {
                         for (i in 0 until marketSelectedItems!!.size) {
@@ -457,8 +456,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
     fun getMarketTeamlist() {
-        /*val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MarketList> =
             apiService.getMarketList(
@@ -496,11 +493,10 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             } else {
                                 listOld!!.addAll(response.body()!!.crypto!!);
                             }
-
                             list!!.clear()
                             list!!.addAll(response.body()!!.crypto!!);
                         }
-//                        listOld!!.addAll(response.body()!!.crypto!!);
+
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
@@ -512,12 +508,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
                             }
                         } else if (flagPriceLTH) {
                             val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
                             }
 
                         } else if (flagDayLTH) {
@@ -525,6 +525,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
                         } else if (flagPriceHTL) {
@@ -532,6 +534,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
 
@@ -540,6 +544,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
                         } else if (flagVolume) {
@@ -547,6 +553,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (obj in sortedList) {
                                 list!!.clear()
                                 list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
                         }
@@ -794,6 +802,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);
                     finish();
+                }
+                else if (data.getStringExtra("flag").equals("3")) {
+                    var intent = Intent();
+                    setResult(Activity.RESULT_OK, intent);
+                    teamId = data.getIntExtra(StockConstant.TEAMID, 0)
                 }
 
             }

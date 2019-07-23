@@ -27,6 +27,7 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.ui.watch_list.WatchListActivity
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
@@ -171,6 +172,14 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
             }
         })
 
+        imgcross.setOnClickListener {
+            et_search.setText("")
+            AppDelegate.hideKeyBoard(activity!!)
+            if (fragment is StocksFragment)
+                (fragment as StocksFragment).setFilter("")
+            else if (fragment is CryptoCurrencyFragment)
+                (fragment as CryptoCurrencyFragment).setFilter("")
+        }
 
     }
 

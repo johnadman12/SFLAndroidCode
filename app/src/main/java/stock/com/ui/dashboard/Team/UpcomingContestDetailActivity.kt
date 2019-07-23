@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_choose_team.*
-import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.upcoming_contest_detail_activity.*
 import kotlinx.android.synthetic.main.include_back.*
 import kotlinx.android.synthetic.main.row_contest_detail.*
@@ -37,7 +36,6 @@ import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import stock.com.utils.AppDelegate
-import stock.com.utils.AppDelegate.showInfoDialogue
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.SimpleDateFormat
@@ -94,12 +92,16 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.upcoming_contest_detail_activity)
         StockConstant.ACTIVITIES.add(this)
+        listScores = ArrayList()
+        listMy = ArrayList()
         if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getStringExtra(StockConstant.EXCHANGEID)
         }
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
+        tvTeamsMy.setOnClickListener(this)
+        tvTeams.setOnClickListener(this)
     }
 
 
@@ -157,7 +159,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         setRulesAdapter(response.body()!!.rules)
                         listScores = response.body()!!.scores
                         marketname = response.body()!!.contest.get(0).marketname
-
+                        listMy!!.clear()
                         for (i in 0 until listScores!!.size) {
                             if (listScores!!.get(i).userid.toString().equals(getFromPrefsString(StockConstant.USERID))) {
                                 listMy!!.add(listScores!!.get(i))

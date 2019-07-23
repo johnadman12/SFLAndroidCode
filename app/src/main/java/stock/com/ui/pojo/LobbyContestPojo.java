@@ -118,6 +118,7 @@ public class LobbyContestPojo extends BasePojo {
         public String totalWinners;
 
         public void setCalculatePosition(int calculatePosition) {
+
             this.calculatePosition = calculatePosition;
         }
 

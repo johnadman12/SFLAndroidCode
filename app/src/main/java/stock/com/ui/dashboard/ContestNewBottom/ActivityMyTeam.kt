@@ -30,6 +30,7 @@ class ActivityMyTeam : BaseActivity() {
     var limit: Int = 50
     var jsonparams: JsonObject = JsonObject()
     var flagMarket: Boolean = false
+    var flagRefresh: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
@@ -71,14 +72,10 @@ class ActivityMyTeam : BaseActivity() {
             }
         })*/
         sr2_layout.setOnRefreshListener {
-            Handler().postDelayed({
-            }, 5000)
+            flagRefresh = true
             if (flagMarket) {
-                limit=limit+50
                 getMarketTeamlist()
-            }
-            else {
-                limit=limit+50
+            } else {
                 getTeamlist()
             }
 
@@ -104,15 +101,14 @@ class ActivityMyTeam : BaseActivity() {
 
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
-                sr2_layout.isRefreshing=false
+                sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-//                        displayToast(list!!.size.toString())
                         setMyAdapter(response.body()!!.myteam)
-                        //  setStockTeamAdapter(response.body()!!.stock!!)
-
+                        if (flagRefresh)
+                            limit = limit + 50
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -123,7 +119,7 @@ class ActivityMyTeam : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
-                sr2_layout.isRefreshing=false
+                sr2_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -144,7 +140,7 @@ class ActivityMyTeam : BaseActivity() {
         call.enqueue(object : Callback<MyTeamsPojo> {
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
-                sr2_layout.isRefreshing=false
+                sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
@@ -163,7 +159,7 @@ class ActivityMyTeam : BaseActivity() {
             }
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
-                sr2_layout.isRefreshing=false
+                sr2_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()

@@ -137,11 +137,21 @@
                     android:background="@drawable/ll_search"
                     android:visibility="visible"
                     android:id="@+id/ll_search">
+                <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        app:srcCompat="@mipmap/search"
+                        android:layout_gravity="center"
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:padding="@dimen/_3sdp"
+                        android:tint="@color/white"/>
                 <EditText
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:textSize="@dimen/_11sdp"
@@ -151,13 +161,14 @@
                         android:singleLine="true"
                         android:id="@+id/et_search"/>
                 <androidx.appcompat.widget.AppCompatImageButton
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        app:srcCompat="@mipmap/search"
+                        android:id="@+id/imgcross"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_15sdp"
+                        app:srcCompat="@mipmap/cross"
                         android:layout_gravity="center"
                         android:background="@null"
                         android:scaleType="fitCenter"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_8sdp"
                         android:padding="@dimen/_3sdp"
                         android:tint="@color/white"/>
             </LinearLayout>
@@ -255,7 +266,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     style="@style/TextStyleNormal"
-                    android:text="Commodities"
+                    android:text="@string/commodities"
                     android:gravity="center"
                     android:textSize="@dimen/_11ssp"
                     android:paddingTop="@dimen/_6sdp"
