@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Lobby
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
@@ -37,7 +39,6 @@ class LobbyContestAdapter(
     val mContest: List<LobbyContestPojo.Contest>
 ) :
     RecyclerView.Adapter<LobbyContestAdapter.FeatureListHolder>() {
-    var SECONDS_IN_A_DAY = 24 * 60 * 60
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_view_featured_contest, parent, false)
@@ -61,7 +62,6 @@ class LobbyContestAdapter(
                     .into(holder.itemView.ivStock)
             }
 
-
         var sports: Int =
             (mContest.get(position).contestSize.toInt() - mContest.get(position).teamsJoined.toInt())
 
@@ -81,9 +81,8 @@ class LobbyContestAdapter(
         else
             holder.itemView.tvMulJoin.visibility = View.VISIBLE
 
-
-
         holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
+
         if (!mContest.get(position).scheduleStart.equals(" ")) {
             val inputPattern = "yyyy-MM-dd HH:mm:ss"
             val inputFormat = SimpleDateFormat(inputPattern)
@@ -106,6 +105,7 @@ class LobbyContestAdapter(
                 holder.itemView.llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.circle))
                 holder.itemView.tvTimeLeft.setText("Contest \n Started")
                 holder.itemView.tvHint.visibility = View.GONE
+
             } else if (diff.equals("3600000")) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -122,41 +122,38 @@ class LobbyContestAdapter(
                 }
                 newtimer.start()
 
-            } else {
+            } else if (diff < 900000) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
-                        val cTime = Calendar.getInstance()
-                        val diff = thatDay.timeInMillis - cTime.timeInMillis
-                        if (diff < 900000) {
-                            holder.itemView.txtjoin.setTextSize(16.00f)
-                            holder.itemView.txtjoin.setText("Starts \n Soon")
-                            holder.itemView.circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(mContext, R.color.GrayColor)
-                            holder.itemView.ll_Circular.isEnabled = false
-                            holder.itemView.isEnabled = false
-                            holder.itemView.llSportsLeft.visibility = View.INVISIBLE
+                        holder.itemView.txtjoin.setTextSize(16.00f)
+                        holder.itemView.txtjoin.setText("Starts \n Soon")
+                        holder.itemView.circular_progress.progressBackgroundColor =
+                            ContextCompat.getColor(mContext, R.color.GrayColor)
+                        holder.itemView.ll_Circular.isEnabled = false
+                        holder.itemView.isEnabled = false
+                        holder.itemView.llSportsLeft.visibility = View.INVISIBLE
 //                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                            val diffSec = diff / 1000
-                            val seconds = diffSec % 60
-                            val minutes = diffSec / 60 % 60
-                            val hours = diffSec / 3600
-                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                        } else {
-                            val diffSec = diff / 1000
-                            val seconds = diffSec % 60
-                            val minutes = diffSec / 60 % 60
-                            val hours = diffSec / 3600
-
-                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                        }
-
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                     }
 
                     override fun onFinish() {
                     }
                 }
                 newtimer.start()
+
+            } else {
+                val diffSec = diff / 1000
+                val seconds = diffSec % 60
+                val minutes = diffSec / 60 % 60
+                val hours = diffSec / 3600
+
+                holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
             }
+
         }
 
         holder.itemView.iv_info.setOnClickListener {
@@ -182,7 +179,11 @@ class LobbyContestAdapter(
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
+            var intent = Intent(mContext, ContestDetailActivity::class.java);
+            intent.putExtra(StockConstant.CONTESTID, mContest.get(position).contestid.toInt())
+            intent.putExtra(StockConstant.EXCHANGEID,  mContest.get(position).exchangeid.toInt())
+            ActivityCompat.startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_CREATED, null);
+           /* mContext.startActivity(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(
                     StockConstant.CONTESTID,
                     mContest.get(position).contestid.toInt()
@@ -190,7 +191,9 @@ class LobbyContestAdapter(
                     StockConstant.EXCHANGEID,
                     mContest.get(position).exchangeid.toInt()
                 )
-            )
+            )*/
+
+
         }
     }
 

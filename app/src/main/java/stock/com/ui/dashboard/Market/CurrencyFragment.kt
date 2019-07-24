@@ -24,14 +24,30 @@ import stock.com.utils.StockDialog
 class CurrencyFragment : BaseFragment() {
     var page: Int = 0
     var limit: Int = 50
+    var forexList: ArrayList<Currency.Currency>? = null
+    var forexAdapter: ForexAdapter? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        forexList = ArrayList();
         getCurrency("1")
 
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setCurrencyAdapter(/*item: MutableList<MarketList.Crypto>*/) {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        if (rv_currencyList != null) {
+            rv_currencyList!!.layoutManager = llm
+            rv_currencyList.visibility = View.VISIBLE
+            forexAdapter = ForexAdapter(context!!, forexList!!, this, forexList!!);
+            rv_currencyList!!.adapter = forexAdapter
+        }
     }
 
     fun getCurrency(flag: String) {
@@ -52,9 +68,8 @@ class CurrencyFragment : BaseFragment() {
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-
+                        forexList = response.body()!!.currency
+                        setCurrencyAdapter()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }

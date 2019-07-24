@@ -234,9 +234,10 @@
                         android:orientation="vertical">
                     <androidx.appcompat.widget.AppCompatImageButton
                             android:id="@+id/ivStock"
-                            android:layout_width="@dimen/_15sdp"
-                            android:layout_height="@dimen/_15sdp"
+                            android:layout_width="@dimen/_16sdp"
+                            android:layout_height="@dimen/_16sdp"
                             android:src="@mipmap/home_icon"
+                            android:scaleType="fitXY"
                             android:background="@null"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextStyleNormal"

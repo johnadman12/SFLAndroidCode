@@ -134,6 +134,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                             limit = limit + 50
                             cryptoList = response.body()!!.crypto
                             cryptoListNew = response.body()!!.crypto
+                            cryptoAdapter!!.notifyDataSetChanged()
                         } else {
                             cryptoList = response.body()!!.crypto
                             for (i in 0 until cryptoList!!.size) {
@@ -180,7 +181,6 @@ class CryptoCurrencyFragment : BaseFragment() {
                 "crypto", "", "", "", "", page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
-
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false

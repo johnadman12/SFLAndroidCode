@@ -36,7 +36,6 @@ import kotlin.collections.ArrayList
 class LobbyFragment : BaseFragment() {
     var categoryId: String = ""
     var flag: String = ""
-
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
 
     private var dashBoardActivity: DashBoardActivity? = null;
@@ -54,11 +53,14 @@ class LobbyFragment : BaseFragment() {
 
         dashBoardActivity = activity as DashBoardActivity?
 
+
         if (!TextUtils.isEmpty(categoryId)) {
             setFilters(categoryId)
         } else {
             getContestlist()
         }
+
+
         ll_filter.setOnClickListener {
             val intent = Intent(context, ActivityFilter::class.java)
             startActivityForResult(intent, RESULT_CODE_FILTER)
@@ -67,9 +69,11 @@ class LobbyFragment : BaseFragment() {
         ll_codejoin.setOnClickListener {
             startActivity(Intent(activity!!, ActivityCodeJoin::class.java))
         }
+
         ll_createContest.setOnClickListener {
             startActivityForResult(Intent(activity, ActivityCreateContest::class.java), StockConstant.REDIRECT_CREATED)
         }
+
         ll_sort.setOnClickListener {
             startActivityForResult(
                 Intent(context, ActivitySort::class.java).putExtra("flagStatus", flag),
@@ -83,8 +87,8 @@ class LobbyFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
+                    getContestlist()
                 }, 1500)
-                getContestlist()
             }
         })
 
@@ -120,9 +124,8 @@ class LobbyFragment : BaseFragment() {
                         } catch (e: Exception) {
 
                         }
-
-                        setContestAdapter(response.body()!!.contest!!)
                         contest = response.body()!!.contest!!;
+                        setContestAdapter(response.body()!!.contest!!)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -133,8 +136,8 @@ class LobbyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
-                if (refreshLayout != null)
-                    refreshLayout.finishRefreshing()
+                /*if (refreshLayout != null)
+                    refreshLayout.finishRefreshing()*/
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -221,11 +224,10 @@ class LobbyFragment : BaseFragment() {
             }
         } else if (requestCode == StockConstant.REDIRECT_CREATED) {
             if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                /*var intent = Intent();
+                var intent = Intent();
                 //activity!!.startActivityForResult(intent,111);
-
                 activity!!.setResult(Activity.RESULT_OK, intent);
-                activity!!.finish();*/
+                activity!!.finish();
                 dashBoardActivity!!.test()
 
             }

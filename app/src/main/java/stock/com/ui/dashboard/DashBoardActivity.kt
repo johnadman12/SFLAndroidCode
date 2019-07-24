@@ -672,8 +672,9 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     public fun test() {
         //displayToast("dsada","error")
         var b = Bundle();
-        b.putString("flag", "")
+        b.putString("flag", "true")
         setFragment(MyContestFragment(), b);
+        setMenu(false, false, false, false, false, false, false)
         changetTextViewBackground(tv_contest, R.color.colorPrimary);
         changetTextViewBackground(tv_market, R.color.textColorLightBlack);
         changetTextViewBackground(tv_profile, R.color.textColorLightBlack);

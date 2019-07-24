@@ -68,8 +68,8 @@ class InvitedFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
+                            setAdapter(response.body()!!.usercontest)
                         }, 100)
-                        setAdapter(response.body()!!.usercontest)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }

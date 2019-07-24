@@ -41,6 +41,7 @@
             android:id="@+id/recycle_myteam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_8sdp"
             android:orientation="horizontal"/>
     <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -109,7 +110,8 @@
                                     style="@style/TextStyleNormal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/percentage"
+                                    android:layout_margin="@dimen/_8sdp"
+                                    android:gravity="center"
                                     android:id="@+id/totalChange"
                                     android:textSize="@dimen/_10ssp"/>
                         </LinearLayout>

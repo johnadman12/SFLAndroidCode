@@ -22,6 +22,10 @@ import stock.com.utils.StockDialog
 class LiveScoreActivity : BaseActivity() {
     var contestid: Int = 0
     var mid: Int = 0
+    var page: Int = 0
+    var limit: Int = 50
+    var flagRefresh: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.live_score_activity)
@@ -35,17 +39,10 @@ class LiveScoreActivity : BaseActivity() {
             mid = intent.getIntExtra(StockConstant.MARKETID, 0)
         }
         getScores()
-        refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
-            override fun completeRefresh() {
-            }
-
-            override fun refreshing() {
-                //TODO make api call here
-                Handler().postDelayed({
-                }, 5000)
-                getScores()
-            }
-        })
+        srl_layout.setOnRefreshListener {
+            flagRefresh = true
+            getScores()
+        }
     }
 
     fun getScores() {
@@ -55,18 +52,19 @@ class LiveScoreActivity : BaseActivity() {
         val call: Call<Scores> =
             apiService.getContestScore(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(),mid.toString()
-
+                , getFromPrefsString(StockConstant.USERID).toString(), mid.toString(),
+                page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<Scores> {
 
             override fun onResponse(call: Call<Scores>, response: Response<Scores>) {
+                srl_layout.isRefreshing = false
                 d.dismiss()
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setScoreAdapter(response.body()!!.scores)
+                        if (flagRefresh)
+                            limit = limit + 50
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -75,8 +73,7 @@ class LiveScoreActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<Scores>, t: Throwable) {
-                if (refreshData != null)
-                    refreshData.finishRefreshing()
+                srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()

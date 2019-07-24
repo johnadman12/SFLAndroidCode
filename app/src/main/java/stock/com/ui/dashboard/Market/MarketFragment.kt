@@ -87,7 +87,7 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 changeBackGroundColor(tv_forex, ContextCompat.getColor(activity!!, R.color.colorbutton));
                 changeBackGroundColor(tv_stocks, ContextCompat.getColor(activity!!, R.color.white));
 
-                setFragment(IndicesFragment(), Bundle())
+                setFragment(CurrencyFragment(), Bundle())
                 position = 3
             }
             R.id.tv_stocks -> {

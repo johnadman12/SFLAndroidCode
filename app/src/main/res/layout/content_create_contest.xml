@@ -429,7 +429,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     style="@style/TextStyleNormal"
-                                    android:text="min: 0"
+                                    android:text="min:100"
                                     android:layout_marginRight="@dimen/_5sdp"
                                     android:textColor="@color/white"
                                     android:padding="@dimen/_3sdp"

@@ -46,8 +46,8 @@
                             android:src="@mipmap/editteam"/>
 
                 </LinearLayout>
-                <RelativeLayout android:layout_width="@dimen/_50sdp"
-                                android:layout_height="@dimen/_50sdp"
+                <RelativeLayout android:layout_width="@dimen/_60sdp"
+                                android:layout_height="@dimen/_60sdp"
                                 android:id="@+id/rel"
                                 android:background="@mipmap/graycircle"
                                 android:layout_marginRight="@dimen/_10sdp"
@@ -68,8 +68,9 @@
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/percentage"
                             android:gravity="center"
+                            android:layout_marginLeft="@dimen/_6sdp"
+                            android:layout_marginRight="@dimen/_6sdp"
                             android:layout_centerVertical="true"
                             android:textSize="@dimen/_10ssp"
                             android:id="@+id/tvTotal"

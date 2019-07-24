@@ -51,7 +51,6 @@ class InvitedAdapter(
             holder.itemView.llAccept.visibility = View.GONE
         }
 
-
         var amount: String = contest.get(position).entryFees.substring(1)
         if (amount.equals("0") && contest.get(position).priceBreak!!.size <= 0) {
             holder.itemView.tvTotalWinnings.setText("Free")

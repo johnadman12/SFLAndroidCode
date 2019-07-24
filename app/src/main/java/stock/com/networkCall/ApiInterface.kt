@@ -256,7 +256,9 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("contest_id") contest_id: String,
         @Field("user_id") user_id: String,
-        @Field("market_id") market_id: String
+        @Field("market_id") market_id: String,
+        @Field("page") page: String,
+        @Field("limit") limit: String
     ): Call<Scores>
 
     /* @Headers("Content-Type: application/json")
@@ -530,17 +532,17 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("contest_id") contest_id: String
-        ,@Field("page") page: String, @Field("limit") limit: String
+        , @Field("page") page: String, @Field("limit") limit: String
     ): Call<InviteData>
 
 
- @FormUrlEncoded
+    @FormUrlEncoded
     @POST("usercontest/user")
     fun getAllUserSearch(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("contest_id") contest_id: String
-        ,@Field("page") page: String,
+        , @Field("page") page: String,
         @Field("limit") limit: String,
         @Field("search") search: String
     ): Call<InviteData>

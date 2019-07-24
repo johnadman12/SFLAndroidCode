@@ -126,13 +126,21 @@ class ViewPagerFeature(
                 val today = Calendar.getInstance()
                 val diff = thatDay.timeInMillis - today.timeInMillis
                 if (diff.toString().contains("-")) {
-                    circular_progress.progressBackgroundColor =
-                        ContextCompat.getColor(context, R.color.GrayColor)
-                    ll_Circular.isEnabled = false
-                    llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                    tvTimeLeft.setText("Contest \nStarted")
-                    txtjoin.setText("Now \nLive")
-                    tvHint.visibility = GONE
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(context, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
+                            tvTimeLeft.setText("Contest \nStarted")
+                            txtjoin.setText("Now \nLive")
+                            tvHint.visibility = GONE
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    newtimer.start()
                 } else if (diff.equals("3600000")) {
                     val newtimer = object : CountDownTimer(diff, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
@@ -149,46 +157,36 @@ class ViewPagerFeature(
                     }
                     newtimer.start()
 
-                } else {
+                } else if (diff < 900000) {
                     val newtimer = object : CountDownTimer(diff, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
                             val cTime = Calendar.getInstance()
+                            txtjoin.setTextSize(16.00f)
+                            txtjoin.setText("Starts \nSoon")
+                            txtjoin.setText("Now \nLive")
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(context, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                            llSportsLeft.visibility = INVISIBLE
                             val diff = thatDay.timeInMillis - cTime.timeInMillis
-                            if (diff < 900000) {
-                                txtjoin.setTextSize(16.00f)
-                                txtjoin.setText("Starts \nSoon")
-                                txtjoin.setText("Now \nLive")
-                                circular_progress.progressBackgroundColor =
-                                    ContextCompat.getColor(context, R.color.GrayColor)
-                                ll_Circular.isEnabled = false
-                                llSportsLeft.visibility = INVISIBLE
-//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                                val diffSec = diff / 1000
-                                val seconds = diffSec % 60
-                                val minutes = diffSec / 60 % 60
-                                val hours = diffSec / 3600
-                                tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                            } else if (diff.toString().contains("-")) {
-                                circular_progress.progressBackgroundColor =
-                                    ContextCompat.getColor(context, R.color.GrayColor)
-                                ll_Circular.isEnabled = false
-                                llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
-                                tvTimeLeft.setText("Contest \nStarted")
-                                txtjoin.setText("Now \nLive")
-                                tvHint.visibility = GONE
-                            } else {
-                                val diffSec = diff / 1000
-                                val seconds = diffSec % 60
-                                val minutes = diffSec / 60 % 60
-                                val hours = diffSec / 3600
-                                tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                            }
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                         }
 
                         override fun onFinish() {
                         }
                     }
                     newtimer.start()
+
+                } else {
+                    val diffSec = diff / 1000
+                    val seconds = diffSec % 60
+                    val minutes = diffSec / 60 % 60
+                    val hours = diffSec / 3600
+                    tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
                 }
             }
 
@@ -238,10 +236,10 @@ class ViewPagerFeature(
             bottomSheetDialogFragment.show(manager, "Bottom Sheet Dialog Fragment")
         }
 
-        // Add the view to the parent
+// Add the view to the parent
         parent.addView(view)
 
-        // Return the view
+// Return the view
         return view
     }
 

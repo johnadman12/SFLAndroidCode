@@ -20,20 +20,18 @@
             android:padding="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_5sdp"
     />
-    <com.madapps.liquid.LiquidRefreshLayout
-            android:id="@+id/refreshData"
+    <android.support.library21.custom.SwipeRefreshLayoutBottom
             android:layout_width="match_parent"
-            app:AniBackColor="@color/colorPrimary"
-            app:AniForeColor="@color/white"
-            app:CircleSmaller="6"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/srl_layout">
+
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/recycler_score"
                 tools:listitem="@layout/row_scores"
                 android:layout_marginTop="@dimen/_5sdp"/>
-    </com.madapps.liquid.LiquidRefreshLayout>
+    </android.support.library21.custom.SwipeRefreshLayoutBottom>
 
 
 </LinearLayout>

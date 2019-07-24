@@ -40,6 +40,7 @@ class LiveContestActivity : BaseActivity() {
     var flagCrypto = false;
     lateinit var mainHandler: Handler;
     var idTeam: Int = 0
+    var totalchange: String = ""
     private var liveAdapter: LiveContestAdapter? = null;
     private var teamAdapter: RecycleTeamAdapter? = null;
 
@@ -67,12 +68,12 @@ class LiveContestActivity : BaseActivity() {
                 startActivity(
                     Intent(this@LiveContestActivity, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, crptoList)
-                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
+                        .putExtra(StockConstant.TOTALCHANGE, totalchange)
                 ) else
                 startActivity(
                     Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockList)
-                        .putExtra(StockConstant.TOTALCHANGE, "0.0%")
+                        .putExtra(StockConstant.TOTALCHANGE, totalchange)
                 )
         }
 
@@ -114,6 +115,7 @@ class LiveContestActivity : BaseActivity() {
                 override fun onItemClick(item: ContestDetail.Score) {
                     idTeam= item.teamId
                     tvRank.setText(item.rank)
+                    totalchange=item.totalchange_Per
                     totalChange.setText(item.totalchange_Per + "%")
                     tvRankLable.setText(getString(R.string.rank) + " (" + item.teamNameCount + ")")
                     if (item.stock.size == 0) {
@@ -164,12 +166,14 @@ class LiveContestActivity : BaseActivity() {
                                 // setLiveTeamAdapter(filterTeamList!!)
                                 tvRank.setText(filterTeamList!!.get(0).rank)
                                 totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                totalchange=filterTeamList!!.get(0).totalchange_Per
                                 if (filterTeamList!!.size > 0) {
 //                                    setLiveTeamAdapter(filterTeamList!!)
                                     if (filterTeamList!!.size == 1) {
                                         recycle_myteam.visibility = View.GONE
                                         tvRank.setText(filterTeamList!!.get(0).rank)
                                         totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                        totalchange=filterTeamList!!.get(0).totalchange_Per
                                         stockList!!.clear()
                                         crptoList!!.clear()
                                         if (filterTeamList!!.get(0).stock.size == 0) {
@@ -180,6 +184,7 @@ class LiveContestActivity : BaseActivity() {
                                     } else {
                                         tvRank.setText(filterTeamList!!.get(0).rank)
                                         totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")
+                                        totalchange=filterTeamList!!.get(0).totalchange_Per
                                         stockList!!.clear()
                                         stockList!!.addAll(filterTeamList!!.get(0).stock)
                                         //setLiveTeamAdapter(filterTeamList!!)

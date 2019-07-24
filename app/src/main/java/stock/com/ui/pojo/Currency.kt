@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 class Currency : BasePojo() {
     @SerializedName("currency")
     @Expose
-    var currency: List<Currency>? = null
+    var currency: ArrayList<Currency>? = null
 
     inner class Currency {
 
@@ -16,24 +16,33 @@ class Currency : BasePojo() {
         var currencyid: Int? = null
         @SerializedName("symbol")
         @Expose
-        var symbol: String? = null
+        var symbol: String = ""
+        @SerializedName("ask")
+        @Expose
+        var ask: String = ""
+        @SerializedName("bid")
+        @Expose
+        var bid: String = ""
+        @SerializedName("daychange")
+        @Expose
+        var daychange: String = ""
         @SerializedName("name")
         @Expose
-        var name: String? = null
+        var name: String = ""
         @SerializedName("firstflag")
         @Expose
-        var firstflag: String? = null
+        var firstflag: String = ""
         @SerializedName("secondflag")
         @Expose
-        var secondflag: String? = null
+        var secondflag: String = ""
         @SerializedName("latestVolume")
         @Expose
-        var latestVolume: String? = null
+        var latestVolume: String = ""
         @SerializedName("changeper")
         @Expose
-        var changeper: String? = null
+        var changeper: String = ""
         @SerializedName("crypto_type")
         @Expose
-        var cryptoType: String? = null
+        var cryptoType: String = ""
     }
 }

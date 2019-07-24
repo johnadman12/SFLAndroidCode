@@ -6,334 +6,345 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:stickyHeader="@+id/rl_banner">
-    <LinearLayout android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@mipmap/bg"
-                  >
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:attrs="http://schemas.android.com/apk/res-auto"
+            android:descendantFocusability="blocksDescendants"
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <com.madapps.liquid.LiquidRefreshLayout
-                android:id="@+id/refreshLayout"
+        <LinearLayout
                 android:layout_width="match_parent"
-                app:AniBackColor="@color/colorPrimary"
-                app:AniForeColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/bg"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_title"
-                app:CircleSmaller="6"
-                android:layout_height="match_parent">
-
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:orientation="vertical">
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:orientation="vertical">
-                <LinearLayout android:layout_width="match_parent"
+                          android:orientation="horizontal"
+                          android:padding="@dimen/_5sdp"
+                          android:layout_marginTop="@dimen/_5sdp">
+                <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:orientation="horizontal"
-                              android:padding="@dimen/_5sdp"
-                              android:layout_marginTop="@dimen/_5sdp"
-                             >
-
-                    <LinearLayout android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:padding="@dimen/_2sdp"
-                                  android:gravity="top"
-                                  android:layout_gravity="top"
-                                  android:layout_marginRight="@dimen/_5sdp"
-                                  android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Lobby"
-                                android:textColor="@color/white"
-                                style="@style/TextStyleSemiBold"
-                                android:textSize="@dimen/_22ssp"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Browse Contests"
-                                android:padding="@dimen/_2sdp"
-                                android:textSize="@dimen/_12ssp"
-                                android:textColor="@color/textColorOffWhite"
-                                style="@style/TextStyleNormal"/>
-                    </LinearLayout>
-                    <LinearLayout
-                            android:id="@+id/ll_codejoin"
+                              android:padding="@dimen/_2sdp"
+                              android:gravity="top"
+                              android:layout_gravity="top"
+                              android:layout_marginRight="@dimen/_5sdp"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:layout_weight="1"
-                            android:layout_gravity="top"
-                            android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
-                                android:src="@mipmap/codejoin"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Code \n Join"
-                                android:textSize="@dimen/_10ssp"
-                                android:padding="@dimen/_2sdp"
-                                android:textColor="@color/textColorOffWhite"
-                                style="@style/TextStyleNormal"
-
-                        />
-
-                    </LinearLayout>
-                    <LinearLayout
-                            android:id="@+id/ll_createContest"
+                            android:text="Lobby"
+                            android:textColor="@color/white"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_22ssp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:layout_weight="1"
-                            android:layout_gravity="top"
-                            android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
-                                android:src="@mipmap/createcontest"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Create \nContest"
-                                android:textSize="@dimen/_10ssp"
-                                android:padding="@dimen/_2sdp"
-                                android:textColor="@color/textColorOffWhite"
-                                style="@style/TextStyleNormal"
-
-                        />
-
-                    </LinearLayout>
-                    <LinearLayout
-                            android:id="@+id/ll_filter"
+                            android:text="Browse Contests"
+                            android:padding="@dimen/_2sdp"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_codejoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@mipmap/codejoin"/>
+                    <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:padding="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_height="@dimen/_25sdp"
-                                android:src="@mipmap/filter_"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Filter"
-                                android:padding="@dimen/_2sdp"
-                                android:gravity="center"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:textSize="@dimen/_10ssp"
-                                android:textColor="@color/textColorOffWhite"
-                                style="@style/TextStyleNormal"
+                            android:layout_height="wrap_content"
+                            android:text="Code \n Join"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
 
-                        />
-
-                    </LinearLayout>
-                    <LinearLayout
-                            android:id="@+id/ll_sort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:padding="@dimen/_5sdp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_25sdp"
-                                android:layout_gravity="top"
-                                android:layout_height="@dimen/_25sdp"
-                                android:src="@mipmap/sort_"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Sort"
-                                android:textSize="@dimen/_10ssp"
-                                android:padding="@dimen/_2sdp"
-                                android:layout_marginTop="@dimen/_3sdp"
-                                android:textColor="@color/textColorOffWhite"
-                                style="@style/TextStyleNormal"
-
-                        />
-
-                    </LinearLayout>
+                    />
 
                 </LinearLayout>
-                <View android:layout_width="match_parent"
-                      android:layout_height="1sp"
-                      android:background="#38A1DA"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
-                        android:gravity="left"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textSize="@dimen/_12sdp"
+                <LinearLayout
+                        android:id="@+id/ll_createContest"
                         android:layout_width="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="@string/all_contest"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingBottom="@dimen/_5sdp"
-                        android:background="@drawable/light_blue_fill_button"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:id="@+id/tv_tranning_contest"
-                        android:visibility="gone"/>
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_gravity="top"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@mipmap/createcontest"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Create \nContest"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@mipmap/filter_"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Filter"
+                            android:padding="@dimen/_2sdp"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textSize="@dimen/_10ssp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_gravity="top"
+                            android:layout_height="@dimen/_25sdp"
+                            android:src="@mipmap/sort_"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sort"
+                            android:textSize="@dimen/_10ssp"
+                            android:padding="@dimen/_2sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1sp"
+                  android:background="#38A1DA"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="left"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="@string/all_contest"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:background="@drawable/light_blue_fill_button"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:id="@+id/tv_tranning_contest"
+                    android:visibility="gone"/>
 
 
-                <HorizontalScrollView
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:scrollbars="none"
+                    android:background="@color/textColorOffWhite"
+                    android:id="@+id/rl_banner"
+                    android:layout_height="wrap_content">
+
+                <LinearLayout
                         android:layout_width="match_parent"
-                        android:scrollbars="none"
-                        android:background="@color/textColorOffWhite"
-                        android:id="@+id/rl_banner"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/_80sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    <LinearLayout
+                    <RelativeLayout
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_marginLeft="@dimen/_2sdp"
+                            android:layout_height="@dimen/_70sdp">
+                        <stock.com.utils.custom.RoundRectCornerImageView
+                                android:id="@+id/imv_product"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/cryptoim"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="@dimen/_11ssp"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:padding="@dimen/_10sdp"
+                                android:background="@color/colorTransparentBlack"
+                                android:gravity="bottom|center_horizontal"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleBold"
+                                android:textStyle="bold"
+                                android:text="CRYPTO"
+
+                        />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginLeft="@dimen/_8sdp">
+                        <stock.com.utils.custom.RoundRectCornerImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/stocks"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="@dimen/_11ssp"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:background="@color/colorTransparentBlack"
+                                android:gravity="bottom|center_horizontal"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleBold"
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:text="Stocks"
+
+                        />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginLeft="@dimen/_8sdp">
+                        <stock.com.utils.custom.RoundRectCornerImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/forex"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="@dimen/_11ssp"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:background="@color/colorTransparentBlack"
+                                android:gravity="bottom|center_horizontal"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleBold"
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:text="Forex"
+
+                        />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_70sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_8sdp">
+                        <stock.com.utils.custom.RoundRectCornerImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/app_name"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/comoditiy"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="@dimen/_10ssp"
+                                android:padding="@dimen/_10sdp"
+                                android:layout_margin="@dimen/_2sdp"
+                                android:background="@color/colorTransparentBlack"
+                                android:gravity="bottom|center_horizontal"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleBold"
+                                android:textStyle="bold"
+                                android:textAllCaps="true"
+                                android:text="@string/commodities"
+
+                        />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </HorizontalScrollView>
+
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         app:layout_constraintTop_toBottomOf="@+id/rl_banner">
+
+
+                <com.madapps.liquid.LiquidRefreshLayout
+                        android:id="@+id/refreshLayout"
+                        android:layout_width="match_parent"
+                        app:AniBackColor="@color/colorPrimary"
+                        app:AniForeColor="@color/white"
+                        app:CircleSmaller="6"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/_6sdp"
+                            android:id="@+id/recyclerView_contest"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                        <RelativeLayout
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_marginLeft="@dimen/_2sdp"
-                                android:layout_height="@dimen/_80sdp">
-                            <stock.com.utils.custom.RoundRectCornerImageView
-                                    android:id="@+id/imv_product"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:scaleType="fitXY"
-                                    android:src="@mipmap/cryptoim"/>
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textSize="@dimen/_11ssp"
-                                    android:layout_margin="@dimen/_2sdp"
-                                    android:padding="@dimen/_10sdp"
-                                    android:background="@color/colorTransparentBlack"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:textColor="@color/textColorOffWhite"
-                                    style="@style/TextStyleBold"
-                                    android:textStyle="bold"
-                                    android:text="CRYPTO"
-
-                            />
-                        </RelativeLayout>
+                            android:visibility="visible"
+                    />
 
 
-                        <RelativeLayout
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="@dimen/_80sdp"
-                                android:layout_marginLeft="@dimen/_8sdp">
-                            <stock.com.utils.custom.RoundRectCornerImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:scaleType="fitXY"
-                                    android:src="@mipmap/stocks"/>
+                </com.madapps.liquid.LiquidRefreshLayout>
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textSize="@dimen/_11ssp"
-                                    android:padding="@dimen/_10sdp"
-                                    android:layout_margin="@dimen/_2sdp"
-                                    android:background="@color/colorTransparentBlack"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:textColor="@color/textColorOffWhite"
-                                    style="@style/TextStyleBold"
-                                    android:textStyle="bold"
-                                    android:textAllCaps="true"
-                                    android:text="Stocks"
+            </FrameLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="@dimen/_80sdp"
-                                android:layout_marginLeft="@dimen/_8sdp">
-                            <stock.com.utils.custom.RoundRectCornerImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:scaleType="fitXY"
-                                    android:src="@mipmap/forex"/>
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textSize="@dimen/_11ssp"
-                                    android:padding="@dimen/_10sdp"
-                                    android:layout_margin="@dimen/_2sdp"
-                                    android:background="@color/colorTransparentBlack"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:textColor="@color/textColorOffWhite"
-                                    style="@style/TextStyleBold"
-                                    android:textStyle="bold"
-                                    android:textAllCaps="true"
-                                    android:text="Forex"
-
-                            />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="@dimen/_80sdp"
-                                android:layout_marginRight="@dimen/_5sdp"
-                                android:layout_marginLeft="@dimen/_8sdp">
-                            <stock.com.utils.custom.RoundRectCornerImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_gravity="center"
-                                    android:adjustViewBounds="true"
-                                    android:contentDescription="@string/app_name"
-                                    android:scaleType="fitXY"
-                                    android:src="@mipmap/comoditiy"/>
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textSize="@dimen/_10ssp"
-                                    android:padding="@dimen/_10sdp"
-                                    android:layout_margin="@dimen/_2sdp"
-                                    android:background="@color/colorTransparentBlack"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:textColor="@color/textColorOffWhite"
-                                    style="@style/TextStyleBold"
-                                    android:textStyle="bold"
-                                    android:textAllCaps="true"
-                                    android:text="@string/commodities"
-
-                            />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-
-                </HorizontalScrollView>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                        android:paddingTop="@dimen/_6sdp"
-                        android:id="@+id/recyclerView_contest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:visibility="visible"
-                        android:nestedScrollingEnabled="false"
-                />
-
-
-            </LinearLayout>
-        </com.madapps.liquid.LiquidRefreshLayout>
-    </LinearLayout>
 </com.amar.library.ui.StickyScrollView>
