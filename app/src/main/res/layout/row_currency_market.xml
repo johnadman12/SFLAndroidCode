@@ -102,8 +102,9 @@
                               android:id="@+id/tv_latest_price"
                               android:padding="@dimen/_3sdp"
                               android:gravity="center"
+                              android:textStyle="bold"
                               style="@style/TextStyleSemiBold"
-                              android:textColor="@color/black"/>
+                              android:textColor="@color/textColorBlack"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

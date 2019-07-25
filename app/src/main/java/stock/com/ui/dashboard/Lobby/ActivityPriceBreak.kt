@@ -235,11 +235,17 @@ class ActivityPriceBreak : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
-                        var intent = Intent();
-                        intent.putExtra("flag", "1")
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
+                        try {
+                            Handler().postDelayed(Runnable {
+                                AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
+                                var intent = Intent();
+                                intent.putExtra("flag", "1")
+                                setResult(Activity.RESULT_OK, intent);
+                                finish();
+                            }, 500)
+                        } catch (e: Exception) {
+
+                        }
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()

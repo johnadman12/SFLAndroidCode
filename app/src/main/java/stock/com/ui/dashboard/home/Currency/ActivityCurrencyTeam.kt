@@ -27,7 +27,11 @@ import java.util.*
 
 class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     override fun onClick(p0: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (p0!!.id) {
+            R.id.img_btn_back -> {
+                finish()
+            }
+        }
     }
 
     private var currencySelected: ArrayList<CurrencyPojo.Currency>? = null
@@ -151,7 +155,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 override fun onItemCheck(item: CurrencyPojo.Currency) {
                     currencySelected?.add(item);
                     setTeamText(currencySelected!!.size.toString())
-
                     Log.e("stocklist", currencySelected.toString())
                 }
             });
@@ -221,6 +224,11 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(list!!)
                         for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+//                            listOld!!.get(i).addedToList = 0
+
+                        }
+                        for (i in 0 until list!!.size) {
                             for (j in 0 until currencySelected!!.size) {
                                 if (list!!.get(i).currencyid == currencySelected!!.get(j).currencyid) {
                                     list!!.get(i).addedToList = 1
@@ -258,5 +266,11 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 //                d.dismiss()
             }
         })
+    }
+
+
+    fun getTeamText(): Int {
+        return currencySelected!!.size
+
     }
 }

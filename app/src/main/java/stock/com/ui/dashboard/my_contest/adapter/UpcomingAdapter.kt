@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -37,7 +38,11 @@ class UpcomingAdapter(
     override fun onBindViewHolder(holder: ContestListHolder, position: Int) {
         holder.itemView.entry_fee.setText(contest.get(position).entryFees)
         holder.itemView.tvWinnersTotal.setText(contest.get(position).totalWinners)
-        holder.itemView.tvContestType.setText(contest.get(position).catname)
+        if (!TextUtils.isEmpty(contest.get(position).catname))
+            holder.itemView.tvContestType.setText(contest.get(position).catname)
+        else
+            holder.itemView.tvContestType.setText("Private Contest")
+
         holder.itemView.tvInvite.visibility = GONE
         var amount: String = contest.get(position).entryFees.substring(1)
         if (amount.equals("0") && contest.get(position).priceBreak.size <= 0) {

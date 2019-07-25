@@ -168,7 +168,6 @@ class ViewPagerTraining(
                             val diff = thatDay.timeInMillis - cTime.timeInMillis
                             txtjoin.setTextSize(16.00f)
                             txtjoin.setText("Starts \nSoon")
-                            txtjoin.setText("Now \nLive")
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false

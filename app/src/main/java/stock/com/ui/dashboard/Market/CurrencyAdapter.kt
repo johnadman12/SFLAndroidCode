@@ -95,7 +95,7 @@ class CurrencyAdapter(
             if (!TextUtils.isEmpty(priceText)) {
                 if (priceText.equals("$" + search!!.get(position).latestPrice)) {
                     holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
+                } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
 
                     val newtimer = object : CountDownTimer(1000, 500) {
                         override fun onTick(millisUntilFinished: Long) {
@@ -164,7 +164,7 @@ class CurrencyAdapter(
                     )
 
 
-                } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
+                } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
                     Log.d("sddasdasdad", "-------3333333--")
                     val newtimer = object : CountDownTimer(500, 500) {
                         override fun onTick(millisUntilFinished: Long) {

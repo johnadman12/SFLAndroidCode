@@ -63,10 +63,6 @@ class WatchSortActivity : BaseActivity(),CompoundButton.OnCheckedChangeListener 
 
         }
 
-
-
-
-
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

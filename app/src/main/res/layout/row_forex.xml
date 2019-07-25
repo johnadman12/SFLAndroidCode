@@ -10,29 +10,29 @@
             android:background="@color/white"
             android:orientation="horizontal">
         <RelativeLayout
-                android:layout_width="@dimen/_54sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:padding="@dimen/_3sdp"
-                android:layout_gravity="center"
-                android:gravity="center">
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:gravity="top"
+                android:padding="@dimen/_3sdp">
+
             <ImageView
-                    android:layout_width="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_centerInParent="true"
                     android:scaleType="fitXY"
                     android:id="@+id/img1"
+                    android:layout_centerVertical="true"
                     android:src="@mipmap/cryptoim"/>
             <ImageView
-                    android:layout_width="@dimen/_23sdp"
+                    android:layout_width="@dimen/_20sdp"
                     android:id="@+id/img2"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:scaleType="fitXY"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:layout_height="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:src="@mipmap/stocks"/>
-        </RelativeLayout>
 
+        </RelativeLayout>
 
         <LinearLayout
                 android:id="@+id/ll_stock_detial"

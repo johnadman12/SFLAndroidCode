@@ -76,7 +76,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (flag) {
                         getCurrencyAgain("1")
                     }
-                    mainHandler.postDelayed(this, 8000)
+                    mainHandler.postDelayed(this, 5000)
                 } else {
                     flagAlphaSort = false
                     flagPriceSort = false
