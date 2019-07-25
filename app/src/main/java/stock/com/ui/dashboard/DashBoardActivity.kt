@@ -670,7 +670,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     }
 
     public fun test() {
-        //displayToast("dsada","error")
         var b = Bundle();
         b.putString("flag", "true")
         setFragment(MyContestFragment(), b);

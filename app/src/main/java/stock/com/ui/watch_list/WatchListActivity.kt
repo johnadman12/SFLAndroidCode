@@ -138,6 +138,9 @@ class WatchListActivity : BaseActivity() {
                             ll_search.visibility = View.VISIBLE;
                             ll_filter.visibility = View.VISIBLE;
                             ll_sort.visibility = View.VISIBLE;
+                        } else if (response.body()!!.stock!!.size == 0) {
+                            list!!.clear()
+                            recyclerView_watch_list.adapter!!.notifyDataSetChanged();
                         } else if (response.body()!!.status.equals("0")) {
                             displayToast(resources.getString(R.string.no_data), "warning");
                             finish()
@@ -253,7 +256,7 @@ class WatchListActivity : BaseActivity() {
                         list!!.addAll(sortedList);
                         setWatchListAdapter();
                     } else if (flag.equals("dailyLTH")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble()}));
+                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
                         list!!.clear();
                         setWatchListAdapter();
                         list!!.addAll(sortedList);

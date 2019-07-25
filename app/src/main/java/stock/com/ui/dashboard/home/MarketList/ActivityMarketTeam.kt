@@ -505,58 +505,42 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         //sortingConcept
                         if (flagAlphaSort) {
                             val sortedList = list!!.sortedBy { it.symbol?.toString() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
                         } else if (flagPriceLTH) {
                             val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
 
                         } else if (flagDayLTH) {
                             val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagPriceHTL) {
                             val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
-
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagDayHTL) {
                             val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagVolume) {
                             val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         }
                         //filter
                         if (flagFilter) {
@@ -716,7 +700,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 flagSort = data.getStringExtra("flag")
                 if (data.getStringExtra("flag").equals("Volume")) {
-                    flagVolume = true
+                    setFlag(false, false, false, false, false, true)
                     var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
 
                     for (obj in sortedList) {
@@ -725,7 +709,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("price")) {
-                    flagPriceLTH = true
+                    setFlag(false, false, false, false, true, false)
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                     for (obj in sortedList) {
                         list!!.clear()
@@ -733,7 +717,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
-                    flagPriceHTL = true
+                    setFlag(false, false, false, true, false, false)
                     var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -741,7 +725,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayLTH")) {
-                    flagDayLTH = true
+                    setFlag(false, false, true, false, false, false)
                     var sortedList = list!!.sortedBy { it.changeper?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -749,7 +733,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("dayHTL")) {
-                    flagDayHTL = true
+                    setFlag(false, true, false, false, false, false)
                     var sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
@@ -757,7 +741,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
-                    flagAlphaSort = true
+                    setFlag(true, false, false, false, false, false)
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
 
                     for (obj in sortedList) {
@@ -766,13 +750,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
-                    flagPriceLTH = false
-                    flagDayHTL = false
-                    flagAlphaSort = false
-                    flagDayLTH = false
-                    flagPriceLTH = false
-                    flagPriceHTL = false
-                    flagVolume = false
+                    setFlag(false, false, false, false, false, false)
                     getMarketTeamlist()
                 }
             }
@@ -802,8 +780,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);
                     finish();
-                }
-                else if (data.getStringExtra("flag").equals("3")) {
+                } else if (data.getStringExtra("flag").equals("3")) {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);
                     teamId = data.getIntExtra(StockConstant.TEAMID, 0)
@@ -933,6 +910,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+
+    fun setFlag(fAl: Boolean, fDHTL: Boolean, fDLTH: Boolean, fPHTL: Boolean, fPLTH: Boolean, fV: Boolean) {
+        flagAlphaSort = fAl
+        flagDayHTL = fDHTL
+        flagDayLTH = fDLTH
+        flagPriceHTL = fPHTL
+        flagPriceLTH = fPLTH
+        flagVolume = fV
     }
 
     override fun onPause() {

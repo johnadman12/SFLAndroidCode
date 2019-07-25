@@ -64,7 +64,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         seeall.setOnClickListener(this)
         getFeatureContentlist();
         getTrainingContentlist()
-        getNewslist()
+//        getNewslist()
         exchangeList = ArrayList()
         dataExchange =
             ArrayList()

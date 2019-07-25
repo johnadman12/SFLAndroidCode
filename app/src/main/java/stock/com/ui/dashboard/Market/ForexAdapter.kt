@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.CountDownTimer
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,26 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.Filter
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_forex.view.*
 import stock.com.R
-import stock.com.ui.pojo.Currency
-import stock.com.ui.pojo.MarketList
+import stock.com.ui.dashboard.Team.ActivityMarketDetail
+import stock.com.ui.pojo.CurrencyPojo
 import stock.com.utils.StockConstant
 
 class ForexAdapter(
     val mContext: Context,
-    val marketData: ArrayList<Currency.Currency>,
+    val marketData: ArrayList<CurrencyPojo.Currency>,
     val frgament: CurrencyFragment,
-    val forex: ArrayList<Currency.Currency>
+    val forex: ArrayList<CurrencyPojo.Currency>
 ) :
     RecyclerView.Adapter<ForexAdapter.FeatureListHolder>() {
     var checkedHolder: BooleanArray? = null;
-    private var search: List<Currency.Currency>? = null
+    private var search: List<CurrencyPojo.Currency>? = null
 
     private fun createCheckedHolder() {
         checkedHolder = BooleanArray(marketData.size)
@@ -75,17 +73,6 @@ class ForexAdapter(
                 )
             }
         }
-
-
-       /* if (!TextUtils.isEmpty(forex.get(position).daychange)) {
-            holder.itemView.tv_change.setText("( " + forex!!.get(position).daychange + " )")
-            if (forex.get(position).daychange.contains("-")) {
-                holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-            } else {
-                holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-            }
-        }*/
-
         if (forex.get(position).cryptoType.equals("1")) {
             holder.itemView.llAdd.visibility = View.GONE
             holder.itemView.img_check.visibility = View.VISIBLE
@@ -98,6 +85,24 @@ class ForexAdapter(
         holder.itemView.bid.setText(forex.get(position).bid)
         holder.itemView.ask.setText(forex.get(position).ask)
         holder.itemView.tv_company.setText("(" + forex.get(position).name + ")")
+
+        holder.itemView.llwatch.setOnClickListener {
+            frgament.saveToWatchList(forex.get(position).currencyid)
+            forex.get(position).cryptoType = "1"
+            holder.itemView.llAdd.visibility = View.GONE
+            holder.itemView.img_check.visibility = View.VISIBLE
+            holder.itemView.llwatch.isEnabled = false
+        }
+
+
+        holder.itemView.setOnClickListener {
+            var intent = Intent(mContext, ActivityMarketDetail::class.java);
+            intent.putExtra("cryptoId", forex.get(position).currencyid)
+            intent.putExtra(StockConstant.MARKETLIST, forex)
+            intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+            intent.putExtra("flag", 2)
+            ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
+        }
 
     }
 

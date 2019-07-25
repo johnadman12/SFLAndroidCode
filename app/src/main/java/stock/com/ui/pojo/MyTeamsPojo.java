@@ -9,7 +9,7 @@ import java.util.List;
 public class MyTeamsPojo extends BasePojo {
     @SerializedName("myteam")
     @Expose
-    public List<Myteam> myteam = null;
+    public List<Myteam> myteams = null;
 
     public class Myteam {
 

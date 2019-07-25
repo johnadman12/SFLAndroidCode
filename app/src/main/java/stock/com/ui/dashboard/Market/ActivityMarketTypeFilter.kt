@@ -129,7 +129,8 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                     resultIntent.putExtra("resetfiltermarket", "0")
                     setResult(Activity.RESULT_OK, resultIntent)
                     finish()
-                }
+                } else
+                    displayToast("please select to apply filter", "error")
             } else {
                 var selectedCountry: String = "";
                 var selectedSector: String = "";

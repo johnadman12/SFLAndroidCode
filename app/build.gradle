@@ -147,6 +147,8 @@ dependencies {
     //like animation
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation project(':swiperefreshlayoutbottomlib')
-
+    //Socket
+//    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 }
+
 apply plugin: 'com.google.gms.google-services'

@@ -125,6 +125,8 @@ class LobbyContestAdapter(
             } else if (diff < 900000) {
                 val newtimer = object : CountDownTimer(diff, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
                         holder.itemView.txtjoin.setTextSize(16.00f)
                         holder.itemView.txtjoin.setText("Starts \n Soon")
                         holder.itemView.circular_progress.progressBackgroundColor =
@@ -132,7 +134,6 @@ class LobbyContestAdapter(
                         holder.itemView.ll_Circular.isEnabled = false
                         holder.itemView.isEnabled = false
                         holder.itemView.llSportsLeft.visibility = View.INVISIBLE
-//                            llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
                         val diffSec = diff / 1000
                         val seconds = diffSec % 60
                         val minutes = diffSec / 60 % 60
@@ -146,12 +147,22 @@ class LobbyContestAdapter(
                 newtimer.start()
 
             } else {
-                val diffSec = diff / 1000
-                val seconds = diffSec % 60
-                val minutes = diffSec / 60 % 60
-                val hours = diffSec / 3600
+                val newtimer = object : CountDownTimer(diff, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
 
-                holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                    }
+
+                    override fun onFinish() {
+                    }
+                }
+                newtimer.start()
             }
 
         }
@@ -181,17 +192,17 @@ class LobbyContestAdapter(
         holder.itemView.setOnClickListener {
             var intent = Intent(mContext, ContestDetailActivity::class.java);
             intent.putExtra(StockConstant.CONTESTID, mContest.get(position).contestid.toInt())
-            intent.putExtra(StockConstant.EXCHANGEID,  mContest.get(position).exchangeid.toInt())
+            intent.putExtra(StockConstant.EXCHANGEID, mContest.get(position).exchangeid.toInt())
             ActivityCompat.startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_CREATED, null);
-           /* mContext.startActivity(
-                Intent(mContext, ContestDetailActivity::class.java).putExtra(
-                    StockConstant.CONTESTID,
-                    mContest.get(position).contestid.toInt()
-                ).putExtra(
-                    StockConstant.EXCHANGEID,
-                    mContest.get(position).exchangeid.toInt()
-                )
-            )*/
+            /* mContext.startActivity(
+                 Intent(mContext, ContestDetailActivity::class.java).putExtra(
+                     StockConstant.CONTESTID,
+                     mContest.get(position).contestid.toInt()
+                 ).putExtra(
+                     StockConstant.EXCHANGEID,
+                     mContest.get(position).exchangeid.toInt()
+                 )
+             )*/
 
 
         }

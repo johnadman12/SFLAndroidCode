@@ -4,16 +4,16 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class Currency : BasePojo() {
+class CurrencyPojo : BasePojo() {
     @SerializedName("currency")
     @Expose
     var currency: ArrayList<Currency>? = null
 
-    inner class Currency {
+    public class Currency {
 
         @SerializedName("currencyid")
         @Expose
-        var currencyid: Int? = null
+        var currencyid: Int = 0
         @SerializedName("symbol")
         @Expose
         var symbol: String = ""
@@ -44,5 +44,6 @@ class Currency : BasePojo() {
         @SerializedName("crypto_type")
         @Expose
         var cryptoType: String = ""
+        var addedToList = 1
     }
 }

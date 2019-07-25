@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StockTeamPojo extends BasePojo implements Parcelable {
-    public String myteam = "";
-
-    @SerializedName("stock")
+   @SerializedName("stock")
     @Expose
     public ArrayList<Stock> stock = null;
 

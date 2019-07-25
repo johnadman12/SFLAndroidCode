@@ -32,6 +32,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
+import stock.com.ui.dashboard.home.Currency.ActivityCurrencyTeam
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
@@ -185,7 +186,12 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
-        tvContestType.setText(contest.catname)
+
+        if (!TextUtils.isEmpty(contest.catname))
+            tvContestType.setText(contest.catname)
+        else
+            tvContestType.setText("Private Contest")
+
         tvWinnersTotal.setText(contest.totalwinners)
         tvTotalWinnings.setText(contest.winningAmount)
         var amount: String = contest.entryFees.substring(1)
@@ -208,8 +214,16 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                     intent.putExtra(StockConstant.CONTESTID, contestid)
                     intent.putExtra("isCloning", 0)
                     startActivityForResult(intent, 405);
-                } else {
+                } else if (contest.marketname.equals("Cryptocurrencies")) {
                     var intent = Intent(this@UpcomingContestDetailActivity, ActivityMarketTeam::class.java)
+                    intent
+                        .putExtra(StockConstant.MARKETID, contest.mid)
+                        .putExtra(StockConstant.CONTESTID, contestid)
+                        .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
+                        .putExtra("isCloning", 0)
+                    startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
+                } else if (contest.marketname.equals("Currencies")) {
+                    var intent = Intent(this@UpcomingContestDetailActivity, ActivityCurrencyTeam::class.java)
                     intent
                         .putExtra(StockConstant.MARKETID, contest.mid)
                         .putExtra(StockConstant.CONTESTID, contestid)

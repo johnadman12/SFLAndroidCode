@@ -56,6 +56,7 @@ class CryptoCurrencyFragment : BaseFragment() {
         cryptoListFiltered = ArrayList()
 
         srl_layout.setOnRefreshListener {
+            flagPagination = true
             getCurrency("2")
         }
 
@@ -121,6 +122,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
+
                         if (flag.equals("1")) {
                             cryptoList = response.body()!!.crypto
                             cryptoListNew = response.body()!!.crypto

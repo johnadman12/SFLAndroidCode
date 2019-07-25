@@ -104,7 +104,6 @@
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
                                     android:layout_height="0dp"
-                                    android:text="$50"
                                     android:textStyle="bold"/>
                             <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/TextStyleNormal"
@@ -166,7 +165,6 @@
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
                                     android:layout_height="0dp"
-                                    android:text="$50"
                                     android:gravity="top"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     android:id="@+id/tvTimeLeft"

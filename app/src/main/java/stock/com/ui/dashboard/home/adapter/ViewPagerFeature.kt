@@ -161,6 +161,7 @@ class ViewPagerFeature(
                     val newtimer = object : CountDownTimer(diff, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
                             val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
                             txtjoin.setTextSize(16.00f)
                             txtjoin.setText("Starts \nSoon")
                             txtjoin.setText("Now \nLive")
@@ -168,7 +169,7 @@ class ViewPagerFeature(
                                 ContextCompat.getColor(context, R.color.GrayColor)
                             ll_Circular.isEnabled = false
                             llSportsLeft.visibility = INVISIBLE
-                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+//                            val diff = thatDay.timeInMillis - cTime.timeInMillis
                             val diffSec = diff / 1000
                             val seconds = diffSec % 60
                             val minutes = diffSec / 60 % 60
@@ -182,20 +183,27 @@ class ViewPagerFeature(
                     newtimer.start()
 
                 } else {
-                    val diffSec = diff / 1000
-                    val seconds = diffSec % 60
-                    val minutes = diffSec / 60 % 60
-                    val hours = diffSec / 3600
-                    tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    newtimer.start()
                 }
             }
 
         } catch (E: Exception) {
 
         }
-
-
-
 
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(list.get(position).description, context);

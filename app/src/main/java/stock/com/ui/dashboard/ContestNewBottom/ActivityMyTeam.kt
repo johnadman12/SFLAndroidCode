@@ -106,7 +106,7 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        setMyAdapter(response.body()!!.myteam)
+                        setMyAdapter(response.body()!!.myteams)
                         if (flagRefresh)
                             limit = limit + 50
                     } else if (response.body()!!.status == "2") {
@@ -146,7 +146,7 @@ class ActivityMyTeam : BaseActivity() {
                         Handler().postDelayed(Runnable {
                         }, 100)
 //                        displayToast(list!!.size.toString())
-                        setMyAdapter(response.body()!!.myteam)
+                        setMyAdapter(response.body()!!.myteams)
                         //  setStockTeamAdapter(response.body()!!.stock!!)
 
                     } else if (response.body()!!.status == "2") {

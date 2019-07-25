@@ -40,6 +40,7 @@ import stock.com.ui.dashboard.Contestdeatil.RulesAdapter
 import stock.com.ui.dashboard.Contestdeatil.ScoresAdapter
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
+import stock.com.ui.dashboard.home.Currency.ActivityCurrencyTeam
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.ContestDetail
 import stock.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
@@ -204,7 +205,11 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(contest: ContestDetail.Contest) {
         entry_fee.setText(contest.entryFees)
-        tvContestType.setText(contest.catname)
+        if (!TextUtils.isEmpty(contest.catname))
+            tvContestType.setText(contest.catname)
+        else
+            tvContestType.setText("Private Contest")
+
         if (contest.marketname.equals("Equity")) {
             Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
                 .into(ivStock)
@@ -225,8 +230,16 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     intent.putExtra(StockConstant.CONTESTID, contestid)
                     intent.putExtra("isCloning", 0)
                     startActivityForResult(intent, 405);
-                } else {
+                } else if (contest.marketname.equals("Cryptocurrencies")) {
                     var intent = Intent(this@ContestDetailActivity, ActivityMarketTeam::class.java)
+                    intent
+                        .putExtra(StockConstant.MARKETID, contest.mid)
+                        .putExtra(StockConstant.CONTESTID, contestid)
+                        .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
+                        .putExtra("isCloning", 0)
+                    startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
+                } else if (contest.marketname.equals("Currencies")) {
+                    var intent = Intent(this@ContestDetailActivity, ActivityCurrencyTeam::class.java)
                     intent
                         .putExtra(StockConstant.MARKETID, contest.mid)
                         .putExtra(StockConstant.CONTESTID, contestid)

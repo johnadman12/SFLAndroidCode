@@ -105,8 +105,8 @@ class ActivityHomeSearch : BaseActivity() {
                                     }
                                 }
                                 homeSearch = HomeSearchPojo()
-                                homeSearch!!.title = key
-                                homeSearch.users = list!!
+                                homeSearch.title = key
+                                homeSearch.users = list
 
                                 main.add(homeSearch)
                             }

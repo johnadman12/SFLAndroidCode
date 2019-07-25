@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 import stock.com.ui.pojo.*
@@ -389,6 +388,14 @@ interface ApiInterface {
     ): Call<MarketList>
 
     @FormUrlEncoded
+    @POST("marketdata/marketdata_list")
+    fun getCurrencyList(
+        @Header("x-access-token") token: String, @Field("market_id") exchange_id: String,
+        @Field("user_id") user_id: String,
+        @Field("page") page: String, @Field("limit") limit: String
+    ): Call<CurrencyPojo>
+
+    @FormUrlEncoded
     @POST("marketdata/wizard_market_list")
     fun getMarketWizardList(
         @Header("x-access-token") token: String, @Field("market_id") exchange_id: String,
@@ -482,7 +489,7 @@ interface ApiInterface {
         @Field("market_status") marketStatus: String,
         @Field("page") page: String,
         @Field("limit") limit: String
-    ): Call<Currency>
+    ): Call<CurrencyPojo>
 
 
     @FormUrlEncoded

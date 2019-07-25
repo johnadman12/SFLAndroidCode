@@ -45,7 +45,7 @@ class CurrencyAdapter(
     init {
         this.search = cryptoListNew;
         createCheckedHolder();
-        Log.d("gugugugugu","---5465466---"+search!!.size)
+        Log.d("gugugugugu", "---5465466---" + search!!.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -56,7 +56,7 @@ class CurrencyAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
 
-        Log.d("gugugugugu","---5465466")
+        Log.d("gugugugugu", "---5465466")
         val anim = AlphaAnimation(0.1f, 1.0f)
         anim.duration = 50 //You can manage the blinking time with this parameter
         anim.startOffset = 20
@@ -210,12 +210,12 @@ class CurrencyAdapter(
                                         R.color.white
                                     )
                                 )
-                              /*  holder.itemView.tv_change_percentage.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )*/
+                                /*  holder.itemView.tv_change_percentage.setTextColor(
+                                      ContextCompat.getColor(
+                                          mContext,
+                                          R.color.white
+                                      )
+                                  )*/
                                 holder.itemView.llPrice.setBackgroundDrawable(
                                     ContextCompat.getDrawable(
                                         mContext,
@@ -275,7 +275,7 @@ class CurrencyAdapter(
             } else {
                 Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("$" +price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
+                holder.itemView.tv_change_percentage.setText("$" + price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
             }
         }
 
@@ -301,7 +301,9 @@ class CurrencyAdapter(
         holder.itemView.llwatch.setOnClickListener {
             frgament.saveToWatchList(cryptoListNew.get(position).cryptocurrencyid)
             cryptoListNew.get(position).cryptoType = "1"
-            notifyDataSetChanged()
+            holder.itemView.llAdd.visibility = View.GONE
+            holder.itemView.img_check.visibility = View.VISIBLE
+            holder.itemView.llwatch.isEnabled = false
         }
     }
 

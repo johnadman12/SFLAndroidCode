@@ -69,7 +69,7 @@ class CandlesticChartmarket() {
         var errorCode: Int? = null
         @SerializedName("error_message")
         @Expose
-        var errorMessage: Any? = null
+        var errorMessage: String = ""
         @SerializedName("elapsed")
         @Expose
         var elapsed: Int? = null
