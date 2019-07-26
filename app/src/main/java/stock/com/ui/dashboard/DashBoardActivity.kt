@@ -93,6 +93,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dashboard_activity)
+        StockConstant.ACTIVITIES.add(this)
 //        if (intent != null)
         setUpMenu();
         initView()
@@ -678,6 +679,18 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
         changetTextViewBackground(tv_market, R.color.textColorLightBlack);
         changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
         changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+    }
+
+    public fun callToCreated() {
+         var b = Bundle();
+         b.putString("flag", "")
+         setFragment(MyContestFragment(), b);
+         setMenu(false, false, false, false, false, false, false)
+         changetTextViewBackground(tv_contest, R.color.colorPrimary);
+         changetTextViewBackground(tv_market, R.color.textColorLightBlack);
+         changetTextViewBackground(tv_profile, R.color.textColorLightBlack);
+         changetTextViewBackground(tv_home, R.color.textColorLightBlack);
+//        displayToast("problem", "sucess")
     }
 
 

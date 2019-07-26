@@ -22,16 +22,19 @@ import stock.com.utils.StockDialog
 import java.util.ArrayList
 
 class UpcomingFragment : BaseFragment() {
+    var contest: ArrayList<LobbyContestPojo.Contest>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_finished, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        contest = ArrayList()
         getContests()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
+
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
@@ -39,6 +42,8 @@ class UpcomingFragment : BaseFragment() {
                 getContests()
             }
         })
+
+        setAdapter(contest!!)
     }
 
     fun getContests() {
@@ -58,29 +63,34 @@ class UpcomingFragment : BaseFragment() {
                     refreshData.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setAdapter(response.body()!!.contest)
-                    }else if (response.body()!!.status == "2") {
+                        if (response.body()!!.contest.size > 0) {
+                            contest = response.body()!!.contest
+                            recycler_finished!!.adapter!!.notifyDataSetChanged()
+                        }
+
+                    } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
                 } else {
-                    displayToast(resources.getString(R.string.internal_server_error),"error")
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.internal_server_error),"error")
+                displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
             }
         })
     }
 
     private fun setAdapter(contest: ArrayList<LobbyContestPojo.Contest>) {
-        val llm = GridLayoutManager(context,2)
+        val llm = GridLayoutManager(context, 2)
         //llm.orientation = GridLayoutManager(applicationContext,2)
-        recycler_finished!!.layoutManager = llm
-        recycler_finished!!.adapter = UpcomingAdapter(context!!,contest);
+        if (recycler_finished != null)
+            recycler_finished!!.layoutManager = llm
+        recycler_finished!!.adapter = UpcomingAdapter(context!!, contest);
     }
 
 }

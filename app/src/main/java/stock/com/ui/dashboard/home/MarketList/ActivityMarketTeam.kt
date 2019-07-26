@@ -69,6 +69,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var flagDayLTH: Boolean = false
     var flagPriceLTH: Boolean = false
     var flagVolume: Boolean = false
+    var searchText: String = ""
     var flagDayHTL: Boolean = false
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
@@ -110,7 +111,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.ll_sort -> {
                 startActivityForResult(
-                    Intent(this@ActivityMarketTeam, ActivitySortTeam::class.java).putExtra("flagStatus", flagSort),
+                    Intent(this@ActivityMarketTeam, ActivitySortTeam::class.java)
+                        .putExtra("flagStatus", flagSort),
                     StockConstant.RESULT_CODE_SORT_MARKET_TEAM
                 )
             }
@@ -328,7 +330,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         })
         srl_layout.setOnRefreshListener {
             flagRefresh = true
-            getMarketTeamlist()
+            if (!flagSearch) {
+                callApiSearch(searchText)
+            } else {
+                getMarketTeamlist()
+            }
         }
 
         val llm = LinearLayoutManager(this)
@@ -349,9 +355,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (flagSearch) {
                     getMarketTeamlist()
                 }
-                mainHandler.postDelayed(this, 8000)
+                mainHandler.postDelayed(this, 3000)
             }
-
         })
     }
 
@@ -359,6 +364,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         Log.d("dsadada", "sdada--" + c);
         if (c.toString().length >= 3) {
             flagSearch = false;
+            searchText = c.toString()
             Log.d("dsadada", "111111--");
             callApiSearch(c);
         } else {
@@ -382,6 +388,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 d.dismiss()
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
@@ -391,6 +399,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = View.GONE
 
+
+                        if (flagRefresh) {
+                            limit = limit + 50
+                        }
+
                         list!!.clear()
                         listOld!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
@@ -398,10 +411,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.addAll(response.body()!!.crypto!!);
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
-//                            listOld!!.get(i).addedToList = 0
-
                         }
-//                        rv_Players.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
@@ -448,6 +458,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 Log.d("serach_error", "---" + t.localizedMessage);
                 d.dismiss()
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -647,12 +659,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!, "0", "50"
+                getFromPrefsString(StockConstant.USERID)!!, page.toString(), limit.toString()
             )
         call.enqueue(object : Callback<MarketList> {
 
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setSectorFilter("")
@@ -687,6 +701,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
 
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()

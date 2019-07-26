@@ -13,6 +13,7 @@ import stock.com.R
 import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
+import stock.com.ui.dashboard.home.Currency.CurrencyPreviewTeamActivity
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.MyTeamsPojo
@@ -105,18 +106,24 @@ class MyTeamAdapter(
         }
 
         holder.itemView.relViewTeam.setOnClickListener {
-            if (myteam.get(position).stock.size == 0) {
+            if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
-            } else {
+            } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                )
+            } else {
+                mContext.startActivity(
+                    Intent(mContext, CurrencyPreviewTeamActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                        .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             }
 

@@ -13,22 +13,43 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.utils.StockConstant
 
-class WatchSortActivity : BaseActivity(),CompoundButton.OnCheckedChangeListener {
+class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sort_watch)
-        img_btn_close.visibility=View.VISIBLE;
+        reset.visibility = View.VISIBLE
+        var getFlag: String = ""
+
 
         img_btn_back.setOnClickListener {
-           onBackPressed()
-           /* val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()*/
+            onBackPressed()
+
         }
-        img_btn_close.setOnClickListener {
-            finish()
+        reset.setOnClickListener {
+            var intent = Intent();
+            intent.putExtra("flag", "nodata")
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         }
+        if (intent != null)
+            getFlag = intent.getStringExtra("flagStatus")
+        if (getFlag.equals("high", true)) {
+            makecheckbox(false, false, false, true, false)
+
+        } else if (getFlag.equals("low", true)) {
+            makecheckbox(false, false, true, false, false)
+
+        } else if (getFlag.equals("daily", true)) {
+            makecheckbox(false, false, false, false, true)
+
+        } else if (getFlag.equals("dailyLTH", true)) {
+            makecheckbox(false, true, false, false, false)
+
+        } else {
+            makecheckbox(true, false, false, false, false)
+        }
+
 
         checkBoxDailyChanges.setOnCheckedChangeListener(this);
         cb_weekly.setOnCheckedChangeListener(this);
@@ -37,71 +58,81 @@ class WatchSortActivity : BaseActivity(),CompoundButton.OnCheckedChangeListener 
         cb_price_high.setOnCheckedChangeListener(this);
 
 
-
-        var temp="";
+        var temp = "";
 
         btn_Apply.setOnClickListener {
-            if(cb_price_high.isChecked){
-                temp="high";
+            if (cb_price_high.isChecked) {
+                temp = "high";
             }
-            if(cb_price_low.isChecked){
-                temp="low";
-            }
-
-            if(checkBoxDailyChanges.isChecked){
-                temp="daily";
+            if (cb_price_low.isChecked) {
+                temp = "low";
             }
 
-            if(cb_monthly.isChecked){
-                temp="dailyLTH";
+            if (checkBoxDailyChanges.isChecked) {
+                temp = "daily";
             }
 
-            var intent=Intent();
-            intent.putExtra("flag",temp)
-            setResult(Activity.RESULT_OK,intent);
+            if (cb_monthly.isChecked) {
+                temp = "dailyLTH";
+            }
+
+            var intent = Intent();
+            intent.putExtra("flag", temp)
+            setResult(Activity.RESULT_OK, intent);
             finish();
 
         }
 
     }
 
+    fun makecheckbox(fW: Boolean, fM: Boolean, fPL: Boolean, fPH: Boolean, fD: Boolean) {
+        cb_weekly.isChecked = fW;
+        cb_monthly.isChecked = fM;
+        cb_price_low.isChecked = fPL;
+        cb_price_high.isChecked = fPH;
+        checkBoxDailyChanges.isChecked = fD;
+    }
+
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        when(buttonView!!.id){
-            R.id.checkBoxDailyChanges->{
-                if(isChecked){
-                    cb_weekly.isChecked=false;
-                    cb_monthly.isChecked=false;
-                    cb_price_low.isChecked=false;
-                    cb_price_high.isChecked=false;
-                }
-            }  R.id.cb_weekly->{
-                if(isChecked){
-                    checkBoxDailyChanges.isChecked=false;
-                    cb_monthly.isChecked=false;
-                    cb_price_low.isChecked=false;
-                    cb_price_high.isChecked=false;
+        when (buttonView!!.id) {
+            R.id.checkBoxDailyChanges -> {
+                if (isChecked) {
+                    cb_weekly.isChecked = false;
+                    cb_monthly.isChecked = false;
+                    cb_price_low.isChecked = false;
+                    cb_price_high.isChecked = false;
                 }
             }
-            R.id.cb_monthly->{
-                if(isChecked){
-                    cb_weekly.isChecked=false;
-                    checkBoxDailyChanges.isChecked=false;
-                    cb_price_low.isChecked=false;
-                    cb_price_high.isChecked=false;
+            R.id.cb_weekly -> {
+                if (isChecked) {
+                    checkBoxDailyChanges.isChecked = false;
+                    cb_monthly.isChecked = false;
+                    cb_price_low.isChecked = false;
+                    cb_price_high.isChecked = false;
                 }
-            } R.id.cb_price_low->{
-                if(isChecked){
-                    cb_weekly.isChecked=false;
-                    checkBoxDailyChanges.isChecked=false;
-                    cb_monthly.isChecked=false;
-                    cb_price_high.isChecked=false;
+            }
+            R.id.cb_monthly -> {
+                if (isChecked) {
+                    cb_weekly.isChecked = false;
+                    checkBoxDailyChanges.isChecked = false;
+                    cb_price_low.isChecked = false;
+                    cb_price_high.isChecked = false;
                 }
-            }R.id.cb_price_high->{
-                if(isChecked){
-                    cb_weekly.isChecked=false;
-                    checkBoxDailyChanges.isChecked=false;
-                    cb_monthly.isChecked=false;
-                    cb_price_low.isChecked=false;
+            }
+            R.id.cb_price_low -> {
+                if (isChecked) {
+                    cb_weekly.isChecked = false;
+                    checkBoxDailyChanges.isChecked = false;
+                    cb_monthly.isChecked = false;
+                    cb_price_high.isChecked = false;
+                }
+            }
+            R.id.cb_price_high -> {
+                if (isChecked) {
+                    cb_weekly.isChecked = false;
+                    checkBoxDailyChanges.isChecked = false;
+                    cb_monthly.isChecked = false;
+                    cb_price_low.isChecked = false;
                 }
             }
 

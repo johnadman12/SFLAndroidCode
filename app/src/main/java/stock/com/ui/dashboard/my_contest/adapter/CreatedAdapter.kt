@@ -3,6 +3,9 @@ package stock.com.ui.dashboard.my_contest.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.CountDownTimer
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,11 +51,14 @@ class CreatedAdapter(
 
 
         if (usercontest.get(position).marketname.equals("Equity")) {
-            Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + usercontest.get(position).exchangeimage.trim())
-                .into(holder.itemView.ivStock)
-            holder.itemView.tvStockName.setText(usercontest.get(position).exchangename)
+            if (!TextUtils.isEmpty(usercontest.get(position).exchangeimage))
+                Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + usercontest.get(position).exchangeimage.trim())
+                    .into(holder.itemView.ivStock)
+            if (usercontest.get(position).exchangename != null)
+                holder.itemView.tvStockName.setText(usercontest.get(position).exchangename)
         } else {
-            holder.itemView.tvStockName.setText(usercontest.get(position).marketname)
+            if (usercontest.get(position).marketname != null)
+                holder.itemView.tvStockName.setText(usercontest.get(position).marketname)
             Glide.with(mContext).load(R.drawable.ic_business)
                 .into(holder.itemView.ivStock)
         }
@@ -70,6 +76,58 @@ class CreatedAdapter(
                         .putExtra(StockConstant.CONTESTCODE, "")
                         .putExtra(StockConstant.CONTESTID, usercontest.get(position).contestid)
                 )
+            }
+        }
+
+        if (!usercontest.get(position).scheduleStart.equals(" ")) {
+            val inputPattern = "yyyy-MM-dd HH:mm:ss"
+            val inputFormat = SimpleDateFormat(inputPattern)
+            var date: Date? = null
+            //date = inputFormat.parse(usercontest.get(position).scheduleStart)
+            date = inputFormat.parse(usercontest.get(position).scheduleEnd)
+            var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+            date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+            val thatDay = Calendar.getInstance()
+            thatDay.setTime(date)
+            Log.d("dkdklsdjkjdklkl",date.toString());
+            val today = Calendar.getInstance()
+            val diff = thatDay.timeInMillis - today.timeInMillis
+            Log.d("dkldjsdjdlk",diff.toString());
+            //usercontest.get(position).setDate(diff.toInt())
+            if (diff.toString().contains("-")) {
+                holder.itemView.tvTimeLeft.setText("00H:00M:00S")
+            } else if (diff.equals("3600000")) {
+                val newtimer = object : CountDownTimer(1000000000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTime.setText(hours.toString() + "H: " + minutes.toString() + "M: ")
+                    }
+                    override fun onFinish() {
+                        holder.itemView.tvTimeLeft.setText("Completed");
+                    }
+                }
+                newtimer.start()
+
+            } else {
+                val newtimer = object : CountDownTimer(diff, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        val cTime = Calendar.getInstance()
+                        val diff = thatDay.timeInMillis - cTime.timeInMillis
+                        val diffSec = diff / 1000
+                        val seconds = diffSec % 60
+                        val minutes = diffSec / 60 % 60
+                        val hours = diffSec / 3600
+                        holder.itemView.tvTimeLeft.setText(hours.toString() + "H: " + minutes.toString() + "M: " + seconds.toString() + "S")
+                    }
+                    override fun onFinish() {
+                        holder.itemView.tvTimeLeft.setText("Complete");
+                    }
+                }
+                newtimer.start()
             }
         }
 

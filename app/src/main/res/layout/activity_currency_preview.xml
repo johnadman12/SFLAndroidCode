@@ -1,0 +1,1316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:background="@mipmap/bgone"
+                android:fitsSystemWindows="true"
+                android:layout_height="wrap_content">
+    <!--android:background="#14851F"-->
+    <include
+            android:id="@+id/inc"
+            layout="@layout/outside_toolbar"/>
+    <androidx.core.widget.NestedScrollView
+            android:layout_below="@+id/inc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+            <LinearLayout
+                    android:id="@+id/llteam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:gravity="right"
+                    android:orientation="vertical">
+                <LinearLayout android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:padding="@dimen/_5sdp"
+                              android:visibility="gone"
+                              android:layout_weight="1"
+                              android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Team "
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_22ssp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:src="@mipmap/editteam"/>
+
+                </LinearLayout>
+                <RelativeLayout android:layout_width="@dimen/_60sdp"
+                                android:layout_height="@dimen/_60sdp"
+                                android:id="@+id/rel"
+                                android:background="@mipmap/graycircle"
+                                android:layout_marginRight="@dimen/_10sdp"
+                >
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total"
+                            android:id="@+id/tv"
+                            android:textSize="@dimen/_10ssp"
+                            android:textAllCaps="true"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleNormal"
+
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/_6sdp"
+                            android:layout_marginRight="@dimen/_6sdp"
+                            android:layout_centerVertical="true"
+                            android:textSize="@dimen/_10ssp"
+                            android:id="@+id/tvTotal"
+                            android:layout_below="@id/tv"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/textColorOffWhite"
+                            style="@style/TextStyleSemiBold"
+
+                    />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_info"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:src="@mipmap/info_"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:visibility="visible"
+                        android:tint="@color/white"
+                        android:layout_marginRight="@dimen/_30sdp"/>
+            </LinearLayout>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/llteam"
+                    android:gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <RelativeLayout
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_width="@dimen/_38sdp"
+                            android:layout_height="@dimen/_38sdp"
+                            android:gravity="top"
+                            android:background="@drawable/white_circle"
+                            android:id="@+id/cimg_wk1"
+                            android:layout_centerHorizontal="true"
+                            android:padding="@dimen/_2sdp">
+
+                        <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:scaleType="fitXY"
+                                android:id="@+id/img1"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/cryptoim"/>
+                        <ImageView
+                                android:layout_width="@dimen/_18sdp"
+                                android:id="@+id/img2"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentEnd="true"
+                                android:scaleType="fitXY"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:layout_height="@dimen/_15sdp"
+                                android:src="@mipmap/stocks"/>
+
+                    </RelativeLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:paddingStart="@dimen/_5sdp"
+                                  android:paddingEnd="@dimen/_5sdp"
+                                  android:paddingTop="@dimen/_2sdp"
+                                  android:orientation="horizontal"
+                                  android:background="@drawable/bg_white"
+                                  android:layout_below="@+id/cimg_wk1"
+                                  android:layout_marginTop="-5dp"
+                                  android:layout_centerHorizontal="true">
+
+                        <!-- <ImageView android:id="@+id/arrow1"
+                                    android:layout_width="@dimen/_25sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@mipmap/toggleon"/>
+                                    -->
+                        <LinearLayout android:layout_width="0dp"
+                                      android:layout_weight="1"
+                                      android:padding="@dimen/_5sdp"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <LinearLayout android:layout_width="wrap_content"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="horizontal">
+                                <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/price1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="172.2$"
+                                        style="@style/TextStyleSemiBold"
+                                        android:layout_marginRight="@dimen/_5sdp"
+                                        android:textColor="@color/textColorBlack"
+                                        android:textSize="@dimen/_9ssp"/>
+
+                                <ImageView
+                                        android:id="@+id/arrow1"
+                                        android:layout_width="@dimen/_30sdp"
+                                        android:layout_height="@dimen/_15sdp"
+                                        android:src="@drawable/buy"
+                                />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/stockname1"
+                                android:minLines="1"
+                                android:minWidth="@dimen/_10sdp"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_9ssp"/>
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk2"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img3"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img4"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk2"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow2"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname2"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:visibility="gone"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk3"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img5"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img6"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk3"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price3"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow3"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname3"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk4"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img7"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img8"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk4"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price4"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow4"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname4"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk5"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img9"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img10"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk5"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price5"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow5"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname5"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:visibility="gone"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk6"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img11"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img12"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk6"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price6"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow6"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+
+
+                            </LinearLayout>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname6"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                    >
+
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk7"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img13"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img14"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk7"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price7"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow7"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname7"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:visibility="gone"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_height="wrap_content">
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk8"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img15"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img16"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk8"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price8"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow8"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname8"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk9"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img17"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img18"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk9"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price9"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow9"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname9"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk10"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img19"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img20"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk10"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price10"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow10"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname10"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk11"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img21"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img22"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk11"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price11"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow11"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+
+                            </LinearLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname11"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    >
+
+                        <RelativeLayout
+                                android:layout_width="@dimen/_38sdp"
+                                android:layout_height="@dimen/_38sdp"
+                                android:gravity="top"
+                                android:background="@drawable/white_circle"
+                                android:id="@+id/cimg_wk12"
+                                android:layout_centerHorizontal="true"
+                                android:padding="@dimen/_2sdp">
+
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img23"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_18sdp"
+                                    android:id="@+id/img24"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:layout_height="@dimen/_15sdp"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingStart="@dimen/_5sdp"
+                                      android:paddingEnd="@dimen/_5sdp"
+                                      android:paddingTop="@dimen/_2sdp"
+                                      android:orientation="horizontal"
+                                      android:background="@drawable/bg_white"
+                                      android:layout_below="@+id/cimg_wk12"
+                                      android:layout_marginTop="-5dp"
+                                      android:layout_centerHorizontal="true">
+
+                            <LinearLayout android:layout_width="0dp"
+                                          android:layout_weight="1"
+                                          android:padding="@dimen/_5sdp"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="vertical">
+
+                                <LinearLayout android:layout_width="wrap_content"
+                                              android:layout_height="wrap_content"
+                                              android:orientation="horizontal">
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/price12"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="172.2$"
+                                            style="@style/TextStyleSemiBold"
+                                            android:layout_marginRight="@dimen/_5sdp"
+                                            android:textColor="@color/textColorBlack"
+                                            android:textSize="@dimen/_9ssp"/>
+
+                                    <ImageView
+                                            android:id="@+id/arrow12"
+                                            android:layout_width="@dimen/_30sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/buy"
+                                    />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/stockname12"
+                                    android:singleLine="true"
+                                    android:ellipsize="end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AAPL"
+                                    android:visibility="gone"
+                                    android:minWidth="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_9ssp"/>
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

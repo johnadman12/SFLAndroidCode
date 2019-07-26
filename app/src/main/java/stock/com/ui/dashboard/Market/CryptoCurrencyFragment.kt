@@ -38,10 +38,12 @@ class CryptoCurrencyFragment : BaseFragment() {
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
     var flagPagination: Boolean = false
+    var flagSearch: Boolean = false
 
     private var flag: Boolean = true;
     var page: Int = 0
     var limit: Int = 50
+    var search: String = ""
     lateinit var mainHandler: Handler;
 
 
@@ -57,7 +59,11 @@ class CryptoCurrencyFragment : BaseFragment() {
 
         srl_layout.setOnRefreshListener {
             flagPagination = true
-            getCurrency("2")
+            if (flagSearch) {
+                callApiSearch(search);
+            } else {
+                getCurrency("2")
+            }
         }
 
         getCurrency("1")
@@ -76,7 +82,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                     if (flag) {
                         getCurrencyAgain("1")
                     }
-                    mainHandler.postDelayed(this, 5000)
+                    mainHandler.postDelayed(this, 3000)
                 } else {
                     flagAlphaSort = false
                     flagPriceSort = false
@@ -95,6 +101,8 @@ class CryptoCurrencyFragment : BaseFragment() {
         if (c.toString().length >= 2) {
             flag = false;
             Log.d("dsadada", "111111--");
+            search = c.toString()
+            flagSearch = true
             callApiSearch(c);
         } else {
             flag = true;
@@ -288,12 +296,14 @@ class CryptoCurrencyFragment : BaseFragment() {
                 "crypto",
                 c.toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "0",
-                "50"
+                page.toString(),
+                limit.toString()
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
@@ -303,6 +313,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                         cryptoList = response.body()!!.crypto;
                         cryptoListNew = response.body()!!.crypto;
                         setCryptoCurrencyAdapter()
+                        if (flagPagination)
+                            limit = limit + 50
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {
@@ -314,6 +326,8 @@ class CryptoCurrencyFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 Log.d("serach_error", "---" + t.localizedMessage);
                 d.dismiss()
                 if (activity != null)

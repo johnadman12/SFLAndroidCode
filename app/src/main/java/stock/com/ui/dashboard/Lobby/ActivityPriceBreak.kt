@@ -17,6 +17,7 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.WinningList
 import stock.com.utils.AppDelegate
@@ -43,6 +44,7 @@ class ActivityPriceBreak : BaseActivity() {
     private var joinmultiple: String = "";
     var contestSizeId: String = "";
     var contestSizeWinner: String = "";
+    var activity: DashBoardActivity? = null
 
 
     var list: ArrayList<WinningList.Pricebreaklist>? = null;
@@ -53,7 +55,9 @@ class ActivityPriceBreak : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_price_break)
+        StockConstant.ACTIVITIES.add(this)
         list = ArrayList()
+        activity = DashBoardActivity()
         if (intent != null) {
             sport = intent.getStringExtra("spot");
             winningAmount = intent.getStringExtra("winningamount");
@@ -73,8 +77,6 @@ class ActivityPriceBreak : BaseActivity() {
             contestName.setText(ContestName)
         else
             contestName.setText(getString(R.string.private_contest))
-
-
         val stime = startDate + " " + startTime
         val etime = endDate + " " + endTime
 
@@ -235,17 +237,22 @@ class ActivityPriceBreak : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        try {
-                            Handler().postDelayed(Runnable {
-                                AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
-                                var intent = Intent();
-                                intent.putExtra("flag", "1")
-                                setResult(Activity.RESULT_OK, intent);
-                                finish();
-                            }, 500)
+//                        AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
+                        var intent = Intent();
+                        setResult(Activity.RESULT_OK, intent);
+                        this@ActivityPriceBreak.finish()
+                        /*   try {
+   //                            AppDelegate.showAlert(this@ActivityPriceBreak, response.body()!!.message)
+
+                               *//*var intent = Intent();
+                            setResult(Activity.RESULT_OK, intent);*//*
+                            Handler().postDelayed({
+                                activity!!.test()
+                                finish()
+                            }, 1000)
                         } catch (e: Exception) {
 
-                        }
+                        }*/
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()

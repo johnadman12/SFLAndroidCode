@@ -43,7 +43,7 @@ class CurrencyTeamAdapter(
       }
 
     init {
-        this.searchList = mContest;
+        this.searchList = mContestOld;
         createCheckedHolder();
     }
 
@@ -84,7 +84,7 @@ class CurrencyTeamAdapter(
             if (activity.getTeamText() > 11) {
                 AppDelegate.showSneakBarRed(
                     mContext,
-                    "You have selected maximum number of Crypto for your team.",
+                    "You have selected maximum number of Currency for your team.",
                     "DFX"
                 )
             } else {

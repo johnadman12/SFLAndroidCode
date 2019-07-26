@@ -193,7 +193,7 @@ class LobbyContestAdapter(
             var intent = Intent(mContext, ContestDetailActivity::class.java);
             intent.putExtra(StockConstant.CONTESTID, mContest.get(position).contestid.toInt())
             intent.putExtra(StockConstant.EXCHANGEID, mContest.get(position).exchangeid.toInt())
-            ActivityCompat.startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_CREATED, null);
+            ActivityCompat.startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null);
             /* mContext.startActivity(
                  Intent(mContext, ContestDetailActivity::class.java).putExtra(
                      StockConstant.CONTESTID,

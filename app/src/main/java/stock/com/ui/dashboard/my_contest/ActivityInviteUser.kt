@@ -32,6 +32,7 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
     var limit: Int = 50
     var flagRefresh: Boolean = false
     var pageScreen: Int = 0
+    var flagSearch: Boolean = false
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
@@ -83,7 +84,11 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
         pageScreen = 0
         srl_layout.setOnRefreshListener {
             flagRefresh = true
-            getFriendsList()
+            if (flagSearch) {
+                getUserSearchList(et_search_news.text.toString())
+            } else {
+                getFriendsList()
+            }
         }
 
         et_search_news.addTextChangedListener(object : TextWatcher {
@@ -96,6 +101,7 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s!!.length >= 2) {
+                    flagSearch = true
                     getUserSearchList(s.toString())
                     AppDelegate.hideKeyBoard(this@ActivityInviteUser)
                 }
@@ -198,6 +204,8 @@ class ActivityInviteUser : BaseActivity(), View.OnClickListener {
                         listFriends!!.clear()
                         listUser = response.body()!!.userData
                         listFriends = response.body()!!.friendData
+                        if (flagRefresh)
+                            limit = limit + 50
                         if (pageScreen == 0)
                             setInviteAdapter(response.body()!!.userData)
                         else

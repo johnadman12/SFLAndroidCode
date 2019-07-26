@@ -35,9 +35,10 @@ class ActivityMyTeam : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
         StockConstant.ACTIVITIES.add(this)
-        if (intent != null)
+        if (intent != null) {
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
-        flagMarket = intent.getBooleanExtra("flagMarket", false)
+            flagMarket = intent.getBooleanExtra("flagMarket", false)
+        }
         if (flagMarket)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         else
@@ -56,21 +57,6 @@ class ActivityMyTeam : BaseActivity() {
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
-
-        /*sr2_layout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
-            override fun completeRefresh() {
-            }
-
-            override fun refreshing() {
-                //TODO make api call here
-                Handler().postDelayed({
-                }, 5000)
-                if (flagMarket)
-                    getMarketTeamlist()
-                else
-                    getTeamlist()
-            }
-        })*/
         sr2_layout.setOnRefreshListener {
             flagRefresh = true
             if (flagMarket) {

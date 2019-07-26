@@ -77,6 +77,14 @@ interface ApiInterface {
     ): Call<MarketList>
 
     @FormUrlEncoded
+    @POST("search/market")
+    fun searchCurrency(
+        @Field("market_type") market_type: String, @Field("search") search: String, @Field("user_id") user_id: String
+        ,
+        @Field("page") page: String, @Field("limit") limit: String
+    ): Call<CurrencyPojo>
+
+    @FormUrlEncoded
     @POST("search/stock")
     fun searchExchange(
         @Field("exchange_id") exchange_id: String, @Field("search") search: String, @Field("user_id") user_id: String,

@@ -36,7 +36,7 @@ class WatchListActivity : BaseActivity() {
 
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
-
+    var flag: String = ""
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +99,8 @@ class WatchListActivity : BaseActivity() {
         }
         ll_sort.setOnClickListener {
             startActivityForResult(
-                Intent(this@WatchListActivity, WatchSortActivity::class.java),
+                Intent(this@WatchListActivity, WatchSortActivity::class.java)
+                    .putExtra("flagStatus", flag),
                 StockConstant.RESULT_CODE_SORT_WATCH
             );
         }
@@ -236,7 +237,7 @@ class WatchListActivity : BaseActivity() {
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
-                    var flag = data.getStringExtra("flag");
+                    flag = data.getStringExtra("flag");
                     if (flag.equals("high")) {
                         var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                         list!!.clear();
@@ -261,6 +262,9 @@ class WatchListActivity : BaseActivity() {
                         setWatchListAdapter();
                         list!!.addAll(sortedList);
                         setWatchListAdapter();
+                    } else if (flag.equals("nodata")) {
+                        getWatchList()
+                        recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
                     }
                 }
             }

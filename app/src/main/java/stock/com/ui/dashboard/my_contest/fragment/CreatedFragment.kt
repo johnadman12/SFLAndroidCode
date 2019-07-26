@@ -19,8 +19,6 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class CreatedFragment : BaseFragment() {
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_created, container, false)
     }
@@ -60,7 +58,8 @@ class CreatedFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
-                            setAdapter(response.body()!!.usercontest)
+                            if (response.body()!!.usercontest.size > 0)
+                                setAdapter(response.body()!!.usercontest)
                         }, 100)
                     } else if (response.body()!!.status == "2") {
                         appLogout()

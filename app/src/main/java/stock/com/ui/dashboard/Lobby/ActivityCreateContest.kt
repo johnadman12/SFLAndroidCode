@@ -183,6 +183,8 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
             dialog.datePicker.minDate = System.currentTimeMillis()
             dialog.show()
             startTime.setText("")
+            endTime.setText("")
+            endDate.setText("")
         }
 
         startTime.setOnClickListener {
@@ -190,6 +192,8 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 this@ActivityCreateContest, timeSetListener1,
                 myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), false
             ).show()
+            endTime.setText("")
+            endDate.setText("")
         }
         endTime.setOnClickListener {
             if (TextUtils.isEmpty(startTime.text.toString())) {
@@ -202,7 +206,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 dialog.updateTime(myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE))
                 dialog.show()
             }
-            endTime.setText("")
+//            endDate.setText("")
         }
         edtWinningAmount.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -324,7 +328,7 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
                 .putExtra("exchangeId", exchangeId)
                 .putExtra("contestName", edtContestName.text.toString())
                 .putExtra("admission_commision", admission_comm)
-                .putExtra("joinMultiple", joinMultiple.toString()), StockConstant.REDIRECT_CREATED
+                .putExtra("joinMultiple", joinMultiple.toString()), 555
         )
     }
 
@@ -454,11 +458,11 @@ class ActivityCreateContest : BaseActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == StockConstant.REDIRECT_CREATED) {
-            if (resultCode == RESULT_OK && data != null) {
+        if (requestCode == 555) {
+            if (resultCode == RESULT_OK /*&& data != null*/) {
                 var intent = Intent();
                 setResult(Activity.RESULT_OK, intent);
-                finish();
+                this.finish();
             }
         }
     }

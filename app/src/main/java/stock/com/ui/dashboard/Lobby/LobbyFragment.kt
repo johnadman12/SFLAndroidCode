@@ -71,7 +71,10 @@ class LobbyFragment : BaseFragment() {
         }
 
         ll_createContest.setOnClickListener {
-            startActivityForResult(Intent(activity, ActivityCreateContest::class.java), StockConstant.REDIRECT_CREATED)
+            startActivityForResult(
+                Intent(activity, ActivityCreateContest::class.java),
+                StockConstant.REDIRECT_CREATED
+            )
         }
 
         ll_sort.setOnClickListener {
@@ -84,6 +87,7 @@ class LobbyFragment : BaseFragment() {
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
+
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
@@ -223,12 +227,19 @@ class LobbyFragment : BaseFragment() {
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/
             }
         } else if (requestCode == StockConstant.REDIRECT_CREATED) {
+            if (resultCode == AppCompatActivity.RESULT_OK /*&& data != null*/) {
+                 var intent = Intent();
+                 activity!!.setResult(Activity.RESULT_OK, intent);
+                 dashBoardActivity!!.callToCreated()
+//                activity!!.finish();
+
+            }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
             if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                var intent = Intent();
-                //activity!!.startActivityForResult(intent,111);
-                activity!!.setResult(Activity.RESULT_OK, intent);
-                activity!!.finish();
-                dashBoardActivity!!.test()
+                   var intent = Intent();
+                   activity!!.setResult(Activity.RESULT_OK, intent);
+                   dashBoardActivity!!.test()
+//                activity!!.finish();
 
             }
         }
