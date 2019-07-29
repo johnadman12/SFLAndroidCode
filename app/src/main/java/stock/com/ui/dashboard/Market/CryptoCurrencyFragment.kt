@@ -32,6 +32,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     private var cryptoList: ArrayList<MarketList.Crypto>? = null
     private var cryptoListNew: ArrayList<MarketList.Crypto>? = null
     private var cryptoListFiltered: ArrayList<MarketList.Crypto>? = null
+
     var flagAlphaSort: Boolean = false
     var flagPriceSort: Boolean = false
     var flagDaySort: Boolean = false
@@ -56,20 +57,19 @@ class CryptoCurrencyFragment : BaseFragment() {
         cryptoList = ArrayList()
         cryptoListNew = ArrayList()
         cryptoListFiltered = ArrayList()
-
+        setCryptoCurrencyAdapter()
         srl_layout.setOnRefreshListener {
             flagPagination = true
             if (flagSearch) {
+                page = 0
+                limit = 50
                 callApiSearch(search);
             } else {
+                page++;
                 getCurrency("2")
             }
         }
-
         getCurrency("1")
-        setCryptoCurrencyAdapter()
-
-
     }
 
 
@@ -103,6 +103,8 @@ class CryptoCurrencyFragment : BaseFragment() {
             Log.d("dsadada", "111111--");
             search = c.toString()
             flagSearch = true
+            page = 0
+            limit = 50
             callApiSearch(c);
         } else {
             flag = true;
@@ -118,33 +120,36 @@ class CryptoCurrencyFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "crypto", "", "", "", "", page.toString(), limit.toString()
+                "crypto",
+                "",
+                "",
+                "",
+                "",
+                page.toString(),
+                "50"
             )
         call.enqueue(object : Callback<MarketData> {
-
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
                 d.dismiss()
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-
                         if (flag.equals("1")) {
-                            cryptoList = response.body()!!.crypto
-                            cryptoListNew = response.body()!!.crypto
+                            cryptoList!!.addAll(response.body()!!.crypto)
+                            cryptoListNew!!.addAll(response.body()!!.crypto)
 //                            cryptoAdapter!!.notifyDataSetChanged()
-//                            rv_currencyList!!.adapter = cryptoAdapter
-                            setCryptoCurrencyAdapter()
+                            if (cryptoAdapter != null)
+                                cryptoAdapter!!.notifyDataSetChanged()
                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
                             }
                         } else if (flag.equals("2")) {
                             limit = limit + 50
-                            cryptoList = response.body()!!.crypto
-                            cryptoListNew = response.body()!!.crypto
-                            cryptoAdapter!!.notifyDataSetChanged()
+                            cryptoList!!.addAll(response.body()!!.crypto)
+                            cryptoListNew!!.addAll(response.body()!!.crypto)
+                            if (cryptoAdapter != null)
+                                cryptoAdapter!!.notifyDataSetChanged()
                         } else {
                             cryptoList = response.body()!!.crypto
                             for (i in 0 until cryptoList!!.size) {
@@ -156,10 +161,9 @@ class CryptoCurrencyFragment : BaseFragment() {
                                     }
                             }
                             cryptoList!!.clear()
-                            cryptoList = cryptoListFiltered
-                            cryptoAdapter!!.notifyDataSetChanged()
-                            rv_currencyList!!.adapter = cryptoAdapter
-                            setCryptoCurrencyAdapter(/*cryptoList!!*/)
+                            cryptoList!!.addAll(cryptoListFiltered!!)
+                            if (cryptoAdapter != null)
+                                cryptoAdapter!!.notifyDataSetChanged()
                         }
 
                     } else if (response.body()!!.status == "2") {
@@ -179,6 +183,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                 d.dismiss()
             }
         })
+
+        Log.d("hkhkhkhkhk---", "--" + limit);
     }
 
 
@@ -188,7 +194,13 @@ class CryptoCurrencyFragment : BaseFragment() {
             apiService.getMarketData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "crypto", "", "", "", "", page.toString(), limit.toString()
+                "crypto",
+                "",
+                "",
+                "",
+                "",
+                "0",
+                limit.toString()
             )
         call.enqueue(object : Callback<MarketData> {
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
@@ -199,7 +211,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                         if (flag.equals("1")) {
                             cryptoList!!.clear();
                             cryptoList!!.addAll(cryptoListNew!!);
-                            cryptoListNew = response.body()!!.crypto
+                            cryptoListNew!!.clear();
+                            cryptoListNew!!.addAll(response.body()!!.crypto)
                             if (flagAlphaSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
                                 for (obj in sortedList) {
@@ -208,51 +221,46 @@ class CryptoCurrencyFragment : BaseFragment() {
                                 }
                             } else if (flagPriceSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
-                                for (obj in sortedList) {
-                                    cryptoListNew!!.clear()
-                                    cryptoListNew!!.addAll(sortedList)
+
+                                cryptoListNew!!.clear()
+                                cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                                }
+
 
                             } else if (flagDaySort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
-                                for (obj in sortedList) {
-                                    cryptoListNew!!.clear()
-                                    cryptoListNew!!.addAll(sortedList)
+
+                                cryptoListNew!!.clear()
+                                cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                                }
+
                             } else if (flagHTLSort) {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
-                                for (obj in sortedList) {
-                                    cryptoListNew!!.clear()
-                                    cryptoListNew!!.addAll(sortedList)
+
+                                cryptoListNew!!.clear()
+                                cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                                }
+
 
                             } else if (flagDHTLSort) {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
-                                for (obj in sortedList) {
-                                    cryptoListNew!!.clear()
-                                    cryptoListNew!!.addAll(sortedList)
+
+                                cryptoListNew!!.clear()
+                                cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                                }
 
-                            } else {
-                                if (rv_currencyList != null)
-                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
                             }
-
                             if (rv_currencyList != null)
-                                rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            setCryptoCurrencyAdapter()
+                                cryptoAdapter!!.notifyDataSetChanged()
 
 
                         } else {
                             cryptoList!!.clear()
                             cryptoListNew!!.clear()
-                            cryptoListNew = response.body()!!.crypto
+                            cryptoListNew!!.addAll(response.body()!!.crypto)
                             cryptoList!!.addAll(cryptoListNew!!)
-                            setCryptoCurrencyAdapter()
+                            if (cryptoAdapter != null)
+                                cryptoAdapter!!.notifyDataSetChanged()
                         }
 
                     } else if (response.body()!!.status == "2") {
@@ -275,7 +283,7 @@ class CryptoCurrencyFragment : BaseFragment() {
     }
 
     @SuppressLint("WrongConstant")
-    fun setCryptoCurrencyAdapter(/*item: MutableList<MarketList.Crypto>*/) {
+    fun setCryptoCurrencyAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         if (rv_currencyList != null) {
@@ -310,9 +318,11 @@ class CryptoCurrencyFragment : BaseFragment() {
                         Log.d("dsadada", "sdada--4646464646464");
                         cryptoList!!.clear();
                         cryptoListNew!!.clear();
-                        cryptoList = response.body()!!.crypto;
-                        cryptoListNew = response.body()!!.crypto;
-                        setCryptoCurrencyAdapter()
+                        cryptoList!!.addAll(response.body()!!.crypto)
+                        cryptoListNew!!.addAll(response.body()!!.crypto)
+
+                        if (cryptoAdapter != null)
+                            cryptoAdapter!!.notifyDataSetChanged()
                         if (flagPagination)
                             limit = limit + 50
                     } else if (response.body()!!.status == "2") {
@@ -387,7 +397,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                cryptoAdapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("dayChange")) {
             setFlag(false, false, true, false, false)
@@ -397,7 +407,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                cryptoAdapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("price")) {
             setFlag(false, true, false, false, false)
@@ -407,7 +417,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                cryptoAdapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("HighToLow")) {
             setFlag(false, false, false, true, false)
@@ -417,7 +427,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                cryptoAdapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("DayHighToLow")) {
             setFlag(false, false, false, false, true)
@@ -427,7 +437,7 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                rv_currencyList!!.adapter!!.notifyDataSetChanged()
+                cryptoAdapter!!.notifyDataSetChanged()
             }
         } else if (type.equals("nodata")) {
             getCurrencyAgain("0")
@@ -449,7 +459,6 @@ class CryptoCurrencyFragment : BaseFragment() {
             rv_currencyList.adapter!!.notifyDataSetChanged()
 
         }
-
     }
 
     fun setFlag(fAl: Boolean, fP: Boolean, fD: Boolean, fHTL: Boolean, fDHTL: Boolean) {

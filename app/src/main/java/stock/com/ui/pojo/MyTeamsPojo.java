@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyTeamsPojo extends BasePojo {
-    @SerializedName("myteam")
+    @SerializedName("myteams")
     @Expose
-    public List<Myteam> myteams = null;
+    public List<Myteamss> myteams = null;
 
-    public class Myteam {
+    public class Myteamss {
 
         @SerializedName("totalchangePercentage")
         @Expose

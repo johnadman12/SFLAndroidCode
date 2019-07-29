@@ -25,7 +25,7 @@ import java.util.*
 
 class MyTeamAdapter(
     val mContext: Context,
-    val myteam: MutableList<MyTeamsPojo.Myteam>,
+    val myteam: MutableList<MyTeamsPojo.Myteamss>,
     val activityMyTeam: ActivityMyTeam,
     val contestId: Int
 ) :

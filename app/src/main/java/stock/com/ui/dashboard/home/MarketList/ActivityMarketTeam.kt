@@ -99,6 +99,10 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
             }
+            R.id.imgcross -> {
+                et_search_stock.setText("")
+                getMarketTeamlist("0")
+            }
             R.id.ll_watchlist -> {
                 startActivity(
                     Intent(this@ActivityMarketTeam, WatchListActivity::class.java)
@@ -225,6 +229,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         relFieldView.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
+        imgcross.setOnClickListener(this)
         if (intent != null) {
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
@@ -331,9 +336,12 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         srl_layout.setOnRefreshListener {
             flagRefresh = true
             if (!flagSearch) {
+                page = 0
+                limit = 50
                 callApiSearch(searchText)
             } else {
-                getMarketTeamlist()
+                page++
+                getMarketTeamlist("0")
             }
         }
 
@@ -342,8 +350,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         rv_Players!!.layoutManager = llm
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter = marketlistAdapter;
-
-        getMarketTeamlist()
+//        getMarketTeamlist("0")
     }
 
 
@@ -352,8 +359,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         mainHandler = Handler(Looper.getMainLooper())
         mainHandler.post(object : Runnable {
             override fun run() {
+                flagRefresh = false;
                 if (flagSearch) {
-                    getMarketTeamlist()
+                    getMarketTeamlist("1")
                 }
                 mainHandler.postDelayed(this, 3000)
             }
@@ -383,8 +391,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 "crypto",
                 c.toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "0",
-                "50"
+                page.toString(),
+                limit.toString()
             )
         call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
@@ -467,14 +475,21 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         })
     }
 
-    fun getMarketTeamlist() {
+    fun getMarketTeamlist(flag: String) {
+        var call: Call<MarketList>? = null;
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<MarketList> =
-            apiService.getMarketList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!, page.toString(), limit.toString()
+        if (flag.equals("0")) {
+            call = apiService.getMarketList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+                getFromPrefsString(StockConstant.USERID)!!, page.toString(), "50"
             )
-        call.enqueue(object : Callback<MarketList> {
+        } else if (flag.equals("1")) {
+            call = apiService.getMarketList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+                getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
+            )
+        }
+        call!!.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
@@ -491,9 +506,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         }
                         if (flagRefresh) {
                             limit = limit + 50
-                            list!!.clear()
                             list!!.addAll(response.body()!!.crypto!!)
-                            listOld!!.clear()
                             listOld!!.addAll(response.body()!!.crypto!!)
 
                         } else {
@@ -582,19 +595,16 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
-
-                        rv_Players!!.adapter = marketlistAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
                         setTeamText(marketSelectedItems!!.size.toString())
 //                        d.dismiss()
 
                     } else if (response.body()!!.status == "2") {
-//                        d.dismiss()
                         appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                    d.dismiss()
                 }
             }
 
@@ -603,7 +613,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                d.dismiss()
             }
         })
     }
@@ -659,7 +668,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         val call: Call<MarketList> =
             apiService.getMarketList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!, page.toString(), limit.toString()
+                getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
             )
         call.enqueue(object : Callback<MarketList> {
 
@@ -671,9 +680,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         setSectorFilter("")
                         list!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.crypto!!)
-
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
@@ -685,10 +694,10 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
-                        rv_Players!!.adapter = marketlistAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
 
-                        marketSelectedItems = marketRemovedItems;
+                        marketSelectedItems!!.addAll(marketRemovedItems!!)
                         setTeamText(marketSelectedItems!!.size.toString())
 
                     } else if (response.body()!!.status == "2") {
@@ -767,7 +776,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
                     setFlag(false, false, false, false, false, false)
-                    getMarketTeamlist()
+                    page = 0;
+                    limit = 50;
+                    getMarketTeamlist("0")
                 }
             }
         }
@@ -807,7 +818,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("resetfiltermarket").equals("0")) {
                     flagFilter = true
-                    getMarketTeamlist()
+                    getMarketTeamlist("0")
                 }
 
             }

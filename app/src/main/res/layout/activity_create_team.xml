@@ -138,6 +138,16 @@
             android:visibility="visible"
             android:padding="@dimen/_8sdp"
             android:id="@+id/ll_search">
+        <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                app:srcCompat="@mipmap/search"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:padding="@dimen/_3sdp"
+                android:tint="@color/white"/>
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -152,46 +162,47 @@
                 android:textColor="@color/white"
                 android:singleLine="true"
                 android:id="@+id/et_search_stock"/>
+
         <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                app:srcCompat="@mipmap/search"
+                android:id="@+id/imgcross"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_15sdp"
+                app:srcCompat="@mipmap/cross"
                 android:layout_gravity="center"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:padding="@dimen/_3sdp"
                 android:tint="@color/white"/>
     </LinearLayout>
-   <!-- <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_below="@+id/ll_search"
-            android:layout_above="@+id/parantbottom"
-            android:layout_height="match_parent">-->
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_below="@+id/ll_search"
-                      android:layout_above="@+id/parantbottom"
-                      android:orientation="vertical">
+    <!-- <androidx.core.widget.NestedScrollView
+             android:layout_width="match_parent"
+             android:layout_below="@+id/ll_search"
+             android:layout_above="@+id/parantbottom"
+             android:layout_height="match_parent">-->
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/ll_search"
+                  android:layout_above="@+id/parantbottom"
+                  android:orientation="vertical">
 
-            <android.support.library21.custom.SwipeRefreshLayoutBottom
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/srl_layout">
+        <android.support.library21.custom.SwipeRefreshLayoutBottom
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/srl_layout">
 
             <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_Players"
-                        android:layout_width="match_parent"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:clipToPadding="false"
-                        tools:listitem="@layout/row_team"
-                        android:layout_height="wrap_content">
+                    android:id="@+id/rv_Players"
+                    android:layout_width="match_parent"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/row_team"
+                    android:layout_height="wrap_content">
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </android.support.library21.custom.SwipeRefreshLayoutBottom>
+            </androidx.recyclerview.widget.RecyclerView>
+        </android.support.library21.custom.SwipeRefreshLayoutBottom>
 
-        </LinearLayout>
+    </LinearLayout>
     <!--</androidx.core.widget.NestedScrollView>-->
 
 

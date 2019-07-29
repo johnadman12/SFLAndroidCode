@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_marginTop="@dimen/_1sdp"
               android:layout_height="wrap_content">
@@ -84,7 +84,7 @@
 
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:textSize="@dimen/_13ssp"
+                              android:textSize="@dimen/_12ssp"
                               android:maxLines="2"
                               android:id="@+id/tv_change_percentage"
                               style="@style/TextStyleNormal"
@@ -92,7 +92,7 @@
 
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:textSize="@dimen/_13ssp"
+                              android:textSize="@dimen/_12ssp"
                               android:maxLines="2"
                               android:id="@+id/tv_change"
                               android:visibility="gone"
@@ -132,16 +132,23 @@
                             android:layout_weight="1"
                             android:background="@drawable/gray_empty_rect"
                             android:layout_gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textSize="@dimen/_10ssp"
+                                  android:gravity="top|center"
+                                  android:text="Ask :"
+                                  android:id="@+id/tv_ask"
+                                  style="@style/TextStyleSemiBold"
+                                  android:textColor="@color/black"/>
 
                         <TextView android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
                                   android:textSize="@dimen/_10ssp"
                                   android:id="@+id/ask"
                                   android:maxLines="2"
-                                  android:padding="@dimen/_2sdp"
+                                  android:padding="@dimen/_1sdp"
                                   android:gravity="top|center"
-                                  android:text="fhkhikhkknckncfnvfkvnfkvfkvk"
                                   style="@style/TextStyleSemiBold"
                                   android:textColor="@color/black"/>
                     </LinearLayout>
@@ -156,16 +163,23 @@
                             android:id="@+id/llchange"
                             android:background="@drawable/gray_empty_rect"
                             android:layout_gravity="center_vertical"
-                            android:orientation="vertical">
+                            android:orientation="horizontal">
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textSize="@dimen/_10ssp"
+                                  android:gravity="top|center"
+                                  android:text="Bid :"
+                                  android:id="@+id/tv_bid"
+                                  style="@style/TextStyleSemiBold"
+                                  android:textColor="@color/black"/>
 
                         <TextView android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
                                   android:textSize="@dimen/_10ssp"
                                   android:id="@+id/bid"
                                   android:maxLines="2"
-                                  android:padding="@dimen/_2sdp"
+                                  android:padding="@dimen/_1sdp"
                                   android:gravity="top|center"
-                                  android:text="kvfvnkvnfkjvfnvfjvnvjfv"
                                   style="@style/TextStyleSemiBold"
                                   android:textColor="@color/black"/>
                     </LinearLayout>

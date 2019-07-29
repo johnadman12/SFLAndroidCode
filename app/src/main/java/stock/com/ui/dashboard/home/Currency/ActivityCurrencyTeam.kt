@@ -14,8 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import io.socket.client.IO
+import io.socket.client.Socket
 import kotlinx.android.synthetic.main.activity_create_team.*
 import kotlinx.android.synthetic.main.include_back.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,6 +36,7 @@ import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.net.URISyntaxException
 import java.util.*
 
 class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
@@ -61,6 +65,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     var flagDayHTL: Boolean = false
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
+    private var socket: Socket? = null;
 
     private var list: ArrayList<stock.com.ui.pojo.CurrencyPojo.Currency>? = null;
     private var listOld: ArrayList<CurrencyPojo.Currency>? = null;
@@ -68,6 +73,11 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
+            }
+            R.id.imgcross -> {
+                callSearch("")
+                et_search_stock.setText("")
+                getCurrencyTeamlist()
             }
             R.id.llMyTeam -> {
                 startActivity(
@@ -191,6 +201,26 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         currencySelected = ArrayList();
         currencyRemoved = ArrayList();
         initView()
+        try {
+            val opts = IO.Options()
+            opts.forceNew = true
+            opts.reconnection = true
+            socket = IO.socket("https://www.dfxchange.com:4000", opts)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+        socket!!.on(Socket.EVENT_CONNECT) {
+        }.on("new_message") {
+        }.on(Socket.EVENT_DISCONNECT) {
+            socket!!.connect()
+        }
+
+        socket!!.connect()
+        socket!!.on("new_message") { args ->
+            val jsonArray = args[0] as JSONArray
+            Log.d("socket_data", "---" + jsonArray);
+            Thread(Task(currencyAdapter!!, jsonArray)).start()
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -204,6 +234,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         relFieldView.setOnClickListener(this)
         tvViewteam.isEnabled = false
         imgButtonWizard.setOnClickListener(this)
+        imgcross.setOnClickListener(this)
         if (intent != null) {
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
@@ -294,18 +325,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     Log.e("stocklist", currencySelected.toString())
                 }
             });
-        et_search_stock.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                callSearch(s.toString())
-            }
-        })
         srl_layout.setOnRefreshListener {
             //            flagRefresh = true
             getCurrencyTeamlist()
@@ -490,9 +510,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         if (flagRefresh)
                             limit = limit + 50
 
-                        list!!.clear()
-                        list = response.body()!!.currency
-                        listOld!!.clear()
+                        list!!.addAll(response.body()!!.currency!!)
                         listOld!!.addAll(list!!)
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
@@ -709,6 +727,68 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 
     fun getTeamText(): Int {
         return currencySelected!!.size
+
+    }
+
+    internal inner class Task(var adapter: CurrencyTeamAdapter, var jsonArray: JSONArray) : Runnable {
+        override fun run() {
+            try {
+                runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        //forexList!!.clear();
+                        listOld!!.clear();
+                        listOld!!.addAll(list!!);
+                        for (i in 0..jsonArray.length()) {
+                            var jsonObject = jsonArray.getJSONObject(i);
+                            var model = CurrencyPojo.Currency()
+                            try {
+                                model.currencyid = jsonObject!!.getString("currencyid").toInt();
+                                model.name = jsonObject!!.getString("name");
+                                model.latestVolume = jsonObject!!.getString("latestVolume");
+                                model.changeper = jsonObject!!.getString("changeper");
+                                model.daychange = jsonObject!!.getString("daychange");
+                                model.ask = jsonObject!!.getString("ask");
+                                model.firstflag = jsonObject!!.getString("firstflag");
+                                model.secondflag = jsonObject!!.getString("secondflag");
+                                model.symbol = jsonObject!!.getString("symbol");
+                                model.bid = jsonObject!!.getString("bid");
+
+                                // forexList!!.add(model)
+                                for (i in 0..list!!.size) {
+                                    if (model.currencyid.equals(list!!.get(i).currencyid)) {
+                                        Log.d("currency_id", "---" + model.name);
+                                        model.firstflag = list!!.get(i).firstflag;
+                                        model.secondflag = list!!.get(i).secondflag;
+                                        list!!.set(i, model!!)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                            }
+                        }
+                    } catch (ee: java.lang.Exception) {
+                    }
+                    if (adapter != null)
+                        adapter!!.notifyDataSetChanged();
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 }

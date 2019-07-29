@@ -244,9 +244,10 @@ class StocksFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
-                            stockListNew = response.body()!!.stock
+                            stockListNew!! .addAll(response.body()!!.stock)
                             Handler().postDelayed(Runnable {
-                                setStockAdapter()
+                                if (stockListNew!!.size > 0)
+                                    setStockAdapter()
                             }, 100)
 
                         }
@@ -274,7 +275,9 @@ class StocksFragment : BaseFragment() {
             llm!!.orientation = LinearLayoutManager.VERTICAL
             rv_stockList!!.layoutManager = llm
             rv_stockList.visibility = View.VISIBLE
-            stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
+            if (stockAdapter != null)
+
+                stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
             rv_stockList!!.adapter = stockAdapter;
         } else
             return

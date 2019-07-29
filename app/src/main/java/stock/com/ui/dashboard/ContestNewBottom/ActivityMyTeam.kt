@@ -31,6 +31,8 @@ class ActivityMyTeam : BaseActivity() {
     var jsonparams: JsonObject = JsonObject()
     var flagMarket: Boolean = false
     var flagRefresh: Boolean = false
+    var myTeamAdapter: MyTeamAdapter? = null
+    var myTeams: ArrayList<MyTeamsPojo.Myteamss>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
@@ -43,7 +45,6 @@ class ActivityMyTeam : BaseActivity() {
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         else
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
-
 //        initView()
     }
 
@@ -53,7 +54,9 @@ class ActivityMyTeam : BaseActivity() {
     }
 
     private fun initView() {
+        myTeams = ArrayList()
         jsonparams = JsonObject()
+        setMyAdapter()
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
@@ -90,9 +93,10 @@ class ActivityMyTeam : BaseActivity() {
                 sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-                        setMyAdapter(response.body()!!.myteams)
+                        myTeams!!.clear()
+                        myTeams!!.addAll(response.body()!!.myteams)
+                        if (myTeamAdapter != null)
+                            myTeamAdapter!!.notifyDataSetChanged()
                         if (flagRefresh)
                             limit = limit + 50
                     } else if (response.body()!!.status == "2") {
@@ -131,9 +135,10 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-//                        displayToast(list!!.size.toString())
-                        setMyAdapter(response.body()!!.myteams)
-                        //  setStockTeamAdapter(response.body()!!.stock!!)
+                        myTeams!!.clear()
+                        myTeams!!.addAll(response.body()!!.myteams)
+                        if (myTeamAdapter != null)
+                            myTeamAdapter!!.notifyDataSetChanged()
 
                     } else if (response.body()!!.status == "2") {
                         appLogout()
@@ -154,12 +159,13 @@ class ActivityMyTeam : BaseActivity() {
     }
 
     @SuppressLint("WrongConstant")
-    fun setMyAdapter(myteam: MutableList<MyTeamsPojo.Myteam>/*, marketName: String*/) {
+    fun setMyAdapter() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rvMYTeam!!.layoutManager = llm
         rvMYTeam?.itemAnimator = DefaultItemAnimator()
-        rvMYTeam!!.adapter = MyTeamAdapter(this, myteam, this@ActivityMyTeam, contestId)
+        myTeamAdapter = MyTeamAdapter(this, myTeams!!, this@ActivityMyTeam, contestId)
+        rvMYTeam!!.adapter = myTeamAdapter
     }
 
 
@@ -184,10 +190,11 @@ class ActivityMyTeam : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                            getTeamlist()
+                            myTeamAdapter!!.notifyDataSetChanged()
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
-                        getTeamlist()
-                        rvMYTeam!!.adapter!!.notifyDataSetChanged()
+
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
@@ -230,10 +237,11 @@ class ActivityMyTeam : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                            getMarketTeamlist()
+                            myTeamAdapter!!.notifyDataSetChanged()
                         }, 100)
-                        AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
-                        getMarketTeamlist()
-                        rvMYTeam!!.adapter!!.notifyDataSetChanged()
+
                     } else if (response.body()!!.status == "0") {
                         AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {

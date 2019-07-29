@@ -34,7 +34,7 @@ class CurrencyAdapter(
     val cryptoListNew: ArrayList<MarketList.Crypto>
 
 ) :
-    RecyclerView.Adapter<CurrencyAdapter.FeatureListHolder>(), Filterable {
+    RecyclerView.Adapter<CurrencyAdapter.FeatureListHolder>() {
     var checkedHolder: BooleanArray? = null;
     private var search: List<MarketList.Crypto>? = null
 
@@ -314,37 +314,7 @@ class CurrencyAdapter(
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
-    override
-    fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
-                val charString = charSequence.toString()
-                if (charString.isEmpty()) {
-                    search = cryptoListNew
-                } else {
-                    val filteredList = ArrayList<MarketList.Crypto>()
-                    for (row in cryptoListNew) {
-                        if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row)
-                        } else if (row.name!!.toLowerCase().contains(charString.toLowerCase()))
-                            filteredList.add(row)
-                    }
-                    search = filteredList
-                }
-                val filterResults = Filter.FilterResults()
-                filterResults.values = search
-                return filterResults
-            }
-
-            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
-                search = filterResults.values as ArrayList<MarketList.Crypto>
-                notifyDataSetChanged()
-            }
-        }
-    }
-
-
-    fun View.blink(
+     fun View.blink(
         times: Int = Animation.INFINITE,
         duration: Long = 50L,
         offset: Long = 20L,

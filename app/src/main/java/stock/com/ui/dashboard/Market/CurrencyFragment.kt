@@ -70,7 +70,6 @@ class CurrencyFragment : BaseFragment() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         try {

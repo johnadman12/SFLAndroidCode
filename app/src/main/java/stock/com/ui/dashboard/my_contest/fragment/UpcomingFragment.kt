@@ -30,6 +30,7 @@ class UpcomingFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contest = ArrayList()
+        setAdapter(contest!!)
         getContests()
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
@@ -42,8 +43,6 @@ class UpcomingFragment : BaseFragment() {
                 getContests()
             }
         })
-
-        setAdapter(contest!!)
     }
 
     fun getContests() {
@@ -64,8 +63,10 @@ class UpcomingFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (response.body()!!.contest.size > 0) {
-                            contest = response.body()!!.contest
-                            recycler_finished!!.adapter!!.notifyDataSetChanged()
+                            contest!!.clear()
+                            contest!!.addAll(response.body()!!.contest)
+                            if (recycler_finished!!.adapter != null)
+                                recycler_finished!!.adapter!!.notifyDataSetChanged()
                         }
 
                     } else if (response.body()!!.status == "2") {

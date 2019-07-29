@@ -194,7 +194,8 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setStockNameAdapter(response.body()!!.exchange)
+                        if (response.body()!!.exchange != null)
+                            setStockNameAdapter(response.body()!!.exchange)
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()

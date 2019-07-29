@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.Filter
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -38,9 +39,9 @@ class CurrencyTeamAdapter(
     private var searchList: List<CurrencyPojo.Currency>? = null
 
 
-      private fun createCheckedHolder() {
-          checkedHolder = BooleanArray(mContest.size)
-      }
+    private fun createCheckedHolder() {
+        checkedHolder = BooleanArray(mContest.size)
+    }
 
     init {
         this.searchList = mContestOld;
@@ -76,7 +77,232 @@ class CurrencyTeamAdapter(
                 )
             }
         }
+        try {
+            if (searchList!!.get(position).ask.equals(mContest!!.get(position).ask)) {
+                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_green_fill);
+                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_empty_rect);
+                holder.itemView.ask.setText(mContest.get(position).ask)
+            } else if (searchList!!.get(position).ask.toDouble() < mContest.get(position).ask.toDouble()) {
 
+                val newtimer = object : CountDownTimer(50, 50) {
+                    override fun onTick(l: Long) {
+                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.llPrice.setBackgroundDrawable(
+                            ContextCompat.getDrawable(
+                                mContext,
+                                R.drawable.gray_green_fill
+                            )
+                        )
+                        holder.itemView.llPrice.blink(3)
+                        holder.itemView.llPrice.clearAnimation()
+                    }
+
+                    override fun onFinish() {
+                        try {
+                            if (mContest!!.get(position).ask.toDouble() < 1)
+                                holder.itemView.ask.setText(
+                                    String.format(
+                                        "%.4f",
+                                        mContest!!.get(position).ask.toDouble()
+                                    )
+                                )
+                            else
+                                holder.itemView.ask.setText(
+                                    String.format(
+                                        "%.2f",
+                                        mContest!!.get(position).ask.toDouble()
+                                    )
+                                )
+                            holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_green_fill
+                                )
+                            )
+                        } catch (e: Exception) {
+
+                        }
+                    }
+                }
+                newtimer.start()
+                holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+                Log.d("gugugugugu", "---464646---");
+            } else if (searchList!!.get(position).ask.toDouble() > mContest!!.get(position).ask.toDouble()) {
+                Log.d("sddasdasdad", "-------3333333--")
+                val newtimer = object : CountDownTimer(50, 50) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.llPrice.setBackgroundDrawable(
+                            ContextCompat.getDrawable(
+                                mContext,
+                                R.drawable.gray_red_fill
+                            )
+                        )
+//                            holder.itemView.llPrice.animation = anim
+                        holder.itemView.llPrice.blink(3)
+                        holder.itemView.llPrice.clearAnimation()
+                    }
+
+                    override fun onFinish() {
+                        try {
+                            if (searchList!!.get(position).ask.toDouble() < 1)
+                                holder.itemView.ask.setText(
+                                    String.format(
+                                        "%.4f",
+                                        mContest!!.get(position).ask.toDouble()
+                                    )
+                                )
+                            else
+                                holder.itemView.ask.setText(
+                                    String.format(
+                                        "%.2f",
+                                        mContest!!.get(position).ask.toDouble()
+                                    )
+                                )
+                            holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.llPrice.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_red_fill
+                                )
+                            )
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                newtimer.start()
+                holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+            } else {
+                Log.e("sddasdasdad", "-------444444444--")
+                if (searchList!!.get(position).ask.toDouble() < 1) {
+                    holder.itemView.ask.setText(String.format("%.4f", mContest!!.get(position).ask.toDouble()))
+                    Log.e("sddasdasdad", "-------55555555--")
+                } else {
+                    Log.e("sddasdasdad", "-------66666666--")
+                    holder.itemView.ask.setText(String.format("%.2f", mContest!!.get(position).ask.toDouble()))
+                }
+            }
+        } catch (ee: Exception) {
+        }
+
+
+        try {
+            if (searchList!!.get(position).bid.equals(mContest!!.get(position).bid)) {
+                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_green_fill);
+                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_empty_rect);
+                holder.itemView.bid.setText(mContest.get(position).bid)
+            } else if (searchList!!.get(position).bid.toDouble() < mContest.get(position).bid.toDouble()) {
+
+                val newtimer = object : CountDownTimer(50, 50) {
+                    override fun onTick(l: Long) {
+                        holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.tv_bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.llchange.setBackgroundDrawable(
+                            ContextCompat.getDrawable(
+                                mContext,
+                                R.drawable.gray_green_fill
+                            )
+                        )
+                        holder.itemView.llchange.blink(3)
+                        holder.itemView.llchange.clearAnimation()
+                    }
+
+                    override fun onFinish() {
+                        try {
+                            if (mContest!!.get(position).bid.toDouble() < 1)
+                                holder.itemView.bid.setText(
+                                    String.format(
+                                        "%.4f",
+                                        mContest!!.get(position).bid.toDouble()
+                                    )
+                                )
+                            else
+                                holder.itemView.bid.setText(
+                                    String.format(
+                                        "%.2f",
+                                        mContest!!.get(position).bid.toDouble()
+                                    )
+                                )
+                            holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.tv_bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.llchange.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_green_fill
+                                )
+                            )
+                        } catch (e: Exception) {
+
+                        }
+                    }
+                }
+                newtimer.start()
+                holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+                Log.d("gugugugugu", "---464646---");
+            } else if (searchList!!.get(position).bid.toDouble() > mContest!!.get(position).bid.toDouble()) {
+                Log.d("sddasdasdad", "-------3333333--")
+                val newtimer = object : CountDownTimer(50, 50) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                        holder.itemView.llchange.setBackgroundDrawable(
+                            ContextCompat.getDrawable(
+                                mContext,
+                                R.drawable.gray_red_fill
+                            )
+                        )
+//                            holder.itemView.llPrice.animation = anim
+                        holder.itemView.llchange.blink(3)
+                        holder.itemView.llchange.clearAnimation()
+                    }
+
+                    override fun onFinish() {
+                        try {
+                            if (searchList!!.get(position).bid.toDouble() < 1)
+                                holder.itemView.bid.setText(
+                                    String.format(
+                                        "%.4f",
+                                        mContest!!.get(position).bid.toDouble()
+                                    )
+                                )
+                            else
+                                holder.itemView.bid.setText(
+                                    String.format(
+                                        "%.2f",
+                                        mContest!!.get(position).bid.toDouble()
+                                    )
+                                )
+                            holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.tv_bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                            holder.itemView.llchange.setBackgroundDrawable(
+                                ContextCompat.getDrawable(
+                                    mContext,
+                                    R.drawable.gray_red_fill
+                                )
+                            )
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                newtimer.start()
+                holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+            } else {
+                Log.e("sddasdasdad", "-------444444444--")
+                if (searchList!!.get(position).bid.toDouble() < 1) {
+                    holder.itemView.bid.setText(String.format("%.4f", mContest!!.get(position).bid.toDouble()))
+                    Log.e("sddasdasdad", "-------55555555--")
+                } else {
+                    Log.e("sddasdasdad", "-------66666666--")
+                    holder.itemView.bid.setText(String.format("%.2f", mContest!!.get(position).bid.toDouble()))
+                }
+            }
+        } catch (ee: Exception) {
+        }
         holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
         holder.itemView.bid.setText(searchList!!.get(position).bid)
         holder.itemView.ask.setText(searchList!!.get(position).ask)
@@ -140,5 +366,17 @@ class CurrencyTeamAdapter(
         }
     }
 
+    fun View.blink(
+        times: Int = Animation.INFINITE, duration:
+        Long = 10L, offset: Long = 5L, minAlpha: Float = 0.0f,
+        maxAlpha: Float = 1.0f, repeatMode: Int = Animation.REVERSE
+    ) {
+        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
+            it.duration = duration
+            it.startOffset = offset
+            it.repeatMode = repeatMode
+//            it.repeatCount = times
+        })
+    }
 
 }

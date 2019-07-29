@@ -131,7 +131,7 @@ class UpcomingAdapter(
             } else {
                 var intent = Intent(mContext, UpcomingContestDetailActivity::class.java);
                 intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid)
-                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
+                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).mid)
                 ActivityCompat.startActivityForResult(
                     mContext as Activity,
                     intent,

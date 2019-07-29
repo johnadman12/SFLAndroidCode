@@ -39,6 +39,14 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/old_pass"
                             android:textColor="@color/white"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_old_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                             app:hintEnabled="false"
+                            app:passwordToggleTint="@color/light_white"
+                            app:passwordToggleEnabled="true">
+
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -52,6 +60,9 @@
                             android:singleLine="true"
                             android:imeOptions="actionNext"
                             android:id="@+id/et_old_pass"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -79,6 +90,13 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/new_pass"
                             android:textColor="@color/white"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_new_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:passwordToggleTint="@color/light_white"
+                            app:passwordToggleEnabled="true">
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -92,6 +110,7 @@
                             android:singleLine="true"
                             android:id="@+id/et_new_pass"
                             android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -119,6 +138,13 @@
                             android:textSize="@dimen/_12sdp"
                             android:text="@string/conf_password"
                             android:textColor="@color/white"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/til_conf_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            app:passwordToggleTint="@color/light_white"
+                            app:passwordToggleEnabled="true">
                     <androidx.appcompat.widget.AppCompatEditText
                             style="@style/EditTextStyle"
                             android:layout_width="match_parent"
@@ -132,6 +158,7 @@
                             android:id="@+id/et_conf_pass"
                             android:singleLine="true"
                             android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
