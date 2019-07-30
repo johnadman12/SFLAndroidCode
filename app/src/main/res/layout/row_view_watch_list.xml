@@ -97,12 +97,50 @@
                             android:layout_gravity="center"
                             android:layout_marginRight="@dimen/_3sdp"/>
 
+                    <LinearLayout android:layout_width="@dimen/_40sdp"
+                                  android:layout_height="match_parent"
+                                  android:orientation="vertical">
+                        <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/imageView"
+                                android:padding="@dimen/_3sdp"
+                                android:visibility="gone"
+                                android:layout_gravity="center"/>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="top"
+                                android:visibility="visible"
+                                android:id="@+id/rl_double_flag"
+                                android:padding="@dimen/_3sdp">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
-                            android:id="@+id/imageView"
-                            android:layout_gravity="center"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:scaleType="fitXY"
+                                    android:id="@+id/img1"
+                                    android:layout_centerVertical="true"
+                                    android:src="@mipmap/cryptoim"/>
+                            <ImageView
+                                    android:layout_width="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_19sdp"
+                                    android:id="@+id/img2"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:scaleType="fitXY"
+                                    android:src="@mipmap/stocks"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <!-- <androidx.appcompat.widget.AppCompatImageView
+                             android:layout_width="@dimen/_40sdp"
+                             android:layout_height="@dimen/_40sdp"
+                             android:id="@+id/imageView"
+                             android:layout_gravity="center"/>-->
+
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -130,6 +168,7 @@
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:id="@+id/tv_sector"/>
                     </LinearLayout>
+
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/img_graph"
                             android:layout_width="@dimen/_20sdp"

@@ -138,7 +138,6 @@ class ForgotPasswordActivity : BaseActivity() {
                         )
                         finish()
                     }
-                    displayToast(response.body()!!.message, "sucess")
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
                     d.dismiss()

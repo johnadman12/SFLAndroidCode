@@ -36,7 +36,6 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         list = ArrayList()
         if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
-            displayToast(list!!.size.toString(), "error")
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 

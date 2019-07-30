@@ -48,6 +48,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
     private var dialog: Dialog? = null;
 
     private var countryId: String = ""
+    private var countryCode: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_contact_info, container, false)
@@ -123,6 +124,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
                             // intent.putExtra("otp", response.body()!!.otp);
                             intent.putExtra("isReset", "profile");
                             intent.putExtra("phoneNumber", et_number.text.toString().trim());
+                            intent.putExtra(StockConstant.USERCOUNTRYCODE, countryCode);
                             context!!.startActivity(intent)
                             activity!!.finish();
                         } else {
@@ -184,6 +186,7 @@ class ContactInfoFragment : BaseFragment(), View.OnClickListener {
         et_number.setText(user.phone_number);
         et_address.setText(user.address);
         // et_country.setText(user.country_id);
+        countryCode= countryCodeHolder.selectedCountryCode
         et_zip_code.setText(user.zipcode);
 
         countryId = user.country_id;

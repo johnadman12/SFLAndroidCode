@@ -20,11 +20,13 @@ import stock.com.R
 import stock.com.ui.pojo.MarketList
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.app.ActivityCompat.startActivityForResult
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.utils.StockConstant
 import java.text.DecimalFormat
 import kotlin.collections.ArrayList
+import android.view.animation.AnimationUtils.loadAnimation
 
 
 class CurrencyAdapter(
@@ -55,13 +57,11 @@ class CurrencyAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-
-        Log.d("gugugugugu", "---5465466")
-        val anim = AlphaAnimation(0.1f, 1.0f)
-        anim.duration = 50 //You can manage the blinking time with this parameter
-        anim.startOffset = 20
-//        anim.repeatCount = Animation.REVERSE
-
+     val animBlink: Animation
+        animBlink = AnimationUtils.loadAnimation(
+            mContext,
+            R.anim.blink
+        )
         holder.itemView.name.setText(cryptoListNew.get(position).symbol)
         holder.itemView.tv_company.setText(cryptoListNew.get(position).name)
         try {
@@ -69,7 +69,7 @@ class CurrencyAdapter(
                 if (search!!.get(position).latestPrice.toDouble() < 1)
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
-                            "%.4f",
+                            "%.6f",
                             search!!.get(position).latestPrice.toDouble()
                         )
                     )
@@ -87,180 +87,152 @@ class CurrencyAdapter(
         var priceText = ""
         try {
             priceText = marketData.get(position).latestPrice;
+            if (marketData.size == cryptoListNew.size) {
+                if (!TextUtils.isEmpty(priceText)) {
+                    if (priceText.equals("$" + search!!.get(position).latestPrice)) {
+                        holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                    } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
+                        holder.itemView.llPrice.startAnimation(animBlink);
+                        holder.itemView.tv_latest_price.startAnimation(animBlink);
+                        animBlink.setAnimationListener(object : Animation.AnimationListener {
+                            override fun onAnimationRepeat(p0: Animation?) {
+                            }
+
+                            override fun onAnimationEnd(p0: Animation?) {
+                                holder.itemView.tv_latest_price.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.black
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_empty_rect
+                                    )
+                                )
+                            }
+
+                            override fun onAnimationStart(p0: Animation?) {
+                                try {
+                                    if (search!!.get(position).latestPrice.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f", search!!.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                search!!.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.white
+                                        )
+                                    )
+                                    holder.itemView.llPrice.setBackgroundDrawable(
+                                        ContextCompat.getDrawable(
+                                            mContext,
+                                            R.drawable.gray_green_fill
+                                        )
+                                    )
+                                } catch (e: Exception) {
+
+                                }
+                            }
+                        })
+                    } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
+                        holder.itemView.llPrice.startAnimation(animBlink);
+                        holder.itemView.tv_latest_price.startAnimation(animBlink);
+                        animBlink.setAnimationListener(object : Animation.AnimationListener {
+                            override fun onAnimationRepeat(p0: Animation?) {
+
+                            }
+
+                            override fun onAnimationEnd(p0: Animation?) {
+                                holder.itemView.tv_latest_price.setTextColor(
+                                    ContextCompat.getColor(
+                                        mContext,
+                                        R.color.black
+                                    )
+                                )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_empty_rect
+                                    )
+                                )
+                            }
+
+                            override fun onAnimationStart(p0: Animation?) {
+                                try {
+                                    if (search!!.get(position).latestPrice.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f", search!!.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                search!!.get(position).latestPrice.toDouble()
+                                            )
+                                        )
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.white
+                                        )
+                                    )
+                                    holder.itemView.llPrice.setBackgroundDrawable(
+                                        ContextCompat.getDrawable(
+                                            mContext,
+                                            R.drawable.gray_red_fill
+                                        )
+                                    )
+                                } catch (e: Exception) {
+
+                                }
+                            }
+                        })
+
+                    }
+
+                } else {
+                    Log.e("sddasdasdad", "-------444444444--")
+                    if (search!!.get(position).latestPrice.toDouble() < 1) {
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.6f",
+                                search!!.get(position).latestPrice.toDouble()
+                            )
+                        )
+                        Log.e("sddasdasdad", "-------55555555--")
+                    } else {
+                        Log.e("sddasdasdad", "-------66666666--")
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.2f",
+                                search!!.get(position).latestPrice.toDouble()
+                            )
+                        )
+                    }
+                }
+            }
         } catch (e: java.lang.Exception) {
         }
 
 
-        if (marketData.size == cryptoListNew.size) {
-            if (!TextUtils.isEmpty(priceText)) {
-                if (priceText.equals("$" + search!!.get(position).latestPrice)) {
-                    holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
-
-                    val newtimer = object : CountDownTimer(1000, 500) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            Log.e("timeerror", millisUntilFinished.toString())
-                            holder.itemView.tv_latest_price.setTextColor(
-                                ContextCompat.getColor(mContext, R.color.white)
-                            )
-                            holder.itemView.llPrice.setBackgroundDrawable(
-                                ContextCompat.getDrawable(
-                                    mContext,
-                                    R.drawable.gray_green_fill
-                                )
-                            )
-                            holder.itemView.llPrice.blink(3)
-                            holder.itemView.llPrice.clearAnimation()
-//                            holder.itemView.llPrice.animation = anim
-                        }
-
-                        override fun onFinish() {
-                            try {
-                                if (search!!.get(position).latestPrice.toDouble() < 1)
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.4f", search!!.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                else
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.2f",
-                                            search!!.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                /*  search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                             search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
-                                holder.itemView.tv_latest_price.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )
-                                /* holder.itemView.tv_change_percentage.setTextColor(
-                                     ContextCompat.getColor(
-                                         mContext,
-                                         R.color.white
-                                     )
-                                 )*/
-                                holder.itemView.llPrice.setBackgroundDrawable(
-                                    ContextCompat.getDrawable(
-                                        mContext,
-                                        R.drawable.gray_green_fill
-                                    )
-                                )
-                            } catch (e: Exception) {
-
-                            }
-
-                        }
-                    }
-                    newtimer.start()
-                    holder.itemView.tv_latest_price.setTextColor(
-                        ContextCompat.getColor(
-                            mContext,
-                            R.color.black
-                        )
-                    )
 
 
-                } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
-                    Log.d("sddasdasdad", "-------3333333--")
-                    val newtimer = object : CountDownTimer(500, 500) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            holder.itemView.tv_latest_price.setTextColor(
-                                ContextCompat.getColor(
-                                    mContext,
-                                    R.color.white
-                                )
-                            )
-                            holder.itemView.llPrice.setBackgroundDrawable(
-                                ContextCompat.getDrawable(
-                                    mContext,
-                                    R.drawable.gray_red_fill
-                                )
-                            )
-//                            holder.itemView.llPrice.animation = anim
-                            holder.itemView.llPrice.blink(3)
-                            holder.itemView.llPrice.clearAnimation()
-                        }
-
-                        override fun onFinish() {
-
-                            try {
-                                if (search!!.get(position).latestPrice.toDouble() < 1)
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.4f",
-                                            search!!.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                else
-                                    holder.itemView.tv_latest_price.setText(
-                                        "$" + String.format(
-                                            "%.2f",
-                                            search!!.get(position).latestPrice.toDouble()
-                                        )
-                                    )
-                                /* search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
-                              search!!.get(position).changeper = cryptoListNew.get(position).changeper*/
-                                holder.itemView.tv_latest_price.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.white
-                                    )
-                                )
-                                /*  holder.itemView.tv_change_percentage.setTextColor(
-                                      ContextCompat.getColor(
-                                          mContext,
-                                          R.color.white
-                                      )
-                                  )*/
-                                holder.itemView.llPrice.setBackgroundDrawable(
-                                    ContextCompat.getDrawable(
-                                        mContext,
-                                        R.drawable.gray_red_fill
-                                    )
-                                )
-                            } catch (e: Exception) {
-                            }
-
-                        }
-                    }
-                    newtimer.start()
-                    holder.itemView.tv_latest_price.setTextColor(
-                        ContextCompat.getColor(
-                            mContext,
-                            R.color.black
-                        )
-                    )
-                }
-            } else {
-                Log.e("sddasdasdad", "-------444444444--")
-                if (search!!.get(position).latestPrice.toDouble() < 1) {
-                    holder.itemView.tv_latest_price.setText(
-                        "$" + String.format(
-                            "%.4f",
-                            search!!.get(position).latestPrice.toDouble()
-                        )
-                    )
-                    Log.e("sddasdasdad", "-------55555555--")
-                } else {
-                    Log.e("sddasdasdad", "-------66666666--")
-                    holder.itemView.tv_latest_price.setText(
-                        "$" + String.format(
-                            "%.2f",
-                            search!!.get(position).latestPrice.toDouble()
-                        )
-                    )
-                }
-            }
-        }
 
 
         Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
-
-
 
         if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
             var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
@@ -314,19 +286,4 @@ class CurrencyAdapter(
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
-     fun View.blink(
-        times: Int = Animation.INFINITE,
-        duration: Long = 50L,
-        offset: Long = 20L,
-        minAlpha: Float = 0.0f,
-        maxAlpha: Float = 1.0f,
-        repeatMode: Int = Animation.REVERSE
-    ) {
-        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
-            it.duration = duration
-            it.startOffset = offset
-            it.repeatMode = repeatMode
-            it.repeatCount = times
-        })
-    }
 }

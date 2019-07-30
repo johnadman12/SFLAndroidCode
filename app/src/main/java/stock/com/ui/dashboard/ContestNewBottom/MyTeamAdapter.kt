@@ -13,6 +13,7 @@ import stock.com.R
 import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.Team.ActivityCreateTeam
+import stock.com.ui.dashboard.home.Currency.ActivityCurrencyTeam
 import stock.com.ui.dashboard.home.Currency.CurrencyPreviewTeamActivity
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
@@ -42,9 +43,6 @@ class MyTeamAdapter(
 
         if (myteam.get(position).stock.size == 0) {
             holder.itemView.stockName.setText(myteam.get(position).marketname)
-            /* if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
-                 Glide.with(mContext).load(AppDelegate.EXCHANGE_URL + myteam.get(position).exchangeimage.trim())
-                     .into(holder.itemView.ivStock)*/
         } else {
             holder.itemView.stockName.setText(myteam.get(position).exchangename)
             if (!TextUtils.isEmpty(myteam.get(position).exchangeimage))
@@ -53,7 +51,7 @@ class MyTeamAdapter(
         }
 
         holder.itemView.txt_team.setOnClickListener {
-            if (myteam.get(position).stock.size == 0) {
+            if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityMarketTeam::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
@@ -62,7 +60,16 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
                 )
-            } else {
+            } else if (myteam.get(position).currencies.size > 0) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityCurrencyTeam::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                        .putExtra("isCloning", 2)
+                )
+            } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
@@ -75,14 +82,16 @@ class MyTeamAdapter(
         }
 
         holder.itemView.relClone.setOnClickListener {
-            if (myteam.get(position).stock.size == 0)
+            if (myteam.get(position).crypto.size > 0)
                 activityMyTeam.makeCloneMarket(myteam.get(position).teamId, myteam.get(position).contestId)
-            else
+            else if (myteam.get(position).currencies.size > 0) {
+                activityMyTeam.makeCloneMarket(myteam.get(position).teamId, myteam.get(position).contestId)
+            } else
                 activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
 
         }
         holder.itemView.setOnClickListener {
-            if (myteam.get(position).stock.size == 0) {
+            if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityMarketTeam::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
@@ -91,7 +100,16 @@ class MyTeamAdapter(
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
-            } else {
+            } else if (myteam.get(position).currencies.size > 0) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityCurrencyTeam::class.java)
+                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.CONTESTID, contestId)
+                        .putExtra("isCloning", 1)
+                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                )
+            } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
@@ -119,7 +137,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
-            } else {
+            } else if (myteam.get(position).currencies.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)

@@ -28,12 +28,11 @@ import java.net.URISyntaxException
 
 
 class CurrencyFragment : BaseFragment() {
-    var page: Int = 0
-    var limit: Int = 50
     var forexList: ArrayList<CurrencyPojo.Currency>? = null
     var forexOldList: ArrayList<CurrencyPojo.Currency>? = null
     var forexAdapter: ForexAdapter? = null
-
+    var page: Int = 0
+    var limit: Int = 50
 
     private var socket: Socket? = null;
 
@@ -87,18 +86,13 @@ class CurrencyFragment : BaseFragment() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<CurrencyPojo> =
-            apiService.getCurrencyData(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),
-                "currency", "0", "500"
-            )
+        val call: Call<CurrencyPojo> = apiService.getCurrencyData(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), getFromPrefsString(StockConstant.USERID).toString(), "currency", page.toString(), "50")
         call.enqueue(object : Callback<CurrencyPojo> {
-
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
-                d.dismiss()
+                d.dismiss();
+                srl_layout.isRefreshing=false;
                 if (srl_layout != null)
-                    srl_layout.isRefreshing = false
+                    srl_layout.isRefreshing = false;
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         forexList!!.addAll(response.body()!!.currency!!);
@@ -106,21 +100,21 @@ class CurrencyFragment : BaseFragment() {
                         // setCurrencyAdapter()
                         if (forexAdapter != null)
                             forexAdapter!!.notifyDataSetChanged();
+                        page++;
                     } else if (response.body()!!.status == "2") {
-                        appLogout()
+                        appLogout();
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
-
             override fun onFailure(call: Call<CurrencyPojo>, t: Throwable) {
                 if (srl_layout != null)
-                    srl_layout.isRefreshing = false
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+                    srl_layout.isRefreshing = false;
+                println(t.toString());
+                displayToast(resources.getString(R.string.something_went_wrong), "error");
+                d.dismiss();
             }
         })
     }

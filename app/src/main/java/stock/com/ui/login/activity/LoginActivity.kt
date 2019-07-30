@@ -136,6 +136,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
 
                     } else if (response.body()!!.status == "0") {
                         displayToast(response.body()!!.message, "warning")
+                        et_pass.setText("")
 
                     }
 
@@ -182,10 +183,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                             Intent(this@LoginActivity, DashBoardActivity::class.java)
                         )
                         finish();
-                    } /*else if (response.body()!!.status == "0") {
-                        startActivity(Intent(this@PasswordActivity, OTPActivity::class.java))
-                        finish()
-                    }*/
+                    } else if (response.body()!!.status == "0") {
+                        displayToast(response.body()!!.message, "warning")
+                        et_pass.setText("")
+
+                    }
                     else
                         displayToast(response.body()!!.message, "warning")
                 } else {
@@ -229,7 +231,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         checkRemebered.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 pass_remembered = 1
-            }else{
+            } else {
                 pass_remembered = 0
             }
         }

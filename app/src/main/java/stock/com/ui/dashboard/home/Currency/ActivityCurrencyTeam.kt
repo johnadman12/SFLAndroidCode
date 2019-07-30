@@ -29,6 +29,7 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.ActivitySortTeam
+import stock.com.ui.dashboard.home.ActivityMarketFilter
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.CurrencyPojo
 import stock.com.ui.pojo.MarketList
@@ -78,8 +79,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 callSearch("")
                 et_search_stock.setText("")
                 page = 0
-                limit = 50
-                getCurrencyTeamlist()
+                getCurrencyTeamlist("1");
             }
             R.id.llMyTeam -> {
                 startActivity(
@@ -92,7 +92,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             contestId
                         ).putExtra(
                             "flagMarket",
-                            true
+                            "currency"
                         )
                 )
             }
@@ -187,7 +187,11 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     }
                 }
             }
-
+            R.id.ll_filter -> {
+                startActivityForResult(
+                    Intent(this@ActivityCurrencyTeam, ActivityMarketFilter::class.java), 10
+                )
+            }
         }
 
 
@@ -203,6 +207,11 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         currencySelected = ArrayList();
         currencyRemoved = ArrayList();
         initView()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         try {
             val opts = IO.Options()
             opts.forceNew = true
@@ -243,10 +252,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             flagCloning = intent.getIntExtra("isCloning", 0)
 
             if (flagCloning == 1) {
-//                currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
 
             } else if (flagCloning == 2) {
-//                currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 ll_filter.visibility = View.GONE
                 tvViewteam.setText("  Save Team  ")
@@ -348,15 +357,14 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter = currencyAdapter;
 
-        getCurrencyTeamlist()
+        getCurrencyTeamlist("1")
 
         srl_layout.setOnRefreshListener {
             flagRefresh = true
             if (!flagSearch) {
                 callApiSearch(searchText)
             } else {
-                page++
-                getCurrencyTeamlist()
+                getCurrencyTeamlist("2");
             }
         }
 
@@ -366,13 +374,14 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         Log.d("dsadada", "sdada--" + c);
         if (c.toString().length >= 3) {
             flagSearch = false;
+            flagRefresh = false;
             searchText = c.toString()
             page = 0
-            limit = 50
             Log.d("dsadada", "111111--");
             callApiSearch(c);
         } else {
             flagSearch = true;
+            page = 0
             Log.d("dsadada", "sdada--");
         }
     }
@@ -398,7 +407,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 "currency",
                 c.toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
-                "0",
+                page.toString(),
                 limit.toString()
             )
         call.enqueue(object : Callback<CurrencyPojo> {
@@ -415,13 +424,14 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             llMyTeam.visibility = View.GONE
 
                         if (flagRefresh) {
-                            limit = limit + 50
+                            list!!.addAll(response.body()!!.currency!!);
+                            listOld!!.addAll(response.body()!!.currency!!);
+                        } else {
+                            list!!.clear()
+                            listOld!!.clear()
+                            list!!.addAll(response.body()!!.currency!!);
+                            listOld!!.addAll(response.body()!!.currency!!);
                         }
-                        list!!.clear()
-                        listOld!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        list!!.addAll(response.body()!!.currency!!);
-                        listOld!!.addAll(response.body()!!.currency!!);
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
@@ -453,9 +463,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                  setActiveCurrencyType("")
                              }*/
 
-                        rv_Players!!.adapter = currencyAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged();
                         setTeamText(currencySelected!!.size.toString())
+                        page++;
                         d.dismiss()
 
                     } else if (response.body()!!.status == "2") {
@@ -481,35 +492,40 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun getCurrencyTeamlist() {
+    fun getCurrencyTeamlist(flag: String) {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<CurrencyPojo> =
-            apiService.getCurrencyList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!, page.toString(), "50"
-            )
-        call.enqueue(object : Callback<CurrencyPojo> {
+        var call: Call<CurrencyPojo>? = null;
+        call = apiService.getCurrencyList(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+            marketId.toString()/*.toString()*/,
+            getFromPrefsString(StockConstant.USERID)!!,
+            page.toString(),
+            limit.toString()
+        )
+        call!!.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
-                        if (flagCloning == 2)
+                        if (flagCloning == 2) {
                             llMyTeam.visibility = View.GONE
-                        else {
+                        } else {
                             if (response.body()!!.myteam.equals("1"))
                                 llMyTeam.visibility = View.VISIBLE
                             else if (response.body()!!.myteam.equals("0"))
                                 llMyTeam.visibility = View.GONE
                         }
 
-
-                        if (flagRefresh)
-                            limit = limit + 50
-
+                        if (flag.equals("1")) {
+                            list!!.clear();
+                            listOld!!.clear();
+                        }
                         list!!.addAll(response.body()!!.currency!!)
-                        listOld!!.addAll(list!!)
+                        listOld!!.addAll(response.body()!!.currency!!)
+
+
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
 //                            listOld!!.get(i).addedToList = 0
@@ -530,10 +546,14 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             }
                         }
 
-                        rv_Players!!.adapter = currencyAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged();
+
                         setTeamText(currencySelected!!.size.toString())
+
+                        page++;
 //                        d.dismiss()
+
 
                     } else if (response.body()!!.status == "2") {
 //                        d.dismiss()
@@ -633,7 +653,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
                     setFlag(false, false, false, true, false, false)
-                    var sortedList = list!!.sortedByDescending { it.bid?.toDouble() }
+                    var sortedList = list!!.sortedByDescending { it.ask?.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
@@ -666,10 +686,27 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
                     setFlag(false, false, false, false, false, false)
-                    getCurrencyTeamlist()
+                    page = 0
+                    getCurrencyTeamlist("1")
                 }
             }
         }
+        if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                list!!.clear()
+                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+                currencySelected!!.clear();
+                for (i in 0 until list!!.size) {
+                    if (list!!.get(i).addedToList == 1) {
+                        currencySelected!!.add(list!!.get(i))
+                    }
+                }
+                setTeamText(currencySelected!!.size.toString())
+            }
+        }
+
+
         if (requestCode == StockConstant.RESULT_CODE_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 list!!.clear()
@@ -690,7 +727,8 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("1")) {
                     currencyRemoved = data.getParcelableArrayListExtra("removedlist")
-                    getCurrencyTeamlist()
+                    page = 0;
+                    getCurrencyTeamlist("1")
                 } else if (data.getStringExtra("flag").equals("2")) {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);
@@ -700,17 +738,15 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     setResult(Activity.RESULT_OK, intent);
                     teamId = data.getIntExtra(StockConstant.TEAMID, 0)
                 }
-
             }
         } else if (requestCode == 10) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("resetfiltermarket").equals("0")) {
+                    page = 0;
                     flagFilter = true
-                    getCurrencyTeamlist()
+                    getCurrencyTeamlist("1")
                 }
-
             }
-
         }
     }
 
@@ -780,7 +816,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         try {
-
             socket!!.off()
             socket!!.disconnect()
             Log.e("Disss", "ok")
@@ -788,5 +823,16 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             e.printStackTrace()
         }
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

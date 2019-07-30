@@ -1,12 +1,14 @@
 package stock.com.ui.dashboard.my_contest.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_view_invited.view.*
@@ -80,15 +82,16 @@ class InvitedAdapter(
 
         holder.itemView.setOnClickListener {
             if (contest.get(position).inviteStatus.equals("1")) {
-                mContext.startActivity(
-                    Intent(mContext, ContestDetailActivity::class.java).putExtra(
-                        StockConstant.CONTESTID,
-                        contest.get(position).contestid.toInt()
-                    ).putExtra(
-                        StockConstant.EXCHANGEID,
-                        0
-                    )
-                )
+                var intent = Intent(mContext, ContestDetailActivity::class.java);
+                intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid.toInt())
+                intent.putExtra(StockConstant.EXCHANGEID, 0)
+                ActivityCompat.startActivityForResult(
+                    mContext as Activity,
+                    intent,
+                    StockConstant.REDIRECT_UPCOMING_MARKET,
+                    null
+                );
+
             }
         }
 //        contest.get(position).setCalculatePosition(sports.toInt())

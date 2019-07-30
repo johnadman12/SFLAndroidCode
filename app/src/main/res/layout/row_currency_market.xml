@@ -103,6 +103,7 @@
                               android:padding="@dimen/_3sdp"
                               android:gravity="center"
                               android:textStyle="bold"
+                              android:text="kldjfkdfndjkfndjkfnfndffdnfjff"
                               style="@style/TextStyleSemiBold"
                               android:textColor="@color/textColorBlack"/>
                 </LinearLayout>

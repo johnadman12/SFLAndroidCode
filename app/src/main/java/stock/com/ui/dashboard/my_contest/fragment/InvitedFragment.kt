@@ -1,10 +1,13 @@
 package stock.com.ui.dashboard.my_contest.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.fragment_finished.*
@@ -15,6 +18,7 @@ import stock.com.AppBase.BaseFragment
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
+import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.my_contest.adapter.InvitedAdapter
 import stock.com.ui.pojo.BasePojo
 import stock.com.ui.pojo.InvitedList
@@ -23,12 +27,15 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
 class InvitedFragment : BaseFragment() {
+    private var dashBoardActivity: DashBoardActivity? = null;
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_finished, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dashBoardActivity = activity as DashBoardActivity?
         refreshData.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
             }
@@ -128,5 +135,16 @@ class InvitedFragment : BaseFragment() {
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+                var intent = Intent();
+                activity!!.setResult(Activity.RESULT_OK, intent);
+                dashBoardActivity!!.test()
+            }
+        }
 
+
+    }
 }

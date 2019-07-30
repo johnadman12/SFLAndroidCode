@@ -38,36 +38,56 @@ class WatchListAdapter_(
     }
 
     override fun onBindViewHolder(holder: WatchListHolder, position: Int) {
-        viewBinderHelper.bind(holder.itemView.swipeRevealLayout, "" + position);
-        holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
-        holder.itemView.tv_id.setText(searchList!!.get(position).id);
-        holder.itemView.tv_sector.setText(searchList!!.get(position).companyName);
-       /* if(searchList!!.get(position).marketname.contains("Cryptocurrencies")){
-            holder.itemView.marketName.setText("Crypto");
-        }else{
-            holder.itemView.marketName.setText(searchList!!.get(position).changePercent);
-        }*/
+        Glide.with(mContext).load(searchList!!.get(position).currency_firstflag).into(holder.itemView.img1)
+        Glide.with(mContext).load(searchList!!.get(position).currency_secondflag).into(holder.itemView.img2)
 
-        holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
+        //holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
+        holder.itemView.tv_id.setText(searchList!!.get(position).id);
         holder.itemView.tv_market_open.setText(searchList!!.get(position).latestPrice);
-        Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
+
+        if (searchList!!.get(position).marketname.equals("Currency")){
+            holder.itemView.rl_double_flag.visibility = View.VISIBLE ;
+            holder.itemView.imageView.visibility = View.GONE;
+            holder.itemView.tv_company_name.setText(searchList!!.get(position).currency_symbol);
+            holder.itemView.tv_sector.setText("");
+            //holder.itemView.tv_change_percentage.setText(searchList!!.get(position).currency_perchange);
+            if (!TextUtils.isEmpty(searchList!!.get(position).currency_perchange)){
+                if (searchList!!.get(position).currency_perchange > 0.toString()){
+                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+                    holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+                }else{
+                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                    holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                }
+            }
+        }else{
+            holder.itemView.rl_double_flag.visibility = View.GONE
+            holder.itemView.imageView.visibility = View.VISIBLE;
+            holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
+            holder.itemView.tv_change_percentage.setText(searchList!!.get(position).changePercent);
+            Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.imageView)
+            holder.itemView.tv_sector.setText(searchList!!.get(position).companyName);
+
+            if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
+                if (searchList!!.get(position).changePercent.contains("-")) {
+                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                    holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                } else {
+                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+                    holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.green));
+                }
+
+        }
+
         holder.itemView.img_btn_remove.setOnClickListener {
             if (activity != null) {
                 activity.callApiRemoveWatch(holder.itemView.tv_id.text.toString())
             }
         }
-
-        if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
-            if (searchList!!.get(position).changePercent.contains("-")) {
-                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
-                holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
-            } else {
-                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green));
-                holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.green));
-            }
-
 
     }
 

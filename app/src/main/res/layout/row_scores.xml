@@ -38,7 +38,6 @@
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dummy_name"
                         style="@style/TextStyleSemiBold"
                         android:textSize="@dimen/_12ssp"
                         android:textColor="@color/blue"
@@ -60,7 +59,6 @@
                             android:id="@+id/tvRank"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6"
                             style="@style/TextStyleNormal"
                             android:textColor="@color/textColorBlack"
                             android:padding="@dimen/_2sdp"/>

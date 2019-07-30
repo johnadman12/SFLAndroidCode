@@ -89,7 +89,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             contestId
                         ).putExtra(
                             "flagMarket",
-                            false
+                            "exchange"
                         )
                 )
             }

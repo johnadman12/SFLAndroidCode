@@ -12,7 +12,6 @@ public class MyTeamsPojo extends BasePojo {
     public List<Myteamss> myteams = null;
 
     public class Myteamss {
-
         @SerializedName("totalchangePercentage")
         @Expose
         public String totalchangePercentage;

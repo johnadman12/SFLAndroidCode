@@ -102,7 +102,7 @@ class CredentialsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
 //                        saveUserData(StockConstant.USERDATA, response.body()!!.user_data)
                         //startActivity(Intent(this@ActivityResetPassword, DashBoardActivity::class.java))
-                        displayToast(response.body()!!.message, "warning")
+                       // displayToast(response.body()!!.message, "warning")
                         appLogout();
                     }else if(response.body()!!.status == "2"){
                         appLogout();

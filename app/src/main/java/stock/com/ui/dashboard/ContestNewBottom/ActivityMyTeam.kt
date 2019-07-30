@@ -29,6 +29,7 @@ class ActivityMyTeam : BaseActivity() {
     var page: Int = 0
     var limit: Int = 50
     var jsonparams: JsonObject = JsonObject()
+    var marketName: String = ""
     var flagMarket: Boolean = false
     var flagRefresh: Boolean = false
     var myTeamAdapter: MyTeamAdapter? = null
@@ -39,12 +40,18 @@ class ActivityMyTeam : BaseActivity() {
         StockConstant.ACTIVITIES.add(this)
         if (intent != null) {
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            flagMarket = intent.getBooleanExtra("flagMarket", false)
+            marketName = intent.getStringExtra("flagMarket")
         }
-        if (flagMarket)
+        if (marketName.equals("crypto")) {
+            flagMarket = true
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
-        else
+        } else if (marketName.equals("currency")) {
+            flagMarket = true
+            marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
+        } else {
+            flagMarket = false
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+        }
 //        initView()
     }
 
@@ -63,20 +70,22 @@ class ActivityMyTeam : BaseActivity() {
         sr2_layout.setOnRefreshListener {
             flagRefresh = true
             if (flagMarket) {
-                getMarketTeamlist()
+                getMarketTeamlist(1)
             } else {
-                getTeamlist()
+                getTeamlist(1)
             }
 
         }
 
-        if (flagMarket)
-            getMarketTeamlist()
+        page = 0
+        if (flagMarket) {
+            getMarketTeamlist(0)
+        }
         else
-            getTeamlist()
+            getTeamlist(0)
     }
 
-    fun getTeamlist() {
+    fun getTeamlist(flagFirstTime: Int) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -93,12 +102,15 @@ class ActivityMyTeam : BaseActivity() {
                 sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        myTeams!!.clear()
+                        if (flagFirstTime == 0) {
+                            myTeams!!.clear()
+                        }
                         myTeams!!.addAll(response.body()!!.myteams)
                         if (myTeamAdapter != null)
                             myTeamAdapter!!.notifyDataSetChanged()
-                        if (flagRefresh)
-                            limit = limit + 50
+//                        if (flagRefresh) {
+                            page++
+//                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -117,7 +129,7 @@ class ActivityMyTeam : BaseActivity() {
         })
     }
 
-    fun getMarketTeamlist() {
+    fun getMarketTeamlist(flagFirstTime: Int) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -133,15 +145,18 @@ class ActivityMyTeam : BaseActivity() {
                 sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-                        myTeams!!.clear()
+                        if (flagFirstTime == 0) {
+                            myTeams!!.clear()
+                        }
                         myTeams!!.addAll(response.body()!!.myteams)
+                        page++
                         if (myTeamAdapter != null)
                             myTeamAdapter!!.notifyDataSetChanged()
 
                     } else if (response.body()!!.status == "2") {
                         appLogout()
+                    } else if (response.body()!!.status == "0") {
+                        displayToast(response.body()!!.message, "error")
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -191,7 +206,7 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
-                            getTeamlist()
+                            getTeamlist(0)
                             myTeamAdapter!!.notifyDataSetChanged()
                         }, 100)
 
@@ -238,7 +253,7 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
-                            getMarketTeamlist()
+                            getMarketTeamlist(0)
                             myTeamAdapter!!.notifyDataSetChanged()
                         }, 100)
 
