@@ -77,6 +77,8 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             R.id.imgcross -> {
                 callSearch("")
                 et_search_stock.setText("")
+                page = 0
+                limit = 50
                 getCurrencyTeamlist()
             }
             R.id.llMyTeam -> {
@@ -326,11 +328,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 }
             });
 
-        srl_layout.setOnRefreshListener {
-            //            flagRefresh = true
-            getCurrencyTeamlist()
-        }
-
         et_search_stock.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -358,6 +355,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             if (!flagSearch) {
                 callApiSearch(searchText)
             } else {
+                page++
                 getCurrencyTeamlist()
             }
         }
@@ -369,6 +367,8 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         if (c.toString().length >= 3) {
             flagSearch = false;
             searchText = c.toString()
+            page = 0
+            limit = 50
             Log.d("dsadada", "111111--");
             callApiSearch(c);
         } else {
@@ -399,7 +399,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 c.toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
                 "0",
-                "50"
+                limit.toString()
             )
         call.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
@@ -414,11 +414,9 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = View.GONE
 
-
                         if (flagRefresh) {
                             limit = limit + 50
                         }
-
                         list!!.clear()
                         listOld!!.clear()
                         rv_Players!!.adapter!!.notifyDataSetChanged();
@@ -488,7 +486,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         val call: Call<CurrencyPojo> =
             apiService.getCurrencyList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString()/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!, page.toString(), limit.toString()
+                getFromPrefsString(StockConstant.USERID)!!, page.toString(), "50"
             )
         call.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
