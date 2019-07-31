@@ -33,9 +33,18 @@ class CurrencyFragment : BaseFragment() {
     var forexAdapter: ForexAdapter? = null
     var page: Int = 0
     var limit: Int = 50
+    var flagSearch: Boolean = false
 
+    private var flag: Boolean = true;
     private var socket: Socket? = null;
+    var search: String = ""
+    var flagPagination: Boolean = false
 
+    var flagAlphaSort: Boolean = false
+    var flagPriceSort: Boolean = false
+    var flagDaySort: Boolean = false
+    var flagHTLSort: Boolean = false
+    var flagDHTLSort: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_currency, container, false)
@@ -67,12 +76,21 @@ class CurrencyFragment : BaseFragment() {
             Log.d("socket_data", "---" + jsonArray);
             Thread(Task(forexAdapter!!, jsonArray)).start()
         }
+        srl_layout.setOnRefreshListener {
+            flagPagination = true
+            if (flagSearch) {
+                page++;
+                callApiSearch(search, 1);
+            } else {
+                page++;
+                getCurrency("1")
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         try {
-
             socket!!.off()
             socket!!.disconnect()
             Log.e("Disss", "ok")
@@ -82,19 +100,50 @@ class CurrencyFragment : BaseFragment() {
 
     }
 
+    fun setFilter(c: CharSequence) {
+        Log.d("dsadada", "sdada--" + c);
+        if (c.toString().length >= 2) {
+            flag = false;
+            Log.d("dsadada", "111111--");
+            search = c.toString()
+            flagSearch = true
+            page = 0
+            limit = 50
+            callApiSearch(c, 0);
+        } else {
+            flag = true;
+            page = 0
+            limit = 50
+            flagSearch = false
+            Log.d("dsadada", "sdada--");
+            getCurrency("2")
+        }
+    }
+
     fun getCurrency(flag: String) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<CurrencyPojo> = apiService.getCurrencyData(getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), getFromPrefsString(StockConstant.USERID).toString(), "currency", page.toString(), "50")
+        val call: Call<CurrencyPojo> = apiService.getCurrencyData(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+            getFromPrefsString(StockConstant.USERID).toString(),
+            "currency",
+            page.toString(),
+            "50"
+        )
         call.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                 d.dismiss();
-                srl_layout.isRefreshing=false;
+                srl_layout.isRefreshing = false;
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false;
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+
+                        if (flag.equals("2")) {
+                            forexList!!.clear()
+                            forexOldList!!.clear()
+                        }
                         forexList!!.addAll(response.body()!!.currency!!);
                         forexOldList!!.addAll(response.body()!!.currency!!);
                         // setCurrencyAdapter()
@@ -109,6 +158,7 @@ class CurrencyFragment : BaseFragment() {
                     d.dismiss()
                 }
             }
+
             override fun onFailure(call: Call<CurrencyPojo>, t: Throwable) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false;
@@ -218,5 +268,122 @@ class CurrencyFragment : BaseFragment() {
 
             }
         }
+    }
+
+    private fun callApiSearch(c: CharSequence, firstTime: Int) {
+        Log.d("dsadada", "22222--");
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<CurrencyPojo> =
+            apiService.searchCurrency(
+                "currency",
+                c.toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                page.toString(),
+                limit.toString()
+            )
+        call.enqueue(object : Callback<CurrencyPojo> {
+            override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
+                d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                if (response.body() != null) {
+                    // displayToast(response.body()!!.message, "sucess")
+                    AppDelegate.hideKeyBoard(activity!!)
+                    if (response.body()!!.status == "1") {
+                        Log.d("dsadada", "sdada--4646464646464");
+                        if (firstTime == 0) {
+                            forexOldList!!.clear();
+                            forexList!!.clear();
+                        }
+                        forexOldList!!.addAll(response.body()!!.currency!!)
+                        forexList!!.addAll(response.body()!!.currency!!)
+                        if (forexAdapter != null)
+                            forexAdapter!!.notifyDataSetChanged()
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    } else {
+                        displayToast(response.body()!!.message, "warning")
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                }
+            }
+
+            override fun onFailure(call: Call<CurrencyPojo>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                Log.d("serach_error", "---" + t.localizedMessage);
+                d.dismiss()
+                if (activity != null)
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
+    fun setSorting(type: String) {
+        if (type.equals("Alpha")) {
+            setFlag(true, false, false, false, false)
+            var sortedList = forexList!!.sortedBy { it.symbol?.toString() }
+            for (obj in sortedList) {
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                forexAdapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("dayChange")) {
+            setFlag(false, false, true, false, false)
+            var sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
+            for (obj in sortedList) {
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                forexAdapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("price")) {
+            setFlag(false, true, false, false, false)
+            var sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
+            for (obj in sortedList) {
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                forexAdapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("HighToLow")) {
+            setFlag(false, false, false, true, false)
+            val sortedList = forexList!!.sortedByDescending { it.ask.toDouble() }
+            for (obj in sortedList) {
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                forexAdapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("DayHighToLow")) {
+            setFlag(false, false, false, false, true)
+            val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
+            for (obj in sortedList) {
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                forexAdapter!!.notifyDataSetChanged()
+            }
+        } else if (type.equals("nodata")) {
+            getCurrency("0")
+        }
+    }
+
+    fun setFlag(fAl: Boolean, fP: Boolean, fD: Boolean, fHTL: Boolean, fDHTL: Boolean) {
+        flagAlphaSort = fAl
+        flagPriceSort = fP
+        flagDaySort = fD
+        flagHTLSort = fHTL
+        flagDHTLSort = fDHTL
     }
 }

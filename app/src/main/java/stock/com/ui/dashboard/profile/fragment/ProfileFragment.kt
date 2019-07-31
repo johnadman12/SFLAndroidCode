@@ -29,7 +29,7 @@ import stock.com.ui.wallet.WalletActivity
 
 class ProfileFragment : BaseFragment(), View.OnClickListener {
 
-    private lateinit var ctx: DashBoardActivity
+//    private lateinit var ctx: DashBoardActivity
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -77,7 +77,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initViews() {
-        ctx = activity as DashBoardActivity
+//        ctx = activity as DashBoardActivity
         tv_pro.setText(getUserData().level_type)
         text_user.setText(getUserData().username)
         Glide.with(activity!!).load(getUserData().profile_image).into(profile_image)

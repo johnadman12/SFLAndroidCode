@@ -76,10 +76,13 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.imgcross -> {
-                callSearch("")
-                et_search_stock.setText("")
-                page = 0
-                getCurrencyTeamlist("1");
+                if (!TextUtils.isEmpty(et_search_stock.text.toString())) {
+                    callSearch("")
+                    et_search_stock.setText("")
+                    page = 0
+                    getCurrencyTeamlist("1");
+                } else
+                    displayToast("no words in search", "warning")
             }
             R.id.llMyTeam -> {
                 startActivity(
@@ -193,8 +196,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 )
             }
         }
-
-
     }
 
 
@@ -362,8 +363,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         srl_layout.setOnRefreshListener {
             flagRefresh = true
             if (!flagSearch) {
+                page++;
                 callApiSearch(searchText)
             } else {
+                page++;
                 getCurrencyTeamlist("2");
             }
         }
@@ -382,6 +385,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         } else {
             flagSearch = true;
             page = 0
+            getCurrencyTeamlist("1")
             Log.d("dsadada", "sdada--");
         }
     }
@@ -418,6 +422,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
+
+                        if (response.body()!!.currency!!.size == 0) {
+                            displayToast("no Data Available", "error")
+                        }
                         if (response.body()!!.myteam.equals("1"))
                             llMyTeam.visibility = View.VISIBLE
                         else if (response.body()!!.myteam.equals("0"))
@@ -502,13 +510,17 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             page.toString(),
             limit.toString()
         )
-        call!!.enqueue(object : Callback<CurrencyPojo> {
+        call.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.currency!!.size == 0) {
+                            displayToast("no Data Available", "error")
+                        }
+
                         if (flagCloning == 2) {
                             llMyTeam.visibility = View.GONE
                         } else {
@@ -528,7 +540,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
-//                            listOld!!.get(i).addedToList = 0
 
                         }
                         for (i in 0 until list!!.size) {
@@ -635,59 +646,97 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 flagSort = data.getStringExtra("flag")
                 if (data.getStringExtra("flag").equals("Volume")) {
-                    setFlag(false, false, false, false, false, true)
-                    var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
-
-                    for (obj in sortedList) {
+                    try {
+                        setFlag(false, false, false, false, false, true)
+                        var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
                         list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+
                     }
+
+
                 } else if (data.getStringExtra("flag").equals("price")) {
                     setFlag(false, false, false, false, true, false)
-                    var sortedList = list!!.sortedWith(compareBy { it.ask })
-                    for (obj in sortedList) {
+                    try {
+                        var sortedList = list!!.sortedWith(compareBy { it.ask })
                         list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
-                    setFlag(false, false, false, true, false, false)
-                    var sortedList = list!!.sortedByDescending { it.ask?.toDouble() }
-                    for (obj in sortedList) {
+                    try {
+                        setFlag(false, false, false, true, false, false)
+                        var sortedList = list!!.sortedByDescending { it.ask?.toDouble() }
                         list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                    }
-                } else if (data.getStringExtra("flag").equals("dayLTH")) {
-                    setFlag(false, false, true, false, false, false)
-                    var sortedList = list!!.sortedBy { it.changeper?.toDouble() }
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                    }
-                } else if (data.getStringExtra("flag").equals("dayHTL")) {
-                    setFlag(false, true, false, false, false, false)
-                    var sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                    }
-                } else if (data.getStringExtra("flag").equals("Alpha")) {
-                    setFlag(true, false, false, false, false, false)
-                    var sortedList = list!!.sortedBy { it.symbol?.toString() }
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
 
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
                     }
+
+                } else if (data.getStringExtra("flag").equals("dayLTH")) {
+                    try {
+                        setFlag(false, false, true, false, false, false)
+                        var sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                        list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        list!!.addAll(sortedList)
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+
+                    }
+
+                } else if (data.getStringExtra("flag").equals("dayHTL")) {
+                    try {
+                        setFlag(false, true, false, false, false, false)
+                        var sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                        list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        list!!.addAll(sortedList)
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+
+                    }
+
+                } else if (data.getStringExtra("flag").equals("Alpha")) {
+                    try {
+                        setFlag(true, false, false, false, false, false)
+                        var sortedList = list!!.sortedBy { it.symbol?.toString() }
+                        list!!.clear()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        list!!.addAll(sortedList)
+                        if (currencyAdapter != null)
+                            currencyAdapter!!.notifyDataSetChanged()
+                    } catch (e: Exception) {
+
+                    }
+
                 } else if (data.getStringExtra("flag").equals("nodata")) {
-                    setFlag(false, false, false, false, false, false)
-                    page = 0
-                    getCurrencyTeamlist("1")
+                    try {
+                        setFlag(false, false, false, false, false, false)
+                        page = 0
+                        getCurrencyTeamlist("0")
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
         }

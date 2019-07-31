@@ -34,6 +34,7 @@ class ActivityMyTeam : BaseActivity() {
     var flagRefresh: Boolean = false
     var myTeamAdapter: MyTeamAdapter? = null
     var myTeams: ArrayList<MyTeamsPojo.Myteamss>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_team)
@@ -52,7 +53,6 @@ class ActivityMyTeam : BaseActivity() {
             flagMarket = false
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
-//        initView()
     }
 
     override fun onResume() {
@@ -67,22 +67,26 @@ class ActivityMyTeam : BaseActivity() {
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
+
         sr2_layout.setOnRefreshListener {
             flagRefresh = true
             if (flagMarket) {
+                page++
                 getMarketTeamlist(1)
             } else {
+                page++
                 getTeamlist(1)
             }
 
         }
 
-        page = 0
         if (flagMarket) {
+            page = 0
             getMarketTeamlist(0)
-        }
-        else
+        } else {
+            page = 0
             getTeamlist(0)
+        }
     }
 
     fun getTeamlist(flagFirstTime: Int) {
@@ -108,9 +112,7 @@ class ActivityMyTeam : BaseActivity() {
                         myTeams!!.addAll(response.body()!!.myteams)
                         if (myTeamAdapter != null)
                             myTeamAdapter!!.notifyDataSetChanged()
-//                        if (flagRefresh) {
-                            page++
-//                        }
+
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -149,7 +151,6 @@ class ActivityMyTeam : BaseActivity() {
                             myTeams!!.clear()
                         }
                         myTeams!!.addAll(response.body()!!.myteams)
-                        page++
                         if (myTeamAdapter != null)
                             myTeamAdapter!!.notifyDataSetChanged()
 

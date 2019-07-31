@@ -7,6 +7,5 @@ open class BasePojo {
     var message: String = ""
     var otp: String = ""
     var contestid: String = ""
-    var pending_requests: String = ""
     var myteam = ""
 }

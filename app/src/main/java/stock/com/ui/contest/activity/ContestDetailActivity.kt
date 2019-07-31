@@ -297,7 +297,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 diff = thatDay.timeInMillis - today.timeInMillis
                 if (diff.toString().contains("-")) {
                     tvTimeLeft.setText("00H:00M:00S")
-//                ll_Circular.isEnabled = false
                     flag = true
                     AppDelegate.showSneakBarRed(this@ContestDetailActivity, "Contest is not live yet.", "DFX")
                     circular_progress.progressBackgroundColor =
@@ -326,7 +325,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             if (diff < 900000) {
                                 ll_Circular.isEnabled = false
                                 txtjoin.setTextSize(16.00f)
-                                txtjoin.setText(getString(R.string.live_now))
+                                txtjoin.setText("Starts\nSoon")
                                 circular_progress.progressBackgroundColor =
                                     ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
                             } else {

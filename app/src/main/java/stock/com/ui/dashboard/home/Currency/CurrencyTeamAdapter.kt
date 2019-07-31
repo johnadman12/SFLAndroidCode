@@ -43,15 +43,17 @@ class CurrencyTeamAdapter(
         checkedHolder = BooleanArray(mContest.size)
     }
 
+
+
     init {
         this.searchList = mContestOld;
         createCheckedHolder();
     }
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_team, parent, false)
+        return FeatureListHolder(view)
+    }
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        val anim = AlphaAnimation(0.1f, 1.0f)
-        anim.duration = 50 //You can manage the blinking time with this parameter
-        anim.startOffset = 20
 
         Glide.with(mContext).load(searchList!!.get(position).firstflag).centerInside().into(holder.itemView.img1)
         Glide.with(mContext).load(searchList!!.get(position).secondflag).centerInside().into(holder.itemView.img2)
@@ -343,11 +345,6 @@ class CurrencyTeamAdapter(
         holder.itemView.setOnClickListener {
             onItemCheckListener.onItemClick(searchList!!.get(position))
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_team, parent, false)
-        return FeatureListHolder(view)
     }
 
     interface OnItemCheckListener {

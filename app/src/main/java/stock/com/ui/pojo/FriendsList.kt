@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 
 class FriendsList : BasePojo() {
+    var pending_request: Int = 0
     @SerializedName("user_data")
     @Expose
     var userData: ArrayList<UserDatum>? = null

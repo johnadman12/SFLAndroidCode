@@ -26,7 +26,6 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_15sdp"
                     android:id="@+id/img1"
-                    android:scaleType="fitXY"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/cryptoim"/>
             <ImageView
@@ -35,7 +34,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:scaleType="fitXY"
                     android:layout_height="@dimen/_15sdp"
                     android:src="@mipmap/stocks"/>
 
@@ -104,7 +102,6 @@
                           android:layout_height="match_parent"
                           android:weightSum="2"
                           android:layout_weight=".5"
-                          android:layout_marginStart="@dimen/_3sdp"
                           android:orientation="vertical">
                 <LinearLayout
                         android:layout_width="match_parent"

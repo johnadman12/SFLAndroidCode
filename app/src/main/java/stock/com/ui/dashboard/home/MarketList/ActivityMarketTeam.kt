@@ -100,8 +100,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 showJoinContestDialogue()
             }
             R.id.imgcross -> {
-                et_search_stock.setText("")
-                getMarketTeamlist("0")
+                if (!TextUtils.isEmpty(et_search_stock.text.toString())) {
+                    et_search_stock.setText("")
+                    page = 0
+                    limit = 50
+                    getMarketTeamlist("0")
+                } else
+                    displayToast("no words in search", "warning")
             }
             R.id.ll_watchlist -> {
                 startActivity(
@@ -214,12 +219,12 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         jsonparams = JsonObject()
         marketRemovedItems = ArrayList();
         initView()
+        getMarketTeamlist("0")
     }
 
     @SuppressLint("WrongConstant")
     private fun initView() {
         marketSelectedItems = ArrayList()
-//        marketWizardSelectedItems = ArrayList()
         img_btn_back.setOnClickListener(this)
         tvViewteam.setOnClickListener(this)
         ll_watchlist.setOnClickListener(this)
@@ -333,15 +338,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 callSearch(s.toString())
             }
         })
+
         srl_layout.setOnRefreshListener {
             flagRefresh = true
             if (!flagSearch) {
-                page = 0
-                limit = 50
-                callApiSearch(searchText)
+                page++
+                callApiSearch(searchText, 1)
             } else {
                 page++
-                getMarketTeamlist("0")
+                getMarketTeamlist("1")
             }
         }
 
@@ -350,7 +355,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         rv_Players!!.layoutManager = llm
         rv_Players.visibility = View.VISIBLE
         rv_Players!!.adapter = marketlistAdapter;
-//        getMarketTeamlist("0")
     }
 
 
@@ -361,7 +365,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             override fun run() {
                 flagRefresh = false;
                 if (flagSearch) {
-                    getMarketTeamlist("1")
+                    getMarketTeamRefresh()
                 }
                 mainHandler.postDelayed(this, 3000)
             }
@@ -374,14 +378,19 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             flagSearch = false;
             searchText = c.toString()
             Log.d("dsadada", "111111--");
-            callApiSearch(c);
+            page = 0
+            limit = 50
+            callApiSearch(c, 0);
         } else {
-            flagSearch = true;
-            Log.d("dsadada", "sdada--");
+            flag = true;
+            flagSearch = true
+            page = 0
+            limit = 50
+            getMarketTeamlist("0")
         }
     }
 
-    private fun callApiSearch(c: CharSequence) {
+    private fun callApiSearch(c: CharSequence, firstTime: Int) {
         Log.d("dsadada", "22222--");
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -402,21 +411,22 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.crypto.size == 0) {
+                            displayToast("No Data Available", "error")
+                        }
                         if (response.body()!!.myteam.equals("1"))
                             llMyTeam.visibility = View.VISIBLE
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = View.GONE
-
-
-                        if (flagRefresh) {
-                            limit = limit + 50
+                        if (firstTime == 0) {
+                            list!!.clear()
+                            listOld!!.clear()
                         }
-
-                        list!!.clear()
-                        listOld!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         list!!.addAll(response.body()!!.crypto!!);
                         listOld!!.addAll(response.body()!!.crypto!!);
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
+
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
@@ -447,9 +457,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
                             }
-
-                        rv_Players!!.adapter = marketlistAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
                         setTeamText(marketSelectedItems!!.size.toString())
                         d.dismiss()
 
@@ -478,24 +487,20 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     fun getMarketTeamlist(flag: String) {
         var call: Call<MarketList>? = null;
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        if (flag.equals("0")) {
-            call = apiService.getMarketList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-                getFromPrefsString(StockConstant.USERID)!!, page.toString(), "50"
-            )
-        } else if (flag.equals("1")) {
-            call = apiService.getMarketList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-                getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
-            )
-        }
-        call!!.enqueue(object : Callback<MarketList> {
+        call = apiService.getMarketList(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+            getFromPrefsString(StockConstant.USERID)!!, page.toString(), "50"
+        )
+        call.enqueue(object : Callback<MarketList> {
             override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.crypto.size == 0) {
+                            displayToast("No Data Available", "error")
+                        }
                         if (flagCloning == 2)
                             llMyTeam.visibility = View.GONE
                         else {
@@ -504,23 +509,147 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             else if (response.body()!!.myteam.equals("0"))
                                 llMyTeam.visibility = View.GONE
                         }
-                        if (flagRefresh) {
+                        if (flag.equals("0")) {
+                            list!!.clear()
+                            listOld!!.clear()
+                            list!!.addAll(response.body()!!.crypto!!)
+                            listOld!!.addAll(response.body()!!.crypto!!)
+                        } else if (flag.equals("1")) {
                             limit = limit + 50
                             list!!.addAll(response.body()!!.crypto!!)
                             listOld!!.addAll(response.body()!!.crypto!!)
-
                         } else {
-                            //flickering
-                            if (listOld!!.size > 0) {
-                                listOld!!.clear()
-                                listOld!!.addAll(list!!)
-                                list!!.clear()
-                            } else {
-                                listOld!!.addAll(response.body()!!.crypto!!);
-                            }
-                            list!!.clear()
-                            list!!.addAll(response.body()!!.crypto!!);
+                            list!!.addAll(response.body()!!.crypto!!)
+                            listOld!!.addAll(response.body()!!.crypto!!)
                         }
+
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+
+                        }
+                        //sortingConcept
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        }
+                        //filter
+                        if (flagFilter) {
+                            for (i in 0 until list!!.size) {
+                                if (list!!.get(i).changeper != null)
+                                    if (!list!!.get(i).changeper.equals("0")) {
+                                        listFiltered!!.add(list!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", listFiltered!!.size.toString())
+                                    }
+                            }
+                        } else
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
+                                }
+                            }
+                        }
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
+                        setTeamText(marketSelectedItems!!.size.toString())
+//                        d.dismiss()
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                }
+            }
+
+            override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
+
+    fun getMarketTeamRefresh() {
+        var call: Call<MarketList>? = null;
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        call = apiService.getMarketList(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+            getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
+        )
+        call.enqueue(object : Callback<MarketList> {
+            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                if (response.body() != null) {
+
+                    //for show my team
+                    if (response.body()!!.status == "1") {
+                        if (response.body()!!.crypto.size == 0) {
+                            displayToast("No Data Available", "error")
+                        }
+                        if (flagCloning == 2)
+                            llMyTeam.visibility = View.GONE
+                        else {
+                            if (response.body()!!.myteam.equals("1"))
+                                llMyTeam.visibility = View.VISIBLE
+                            else if (response.body()!!.myteam.equals("0"))
+                                llMyTeam.visibility = View.GONE
+                        }
+
+                        listOld!!.clear();
+                        listOld!!.addAll(list!!);
+                        list!!.clear();
+                        list!!.addAll(response.body()!!.crypto)
 
                         rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
@@ -737,7 +866,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
                 } else if (data.getStringExtra("flag").equals("price")) {
                     try {
-
                         setFlag(false, false, false, false, true, false)
                         var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
                         list!!.clear()
@@ -825,158 +953,158 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         }
 
 
-            if (requestCode == StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM) {
-                if (resultCode == RESULT_OK && data != null) {
-                    if (data.getStringExtra("flag").equals("1")) {
-                        marketRemovedItems = data.getParcelableArrayListExtra("removedlist")
-                        getTeamAgainlist()
-                    } else if (data.getStringExtra("flag").equals("2")) {
-                        var intent = Intent();
-                        setResult(Activity.RESULT_OK, intent);
-                        finish();
-                    } else if (data.getStringExtra("flag").equals("3")) {
-                        var intent = Intent();
-                        setResult(Activity.RESULT_OK, intent);
-                        teamId = data.getIntExtra(StockConstant.TEAMID, 0)
-                    }
-
-                }
-            } else if (requestCode == 10) {
-                if (resultCode == RESULT_OK && data != null) {
-                    if (data.getStringExtra("resetfiltermarket").equals("0")) {
-                        flagFilter = true
-                        getMarketTeamlist("0")
-                    }
-
+        if (requestCode == StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("flag").equals("1")) {
+                    marketRemovedItems = data.getParcelableArrayListExtra("removedlist")
+                    getTeamAgainlist()
+                } else if (data.getStringExtra("flag").equals("2")) {
+                    var intent = Intent();
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                } else if (data.getStringExtra("flag").equals("3")) {
+                    var intent = Intent();
+                    setResult(Activity.RESULT_OK, intent);
+                    teamId = data.getIntExtra(StockConstant.TEAMID, 0)
                 }
 
             }
-        }
-
-        fun saveTeamList() {
-            val d = StockDialog.showLoading(this)
-            d.setCanceledOnTouchOutside(false)
-            val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-            jsonparams.addProperty("contest_id", contestId.toString())
-            jsonparams.addProperty("team_id", teamId)
-            jsonparams.addProperty("market_id", marketId)
-            jsonparams.addProperty("join_var", 0)
-            jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
-            jsonparams.add("marketdatas", array)
-
-            Log.e("savedlist", array.toString())
-
-            val call: Call<BasePojo> =
-                apiService.editMarketTeam(
-                    getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                    jsonparams
-                )
-            call.enqueue(object : Callback<BasePojo> {
-
-                override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-                    d.dismiss()
-                    if (response.body() != null) {
-                        if (response.body()!!.status == "1") {
-                            AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
-                            Handler().postDelayed({
-                                finish()
-                            }, 1000)
-
-                        } else if (response.body()!!.status == "0") {
-                            AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
-                            Handler().postDelayed({
-                            }, 1000)
-//                        finish()
-                        } else if (response.body()!!.status == "2") {
-                            AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
-                            Handler().postDelayed({
-                                finish()
-                            }, 1000)
-                        }
-                    } else {
-                        d.dismiss()
-                    }
+        } else if (requestCode == 10) {
+            if (resultCode == RESULT_OK && data != null) {
+                if (data.getStringExtra("resetfiltermarket").equals("0")) {
+                    flagFilter = true
+                    getMarketTeamlist("0")
                 }
 
-                override fun onFailure(call: Call<BasePojo>, t: Throwable) {
-                    println(t.toString())
-                    displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
-                }
-            })
-        }
+            }
 
-        fun getWizardStocklist() {
-            val d = StockDialog.showLoading(this)
-            d.setCanceledOnTouchOutside(false)
-            val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-            val call: Call<MarketList> =
-                apiService.getMarketWizardList(
-                    getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-                    getFromPrefsString(StockConstant.USERID).toString()
-                )
-            call.enqueue(object : Callback<MarketList> {
-
-                override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
-                    d.dismiss()
-                    if (response.body() != null) {
-                        if (response.body()!!.status == "1") {
-                            flag = true
-                            marketSelectedItems!!.clear()
-                            marketSelectedItems!!.addAll(response.body()!!.crypto!!);
-                            setTeamText(marketSelectedItems!!.size.toString())
-                            for (i in 0 until list!!.size) {
-                                list!!.get(i).addedToList = 0
-                            }
-                            rv_Players!!.adapter!!.notifyDataSetChanged();
-                            for (i in 0 until list!!.size) {
-                                for (j in 0 until marketSelectedItems!!.size) {
-                                    if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                        list!!.get(i).addedToList = 1
-                                    }
-                                }
-                            }
-                            for (i in 0 until list!!.size) {
-                                for (j in 0 until marketSelectedItems!!.size) {
-                                    if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                        list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
-                                    }
-                                }
-                            }
-
-                            rv_Players!!.adapter = marketlistAdapter;
-                            rv_Players!!.adapter!!.notifyDataSetChanged();
-                            setTeamText(marketSelectedItems!!.size.toString())
-
-
-                        } else if (response.body()!!.status == "2") {
-                            appLogout()
-                        }
-                    } else {
-                        displayToast(resources.getString(R.string.something_went_wrong), "error")
-                        d.dismiss()
-                    }
-                }
-
-                override fun onFailure(call: Call<MarketList>, t: Throwable) {
-                    println(t.toString())
-                    displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
-                }
-            })
-        }
-
-        fun setFlag(fAl: Boolean, fDHTL: Boolean, fDLTH: Boolean, fPHTL: Boolean, fPLTH: Boolean, fV: Boolean) {
-            flagAlphaSort = fAl
-            flagDayHTL = fDHTL
-            flagDayLTH = fDLTH
-            flagPriceHTL = fPHTL
-            flagPriceLTH = fPLTH
-            flagVolume = fV
-        }
-
-        override fun onPause() {
-            super.onPause()
-            mainHandler.removeCallbacksAndMessages(null);
         }
     }
+
+    fun saveTeamList() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
+        jsonparams.add("marketdatas", array)
+
+        Log.e("savedlist", array.toString())
+
+        val call: Call<BasePojo> =
+            apiService.editMarketTeam(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                jsonparams
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
+
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                        }, 1000)
+//                        finish()
+                    } else if (response.body()!!.status == "2") {
+                        AppDelegate.showAlert(this@ActivityMarketTeam, response.body()!!.message)
+                        Handler().postDelayed({
+                            finish()
+                        }, 1000)
+                    }
+                } else {
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    fun getWizardStocklist() {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<MarketList> =
+            apiService.getMarketWizardList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+                getFromPrefsString(StockConstant.USERID).toString()
+            )
+        call.enqueue(object : Callback<MarketList> {
+
+            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        flag = true
+                        marketSelectedItems!!.clear()
+                        marketSelectedItems!!.addAll(response.body()!!.crypto!!);
+                        setTeamText(marketSelectedItems!!.size.toString())
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptocurrencyid = marketSelectedItems!!.get(j).cryptocurrencyid
+                                }
+                            }
+                        }
+
+                        rv_Players!!.adapter = marketlistAdapter;
+                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        setTeamText(marketSelectedItems!!.size.toString())
+
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<MarketList>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+    fun setFlag(fAl: Boolean, fDHTL: Boolean, fDLTH: Boolean, fPHTL: Boolean, fPLTH: Boolean, fV: Boolean) {
+        flagAlphaSort = fAl
+        flagDayHTL = fDHTL
+        flagDayLTH = fDLTH
+        flagPriceHTL = fPHTL
+        flagPriceLTH = fPLTH
+        flagVolume = fV
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mainHandler.removeCallbacksAndMessages(null);
+    }
+}

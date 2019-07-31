@@ -267,7 +267,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_3sdp"
-            android:weightSum="5">
+            android:weightSum="4">
 
         <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
@@ -372,6 +372,7 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_analystics">

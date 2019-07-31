@@ -38,16 +38,16 @@ class CurrencyAdapter(
 ) :
     RecyclerView.Adapter<CurrencyAdapter.FeatureListHolder>() {
     var checkedHolder: BooleanArray? = null;
-    private var search: List<MarketList.Crypto>? = null
+//    private var search: List<MarketList.Crypto>? = null
 
     private fun createCheckedHolder() {
         checkedHolder = BooleanArray(marketData.size)
     }
 
     init {
-        this.search = cryptoListNew;
+//        this.search = cryptoListNew;
         createCheckedHolder();
-        Log.d("gugugugugu", "---5465466---" + search!!.size)
+//        Log.d("gugugugugu", "---5465466---" + search!!.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
@@ -57,7 +57,7 @@ class CurrencyAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-     val animBlink: Animation
+        val animBlink: Animation
         animBlink = AnimationUtils.loadAnimation(
             mContext,
             R.anim.blink
@@ -65,19 +65,19 @@ class CurrencyAdapter(
         holder.itemView.name.setText(cryptoListNew.get(position).symbol)
         holder.itemView.tv_company.setText(cryptoListNew.get(position).name)
         try {
-            if (search!!.get(position).latestPrice != null)
-                if (search!!.get(position).latestPrice.toDouble() < 1)
+            if (cryptoListNew.get(position).latestPrice != null)
+                if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
                             "%.6f",
-                            search!!.get(position).latestPrice.toDouble()
+                            cryptoListNew.get(position).latestPrice.toDouble()
                         )
                     )
                 else
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
                             "%.2f",
-                            search!!.get(position).latestPrice.toDouble()
+                            cryptoListNew.get(position).latestPrice.toDouble()
                         )
                     )
         } catch (e: Exception) {
@@ -89,9 +89,9 @@ class CurrencyAdapter(
             priceText = marketData.get(position).latestPrice;
             if (marketData.size == cryptoListNew.size) {
                 if (!TextUtils.isEmpty(priceText)) {
-                    if (priceText.equals("$" + search!!.get(position).latestPrice)) {
+                    if (priceText.equals("$" + cryptoListNew!!.get(position).latestPrice)) {
                         holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                    } else if (priceText.toDouble() < search!!.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() < cryptoListNew!!.get(position).latestPrice.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tv_latest_price.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -115,17 +115,17 @@ class CurrencyAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (search!!.get(position).latestPrice.toDouble() < 1)
+                                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1)
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
-                                                "%.6f", search!!.get(position).latestPrice.toDouble()
+                                                "%.6f", cryptoListNew!!.get(position).latestPrice.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                search!!.get(position).latestPrice.toDouble()
+                                                cryptoListNew!!.get(position).latestPrice.toDouble()
                                             )
                                         )
                                     holder.itemView.tv_latest_price.setTextColor(
@@ -145,7 +145,7 @@ class CurrencyAdapter(
                                 }
                             }
                         })
-                    } else if (priceText.toDouble() > search!!.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() > cryptoListNew!!.get(position).latestPrice.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tv_latest_price.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -170,17 +170,17 @@ class CurrencyAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (search!!.get(position).latestPrice.toDouble() < 1)
+                                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1)
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
-                                                "%.6f", search!!.get(position).latestPrice.toDouble()
+                                                "%.6f", cryptoListNew!!.get(position).latestPrice.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                search!!.get(position).latestPrice.toDouble()
+                                                cryptoListNew!!.get(position).latestPrice.toDouble()
                                             )
                                         )
                                     holder.itemView.tv_latest_price.setTextColor(
@@ -205,11 +205,11 @@ class CurrencyAdapter(
 
                 } else {
                     Log.e("sddasdasdad", "-------444444444--")
-                    if (search!!.get(position).latestPrice.toDouble() < 1) {
+                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1) {
                         holder.itemView.tv_latest_price.setText(
                             "$" + String.format(
                                 "%.6f",
-                                search!!.get(position).latestPrice.toDouble()
+                                cryptoListNew!!.get(position).latestPrice.toDouble()
                             )
                         )
                         Log.e("sddasdasdad", "-------55555555--")
@@ -218,7 +218,7 @@ class CurrencyAdapter(
                         holder.itemView.tv_latest_price.setText(
                             "$" + String.format(
                                 "%.2f",
-                                search!!.get(position).latestPrice.toDouble()
+                                cryptoListNew!!.get(position).latestPrice.toDouble()
                             )
                         )
                     }
@@ -227,60 +227,64 @@ class CurrencyAdapter(
         } catch (e: java.lang.Exception) {
         }
 
+        try {
+            Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
+
+            if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
+                var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
+                var price = (priceText.toString())
 
 
-
-
-
-        Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
-
-        if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
-            var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
-            var price = (priceText.toString())
-
-
-            if (cryptoListNew.get(position).changeper.contains("-")) {
-                price = price.substring(0, 1) + "$" + price.substring(4, price.length)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setText(price + " (" + cryptoListNew!!.get(position).changeper + " %)")
-            } else {
-                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("$" + price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
+                if (cryptoListNew.get(position).changeper.contains("-")) {
+                    price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+                    holder.itemView.tv_change_percentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.redcolor
+                        )
+                    )
+                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setText(price + " (" + cryptoListNew!!.get(position).changeper + " %)")
+                } else {
+                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                    holder.itemView.tv_change_percentage.setText("$" + price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
+                }
             }
-        }
 
-        if (cryptoListNew.get(position).cryptoType.equals("1")) {
-            holder.itemView.llAdd.visibility = View.GONE
-            holder.itemView.img_check.visibility = View.VISIBLE
-            holder.itemView.llwatch.isEnabled = false
-        } else {
-            holder.itemView.llAdd.visibility = View.VISIBLE
-            holder.itemView.img_check.visibility = View.GONE
-        }
+            if (cryptoListNew.get(position).cryptoType.equals("1")) {
+                holder.itemView.llAdd.visibility = View.GONE
+                holder.itemView.img_check.visibility = View.VISIBLE
+                holder.itemView.llwatch.isEnabled = false
+            } else {
+                holder.itemView.llAdd.visibility = View.VISIBLE
+                holder.itemView.img_check.visibility = View.GONE
+            }
 
 
-        holder.itemView.setOnClickListener {
-            var intent = Intent(mContext, ActivityMarketDetail::class.java);
-            intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
-            intent.putExtra(StockConstant.MARKETLIST, cryptoListNew)
-            intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
-            intent.putExtra("flag", 2)
-            startActivityForResult(mContext as Activity, intent, 410, null);
-        }
+            holder.itemView.setOnClickListener {
+                var intent = Intent(mContext, ActivityMarketDetail::class.java);
+                intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
+                intent.putExtra(StockConstant.MARKETLIST, cryptoListNew)
+                intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+                intent.putExtra("flag", 2)
+                startActivityForResult(mContext as Activity, intent, 410, null);
+            }
 
-        holder.itemView.llwatch.setOnClickListener {
-            frgament.saveToWatchList(cryptoListNew.get(position).cryptocurrencyid)
-            cryptoListNew.get(position).cryptoType = "1"
-            holder.itemView.llAdd.visibility = View.GONE
-            holder.itemView.img_check.visibility = View.VISIBLE
-            holder.itemView.llwatch.isEnabled = false
+            holder.itemView.llwatch.setOnClickListener {
+                frgament.saveToWatchList(cryptoListNew.get(position).cryptocurrencyid)
+                cryptoListNew.get(position).cryptoType = "1"
+                holder.itemView.llAdd.visibility = View.GONE
+                holder.itemView.img_check.visibility = View.VISIBLE
+                holder.itemView.llwatch.isEnabled = false
+            }
+        } catch (e: java.lang.Exception) {
+
         }
     }
 
     override fun getItemCount(): Int {
-        return search!!.size
+        return cryptoListNew.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -56,20 +56,26 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
-    }
-
-    private fun initViews() {
         ll_expandable_view.visibility = View.VISIBLE
         seeall.setOnClickListener(this)
-        getFeatureContentlist();
-        getTrainingContentlist()
-//        getNewslist()
         exchangeList = ArrayList()
         dataExchange =
             ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        initViews()
+    }
+
+    private fun initViews() {
+        getFeatureContentlist();
+        getTrainingContentlist()
+//        getNewslist()
+
 
     }
 
@@ -159,7 +165,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         var adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_features.setAdapter(adapter)
 
-          if (listItem.size > 5) {
+        if (listItem.size > 5) {
             pageIndicatorView.visibility = VISIBLE
             // specify total count of indicators
             pageIndicatorView.setCount(5)
@@ -307,8 +313,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     fun getTrainingContentlist() {
-       /* val d = StockDialog.showLoading(activity!!)
-        d.setCanceledOnTouchOutside(false)*/
+        /* val d = StockDialog.showLoading(activity!!)
+         d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<TrainingPojo> =
             apiService.getTrainingContest()

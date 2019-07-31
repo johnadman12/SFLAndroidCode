@@ -61,9 +61,8 @@ class CryptoCurrencyFragment : BaseFragment() {
         srl_layout.setOnRefreshListener {
             flagPagination = true
             if (flagSearch) {
-                page = 0
-                limit = 50
-                callApiSearch(search);
+                page++
+                callApiSearch(search, 1);
             } else {
                 page++;
                 getCurrency("2")
@@ -95,8 +94,6 @@ class CryptoCurrencyFragment : BaseFragment() {
     }
 
     fun setFilter(c: CharSequence) {
-        /*if (cryptoAdapter != null)
-            cryptoAdapter!!.getFilter().filter(c)*/
         Log.d("dsadada", "sdada--" + c);
         if (c.toString().length >= 2) {
             flag = false;
@@ -105,10 +102,15 @@ class CryptoCurrencyFragment : BaseFragment() {
             flagSearch = true
             page = 0
             limit = 50
-            callApiSearch(c);
+            callApiSearch(c, 0);
         } else {
             flag = true;
+            flagSearch=false
             Log.d("dsadada", "sdada--");
+            page = 0
+            limit = 50
+            Log.d("dsadada", "sdada--");
+            getCurrency("1")
         }
     }
 
@@ -213,15 +215,14 @@ class CryptoCurrencyFragment : BaseFragment() {
                             cryptoList!!.addAll(cryptoListNew!!);
                             cryptoListNew!!.clear();
                             cryptoListNew!!.addAll(response.body()!!.crypto)
+
                             if (flagAlphaSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
-                                for (obj in sortedList) {
                                     cryptoListNew!!.clear()
                                     cryptoListNew!!.addAll(sortedList)
-                                }
+
                             } else if (flagPriceSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
-
                                 cryptoListNew!!.clear()
                                 cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
@@ -229,7 +230,6 @@ class CryptoCurrencyFragment : BaseFragment() {
 
                             } else if (flagDaySort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
-
                                 cryptoListNew!!.clear()
                                 cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
@@ -294,7 +294,7 @@ class CryptoCurrencyFragment : BaseFragment() {
         }
     }
 
-    private fun callApiSearch(c: CharSequence) {
+    private fun callApiSearch(c: CharSequence, firsttime: Int) {
         Log.d("dsadada", "22222--");
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
@@ -313,18 +313,21 @@ class CryptoCurrencyFragment : BaseFragment() {
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
+                    AppDelegate.hideKeyBoard(activity!!)
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
                         Log.d("dsadada", "sdada--4646464646464");
-                        cryptoList!!.clear();
-                        cryptoListNew!!.clear();
+                        if (firsttime == 0) {
+                            cryptoList!!.clear();
+                            cryptoListNew!!.clear();
+                        }
                         cryptoList!!.addAll(response.body()!!.crypto)
                         cryptoListNew!!.addAll(response.body()!!.crypto)
 
                         if (cryptoAdapter != null)
                             cryptoAdapter!!.notifyDataSetChanged()
-                        if (flagPagination)
-                            limit = limit + 50
+                        /* if (flagPagination)
+                             page++*/
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {

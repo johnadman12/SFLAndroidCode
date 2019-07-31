@@ -46,10 +46,10 @@ class FriendsActivity : BaseActivity() {
             }
 
             override fun refreshing() {
+                getFriendsList()
                 //TODO make api call here
                 Handler().postDelayed({
                 }, 5000)
-                getFriendsList()
             }
         })
 
@@ -93,8 +93,8 @@ class FriendsActivity : BaseActivity() {
         val call: Call<FriendsList> =
             apiService.getFriendsList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(),page.toString(), limit.toString()
-        )
+                getFromPrefsString(StockConstant.USERID).toString(), page.toString(), limit.toString()
+            )
         call.enqueue(object : Callback<FriendsList> {
 
             override fun onResponse(call: Call<FriendsList>, response: Response<FriendsList>) {
@@ -103,7 +103,7 @@ class FriendsActivity : BaseActivity() {
                     refreshD.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        tv_request_count.setText(response.body()!!.pending_requests)
+                        tv_request_count.setText(response.body()!!.pending_request.toString())
                         list = response.body()!!.userData
                         setAdapter()
                     }

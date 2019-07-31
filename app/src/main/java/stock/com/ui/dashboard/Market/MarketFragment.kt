@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -169,16 +170,22 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
                     (fragment as StocksFragment).setFilter(s!!)
                 else if (fragment is CryptoCurrencyFragment)
                     (fragment as CryptoCurrencyFragment).setFilter(s!!)
+                else if (fragment is CurrencyFragment)
+                    (fragment as CurrencyFragment).setFilter(s!!)
             }
         })
 
         imgcross.setOnClickListener {
-            et_search.setText("")
-            AppDelegate.hideKeyBoard(activity!!)
-            if (fragment is StocksFragment)
-                (fragment as StocksFragment).setFilter("")
-            else if (fragment is CryptoCurrencyFragment)
-                (fragment as CryptoCurrencyFragment).setFilter("")
+            if (!TextUtils.isEmpty(et_search.text.toString())) {
+                et_search.setText("")
+                AppDelegate.hideKeyBoard(activity!!)
+                if (fragment is StocksFragment)
+                    (fragment as StocksFragment).setFilter("")
+                else if (fragment is CryptoCurrencyFragment)
+                    (fragment as CryptoCurrencyFragment).setFilter("")
+            } else {
+                displayToast("no words in search", "warning")
+            }
         }
 
     }
@@ -294,51 +301,13 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET) {
             if (resultCode == Activity.RESULT_OK && data != null) {
                 flagData = (data.getStringExtra("flag"));
-                if (data.getStringExtra("flag").equals("Alpha")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                } else if (data.getStringExtra("flag").equals("dayChange")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                } else if (data.getStringExtra("flag").equals("price")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                } else if (data.getStringExtra("flag").equals("HighToLow")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                } else if (data.getStringExtra("flag").equals("DayHighToLow")) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                } else if (data.getStringExtra("flag").equals("nodata", true)) {
-                    if (fragment is StocksFragment)
-                        (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
-                    else if (fragment is CryptoCurrencyFragment)
-                        (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
-
-
-                }
+                if (fragment is StocksFragment)
+                    (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                else if (fragment is CryptoCurrencyFragment)
+                    (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+                else if (fragment is CurrencyFragment)
+                    (fragment as CurrencyFragment).setSorting(data.getStringExtra("flag"))
             }
-
             // 1- change percent filter for market
             //2- change percent filter for stocks
             //3-
@@ -369,5 +338,93 @@ class MarketFragment : BaseFragment(), View.OnClickListener {
 
         }
     }
+
+    /* override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+     super.onActivityResult(requestCode, resultCode, data)
+     if (requestCode == StockConstant.RESULT_CODE_SORT_MARKET) {
+         if (resultCode == Activity.RESULT_OK && data != null) {
+             flagData = (data.getStringExtra("flag"));
+             if (data.getStringExtra("flag").equals("Alpha")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CurrencyFragment)
+                     (fragment as CurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             } else if (data.getStringExtra("flag").equals("dayChange")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CurrencyFragment)
+                     (fragment as CurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             } else if (data.getStringExtra("flag").equals("price")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CurrencyFragment)
+                     (fragment as CurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             } else if (data.getStringExtra("flag").equals("HighToLow")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             } else if (data.getStringExtra("flag").equals("DayHighToLow")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             } else if (data.getStringExtra("flag").equals("nodata", true)) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).setSorting(data.getStringExtra("flag"))
+                 else if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).setSorting(data.getStringExtra("flag"))
+
+
+             }
+         }
+
+         // 1- change percent filter for market
+         //2- change percent filter for stocks
+         //3-
+     } else if (requestCode == StockConstant.RESULT_CODE_MARKET_FILTER) {
+         if (resultCode == Activity.RESULT_OK && data != null) {
+             if (data.getStringExtra("resetfiltermarket").equals("0")) {
+                 //remove inactive like change percent is 0.00
+                 if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
+             } else if (data.getStringExtra("resetfiltermarket").equals("1")) {
+                 if (fragment is CryptoCurrencyFragment)
+                     (fragment as CryptoCurrencyFragment).changePercentFilter(data.getStringExtra("resetfiltermarket"))
+
+             } else if (data.getStringExtra("resetfiltermarket").equals("3")) {
+                 var sector: String = data.getStringExtra("sectorlist")
+                 var exchange: String = data.getStringExtra("exchangelist")
+                 var country: String = data.getStringExtra("countrylist")
+
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).applyFilter(sector, exchange, country)
+
+             } else if (data.getStringExtra("resetfiltermarket").equals("2")) {
+                 if (fragment is StocksFragment)
+                     (fragment as StocksFragment).changePercentFilter("1")
+
+             }
+         }
+
+     }
+ }*/
+
 }
 
