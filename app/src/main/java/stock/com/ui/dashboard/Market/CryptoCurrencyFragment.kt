@@ -105,7 +105,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             callApiSearch(c, 0);
         } else {
             flag = true;
-            flagSearch=false
+            flagSearch = false
             Log.d("dsadada", "sdada--");
             page = 0
             limit = 50
@@ -137,15 +137,20 @@ class CryptoCurrencyFragment : BaseFragment() {
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        try {
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
+                        } catch (e: Exception) {
+
+                        }
                         if (flag.equals("1")) {
                             cryptoList!!.addAll(response.body()!!.crypto)
                             cryptoListNew!!.addAll(response.body()!!.crypto)
 //                            cryptoAdapter!!.notifyDataSetChanged()
                             if (cryptoAdapter != null)
                                 cryptoAdapter!!.notifyDataSetChanged()
-                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                setActiveCurrencyType("")
-                            }
+
                         } else if (flag.equals("2")) {
                             limit = limit + 50
                             cryptoList!!.addAll(response.body()!!.crypto)
@@ -218,8 +223,8 @@ class CryptoCurrencyFragment : BaseFragment() {
 
                             if (flagAlphaSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
-                                    cryptoListNew!!.clear()
-                                    cryptoListNew!!.addAll(sortedList)
+                                cryptoListNew!!.clear()
+                                cryptoListNew!!.addAll(sortedList)
 
                             } else if (flagPriceSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
@@ -244,10 +249,8 @@ class CryptoCurrencyFragment : BaseFragment() {
 
                             } else if (flagDHTLSort) {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
-
                                 cryptoListNew!!.clear()
                                 cryptoListNew!!.addAll(sortedList)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
 
                             }
                             if (rv_currencyList != null)
@@ -365,10 +368,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         AppDelegate.showAlert(activity!!, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()

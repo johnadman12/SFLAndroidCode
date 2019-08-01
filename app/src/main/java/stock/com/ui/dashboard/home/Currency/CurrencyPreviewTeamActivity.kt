@@ -18,6 +18,7 @@ import java.lang.Exception
 class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<CurrencyPojo.Currency>? = null;
     var totalChange: String = ""
+    var teamName: String = ""
     var totalChange1: Double = 0.0
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -36,6 +37,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         list = ArrayList()
         if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+            teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 
@@ -66,8 +68,10 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
     private fun initViews() {
         img_back.setOnClickListener(this)
         img_close.setOnClickListener(this)
-        if (list != null)
+        if (list != null) {
             setData()
+            txt_teamName.setText(teamName)
+        }
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
         }

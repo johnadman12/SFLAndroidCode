@@ -303,7 +303,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
 
                         if (diff < 900000) {
                             ll_Circular.isEnabled = false
-                            txtjoin.setText(getString(R.string.live_now))
+                            txtjoin.setText("Starts \n Soon")
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
                         } else {

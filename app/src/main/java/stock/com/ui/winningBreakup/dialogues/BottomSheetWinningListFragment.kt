@@ -2,6 +2,7 @@ package stock.com.ui.winningBreakup.dialogues
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_winninglist.*
 import stock.com.R
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.PriceBreak
+import stock.com.ui.rules_and_scoring.RulesScoringActivity
 import stock.com.ui.winningBreakup.adapter.WinningsListAdapter
 
 @SuppressLint("ValidFragment")
@@ -46,6 +48,9 @@ class BottomSheetWinningListFragment(
             behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
         }
         dialog.txt_prizeMoney.setText(winningAmount)
+        dialog.txt_Note.setOnClickListener {
+            startActivity(Intent(context, RulesScoringActivity::class.java))
+        }
         if (list != null) {
             setAdapter()
         }

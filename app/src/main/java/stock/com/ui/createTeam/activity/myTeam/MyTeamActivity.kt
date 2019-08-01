@@ -12,14 +12,7 @@ import stock.com.ui.dashboard.ContestNewBottom.MyTeamAdapter
 
 class MyTeamActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
-//        when (view!!.id) {
-//            R.id.btn_CreateTeam -> {
-//            startActivity(Intent(this, ChooseTeamActivity::class.java))
-//        }
-//            R.id.txt_Signup -> {
-//                startActivity(Intent(this, SignUpActivity::class.java))
-//            }
-//        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +27,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.my_team)
-        //setMenu(false, false, false, false, false, false, false)
         setAdapter()
-//        btn_CreateTeam.setOnClickListener(this)
-//        txt_Signup.setOnClickListener(this)
     }
 
 
@@ -46,6 +36,5 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-//        rv_Contest!!.adapter = MyTeamAdapter(this)
     }
 }

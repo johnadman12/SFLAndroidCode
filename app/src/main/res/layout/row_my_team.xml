@@ -23,7 +23,6 @@
                 card_view:layout_constraintTop_toTopOf="parent"
                 android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_team"
                     style="@style/TextStyleSemiBold"
                     android:gravity="start|center"
                     android:paddingTop="@dimen/_5sdp"
@@ -32,11 +31,33 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/_11ssp"
                     android:drawableEnd="@mipmap/edit"
+                    android:visibility="visible"
+                    android:focusable="false"
                     android:layout_width="wrap_content"
                     android:drawableTint="@color/blue"
                     android:drawablePadding="@dimen/_5sdp"
                     android:textColor="@color/black"
                     android:text="My Team "
+                    android:id="@+id/txt_MyTeam"
+                    android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="start|center"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:hint="Enter Team Name"
+                    android:textSize="@dimen/_11ssp"
+                    android:layout_width="wrap_content"
+                    android:drawableTint="@color/blue"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:inputType="text"
+                    android:visibility="gone"
+                    android:id="@+id/edt_teamname"
+                    android:backgroundTint="@color/blue"
+                    android:drawableEnd="@drawable/ic_check_name"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"/>
             <LinearLayout android:layout_width="0dp"
                           android:layout_weight="1"
@@ -177,16 +198,18 @@
                 card_view:layout_constraintEnd_toEndOf="parent"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:weightSum="4"
+                android:layout_height="32dp">
             <RelativeLayout
                     android:layout_width="0dp"
                     android:id="@+id/relViewTeam"
-                    android:layout_weight="1"
-                    android:padding="@dimen/_7sdp"
+                    android:layout_weight="1.1"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
-                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
                         style="@style/TextStyleMedium"
                         android:textSize="@dimen/_10sdp"
@@ -199,16 +222,17 @@
                 />
             </RelativeLayout>
             <RelativeLayout
-                    android:id="@+id/relClone" android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:padding="@dimen/_7sdp"
-                            android:layout_height="wrap_content">
+                    android:id="@+id/relClone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
-                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
                         style="@style/TextStyleMedium"
-
                         android:textSize="@dimen/_10sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
@@ -219,13 +243,35 @@
                 />
             </RelativeLayout>
             <RelativeLayout
-                    android:id="@+id/relShare" android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:id="@+id/rel_team"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.1"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="center"
+                        style="@style/TextStyleMedium"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textColorLightBlack"
+                        android:text="Edit Team"
+                        android:drawableStart="@mipmap/edit"
+                />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:id="@+id/relShare"
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
                     android:padding="@dimen/_7sdp"
                     android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
-                        android:drawablePadding="@dimen/_10sdp"
                         android:gravity="center"
                         style="@style/TextStyleMedium"
                         android:textSize="@dimen/_10sdp"

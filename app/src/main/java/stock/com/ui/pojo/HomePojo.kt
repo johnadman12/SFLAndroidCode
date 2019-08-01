@@ -9,14 +9,14 @@ import stock.com.ui.pojo.HomePojo.FeatureContest
 class HomePojo : BasePojo() {
     @SerializedName("featureContest")
     @Expose
-    var featureContest: List<FeatureContest>? = null
+    var featureContest: ArrayList<FeatureContest>? = null
     @SerializedName("banner")
     @Expose
-    var banner: List<Banner>? = null
+    var banner: ArrayList<Banner>? = null
 
     @SerializedName("news")
     @Expose
-    var news: List<News>? = null
+    var news: ArrayList<News>? = null
     @SerializedName("exchange")
     @Expose
     var exchange: ArrayList<Exchange>? = null

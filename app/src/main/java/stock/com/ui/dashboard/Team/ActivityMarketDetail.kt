@@ -103,7 +103,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
 
                         val fragment: ChartFragment = ChartFragment()
                         var nd: Bundle = Bundle()
-                        nd.putString("Stockname",symbol)
+                        nd.putString("Stockname", symbol)
                         setFragment(fragment, nd);
                         setStockData(response.body()!!.stock)
                         d.dismiss()
@@ -328,10 +328,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         AppDelegate.showAlert(this@ActivityMarketDetail, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()

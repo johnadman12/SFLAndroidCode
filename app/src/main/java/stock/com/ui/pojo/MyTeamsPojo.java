@@ -21,6 +21,9 @@ public class MyTeamsPojo extends BasePojo {
         @SerializedName("user_id")
         @Expose
         public int userId;
+        @SerializedName("userteamname")
+        @Expose
+        public String userteamname;
         @SerializedName("contest_id")
         @Expose
         public int contestId;

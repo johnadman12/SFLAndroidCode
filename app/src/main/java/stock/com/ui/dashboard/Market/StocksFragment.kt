@@ -300,11 +300,8 @@ class StocksFragment : BaseFragment() {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    displayToast(response.body()!!.message, "sucess")
-                    if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
-                        AppDelegate.showAlert(activity!!, response.body()!!.message)
+                     if (response.body()!!.status == "1") {
+                         AppDelegate.showAlert(activity!!, response.body()!!.message)
 
                     } else if (response.body()!!.status == "2") {
                         appLogout()

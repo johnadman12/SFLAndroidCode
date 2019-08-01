@@ -129,6 +129,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityMarketTeam, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                        .putExtra(StockConstant.TEAMNAME, "My Team")
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -811,7 +812,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         list!!.clear()
                         if (marketlistAdapter != null)
                             marketlistAdapter!!.notifyDataSetChanged();
+
                         list!!.addAll(response.body()!!.crypto!!)
+
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
@@ -820,6 +823,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (j in 0 until marketRemovedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketRemovedItems!!.get(j).cryptocurrencyid) {
                                     list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
                                 }
                             }
                         }
@@ -956,8 +967,11 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("1")) {
+                    if (marketSelectedItems!!.size > 0)
+                        marketSelectedItems!!.clear()
                     marketRemovedItems = data.getParcelableArrayListExtra("removedlist")
                     getTeamAgainlist()
+
                 } else if (data.getStringExtra("flag").equals("2")) {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);

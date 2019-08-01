@@ -23,7 +23,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.ll_myteam -> {
-                startActivity(Intent(this, MyTeamActivity::class.java))
+//                startActivity(Intent(this, MyTeamActivity::class.java))
             }
             R.id.rl_enterContestCode -> {
                 startActivity(Intent(this, InviteCodeActivity::class.java))

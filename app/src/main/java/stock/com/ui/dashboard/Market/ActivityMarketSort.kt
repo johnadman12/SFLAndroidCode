@@ -3,12 +3,14 @@ package stock.com.ui.dashboard.Market
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_market_sort.*
 import kotlinx.android.synthetic.main.include_back.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.utils.StockConstant
+import kotlin.math.log
 
 class ActivityMarketSort : BaseActivity() {
     var getFlag: String = ""
@@ -20,7 +22,6 @@ class ActivityMarketSort : BaseActivity() {
         reset.visibility = View.VISIBLE
 
 
-
         if (intent != null)
             getFlag = intent.getStringExtra("flagStatus")
 
@@ -30,7 +31,7 @@ class ActivityMarketSort : BaseActivity() {
             checkBoxHTL.isChecked = false;
             checkBoxDayHTL.isChecked = false
             checkBoxPrize.isChecked = true;
-            checkFlag =true;
+            checkFlag=true
 
         } else if (getFlag.equals("dayChange", true)) {
             checkBoxVolume.isChecked = true;
@@ -38,14 +39,15 @@ class ActivityMarketSort : BaseActivity() {
             checkBoxHTL.isChecked = false;
             checkBoxDayHTL.isChecked = false
             checkBoxPrize.isChecked = false;
-            checkFlag =true;
+            checkFlag=true
         } else if (getFlag.equals("Alpha", true)) {
             checkBoxVolume.isChecked = false;
             checkBoxAlpha.isChecked = true;
             checkBoxHTL.isChecked = false;
             checkBoxDayHTL.isChecked = false
             checkBoxPrize.isChecked = false;
-            checkFlag =true;
+            checkFlag=true
+
 
         } else if (getFlag.equals("HighToLow", true)) {
             checkBoxVolume.isChecked = false;
@@ -53,25 +55,26 @@ class ActivityMarketSort : BaseActivity() {
             checkBoxHTL.isChecked = true;
             checkBoxDayHTL.isChecked = false
             checkBoxPrize.isChecked = false;
-            checkFlag =true;
+            checkFlag=true
         } else if (getFlag.equals("DayHighToLow", true)) {
             checkBoxVolume.isChecked = false;
             checkBoxAlpha.isChecked = false;
             checkBoxHTL.isChecked = false;
             checkBoxDayHTL.isChecked = true
             checkBoxPrize.isChecked = false;
-            checkFlag =true;
+            checkFlag=true
+
         } else {
             checkBoxVolume.isChecked = false;
             checkBoxAlpha.isChecked = false;
             checkBoxHTL.isChecked = false;
             checkBoxDayHTL.isChecked = false
             checkBoxPrize.isChecked = false;
-            checkFlag =true;
+            checkFlag=false
+
         }
 
         initViews()
-
 
         checkBoxPrize?.setOnCheckedChangeListener { buttonView, isChecked ->
             //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
@@ -81,6 +84,8 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxHTL.isChecked = false;
                 checkBoxDayHTL.isChecked = false
                 checkFlag =true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxVolume?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -91,6 +96,8 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxHTL.isChecked = false;
                 checkBoxDayHTL.isChecked = false
                 checkFlag =true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxAlpha?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -101,16 +108,21 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxHTL.isChecked = false;
                 checkBoxDayHTL.isChecked = false
                 checkFlag =true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
             //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
+
             if (isChecked) {
                 checkBoxVolume.isChecked = false;
                 checkBoxPrize.isChecked = false;
                 checkBoxAlpha.isChecked = false;
                 checkBoxDayHTL.isChecked = false
                 checkFlag =true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxDayHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -121,6 +133,8 @@ class ActivityMarketSort : BaseActivity() {
                 checkBoxAlpha.isChecked = false;
                 checkBoxHTL.isChecked = false
                 checkFlag =true;
+            }else{
+                checkFlag=false;
             }
         }
 
@@ -144,9 +158,8 @@ class ActivityMarketSort : BaseActivity() {
 
         btn_sortApply.setOnClickListener {
             var temp: String = "";
+            Log.d("dklddlkdl",checkFlag.toString())
             if (checkFlag) {
-                displayToast("Please Select Sort Option.", "warning")
-            } else {
                 if (checkBoxPrize.isChecked) {
                     temp = "price"
                 }
@@ -166,6 +179,9 @@ class ActivityMarketSort : BaseActivity() {
                 intent.putExtra("flag", temp)
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+            }
+            else{
+                displayToast("Please Select Sort Option.", "warning")
             }
 
         }

@@ -33,7 +33,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     var identifires: String = ""
     private var dashBoradACtivity: DashBoardActivity? = null;
     var dataExchange: ArrayList<String>? = null;
-    var exchangeList: List<HomePojo.Exchange>? = null;
+    var exchangeList: ArrayList<HomePojo.Exchange>? = null;
+    var bannerAdapter: HorizontalPagerAdapter? = null
+    var stockNameAdapter: StockNameAdapter? = null
+    var bannerList: ArrayList<HomePojo.Banner>? = null;
     var newsStories: ArrayList<CityfalconNewsPojo.Story>? = null
 
     override fun onClick(view: View?) {
@@ -61,8 +64,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         exchangeList = ArrayList()
         dataExchange =
             ArrayList()
+        bannerList =
+            ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
+        setStockNameAdapter()
+        setHomeBannerAdapter()
     }
 
 
@@ -76,42 +83,28 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         getTrainingContentlist()
 //        getNewslist()
 
-
     }
 
-    private fun setHomeBannerAdapter(listImage: List<HomePojo.Banner>) {
+    private fun setHomeBannerAdapter() {
         if (!isAdded)
             return
-        /*  viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!, listImage)
-          viewPager_Banner.setClipToPadding(false);
-          viewPager_Banner.setPageMargin(10);
-          viewPager_Banner.startAutoScroll()
-          viewPager_Banner.isCycle = true
-
-          viewPager_Banner.setClipToPadding(false);
-          viewPager_Banner.setPadding(40, 0, 40, 0);
-          viewPager_Banner.setPageMargin(20);
-
-          tab_layout.visibility = VISIBLE;
-          tab_layout.setupWithViewPager(viewPager_Banner);*/
-        hicvp.adapter = HorizontalPagerAdapter(context, listImage!!, this, getFromPrefsString(StockConstant.USERID))
-//        recyclerView_stock_namesszzs
+        bannerAdapter = HorizontalPagerAdapter(context, bannerList, this, getFromPrefsString(StockConstant.USERID))
+        hicvp.adapter = bannerAdapter
     }
 
 
-    private fun setStockNameAdapter(exchangeList: ArrayList<HomePojo.Exchange>) {
+    private fun setStockNameAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView_stock_name!!.layoutManager = llm
         recyclerView_stock_name.visibility = View.VISIBLE
 
-        recyclerView_stock_name!!.adapter = StockNameAdapter(context!!, exchangeList!!)
+        stockNameAdapter = StockNameAdapter(context!!, exchangeList!!)
+        recyclerView_stock_name!!.adapter = stockNameAdapter
 
         // call function news
         autoScrollNews(llm)
 
-        //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
-//        recyclerView_stock_name.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         recyclerView_stock_name.setItemAnimator(DefaultItemAnimator())
         recyclerView_stock_name!!.adapter!!.notifyDataSetChanged();
 
@@ -160,8 +153,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_features.setClipToPadding(false);
         viewPager_features.setPadding(30, 0, 30, 0);
         viewPager_features.setPageMargin(10);
-
-
         var adapter = ViewPagerFeature(context!!, listItem, getFromPrefsString(StockConstant.USERID).toString())
         viewPager_features.setAdapter(adapter)
 
@@ -187,7 +178,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             override fun onPageScrollStateChanged(state: Int) {/*empty*/
             }
         });
-
 
     }
 
@@ -225,9 +215,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             }
         });
 
-/*
-        tab_layout_training.visibility = VISIBLE;
-        tab_layout_training.setupWithViewPager(viewPager_training);*/
 
     }
 
@@ -241,30 +228,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         //recyclerView_latest_new.addItemDecoration(CirclePagerIndicatorDecoration(activity));
     }
 
-    @SuppressLint("WrongConstant")
-    private fun setFixturesAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchFixturesAdapter(context!!)
-    }
-
-    @SuppressLint("WrongConstant")
-    private fun setLiveAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchLiveAdapter(context!!)
-    }
-
-    @SuppressLint("WrongConstant")
-    private fun setCompletedAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchCompletedAdapter(context!!)
-    }
-
     fun getFeatureContentlist() {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
@@ -276,13 +239,17 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-//                        progressBar.visibility = GONE
-                        setHomeBannerAdapter(response.body()!!.banner!!)
-                        setFeatureContestAdapter(response.body()!!.featureContest!!)
-
+                        bannerList!!.addAll(response.body()!!.banner!!)
+                        exchangeList!!.addAll(response.body()!!.exchange!!)
+                        /*setStockNameAdapter()
+                        setHomeBannerAdapter()*/
+                        if (bannerAdapter != null) {
+                            bannerAdapter!!.notifyDataSetChanged()
+                        }
                         exchangeList = response.body()!!.exchange!!
-
-                        setStockNameAdapter(response.body()!!.exchange!!)
+                        if (stockNameAdapter != null)
+                            stockNameAdapter!!.notifyDataSetChanged();
+                        setFeatureContestAdapter(response.body()!!.featureContest!!)
 
                         if (response.body()!!.exchange != null) {
                             for (i in 0 until response.body()!!.exchange!!.size)
@@ -324,7 +291,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 //                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        setTrainingContestAdapter(response.body()!!.traniningContest!!)
+                        try {
+                            setTrainingContestAdapter(response.body()!!.traniningContest!!)
+                        } catch (e: Exception) {
+
+                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }

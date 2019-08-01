@@ -22,76 +22,71 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:gravity="right"
-                    android:orientation="vertical">
-                <LinearLayout android:layout_width="0dp"
+                    android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_teamName"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="My Team"
+                        android:textSize="@dimen/_16ssp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_height="wrap_content"/>
+                <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
-                              android:padding="@dimen/_5sdp"
-                              android:visibility="gone"
-                              android:layout_weight="1"
-                              android:orientation="horizontal">
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="My Team "
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            style="@style/TextStyleSemiBold"
-                            android:textSize="@dimen/_22ssp"/>
+                              android:visibility="visible"
+                              android:layout_marginRight="@dimen/_10sdp"
+                              android:gravity="center"
+                              android:orientation="vertical">
+
+                    <RelativeLayout android:layout_width="@dimen/_60sdp"
+                                    android:layout_height="@dimen/_60sdp"
+                                    android:id="@+id/rel"
+                                    android:background="@mipmap/graycircle"
+                    >
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total"
+                                android:id="@+id/tv"
+                                android:textSize="@dimen/_10ssp"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleNormal"
+
+                        />
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_marginLeft="@dimen/_6sdp"
+                                android:layout_marginRight="@dimen/_6sdp"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/_10ssp"
+                                android:id="@+id/tvTotal"
+                                android:layout_below="@id/tv"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/textColorOffWhite"
+                                style="@style/TextStyleSemiBold"
+
+                        />
+
+                    </RelativeLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:id="@+id/iv_info"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:src="@mipmap/info_"
+                            android:layout_marginTop="@dimen/_2sdp"
                             android:layout_gravity="center"
-                            android:padding="@dimen/_5sdp"
-                            android:src="@mipmap/editteam"/>
-
+                            android:visibility="visible"
+                            android:tint="@color/white"/>
                 </LinearLayout>
-                <RelativeLayout android:layout_width="@dimen/_60sdp"
-                                android:layout_height="@dimen/_60sdp"
-                                android:id="@+id/rel"
-                                android:background="@mipmap/graycircle"
-                                android:layout_marginRight="@dimen/_10sdp"
-                >
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total"
-                            android:id="@+id/tv"
-                            android:textSize="@dimen/_10ssp"
-                            android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_centerHorizontal="true"
-                            android:textColor="@color/textColorOffWhite"
-                            style="@style/TextStyleNormal"
-
-                    />
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_marginLeft="@dimen/_6sdp"
-                            android:layout_marginRight="@dimen/_6sdp"
-                            android:layout_centerVertical="true"
-                            android:textSize="@dimen/_10ssp"
-                            android:id="@+id/tvTotal"
-                            android:layout_below="@id/tv"
-                            android:layout_centerInParent="true"
-                            android:textColor="@color/textColorOffWhite"
-                            style="@style/TextStyleSemiBold"
-
-                    />
-
-                </RelativeLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_info"
-                        android:layout_width="@dimen/_15sdp"
-                        android:layout_height="@dimen/_15sdp"
-                        android:src="@mipmap/info_"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:visibility="visible"
-                        android:tint="@color/white"
-                        android:layout_marginRight="@dimen/_30sdp"/>
             </LinearLayout>
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_centerVertical="true"

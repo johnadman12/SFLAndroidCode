@@ -25,6 +25,7 @@ import java.lang.Exception
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<StockTeamPojo.Stock>? = null;
     var totalChange: String = ""
+    var teamName: String = ""
     var totalChange1: Double = 0.0
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -43,6 +44,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         list = ArrayList()
         if (intent != null) {
             list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 
@@ -57,7 +59,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 rel.setBackgroundResource(R.mipmap.greencircle)
             else
                 rel.setBackgroundResource(R.mipmap.graycircle)
-            tvTotal.setText(totalChange+ "%")
+            tvTotal.setText(totalChange + "%")
         }
         try {
             initViews()
@@ -71,8 +73,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private fun initViews() {
         img_back.setOnClickListener(this)
         img_close.setOnClickListener(this)
-        if (list != null)
+        if (list != null) {
             setData()
+            txt_teamName.setText(teamName)
+        }
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
         }

@@ -23,6 +23,9 @@ public class Scores extends BasePojo {
         @SerializedName("rank")
         @Expose
         public String rank;
+        @SerializedName("userteamname")
+        @Expose
+        public String userteamname;
         @SerializedName("points")
         @Expose
         public String points;

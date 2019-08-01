@@ -32,16 +32,31 @@
                               android:layout_marginRight="@dimen/_5sdp"
                               android:layout_marginTop="@dimen/_5sdp"
                               android:orientation="horizontal">
-                    <EditText
+                    <TextView
+                            android:id="@+id/txtTeamname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Team "
+                            android:textColor="@color/white"
+                            android:drawablePadding="@dimen/_2sdp"
+                            android:drawableEnd="@mipmap/editteam"
+                            style="@style/TextStyleSemiBold"
+                            android:background="@null"
+                            android:textSize="@dimen/_20ssp"/>
+                    <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edtTeamName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="My Team "
-                            android:enabled="false"
                             android:textColor="@color/white"
+                            android:drawableRight="@drawable/ic_check_name"
+                            android:drawableTint="@color/white"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:backgroundTint="@color/white"
+                            android:imeOptions="actionDone"
                             style="@style/TextStyleSemiBold"
-                            android:background="@null"
-                            android:textSize="@dimen/_22ssp"/>
+                            android:textSize="@dimen/_20ssp"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivedit"

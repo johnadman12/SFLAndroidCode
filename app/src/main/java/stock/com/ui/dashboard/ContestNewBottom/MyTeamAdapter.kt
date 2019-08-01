@@ -2,10 +2,13 @@ package stock.com.ui.dashboard.ContestNewBottom
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_my_team.view.*
@@ -23,6 +26,8 @@ import stock.com.utils.StockConstant
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.constraintlayout.solver.widgets.WidgetContainer.getBounds
+
 
 class MyTeamAdapter(
     val mContext: Context,
@@ -41,6 +46,45 @@ class MyTeamAdapter(
         holder.itemView.tvDate.setText(parseDateToddMMyyyy(myteam.get(position).created))
         holder.itemView.totalChange.setText(myteam.get(position).totalchangePercentage.toString() + " %")
 
+        holder.itemView.txt_MyTeam.visibility = View.VISIBLE
+        holder.itemView.edt_teamname.visibility = View.GONE
+        if (!TextUtils.isEmpty(myteam.get(position).userteamname)) {
+            holder.itemView.txt_MyTeam.setText(myteam.get(position).userteamname)
+            holder.itemView.edt_teamname.setText(myteam.get(position).userteamname)
+        }
+
+
+        holder.itemView.edt_teamname.setOnTouchListener(object : View.OnTouchListener {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                val DRAWABLE_RIGHT = 2
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= holder.itemView.edt_teamname.getRight() - holder.itemView.edt_teamname.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()) {
+                        holder.itemView.edt_teamname.setFocusable(false);
+                        if (TextUtils.isEmpty(holder.itemView.edt_teamname.text.toString()))
+                            AppDelegate.showToast(mContext, "Please Enter Team Name")
+                        else {
+                            holder.itemView.txt_MyTeam.setText(holder.itemView.edt_teamname.text.toString())
+                            activityMyTeam.saveTeamName(
+                                myteam.get(position).teamId,
+                                holder.itemView.txt_MyTeam.text.toString()
+                            )
+
+                        }
+                          holder.itemView.edt_teamname.visibility = View.GONE
+                          holder.itemView.txt_MyTeam.visibility = View.VISIBLE
+                        return true
+                    }
+                }
+                return false
+            }
+        })
+
+        holder.itemView.txt_MyTeam.setOnClickListener {
+            holder.itemView.edt_teamname.visibility = View.VISIBLE
+            holder.itemView.txt_MyTeam.visibility = View.GONE
+        }
+
         if (myteam.get(position).stock.size == 0) {
             holder.itemView.stockName.setText(myteam.get(position).marketname)
         } else {
@@ -50,7 +94,8 @@ class MyTeamAdapter(
                     .into(holder.itemView.ivStock)
         }
 
-        holder.itemView.txt_team.setOnClickListener {
+
+        holder.itemView.rel_team.setOnClickListener {
             if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityMarketTeam::class.java)
@@ -128,12 +173,14 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
@@ -141,6 +188,7 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             }

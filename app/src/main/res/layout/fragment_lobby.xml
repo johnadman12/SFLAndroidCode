@@ -195,6 +195,7 @@
                     <RelativeLayout
                             android:layout_width="@dimen/_80sdp"
                             android:layout_marginLeft="@dimen/_2sdp"
+                            android:id="@+id/rel_crypto"
                             android:layout_height="@dimen/_70sdp">
                         <stock.com.utils.custom.RoundRectCornerImageView
                                 android:id="@+id/imv_product"

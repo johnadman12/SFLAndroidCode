@@ -241,6 +241,11 @@
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
         <activity
+                android:name=".ui.dashboard.WebviewActivity"
+                android:configChanges="orientation|keyboardHidden"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
                 android:name=".ui.dashboard.profile.activity.MyAccountActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"

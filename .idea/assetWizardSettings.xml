@@ -168,9 +168,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_google_plus" />
+                            <entry key="color" value="010101" />
+                            <entry key="outputName" value="ic_check_name" />
                             <entry key="sourceFile" value="C:\Users\Emizen\Desktop\iconfinder_googleplus_306197.svg" />
                           </map>
                         </option>

@@ -103,6 +103,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityCurrencyTeam, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, currencySelected)
+                        .putExtra(StockConstant.TEAMNAME, "My Team")
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -775,7 +776,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("1")) {
+                    if (currencySelected != null)
+                        currencySelected!!.clear()
                     currencyRemoved = data.getParcelableArrayListExtra("removedlist")
+                    currencySelected!!.addAll(currencyRemoved!!)
                     page = 0;
                     getCurrencyTeamlist("1")
                 } else if (data.getStringExtra("flag").equals("2")) {

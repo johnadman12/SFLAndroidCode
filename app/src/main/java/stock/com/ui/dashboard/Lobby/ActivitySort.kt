@@ -12,14 +12,12 @@ import stock.com.R
 class ActivitySort : BaseActivity() {
     var getFlag: String = ""
     var checkFlag: Boolean=false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sort)
         reset.visibility = VISIBLE
         //var getFlag: String = ""
         initViews();
-
         if (intent != null)
             getFlag = intent.getStringExtra("flagStatus")
 
@@ -55,7 +53,7 @@ class ActivitySort : BaseActivity() {
                 checkBoxTime.isChecked = false;
                 checkBoxPosition.isChecked = false;
                 checkBoxEntry.isChecked = false;
-                checkFlag=true;
+                checkFlag=false;
             }
 
         reset.setOnClickListener {
@@ -73,6 +71,8 @@ class ActivitySort : BaseActivity() {
                 checkBoxTime.isChecked = false;
                 checkBoxPosition.isChecked = false;
                 checkFlag=true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxEntry?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -82,6 +82,8 @@ class ActivitySort : BaseActivity() {
                 checkBoxTime.isChecked = false;
                 checkBoxPosition.isChecked = false;
                 checkFlag=true;
+            }else{
+                checkFlag=false;
             }
         }
         checkBoxTime?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -91,9 +93,10 @@ class ActivitySort : BaseActivity() {
                 checkBoxPrize.isChecked = false;
                 checkBoxPosition.isChecked = false;
                 checkFlag=true;
+            }else{
+                checkFlag=false;
             }
         }
-
         checkBoxPosition?.setOnCheckedChangeListener { buttonView, isChecked ->
             //val msg = "You have " + (if (isChecked) "checked" else "unchecked") + " this Check it Checkbox."
             if (isChecked) {
@@ -101,6 +104,8 @@ class ActivitySort : BaseActivity() {
                 checkBoxTime.isChecked = false;
                 checkBoxPrize.isChecked = false;
                 checkFlag=true;
+            }else{
+                checkFlag=false;
             }
         }
     }
@@ -112,8 +117,6 @@ class ActivitySort : BaseActivity() {
 
         btn_sortApply.setOnClickListener {
             if (checkFlag) {
-                displayToast("Please Select Sort Option.", "warning")
-            } else {
                 var temp: String = "";
                 if (checkBoxPrize.isChecked) {
                     temp = "price"
@@ -127,17 +130,16 @@ class ActivitySort : BaseActivity() {
                 if (checkBoxPosition.isChecked) {
                     temp = "position"
                 }
-
                 var intent = Intent();
                 intent.putExtra("flag", temp)
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+            }else{
+                displayToast("Please Select Sort Option.", "warning")
             }
         }
     }
-
     override fun onBackPressed() {
         super.onBackPressed();
-
     }
 }

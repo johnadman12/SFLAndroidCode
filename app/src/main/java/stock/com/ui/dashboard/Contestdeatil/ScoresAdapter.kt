@@ -61,23 +61,26 @@ class ScoresAdapter(
                         mContext.startActivity(
                             Intent(mContext, TeamPreviewActivity::class.java)
                                 .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                                .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         ) else if (!TextUtils.isEmpty(marketName) && marketName.equals("Cryptocurrencies"))
                         mContext.startActivity(
                             Intent(mContext, MarketTeamPreviewActivity::class.java)
                                 .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                                .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         )
                     else if (!TextUtils.isEmpty(marketName) && marketName.equals("Currencies"))
                         mContext.startActivity(
                             Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                                 .putExtra(StockConstant.MARKETLIST, scores.get(position).currencies)
+                                .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         )
-                    AppDelegate.showToast(mContext,scores.get(position).currencies.size.toString())
+                    AppDelegate.showToast(mContext, scores.get(position).currencies.size.toString())
+                } else {
+                    AppDelegate.showToast(mContext, "contest not started yet")
                 }
-            } else {
-                AppDelegate.showToast(mContext, "contest not started yet")
             }
 //        }
 

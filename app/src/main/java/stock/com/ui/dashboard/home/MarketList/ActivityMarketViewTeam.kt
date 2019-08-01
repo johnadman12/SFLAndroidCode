@@ -8,11 +8,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -83,6 +81,10 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 ivedit.visibility = View.VISIBLE
                 ivRight.visibility = View.GONE
             }
+            R.id.txtTeamname -> {
+                edtTeamName.visibility = View.VISIBLE
+                txtTeamname.visibility = View.GONE
+            }
             R.id.ll_save -> {
                 if (marketSelectedItem!!.size > 0) {
                     for (i in 0 until marketSelectedItem!!.size) {
@@ -99,7 +101,10 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                         Log.d("finaldata", array.toString())
                         array.add(postData1)
                     }
-                    saveTeamList()
+                    if (!TextUtils.isEmpty(edtTeamName.text.toString()))
+                        saveTeamList()
+                    else
+                        displayToast("Please Enter Team name", "error")
                 } else {
                     displayToast("please select Crypto first", "warning")
                 }
@@ -128,6 +133,25 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
         if (flagCloning == 1)
             getContestDetail()
+
+        edtTeamName.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                val DRAWABLE_RIGHT = 2
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= edtTeamName.getRight() - edtTeamName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()) {
+                        if (TextUtils.isEmpty(edtTeamName.text.toString())) {
+                            displayToast("Please enter team name", "warning")
+                        } else {
+                            edtTeamName.visibility = View.GONE
+                            txtTeamname.visibility = View.VISIBLE
+                            txtTeamname.setText(edtTeamName.text.toString())
+                        }
+                        return true
+                    }
+                }
+                return false
+            }
+        })
 
     }
 
@@ -172,6 +196,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
+        txtTeamname.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
         ll_sort.visibility = View.GONE
         marketSelectedItem = list
@@ -258,9 +283,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
             }
 //                    Log.e("savedlist", array.toString())
 
-            if (flagCloning == 1)
+            if (flagCloning == 1) {
                 joinWithThisTeamID()
-            else
+            } else
                 joinWithThisTeam()
             Log.e("savedlist", array.toString())
         } else {
@@ -283,7 +308,11 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         }
         dialogue.tv_yes.setOnClickListener {
             dialogue.dismiss()
-            joinContest()
+            if (!TextUtils.isEmpty(edtTeamName.text.toString()))
+                joinContest()
+            else
+                displayToast("Please Enter Team name", "error")
+
         }
         dialogue.txt_Withdraw.setOnClickListener {
             dialogue.dismiss()
@@ -372,6 +401,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 
@@ -433,6 +463,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 
@@ -489,6 +520,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 
@@ -515,7 +547,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
-                        AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
+                            AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
                         }, 500)
 
                     } else if (response.body()!!.status == "2") {

@@ -155,8 +155,11 @@
     <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions">
         <b>Note:-</b>
         ACTUAL PRIZE AMOUNT MAY VARY THAN WHAT IS MENTIONED PER RANKING IF THERE WAS A TIE IN SCORES AND RESULTS. REFER
-        TO RULES AND SCORING FOR MORE DETAILS.
-        <u>(RULES AND SCORING SHOULD BE HYPERLINK TO ITS SCREEN)</u>
+        TO
+        <font color="#0190C8">
+            <u>RULES AND SCORING</u>
+        </font>
+        FOR MORE DETAILS.
     </string>
     <string name="view_teams">View Team</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>

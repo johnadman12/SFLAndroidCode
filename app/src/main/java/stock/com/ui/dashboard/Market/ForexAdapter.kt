@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.row_forex.view.*
 import stock.com.R
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.pojo.CurrencyPojo
+import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 
 class ForexAdapter(
@@ -309,11 +310,14 @@ class ForexAdapter(
         holder.itemView.tv_company.setText("(" + oldData.get(position).name + ")");
 
         holder.itemView.llwatch.setOnClickListener {
-            frgament.saveToWatchList(oldData.get(position).currencyid);
-            oldData.get(position).cryptoType = "1";
-            holder.itemView.llAdd.visibility = View.GONE;
-            holder.itemView.img_check.visibility = View.VISIBLE;
-            holder.itemView.llwatch.isEnabled = false;
+            if (oldData.get(position).cryptoType.equals("0")) {
+                frgament.saveToWatchList(oldData.get(position).currencyid);
+                oldData.get(position).cryptoType = "1";
+                holder.itemView.llAdd.visibility = View.GONE;
+                holder.itemView.img_check.visibility = View.VISIBLE;
+            } else {
+                AppDelegate.showAlert(mContext, "Already Added")
+            }
         }
 
 

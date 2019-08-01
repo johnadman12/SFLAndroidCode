@@ -100,6 +100,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                        .putExtra(StockConstant.TEAMNAME, "My Team")
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }

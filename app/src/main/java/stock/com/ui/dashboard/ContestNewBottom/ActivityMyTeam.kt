@@ -144,7 +144,8 @@ class ActivityMyTeam : BaseActivity() {
         call.enqueue(object : Callback<MyTeamsPojo> {
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
                 d.dismiss()
-                sr2_layout.isRefreshing = false
+                if (sr2_layout != null)
+                    sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flagFirstTime == 0) {
@@ -184,7 +185,6 @@ class ActivityMyTeam : BaseActivity() {
         rvMYTeam!!.adapter = myTeamAdapter
     }
 
-
     fun makeClone(teamId: Int, contestId: Int) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -207,8 +207,49 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                            page = 0
                             getTeamlist(0)
-                            myTeamAdapter!!.notifyDataSetChanged()
+                        }, 100)
+
+                    } else if (response.body()!!.status == "0") {
+                        AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    d.dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<BasePojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
+
+
+    fun saveTeamName(teamId: Int, teamname: String) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<BasePojo> =
+            apiService.saveTeamName(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                teamId, teamname
+            )
+        call.enqueue(object : Callback<BasePojo> {
+
+            override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        Handler().postDelayed(Runnable {
+                            AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                        /*    page = 0
+                            getTeamlist(0)*/
                         }, 100)
 
                     } else if (response.body()!!.status == "0") {
@@ -254,6 +295,7 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
+                            page = 0
                             getMarketTeamlist(0)
                             myTeamAdapter!!.notifyDataSetChanged()
                         }, 100)

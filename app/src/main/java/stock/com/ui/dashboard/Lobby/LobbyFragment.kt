@@ -25,6 +25,7 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
+import stock.com.ui.dashboard.WebviewActivity
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -37,28 +38,16 @@ class LobbyFragment : BaseFragment() {
     var categoryId: String = ""
     var flag: String = ""
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
+    var lobbyContestAdapter: LobbyContestAdapter? = null
 
     private var dashBoardActivity: DashBoardActivity? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews();
-    }
-
-    private fun initViews() {
         contest = ArrayList();
-
+        dashBoardActivity = activity as DashBoardActivity?
         if (arguments!!.getString("id") != null)
             categoryId = arguments!!.getString("id");
-
-        dashBoardActivity = activity as DashBoardActivity?
-
-
-        if (!TextUtils.isEmpty(categoryId)) {
-            setFilters(categoryId)
-        } else {
-            getContestlist()
-        }
 
 
         ll_filter.setOnClickListener {
@@ -83,6 +72,9 @@ class LobbyFragment : BaseFragment() {
                 StockConstant.RESULT_CODE_SORT
             )
         }
+        rel_crypto.setOnClickListener {
+            startActivity(Intent(activity!!, WebviewActivity::class.java))
+        }
 
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
             override fun completeRefresh() {
@@ -95,7 +87,21 @@ class LobbyFragment : BaseFragment() {
                 }, 1500)
             }
         })
+        setContestAdapter()
+    }
 
+    private fun initViews() {
+        if (!TextUtils.isEmpty(categoryId)) {
+            setFilters(categoryId)
+        } else {
+            getContestlist()
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initViews()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -128,8 +134,13 @@ class LobbyFragment : BaseFragment() {
                         } catch (e: Exception) {
 
                         }
-                        contest = response.body()!!.contest!!;
-                        setContestAdapter(response.body()!!.contest!!)
+                        if (contest != null) {
+                            contest!!.clear()
+                        }
+                        contest!!.addAll(response.body()!!.contest!!)
+                        if (lobbyContestAdapter != null) {
+                            lobbyContestAdapter!!.notifyDataSetChanged()
+                        }
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -151,12 +162,13 @@ class LobbyFragment : BaseFragment() {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setContestAdapter(contest: List<LobbyContestPojo.Contest>) {
+    private fun setContestAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_contest!!.layoutManager = llm
         recyclerView_contest?.itemAnimator = DefaultItemAnimator()
-        recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest)
+        lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
+        recyclerView_contest!!.adapter = lobbyContestAdapter
 
     }
 
@@ -228,17 +240,17 @@ class LobbyFragment : BaseFragment() {
             }
         } else if (requestCode == StockConstant.REDIRECT_CREATED) {
             if (resultCode == AppCompatActivity.RESULT_OK /*&& data != null*/) {
-                 var intent = Intent();
-                 activity!!.setResult(Activity.RESULT_OK, intent);
-                 dashBoardActivity!!.callToCreated()
+                var intent = Intent();
+                activity!!.setResult(Activity.RESULT_OK, intent);
+                dashBoardActivity!!.callToCreated()
 //                activity!!.finish();
 
             }
         } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
             if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                   var intent = Intent();
-                   activity!!.setResult(Activity.RESULT_OK, intent);
-                   dashBoardActivity!!.test()
+                var intent = Intent();
+                activity!!.setResult(Activity.RESULT_OK, intent);
+                dashBoardActivity!!.test()
 //                activity!!.finish();
 
             }
@@ -285,8 +297,10 @@ class LobbyFragment : BaseFragment() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        contest = response.body()!!.contest
-                        setContestAdapter(contest!!)
+                        contest!!.clear()
+                        contest!!.addAll(response.body()!!.contest)
+                        if (lobbyContestAdapter != null)
+                            lobbyContestAdapter!!.notifyDataSetChanged()
                     } else if (response.body()!!.status == "2") {
                         appLogout();
                     } else {

@@ -134,7 +134,6 @@ class CurrencyFragment : BaseFragment() {
         call.enqueue(object : Callback<CurrencyPojo> {
             override fun onResponse(call: Call<CurrencyPojo>, response: Response<CurrencyPojo>) {
                 d.dismiss();
-                srl_layout.isRefreshing = false;
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false;
                 if (response.body() != null) {
@@ -184,10 +183,7 @@ class CurrencyFragment : BaseFragment() {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                    displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
-                        Handler().postDelayed(Runnable {
-                        }, 100)
                         AppDelegate.showAlert(activity!!, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()

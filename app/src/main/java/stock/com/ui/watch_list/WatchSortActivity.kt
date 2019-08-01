@@ -54,9 +54,8 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
 
         } else {
             makecheckbox(true, false, false, false, false)
-            checkFlag = true;
+            checkFlag = false;
         }
-
 
         checkBoxDailyChanges.setOnCheckedChangeListener(this);
         cb_weekly.setOnCheckedChangeListener(this);
@@ -69,8 +68,6 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
 
         btn_Apply.setOnClickListener {
             if ( checkFlag){
-                displayToast("Please Select Sort Option.", "warning");
-            }else {
                 if (cb_price_high.isChecked) {
                     temp = "high";
                 }
@@ -90,6 +87,9 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                 intent.putExtra("flag", temp)
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+            }
+            else {
+                displayToast("Please Select Sort Option.", "warning");
             }
         }
 
@@ -113,6 +113,9 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                     cb_price_high.isChecked = false;
                     checkFlag = true;
                 }
+                else{
+                    checkFlag=false;
+                }
             }
             R.id.cb_weekly -> {
                 if (isChecked) {
@@ -121,6 +124,8 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                     cb_price_low.isChecked = false;
                     cb_price_high.isChecked = false;
                     checkFlag = true;
+                }else{
+                    checkFlag=false;
                 }
             }
             R.id.cb_monthly -> {
@@ -130,6 +135,8 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                     cb_price_low.isChecked = false;
                     cb_price_high.isChecked = false;
                     checkFlag = true;
+                }else{
+                    checkFlag=false;
                 }
             }
             R.id.cb_price_low -> {
@@ -139,6 +146,8 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                     cb_monthly.isChecked = false;
                     cb_price_high.isChecked = false;
                     checkFlag = true;
+                }else{
+                    checkFlag=false;
                 }
             }
             R.id.cb_price_high -> {
@@ -148,6 +157,8 @@ class WatchSortActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
                     cb_monthly.isChecked = false;
                     cb_price_low.isChecked = false;
                     checkFlag = true;
+                }else{
+                    checkFlag=false;
                 }
             }
 

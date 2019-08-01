@@ -43,18 +43,21 @@ class LiveScoreAdapter(
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
+                        .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
             } else if (scores.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
+                        .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
             }else
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, scores.get(position).currencies)
+                        .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
 

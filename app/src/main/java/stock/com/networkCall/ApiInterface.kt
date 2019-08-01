@@ -582,6 +582,14 @@ interface ApiInterface {
         @Field("friend_id") friend_id: String
     ): Call<OtherProfile>
 
+    @FormUrlEncoded
+    @POST("/api/marketteam/edit_team_name")
+    fun saveTeamName(
+        @Header("x-access-token") token: String,
+        @Field("team_id") teamId: Int,
+        @Field("user_team_name") teamname: String
+    ): Call<BasePojo>
+
 
     /*  @FormUrlEncoded
       @POST("team/create_team")

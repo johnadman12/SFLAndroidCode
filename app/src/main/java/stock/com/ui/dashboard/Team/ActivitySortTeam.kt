@@ -47,7 +47,7 @@ class ActivitySortTeam : BaseActivity() {
             checkFalg=true;
         } else {
             makecheckbox(false, false, false, false, false, false)
-            checkFalg=true;
+            checkFalg=false;
         }
 
         initViews()
@@ -61,6 +61,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayHTL.isChecked = false;
                 checkBoxDayLTH.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
         checkBoxVolume?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -72,6 +74,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayHTL.isChecked = false;
                 checkBoxDayLTH.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
         checkBoxAlpha?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -83,6 +87,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayHTL.isChecked = false;
                 checkBoxDayLTH.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
         checkBoxPrizeHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -94,6 +100,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayHTL.isChecked = false;
                 checkBoxDayLTH.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
         checkBoxDayHTL?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -105,6 +113,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayLTH.isChecked = false;
                 checkBoxPrizeHTL.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
         checkBoxDayLTH?.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -116,6 +126,8 @@ class ActivitySortTeam : BaseActivity() {
                 checkBoxDayHTL.isChecked = false;
                 checkBoxPrizeHTL.isChecked = false;
                 checkFalg=true;
+            }else{
+                checkFalg=false;
             }
         }
 
@@ -146,12 +158,9 @@ class ActivitySortTeam : BaseActivity() {
         img_btn_back.setOnClickListener {
             finish();
         }
-
         btn_sortApply.setOnClickListener {
             var temp: String = "";
             if (checkFalg) {
-                displayToast("Please Select Sort Option.", "warning")
-            } else {
                 if (checkBoxPrize.isChecked) {
                     temp = "price"
                 }
@@ -176,6 +185,8 @@ class ActivitySortTeam : BaseActivity() {
                 intent.putExtra("flag", temp)
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+            }else {
+                displayToast("Please Select Sort Option.", "warning")
             }
         }
     }
