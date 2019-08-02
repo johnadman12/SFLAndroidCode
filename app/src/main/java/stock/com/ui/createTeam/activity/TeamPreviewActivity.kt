@@ -83,154 +83,204 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setData() {
-        Glide.with(this).load(list!!.get(0).image).placeholder(R.mipmap.cricketer).into(cimg_wk1)
-        price1.setText(list!!.get(0).symbol)
-        percentage1.setText(list!!.get(0).companyName)
-//        stockcompanyName1.setText(list!!.get(0).symbol)
-        if (!TextUtils.isEmpty(list!!.get(0).changePercent))
-            if (list!!.get(0).changePercent.contains("-"))
-                arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-                /*price1.setTextColor(ContextCompat.getColor(this, R.color.green))
-                percentage1.setTextColor(ContextCompat.getColor(this, R.color.green))*/
-            }
-
-        Glide.with(this).load(list!!.get(1).image).placeholder(R.mipmap.cricketer).into(cimg_wk2)
-        price2.setText(list!!.get(1).symbol)
-        percentage2.setText(list!!.get(1).companyName)
-        if (!TextUtils.isEmpty(list!!.get(1).changePercent))
-            if (list!!.get(1).changePercent.contains("-"))
-                arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-
-            }
+        if (!TextUtils.isEmpty(list!!.get(0).symbol)) {
+            rel1.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(0).image).placeholder(R.mipmap.cricketer).into(cimg_wk1)
+            price1.setText(list!!.get(0).symbol)
+            percentage1.setText(list!!.get(0).companyName)
+            if (!TextUtils.isEmpty(list!!.get(0).stock_type))
+                if (list!!.get(0).stock_type.equals("1"))
+                    arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                    /*price1.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    percentage1.setTextColor(ContextCompat.getColor(this, R.color.green))*/
+                }
+        } else {
+            rel1.visibility = View.GONE
+        }
 
 
+        if (!TextUtils.isEmpty(list!!.get(1).symbol)) {
+            rel2.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(1).image).placeholder(R.mipmap.cricketer).into(cimg_wk2)
+            price2.setText(list!!.get(1).symbol)
+            percentage2.setText(list!!.get(1).companyName)
+            if (!TextUtils.isEmpty(list!!.get(1).stock_type))
+                if (list!!.get(1).stock_type.equals("1"))
+                    arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
+                }
 
-        Glide.with(this).load(list!!.get(2).image).placeholder(R.mipmap.cricketer).into(cimg_wk3)
-        price3.setText(list!!.get(2).symbol)
-        percentage3.setText(list!!.get(2).companyName)
-        if (!TextUtils.isEmpty(list!!.get(2).changePercent))
-            if (list!!.get(2).changePercent.contains("-"))
-                arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-                /*    price3.setTextColor(ContextCompat.getColor(this, R.color.green))
-                    percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))*/
-            }
-
-
-        Glide.with(this).load(list!!.get(3).image).placeholder(R.mipmap.cricketer).into(cimg_wk4)
-        price4.setText(list!!.get(3).symbol)
-        percentage4.setText(list!!.get(3).companyName)
-        if (!TextUtils.isEmpty(list!!.get(3).changePercent))
-            if (list!!.get(3).changePercent.contains("-"))
-                arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-
-            }
+        } else {
+            rel2.visibility = View.GONE
+        }
 
 
 
-        Glide.with(this).load(list!!.get(4).image).placeholder(R.mipmap.cricketer).into(cimg_wk5)
-        price5.setText(list!!.get(4).symbol)
-        percentage5.setText(list!!.get(4).companyName)
-        if (!TextUtils.isEmpty(list!!.get(4).changePercent))
-            if (list!!.get(4).changePercent.contains("-"))
-                arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
+        if (!TextUtils.isEmpty(list!!.get(2).symbol)) {
+            rel3.visibility = View.VISIBLE
+
+            Glide.with(this).load(list!!.get(2).image).placeholder(R.mipmap.cricketer).into(cimg_wk3)
+            price3.setText(list!!.get(2).symbol)
+            percentage3.setText(list!!.get(2).companyName)
+            if (!TextUtils.isEmpty(list!!.get(2).stock_type))
+                if (list!!.get(2).stock_type.equals("1"))
+                    arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                    /*    price3.setTextColor(ContextCompat.getColor(this, R.color.green))
+                        percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))*/
+                }
+        } else {
+            rel3.visibility = View.GONE
+        }
 
 
+        if (!TextUtils.isEmpty(list!!.get(3).symbol)) {
+            rel4.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(3).image).placeholder(R.mipmap.cricketer).into(cimg_wk4)
+            price4.setText(list!!.get(3).symbol)
+            percentage4.setText(list!!.get(3).companyName)
+            if (!TextUtils.isEmpty(list!!.get(3).stock_type))
+                if (list!!.get(3).stock_type.equals("1"))
+                    arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
-        Glide.with(this).load(list!!.get(5).image).placeholder(R.mipmap.cricketer).into(cimg_wk6)
-        price6.setText(list!!.get(5).symbol)
-        percentage6.setText(list!!.get(5).companyName)
-        if (!TextUtils.isEmpty(list!!.get(5).changePercent))
-            if (list!!.get(5).changePercent.contains("-"))
-                arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
-
-
-
-        Glide.with(this).load(list!!.get(6).image).placeholder(R.mipmap.cricketer).into(cimg_wk7)
-        price7.setText(list!!.get(6).symbol)
-        percentage7.setText(list!!.get(6).companyName)
-        if (!TextUtils.isEmpty(list!!.get(6).changePercent))
-            if (list!!.get(6).changePercent.contains("-"))
-                arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
+                }
+        } else {
+            rel4.visibility = View.GONE
+        }
 
 
+        if (!TextUtils.isEmpty(list!!.get(4).symbol)) {
+            rel5.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(4).image).placeholder(R.mipmap.cricketer).into(cimg_wk5)
+            price5.setText(list!!.get(4).symbol)
+            percentage5.setText(list!!.get(4).companyName)
+            if (!TextUtils.isEmpty(list!!.get(4).stock_type))
+                if (list!!.get(4).stock_type.equals("1"))
+                    arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel5.visibility = View.GONE
+        }
 
-        Glide.with(this).load(list!!.get(7).image).placeholder(R.mipmap.cricketer).into(cimg_wk8)
-        price8.setText(list!!.get(7).symbol)
-        percentage8.setText(list!!.get(7).companyName)
-        if (!TextUtils.isEmpty(list!!.get(7).changePercent))
-            if (list!!.get(7).changePercent.contains("-"))
-                arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
+        if (!TextUtils.isEmpty(list!!.get(5).symbol)) {
+            rel6.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(5).image).placeholder(R.mipmap.cricketer).into(cimg_wk6)
+            price6.setText(list!!.get(5).symbol)
+            percentage6.setText(list!!.get(5).companyName)
+            if (!TextUtils.isEmpty(list!!.get(5).stock_type))
+                if (list!!.get(5).stock_type.equals("1"))
+                    arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel6.visibility = View.GONE
+        }
 
-
-
-
-        Glide.with(this).load(list!!.get(8).image).placeholder(R.mipmap.cricketer).into(cimg_wk9)
-        price9.setText(list!!.get(8).symbol)
-        percentage9.setText(list!!.get(8).companyName)
-        if (!TextUtils.isEmpty(list!!.get(8).changePercent))
-            if (list!!.get(8).changePercent.contains("-"))
-                arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
-
-
-
-        Glide.with(this).load(list!!.get(9).image).placeholder(R.mipmap.cricketer).into(cimg_wk10)
-        price10.setText(list!!.get(9).symbol)
-        percentage10.setText(list!!.get(9).companyName)
-        if (!TextUtils.isEmpty(list!!.get(9).changePercent))
-            if (list!!.get(9).changePercent.contains("-"))
-                arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
-
-
-
-        Glide.with(this).load(list!!.get(10).image).placeholder(R.mipmap.cricketer).into(cimg_wk11)
-        price11.setText(list!!.get(10).symbol)
-        percentage11.setText(list!!.get(10).companyName)
-        if (!TextUtils.isEmpty(list!!.get(10).changePercent))
-            if (list!!.get(10).changePercent.contains("-"))
-                arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
-            }
+        if (!TextUtils.isEmpty(list!!.get(6).symbol)) {
+            rel7.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(6).image).placeholder(R.mipmap.cricketer).into(cimg_wk7)
+            price7.setText(list!!.get(6).symbol)
+            percentage7.setText(list!!.get(6).companyName)
+            if (!TextUtils.isEmpty(list!!.get(6).stock_type))
+                if (list!!.get(6).stock_type.equals("1"))
+                    arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel7.visibility = View.GONE
+        }
 
 
+        if (!TextUtils.isEmpty(list!!.get(7).symbol)) {
+            rel8.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(7).image).placeholder(R.mipmap.cricketer).into(cimg_wk8)
+            price8.setText(list!!.get(7).symbol)
+            percentage8.setText(list!!.get(7).companyName)
+            if (!TextUtils.isEmpty(list!!.get(7).stock_type))
+                if (list!!.get(7).stock_type.equals("1"))
+                    arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel8.visibility = View.GONE
+        }
 
-        Glide.with(this).load(list!!.get(11).image).into(cimg_wk12)
-        price12.setText(list!!.get(11).symbol)
-        percentage12.setText(list!!.get(11).companyName)
-        if (!TextUtils.isEmpty(list!!.get(11).changePercent))
-            if (list!!.get(11).changePercent.contains("-"))
-                arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
-            else {
-                arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
-            }
+        if (!TextUtils.isEmpty(list!!.get(8).symbol)) {
+            rel9.visibility = View.VISIBLE
+
+            Glide.with(this).load(list!!.get(8).image).placeholder(R.mipmap.cricketer).into(cimg_wk9)
+            price9.setText(list!!.get(8).symbol)
+            percentage9.setText(list!!.get(8).companyName)
+            if (!TextUtils.isEmpty(list!!.get(8).stock_type))
+                if (list!!.get(8).stock_type.equals("1"))
+                    arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel9.visibility = View.GONE
+        }
+
+        if (!TextUtils.isEmpty(list!!.get(9).symbol)) {
+            rel10.visibility = View.VISIBLE
+
+            Glide.with(this).load(list!!.get(9).image).placeholder(R.mipmap.cricketer).into(cimg_wk10)
+            price10.setText(list!!.get(9).symbol)
+            percentage10.setText(list!!.get(9).companyName)
+            if (!TextUtils.isEmpty(list!!.get(9).stock_type))
+                if (list!!.get(9).stock_type.equals("1"))
+                    arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel10.visibility = View.GONE
+        }
+
+        if (!TextUtils.isEmpty(list!!.get(10).symbol)) {
+            rel11.visibility = View.VISIBLE
+
+            Glide.with(this).load(list!!.get(10).image).placeholder(R.mipmap.cricketer).into(cimg_wk11)
+            price11.setText(list!!.get(10).symbol)
+            percentage11.setText(list!!.get(10).companyName)
+            if (!TextUtils.isEmpty(list!!.get(10).stock_type))
+                if (list!!.get(10).stock_type.equals("1"))
+                    arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+                }
+        } else {
+            rel11.visibility = GONE
+        }
+
+        if (!TextUtils.isEmpty(list!!.get(11).symbol)) {
+            rel12.visibility = View.VISIBLE
+            Glide.with(this).load(list!!.get(11).image).into(cimg_wk12)
+            price12.setText(list!!.get(11).symbol)
+            percentage12.setText(list!!.get(11).companyName)
+            if (!TextUtils.isEmpty(list!!.get(11).stock_type))
+                if (list!!.get(11).stock_type.equals("1"))
+                    arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
+                else {
+                    arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
+
+                }
+        } else {
+            rel12.visibility = GONE
+        }
     }
 
 

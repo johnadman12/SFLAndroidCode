@@ -78,6 +78,8 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setData() {
+        if (!TextUtils.isEmpty(list!!.get(0).symbol)) {
+            rel_1.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(0).firstflag).placeholder(R.mipmap.cricketer).into(img1)
         Glide.with(this).load(list!!.get(0).secondflag).placeholder(R.mipmap.cricketer).into(img2)
         price1.setText(list!!.get(0).symbol)
@@ -90,6 +92,13 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 percentage1.setTextColor(ContextCompat.getColor(this, R.color.green))*/
             }
 
+        } else {
+            rel_1.visibility = View.GONE
+        }
+
+
+        if (!TextUtils.isEmpty(list!!.get(1).symbol)) {
+            rel_2.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(1).firstflag).placeholder(R.mipmap.cricketer).into(img3)
         Glide.with(this).load(list!!.get(1).secondflag).placeholder(R.mipmap.cricketer).into(img4)
         price2.setText(list!!.get(1).symbol)
@@ -100,10 +109,14 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
             }
+        } else {
+            rel_2.visibility = View.GONE
+        }
 
 
 
-
+        if (!TextUtils.isEmpty(list!!.get(2).symbol)) {
+            rel_3.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(2).firstflag).placeholder(R.mipmap.cricketer).into(img5)
         Glide.with(this).load(list!!.get(2).secondflag).placeholder(R.mipmap.cricketer).into(img6)
         price3.setText(list!!.get(2).symbol)
@@ -115,8 +128,12 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 /*    price3.setTextColor(ContextCompat.getColor(this, R.color.green))
                     percentage3.setTextColor(ContextCompat.getColor(this, R.color.green))*/
             }
+        } else {
+            rel_3.visibility = View.GONE
+        }
 
-
+        if (!TextUtils.isEmpty(list!!.get(3).symbol)) {
+            rel_4.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(3).firstflag).placeholder(R.mipmap.cricketer).into(img7)
         Glide.with(this).load(list!!.get(3).secondflag).placeholder(R.mipmap.cricketer).into(img8)
         price4.setText(list!!.get(3).symbol)
@@ -127,9 +144,14 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
             }
+        } else {
+            rel_4.visibility = View.GONE
+        }
 
 
 
+        if (!TextUtils.isEmpty(list!!.get(4).symbol)) {
+            rel_5.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(4).firstflag).placeholder(R.mipmap.cricketer).into(img9)
         Glide.with(this).load(list!!.get(4).secondflag).placeholder(R.mipmap.cricketer).into(img10)
         price5.setText(list!!.get(4).symbol)
@@ -139,9 +161,13 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_5.visibility = View.GONE
+        }
 
 
-
+        if (!TextUtils.isEmpty(list!!.get(5).symbol)) {
+            rel_6.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(5).firstflag).placeholder(R.mipmap.cricketer).into(img11)
         Glide.with(this).load(list!!.get(5).secondflag).placeholder(R.mipmap.cricketer).into(img12)
         price6.setText(list!!.get(5).symbol)
@@ -151,9 +177,12 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_6.visibility = View.GONE
+        }
 
-
-
+        if (!TextUtils.isEmpty(list!!.get(6).symbol)) {
+            rel_7.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(6).firstflag).placeholder(R.mipmap.cricketer).into(img13)
         Glide.with(this).load(list!!.get(6).secondflag).placeholder(R.mipmap.cricketer).into(img14)
         price7.setText(list!!.get(6).symbol)
@@ -163,9 +192,13 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_7.visibility = View.GONE
+        }
 
 
-
+        if (!TextUtils.isEmpty(list!!.get(7).symbol)) {
+            rel_8.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(7).firstflag).placeholder(R.mipmap.cricketer).into(img15)
         Glide.with(this).load(list!!.get(7).secondflag).placeholder(R.mipmap.cricketer).into(img16)
         price8.setText(list!!.get(7).symbol)
@@ -175,10 +208,12 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_8.visibility = View.GONE
+        }
 
-
-
-
+        if (!TextUtils.isEmpty(list!!.get(8).symbol)) {
+            rel_9.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(8).firstflag).placeholder(R.mipmap.cricketer).into(img17)
         Glide.with(this).load(list!!.get(8).secondflag).placeholder(R.mipmap.cricketer).into(img18)
         price9.setText(list!!.get(8).symbol)
@@ -188,9 +223,12 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_9.visibility = View.GONE
+        }
 
-
-
+        if (!TextUtils.isEmpty(list!!.get(9).symbol)) {
+            rel_10.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(9).firstflag).placeholder(R.mipmap.cricketer).into(img19)
         Glide.with(this).load(list!!.get(9).secondflag).placeholder(R.mipmap.cricketer).into(img20)
         price10.setText(list!!.get(9).symbol)
@@ -201,8 +239,12 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
 
+        } else {
+            rel_10.visibility = View.GONE
+        }
 
-
+        if (!TextUtils.isEmpty(list!!.get(10).symbol)) {
+            rel_11.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(10).firstflag).placeholder(R.mipmap.cricketer).into(img21)
         Glide.with(this).load(list!!.get(10).secondflag).placeholder(R.mipmap.cricketer).into(img22)
         price11.setText(list!!.get(10).symbol)
@@ -212,9 +254,13 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             else {
                 arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
             }
+        } else {
+            rel_11.visibility = View.GONE
+        }
 
 
-
+        if (!TextUtils.isEmpty(list!!.get(11).symbol)) {
+            rel_12.visibility = View.VISIBLE
         Glide.with(this).load(list!!.get(11).firstflag).into(img23)
         Glide.with(this).load(list!!.get(11).secondflag).into(img24)
         price12.setText(list!!.get(11).symbol)
@@ -225,6 +271,9 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
                 arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.buy))
 
             }
+        } else {
+            rel_12.visibility = View.GONE
+        }
     }
 
 }

@@ -221,6 +221,9 @@
                         android:drawableStart="@mipmap/preview"
                 />
             </RelativeLayout>
+            <View android:layout_width="@dimen/_1ssp"
+                  android:layout_height="match_parent"
+                  android:background="@color/GrayColor"/>
             <RelativeLayout
                     android:id="@+id/relClone"
                     android:layout_width="0dp"
@@ -242,6 +245,9 @@
                         android:drawableStart="@mipmap/clone"
                 />
             </RelativeLayout>
+            <View android:layout_width="@dimen/_1ssp"
+                  android:layout_height="match_parent"
+                  android:background="@color/GrayColor"/>
             <RelativeLayout
                     android:id="@+id/rel_team"
                     android:layout_width="0dp"
@@ -263,7 +269,8 @@
                         android:drawableStart="@mipmap/edit"
                 />
             </RelativeLayout>
-
+            <View android:layout_width="@dimen/_1ssp" android:layout_height="match_parent"
+                  android:background="@color/GrayColor"/>
             <RelativeLayout
                     android:id="@+id/relShare"
                     android:layout_width="0dp"
