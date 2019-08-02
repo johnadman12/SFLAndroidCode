@@ -68,7 +68,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             ArrayList()
         newsStories = ArrayList()
         txt_title.visibility = GONE;
-        setStockNameAdapter()
         setHomeBannerAdapter()
     }
 
@@ -79,6 +78,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initViews() {
+        setStockNameAdapter()
         getFeatureContentlist();
         getTrainingContentlist()
 //        getNewslist()
@@ -104,7 +104,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
         // call function news
         autoScrollNews(llm)
-
         recyclerView_stock_name.setItemAnimator(DefaultItemAnimator())
         recyclerView_stock_name!!.adapter!!.notifyDataSetChanged();
 

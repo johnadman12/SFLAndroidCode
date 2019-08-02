@@ -241,7 +241,8 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment1: CommentsFragment = CommentsFragment()
                 var nd: Bundle = Bundle()
-                nd.putString("Stockname", stockId.toString())
+                nd.putString(StockConstant.STOCKID, stockId.toString())
+                nd.putString(StockConstant.CONTEST_TYPE, "stock")
                 setFragment(fragment1, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))

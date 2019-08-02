@@ -173,14 +173,14 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
-                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
+                        .putExtra(StockConstant.TEAMNAME,holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
@@ -188,7 +188,7 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
-                        .putExtra(StockConstant.TEAMNAME, myteam.get(position).userteamname)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             }

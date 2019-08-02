@@ -620,132 +620,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     }
 
 
-    fun getMarketTeamRefresh() {
-        var call: Call<MarketList>? = null;
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        call = apiService.getMarketList(
-            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
-            getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
-        )
-        call.enqueue(object : Callback<MarketList> {
-            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
-                if (srl_layout != null)
-                    srl_layout.isRefreshing = false
-                if (response.body() != null) {
 
-                    //for show my team
-                    if (response.body()!!.status == "1") {
-                        if (response.body()!!.crypto.size == 0) {
-                            displayToast("No Data Available", "error")
-                        }
-                        if (flagCloning == 2)
-                            llMyTeam.visibility = View.GONE
-                        else {
-                            if (response.body()!!.myteam.equals("1"))
-                                llMyTeam.visibility = View.VISIBLE
-                            else if (response.body()!!.myteam.equals("0"))
-                                llMyTeam.visibility = View.GONE
-                        }
-
-                        listOld!!.clear();
-                        listOld!!.addAll(list!!);
-                        list!!.clear();
-                        list!!.addAll(response.body()!!.crypto)
-
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        for (i in 0 until list!!.size) {
-                            list!!.get(i).addedToList = 0
-
-                        }
-                        //sortingConcept
-                        if (flagAlphaSort) {
-                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-
-                        } else if (flagPriceLTH) {
-                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-
-                        } else if (flagDayLTH) {
-                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-                        } else if (flagPriceHTL) {
-                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-                        } else if (flagDayHTL) {
-                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-                        } else if (flagVolume) {
-                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-                        }
-                        //filter
-                        if (flagFilter) {
-                            for (i in 0 until list!!.size) {
-                                if (list!!.get(i).changeper != null)
-                                    if (!list!!.get(i).changeper.equals("0")) {
-                                        listFiltered!!.add(list!!.get(i))
-//                                        stockList!!.remove(stockList!!.get(i))
-                                        Log.d("stocklist", listFiltered!!.size.toString())
-                                    }
-                            }
-                        } else
-                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                setActiveCurrencyType("")
-                            }
-                        for (i in 0 until list!!.size) {
-                            for (j in 0 until marketSelectedItems!!.size) {
-                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                    list!!.get(i).addedToList = 1
-                                }
-                            }
-                        }
-                        for (i in 0 until list!!.size) {
-                            for (j in 0 until marketSelectedItems!!.size) {
-                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
-                                    list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
-                                }
-                            }
-                        }
-                        if (marketlistAdapter != null)
-                            marketlistAdapter!!.notifyDataSetChanged();
-                        setTeamText(marketSelectedItems!!.size.toString())
-//                        d.dismiss()
-
-                    } else if (response.body()!!.status == "2") {
-                        appLogout()
-                    }
-                } else {
-                    displayToast(resources.getString(R.string.something_went_wrong), "error")
-                }
-            }
-
-            override fun onFailure(call: Call<MarketList>, t: Throwable) {
-                if (srl_layout != null)
-                    srl_layout.isRefreshing = false
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-            }
-        })
-    }
 
     fun getTeamText(): Int {
         return marketSelectedItems!!.size
@@ -857,6 +732,149 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+    fun getMarketTeamRefresh() {
+        var call: Call<MarketList>? = null;
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        call = apiService.getMarketList(
+            getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), marketId.toString(),
+            getFromPrefsString(StockConstant.USERID)!!, "0", limit.toString()
+        )
+        call.enqueue(object : Callback<MarketList> {
+            override fun onResponse(call: Call<MarketList>, response: Response<MarketList>) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                if (response.body() != null) {
+                    //for show my team
+                    if (response.body()!!.status == "1") {
+                        if (response.body()!!.crypto.size == 0) {
+                            displayToast("No Data Available", "error")
+                        }
+                        if (flagCloning == 2)
+                            llMyTeam.visibility = View.GONE
+                        else {
+                            if (response.body()!!.myteam.equals("1"))
+                                llMyTeam.visibility = View.VISIBLE
+                            else if (response.body()!!.myteam.equals("0"))
+                                llMyTeam.visibility = View.GONE
+                        }
+                        list!!.clear();
+                        list!!.addAll(response.body()!!.crypto)
+                        //   rv_Players!!.adapter!!.notifyDataSetChanged();
+                        for (i in 0 until list!!.size) {
+                            list!!.get(i).addedToList = 0
+                        }
+                        //sortingConcept
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        }
+                        //filter
+                        if (flagFilter) {
+                            for (i in 0 until list!!.size) {
+                                if (list!!.get(i).changeper != null)
+                                    if (!list!!.get(i).changeper.equals("0")) {
+                                        listFiltered!!.add(list!!.get(i))
+//                                        stockList!!.remove(stockList!!.get(i))
+                                        Log.d("stocklist", listFiltered!!.size.toString())
+                                    }
+                            }
+                        } else
+                            if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
+                                setActiveCurrencyType("")
+                            }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).addedToList = 1
+                                }
+                            }
+                        }
+                        for (i in 0 until list!!.size) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
+                                    list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
+                                }
+                            }
+                        }
+                        /* if (marketlistAdapter != null)
+                             marketlistAdapter!!.notifyDataSetChanged();*/
+                        Thread(Task()).start();
+                        setTeamText(marketSelectedItems!!.size.toString())
+//                        d.dismiss()
+
+                    } else if (response.body()!!.status == "2") {
+                        appLogout()
+                    }
+                } else {
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                }
+            }
+
+            override fun onFailure(call: Call<MarketList>, t: Throwable) {
+
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+    internal inner class Task() : Runnable {
+        override fun run() {
+            try {
+                runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        //forexList!!.clear();
+                        if (marketlistAdapter != null)
+                            marketlistAdapter!!.notifyDataSetChanged();
+
+                    } catch (ee: java.lang.Exception) {
+                    }
+
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

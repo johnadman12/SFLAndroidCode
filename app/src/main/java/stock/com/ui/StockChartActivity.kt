@@ -22,6 +22,8 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
     var data: CandlesticChartmarket.Data? = null
     var list: ArrayList<CandlesticChartmarket.Data.Quote>? = null
     val yValsCandleStick = ArrayList<CandleEntry>()
+    var symbol: String = ""
+    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php/"
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.back_arrow ->
@@ -39,11 +41,18 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_stock_chart)
         back_arrow.setOnClickListener(this)
         if (intent != null)
-            data = intent.getSerializableExtra(StockConstant.CHART) as CandlesticChartmarket.Data?
-
-        if (data != null) {
-            list = data!!.quotes
-            initView()
+//            data = intent.getSerializableExtra(StockConstant.CHART) as CandlesticChartmarket.Data?
+            symbol = intent!!.getStringExtra(StockConstant.CHART)
+        if (symbol != null) {
+            /* list = data!!.quotes
+             initView()*/
+            url = url + symbol
+            webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            webview.getSettings().setJavaScriptEnabled(true);
+            webview.setBackgroundColor(0x00000000);
+            webview.getSettings().setLoadWithOverviewMode(true);
+            webview.getSettings().setDomStorageEnabled(true);
+            webview.loadUrl(url)
         }
     }
 
@@ -77,7 +86,7 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         val data = CandleData(set1)
         // set data
         chart11.setData(data)
-        chart11.zoomToCenter(28f,0f)
+        chart11.zoomToCenter(28f, 0f)
         chart11.invalidate()
         chart11.animateXY(500, 500)
         chart11.getDescription().setEnabled(false);

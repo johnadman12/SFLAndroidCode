@@ -262,8 +262,10 @@ class CryptoCurrencyFragment : BaseFragment() {
                             cryptoListNew!!.clear()
                             cryptoListNew!!.addAll(response.body()!!.crypto)
                             cryptoList!!.addAll(cryptoListNew!!)
-                            if (cryptoAdapter != null)
-                                cryptoAdapter!!.notifyDataSetChanged()
+                            /*if (cryptoAdapter != null)
+                                cryptoAdapter!!.notifyDataSetChanged()*/
+                            Thread(Task()).start();
+
                         }
 
                     } else if (response.body()!!.status == "2") {
@@ -283,6 +285,28 @@ class CryptoCurrencyFragment : BaseFragment() {
 //                d.dismiss()
             }
         })
+    }
+
+    internal inner class Task() : Runnable {
+        override fun run() {
+            try {
+                activity!!.runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        //forexList!!.clear();
+                        if (cryptoAdapter != null)
+                            cryptoAdapter!!.notifyDataSetChanged()
+
+                    } catch (ee: java.lang.Exception) {
+                    }
+
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -400,8 +424,11 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                cryptoAdapter!!.notifyDataSetChanged()
+                // cryptoAdapter!!.notifyDataSetChanged()
             }
+            setCryptoCurrencyAdapter();
+
+
         } else if (type.equals("dayChange")) {
             setFlag(false, false, true, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
@@ -410,8 +437,9 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                cryptoAdapter!!.notifyDataSetChanged()
+                // cryptoAdapter!!.notifyDataSetChanged()
             }
+            setCryptoCurrencyAdapter();
         } else if (type.equals("price")) {
             setFlag(false, true, false, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
@@ -420,8 +448,9 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                cryptoAdapter!!.notifyDataSetChanged()
+                //cryptoAdapter!!.notifyDataSetChanged()
             }
+            setCryptoCurrencyAdapter();
         } else if (type.equals("HighToLow")) {
             setFlag(false, false, false, true, false)
             val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
@@ -430,8 +459,9 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                cryptoAdapter!!.notifyDataSetChanged()
+                //cryptoAdapter!!.notifyDataSetChanged()
             }
+            setCryptoCurrencyAdapter();
         } else if (type.equals("DayHighToLow")) {
             setFlag(false, false, false, false, true)
             val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
@@ -440,8 +470,9 @@ class CryptoCurrencyFragment : BaseFragment() {
                 cryptoListNew!!.addAll(sortedList)
                 cryptoList!!.clear()
                 cryptoList!!.addAll(sortedList)
-                cryptoAdapter!!.notifyDataSetChanged()
+                // cryptoAdapter!!.notifyDataSetChanged()
             }
+            setCryptoCurrencyAdapter();
         } else if (type.equals("nodata")) {
             getCurrencyAgain("0")
         }

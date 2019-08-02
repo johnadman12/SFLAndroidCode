@@ -28,7 +28,7 @@ import stock.com.ui.watch_list.adapter.WatchListAdapter_
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import java.lang.Exception
+import kotlin.Exception
 
 
 class WatchListActivity : BaseActivity() {
@@ -239,29 +239,49 @@ class WatchListActivity : BaseActivity() {
                 if (data != null) {
                     flag = data.getStringExtra("flag");
                     if (flag.equals("high")) {
-                        var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                        list!!.clear();
-                        setWatchListAdapter();
-                        list!!.addAll(sortedList);
-                        setWatchListAdapter();
+                        try {
+                            var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            list!!.clear();
+                            setWatchListAdapter();
+                            list!!.addAll(sortedList);
+                            if (watchListAdapter != null)
+                                watchListAdapter!!.notifyDataSetChanged()
+                        } catch (e: Exception) {
+
+                        }
                     } else if (flag.equals("low")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.latestPrice.toDouble() }));
-                        list!!.clear();
-                        setWatchListAdapter();
-                        list!!.addAll(sortedList);
-                        setWatchListAdapter();
+                        try {
+                            var sortedList = list!!.sortedWith(compareBy({ it.latestPrice.toDouble() }));
+                            list!!.clear();
+                            setWatchListAdapter();
+                            list!!.addAll(sortedList);
+                            if (watchListAdapter != null)
+                                watchListAdapter!!.notifyDataSetChanged()
+                        } catch (e: Exception) {
+
+                        }
                     } else if (flag.equals("daily")) {
-                        var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
-                        list!!.clear();
-                        setWatchListAdapter();
-                        list!!.addAll(sortedList);
-                        setWatchListAdapter();
+                        try {
+                            var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                            list!!.clear();
+                            setWatchListAdapter();
+                            list!!.addAll(sortedList);
+                            if (watchListAdapter != null)
+                                watchListAdapter!!.notifyDataSetChanged()
+                        } catch (e: Exception) {
+
+                        }
                     } else if (flag.equals("dailyLTH")) {
-                        var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
-                        list!!.clear();
-                        setWatchListAdapter();
-                        list!!.addAll(sortedList);
-                        setWatchListAdapter();
+                        try {
+                            var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
+                            list!!.clear();
+                            setWatchListAdapter();
+                            list!!.addAll(sortedList);
+                            if (watchListAdapter != null)
+                                watchListAdapter!!.notifyDataSetChanged()
+                        } catch (e: Exception) {
+
+                        }
                     } else if (flag.equals("nodata")) {
                         getWatchList()
                         recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();

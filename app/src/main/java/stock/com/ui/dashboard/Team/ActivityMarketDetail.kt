@@ -35,7 +35,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<MarketList.Crypto>? = null;
     private var selectedItems: Int = 0
     private var fragment: Fragment? = null;
-    var stockId: Int = 0
+    var marketId: Int = 0
     var position: Int = -1
     var flagData: Int = 0
     var symbol: String = ""
@@ -46,21 +46,21 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         list = ArrayList()
         StockConstant.ACTIVITIES.add(this)
         if (intent != null) {
-            stockId = intent.getIntExtra("cryptoId", 0);
+            marketId = intent.getIntExtra("cryptoId", 0);
             flagData = intent.getIntExtra("flag", 0);
             if (flagData == 1) {
                 list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
             }
         }
-        getData(stockId.toString())
+        getData(marketId.toString())
 
         if (flagData == 1) {
             if (list != null) {
                 if (list!!.size > 0)
                     for (i in 0 until list!!.size) {
                         try {
-                            if (stockId.equals(list!!.get(i).cryptocurrencyid))
+                            if (marketId.equals(list!!.get(i).cryptocurrencyid))
                                 position = i
                             symbol = list!!.get(position).name
                         } catch (e: Exception) {
@@ -241,7 +241,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment: DataFragment = DataFragment()
                 var nd: Bundle = Bundle()
-                nd.putInt(StockConstant.MARKETID, stockId)
+                nd.putInt(StockConstant.MARKETID, marketId)
                 nd.putString(StockConstant.MARKET_TYPE, "crypto")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
@@ -267,7 +267,8 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment1: CommentsFragment = CommentsFragment()
                 var nd: Bundle = Bundle()
-                nd.putString("Stockname", stockId.toString())
+                nd.putString(StockConstant.STOCKID, marketId.toString())
+                nd.putString(StockConstant.CONTEST_TYPE, "crypto")
                 setFragment(fragment1, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
@@ -320,7 +321,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         val call: Call<BasePojo> =
             apiService.addCurrencyToWatch(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                stockId,
+                marketId,
                 getFromPrefsString(StockConstant.USERID).toString(), "crypto"
             )
         call.enqueue(object : Callback<BasePojo> {

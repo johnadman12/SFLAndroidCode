@@ -64,22 +64,18 @@ class StocksFragment : BaseFragment() {
         stockListFilter = ArrayList()
         llm = LinearLayoutManager(context)
         getExchangeNamelist()
-
         setStockAdapter()
 
-        /* scrollListener = RecyclerViewLoadMoreScroll(llm)
-         scrollListener!!.setOnLoadMoreListener(object : OnLoadMoreListener {
-             override fun onLoadMore() {
-                 getStocks("1",exchangeId)
-             }
-         })*/
+        srl_layout.setOnRefreshListener {
+            page++
+            getStocks("1", exchangeId)
+        }
 
     }
 
     override fun onResume() {
         super.onResume()
         mainHandler = Handler(Looper.getMainLooper())
-
         mainHandler.post(object : Runnable {
             override fun run() {
                 if (isVisible) {
@@ -99,6 +95,7 @@ class StocksFragment : BaseFragment() {
         call.enqueue(object : Callback<ExchangeList> {
             override fun onResponse(call: Call<ExchangeList>, response: Response<ExchangeList>) {
                 d.dismiss()
+
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setStockNameAdapter(response.body()!!.exchange)
@@ -186,27 +183,21 @@ class StocksFragment : BaseFragment() {
 
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
-                isLoading = false
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
                             stockList = response.body()!!.stock
                             stockListNew = response.body()!!.stock
-                            setStockAdapter()
-                            try {
-                                if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
-                                    setActiveCurrencyType("")
-                                }
-                            } catch (e: Exception) {
-
-                            }
-
                         } else {
                             stockList!!.clear()
-                            stockList = stockListFilter
-                            stockListNew = stockListFilter
-                            setStockAdapter()
+                            stockList!!.addAll(stockListFilter!!)
+                            stockListNew!!.addAll(stockListFilter!!)
                         }
+                        /* if (stockAdapter != null)
+                             stockAdapter!!.notifyDataSetChanged()*/
+                        setStockAdapter()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -217,7 +208,8 @@ class StocksFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
-
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -244,7 +236,7 @@ class StocksFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
-                            stockListNew!! .addAll(response.body()!!.stock)
+                            stockListNew!!.addAll(response.body()!!.stock)
                             Handler().postDelayed(Runnable {
                                 if (stockListNew!!.size > 0)
                                     setStockAdapter()
@@ -275,9 +267,8 @@ class StocksFragment : BaseFragment() {
             llm!!.orientation = LinearLayoutManager.VERTICAL
             rv_stockList!!.layoutManager = llm
             rv_stockList.visibility = View.VISIBLE
-            if (stockAdapter != null)
-
-                stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
+//            if (stockAdapter != null)
+            stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
             rv_stockList!!.adapter = stockAdapter;
         } else
             return
@@ -300,8 +291,8 @@ class StocksFragment : BaseFragment() {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
                 d.dismiss()
                 if (response.body() != null) {
-                     if (response.body()!!.status == "1") {
-                         AppDelegate.showAlert(activity!!, response.body()!!.message)
+                    if (response.body()!!.status == "1") {
+                        AppDelegate.showAlert(activity!!, response.body()!!.message)
 
                     } else if (response.body()!!.status == "2") {
                         appLogout()
@@ -332,45 +323,45 @@ class StocksFragment : BaseFragment() {
         getExchangeNamelist()
         if (type.equals("Alpha")) {
             var sortedList = stockList!!.sortedBy { it.symbol?.toString() }
-            for (obj in sortedList) {
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                rv_stockList!!.adapter!!.notifyDataSetChanged()
-            }
+            stockList!!.clear()
+            stockList!!.addAll(sortedList)
+            stockListNew!!.clear()
+            stockListNew!!.addAll(sortedList)
+            rv_stockList!!.adapter!!.notifyDataSetChanged()
+
         } else if (type.equals("dayChange")) {
             var sortedList = stockList!!.sortedBy { it.changePercent?.toDouble() }
-            for (obj in sortedList) {
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                rv_stockList!!.adapter!!.notifyDataSetChanged()
-            }
+            stockList!!.clear()
+            stockList!!.addAll(sortedList)
+            stockListNew!!.clear()
+            stockListNew!!.addAll(sortedList)
+            rv_stockList!!.adapter!!.notifyDataSetChanged()
+
         } else if (type.equals("price")) {
             var sortedList = stockList!!.sortedBy { it.latestPrice?.toDouble() }
-            for (obj in sortedList) {
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                rv_stockList!!.adapter!!.notifyDataSetChanged()
-            }
+            stockList!!.clear()
+            stockList!!.addAll(sortedList)
+            stockListNew!!.clear()
+            stockListNew!!.addAll(sortedList)
+            rv_stockList!!.adapter!!.notifyDataSetChanged()
+
         } else if (type.equals("HighToLow")) {
             flagHTLSort = true
             val sortedList = stockList!!.sortedByDescending { it.latestPrice?.toDouble() }
-            for (obj in sortedList) {
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                rv_stockList!!.adapter!!.notifyDataSetChanged()
-            }
+            stockList!!.clear()
+            stockList!!.addAll(sortedList)
+            stockListNew!!.clear()
+            stockListNew!!.addAll(sortedList)
+            rv_stockList!!.adapter!!.notifyDataSetChanged()
         } else if (type.equals("DayHighToLow")) {
             flagDHTLSort = true
             val sortedList = stockList!!.sortedByDescending { it.changePercent?.toDouble() }
-            for (obj in sortedList) {
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                stockList!!.clear()
-                stockList!!.addAll(sortedList)
-                rv_stockList!!.adapter!!.notifyDataSetChanged()
-            }
+            stockList!!.clear()
+            stockList!!.addAll(sortedList)
+            stockListNew!!.clear()
+            stockListNew!!.addAll(sortedList)
+            rv_stockList!!.adapter!!.notifyDataSetChanged()
+
         } else if (type.equals("nodata")) {
             getStocks("1", exchangeId)
         }

@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_below="@+id/view"
                 android:layout_above="@+id/ll_text"
+                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:scrollbarAlwaysDrawVerticalTrack="true"
                 android:background="@color/white"/>
@@ -34,6 +35,7 @@
                 android:layout_marginBottom="@dimen/_100sdp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
             <LinearLayout android:layout_width="wrap_content"
@@ -80,6 +82,14 @@
             />
         </LinearLayout>
 
+        <WebView android:layout_width="match_parent"
+                 android:id="@+id/webview"
+                 android:layout_height="match_parent"
+                 android:background="@color/white"
+                 android:layout_above="@+id/ll_text">
+
+        </WebView>
+
         <LinearLayout
                 android:id="@+id/ll_text" android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
@@ -90,13 +100,27 @@
                 android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="@style/TextStyleNormal"
+                    android:layout_weight="1"
                     android:textColor="@color/textColorGray"
                     android:text="@string/chart_info"
                     android:textSize="@dimen/_8ssp"
                     android:lineSpacingExtra="@dimen/_2sdp"
+                    android:textAllCaps="true"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_expand"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="@dimen/_23sdp"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:background="@drawable/green_fill_button"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/_3sdp"
+                    android:text="EXPAND"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="@dimen/_10ssp"
                     android:textAllCaps="true"/>
 
 

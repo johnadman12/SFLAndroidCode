@@ -644,12 +644,30 @@ interface ApiInterface {
         @Query("user_id") user_id: String
     ): Call<Comments>
 
+    @GET("comments/market_comments_list")
+    fun getCommentsMArket(
+        @Header("x-access-token") token: String,
+        @Query("marketId") marketid: Int,
+        @Query("marketType") marketType: String,
+        @Query("user_id") user_id: String
+    ): Call<Comments>
+
     @FormUrlEncoded
     @POST("comments/commentPost")
     fun postComments(
         @Header("x-access-token") token: String,
         @Field("stockid") stock_id: Int,
 //        @Field("comment_id") comments_id: Int,
+        @Field("user_id") user_id: String,
+        @Field("comments") comments: String
+    ): Call<Comments>
+
+    @FormUrlEncoded
+    @POST("comments/market_comments_post")
+    fun postCommentsMarket(
+        @Header("x-access-token") token: String,
+        @Field("marketId") marketid: Int,
+        @Field("marketType") marketType: String,
         @Field("user_id") user_id: String,
         @Field("comments") comments: String
     ): Call<Comments>
