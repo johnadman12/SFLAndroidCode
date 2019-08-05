@@ -218,7 +218,7 @@ class CurrencyAdapter(
                         holder.itemView.tv_latest_price.setText(
                             "$" + String.format(
                                 "%.2f",
-                                cryptoListNew!!.get(position).latestPrice.toDouble()
+                                cryptoListNew.get(position).latestPrice.toDouble()
                             )
                         )
                     }
@@ -231,7 +231,7 @@ class CurrencyAdapter(
             Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
 
             if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
-                var priceText: Double = (cryptoListNew!!.get(position).changeper).toDouble() * 0.01
+                var priceText: Double = (cryptoListNew.get(position).changeper).toDouble() * 0.01
                 var price = (priceText.toString())
 
 
@@ -245,10 +245,11 @@ class CurrencyAdapter(
                     )
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
                     holder.itemView.tv_change_percentage.setText(price + " (" + cryptoListNew!!.get(position).changeper + " %)")
+                    holder.itemView.tv_change_percentage.setText(cryptoListNew.get(position).decimalchange + " (" + cryptoListNew!!.get(position).changeper + " %)")
                 } else {
                     Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
                     holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                    holder.itemView.tv_change_percentage.setText("$" + price + " (+" + cryptoListNew!!.get(position).changeper + " %)")
+                    holder.itemView.tv_change_percentage.setText("$" + cryptoListNew.get(position).decimalchange + " (+" + cryptoListNew!!.get(position).changeper + " %)")
                 }
             }
 

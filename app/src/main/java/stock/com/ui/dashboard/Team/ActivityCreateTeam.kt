@@ -59,6 +59,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var flag: Boolean = false
     var flagCloning: Int = 0
     var sector: String = ""
+    var teamName: String = ""
     lateinit var mainHandler: Handler;
     var flagFilter: Boolean = false
     var flagSort: String = ""
@@ -100,7 +101,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
-                        .putExtra(StockConstant.TEAMNAME, "My Team")
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -225,9 +226,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             if (flagCloning == 1) {
                 stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             } else if (flagCloning == 2) {
                 stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 ll_filter.visibility = GONE
                 tvViewteam.setText("  Save Team  ")
                 textTeam.setText("Edit Team")

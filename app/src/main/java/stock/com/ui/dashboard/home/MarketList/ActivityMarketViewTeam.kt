@@ -68,6 +68,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityMarketViewTeam, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, list)
+                        .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -202,6 +203,17 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         marketSelectedItem = list
         viewTeamAdapter = MarketViewTeamAdapter(
             this, list as ArrayList, object : MarketViewTeamAdapter.OnItemCheckListener {
+                override fun onRemoveIteam(item: MarketList.Crypto) {
+                    if (marketSelectedItem!!.size > 0) {
+                        marketSelectedItem!!.remove(item)
+                        setTeamText(marketSelectedItem!!.size)
+                        val intent = Intent();
+                        intent.putExtra("removedlist", list)
+                        intent.putExtra("flag", "1")
+                        setResult(Activity.RESULT_OK, intent);
+                    }
+                }
+
                 override fun onToggleBuy(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
@@ -233,6 +245,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 }
 
                 override fun onItemCheck(item: Int, itemcontest: MarketList.Crypto) {
+                    marketSelectedItem!!.remove(itemcontest)
                     setTeamText(item)
                     val intent = Intent();
                     intent.putExtra("removedlist", list)
@@ -353,7 +366,6 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_MARKETVIEW_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
-
                     var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
 
                     for (obj in sortedList) {

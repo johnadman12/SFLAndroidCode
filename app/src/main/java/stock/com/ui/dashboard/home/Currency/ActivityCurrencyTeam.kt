@@ -63,6 +63,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     var flagPriceLTH: Boolean = false
     var flagVolume: Boolean = false
     var searchText: String = ""
+    var teamName: String = ""
     var flagDayHTL: Boolean = false
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
@@ -103,7 +104,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityCurrencyTeam, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, currencySelected)
-                        .putExtra(StockConstant.TEAMNAME, "My Team")
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -255,10 +256,12 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 
             if (flagCloning == 1) {
                 currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
 
             } else if (flagCloning == 2) {
                 currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 ll_filter.visibility = View.GONE
                 tvViewteam.setText("  Save Team  ")
                 textTeam.setText("Edit Team")
@@ -269,76 +272,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             }
 
         }
-
-        currencyAdapter = CurrencyTeamAdapter(
-            this, list as ArrayList,
-            listOld as ArrayList,
-            this@ActivityCurrencyTeam,
-            object : CurrencyTeamAdapter.OnItemCheckListener {
-                override fun onToggleUncheck(item: CurrencyPojo.Currency) {
-                    for (j in 0 until list!!.size) {
-                        if (item.currencyid.equals(list!!.get(j).currencyid)) {
-                            item.cryptoType = "1";
-                            if (currencySelected!!.size > 0) {
-                                for (i in 0 until currencySelected!!.size)
-                                    if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
-                                        currencySelected!!.get(j).cryptoType = item.cryptoType
-
-                            } else
-                                list!!.get(j).cryptoType = item.cryptoType
-                            break;
-                        }
-                    }
-
-                }
-
-                override fun onToggleCheck(item: CurrencyPojo.Currency) {
-                    for (j in 0 until list!!.size) {
-                        if (item.currencyid.equals(list!!.get(j).currencyid)) {
-                            item.cryptoType = "0";
-                            if (currencySelected!!.size > 0) {
-                                for (i in 0 until currencySelected!!.size)
-                                    if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
-                                        currencySelected!!.get(j).cryptoType = item.cryptoType
-                            } else
-                                list!!.get(j).cryptoType = item.cryptoType
-                            break;
-                        }
-                    }
-                }
-
-                override fun onItemClick(item: CurrencyPojo.Currency) {
-                    startActivityForResult(
-                        Intent(
-                            this@ActivityCurrencyTeam,
-                            ActivityMarketDetail::class.java
-                        )
-                            .putExtra("cryptoId", item.currencyid)
-                            .putExtra("flag", 1)
-                            .putExtra(StockConstant.MARKETLIST, list)
-                            .putExtra(StockConstant.SELECTEDSTOCK, currencySelected!!.size)
-                        , StockConstant.RESULT_CODE_CREATE_TEAM
-                    )
-
-                }
-
-                override fun onItemUncheck(item: CurrencyPojo.Currency) {
-                    for (j in 0 until currencySelected!!.size) {
-                        if (item.currencyid.equals(currencySelected!!.get(j).currencyid)) {
-                            currencySelected!!.removeAt(j);
-                            break;
-                        }
-                    }
-                    setTeamText(currencySelected!!.size.toString())
-                }
-
-                override fun onItemCheck(item: CurrencyPojo.Currency) {
-                    currencySelected?.add(item);
-                    setTeamText(currencySelected!!.size.toString())
-                    Log.e("stocklist", currencySelected.toString())
-                }
-            });
-
         et_search_stock.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -353,12 +286,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         })
 
 
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Players!!.layoutManager = llm
-        rv_Players.visibility = View.VISIBLE
-        rv_Players!!.adapter = currencyAdapter;
-
+        setAdapter()
         getCurrencyTeamlist("1")
 
         srl_layout.setOnRefreshListener {
@@ -654,8 +582,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -669,8 +596,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -682,8 +608,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -696,8 +621,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -710,8 +634,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -724,8 +647,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
                         list!!.addAll(sortedList)
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged()
+                        setAdapter()
                     } catch (e: Exception) {
 
                     }
@@ -801,6 +723,84 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+
+    fun setAdapter() {
+        currencyAdapter = CurrencyTeamAdapter(
+            this, list as ArrayList,
+            listOld as ArrayList,
+            this@ActivityCurrencyTeam,
+            object : CurrencyTeamAdapter.OnItemCheckListener {
+                override fun onToggleUncheck(item: CurrencyPojo.Currency) {
+                    for (j in 0 until list!!.size) {
+                        if (item.currencyid.equals(list!!.get(j).currencyid)) {
+                            item.cryptoType = "1";
+                            if (currencySelected!!.size > 0) {
+                                for (i in 0 until currencySelected!!.size)
+                                    if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
+                                        currencySelected!!.get(j).cryptoType = item.cryptoType
+
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
+                            break;
+                        }
+                    }
+
+                }
+
+                override fun onToggleCheck(item: CurrencyPojo.Currency) {
+                    for (j in 0 until list!!.size) {
+                        if (item.currencyid.equals(list!!.get(j).currencyid)) {
+                            item.cryptoType = "0";
+                            if (currencySelected!!.size > 0) {
+                                for (i in 0 until currencySelected!!.size)
+                                    if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
+                                        currencySelected!!.get(j).cryptoType = item.cryptoType
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
+                            break;
+                        }
+                    }
+                }
+
+                override fun onItemClick(item: CurrencyPojo.Currency) {
+                    startActivityForResult(
+                        Intent(
+                            this@ActivityCurrencyTeam,
+                            ActivityMarketDetail::class.java
+                        )
+                            .putExtra("cryptoId", item.currencyid)
+                            .putExtra("flag", 1)
+                            .putExtra(StockConstant.MARKETLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, currencySelected!!.size)
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
+
+                }
+
+                override fun onItemUncheck(item: CurrencyPojo.Currency) {
+                    for (j in 0 until currencySelected!!.size) {
+                        if (item.currencyid.equals(currencySelected!!.get(j).currencyid)) {
+                            currencySelected!!.removeAt(j);
+                            break;
+                        }
+                    }
+                    setTeamText(currencySelected!!.size.toString())
+                }
+
+                override fun onItemCheck(item: CurrencyPojo.Currency) {
+                    currencySelected?.add(item);
+                    setTeamText(currencySelected!!.size.toString())
+                    Log.e("stocklist", currencySelected.toString())
+                }
+            });
+
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Players!!.layoutManager = llm
+        rv_Players.visibility = View.VISIBLE
+        rv_Players!!.adapter = currencyAdapter;
     }
 
     fun setFlag(fAl: Boolean, fDHTL: Boolean, fDLTH: Boolean, fPHTL: Boolean, fPLTH: Boolean, fV: Boolean) {

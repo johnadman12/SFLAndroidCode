@@ -35,6 +35,9 @@ public class MarketList extends BasePojo {
         @SerializedName("supply")
         @Expose
         public String supply;
+        @SerializedName("decimalchange")
+        @Expose
+        public String decimalchange;
         @SerializedName("latestPrice")
         @Expose
         public String latestPrice;
@@ -63,6 +66,7 @@ public class MarketList extends BasePojo {
             latestPrice = in.readString();
             latestVolume = in.readString();
             changeper = in.readString();
+            decimalchange = in.readString();
             image = in.readString();
             cryptoType = in.readString();
             addedToList = in.readInt();
@@ -96,6 +100,7 @@ public class MarketList extends BasePojo {
             parcel.writeString(supply);
             parcel.writeString(latestPrice);
             parcel.writeString(latestVolume);
+            parcel.writeString(decimalchange);
             parcel.writeString(changeper);
             parcel.writeString(image);
             parcel.writeString(cryptoType);

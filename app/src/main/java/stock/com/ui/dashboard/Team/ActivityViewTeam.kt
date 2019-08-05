@@ -76,6 +76,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, list)
+                        .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -96,7 +97,10 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         try {
                             postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                            postData1.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent.toString());
+                            postData1.addProperty(
+                                "change_percent",
+                                stockSelectedItems!!.get(i).changePercent.toString()
+                            );
                             postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
                         } catch (e: Exception) {
@@ -177,13 +181,25 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)
         ll_sort.setOnClickListener(this)
-        ll_sort.visibility= GONE
+        ll_sort.visibility = GONE
 
         relFieldView.setOnClickListener(this)
 
         stockSelectedItems = list
         viewTeamAdapter = ViewTeamAdapter(
             this, list as ArrayList, object : ViewTeamAdapter.OnItemCheckListener {
+
+                override fun onRemoveIteam(item: StockTeamPojo.Stock) {
+                    if (stockSelectedItems!!.size > 0) {
+                        stockSelectedItems!!.remove(item)
+                        setTeamText(stockSelectedItems!!.size)
+                        val intent = Intent();
+                        intent.putExtra("removedlist", list)
+                        intent.putExtra("flag", "1")
+                        setResult(Activity.RESULT_OK, intent);
+                    }
+                }
+
                 override fun onToggleBuy(item: StockTeamPojo.Stock) {
                     for (i in 0 until stockSelectedItems!!.size) {
                         if (stockSelectedItems!!.get(i).stockid == item.stockid) {

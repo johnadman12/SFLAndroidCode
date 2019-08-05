@@ -37,6 +37,7 @@ class MyTeamAdapter(
 ) :
     RecyclerView.Adapter<MyTeamAdapter.FeatureListHolder>() {
 
+    var teamName: String = ""
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_my_team, parent, false)
         return FeatureListHolder(view)
@@ -51,6 +52,7 @@ class MyTeamAdapter(
         if (!TextUtils.isEmpty(myteam.get(position).userteamname)) {
             holder.itemView.txt_MyTeam.setText(myteam.get(position).userteamname)
             holder.itemView.edt_teamname.setText(myteam.get(position).userteamname)
+            teamName = myteam.get(position).userteamname
         }
 
 
@@ -71,8 +73,9 @@ class MyTeamAdapter(
                             )
 
                         }
-                          holder.itemView.edt_teamname.visibility = View.GONE
-                          holder.itemView.txt_MyTeam.visibility = View.VISIBLE
+                        teamName = myteam.get(position).userteamname
+                        holder.itemView.edt_teamname.visibility = View.GONE
+                        holder.itemView.txt_MyTeam.visibility = View.VISIBLE
                         return true
                     }
                 }
@@ -102,6 +105,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
                 )
@@ -111,6 +115,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
                 )
@@ -120,6 +125,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
                         .putExtra("isCloning", 2)
                 )
@@ -142,6 +148,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
@@ -152,19 +159,21 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
                         .putExtra("isCloning", 1)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
+
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
                 )
             }
-
 
         }
 
@@ -173,14 +182,17 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
-                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                        .putExtra(StockConstant.TEAMNAME,holder.itemView.txt_MyTeam.text.toString())
+                        .putExtra(
+                            StockConstant.TEAMNAME,
+                            teamName
+                        )
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
@@ -188,7 +200,7 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
-                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             }

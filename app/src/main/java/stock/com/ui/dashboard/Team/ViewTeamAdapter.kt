@@ -31,6 +31,7 @@ class ViewTeamAdapter(
         fun onItemClick(item: StockTeamPojo.Stock)
         fun onToggleSell(item: StockTeamPojo.Stock)
         fun onToggleBuy(item: StockTeamPojo.Stock)
+        fun onRemoveIteam(item: StockTeamPojo.Stock)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -63,10 +64,10 @@ class ViewTeamAdapter(
 
 
         holder.itemView.llremoveStock.setOnClickListener {
-            mContest.remove(mContest.get(position))
+            /* mContest.remove(mContest.get(position))
+             notifyDataSetChanged()*/
+            onItemCheckListener.onRemoveIteam(mContest.get(position))
             notifyDataSetChanged()
-            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))
-            mContest.get(position).addedToList = 0
         }
 
 

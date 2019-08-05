@@ -323,53 +323,45 @@ class CurrencyFragment : BaseFragment() {
         if (type.equals("Alpha")) {
             setFlag(true, false, false, false, false)
             var sortedList = forexList!!.sortedBy { it.symbol?.toString() }
-            for (obj in sortedList) {
-                forexList!!.clear()
-                forexList!!.addAll(sortedList)
-                forexOldList!!.clear()
-                forexOldList!!.addAll(sortedList)
-                forexAdapter!!.notifyDataSetChanged()
-            }
+            forexList!!.clear()
+            forexList!!.addAll(sortedList)
+            forexOldList!!.clear()
+            forexOldList!!.addAll(sortedList)
+            setCurrencyAdapter();
         } else if (type.equals("dayChange")) {
             setFlag(false, false, true, false, false)
             var sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
-            for (obj in sortedList) {
-                forexList!!.clear()
-                forexList!!.addAll(sortedList)
-                forexOldList!!.clear()
-                forexOldList!!.addAll(sortedList)
-                forexAdapter!!.notifyDataSetChanged()
-            }
+
+            forexList!!.clear()
+            forexList!!.addAll(sortedList)
+            forexOldList!!.clear()
+            forexOldList!!.addAll(sortedList)
+            setCurrencyAdapter();
+
         } else if (type.equals("price")) {
             setFlag(false, true, false, false, false)
             var sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
-            for (obj in sortedList) {
-                forexList!!.clear()
-                forexList!!.addAll(sortedList)
-                forexOldList!!.clear()
-                forexOldList!!.addAll(sortedList)
-                forexAdapter!!.notifyDataSetChanged()
-            }
+            forexList!!.clear()
+            forexList!!.addAll(sortedList)
+            forexOldList!!.clear()
+            forexOldList!!.addAll(sortedList)
+            setCurrencyAdapter();
         } else if (type.equals("HighToLow")) {
             setFlag(false, false, false, true, false)
             val sortedList = forexList!!.sortedByDescending { it.ask.toDouble() }
-            for (obj in sortedList) {
-                forexList!!.clear()
-                forexList!!.addAll(sortedList)
-                forexOldList!!.clear()
-                forexOldList!!.addAll(sortedList)
-                forexAdapter!!.notifyDataSetChanged()
-            }
+            forexList!!.clear()
+            forexList!!.addAll(sortedList)
+            forexOldList!!.clear()
+            forexOldList!!.addAll(sortedList)
+            setCurrencyAdapter();
         } else if (type.equals("DayHighToLow")) {
             setFlag(false, false, false, false, true)
             val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
-            for (obj in sortedList) {
-                forexList!!.clear()
-                forexList!!.addAll(sortedList)
-                forexOldList!!.clear()
-                forexOldList!!.addAll(sortedList)
-                forexAdapter!!.notifyDataSetChanged()
-            }
+            forexList!!.clear()
+            forexList!!.addAll(sortedList)
+            forexOldList!!.clear()
+            forexOldList!!.addAll(sortedList)
+            setCurrencyAdapter();
         } else if (type.equals("nodata")) {
             getCurrency("0")
         }

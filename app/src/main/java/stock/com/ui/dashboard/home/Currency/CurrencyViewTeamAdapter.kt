@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.row_view_team_currency.view.*
 import stock.com.R
 import stock.com.ui.pojo.CurrencyPojo
 
-class CurrencyViewTeamAdapter (
+class CurrencyViewTeamAdapter(
     val mContext: Context, val mContest: MutableList<CurrencyPojo.Currency>,
     val onItemCheckListener: OnItemCheckListener
 ) :
@@ -29,6 +29,7 @@ class CurrencyViewTeamAdapter (
         fun onItemClick(item: CurrencyPojo.Currency)
         fun onToggleSell(item: CurrencyPojo.Currency)
         fun onToggleBuy(item: CurrencyPojo.Currency)
+        fun onRemoveIteam(item: CurrencyPojo.Currency)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -50,24 +51,26 @@ class CurrencyViewTeamAdapter (
         holder.itemView.img_add.visibility = View.GONE
         mContest.get(position).addedToList = 1
 
-       /* if (!TextUtils.isEmpty(mContest.get(position).changeper))
-            if (mContest.get(position).changeper.contains("-")) {
-                Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
-                holder.itemView.tvPercentage.setText(mContest.get(position).changeper)
-            } else {
-                Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
-                holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText("+" + mContest.get(position).changeper)
-            }*/
+        /* if (!TextUtils.isEmpty(mContest.get(position).changeper))
+             if (mContest.get(position).changeper.contains("-")) {
+                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
+                 holder.itemView.tvPercentage.setText(mContest.get(position).changeper)
+             } else {
+                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)
+                 holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                 holder.itemView.tv_change_percentage.setText("+" + mContest.get(position).changeper)
+             }*/
 
 
 
         holder.itemView.llremoveStock.setOnClickListener {
-            mContest.remove(mContest.get(position))
+            onItemCheckListener.onRemoveIteam(mContest.get(position))
+            notifyDataSetChanged()
+           /* mContest.remove(mContest.get(position))
             notifyDataSetChanged()
             onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))
-            mContest.get(position).addedToList = 0
+            mContest.get(position).addedToList = 0*/
         }
 
 

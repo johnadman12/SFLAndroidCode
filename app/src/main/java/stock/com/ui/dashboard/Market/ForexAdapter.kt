@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -37,8 +38,11 @@ class ForexAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ForexAdapter.FeatureListHolder, position: Int) {
-
-
+        val animBlink: Animation
+        animBlink = AnimationUtils.loadAnimation(
+            mContext,
+            R.anim.blink
+        )
         Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
         Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
 
@@ -67,43 +71,52 @@ class ForexAdapter(
             }
         }
 
-
-
         try {
             if (oldData.get(position).ask.equals(forexList!!.get(position).ask)) {
-                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_green_fill);
-                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_empty_rect);
                 holder.itemView.ask.setText(forexList.get(position).ask)
             } else if (oldData.get(position).ask.toDouble() < forexList.get(position).ask.toDouble()) {
+                holder.itemView.llPrice.startAnimation(animBlink);
+                holder.itemView.ask.startAnimation(animBlink);
+                holder.itemView.tv_ask.startAnimation(animBlink);
+                animBlink.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
 
-                val newtimer = object : CountDownTimer(50, 50) {
-                    override fun onTick(l: Long) {
-                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
-                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                    override fun onAnimationEnd(p0: Animation?) {
+                        holder.itemView.ask.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
+                        holder.itemView.tv_ask.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
                         holder.itemView.llPrice.setBackgroundDrawable(
                             ContextCompat.getDrawable(
                                 mContext,
-                                R.drawable.gray_green_fill
+                                R.drawable.gray_empty_rect
                             )
                         )
-                        holder.itemView.llPrice.blink(3)
-                        holder.itemView.llPrice.clearAnimation()
                     }
 
-                    override fun onFinish() {
+                    override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (forexList!!.get(position).ask.toDouble() < 1)
+                            if (forexList.get(position).ask.toDouble() < 1)
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.4f",
-                                        forexList!!.get(position).ask.toDouble()
+                                        forexList.get(position).ask.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.2f",
-                                        forexList!!.get(position).ask.toDouble()
+                                        forexList.get(position).ask.toDouble()
                                     )
                                 )
                             holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -118,28 +131,39 @@ class ForexAdapter(
 
                         }
                     }
-                }
-                newtimer.start()
-                holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.black))
-                Log.d("gugugugugu", "---464646---");
+                })
+
             } else if (oldData.get(position).ask.toDouble() > forexList!!.get(position).ask.toDouble()) {
-                Log.d("sddasdasdad", "-------3333333--")
-                val newtimer = object : CountDownTimer(50, 50) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
-                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                holder.itemView.llPrice.startAnimation(animBlink);
+                holder.itemView.ask.startAnimation(animBlink);
+                holder.itemView.tv_ask.startAnimation(animBlink);
+
+                animBlink.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
+
+                    override fun onAnimationEnd(p0: Animation?) {
+                        holder.itemView.ask.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
+                        holder.itemView.tv_ask.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
                         holder.itemView.llPrice.setBackgroundDrawable(
                             ContextCompat.getDrawable(
                                 mContext,
-                                R.drawable.gray_red_fill
+                                R.drawable.gray_empty_rect
                             )
                         )
-//                            holder.itemView.llPrice.animation = anim
-                        holder.itemView.llPrice.blink(3)
-                        holder.itemView.llPrice.clearAnimation()
                     }
 
-                    override fun onFinish() {
+                    override fun onAnimationStart(p0: Animation?) {
                         try {
                             if (oldData!!.get(position).ask.toDouble() < 1)
                                 holder.itemView.ask.setText(
@@ -166,9 +190,7 @@ class ForexAdapter(
                         } catch (e: Exception) {
                         }
                     }
-                }
-                newtimer.start()
-                holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+                })
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
                 if (oldData!!.get(position).ask.toDouble() < 1) {
@@ -185,26 +207,39 @@ class ForexAdapter(
 
         try {
             if (oldData.get(position).bid.equals(forexList!!.get(position).bid)) {
-                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_green_fill);
-                // holder.itemView.llPrice.setBackgroundResource(R.drawable.gray_empty_rect);
-                holder.itemView.bid.setText(forexList.get(position).bid)
-            } else if (oldData.get(position).bid.toDouble() < forexList.get(position).bid.toDouble()) {
 
-                val newtimer = object : CountDownTimer(50, 50) {
-                    override fun onTick(l: Long) {
-                        holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
-                        holder.itemView.tv_bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                holder.itemView.bid.setText(forexList.get(position).bid)
+
+            } else if (oldData.get(position).bid.toDouble() < forexList.get(position).bid.toDouble()) {
+                holder.itemView.llchange.startAnimation(animBlink);
+                holder.itemView.bid.startAnimation(animBlink);
+                holder.itemView.tv_bid.startAnimation(animBlink);
+                animBlink.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
+
+                    override fun onAnimationEnd(p0: Animation?) {
+                        holder.itemView.bid.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
+                        holder.itemView.tv_bid.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
                         holder.itemView.llchange.setBackgroundDrawable(
                             ContextCompat.getDrawable(
                                 mContext,
-                                R.drawable.gray_green_fill
+                                R.drawable.gray_empty_rect
                             )
                         )
-                        holder.itemView.llchange.blink(3)
-                        holder.itemView.llchange.clearAnimation()
                     }
 
-                    override fun onFinish() {
+                    override fun onAnimationStart(p0: Animation?) {
                         try {
                             if (forexList!!.get(position).bid.toDouble() < 1)
                                 holder.itemView.bid.setText(
@@ -232,28 +267,39 @@ class ForexAdapter(
 
                         }
                     }
-                }
-                newtimer.start()
-                holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.black))
-                Log.d("gugugugugu", "---464646---");
-            } else if (oldData.get(position).bid.toDouble() > forexList!!.get(position).bid.toDouble()) {
+                })
+
+            } else if (oldData.get(position).bid.toDouble() > forexList.get(position).bid.toDouble()) {
                 Log.d("sddasdasdad", "-------3333333--")
-                val newtimer = object : CountDownTimer(50, 50) {
-                    override fun onTick(millisUntilFinished: Long) {
-                        holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
-                        holder.itemView.tv_ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+                holder.itemView.llchange.startAnimation(animBlink);
+                holder.itemView.bid.startAnimation(animBlink);
+                holder.itemView.tv_bid.startAnimation(animBlink);
+                animBlink.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationRepeat(p0: Animation?) {
+                    }
+
+                    override fun onAnimationEnd(p0: Animation?) {
+                        holder.itemView.bid.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
+                        holder.itemView.tv_bid.setTextColor(
+                            ContextCompat.getColor(
+                                mContext,
+                                R.color.black
+                            )
+                        )
                         holder.itemView.llchange.setBackgroundDrawable(
                             ContextCompat.getDrawable(
                                 mContext,
-                                R.drawable.gray_red_fill
+                                R.drawable.gray_empty_rect
                             )
                         )
-//                            holder.itemView.llPrice.animation = anim
-                        holder.itemView.llchange.blink(3)
-                        holder.itemView.llchange.clearAnimation()
                     }
 
-                    override fun onFinish() {
+                    override fun onAnimationStart(p0: Animation?) {
                         try {
                             if (oldData!!.get(position).bid.toDouble() < 1)
                                 holder.itemView.bid.setText(
@@ -280,9 +326,7 @@ class ForexAdapter(
                         } catch (e: Exception) {
                         }
                     }
-                }
-                newtimer.start()
-                holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+                })
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
                 if (oldData!!.get(position).bid.toDouble() < 1) {
@@ -307,12 +351,14 @@ class ForexAdapter(
         holder.itemView.name.setText(forexList.get(position).symbol)
         /* holder.itemView.bid.setText(forexList.get(position).bid)
          holder.itemView.ask.setText(forexList.get(position).ask)*/
-        holder.itemView.tv_company.setText("(" + oldData.get(position).name + ")");
+        holder.itemView.tv_company.setText("(" + forexList.get(position).name + ")");
+
+
 
         holder.itemView.llwatch.setOnClickListener {
-            if (oldData.get(position).cryptoType.equals("0")) {
-                frgament.saveToWatchList(oldData.get(position).currencyid);
-                oldData.get(position).cryptoType = "1";
+            if (forexList.get(position).cryptoType.equals("0")) {
+                frgament.saveToWatchList(forexList.get(position).currencyid);
+                forexList.get(position).cryptoType = "1";
                 holder.itemView.llAdd.visibility = View.GONE;
                 holder.itemView.img_check.visibility = View.VISIBLE;
             } else {
@@ -323,8 +369,8 @@ class ForexAdapter(
 
         holder.itemView.setOnClickListener {
             var intent = Intent(mContext, ActivityMarketDetail::class.java);
-            intent.putExtra("cryptoId", oldData.get(position).currencyid)
-            intent.putExtra(StockConstant.MARKETLIST, oldData)
+            intent.putExtra("cryptoId", forexList.get(position).currencyid)
+            intent.putExtra(StockConstant.MARKETLIST, forexList)
             intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
             intent.putExtra("flag", 2)
             //            ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
@@ -337,19 +383,6 @@ class ForexAdapter(
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    }
 
-
-    fun View.blink(
-        times: Int = Animation.INFINITE, duration:
-        Long = 10L, offset: Long = 5L, minAlpha: Float = 0.0f,
-        maxAlpha: Float = 1.0f, repeatMode: Int = Animation.REVERSE
-    ) {
-        startAnimation(AlphaAnimation(minAlpha, maxAlpha).also {
-            it.duration = duration
-            it.startOffset = offset
-            it.repeatMode = repeatMode
-//            it.repeatCount = times
-        })
     }
 }

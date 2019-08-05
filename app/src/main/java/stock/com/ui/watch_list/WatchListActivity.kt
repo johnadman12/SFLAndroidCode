@@ -43,11 +43,7 @@ class WatchListActivity : BaseActivity() {
         setContentView(R.layout.activity_watch_list)
 
         list = ArrayList();
-        watchListAdapter = WatchListAdapter_(applicationContext!!, list as ArrayList, this)
-        val llm = LinearLayoutManager(applicationContext)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_watch_list!!.layoutManager = llm
-        recyclerView_watch_list!!.adapter = watchListAdapter;
+        setAdapter();
 
 
         val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(
@@ -107,6 +103,14 @@ class WatchListActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("WrongConstant")
+    private fun setAdapter(){
+        watchListAdapter = WatchListAdapter_(applicationContext!!, list as ArrayList, this)
+        val llm = LinearLayoutManager(applicationContext)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recyclerView_watch_list!!.layoutManager = llm
+        recyclerView_watch_list!!.adapter = watchListAdapter;
+    }
 
     private fun setWatchListAdapter() {
         recyclerView_watch_list.visibility = View.VISIBLE
@@ -213,7 +217,8 @@ class WatchListActivity : BaseActivity() {
                             Log.d("sdadada---Filter", "--" + testing.size)
                             list!!.clear()
                             list!!.addAll(testing)
-                            recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
+                            //recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
+                            setAdapter()
                         } else {
                             list!!.clear()
                             recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
@@ -242,10 +247,11 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                             list!!.clear();
-                            setWatchListAdapter();
+                            // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            if (watchListAdapter != null)
-                                watchListAdapter!!.notifyDataSetChanged()
+                            //if (watchListAdapter != null)
+                              //  watchListAdapter!!.notifyDataSetChanged()
+                            setAdapter()
                         } catch (e: Exception) {
 
                         }
@@ -253,10 +259,11 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedWith(compareBy({ it.latestPrice.toDouble() }));
                             list!!.clear();
-                            setWatchListAdapter();
+                            // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            if (watchListAdapter != null)
-                                watchListAdapter!!.notifyDataSetChanged()
+                            //if (watchListAdapter != null)
+                            //  watchListAdapter!!.notifyDataSetChanged()
+                            setAdapter()
                         } catch (e: Exception) {
 
                         }
@@ -264,10 +271,11 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
                             list!!.clear();
-                            setWatchListAdapter();
+                            //setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            if (watchListAdapter != null)
-                                watchListAdapter!!.notifyDataSetChanged()
+                            //if (watchListAdapter != null)
+                              //  watchListAdapter!!.notifyDataSetChanged()
+                            setAdapter()
                         } catch (e: Exception) {
 
                         }
@@ -275,10 +283,11 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
                             list!!.clear();
-                            setWatchListAdapter();
+                           // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            if (watchListAdapter != null)
-                                watchListAdapter!!.notifyDataSetChanged()
+                           // if (watchListAdapter != null)
+                             //   watchListAdapter!!.notifyDataSetChanged()
+                            setAdapter()
                         } catch (e: Exception) {
 
                         }

@@ -39,7 +39,7 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
+class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<CurrencyPojo.Currency>? = null;
     private var currencySelectedItem: ArrayList<CurrencyPojo.Currency>? = null;
     private var viewTeamAdapter: CurrencyViewTeamAdapter? = null;
@@ -56,12 +56,12 @@ class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
-           /* R.id.ll_sort -> {
-                startActivityForResult(
-                    Intent(this@CurrencyViewTeamActivity, ActivitySortTeam::class.java),
-                    StockConstant.RESULT_CODE_SORT_MARKETVIEW_TEAM
-                )
-            }*/
+            /* R.id.ll_sort -> {
+                 startActivityForResult(
+                     Intent(this@CurrencyViewTeamActivity, ActivitySortTeam::class.java),
+                     StockConstant.RESULT_CODE_SORT_MARKETVIEW_TEAM
+                 )
+             }*/
             R.id.btn_Join -> {
                 showJoinContestDialogue()
             }
@@ -69,6 +69,7 @@ class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
                 startActivity(
                     Intent(this@CurrencyViewTeamActivity, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, list)
+                        .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -176,6 +177,17 @@ class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
         currencySelectedItem = list
         viewTeamAdapter = CurrencyViewTeamAdapter(
             this, list as ArrayList, object : CurrencyViewTeamAdapter.OnItemCheckListener {
+                override fun onRemoveIteam(item: CurrencyPojo.Currency) {
+                    if (currencySelectedItem!!.size > 0) {
+                        currencySelectedItem!!.remove(item)
+                        setTeamText(currencySelectedItem!!.size)
+                        val intent = Intent();
+                        intent.putExtra("removedlist", list)
+                        intent.putExtra("flag", "1")
+                        setResult(Activity.RESULT_OK, intent);
+                    }
+                }
+
                 override fun onToggleBuy(item: CurrencyPojo.Currency) {
                     for (i in 0 until currencySelectedItem!!.size) {
                         if (currencySelectedItem!!.get(i).currencyid == item.currencyid) {
@@ -206,7 +218,7 @@ class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
                     )
                 }
 
-                override fun onItemCheck(item: Int, itemcontest:CurrencyPojo.Currency) {
+                override fun onItemCheck(item: Int, itemcontest: CurrencyPojo.Currency) {
                     setTeamText(item)
                     val intent = Intent();
                     intent.putExtra("removedlist", list)
@@ -537,7 +549,6 @@ class CurrencyViewTeamActivity : BaseActivity() , View.OnClickListener {
             }
         })
     }
-    
-    
-    
+
+
 }

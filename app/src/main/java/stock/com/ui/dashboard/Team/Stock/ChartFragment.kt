@@ -78,7 +78,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
             webview.getSettings().setJavaScriptEnabled(true);
             webview.setBackgroundColor(0x00000000);
             webview.getSettings().setLoadWithOverviewMode(true);
-            webview.getSettings().setDomStorageEnabled(true);
+//            webview.getSettings().setDomStorageEnabled(true);
             webview.loadUrl(url)
         }
 

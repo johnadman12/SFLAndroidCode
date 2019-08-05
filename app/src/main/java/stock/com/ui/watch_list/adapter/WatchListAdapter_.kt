@@ -20,12 +20,12 @@ import stock.com.ui.watch_list.WatchListActivity
 
 class WatchListAdapter_(
     val mContext: Context,
-    val mContest: MutableList<WatchlistPojo.WatchStock>,
+    val mContest: ArrayList<WatchlistPojo.WatchStock>,
     val activity: WatchListActivity
 ) :
     RecyclerView.Adapter<WatchListAdapter_.WatchListHolder>(), Filterable {
 
-    private var searchList: List<WatchlistPojo.WatchStock>? = null
+    private var searchList: ArrayList<WatchlistPojo.WatchStock>? = null
 
     init {
         this.searchList = mContest;
@@ -45,24 +45,29 @@ class WatchListAdapter_(
         holder.itemView.tv_id.setText(searchList!!.get(position).id);
         holder.itemView.tv_market_open.setText(searchList!!.get(position).latestPrice);
 
-        if (searchList!!.get(position).marketname.equals("Currency")){
-            holder.itemView.rl_double_flag.visibility = View.VISIBLE ;
+        if (searchList!!.get(position).marketname.equals("Currency")) {
+            holder.itemView.rl_double_flag.visibility = View.VISIBLE;
             holder.itemView.imageView.visibility = View.GONE;
             holder.itemView.tv_company_name.setText(searchList!!.get(position).currency_symbol);
             holder.itemView.tv_sector.setText("");
             //holder.itemView.tv_change_percentage.setText(searchList!!.get(position).currency_perchange);
-            if (!TextUtils.isEmpty(searchList!!.get(position).currency_perchange)){
-                if (searchList!!.get(position).currency_perchange > 0.toString()){
+            if (!TextUtils.isEmpty(searchList!!.get(position).currency_perchange)) {
+                if (searchList!!.get(position).currency_perchange > 0.toString()) {
                     Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
                     holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green));
                     holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.green));
-                }else{
+                } else {
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                    holder.itemView.tv_change_percentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.colorRed
+                        )
+                    );
                     holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
                 }
             }
-        }else{
+        } else {
             holder.itemView.rl_double_flag.visibility = View.GONE
             holder.itemView.imageView.visibility = View.VISIBLE;
             holder.itemView.tv_company_name.setText(searchList!!.get(position).symbol);
@@ -73,7 +78,12 @@ class WatchListAdapter_(
             if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
                 if (searchList!!.get(position).changePercent.contains("-")) {
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
+                    holder.itemView.tv_change_percentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.colorRed
+                        )
+                    );
                     holder.itemView.tv_market_open.setTextColor(ContextCompat.getColor(mContext, R.color.colorRed));
                 } else {
                     Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
@@ -110,10 +120,12 @@ class WatchListAdapter_(
                     for (row in mContest) {
                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row)
+                            Log.d("dadada", "---" + filteredList.size);
                         } else if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
                             filteredList.add(row)
                     }
                     searchList = filteredList
+
                 }
                 val filterResults = Filter.FilterResults()
                 filterResults.values = searchList
@@ -121,7 +133,8 @@ class WatchListAdapter_(
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
-                searchList = filterResults.values as ArrayList<WatchlistPojo.WatchStock>
+                searchList =
+                    filterResults.values as ArrayList<WatchlistPojo.WatchStock>?
                 notifyDataSetChanged()
             }
         }

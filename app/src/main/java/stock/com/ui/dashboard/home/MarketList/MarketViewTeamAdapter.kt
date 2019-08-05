@@ -30,6 +30,7 @@ class MarketViewTeamAdapter
         fun onItemClick(item: MarketList.Crypto)
         fun onToggleSell(item: MarketList.Crypto)
         fun onToggleBuy(item: MarketList.Crypto)
+        fun onRemoveIteam(item: MarketList.Crypto)
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
@@ -66,10 +67,11 @@ class MarketViewTeamAdapter
 
 
         holder.itemView.llremoveStock.setOnClickListener {
-            mContest.remove(mContest.get(position))
+            /*mContest.remove(mContest.get(position))
             notifyDataSetChanged()
-            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))
-            mContest.get(position).addedToList = 0
+            onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))*/
+            onItemCheckListener.onRemoveIteam(mContest.get(position))
+            notifyDataSetChanged()
         }
 
 

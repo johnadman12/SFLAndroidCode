@@ -25,7 +25,7 @@ import java.lang.Exception
 class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
     private var list: ArrayList<MarketList.Crypto>? = null;
     var totalChange: String = ""
-    var teamName: String = ""
+    var teamName: String? = ""
     var totalChange1: Double = 0.0
     override fun onClick(view: View?) {
         when (view!!.id) {

@@ -53,7 +53,7 @@ class LiveScoreAdapter(
                         .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                         .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                 )
-            }else
+            } else
                 mContext.startActivity(
                     Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, scores.get(position).currencies)
@@ -64,11 +64,13 @@ class LiveScoreAdapter(
         }
 
         holder.itemView.ll_n_r.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
-                    StockConstant.FRIENDID, scores.get(position).userid.toString()
+            if (userId != scores.get(position).userid) {
+                mContext.startActivity(
+                    Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                        StockConstant.FRIENDID, scores.get(position).userid.toString()
+                    )
                 )
-            )
+            }
         }
 //        }
 

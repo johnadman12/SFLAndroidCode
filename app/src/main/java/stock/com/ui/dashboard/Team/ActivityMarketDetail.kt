@@ -300,7 +300,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         stock_name.setText(stock!!.get(0).symbol)
         tv_stockcomp.setText(stock.get(0).companyName)
         tvStockPercentage.setText(stock.get(0).changePercent)
-        tvVol.setText(stock.get(0).latestVolume)
+        tvVol.setText(stock.get(0).hVolume)
         tvlatestPrice.setText(stock.get(0).latestPrice)
         Glide.with(this).load(stock.get(0).image).into(iv_stock_img)
         if (!TextUtils.isEmpty(stock.get(0).changePercent))
