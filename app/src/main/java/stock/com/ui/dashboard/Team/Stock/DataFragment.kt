@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Team.Stock
 
 import android.os.Bundle
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class DataFragment : BaseFragment() {
             }
         })
     }
+
     private fun setData(list: AssestData.Stock) {
         tvOpen.setText(list.open)
         tvClose.setText(list.close)
@@ -85,22 +87,27 @@ class DataFragment : BaseFragment() {
             if (list.urls!!.websiteUrl!!.size > 0) {
                 tvWebsite.setText(list.urls!!.websiteUrl!!.get(0))
                 tvWebsite.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                Linkify.addLinks(tvWebsite, Linkify.WEB_URLS);
             }
             if (list.urls!!.redditUrl!!.size > 0) {
                 tvReddit.setText(list.urls!!.redditUrl!!.get(0))
                 tvReddit.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                Linkify.addLinks(tvReddit, Linkify.WEB_URLS);
             }
             if (list.urls!!.messageBoardUrl!!.size > 0) {
                 tvMessageBoard.setText(list.urls!!.messageBoardUrl!!.get(0))
                 tvMessageBoard.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                Linkify.addLinks(tvMessageBoard, Linkify.WEB_URLS);
             }
             if (list.urls!!.sourceCodeUrl!!.size > 0) {
                 tvSourceCode.setText(list.urls!!.sourceCodeUrl!!.get(0))
                 tvSourceCode.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                Linkify.addLinks(tvSourceCode, Linkify.WEB_URLS);
             }
             if (list.urls!!.explorerUrl!!.size > 0) {
                 tvExplorer.setText(list.urls!!.explorerUrl!!.get(0))
                 tvExplorer.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+                Linkify.addLinks(tvExplorer, Linkify.WEB_URLS);
             }
         }
         if (list.cryptologo != null)

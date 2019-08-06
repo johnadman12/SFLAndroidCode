@@ -224,11 +224,15 @@ class CryptoCurrencyFragment : BaseFragment() {
                             if (flagAlphaSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
                                 cryptoListNew!!.clear()
+                                cryptoList!!.clear()
+                                cryptoList!!.addAll(sortedList)
                                 cryptoListNew!!.addAll(sortedList)
 
                             } else if (flagPriceSort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
                                 cryptoListNew!!.clear()
+                                cryptoList!!.clear()
+                                cryptoList!!.addAll(sortedList)
                                 cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
 
@@ -236,6 +240,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                             } else if (flagDaySort) {
                                 val sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
                                 cryptoListNew!!.clear()
+                                cryptoList!!.clear()
+                                cryptoList!!.addAll(sortedList)
                                 cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
 
@@ -243,6 +249,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
 
                                 cryptoListNew!!.clear()
+                                cryptoList!!.clear()
+                                cryptoList!!.addAll(sortedList)
                                 cryptoListNew!!.addAll(sortedList)
 //                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
 
@@ -250,10 +258,12 @@ class CryptoCurrencyFragment : BaseFragment() {
                             } else if (flagDHTLSort) {
                                 val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
                                 cryptoListNew!!.clear()
+                                cryptoList!!.clear()
+                                cryptoList!!.addAll(sortedList)
                                 cryptoListNew!!.addAll(sortedList)
 
                             }
-                            if (rv_currencyList != null)
+                            if (cryptoAdapter != null)
                                 cryptoAdapter!!.notifyDataSetChanged()
 
 
@@ -419,59 +429,54 @@ class CryptoCurrencyFragment : BaseFragment() {
         if (type.equals("Alpha")) {
             setFlag(true, false, false, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
-            for (obj in sortedList) {
-                cryptoListNew!!.clear()
-                cryptoListNew!!.addAll(sortedList)
-                cryptoList!!.clear()
-                cryptoList!!.addAll(sortedList)
-                // cryptoAdapter!!.notifyDataSetChanged()
-            }
+            cryptoListNew!!.clear()
+            cryptoListNew!!.addAll(sortedList)
+            cryptoList!!.clear()
+            cryptoList!!.addAll(sortedList)
+            // cryptoAdapter!!.notifyDataSetChanged()
+
             setCryptoCurrencyAdapter();
 
 
         } else if (type.equals("dayChange")) {
             setFlag(false, false, true, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
-            for (obj in sortedList) {
-                cryptoListNew!!.clear()
-                cryptoListNew!!.addAll(sortedList)
-                cryptoList!!.clear()
-                cryptoList!!.addAll(sortedList)
-                // cryptoAdapter!!.notifyDataSetChanged()
-            }
+            cryptoListNew!!.clear()
+            cryptoListNew!!.addAll(sortedList)
+            cryptoList!!.clear()
+            cryptoList!!.addAll(sortedList)
+            // cryptoAdapter!!.notifyDataSetChanged()
+
             setCryptoCurrencyAdapter();
         } else if (type.equals("price")) {
             setFlag(false, true, false, false, false)
             var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
-            for (obj in sortedList) {
-                cryptoListNew!!.clear()
-                cryptoListNew!!.addAll(sortedList)
-                cryptoList!!.clear()
-                cryptoList!!.addAll(sortedList)
-                //cryptoAdapter!!.notifyDataSetChanged()
-            }
+            cryptoListNew!!.clear()
+            cryptoListNew!!.addAll(sortedList)
+            cryptoList!!.clear()
+            cryptoList!!.addAll(sortedList)
+            //cryptoAdapter!!.notifyDataSetChanged()
+
             setCryptoCurrencyAdapter();
         } else if (type.equals("HighToLow")) {
             setFlag(false, false, false, true, false)
             val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
-            for (obj in sortedList) {
-                cryptoListNew!!.clear()
-                cryptoListNew!!.addAll(sortedList)
-                cryptoList!!.clear()
-                cryptoList!!.addAll(sortedList)
-                //cryptoAdapter!!.notifyDataSetChanged()
-            }
+            cryptoListNew!!.clear()
+            cryptoListNew!!.addAll(sortedList)
+            cryptoList!!.clear()
+            cryptoList!!.addAll(sortedList)
+            //cryptoAdapter!!.notifyDataSetChanged()
+
             setCryptoCurrencyAdapter();
         } else if (type.equals("DayHighToLow")) {
             setFlag(false, false, false, false, true)
             val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
-            for (obj in sortedList) {
-                cryptoListNew!!.clear()
-                cryptoListNew!!.addAll(sortedList)
-                cryptoList!!.clear()
-                cryptoList!!.addAll(sortedList)
-                // cryptoAdapter!!.notifyDataSetChanged()
-            }
+            cryptoListNew!!.clear()
+            cryptoListNew!!.addAll(sortedList)
+            cryptoList!!.clear()
+            cryptoList!!.addAll(sortedList)
+            // cryptoAdapter!!.notifyDataSetChanged()
+
             setCryptoCurrencyAdapter();
         } else if (type.equals("nodata")) {
             getCurrencyAgain("0")

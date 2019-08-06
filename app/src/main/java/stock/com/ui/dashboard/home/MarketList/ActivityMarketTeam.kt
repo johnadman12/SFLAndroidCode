@@ -287,6 +287,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     }
 
+    @SuppressLint("WrongConstant")
     private fun setAdapter() {
         marketlistAdapter = MarketListAdapter(
             this, list as ArrayList,
@@ -300,7 +301,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             if (marketSelectedItems!!.size > 0) {
                                 for (i in 0 until marketSelectedItems!!.size)
                                     if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
-                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+                                        marketSelectedItems!!.get(i).cryptoType = item.cryptoType
 
                             } else
                                 list!!.get(j).cryptoType = item.cryptoType
@@ -317,7 +318,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             if (marketSelectedItems!!.size > 0) {
                                 for (i in 0 until marketSelectedItems!!.size)
                                     if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
-                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+                                        marketSelectedItems!!.get(i).cryptoType = item.cryptoType
                             } else
                                 list!!.get(j).cryptoType = item.cryptoType
                             break;
@@ -600,6 +601,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
                                     list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
+                                    marketSelectedItems!!.get(j).changeper = list!!.get(i).changeper
                                 }
                             }
                         }
@@ -699,8 +701,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         }
 
                         for (i in 0 until list!!.size) {
-                            for (j in 0 until marketRemovedItems!!.size) {
-                                if (list!!.get(i).cryptocurrencyid == marketRemovedItems!!.get(j).cryptocurrencyid) {
+                            for (j in 0 until marketSelectedItems!!.size) {
+                                if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
                                     list!!.get(i).addedToList = 1
                                 }
                             }
@@ -710,13 +712,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
                                     list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
+                                    marketSelectedItems!!.get(j).changeper = list!!.get(i).changeper
                                 }
                             }
                         }
                         if (marketlistAdapter != null)
                             marketlistAdapter!!.notifyDataSetChanged();
 
-                        marketSelectedItems!!.addAll(marketRemovedItems!!)
+//                        marketSelectedItems!!.addAll(marketRemovedItems!!)
                         setTeamText(marketSelectedItems!!.size.toString())
 
                     } else if (response.body()!!.status == "2") {
@@ -834,6 +837,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
                                     list!!.get(i).cryptoType = marketSelectedItems!!.get(j).cryptoType
+                                    marketSelectedItems!!.get(j).changeper = list!!.get(i).changeper
                                 }
                             }
                         }
@@ -1000,6 +1004,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     if (marketSelectedItems!!.size > 0)
                         marketSelectedItems!!.clear()
                     marketRemovedItems = data.getParcelableArrayListExtra("removedlist")
+                    marketSelectedItems!!.addAll(marketRemovedItems!!)
                     getTeamAgainlist()
 
                 } else if (data.getStringExtra("flag").equals("2")) {

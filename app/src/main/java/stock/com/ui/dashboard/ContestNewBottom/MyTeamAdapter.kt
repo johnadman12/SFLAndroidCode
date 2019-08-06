@@ -61,9 +61,9 @@ class MyTeamAdapter(
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onTouch(v: View, event: MotionEvent): Boolean {
                 val DRAWABLE_RIGHT = 2
+//                holder.itemView.edt_teamname.setFocusable(false);
                 if (event.getAction() === MotionEvent.ACTION_UP) {
                     if (event.getRawX() >= holder.itemView.edt_teamname.getRight() - holder.itemView.edt_teamname.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()) {
-                        holder.itemView.edt_teamname.setFocusable(false);
                         if (TextUtils.isEmpty(holder.itemView.edt_teamname.text.toString()))
                             AppDelegate.showToast(mContext, "Please Enter Team Name")
                         else {

@@ -54,7 +54,7 @@
                             android:inputType="text"
                             android:visibility="gone"
                             android:backgroundTint="@color/white"
-                            android:imeOptions="actionDone"
+                            android:imeOptions="normal"
                             style="@style/TextStyleSemiBold"
                             android:textSize="@dimen/_20ssp"/>
 

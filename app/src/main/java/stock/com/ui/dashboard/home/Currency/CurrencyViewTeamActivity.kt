@@ -8,11 +8,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -56,12 +54,6 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
             R.id.img_btn_back -> {
                 finish()
             }
-            /* R.id.ll_sort -> {
-                 startActivityForResult(
-                     Intent(this@CurrencyViewTeamActivity, ActivitySortTeam::class.java),
-                     StockConstant.RESULT_CODE_SORT_MARKETVIEW_TEAM
-                 )
-             }*/
             R.id.btn_Join -> {
                 showJoinContestDialogue()
             }
@@ -128,6 +120,25 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
         if (flagCloning == 1)
             getContestDetail()
+
+        edtTeamName.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                val DRAWABLE_RIGHT = 2
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= edtTeamName.getRight() - edtTeamName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()) {
+                        if (TextUtils.isEmpty(edtTeamName.text.toString())) {
+                            displayToast("Please enter team name", "warning")
+                        } else {
+                            edtTeamName.visibility = View.GONE
+                            txtTeamname.visibility = View.VISIBLE
+                            txtTeamname.setText(edtTeamName.text.toString())
+                        }
+                        return true
+                    }
+                }
+                return false
+            }
+        })
 
     }
 
@@ -382,6 +393,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
@@ -442,6 +454,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -498,6 +511,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())

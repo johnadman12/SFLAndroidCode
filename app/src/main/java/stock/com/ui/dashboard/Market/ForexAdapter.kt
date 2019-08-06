@@ -43,8 +43,10 @@ class ForexAdapter(
             mContext,
             R.anim.blink
         )
-        Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
-        Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
+        Glide.with(mContext).load(forexList.get(position).firstflag).into(holder.itemView.img1)
+        Glide.with(mContext).load(forexList.get(position).secondflag).into(holder.itemView.img2)
+        holder.itemView.ask.setText(forexList.get(position).ask)
+        holder.itemView.ask.setText(forexList.get(position).bid)
 
         Log.d("dad_fisrt_image", "---" + oldData.get(position).firstflag);
         Log.d("dad_fisrt_image", "---" + oldData.get(position).secondflag);
