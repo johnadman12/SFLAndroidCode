@@ -49,7 +49,7 @@ class MarketListAdapter(
         createCheckedHolder();
     }
 
-    @SuppressLint("SetTextI18n", "ResourceAsColor")
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         try {
             holder.itemView.tvSymbol.setText(mContest.get(position).symbol)
@@ -243,25 +243,11 @@ class MarketListAdapter(
                 if (searchList!!.get(position).changeper.contains("-")) {
                     price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
-//                    holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changeper + "%)")
-                    holder.itemView.tv_change_percentage.setText(
-                        searchList!!.get(position).decimalchange + " (" + searchList!!.get(
-                            position
-                        ).changeper + "%)"
-                    )
-                    holder.itemView.tv_change_percentage.setTextColor(  ContextCompat.getColor(
-                        mContext,
-                        R.color.redcolor
-                    ))
+                    holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changeper + "%)")
                 } else {
                     Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.img_graph)
                     holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-//                    holder.itemView.tv_change_percentage.setText("$" + price + " (+" + searchList!!.get(position).changeper + "%)")
-                    holder.itemView.tv_change_percentage.setText(
-                        "$" + searchList!!.get(position).decimalchange + " (+" + searchList!!.get(
-                            position
-                        ).changeper + "%)"
-                    )
+                    holder.itemView.tv_change_percentage.setText("$" + price + " (+" + searchList!!.get(position).changeper + "%)")
                 }
 
             }
@@ -298,6 +284,8 @@ class MarketListAdapter(
             if (searchList!!.get(position).addedToList == 1) {
                 holder.itemView.llremoveStock.visibility = View.VISIBLE
                 holder.itemView.img_add.visibility = View.GONE
+
+                Log.d("sdadad---","--"+searchList!!.get(position).changeper)
             } else if (searchList!!.get(position).addedToList == 0) {
                 holder.itemView.llremoveStock.visibility = View.GONE
                 holder.itemView.img_add.visibility = View.VISIBLE

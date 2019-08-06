@@ -739,7 +739,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             if (currencySelected!!.size > 0) {
                                 for (i in 0 until currencySelected!!.size)
                                     if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
-                                        currencySelected!!.get(j).cryptoType = item.cryptoType
+                                        currencySelected!!.get(i).cryptoType = item.cryptoType
 
                             } else
                                 list!!.get(j).cryptoType = item.cryptoType
@@ -756,7 +756,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             if (currencySelected!!.size > 0) {
                                 for (i in 0 until currencySelected!!.size)
                                     if (item.currencyid.equals(currencySelected!!.get(i).currencyid))
-                                        currencySelected!!.get(j).cryptoType = item.cryptoType
+                                        currencySelected!!.get(i).cryptoType = item.cryptoType
                             } else
                                 list!!.get(j).cryptoType = item.cryptoType
                             break;

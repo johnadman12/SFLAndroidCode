@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -102,17 +103,21 @@ class MyTeamAdapter(
             if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityMarketTeam::class.java)
-                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
+                        .putParcelableArrayListExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+
                 )
+
+                Log.d("Change_per", "--" + myteam!!.get(position).crypto.get(0).changeper);
+
             } else if (myteam.get(position).currencies.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCurrencyTeam::class.java)
-                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                        .putParcelableArrayListExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
@@ -122,7 +127,7 @@ class MyTeamAdapter(
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
-                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putParcelableArrayListExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
@@ -141,6 +146,7 @@ class MyTeamAdapter(
                 activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
 
         }
+
         holder.itemView.setOnClickListener {
             if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
@@ -251,4 +257,6 @@ class MyTeamAdapter(
         );
         mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.send_to)))
     }
+
+
 }

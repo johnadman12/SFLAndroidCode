@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_data.*
 import retrofit2.Call
@@ -66,7 +67,6 @@ class DataFragment : BaseFragment() {
             }
         })
     }
-
     private fun setData(list: AssestData.Stock) {
         tvOpen.setText(list.open)
         tvClose.setText(list.close)
@@ -82,21 +82,30 @@ class DataFragment : BaseFragment() {
         tvCrypto.setText("About " + list.symbol)
         tvAbout.setText(list.cryptodescription)
         if (list.urls != null) {
-            if (list.urls!!.websiteUrl!!.size > 0)
+            if (list.urls!!.websiteUrl!!.size > 0) {
                 tvWebsite.setText(list.urls!!.websiteUrl!!.get(0))
-            if (list.urls!!.redditUrl!!.size > 0)
+                tvWebsite.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            }
+            if (list.urls!!.redditUrl!!.size > 0) {
                 tvReddit.setText(list.urls!!.redditUrl!!.get(0))
-            if (list.urls!!.messageBoardUrl!!.size > 0)
+                tvReddit.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            }
+            if (list.urls!!.messageBoardUrl!!.size > 0) {
                 tvMessageBoard.setText(list.urls!!.messageBoardUrl!!.get(0))
-            if (list.urls!!.sourceCodeUrl!!.size > 0)
+                tvMessageBoard.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            }
+            if (list.urls!!.sourceCodeUrl!!.size > 0) {
                 tvSourceCode.setText(list.urls!!.sourceCodeUrl!!.get(0))
-            if (list.urls!!.explorerUrl!!.size > 0)
+                tvSourceCode.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            }
+            if (list.urls!!.explorerUrl!!.size > 0) {
                 tvExplorer.setText(list.urls!!.explorerUrl!!.get(0))
+                tvExplorer.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
+            }
         }
         if (list.cryptologo != null)
             Glide.with(activity!!).load(list.cryptologo).into(logo)
-
-
     }
+
 
 }

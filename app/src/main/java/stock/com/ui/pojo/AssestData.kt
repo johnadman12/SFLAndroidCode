@@ -12,7 +12,7 @@ class AssestData : BasePojo() {
     @Expose
     var stock: ArrayList<Stock>? = null
 
-     class Stock() : Serializable {
+    class Stock() : Serializable {
         @SerializedName("cryptocurrencyid")
         @Expose
         var cryptocurrencyid: String = ""
@@ -67,7 +67,7 @@ class AssestData : BasePojo() {
         @SerializedName("country_id")
         @Expose
         var countryId: String = ""
-        @SerializedName("cryptodescription")
+        @SerializedName("description")
         @Expose
         var cryptodescription: String = ""
         @SerializedName("cryptologo")
@@ -145,10 +145,9 @@ class AssestData : BasePojo() {
         }
 
 
-
     }
 
-    public class Urls  :Serializable {
+    public class Urls : Serializable {
 
         @SerializedName("Website")
         @Expose

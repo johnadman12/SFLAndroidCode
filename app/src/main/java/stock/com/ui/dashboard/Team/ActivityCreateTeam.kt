@@ -252,7 +252,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             if (stockSelectedItems!!.size > 0) {
                                 for (i in 0 until stockSelectedItems!!.size)
                                     if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
-                                        stockSelectedItems!!.get(j).stock_type = item.stock_type
+                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
 
                             } else
                                 list!!.get(j).stock_type = item.stock_type
@@ -268,7 +268,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             if (stockSelectedItems!!.size > 0) {
                                 for (i in 0 until stockSelectedItems!!.size)
                                     if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
-                                        stockSelectedItems!!.get(j).stock_type = item.stock_type
+                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
                             } else
                                 list!!.get(j).stock_type = item.stock_type
                             break;

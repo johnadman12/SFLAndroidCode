@@ -69,6 +69,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         newsStories = ArrayList()
         txt_title.visibility = GONE;
         setHomeBannerAdapter()
+        setStockNameAdapter()
     }
 
 

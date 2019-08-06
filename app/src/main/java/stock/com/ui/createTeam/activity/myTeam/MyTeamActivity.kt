@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_contest.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
-import stock.com.ui.dashboard.ContestNewBottom.MyTeamAdapter
 
 class MyTeamActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {

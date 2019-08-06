@@ -81,7 +81,7 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, tvDescription.text.toString());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, tvNewsText.text.toString() + "\n" + tvDescription.text.toString());
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 

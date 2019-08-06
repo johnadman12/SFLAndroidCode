@@ -55,7 +55,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     private var listOld: ArrayList<MarketList.Crypto>? = null;
     private var listFiltered: ArrayList<MarketList.Crypto>? = null;
     var flag: Boolean = false
-    var teamName: String = ""
     var flagCloning: Int = 0
     var teamId: Int = 0
     var contestFee: String = ""
@@ -130,13 +129,13 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 startActivity(
                     Intent(this@ActivityMarketTeam, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME, "My Team")
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
             R.id.tvViewteam -> {
                 if (flagCloning == 2) {
-                    if (marketSelectedItems!!.size > 0) {
+                    if (marketSelectedItems!!.size >= 0) {
                         for (i in 0 until marketSelectedItems!!.size) {
                             var postData1 = JsonObject();
                             try {
@@ -144,15 +143,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                     "crypto_id",
                                     marketSelectedItems!!.get(i).cryptocurrencyid.toString()
                                 );
-                                postData1.addProperty("price", marketSelectedItems!!.get(i).latestPrice.toString());
+                                postData1.addProperty("price", marketSelectedItems!!.get(i).latestPrice);
                                 postData1.addProperty(
-                                    "change_percent",
-                                    marketSelectedItems!!.get(i).changeper.toString()
-                                );
+                                    "change_percent", marketSelectedItems!!.get(i).changeper
+                                )
+                                ;
                                 postData1.addProperty("stock_type", marketSelectedItems!!.get(i).cryptoType);
                                 Log.e("savedlist", postData1.toString())
                             } catch (e: Exception) {
-
+                                Log.d("Ksadad", "dsdad" + e.localizedMessage)
                             }
                             Log.d("finaldata", array.toString())
                             array.add(postData1)
@@ -244,17 +243,15 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
             if (flagCloning == 1) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
-                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
-
 
             } else if (flagCloning == 2) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
-                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 ll_filter.visibility = GONE
                 tvViewteam.setText("  Save Team  ")
                 textTeam.setText("Edit Team")
                 relFieldView.visibility = VISIBLE
+                Log.d("Change_per1", "--" + marketSelectedItems!!.get(0).changeper)
             } else {
                 contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
@@ -287,8 +284,86 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             }
         }
         setAdapter()
+
     }
 
+    private fun setAdapter() {
+        marketlistAdapter = MarketListAdapter(
+            this, list as ArrayList,
+            listOld as ArrayList,
+            this@ActivityMarketTeam,
+            object : MarketListAdapter.OnItemCheckListener {
+                override fun onToggleUncheck(item: MarketList.Crypto) {
+                    for (j in 0 until list!!.size) {
+                        if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
+                            item.cryptoType = "1";
+                            if (marketSelectedItems!!.size > 0) {
+                                for (i in 0 until marketSelectedItems!!.size)
+                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
+                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
+                            break;
+                        }
+                    }
+
+                }
+
+                override fun onToggleCheck(item: MarketList.Crypto) {
+                    for (j in 0 until list!!.size) {
+                        if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
+                            item.cryptoType = "0";
+                            if (marketSelectedItems!!.size > 0) {
+                                for (i in 0 until marketSelectedItems!!.size)
+                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
+                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
+                            } else
+                                list!!.get(j).cryptoType = item.cryptoType
+                            break;
+                        }
+                    }
+                }
+
+                override fun onItemClick(item: MarketList.Crypto) {
+                    startActivityForResult(
+                        Intent(
+                            this@ActivityMarketTeam,
+                            ActivityMarketDetail::class.java
+                        )
+                            .putExtra("cryptoId", item.cryptocurrencyid)
+                            .putExtra("flag", 1)
+                            .putExtra(StockConstant.MARKETLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
+
+                }
+
+                override fun onItemUncheck(item: MarketList.Crypto) {
+                    for (j in 0 until marketSelectedItems!!.size) {
+                        if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(j).cryptocurrencyid)) {
+                            marketSelectedItems!!.removeAt(j);
+                            break;
+                        }
+                    }
+                    setTeamText(marketSelectedItems!!.size.toString())
+                }
+
+                override fun onItemCheck(item: MarketList.Crypto) {
+                    marketSelectedItems?.add(item);
+                    setTeamText(marketSelectedItems!!.size.toString())
+
+                    Log.e("stocklist", marketSelectedItems.toString())
+                }
+            });
+
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Players!!.layoutManager = llm
+        rv_Players.visibility = View.VISIBLE
+        rv_Players!!.adapter = marketlistAdapter;
+    }
 
     override fun onResume() {
         super.onResume()
@@ -950,84 +1025,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
-    @SuppressLint("WrongConstant")
-    private fun setAdapter() {
-        marketlistAdapter = MarketListAdapter(
-            this, list as ArrayList,
-            listOld as ArrayList,
-            this@ActivityMarketTeam,
-            object : MarketListAdapter.OnItemCheckListener {
-                override fun onToggleUncheck(item: MarketList.Crypto) {
-                    for (j in 0 until list!!.size) {
-                        if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
-                            item.cryptoType = "1";
-                            if (marketSelectedItems!!.size > 0) {
-                                for (i in 0 until marketSelectedItems!!.size)
-                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
-                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
-
-                            } else
-                                list!!.get(j).cryptoType = item.cryptoType
-                            break;
-                        }
-                    }
-
-                }
-
-                override fun onToggleCheck(item: MarketList.Crypto) {
-                    for (j in 0 until list!!.size) {
-                        if (item.cryptocurrencyid.equals(list!!.get(j).cryptocurrencyid)) {
-                            item.cryptoType = "0";
-                            if (marketSelectedItems!!.size > 0) {
-                                for (i in 0 until marketSelectedItems!!.size)
-                                    if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(i).cryptocurrencyid))
-                                        marketSelectedItems!!.get(j).cryptoType = item.cryptoType
-                            } else
-                                list!!.get(j).cryptoType = item.cryptoType
-                            break;
-                        }
-                    }
-                }
-
-                override fun onItemClick(item: MarketList.Crypto) {
-                    startActivityForResult(
-                        Intent(
-                            this@ActivityMarketTeam,
-                            ActivityMarketDetail::class.java
-                        )
-                            .putExtra("cryptoId", item.cryptocurrencyid)
-                            .putExtra("flag", 1)
-                            .putExtra(StockConstant.MARKETLIST, list)
-                            .putExtra(StockConstant.SELECTEDSTOCK, marketSelectedItems!!.size)
-                        , StockConstant.RESULT_CODE_CREATE_TEAM
-                    )
-
-                }
-
-                override fun onItemUncheck(item: MarketList.Crypto) {
-                    for (j in 0 until marketSelectedItems!!.size) {
-                        if (item.cryptocurrencyid.equals(marketSelectedItems!!.get(j).cryptocurrencyid)) {
-                            marketSelectedItems!!.removeAt(j);
-                            break;
-                        }
-                    }
-                    setTeamText(marketSelectedItems!!.size.toString())
-                }
-
-                override fun onItemCheck(item: MarketList.Crypto) {
-                    marketSelectedItems?.add(item);
-                    setTeamText(marketSelectedItems!!.size.toString())
-
-                    Log.e("stocklist", marketSelectedItems.toString())
-                }
-            });
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Players!!.layoutManager = llm
-        rv_Players.visibility = View.VISIBLE
-        rv_Players!!.adapter = marketlistAdapter;
-    }
-
     fun saveTeamList() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -1035,7 +1032,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
-        jsonparams.addProperty("user_team_name", teamName)
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)

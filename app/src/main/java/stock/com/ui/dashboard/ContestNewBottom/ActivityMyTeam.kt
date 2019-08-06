@@ -53,14 +53,7 @@ class ActivityMyTeam : BaseActivity() {
             flagMarket = false
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        initView()
-    }
-
-    private fun initView() {
         myTeams = ArrayList()
         jsonparams = JsonObject()
         setMyAdapter()
@@ -80,6 +73,14 @@ class ActivityMyTeam : BaseActivity() {
 
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
+    }
+
+    private fun initView() {
         if (flagMarket) {
             page = 0
             getMarketTeamlist(0)
@@ -248,8 +249,8 @@ class ActivityMyTeam : BaseActivity() {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMyTeam, response.body()!!.message)
-                        /*    page = 0
-                            getTeamlist(0)*/
+                            /*    page = 0
+                                getTeamlist(0)*/
                         }, 100)
 
                     } else if (response.body()!!.status == "0") {
