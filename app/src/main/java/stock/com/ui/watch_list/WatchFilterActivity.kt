@@ -7,6 +7,7 @@ import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -106,11 +107,27 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                 setMarketWatchlistFilter(marketAdapter!!.getSeletedtIds());
             }
             if (countryAdapter != null) {
-                Log.d("546546464adadad","---"+countryAdapter!!.getSeletedtIds())
+                Log.d("546546464adadad", "---" + countryAdapter!!.getSeletedtIds())
                 setCountryWatchlistFilter(countryAdapter!!.getSeletedtIds());
-                Log.d("546546464adadad","---"+getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE))
+                Log.d("546546464adadad", "---" + getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE))
             }
-            setWatchlistFilters();
+
+            sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_WATCHLIST_TYPE);
+            assetsTypeFilter = getFromPrefsString(StockConstant.ASSETS_WATCHLIST_TYPE);
+            marketTypeFilter = getFromPrefsString(StockConstant.MARKET_WATCHLIST_TYPE);
+            countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE);
+            if (assetAdapter!=null)
+                assetAdapter!!.notifyDataSetChanged()
+
+            if (TextUtils.isEmpty(sectorTypeFilter) && TextUtils.isEmpty(assetsTypeFilter) && TextUtils.isEmpty(
+                    marketTypeFilter
+                ) && TextUtils.isEmpty(countryTypeFilter)
+            ) {
+                displayToast("please select some filter options", "warning")
+
+            } else {
+                setWatchlistFilters();
+            }
         }
     }
 
@@ -186,7 +203,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recycle_country!!.layoutManager = llm
-        Log.d("sdadadad646464--","---"+countryTypeFilter)
+        Log.d("sdadadad646464--", "---" + countryTypeFilter)
         countryAdapter = CountryListAdapter(this, country, countryTypeFilter!!)
         recycle_country!!.adapter = countryAdapter;
     }

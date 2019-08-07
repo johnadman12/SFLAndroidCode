@@ -66,18 +66,18 @@ class CurrencyAdapter(
         holder.itemView.tv_company.setText(cryptoListNew.get(position).name)
         try {
             if (cryptoListNew.get(position).latestPrice != null)
-                if (cryptoListNew.get(position).latestPrice.toDouble() < 1)
+                if (cryptoListNew.get(position).latestPrice!!.toDouble() < 1)
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
                             "%.6f",
-                            cryptoListNew.get(position).latestPrice.toDouble()
+                            cryptoListNew.get(position).latestPrice!!.toDouble()
                         )
                     )
                 else
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
                             "%.2f",
-                            cryptoListNew.get(position).latestPrice.toDouble()
+                            cryptoListNew.get(position).latestPrice!!.toDouble()
                         )
                     )
         } catch (e: Exception) {
@@ -86,12 +86,12 @@ class CurrencyAdapter(
 
         var priceText = ""
         try {
-            priceText = marketData.get(position).latestPrice;
+            priceText = marketData.get(position).latestPrice!!;
             if (marketData.size == cryptoListNew.size) {
                 if (!TextUtils.isEmpty(priceText)) {
                     if (priceText.equals("$" + cryptoListNew!!.get(position).latestPrice)) {
                         holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                    } else if (priceText.toDouble() < cryptoListNew!!.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() < cryptoListNew!!.get(position).latestPrice!!.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tv_latest_price.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -115,17 +115,17 @@ class CurrencyAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1)
+                                    if (cryptoListNew!!.get(position).latestPrice!!.toDouble() < 1)
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
-                                                "%.6f", cryptoListNew!!.get(position).latestPrice.toDouble()
+                                                "%.6f", cryptoListNew!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                cryptoListNew!!.get(position).latestPrice.toDouble()
+                                                cryptoListNew!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     holder.itemView.tv_latest_price.setTextColor(
@@ -145,7 +145,7 @@ class CurrencyAdapter(
                                 }
                             }
                         })
-                    } else if (priceText.toDouble() > cryptoListNew!!.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() > cryptoListNew!!.get(position).latestPrice!!.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tv_latest_price.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -170,17 +170,17 @@ class CurrencyAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1)
+                                    if (cryptoListNew!!.get(position).latestPrice!!.toDouble() < 1)
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
-                                                "%.6f", cryptoListNew!!.get(position).latestPrice.toDouble()
+                                                "%.6f", cryptoListNew!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tv_latest_price.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                cryptoListNew!!.get(position).latestPrice.toDouble()
+                                                cryptoListNew!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     holder.itemView.tv_latest_price.setTextColor(
@@ -205,11 +205,11 @@ class CurrencyAdapter(
 
                 } else {
                     Log.e("sddasdasdad", "-------444444444--")
-                    if (cryptoListNew!!.get(position).latestPrice.toDouble() < 1) {
+                    if (cryptoListNew!!.get(position).latestPrice!!.toDouble() < 1) {
                         holder.itemView.tv_latest_price.setText(
                             "$" + String.format(
                                 "%.6f",
-                                cryptoListNew!!.get(position).latestPrice.toDouble()
+                                cryptoListNew!!.get(position).latestPrice!!.toDouble()
                             )
                         )
                         Log.e("sddasdasdad", "-------55555555--")
@@ -218,7 +218,7 @@ class CurrencyAdapter(
                         holder.itemView.tv_latest_price.setText(
                             "$" + String.format(
                                 "%.2f",
-                                cryptoListNew.get(position).latestPrice.toDouble()
+                                cryptoListNew.get(position).latestPrice!!.toDouble()
                             )
                         )
                     }
@@ -231,11 +231,11 @@ class CurrencyAdapter(
             Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
 
             if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
-                var priceText: Double = (cryptoListNew.get(position).changeper).toDouble() * 0.01
+                var priceText: Double = (cryptoListNew.get(position).changeper)!!.toDouble() * 0.01
                 var price = (priceText.toString())
 
 
-                if (cryptoListNew.get(position).changeper.contains("-")) {
+                if (cryptoListNew.get(position).changeper!!.contains("-")) {
                     price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                     holder.itemView.tv_change_percentage.setTextColor(
                         ContextCompat.getColor(

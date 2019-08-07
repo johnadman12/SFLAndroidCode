@@ -768,7 +768,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 flagSort = (data.getStringExtra("flag"))
                 if (data.getStringExtra("flag").equals("Volume")) {
                     flagVolume = true
-                    var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
+                    var sortedList = list!!.sortedByDescending { it.latestVolume!!.toDouble() }
                     for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)

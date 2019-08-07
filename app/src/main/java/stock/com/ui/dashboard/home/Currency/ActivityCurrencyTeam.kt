@@ -129,10 +129,10 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                     "crypto_id",
                                     currencySelected!!.get(i).currencyid.toString()
                                 );
-                                postData1.addProperty("price", currencySelected!!.get(i).ask.toString());
+                                postData1.addProperty("price", currencySelected!!.get(i).ask);
                                 postData1.addProperty(
                                     "change_percent",
-                                    currencySelected!!.get(i).changeper.toString()
+                                    currencySelected!!.get(i).changeper
                                 );
                                 postData1.addProperty("stock_type", currencySelected!!.get(i).cryptoType);
                                 Log.e("savedlist", postData1.toString())
@@ -319,6 +319,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         }
     }
 
+    @Suppress("DEPRECATION")
     fun setTeamText(add: String) {
         tvteamplayer.setText(add + "/12")
         if (add.toInt() == 12) {
@@ -385,6 +386,46 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                     list!!.get(i).currencyid = currencySelected!!.get(j).currencyid
                                 }
                             }
+                        }
+
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.ask?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.ask?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         }
                         /* if (flagFilter) {
                              for (i in 0 until list!!.size) {
@@ -486,6 +527,46 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             }
                         }
 
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.ask?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.ask?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        }
+
                         if (currencyAdapter != null)
                             currencyAdapter!!.notifyDataSetChanged();
 
@@ -577,7 +658,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 if (data.getStringExtra("flag").equals("Volume")) {
                     try {
                         setFlag(false, false, false, false, false, true)
-                        var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
+                        var sortedList = list!!.sortedByDescending { it.latestVolume!!.toDouble() }
                         list!!.clear()
                         listOld!!.clear()
                         listOld!!.addAll(sortedList)
@@ -726,6 +807,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
     }
 
 
+    @SuppressLint("WrongConstant")
     fun setAdapter() {
         currencyAdapter = CurrencyTeamAdapter(
             this, list as ArrayList,
@@ -843,7 +925,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 
                                 // forexList!!.add(model)
                                 for (i in 0..list!!.size) {
-                                    if (model.currencyid.equals(list!!.get(i).currencyid)) {
+                                    if (model.symbol.equals(list!!.get(i).symbol)) {
                                         Log.d("currency_id", "---" + model.name);
                                         model.firstflag = list!!.get(i).firstflag;
                                         model.secondflag = list!!.get(i).secondflag;

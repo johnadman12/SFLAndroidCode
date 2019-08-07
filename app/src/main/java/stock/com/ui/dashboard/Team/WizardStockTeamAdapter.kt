@@ -67,7 +67,7 @@ class WizardStockTeamAdapter(
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent))
-            if (searchList!!.get(position).changePercent.contains("-"))
+            if (searchList!!.get(position).changePercent!!.contains("-"))
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
             else
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)

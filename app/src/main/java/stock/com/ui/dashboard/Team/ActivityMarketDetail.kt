@@ -62,7 +62,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                         try {
                             if (marketId.equals(list!!.get(i).cryptocurrencyid))
                                 position = i
-                            symbol = list!!.get(position).name
+                            symbol = list!!.get(position).name!!
                         } catch (e: Exception) {
 
                         }

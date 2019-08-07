@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.row_currency_team.view.*
 import stock.com.R
 import stock.com.ui.dashboard.home.MarketList.ActivityMarketTeam
 import stock.com.ui.pojo.CurrencyPojo
-import stock.com.ui.pojo.MarketList
 import stock.com.utils.AppDelegate
 
 class CurrencyTeamAdapter(
@@ -65,7 +64,7 @@ class CurrencyTeamAdapter(
         Glide.with(mContext).load(searchList!!.get(position).secondflag).centerInside().into(holder.itemView.img2)
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper)) {
-            if (searchList!!.get(position).changeper.contains("-")) {
+            if (searchList!!.get(position).changeper!!.contains("-")) {
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
@@ -88,7 +87,7 @@ class CurrencyTeamAdapter(
         try {
             if (searchList!!.get(position).ask.equals(mContest!!.get(position).ask)) {
                 holder.itemView.ask.setText(mContest.get(position).ask)
-            } else if (searchList!!.get(position).ask.toDouble() < mContest.get(position).ask.toDouble()) {
+            } else if (searchList!!.get(position).ask!!.toDouble() < mContest.get(position).ask!!.toDouble()) {
 
                 holder.itemView.llPrice.startAnimation(animBlink);
                 holder.itemView.ask.startAnimation(animBlink);
@@ -120,18 +119,18 @@ class CurrencyTeamAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (mContest.get(position).ask.toDouble() < 1)
+                            if (mContest.get(position).ask!!.toDouble() < 1)
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.4f",
-                                        mContest.get(position).ask.toDouble()
+                                        mContest.get(position).ask!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.2f",
-                                        mContest.get(position).ask.toDouble()
+                                        mContest.get(position).ask!!.toDouble()
                                     )
                                 )
                             holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -149,7 +148,7 @@ class CurrencyTeamAdapter(
                 })
 
 
-            } else if (searchList!!.get(position).ask.toDouble() > mContest!!.get(position).ask.toDouble()) {
+            } else if (searchList!!.get(position).ask!!.toDouble() > mContest!!.get(position).ask!!.toDouble()) {
 
                 Log.d("sddasdasdad", "-------3333333--")
 
@@ -183,18 +182,18 @@ class CurrencyTeamAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (mContest.get(position).ask.toDouble() < 1)
+                            if (mContest.get(position).ask!!.toDouble() < 1)
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.4f",
-                                        mContest.get(position).ask.toDouble()
+                                        mContest.get(position).ask!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.2f",
-                                        mContest.get(position).ask.toDouble()
+                                        mContest.get(position).ask!!.toDouble()
                                     )
                                 )
                             holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -214,12 +213,12 @@ class CurrencyTeamAdapter(
 
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
-                if (searchList!!.get(position).ask.toDouble() < 1) {
-                    holder.itemView.ask.setText(String.format("%.4f", mContest!!.get(position).ask.toDouble()))
+                if (searchList!!.get(position).ask!!.toDouble() < 1) {
+                    holder.itemView.ask.setText(String.format("%.4f", mContest!!.get(position).ask!!.toDouble()))
                     Log.e("sddasdasdad", "-------55555555--")
                 } else {
                     Log.e("sddasdasdad", "-------66666666--")
-                    holder.itemView.ask.setText(String.format("%.2f", mContest!!.get(position).ask.toDouble()))
+                    holder.itemView.ask.setText(String.format("%.2f", mContest!!.get(position).ask!!.toDouble()))
                 }
             }
         } catch (ee: Exception) {
@@ -228,7 +227,7 @@ class CurrencyTeamAdapter(
         try {
             if (searchList!!.get(position).bid.equals(mContest!!.get(position).bid)) {
                 holder.itemView.bid.setText(mContest.get(position).bid)
-            } else if (searchList!!.get(position).bid.toDouble() < mContest.get(position).bid.toDouble()) {
+            } else if (searchList!!.get(position).bid!!.toDouble() < mContest.get(position).bid!!.toDouble()) {
 
                 holder.itemView.llchange.startAnimation(animBlink);
                 holder.itemView.bid.startAnimation(animBlink);
@@ -260,18 +259,18 @@ class CurrencyTeamAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (mContest!!.get(position).bid.toDouble() < 1)
+                            if (mContest!!.get(position).bid!!.toDouble() < 1)
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.4f",
-                                        mContest!!.get(position).bid.toDouble()
+                                        mContest!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.2f",
-                                        mContest!!.get(position).bid.toDouble()
+                                        mContest!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -288,7 +287,7 @@ class CurrencyTeamAdapter(
                     }
                 })
 
-            } else if (searchList!!.get(position).bid.toDouble() > mContest!!.get(position).bid.toDouble()) {
+            } else if (searchList!!.get(position).bid!!.toDouble() > mContest!!.get(position).bid!!.toDouble()) {
                 holder.itemView.llchange.startAnimation(animBlink);
                 holder.itemView.bid.startAnimation(animBlink);
                 holder.itemView.tv_bid.startAnimation(animBlink);
@@ -319,18 +318,18 @@ class CurrencyTeamAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (mContest.get(position).bid.toDouble() < 1)
+                            if (mContest.get(position).bid!!.toDouble() < 1)
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.4f",
-                                        mContest.get(position).bid.toDouble()
+                                        mContest.get(position).bid!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.2f",
-                                        mContest.get(position).bid.toDouble()
+                                        mContest.get(position).bid!!.toDouble()
                                     )
                                 )
                             holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -347,12 +346,12 @@ class CurrencyTeamAdapter(
                 })
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
-                if (searchList!!.get(position).bid.toDouble() < 1) {
-                    holder.itemView.bid.setText(String.format("%.4f", mContest!!.get(position).bid.toDouble()))
+                if (searchList!!.get(position).bid!!.toDouble() < 1) {
+                    holder.itemView.bid.setText(String.format("%.4f", mContest!!.get(position).bid!!.toDouble()))
                     Log.e("sddasdasdad", "-------55555555--")
                 } else {
                     Log.e("sddasdasdad", "-------66666666--")
-                    holder.itemView.bid.setText(String.format("%.2f", mContest!!.get(position).bid.toDouble()))
+                    holder.itemView.bid.setText(String.format("%.2f", mContest!!.get(position).bid!!.toDouble()))
                 }
             }
         } catch (ee: Exception) {

@@ -347,7 +347,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("Volume")) {
 
-                    var sortedList = list!!.sortedBy { it.latestVolume.toDouble() }
+                    var sortedList = list!!.sortedBy { it.latestVolume!!.toDouble() }
 
                     for (obj in sortedList) {
                         list!!.clear()

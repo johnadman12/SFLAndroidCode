@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_stocks.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -236,7 +238,7 @@ class StocksFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
-                            stockListNew!!.addAll(response.body()!!.stock)
+                            stockListNew!!.addAll(response.body()!!.stock!!)
                             Handler().postDelayed(Runnable {
                                 if (stockListNew!!.size > 0)
                                     setStockAdapter()
@@ -396,6 +398,53 @@ class StocksFragment : BaseFragment() {
             rv_stockList.adapter!!.notifyDataSetChanged()
         }
 
+    }
+
+    internal inner class Task(var adapter: ForexAdapter, var jsonArray: JSONArray) : Runnable {
+        override fun run() {
+            try {
+                activity!!.runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        stockListNew!!.clear();
+                        stockList!!.addAll(stockListNew!!);
+                        for (i in 0..jsonArray.length()) {
+                            var jsonObject = jsonArray.getJSONObject(i);
+                            var model = StockTeamPojo.Stock()
+                            try {
+                                 model.stockid = jsonObject!!.getString("currencyid").toInt();
+                                 model.changePercent = jsonObject!!.getString("changePercent");
+                                 model.latestVolume = jsonObject!!.getString("latestVolume");
+                                 model.marketopen = jsonObject!!.getString("marketopen");
+                                 model.previousClose = jsonObject!!.getString("previousClose");
+                                 model.latestPrice = jsonObject!!.getString("latestPrice");
+                                 model.stock_type = jsonObject!!.getString("stock_type");
+                                 model.companyName = jsonObject!!.getString("companyName");
+                                 model.symbol = jsonObject!!.getString("symbol");
+                                 model.image = jsonObject!!.getString("image");
+                                 model.sector = jsonObject!!.getString("sector");
+                                stockListNew!!.add(model)
+                                for (i in 0..stockListNew!!.size) {
+                                    if (model.symbol.equals(stockListNew!!.get(i).symbol)) {
+                                        model.symbol = stockListNew!!.get(i).symbol;
+                                        model.companyName = stockListNew!!.get(i).companyName;
+                                        stockListNew!!.set(i, model!!)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                            }
+                        }
+                    } catch (ee: java.lang.Exception) {
+                    }
+                    if (adapter != null)
+                        adapter!!.notifyDataSetChanged();
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
     }
 
     override fun onPause() {

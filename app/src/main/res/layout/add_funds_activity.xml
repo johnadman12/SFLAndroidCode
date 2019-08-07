@@ -144,27 +144,18 @@
                 android:textColor="@color/white"
                 android:text="Add cash to your account"/>
 
-
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_email"
+        <androidx.appcompat.widget.AppCompatEditText
+                style="@style/EditTextStyle"
+                android:id="@+id/et_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_15sdp"
                 android:background="@drawable/add_cash_light_blue_background"
-                android:layout_margin="@dimen/_10sdp"
-                android:theme="@style/EditTextLabel">
-            <com.google.android.material.textfield.TextInputEditText
-                    style="@style/EditTextStyle"
-                    android:id="@+id/et_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:padding="@dimen/_10sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:hint="Amount to add"
-                    android:inputType="phone"
-                    android:focusable="false"
-                    android:imeOptions="actionDone"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="@dimen/_5sdp"
+                android:hint="Amount to add"
+                android:inputType="phone"
+                android:focusable="false"
+                android:imeOptions="actionDone"/>
 
 
         <LinearLayout

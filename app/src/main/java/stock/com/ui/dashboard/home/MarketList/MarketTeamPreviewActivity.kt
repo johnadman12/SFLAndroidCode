@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.outside_toolbar.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.ui.pojo.MarketList
-import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import java.lang.Exception

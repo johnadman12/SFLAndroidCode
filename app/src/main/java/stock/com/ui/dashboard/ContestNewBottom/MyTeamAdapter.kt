@@ -72,9 +72,8 @@ class MyTeamAdapter(
                                 myteam.get(position).teamId,
                                 holder.itemView.txt_MyTeam.text.toString()
                             )
-
+                            teamName = myteam.get(position).userteamname
                         }
-                        teamName = myteam.get(position).userteamname
                         holder.itemView.edt_teamname.visibility = View.GONE
                         holder.itemView.txt_MyTeam.visibility = View.VISIBLE
                         return true

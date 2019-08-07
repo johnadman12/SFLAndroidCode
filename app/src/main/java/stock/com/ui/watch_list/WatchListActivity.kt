@@ -29,11 +29,12 @@ import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import kotlin.Exception
+import java.util.Optional.ofNullable
+
+
 
 
 class WatchListActivity : BaseActivity() {
-
-
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
     var flag: String = ""
@@ -41,12 +42,9 @@ class WatchListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_list)
-
         list = ArrayList();
         setAdapter();
-
-
-        val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(
+        val touchHelper = RecyclerHelper(
             list!!,
             watchListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>
         )
@@ -63,8 +61,6 @@ class WatchListActivity : BaseActivity() {
 
         val itemTouchHelper = ItemTouchHelper(touchHelper)
         itemTouchHelper.attachToRecyclerView(recyclerView_watch_list)
-
-
 
 
         img_btn_back.setOnClickListener {
@@ -104,17 +100,12 @@ class WatchListActivity : BaseActivity() {
     }
 
     @SuppressLint("WrongConstant")
-    private fun setAdapter(){
-        watchListAdapter = WatchListAdapter_(applicationContext!!, list as ArrayList, this)
+    private fun setAdapter() {
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_watch_list!!.layoutManager = llm
+        watchListAdapter = WatchListAdapter_(applicationContext!!, list as ArrayList, this)
         recyclerView_watch_list!!.adapter = watchListAdapter;
-    }
-
-    private fun setWatchListAdapter() {
-        recyclerView_watch_list.visibility = View.VISIBLE
-        recyclerView_watch_list.adapter!!.notifyDataSetChanged();
     }
 
     private fun getWatchList() {
@@ -131,27 +122,34 @@ class WatchListActivity : BaseActivity() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
-                        if (response.body()!!.stock!!.size != 0) {
-                            setAssetWatchlistFilter(" ")
-                            setSectorWatchlistFilter(" ")
-                            setCountryWatchlistFilter(" ")
-                            setMarketWatchlistFilter(" ")
+                        if (response.body()!!.stock!!.size > 0) {
+                            try {
+                                setAssetWatchlistFilter(" ")
+                                setSectorWatchlistFilter(" ")
+                                setCountryWatchlistFilter(" ")
+                                setMarketWatchlistFilter(" ")
+                            } catch (e: Exception) {
+
+                            }
                             //setWatchListAdapter(response.body()!!.stockList!!);
                             list!!.clear()
                             list!!.addAll(response.body()!!.stock!!);
-                            setWatchListAdapter();
+                            /* if (watchListAdapter != null)
+                                 watchListAdapter!!.notifyDataSetChanged()*/
+                            setAdapter()
                             ll_search.visibility = View.VISIBLE;
                             ll_filter.visibility = View.VISIBLE;
                             ll_sort.visibility = View.VISIBLE;
                         } else if (response.body()!!.stock!!.size == 0) {
                             list!!.clear()
-                            recyclerView_watch_list.adapter!!.notifyDataSetChanged();
-                        } else if (response.body()!!.status.equals("0")) {
-                            displayToast(resources.getString(R.string.no_data), "warning");
-                            finish()
+                            if (watchListAdapter != null)
+                                watchListAdapter!!.notifyDataSetChanged()
                         }
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
+                    } else if (response.body()!!.status.equals("0")) {
+                        displayToast(resources.getString(R.string.no_data), "warning");
+//                            finish()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -250,19 +248,16 @@ class WatchListActivity : BaseActivity() {
                             // setWatchListAdapter();
                             list!!.addAll(sortedList);
                             //if (watchListAdapter != null)
-                              //  watchListAdapter!!.notifyDataSetChanged()
+                            //  watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
                         }
                     } else if (flag.equals("low")) {
                         try {
-                            var sortedList = list!!.sortedWith(compareBy({ it.latestPrice.toDouble() }));
+                            var sortedList = list!!.sortedWith(compareBy({ it.latestPrice!!.toDouble() }));
                             list!!.clear();
-                            // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            //if (watchListAdapter != null)
-                            //  watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
@@ -271,22 +266,19 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
                             list!!.clear();
-                            //setWatchListAdapter();
                             list!!.addAll(sortedList);
-                            //if (watchListAdapter != null)
-                              //  watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
                         }
                     } else if (flag.equals("dailyLTH")) {
                         try {
-                            var sortedList = list!!.sortedWith(compareBy({ it.changePercent.toDouble() }));
+                            var sortedList = list!!.sortedWith(compareBy({ it.changePercent!!.toDouble() }));
                             list!!.clear();
-                           // setWatchListAdapter();
+                            // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                           // if (watchListAdapter != null)
-                             //   watchListAdapter!!.notifyDataSetChanged()
+                            // if (watchListAdapter != null)
+                            //   watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
@@ -299,4 +291,6 @@ class WatchListActivity : BaseActivity() {
             }
         }
     }
+
+
 }

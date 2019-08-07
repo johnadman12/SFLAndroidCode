@@ -61,7 +61,7 @@ class MarketWizardAdapter(val mContext: Context, val mContest: MutableList<Marke
         Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper))
-            if (searchList!!.get(position).changeper.contains("-"))
+            if (searchList!!.get(position).changeper!!.contains("-"))
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
             else
                 Glide.with(mContext).load(R.mipmap.upgraph).into(holder.itemView.img_graph)

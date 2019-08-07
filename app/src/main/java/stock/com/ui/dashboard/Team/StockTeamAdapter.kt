@@ -75,24 +75,24 @@ class StockTeamAdapter(
         anim.startOffset = 20
         try {
             if (mContestOld!!.get(position).latestPrice != null)
-                if (mContestOld!!.get(position).latestPrice.toDouble() < 1)
+                if (mContestOld!!.get(position).latestPrice!!.toDouble() < 1)
                     holder.itemView.tvPercentage.setText(
                         "$" + String.format(
                             "%.4f",
-                            mContestOld!!.get(position).latestPrice.toDouble()
+                            mContestOld!!.get(position).latestPrice!!.toDouble()
                         )
                     )
                 else
                     holder.itemView.tvPercentage.text = "$" + String.format(
                         "%.2f",
-                        mContestOld!!.get(position).latestPrice.toDouble()
+                        mContestOld!!.get(position).latestPrice!!.toDouble()
                     )
         } catch (e: Exception) {
 
         }
         var priceText = ""
         try {
-            priceText = mContestOld.get(position).latestPrice;
+            priceText = mContestOld.get(position).latestPrice!!;
         } catch (e: java.lang.Exception) {
         }
 
@@ -100,7 +100,7 @@ class StockTeamAdapter(
             if (!TextUtils.isEmpty(priceText)) {
                 if (priceText.equals("$" + mContest.get(position).latestPrice)) {
                     holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                } else if (priceText.toDouble() > mContest.get(position).latestPrice.toDouble()) {
+                } else if (priceText.toDouble() > mContest.get(position).latestPrice!!.toDouble()) {
                     val newtimer = object : CountDownTimer(1000, 500) {
                         override fun onTick(millisUntilFinished: Long) {
                             Log.e("timeerror", millisUntilFinished.toString())
@@ -118,17 +118,17 @@ class StockTeamAdapter(
 
                         override fun onFinish() {
                             try {
-                                if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                                if (mContest!!.get(position).latestPrice!!.toDouble() < 1)
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
-                                            "%.4f", mContest!!.get(position).latestPrice.toDouble()
+                                            "%.4f", mContest!!.get(position).latestPrice!!.toDouble()
                                         )
                                     )
                                 else
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
                                             "%.2f",
-                                            mContest!!.get(position).latestPrice.toDouble()
+                                            mContest!!.get(position).latestPrice!!.toDouble()
                                         )
                                     )
                                 /*  search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
@@ -166,7 +166,7 @@ class StockTeamAdapter(
                     )
 
 
-                } else if (priceText.toDouble() < mContest.get(position).latestPrice.toDouble()) {
+                } else if (priceText.toDouble() < mContest.get(position).latestPrice!!.toDouble()) {
                     Log.d("sddasdasdad", "-------3333333--")
                     val newtimer = object : CountDownTimer(500, 500) {
                         override fun onTick(millisUntilFinished: Long) {
@@ -188,18 +188,18 @@ class StockTeamAdapter(
                         override fun onFinish() {
 
                             try {
-                                if (mContest.get(position).latestPrice.toDouble() < 1)
+                                if (mContest.get(position).latestPrice!!.toDouble() < 1)
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
                                             "%.4f",
-                                            mContest.get(position).latestPrice.toDouble()
+                                            mContest.get(position).latestPrice!!.toDouble()
                                         )
                                     )
                                 else
                                     holder.itemView.tvPercentage.setText(
                                         "$" + String.format(
                                             "%.2f",
-                                            mContest!!.get(position).latestPrice.toDouble()
+                                            mContest!!.get(position).latestPrice!!.toDouble()
                                         )
                                     )
                                 /* search!!.get(position).latestPrice = cryptoListNew.get(position).latestPrice
@@ -238,18 +238,18 @@ class StockTeamAdapter(
             } else {
                 try {
                     if (mContest!!.get(position).latestPrice != null)
-                        if (mContest!!.get(position).latestPrice.toDouble() < 1)
+                        if (mContest!!.get(position).latestPrice!!.toDouble() < 1)
                             holder.itemView.tvPercentage.setText(
                                 "$" + String.format(
                                     "%.4f",
-                                    mContest!!.get(position).latestPrice.toDouble()
+                                    mContest!!.get(position).latestPrice!!.toDouble()
                                 )
                             )
                         else
                             holder.itemView.tvPercentage.setText(
                                 String.format(
                                     "%.2f",
-                                    mContest!!.get(position).latestPrice.toDouble()
+                                    mContest!!.get(position).latestPrice!!.toDouble()
                                 )
                             )
                 } catch (e: Exception) {
@@ -269,9 +269,9 @@ class StockTeamAdapter(
 
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent)) {
-            var priceText: Double = (searchList!!.get(position).changePercent).toDouble() * 0.01
+            var priceText: Double = (searchList!!.get(position).changePercent)!!.toDouble() * 0.01
             var price = (priceText.toString())
-            if (searchList!!.get(position).changePercent.contains("-")) {
+            if (searchList!!.get(position).changePercent!!.contains("-")) {
                 price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changePercent + " %)")

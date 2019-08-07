@@ -34,7 +34,7 @@ class ActivityMarketFilter : BaseActivity(), View.OnClickListener {
                     setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 } else
-                    displayToast("please select to apply filter", "error")
+                    displayToast("please select to apply filter", "warning")
             }
         }
     }

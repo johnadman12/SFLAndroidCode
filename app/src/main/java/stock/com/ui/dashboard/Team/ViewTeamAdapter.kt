@@ -51,7 +51,7 @@ class ViewTeamAdapter(
         mContest.get(position).addedToList = 1
 
         if (!TextUtils.isEmpty(mContest.get(position).changePercent))
-            if (mContest.get(position).changePercent.contains("-")) {
+            if (mContest.get(position).changePercent!!.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
                 holder.itemView.tv_change_percentage.setText(mContest.get(position).changePercent)
             } else {

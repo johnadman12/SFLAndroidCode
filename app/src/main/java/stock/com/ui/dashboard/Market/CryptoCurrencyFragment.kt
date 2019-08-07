@@ -358,8 +358,8 @@ class CryptoCurrencyFragment : BaseFragment() {
                             cryptoList!!.clear();
                             cryptoListNew!!.clear();
                         }
-                        cryptoList!!.addAll(response.body()!!.crypto)
-                        cryptoListNew!!.addAll(response.body()!!.crypto)
+                        cryptoList!!.addAll(response.body()!!.crypto!!)
+                        cryptoListNew!!.addAll(response.body()!!.crypto!!)
 
                         if (cryptoAdapter != null)
                             cryptoAdapter!!.notifyDataSetChanged()

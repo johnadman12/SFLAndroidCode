@@ -158,32 +158,41 @@ class CurrencyFragment : BaseFragment() {
                         forexOldList!!.addAll(response.body()!!.currency!!);
 
                         if (flagAlphaSort) {
-                            val sortedList = forexList!!.sortedBy { it.symbol?.toString() }
+                            val sortedList = forexList!!.sortedBy { it.symbol }
                             forexList!!.clear()
+                            forexOldList!!.clear()
                             forexList!!.addAll(sortedList)
+                            forexOldList!!.addAll(sortedList)
 
                         } else if (flagPriceSort) {
                             val sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
                             forexList!!.clear()
+                            forexOldList!!.clear()
                             forexList!!.addAll(sortedList)
+                            forexOldList!!.addAll(sortedList)
 
 
                         } else if (flagDaySort) {
                             val sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
                             forexList!!.clear()
+                            forexOldList!!.clear()
                             forexList!!.addAll(sortedList)
+                            forexOldList!!.addAll(sortedList)
 
                         } else if (flagHTLSort) {
                             val sortedList = forexList!!.sortedByDescending { it.ask?.toDouble() }
 
                             forexList!!.clear()
+                            forexOldList!!.clear()
                             forexList!!.addAll(sortedList)
-
+                            forexOldList!!.addAll(sortedList)
 
                         } else if (flagDHTLSort) {
                             val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
                             forexList!!.clear()
+                            forexOldList!!.clear()
                             forexList!!.addAll(sortedList)
+                            forexOldList!!.addAll(sortedList)
 
                         }
                         if (forexAdapter != null)
@@ -283,7 +292,7 @@ class CurrencyFragment : BaseFragment() {
 
                                 // forexList!!.add(model)
                                 for (i in 0..forexList!!.size) {
-                                    if (model.currencyid.equals(forexList!!.get(i).currencyid)) {
+                                    if (model.symbol.equals(forexList!!.get(i).symbol)) {
                                         Log.d("currency_id", "---" + model.name);
                                         model.firstflag = forexList!!.get(i).firstflag;
                                         model.secondflag = forexList!!.get(i).secondflag;
@@ -427,7 +436,7 @@ class CurrencyFragment : BaseFragment() {
             setCurrencyAdapter();
         } else if (type.equals("HighToLow")) {
             setFlag(false, false, false, true, false)
-            val sortedList = forexList!!.sortedByDescending { it.ask.toDouble() }
+            val sortedList = forexList!!.sortedByDescending { it.ask!!.toDouble() }
             forexList!!.clear()
             forexList!!.addAll(sortedList)
             forexOldList!!.clear()

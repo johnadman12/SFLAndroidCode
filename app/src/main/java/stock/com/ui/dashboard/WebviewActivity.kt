@@ -8,7 +8,7 @@ import stock.com.R
 
 class WebviewActivity:BaseActivity(){
 
-    var url= "https://dfxchange.com/dfxchange/info.php"
+    var url= "https://dfxchange.com/dfxchange/api/controllers/graph.php"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

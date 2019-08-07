@@ -73,7 +73,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
     var flagDayHTL: Boolean = false
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
-
+    var teamName: String = ""
     var flagScreen: Boolean = false
 
     override fun onClick(p0: View?) {
@@ -128,8 +128,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityMarketTeam, MarketTeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.MARKETLIST, marketSelectedItems)
-                        .putExtra(StockConstant.TEAMNAME, "My Team")
+                        .putParcelableArrayListExtra(StockConstant.MARKETLIST, marketSelectedItems)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
             }
@@ -243,9 +243,10 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
             if (flagCloning == 1) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
-
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             } else if (flagCloning == 2) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
+                teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 ll_filter.visibility = GONE
                 tvViewteam.setText("  Save Team  ")
@@ -419,7 +420,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     // displayToast(response.body()!!.message, "sucess")
                     if (response.body()!!.status == "1") {
-                        if (response.body()!!.crypto.size == 0) {
+                        if (response.body()!!.crypto!!.size == 0) {
                             displayToast("No Data Available", "error")
                         }
                         if (response.body()!!.myteam.equals("1"))
@@ -506,7 +507,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
-                        if (response.body()!!.crypto.size == 0) {
+                        if (response.body()!!.crypto!!.size == 0) {
                             displayToast("No Data Available", "error")
                         }
                         if (flagCloning == 2)
@@ -755,7 +756,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     //for show my team
                     if (response.body()!!.status == "1") {
-                        if (response.body()!!.crypto.size == 0) {
+                        if (response.body()!!.crypto!!.size == 0) {
                             displayToast("No Data Available", "error")
                         }
                         if (flagCloning == 2)
@@ -767,7 +768,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 llMyTeam.visibility = View.GONE
                         }
                         list!!.clear();
-                        list!!.addAll(response.body()!!.crypto)
+                        list!!.addAll(response.body()!!.crypto!!)
                         //   rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
@@ -895,7 +896,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 if (data.getStringExtra("flag").equals("Volume")) {
                     try {
                         setFlag(false, false, false, false, false, true)
-                        var sortedList = list!!.sortedByDescending { it.latestVolume.toDouble() }
+                        var sortedList = list!!.sortedByDescending { it.latestVolume!!.toDouble() }
                         list!!.clear()
                         list!!.addAll(sortedList)
                         //rv_Players!!.adapter!!.notifyDataSetChanged()

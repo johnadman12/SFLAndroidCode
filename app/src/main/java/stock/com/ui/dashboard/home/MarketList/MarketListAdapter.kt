@@ -64,29 +64,29 @@ class MarketListAdapter(
         )
         try {
             if (mContestOld.get(position).latestPrice != null)
-                if (mContestOld.get(position).latestPrice.toDouble() < 1)
+                if (mContestOld.get(position).latestPrice!!.toDouble() < 1)
                     holder.itemView.tvPercentage.setText(
                         "$" + String.format(
                             "%.6f",
-                            mContestOld.get(position).latestPrice.toDouble()
+                            mContestOld.get(position).latestPrice!!.toDouble()
                         )
                     )
                 else
                     holder.itemView.tvPercentage.text = "$" + String.format(
                         "%.2f",
-                        mContestOld.get(position).latestPrice.toDouble()
+                        mContestOld.get(position).latestPrice!!.toDouble()
                     )
         } catch (e: Exception) {
 
         }
         var priceText = ""
         try {
-            priceText = mContestOld.get(position).latestPrice;
+            priceText = mContestOld.get(position).latestPrice!!;
             if (mContestOld.size == mContest.size) {
                 if (!TextUtils.isEmpty(priceText)) {
                     if (priceText.equals("$" + mContest.get(position).latestPrice)) {
                         holder.itemView.tvPercentage.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                    } else if (priceText.toDouble() > mContest.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() > mContest.get(position).latestPrice!!.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tvPercentage.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -110,17 +110,17 @@ class MarketListAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (mContest.get(position).latestPrice.toDouble() < 1)
+                                    if (mContest.get(position).latestPrice!!.toDouble() < 1)
                                         holder.itemView.tvPercentage.setText(
                                             "$" + String.format(
-                                                "%.6f", mContest.get(position).latestPrice.toDouble()
+                                                "%.6f", mContest.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tvPercentage.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                mContest.get(position).latestPrice.toDouble()
+                                                mContest.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     holder.itemView.tvPercentage.setTextColor(
@@ -140,7 +140,7 @@ class MarketListAdapter(
                                 }
                             }
                         })
-                    } else if (priceText.toDouble() < mContest.get(position).latestPrice.toDouble()) {
+                    } else if (priceText.toDouble() < mContest.get(position).latestPrice!!.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tvPercentage.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -165,17 +165,17 @@ class MarketListAdapter(
 
                             override fun onAnimationStart(p0: Animation?) {
                                 try {
-                                    if (mContest.get(position).latestPrice.toDouble() < 1)
+                                    if (mContest.get(position).latestPrice!!.toDouble() < 1)
                                         holder.itemView.tvPercentage.setText(
                                             "$" + String.format(
-                                                "%.6f", mContest!!.get(position).latestPrice.toDouble()
+                                                "%.6f", mContest!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     else
                                         holder.itemView.tvPercentage.setText(
                                             "$" + String.format(
                                                 "%.2f",
-                                                mContest!!.get(position).latestPrice.toDouble()
+                                                mContest!!.get(position).latestPrice!!.toDouble()
                                             )
                                         )
                                     holder.itemView.tvPercentage.setTextColor(
@@ -200,18 +200,18 @@ class MarketListAdapter(
                 } else {
                     try {
                         if (mContest.get(position).latestPrice != null)
-                            if (mContest.get(position).latestPrice.toDouble() < 1)
+                            if (mContest.get(position).latestPrice!!.toDouble() < 1)
                                 holder.itemView.tvPercentage.setText(
                                     "$" + String.format(
                                         "%.6f",
-                                        mContest.get(position).latestPrice.toDouble()
+                                        mContest.get(position).latestPrice!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.tvPercentage.setText(
                                     String.format(
                                         "%.2f",
-                                        mContest.get(position).latestPrice.toDouble()
+                                        mContest.get(position).latestPrice!!.toDouble()
                                     )
                                 )
                     } catch (e: Exception) {
@@ -237,10 +237,10 @@ class MarketListAdapter(
             Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
             if (!TextUtils.isEmpty(searchList!!.get(position).changeper)) {
-                var priceText: Double = (searchList!!.get(position).changeper).toDouble() * 0.01
+                var priceText: Double = (searchList!!.get(position).changeper)!!.toDouble() * 0.01
                 var price = (priceText.toString())
 
-                if (searchList!!.get(position).changeper.contains("-")) {
+                if (searchList!!.get(position).changeper!!.contains("-")) {
                     price = price.substring(0, 1) + "$" + price.substring(4, price.length)
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.img_graph)
                     holder.itemView.tv_change_percentage.setText(price + " (" + searchList!!.get(position).changeper + "%)")

@@ -1,118 +1,117 @@
-package stock.com.ui.pojo;
+package stock.com.ui.pojo
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable
+import java.util.ArrayList
 
-public class WatchlistPojo extends BasePojo {
+class WatchlistPojo : BasePojo() {
     @SerializedName("stock")
     @Expose
-    public ArrayList<WatchStock> stock = null;
+    var stock: ArrayList<WatchStock>? = null
 
-    public class WatchStock implements Serializable {
+    inner class WatchStock : Serializable {
 
         @SerializedName("id")
         @Expose
-        public String id;
+        var id: String? = null
         @SerializedName("stockid")
         @Expose
-        public String stockid;
+        var stockid: String? = null
         @SerializedName("previousClose")
         @Expose
-        public String previousClose;
+        var previousClose: String? = null
         @SerializedName("marketopen")
         @Expose
-        public String marketopen;
+        var marketopen: String? = null
         @SerializedName("marketclose")
         @Expose
-        public String marketclose;
+        var marketclose: String? = null
         @SerializedName("sector")
         @Expose
-        public String sector;
+        var sector: String? = null
         @SerializedName("cryptocurrencyid")
         @Expose
-        public String cryptocurrencyid;
+        var cryptocurrencyid: String? = null
         @SerializedName("cmc_rank")
         @Expose
-        public String cmcRank;
+        var cmcRank: String? = null
 
         @SerializedName("crypto_logo")
         @Expose
-        public String crypto_logo;
+        var crypto_logo: String? = null
 
         @SerializedName("marketcapital")
         @Expose
-        public String marketcapital;
+        var marketcapital: String? = null
         @SerializedName("supply")
         @Expose
-        public String supply;
+        var supply: String? = null
         @SerializedName("country_id")
         @Expose
-        public String countryId;
+        var countryId: String? = null
         @SerializedName("marketId")
         @Expose
-        public String marketId;
+        var marketId: String? = null
         @SerializedName("marketname")
         @Expose
-        public String marketname;
+        var marketname: String? = null
         @SerializedName("currencyid")
         @Expose
-        public String currencyid;
+        var currencyid: String? = null
         @SerializedName("ask")
         @Expose
-        public String ask;
+        var ask: String? = null
         @SerializedName("bid")
         @Expose
-        public String bid;
+        var bid: String? = null
 
         @SerializedName("currency_netchange")
         @Expose
-        public String currency_netchange;
+        var currency_netchange: String? = null
         @SerializedName("currency_perchange")
         @Expose
-        public String currency_perchange;
+        var currency_perchange: String? = null
         @SerializedName("currency_volume")
         @Expose
-        public String currency_volume;
+        var currency_volume: String? = null
         @SerializedName("crypto_market_id")
         @Expose
-        public String crypto_market_id;
+        var crypto_market_id: String? = null
         @SerializedName("currency_market_id")
         @Expose
-        public String currency_market_id;
+        var currency_market_id: String? = null
         @SerializedName("currency_symbol")
         @Expose
-        public String currency_symbol;
+        var currency_symbol: String? = null
 
         @SerializedName("currency_firstflag")
         @Expose
-        public String currency_firstflag;
-         @SerializedName("currency_secondflag")
-         @Expose
-         public String currency_secondflag;
+        var currency_firstflag: String? = null
+        @SerializedName("currency_secondflag")
+        @Expose
+        var currency_secondflag: String? = null
 
         @SerializedName("symbol")
         @Expose
-        public String symbol;
+        var symbol: String? = null
 
         @SerializedName("image")
         @Expose
-        public String image;
+        var image: String? = null
         @SerializedName("latestVolume")
         @Expose
-        public String latestVolume;
+        var latestVolume: String? = null
         @SerializedName("latestPrice")
         @Expose
-        public String latestPrice;
+        var latestPrice: String? = null
         @SerializedName("changePercent")
         @Expose
-        public String changePercent;
+        var changePercent: String? = null
         @SerializedName("companyName")
         @Expose
-        public String companyName;
+        var companyName: String? = null
 
 
     }

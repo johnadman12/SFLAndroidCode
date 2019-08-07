@@ -11,44 +11,44 @@ class CurrencyPojo : BasePojo() {
     @Expose
     var currency: ArrayList<Currency>? = null
 
-    public class Currency() :Parcelable {
+    class Currency() : Parcelable {
 
         @SerializedName("currencyid")
         @Expose
         var currencyid: Int = 0
         @SerializedName("symbol")
         @Expose
-        var symbol: String = ""
+        var symbol: String? = null
         @SerializedName("ask")
         @Expose
-        var ask: String = ""
+        var ask: String ? = null
         @SerializedName("bid")
         @Expose
-        var bid: String = ""
+        var bid: String? = null
         @SerializedName("daychange")
         @Expose
-        var daychange: String = ""
+        var daychange: String? = null
         @SerializedName("price")
         @Expose
-        var price: String = ""
+        var price: String? = null
         @SerializedName("name")
         @Expose
-        var name: String = ""
+        var name: String? = null
         @SerializedName("firstflag")
         @Expose
-        var firstflag: String = ""
+        var firstflag: String ? = null
         @SerializedName("secondflag")
         @Expose
-        var secondflag: String = ""
+        var secondflag: String ? = null
         @SerializedName("latestVolume")
         @Expose
-        var latestVolume: String = ""
+        var latestVolume: String ? = null
         @SerializedName("changeper")
         @Expose
-        var changeper: String = ""
+        var changeper: String? = null
         @SerializedName("crypto_type")
         @Expose
-        var cryptoType: String = ""
+        var cryptoType: String? = null
         var addedToList = 1
 
         constructor(parcel: Parcel) : this() {

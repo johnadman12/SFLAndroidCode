@@ -130,7 +130,7 @@ class ViewPagerFeature(
                         override fun onTick(millisUntilFinished: Long) {
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
-                            ll_Circular.isEnabled = false
+                            view.isEnabled = false
                             llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.circle))
                             tvTimeLeft.setText("Contest \nStarted")
                             txtjoin.setText("Now \nLive")
@@ -165,7 +165,7 @@ class ViewPagerFeature(
                             txtjoin.setText("Starts \nSoon")
                             circular_progress.progressBackgroundColor =
                                 ContextCompat.getColor(context, R.color.GrayColor)
-                            ll_Circular.isEnabled = false
+                            view.isEnabled = false
                             llSportsLeft.visibility = INVISIBLE
 //                            val diff = thatDay.timeInMillis - cTime.timeInMillis
                             val diffSec = diff / 1000
@@ -206,7 +206,7 @@ class ViewPagerFeature(
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(list.get(position).description, context);
         }
-        ll_Circular.setOnClickListener {
+        view.setOnClickListener {
             if (userid.equals("")) {
                 AppDelegate.showAlertRegister(
                     context, context.getResources().getString(R.string.app_name),

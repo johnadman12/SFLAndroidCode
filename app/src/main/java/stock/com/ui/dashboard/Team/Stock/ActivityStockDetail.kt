@@ -65,7 +65,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                         try {
                             if (stockId.equals(list!!.get(i).stockid))
                                 position = i
-                            symbol = list!!.get(position).companyName
+                            symbol = list!!.get(position).companyName!!
                         } catch (e: Exception) {
 
                         }
@@ -108,10 +108,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
 
             R.id.ivTeam -> {
                 if (list != null)
-                    if (list!!.get(position).getAddedToList() == 1) {
+                    if (list!!.get(position).addedToList == 1) {
                         //show green button
                         AppDelegate.showAlert(this, "already added to stock")
-                    } else if (list!!.get(position).getAddedToList() == 0) {
+                    } else if (list!!.get(position).addedToList == 0) {
                         if (selectedItems >= 12) {
                             displayToast("You have selected maximum number of stocks for your team.", "error")
                         } else {

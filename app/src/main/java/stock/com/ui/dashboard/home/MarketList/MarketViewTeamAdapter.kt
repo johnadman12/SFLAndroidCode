@@ -54,7 +54,7 @@ class MarketViewTeamAdapter
         mContest.get(position).addedToList = 1
 
         if (!TextUtils.isEmpty(mContest.get(position).changeper))
-            if (mContest.get(position).changeper.contains("-")) {
+            if (mContest.get(position).changeper!!.contains("-")) {
                 Glide.with(mContext).load(R.mipmap.downred).into(holder.itemView.img_graph)
                 holder.itemView.tvPercentage.setText(mContest.get(position).changeper)
             } else {

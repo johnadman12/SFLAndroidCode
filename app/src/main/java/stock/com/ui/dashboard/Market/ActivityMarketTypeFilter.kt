@@ -132,9 +132,9 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                 } else
                     displayToast("please select to apply filter", "error")
             } else {
-                var selectedCountry: String = "";
-                var selectedSector: String = "";
-                var selectedExchange: String = "";
+                sectorTypeFilter = getFromPrefsString(StockConstant.SECTOR_WATCHLIST_TYPE);
+                marketTypeFilter = getFromPrefsString(StockConstant.MARKET_WATCHLIST_TYPE);
+                countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE);
 
                 if (countryAdapter != null) {
                     setCountryWatchlistFilter(countryAdapter!!.getSeletedtIds())
@@ -148,12 +148,11 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
                     setMarketWatchlistFilter(marketListAdapter!!.getSeletedtIds())
 //                    selectedExchange = marketListAdapter!!.getSeletedtIds();
                 }
-                Log.e("sectorlist", selectedSector)
 
                 var resultIntent = Intent()
-                resultIntent.putExtra("sectorlist", selectedSector)
-                resultIntent.putExtra("exchangelist", selectedExchange)
-                resultIntent.putExtra("countrylist", selectedCountry)
+                resultIntent.putExtra("sectorlist", sectorTypeFilter)
+                resultIntent.putExtra("exchangelist", marketTypeFilter)
+                resultIntent.putExtra("countrylist", countryTypeFilter)
                 resultIntent.putExtra("resetfiltermarket", "3")
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
@@ -273,6 +272,4 @@ class ActivityMarketTypeFilter : BaseActivity(), View.OnClickListener {
             relative.visibility = View.GONE
         }
     }
-
-
 }

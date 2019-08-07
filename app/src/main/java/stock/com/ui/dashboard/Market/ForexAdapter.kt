@@ -52,7 +52,7 @@ class ForexAdapter(
         Log.d("dad_fisrt_image", "---" + oldData.get(position).secondflag);
 
         if (!TextUtils.isEmpty(forexList.get(position).changeper)) {
-            if (forexList.get(position).changeper.contains("-")) {
+            if (forexList.get(position).changeper!!.contains("-")) {
                 holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
                 Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
@@ -76,7 +76,7 @@ class ForexAdapter(
         try {
             if (oldData.get(position).ask.equals(forexList!!.get(position).ask)) {
                 holder.itemView.ask.setText(forexList.get(position).ask)
-            } else if (oldData.get(position).ask.toDouble() < forexList.get(position).ask.toDouble()) {
+            } else if (oldData.get(position).ask!!.toDouble() < forexList.get(position).ask!!.toDouble()) {
                 holder.itemView.llPrice.startAnimation(animBlink);
                 holder.itemView.ask.startAnimation(animBlink);
                 holder.itemView.tv_ask.startAnimation(animBlink);
@@ -107,18 +107,18 @@ class ForexAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (forexList.get(position).ask.toDouble() < 1)
+                            if (forexList.get(position).ask!!.toDouble() < 1)
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.4f",
-                                        forexList.get(position).ask.toDouble()
+                                        forexList.get(position).ask!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.2f",
-                                        forexList.get(position).ask.toDouble()
+                                        forexList.get(position).ask!!.toDouble()
                                     )
                                 )
                             holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -135,7 +135,7 @@ class ForexAdapter(
                     }
                 })
 
-            } else if (oldData.get(position).ask.toDouble() > forexList!!.get(position).ask.toDouble()) {
+            } else if (oldData.get(position).ask!!.toDouble() > forexList!!.get(position).ask!!.toDouble()) {
                 holder.itemView.llPrice.startAnimation(animBlink);
                 holder.itemView.ask.startAnimation(animBlink);
                 holder.itemView.tv_ask.startAnimation(animBlink);
@@ -167,18 +167,18 @@ class ForexAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (oldData!!.get(position).ask.toDouble() < 1)
+                            if (oldData!!.get(position).ask!!.toDouble() < 1)
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.4f",
-                                        forexList!!.get(position).ask.toDouble()
+                                        forexList!!.get(position).ask!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.ask.setText(
                                     String.format(
                                         "%.2f",
-                                        forexList!!.get(position).ask.toDouble()
+                                        forexList!!.get(position).ask!!.toDouble()
                                     )
                                 )
                             holder.itemView.ask.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -195,12 +195,12 @@ class ForexAdapter(
                 })
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
-                if (oldData!!.get(position).ask.toDouble() < 1) {
-                    holder.itemView.ask.setText(String.format("%.4f", forexList!!.get(position).ask.toDouble()))
+                if (oldData!!.get(position).ask!!.toDouble() < 1) {
+                    holder.itemView.ask.setText(String.format("%.4f", forexList!!.get(position).ask!!.toDouble()))
                     Log.e("sddasdasdad", "-------55555555--")
                 } else {
                     Log.e("sddasdasdad", "-------66666666--")
-                    holder.itemView.ask.setText(String.format("%.2f", forexList!!.get(position).ask.toDouble()))
+                    holder.itemView.ask.setText(String.format("%.2f", forexList!!.get(position).ask!!.toDouble()))
                 }
             }
         } catch (ee: Exception) {
@@ -212,7 +212,7 @@ class ForexAdapter(
 
                 holder.itemView.bid.setText(forexList.get(position).bid)
 
-            } else if (oldData.get(position).bid.toDouble() < forexList.get(position).bid.toDouble()) {
+            } else if (oldData.get(position).bid!!.toDouble() < forexList.get(position).bid!!.toDouble()) {
                 holder.itemView.llchange.startAnimation(animBlink);
                 holder.itemView.bid.startAnimation(animBlink);
                 holder.itemView.tv_bid.startAnimation(animBlink);
@@ -243,18 +243,18 @@ class ForexAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (forexList!!.get(position).bid.toDouble() < 1)
+                            if (forexList!!.get(position).bid!!.toDouble() < 1)
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.4f",
-                                        forexList!!.get(position).bid.toDouble()
+                                        forexList!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.2f",
-                                        forexList!!.get(position).bid.toDouble()
+                                        forexList!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -271,7 +271,7 @@ class ForexAdapter(
                     }
                 })
 
-            } else if (oldData.get(position).bid.toDouble() > forexList.get(position).bid.toDouble()) {
+            } else if (oldData.get(position).bid!!.toDouble() > forexList.get(position).bid!!.toDouble()) {
                 Log.d("sddasdasdad", "-------3333333--")
                 holder.itemView.llchange.startAnimation(animBlink);
                 holder.itemView.bid.startAnimation(animBlink);
@@ -303,18 +303,18 @@ class ForexAdapter(
 
                     override fun onAnimationStart(p0: Animation?) {
                         try {
-                            if (oldData!!.get(position).bid.toDouble() < 1)
+                            if (oldData!!.get(position).bid!!.toDouble() < 1)
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.4f",
-                                        forexList!!.get(position).bid.toDouble()
+                                        forexList!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             else
                                 holder.itemView.bid.setText(
                                     String.format(
                                         "%.2f",
-                                        forexList!!.get(position).bid.toDouble()
+                                        forexList!!.get(position).bid!!.toDouble()
                                     )
                                 )
                             holder.itemView.bid.setTextColor(ContextCompat.getColor(mContext, R.color.white))
@@ -331,12 +331,12 @@ class ForexAdapter(
                 })
             } else {
                 Log.e("sddasdasdad", "-------444444444--")
-                if (oldData!!.get(position).bid.toDouble() < 1) {
-                    holder.itemView.bid.setText(String.format("%.4f", forexList!!.get(position).bid.toDouble()))
+                if (oldData!!.get(position).bid!!.toDouble() < 1) {
+                    holder.itemView.bid.setText(String.format("%.4f", forexList!!.get(position).bid!!.toDouble()))
                     Log.e("sddasdasdad", "-------55555555--")
                 } else {
                     Log.e("sddasdasdad", "-------66666666--")
-                    holder.itemView.bid.setText(String.format("%.2f", forexList!!.get(position).bid.toDouble()))
+                    holder.itemView.bid.setText(String.format("%.2f", forexList!!.get(position).bid!!.toDouble()))
                 }
             }
         } catch (ee: Exception) {

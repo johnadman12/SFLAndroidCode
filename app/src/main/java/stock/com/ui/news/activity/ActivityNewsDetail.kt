@@ -61,27 +61,31 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
     }
 
     private fun setdata(news: CityfalconNewsPojo.Story) {
-            tvNewsText.setText(news.title)
-            tvDescription.setText(news.description)
-            tvTime.setText(
-                DateUtils.getRelativeTimeSpanString(parseDateToddMMyyyyMILIEs(news.publishTime)!!,
-                    Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS))
+        tvNewsText.setText(news.title)
+        tvDescription.setText(news.description)
+        tvTime.setText(
+            DateUtils.getRelativeTimeSpanString(
+                parseDateToddMMyyyyMILIEs(news.publishTime)!!,
+                Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS
+            )
+        )
 
-            tvNewsEditor.setText(news.source.brandName)
+        tvNewsEditor.setText(news.source.brandName)
 
-            if (TextUtils.isEmpty(news.source.imageUrls.large))
-                ivNews.visibility = View.GONE
-            else
-                Glide.with(this).load(news.source.imageUrls.large).into(ivNews)
-            Glide.with(this).load(news.source.imageUrl).into(ivEditor)
+        if (TextUtils.isEmpty(news.source.imageUrls.large))
+            ivNews.visibility = View.GONE
+        else
+            Glide.with(this).load(news.source.imageUrls.large).into(ivNews)
+        Glide.with(this).load(news.source.imageUrl).into(ivEditor)
 
     }
 
     fun shareIntent() {
+        var shareText: String = tvNewsText.text.toString() + "\n" + tvDescription.text.toString()
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, tvNewsText.text.toString() + "\n" + tvDescription.text.toString());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 
@@ -98,38 +102,39 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
         }
         return 0
     }
+
     val categories: String = "mp,op"
 
-   /* fun getNewslist() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
-        val call: Call<CityfalconNewsPojo> =
-            apiService.getNewsHome(
-                "tickers",
-                identifires, categories, "20",
-                "top", "d1", false,
-                StockConstant.NEWS_ACCESS_TOKEN
-            )
-        call.enqueue(object : Callback<CityfalconNewsPojo> {
-            override fun onResponse(call: Call<CityfalconNewsPojo>, response: Response<CityfalconNewsPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    d.dismiss()
-                    for (i in 0 until response.body()!!.stories.size) {
-                        if (uuid.equals(response.body()!!.stories.get(i).uuid))
-                            setdata(response.body()!!.stories.get(i))
-                    }
-                }
-            }
+    /* fun getNewslist() {
+         val d = StockDialog.showLoading(this)
+         d.setCanceledOnTouchOutside(false)
+         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
+         val call: Call<CityfalconNewsPojo> =
+             apiService.getNewsHome(
+                 "tickers",
+                 identifires, categories, "20",
+                 "top", "d1", false,
+                 StockConstant.NEWS_ACCESS_TOKEN
+             )
+         call.enqueue(object : Callback<CityfalconNewsPojo> {
+             override fun onResponse(call: Call<CityfalconNewsPojo>, response: Response<CityfalconNewsPojo>) {
+                 d.dismiss()
+                 if (response.body() != null) {
+                     d.dismiss()
+                     for (i in 0 until response.body()!!.stories.size) {
+                         if (uuid.equals(response.body()!!.stories.get(i).uuid))
+                             setdata(response.body()!!.stories.get(i))
+                     }
+                 }
+             }
 
-            override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong))
-                d.dismiss()
-            }
+             override fun onFailure(call: Call<CityfalconNewsPojo>, t: Throwable) {
+                 println(t.toString())
+                 displayToast(resources.getString(R.string.something_went_wrong))
+                 d.dismiss()
+             }
 
-        })
-    }*/
+         })
+     }*/
 
 }
