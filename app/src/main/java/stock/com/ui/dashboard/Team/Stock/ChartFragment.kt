@@ -39,7 +39,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     var type = "application/json"
     var chartToken = "1efc85ca-e723-4546-9f72-cf795e499eaf"
     var symbol: String = ""
-    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php/"
+    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug="
     private var loadingFinished = true
     private var redirect = false
 
@@ -78,7 +78,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
             webview.getSettings().setJavaScriptEnabled(true);
             webview.setBackgroundColor(0x00000000);
             webview.getSettings().setLoadWithOverviewMode(true);
-//            webview.getSettings().setDomStorageEnabled(true);
+            webview.getSettings().setDomStorageEnabled(true);
             webview.loadUrl(url)
         }
 

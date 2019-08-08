@@ -163,7 +163,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestId.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), ""
+                , getFromPrefsString(StockConstant.USERID).toString(), "", marketId.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 

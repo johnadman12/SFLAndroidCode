@@ -89,9 +89,9 @@ class CurrencyAdapter(
             priceText = marketData.get(position).latestPrice!!;
             if (marketData.size == cryptoListNew.size) {
                 if (!TextUtils.isEmpty(priceText)) {
-                    if (priceText.equals("$" + cryptoListNew!!.get(position).latestPrice)) {
+                    if (priceText.equals("$" + cryptoListNew.get(position).latestPrice)) {
                         holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
-                    } else if (priceText.toDouble() < cryptoListNew!!.get(position).latestPrice!!.toDouble()) {
+                    } else if (priceText.toDouble() < cryptoListNew.get(position).latestPrice!!.toDouble()) {
                         holder.itemView.llPrice.startAnimation(animBlink);
                         holder.itemView.tv_latest_price.startAnimation(animBlink);
                         animBlink.setAnimationListener(object : Animation.AnimationListener {
@@ -266,7 +266,7 @@ class CurrencyAdapter(
             holder.itemView.setOnClickListener {
                 var intent = Intent(mContext, ActivityMarketDetail::class.java);
                 intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
-                intent.putExtra(StockConstant.MARKETLIST, cryptoListNew)
+                intent.putExtra(StockConstant.CURRENCYID, cryptoListNew)
                 intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
                 intent.putExtra("flag", 2)
                 startActivityForResult(mContext as Activity, intent, 410, null);

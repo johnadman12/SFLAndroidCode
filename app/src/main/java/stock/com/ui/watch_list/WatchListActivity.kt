@@ -38,12 +38,15 @@ class WatchListActivity : BaseActivity() {
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
     var flag: String = ""
+
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_list)
         list = ArrayList();
         setAdapter();
+
+
         val touchHelper = RecyclerHelper(
             list!!,
             watchListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>

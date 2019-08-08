@@ -140,7 +140,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), "upcoming"
+                , getFromPrefsString(StockConstant.USERID).toString(), "upcoming", exchangeid.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 

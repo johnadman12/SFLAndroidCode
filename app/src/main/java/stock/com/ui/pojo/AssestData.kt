@@ -19,6 +19,9 @@ class AssestData : BasePojo() {
         @SerializedName("companyName")
         @Expose
         var companyName: String = ""
+        @SerializedName("slug")
+        @Expose
+        var slug: String = ""
         @SerializedName("symbol")
         @Expose
         var symbol: String = ""

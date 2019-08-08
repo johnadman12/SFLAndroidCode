@@ -12,6 +12,9 @@ import java.security.cert.CertificateException
 import java.util.concurrent.TimeUnit
 import android.annotation.SuppressLint
 import android.content.Context
+import com.google.android.gms.common.api.Api
+import okhttp3.Request
+import retrofit2.Response
 import java.io.IOException
 import java.io.InputStream
 import java.security.*
@@ -19,6 +22,9 @@ import java.security.AccessController.getContext
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
+import stock.com.utils.networkUtils.NetworkUtils.isConnected
+
+
 
 
 object ApiClient {
@@ -109,6 +115,9 @@ object ApiClient {
             .build()
     }
 
+
+    }
+
     /* @JvmStatic
      private fun urlConnection():HttpsURLConnection{
          val urlConnection = url.openConnection() as HttpsURLConnection
@@ -148,7 +157,7 @@ object ApiClient {
     }*/
 
 
-}
+
 
 
 /*class ApiClient {

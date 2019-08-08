@@ -25,6 +25,7 @@ class NewsFragment : BaseFragment() {
     var bd: Bundle = Bundle()
     //    var identifires: String = "AAPL,TSLA,FTSE"
     var identifires: String = ""
+    var identifiresType: String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false)
@@ -32,8 +33,11 @@ class NewsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (arguments != null)
+        if (arguments != null) {
             identifires = arguments!!.getString("Stockname")
+            identifiresType = arguments!!.getString(StockConstant.IDENTIFIRE)
+        }
+
 
         if (identifires != null)
             getNewslist()
@@ -47,7 +51,7 @@ class NewsFragment : BaseFragment() {
         val apiService: ApiInterface = ApiClient.getClientNews()!!.create(ApiInterface::class.java)
         val call: Call<CityfalconNewsPojo> =
             apiService.getNews(
-                "tickers",
+                identifiresType,
                 identifires, categories, "0",
                 "latest", "d1", false,
                 StockConstant.NEWS_ACCESS_TOKEN
@@ -57,7 +61,12 @@ class NewsFragment : BaseFragment() {
                 d.dismiss()
                 if (response.body() != null) {
                     d.dismiss()
-                    setLatestNewAdapter(response.body()!!.stories, identifires)
+                    if (response.body()!!.stories.size > 0)
+                        setLatestNewAdapter(response.body()!!.stories, identifires)
+                    else {
+                        no_news.visibility = View.VISIBLE
+                        rvNews.visibility = View.GONE
+                    }
                 }
             }
 

@@ -23,7 +23,7 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
     var list: ArrayList<CandlesticChartmarket.Data.Quote>? = null
     val yValsCandleStick = ArrayList<CandleEntry>()
     var symbol: String = ""
-    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php/"
+    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug="
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.back_arrow ->

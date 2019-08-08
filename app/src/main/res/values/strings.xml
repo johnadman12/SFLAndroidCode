@@ -328,7 +328,7 @@
     <string name="ftse">FTSE</string>
     <string name="invalid_otp">Please enter valid OTP.</string>
     <string name="internal_server_error">Internal server error.</string>
-    <string name="something_went_wrong">Oops!!! Server is not Responding</string>
+    <string name="something_went_wrong">Oops!!! Network is not Responding</string>
     <string name="back_exit">Please click BACK again to exit</string>
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="note">Team performance is based on market and is a kind of risk. Additionally, Team Wizard (C) is only
@@ -615,4 +615,5 @@
         financial institution.
     </string>
     <string name="commodities">Commodities</string>
+    <string name="no_breaking_news">Oops!!!Currently there is no breaking news</string>
 </resources>

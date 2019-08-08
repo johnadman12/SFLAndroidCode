@@ -125,7 +125,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestId.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), ""
+                , getFromPrefsString(StockConstant.USERID).toString(), "", exchangeId.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 

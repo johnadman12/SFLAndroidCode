@@ -69,6 +69,7 @@ class ActivityCodeJoin : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         var contestId = response.body()!!.contestid
+                        var marketid = response.body()!!.market_id
                         Handler().postDelayed(Runnable {
                             displayToast("code Matched !!!", "sucess")
                             startActivity(
@@ -77,7 +78,7 @@ class ActivityCodeJoin : BaseActivity(), View.OnClickListener {
                                     contestId.toInt()
                                 ).putExtra(
                                     StockConstant.EXCHANGEID,
-                                    0
+                                    marketid
                                 )
                             )
                             finish()

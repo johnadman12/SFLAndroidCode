@@ -1,10 +1,9 @@
-package stock.com.ui.dashboard.Team.Stock
+package stock.com.ui.dashboard.home.Currency
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -13,7 +12,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_stock_detail_page.*
+import kotlinx.android.synthetic.main.activity_currency_detail.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,50 +21,44 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.pojo.AssestData
-import stock.com.ui.pojo.BasePojo
-import stock.com.ui.pojo.StockTeamPojo
+import stock.com.ui.dashboard.Team.Stock.*
+import stock.com.ui.pojo.*
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
-import java.lang.Exception
 
-
-class ActivityStockDetail : BaseActivity(), View.OnClickListener {
-    private var list: ArrayList<StockTeamPojo.Stock>? = null;
+class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
+    private var list: ArrayList<CurrencyPojo.Currency>? = null;
     private var selectedItems: Int = 0
     private var fragment: Fragment? = null;
-    var stockId: Int = 0
+    var currencyId: Int = 0
     var position: Int = -1
     var flagData: Int = 0
     var symbol: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stock_detail_page)
+        setContentView(R.layout.activity_currency_detail)
         list = ArrayList()
         StockConstant.ACTIVITIES.add(this)
         if (intent != null) {
-            stockId = intent.getIntExtra(StockConstant.STOCKID, 0);
+            currencyId = intent.getIntExtra(StockConstant.CURRENCYID, 0);
             flagData = intent.getIntExtra("flag", 0);
             if (flagData == 1) {
-                list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                list = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
-            } /*else {
-                symbol = intent.getStringExtra(StockConstant.SYMBOL)
-            }*/
+            }
         }
-        getData(stockId.toString())
+        getData(currencyId.toString())
 
         if (flagData == 1) {
             if (list != null) {
                 if (list!!.size > 0)
                     for (i in 0 until list!!.size) {
                         try {
-                            if (stockId.equals(list!!.get(i).stockid))
+                            if (currencyId.equals(list!!.get(i).currencyid))
                                 position = i
-                            symbol = list!!.get(position).companyName!!
+                            symbol = list!!.get(position).symbol!!
                         } catch (e: Exception) {
 
                         }
@@ -75,13 +68,6 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         } else {
             ivTeam.visibility = View.GONE
         }
-
-
-        /*  if (list!!.get(position).getAddedStock().equals("0")) {
-              list!!.get(position).addedStock = "1";
-          } else if (list!!.get(position).getAddedStock().equals("1"))
-              list!!.get(position).addedStock = "0";*/
-
 
 
         ll_news.setOnClickListener(this);
@@ -95,6 +81,49 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
 
     }
 
+    fun getData(assestId: String) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<CurrencyDetail> =
+            apiService.getCurrencyDetail(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                assestId, "currency"
+            )
+        call.enqueue(object : Callback<CurrencyDetail> {
+            override fun onResponse(call: Call<CurrencyDetail>, response: Response<CurrencyDetail>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        symbol = response.body()!!.stock!!.get(0).symbol!!
+
+                        /* val fragment: ChartFragment = ChartFragment()
+                         var nd: Bundle = Bundle()
+                         nd.putString("Stockname", symbol)
+                         setFragment(fragment, nd);*/
+
+                        val fragment: DataCurrencyFragment = DataCurrencyFragment()
+                        var nd: Bundle = Bundle()
+                        nd.putInt(StockConstant.MARKETID, currencyId)
+                        nd.putString(StockConstant.MARKET_TYPE, "currency")
+                        setFragment(fragment, nd);
+
+                        setStockData(response.body()!!.stock!!)
+                        d.dismiss()
+
+                    } else if (response.body()!!.status == "0") {
+                        displayToast(response.body()!!.message, "error")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CurrencyDetail>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+    }
 
     @SuppressLint("WrongConstant")
     override fun onClick(v: View?) {
@@ -110,14 +139,14 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 if (list != null)
                     if (list!!.get(position).addedToList == 1) {
                         //show green button
-                        AppDelegate.showAlert(this, "already added to stock")
+                        AppDelegate.showAlert(this, "already added to Crypto")
                     } else if (list!!.get(position).addedToList == 0) {
                         if (selectedItems >= 12) {
-                            displayToast("You have selected maximum number of stocks for your team.", "error")
+                            displayToast("You have selected maximum number of Crypto for your team.", "error")
                         } else {
                             list!!.get(position).addedToList = 1
                             //show red button
-                            AppDelegate.showAlert(this, "added to stock")
+                            AppDelegate.showAlert(this, "added to Crypto")
                             var intent = Intent();
                             intent.putExtra("list", list)
                             setResult(Activity.RESULT_OK, intent);
@@ -137,7 +166,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 if (list != null)
                     nd.putString("Stockname", symbol)
                 else
-                    nd.putString("Stockname", "0")
+                    nd.putString("Stockname", "")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))
@@ -168,7 +197,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
-                nd.putString(StockConstant.IDENTIFIRE, "tickers")
+                nd.putString(StockConstant.IDENTIFIRE, "assets")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
@@ -214,10 +243,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_data -> {
                 if (fragment is DataFragment)
                     return;
-                val fragment: DataFragment = DataFragment()
+                val fragment: DataCurrencyFragment = DataCurrencyFragment()
                 var nd: Bundle = Bundle()
-                nd.putInt(StockConstant.MARKETID, stockId)
-                nd.putString(StockConstant.MARKET_TYPE, "Equity")
+                nd.putInt(StockConstant.MARKETID, currencyId)
+                nd.putString(StockConstant.MARKET_TYPE, "currency")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
@@ -242,8 +271,8 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     return;
                 val fragment1: CommentsFragment = CommentsFragment()
                 var nd: Bundle = Bundle()
-                nd.putString(StockConstant.STOCKID, stockId.toString())
-                nd.putString(StockConstant.CONTEST_TYPE, "stock")
+                nd.putString(StockConstant.STOCKID, currencyId.toString())
+                nd.putString(StockConstant.CONTEST_TYPE, "crypto")
                 setFragment(fragment1, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))
@@ -271,65 +300,22 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         tv.setTextColor(color);
     }
 
-    fun getData(assestId: String) {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<AssestData> =
-            apiService.getAssestData(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                assestId, "Equity"
-            )
-        call.enqueue(object : Callback<AssestData> {
-            override fun onResponse(call: Call<AssestData>, response: Response<AssestData>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        symbol = response.body()!!.stock!!.get(0).symbol
-                        /*val fragment: ChartFragment = ChartFragment()
-                        var nd: Bundle = Bundle()
-                        nd.putString("Stockname", symbol)
-                        setFragment(fragment, nd);*/
-
-                        val fragment: DataFragment = DataFragment()
-                        var nd: Bundle = Bundle()
-                        nd.putInt(StockConstant.MARKETID, stockId)
-                        nd.putString(StockConstant.MARKET_TYPE, "Equity")
-                        setFragment(fragment, nd);
-
-                        setStockData(response.body()!!.stock)
-                        d.dismiss()
-
-                    } else if (response.body()!!.status == "0") {
-                        displayToast(response.body()!!.message, "error")
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<AssestData>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
-            }
-        })
-    }
-
-    fun setStockData(stock: ArrayList<AssestData.Stock>?) {
+    fun setStockData(stock: ArrayList<CurrencyDetail.Stock>?) {
         stock_name.setText(stock!!.get(0).symbol)
-        tv_stockcomp.setText(stock.get(0).companyName)
+//        tv_stockcomp.setText(stock.get(0).companyName)
         tvStockPercentage.setText(stock.get(0).changePercent)
-        tvVol.setText(stock.get(0).latestVolume)
-        tvlatestPrice.setText(stock.get(0).latestPrice)
-        Glide.with(this).load(stock.get(0).image).into(iv_stock_img)
+        tvVol.setText(stock.get(0).hVolume)
+        tvask.setText(stock.get(0).latestPrice)
+        Glide.with(this).load(stock.get(0).firstflag).into(img1)
+        Glide.with(this).load(stock.get(0).secondflag).into(img2)
         if (!TextUtils.isEmpty(stock.get(0).changePercent))
-            if (stock.get(0).changePercent.contains("-")) {
+            if (stock.get(0).changePercent!!.contains("-")) {
                 Glide.with(this).load(R.drawable.ic_down_arrow).into(stockgraph)
                 tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
             } else {
                 Glide.with(this).load(R.drawable.ic_arrow_up).into(stockgraph)
                 tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
             }
-
     }
 
 
@@ -338,10 +324,10 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> =
-            apiService.addStockWatch(
+            apiService.addCurrencyToWatch(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                stockId,
-                getFromPrefsString(StockConstant.USERID).toString()
+                currencyId,
+                getFromPrefsString(StockConstant.USERID).toString(), "crypto"
             )
         call.enqueue(object : Callback<BasePojo> {
 
@@ -349,7 +335,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        displayToast(response.body()!!.message, "sucess")
+                        AppDelegate.showAlert(this@ActivityCurrencyDetail, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     } else {

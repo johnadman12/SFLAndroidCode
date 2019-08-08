@@ -253,7 +253,8 @@ interface ApiInterface {
     @POST("contest/GetContestsDetail")
     fun getContestDetail(
         @Field("contest_id") contest_id: String, @Field("user_id") user_id: String,
-        @Field("status") status: String
+        @Field("status") status: String,
+        @Field("market_id") market_id: String
     ): Call<ContestDetail>
 
     @FormUrlEncoded
@@ -705,6 +706,14 @@ interface ApiInterface {
         @Field("asset_id") comments: String,
         @Field("market_type") market_type: String
     ): Call<AssestData>
+
+    @FormUrlEncoded
+    @POST("marketdata/currency_detail")
+    fun getCurrencyDetail(
+        @Header("x-access-token") token: String,
+        @Field("asset_id") comments: String,
+        @Field("market_type") market_type: String
+    ): Call<CurrencyDetail>
 
 
     @FormUrlEncoded

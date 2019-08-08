@@ -109,38 +109,6 @@ class WatchListAdapter_(
     inner class WatchListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
-    /* override fun getFilter(): Filter {
-         return object : Filter() {
-             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
-                 val charString = charSequence.toString()
-                 if (charString.isEmpty()) {
-                     searchList = mContest;
-
-                 } else {
-                     val filteredList = ArrayList<WatchlistPojo.WatchStock>()
-                     for (row in mContest) {
-                         if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
-                             filteredList.add(row)
-                             Log.d("dadada", "---" + filteredList.size);
-                         } else if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
-                             filteredList.add(row)
-                     }
-                     searchList = filteredList
-
-                 }
-                 val filterResults = Filter.FilterResults()
-                 filterResults.values = searchList
-                 return filterResults
-             }
-
-             override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
-                 searchList =
-                     filterResults.values as ArrayList<WatchlistPojo.WatchStock>?
-                 notifyDataSetChanged()
-             }
-         }
-     }*/
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {

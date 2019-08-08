@@ -39,6 +39,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
     var position: Int = -1
     var flagData: Int = 0
     var symbol: String = ""
+    var slug: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,11 +101,18 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         symbol = response.body()!!.stock!!.get(0).symbol
+                        slug= response.body()!!.stock!!.get(0).slug
+                        /*  val fragment: ChartFragment = ChartFragment()
+                          var nd: Bundle = Bundle()
+                          nd.putString("Stockname", symbol)
+                          setFragment(fragment, nd);*/
 
-                        val fragment: ChartFragment = ChartFragment()
+                        val fragment: DataFragment = DataFragment()
                         var nd: Bundle = Bundle()
-                        nd.putString("Stockname", symbol)
+                        nd.putInt(StockConstant.MARKETID, marketId)
+                        nd.putString(StockConstant.MARKET_TYPE, "crypto")
                         setFragment(fragment, nd);
+
                         setStockData(response.body()!!.stock)
                         d.dismiss()
 
@@ -161,7 +169,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 val fragment: ChartFragment = ChartFragment()
                 var nd: Bundle = Bundle()
                 if (list != null)
-                    nd.putString("Stockname", symbol)
+                    nd.putString("Stockname", slug)
                 else
                     nd.putString("Stockname", "")
                 setFragment(fragment, nd);
@@ -194,6 +202,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
+                nd.putString(StockConstant.IDENTIFIRE, "tickers")
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.colorbutton));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.white))

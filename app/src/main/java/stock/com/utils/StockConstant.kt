@@ -68,6 +68,7 @@ object StockConstant {
     val ACCESSTOKEN = "x_access_token"
     val PASSWORD = "password"
     val CONTESTCODE = "contestcode"
+    val CURRENCYID = "currencyid"
 
     val DEFAULT_VALUE_STRING = ""
 

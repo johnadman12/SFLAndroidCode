@@ -26,6 +26,9 @@ class StockTeamPojo() : BasePojo() {
         @SerializedName("companyName")
         @Expose
         var companyName: String? = null
+        @SerializedName("slug")
+        @Expose
+        var slug: String? = null
         @SerializedName("previousClose")
         @Expose
         var previousClose: String? = null

@@ -404,6 +404,9 @@ class CurrencyTeamAdapter(
         } catch (e: Exception) {
 
         }
+
+
+
     }
 
     interface OnItemCheckListener {

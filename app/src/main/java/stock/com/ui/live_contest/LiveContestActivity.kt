@@ -147,7 +147,7 @@ class LiveContestActivity : BaseActivity() {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestid.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), "live"
+                , getFromPrefsString(StockConstant.USERID).toString(), "live", exchangeid.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 

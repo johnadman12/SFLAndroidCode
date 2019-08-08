@@ -46,14 +46,30 @@
             android:background="@color/white"
             android:weightSum="1">
 
-        <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_stock_img"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:src="@mipmap/crypto"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_gravity="left"/>
+        <RelativeLayout
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:gravity="top"
+                android:padding="@dimen/_3sdp">
 
+            <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/img1"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/cryptoim"/>
+            <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:id="@+id/img2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@mipmap/stocks"/>
+
+        </RelativeLayout>
         <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -69,101 +85,105 @@
                     android:weightSum="1">
                 <LinearLayout android:layout_width="0dp"
                               android:layout_height="wrap_content"
+                              android:layout_marginRight="@dimen/_5sdp"
                               android:layout_weight="1"
-                              android:orientation="horizontal">
+                              android:orientation="vertical">
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/stock_name"
-                            android:layout_width="wrap_content"
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/stock_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleSemiBold"
+                                android:gravity="center"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:textColor="@color/textColorBlack"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="|"
+                                android:gravity="center"
+                                android:paddingLeft="@dimen/_1sdp"
+                                android:paddingRight="@dimen/_1sdp"
+                                style="@style/TextStyleNormal"
+                                android:textColor="@color/textColorGray"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_stockcomp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextStyleNormal"
+                                android:textSize="@dimen/_11ssp"
+                                android:textStyle="italic"
+                                android:maxLines="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/textColorGray"/>
+                    </LinearLayout>
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/market"
-                            style="@style/TextStyleSemiBold"
-                            android:gravity="center"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:textColor="@color/textColorBlack"/>
+                            android:orientation="horizontal"
+                    >
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="|"
-                            android:gravity="center"
-                            android:paddingLeft="@dimen/_1sdp"
-                            android:paddingRight="@dimen/_1sdp"
-                            style="@style/TextStyleNormal"
-                            android:textColor="@color/textColorGray"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/volume"
+                                style="@style/TextStyleNormal"
+                                android:padding="@dimen/_2sdp"
+                                android:textColor="@color/textColorGray"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_stockcomp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/market"
-                            style="@style/TextStyleNormal"
-                            android:textSize="@dimen/_11ssp"
-                            android:textStyle="italic"
-                            android:maxLines="1"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/textColorGray"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvVol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0.0"
+                                android:textSize="@dimen/_10ssp"
+                                style="@style/TextStyleNormal"
+                                android:padding="@dimen/_2sdp"
+                                android:textColor="@color/textColorBlack"/>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </LinearLayout>
+
                 <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/stockgraph"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
                         android:src="@drawable/ic_down_arrow"
                 />
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_marginLeft="@dimen/_2sdp"
+                              android:layout_marginRight="@dimen/_5sdp"
+                              android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvask"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ASK :0.0"
+                            android:textColor="@color/textColorBlack"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_13ssp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_bid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BID : 0.0"
+                            android:textColor="@color/textColorBlack"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_13ssp"/>
+                </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvlatestPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0.0"
-                        android:layout_marginLeft="@dimen/_2sdp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textColor="@color/textColorBlack"
-                        style="@style/TextStyleSemiBold"
-                        android:textSize="@dimen/_14ssp"/>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-            >
-
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/volume"
-                        style="@style/TextStyleNormal"
-                        android:padding="@dimen/_2sdp"
-                        android:textColor="@color/textColorGray"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvVol"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0.0"
-                        android:textSize="@dimen/_10ssp"
-                        style="@style/TextStyleNormal"
-                        android:padding="@dimen/_2sdp"
-                        android:textColor="@color/textColorBlack"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvStockPercentage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:layout_marginTop="-5dp"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:padding="@dimen/_3sdp"
-                        android:text="@string/percentage"
-                        android:textColor="@color/colorRed"
-                        android:textSize="@dimen/_12ssp"
-                        style="@style/TextStyleNormal"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -178,38 +198,19 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                            android:layout_width="match_parent"
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvStockPercentage"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_gravity="center"
-                            android:gravity="center|left">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_15sdp"
-                                android:src="@mipmap/timegrey"/>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/market"
-                                style="@style/TextStyleNormal"
-                                android:textSize="@dimen/_12ssp"
-                                android:layout_marginRight="@dimen/_5sdp"
-                                android:paddingLeft="@dimen/_5sdp"
-                                android:textColor="@color/textColorBlack"/>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvMarket_status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/TextStyleNormal"
-                                android:textSize="@dimen/_12ssp"
-                                android:text="Open"
-                                android:textColor="@color/green"/>
-
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:layout_marginTop="-5dp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:text="@string/percentage"
+                            android:textColor="@color/colorRed"
+                            android:textSize="@dimen/_12ssp"
+                            style="@style/TextStyleNormal"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"

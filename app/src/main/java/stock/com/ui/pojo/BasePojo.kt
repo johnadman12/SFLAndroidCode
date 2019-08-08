@@ -7,5 +7,6 @@ open class BasePojo  {
     var message: String = ""
     var otp: String = ""
     var contestid: String = ""
+    var market_id: String = ""
     var myteam = ""
 }

@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.socket.client.IO
+import io.socket.client.Socket
 import kotlinx.android.synthetic.main.fragment_stocks.*
 import org.json.JSONArray
 import retrofit2.Call
@@ -29,6 +31,7 @@ import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.net.URISyntaxException
 import java.util.*
 
 class StocksFragment : BaseFragment() {
@@ -38,7 +41,7 @@ class StocksFragment : BaseFragment() {
     var page: Int = 0
     var limit: Int = 50
     var exchangeId: Int = 0
-    lateinit var mainHandler: Handler;
+    private var socket: Socket? = null;
 
     private var stockAdapter: StockAdapter? = null;
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null
@@ -68,6 +71,30 @@ class StocksFragment : BaseFragment() {
         getExchangeNamelist()
         setStockAdapter()
 
+
+        try {
+            val opts = IO.Options()
+            opts.forceNew = true
+            opts.reconnection = true
+            socket = IO.socket("https://www.dfxchange.com:4000", opts)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        socket!!.on(Socket.EVENT_CONNECT) {
+        }.on("new_stock_message") {
+        }.on(Socket.EVENT_DISCONNECT) {
+            socket!!.connect()
+        }
+
+        socket!!.connect()
+        socket!!.on("new_stock_message") { args ->
+            val jsonArray = args[0] as JSONArray
+            Log.d("socket_data_stock", "---" + jsonArray);
+            Thread(Task(stockAdapter!!, jsonArray)).start()
+        }
+
+
         srl_layout.setOnRefreshListener {
             page++
             getStocks("1", exchangeId)
@@ -77,15 +104,13 @@ class StocksFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        mainHandler = Handler(Looper.getMainLooper())
-        mainHandler.post(object : Runnable {
-            override fun run() {
-                if (isVisible) {
-                    getStocksAgain("1", exchangeId)
-                    mainHandler.postDelayed(this, 20000)
-                }
-            }
-        })
+        if (!isVisible) {
+            flagAlphaSort = false
+            flagPriceSort = false
+            flagDaySort = false
+            flagHTLSort = false
+            flagDHTLSort = false
+        }
     }
 
     fun getExchangeNamelist() {
@@ -97,7 +122,6 @@ class StocksFragment : BaseFragment() {
         call.enqueue(object : Callback<ExchangeList> {
             override fun onResponse(call: Call<ExchangeList>, response: Response<ExchangeList>) {
                 d.dismiss()
-
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setStockNameAdapter(response.body()!!.exchange)
@@ -129,10 +153,6 @@ class StocksFragment : BaseFragment() {
 
         // call function news
         autoScrollNews(llm)
-
-        //recyclerView_stock_name.getAdapter()!!.notifyDataSetChanged();
-//        rvstock.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
-//        rvstock.setItemAnimator(DefaultItemAnimator())
         rvstock!!.adapter!!.notifyDataSetChanged();
 
     }
@@ -197,8 +217,6 @@ class StocksFragment : BaseFragment() {
                             stockList!!.addAll(stockListFilter!!)
                             stockListNew!!.addAll(stockListFilter!!)
                         }
-                        /* if (stockAdapter != null)
-                             stockAdapter!!.notifyDataSetChanged()*/
                         setStockAdapter()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
@@ -234,14 +252,14 @@ class StocksFragment : BaseFragment() {
 
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
-
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
                             stockListNew!!.addAll(response.body()!!.stock!!)
                             Handler().postDelayed(Runnable {
                                 if (stockListNew!!.size > 0)
-                                    setStockAdapter()
+                                    if (stockAdapter != null)
+                                        stockAdapter!!.notifyDataSetChanged()
                             }, 100)
 
                         }
@@ -269,7 +287,6 @@ class StocksFragment : BaseFragment() {
             llm!!.orientation = LinearLayoutManager.VERTICAL
             rv_stockList!!.layoutManager = llm
             rv_stockList.visibility = View.VISIBLE
-//            if (stockAdapter != null)
             stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
             rv_stockList!!.adapter = stockAdapter;
         } else
@@ -322,7 +339,6 @@ class StocksFragment : BaseFragment() {
     }
 
     fun setSorting(type: String) {
-        getExchangeNamelist()
         if (type.equals("Alpha")) {
             var sortedList = stockList!!.sortedBy { it.symbol?.toString() }
             stockList!!.clear()
@@ -400,7 +416,7 @@ class StocksFragment : BaseFragment() {
 
     }
 
-    internal inner class Task(var adapter: ForexAdapter, var jsonArray: JSONArray) : Runnable {
+    internal inner class Task(var adapter: StockAdapter, var jsonArray: JSONArray) : Runnable {
         override fun run() {
             try {
                 activity!!.runOnUiThread(Runnable {
@@ -412,23 +428,23 @@ class StocksFragment : BaseFragment() {
                             var jsonObject = jsonArray.getJSONObject(i);
                             var model = StockTeamPojo.Stock()
                             try {
-                                 model.stockid = jsonObject!!.getString("currencyid").toInt();
-                                 model.changePercent = jsonObject!!.getString("changePercent");
-                                 model.latestVolume = jsonObject!!.getString("latestVolume");
-                                 model.marketopen = jsonObject!!.getString("marketopen");
-                                 model.previousClose = jsonObject!!.getString("previousClose");
-                                 model.latestPrice = jsonObject!!.getString("latestPrice");
-                                 model.stock_type = jsonObject!!.getString("stock_type");
-                                 model.companyName = jsonObject!!.getString("companyName");
-                                 model.symbol = jsonObject!!.getString("symbol");
-                                 model.image = jsonObject!!.getString("image");
-                                 model.sector = jsonObject!!.getString("sector");
+                                model.stockid = jsonObject!!.getString("currencyid").toInt();
+                                model.changePercent = jsonObject.getString("changePercent");
+                                model.latestVolume = jsonObject.getString("latestVolume");
+                                model.marketopen = jsonObject.getString("marketopen");
+                                model.previousClose = jsonObject.getString("previousClose");
+                                model.latestPrice = jsonObject.getString("latestPrice");
+                                model.stock_type = jsonObject.getString("stock_type");
+                                model.companyName = jsonObject.getString("companyName");
+                                model.symbol = jsonObject.getString("symbol");
+                                model.image = jsonObject.getString("image");
+                                model.sector = jsonObject.getString("sector");
                                 stockListNew!!.add(model)
                                 for (i in 0..stockListNew!!.size) {
-                                    if (model.symbol.equals(stockListNew!!.get(i).symbol)) {
-                                        model.symbol = stockListNew!!.get(i).symbol;
-                                        model.companyName = stockListNew!!.get(i).companyName;
-                                        stockListNew!!.set(i, model!!)
+                                    if (model.symbol.equals(stockListNew!!.get(i).slug)) {
+                                        model.latestPrice = stockListNew!!.get(i).latestPrice;
+//                                        model.companyName = stockListNew!!.get(i).companyName;
+                                        stockListNew!!.set(i, model)
                                     }
                                 }
                             } catch (e: Exception) {
@@ -447,8 +463,15 @@ class StocksFragment : BaseFragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        mainHandler.removeCallbacksAndMessages(null)
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 }

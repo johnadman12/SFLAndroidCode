@@ -1,6 +1,7 @@
 package stock.com.ui.dashboard.Market
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.CountDownTimer
@@ -12,12 +13,14 @@ import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_forex.view.*
 import stock.com.R
 import stock.com.ui.dashboard.Team.ActivityMarketDetail
+import stock.com.ui.dashboard.home.Currency.ActivityCurrencyDetail
 import stock.com.ui.pojo.CurrencyPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -370,12 +373,12 @@ class ForexAdapter(
 
 
         holder.itemView.setOnClickListener {
-            var intent = Intent(mContext, ActivityMarketDetail::class.java);
-            intent.putExtra("cryptoId", forexList.get(position).currencyid)
+            var intent = Intent(mContext, ActivityCurrencyDetail::class.java);
+            intent.putExtra(StockConstant.CURRENCYID, forexList.get(position).currencyid)
             intent.putExtra(StockConstant.MARKETLIST, forexList)
             intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
             intent.putExtra("flag", 2)
-            //            ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
+            ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
         }
 
     }
