@@ -63,7 +63,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                         try {
                             if (marketId.equals(list!!.get(i).cryptocurrencyid))
                                 position = i
-                            symbol = list!!.get(position).name!!
+//                            symbol = list!!.get(position).name!!
                         } catch (e: Exception) {
 
                         }
@@ -101,7 +101,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         symbol = response.body()!!.stock!!.get(0).symbol
-                        slug= response.body()!!.stock!!.get(0).slug
+                        slug = response.body()!!.stock!!.get(0).slug
                         /*  val fragment: ChartFragment = ChartFragment()
                           var nd: Bundle = Bundle()
                           nd.putString("Stockname", symbol)
@@ -172,6 +172,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", slug)
                 else
                     nd.putString("Stockname", "")
+                nd.putInt(StockConstant.MARKETID, 7)// for show chart its fix
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))

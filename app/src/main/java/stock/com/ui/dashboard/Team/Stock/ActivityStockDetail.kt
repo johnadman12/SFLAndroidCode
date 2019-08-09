@@ -138,6 +138,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "0")
+                nd.putInt(StockConstant.MARKETID, 0)
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))

@@ -33,11 +33,12 @@ class CurrencyFragment : BaseFragment() {
     var forexAdapter: ForexAdapter? = null
     var page: Int = 0
     var limit: Int = 50
-    var flagSearch: Boolean = false
+
 
     private var flag: Boolean = true;
     private var socket: Socket? = null;
     var search: String = ""
+    var flagSearch: Boolean = false
     var flagPagination: Boolean = false
 
     var flagAlphaSort: Boolean = false

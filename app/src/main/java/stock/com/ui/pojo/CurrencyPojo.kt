@@ -37,6 +37,9 @@ class CurrencyPojo : BasePojo() {
         @SerializedName("firstflag")
         @Expose
         var firstflag: String ? = null
+        @SerializedName("currencyname")
+        @Expose
+        var currencyname: String ? = null
         @SerializedName("secondflag")
         @Expose
         var secondflag: String ? = null
@@ -59,6 +62,7 @@ class CurrencyPojo : BasePojo() {
             daychange = parcel.readString()
             name = parcel.readString()
             firstflag = parcel.readString()
+            currencyname = parcel.readString()
             secondflag = parcel.readString()
             latestVolume = parcel.readString()
             changeper = parcel.readString()
@@ -75,6 +79,7 @@ class CurrencyPojo : BasePojo() {
             parcel.writeString(daychange)
             parcel.writeString(name)
             parcel.writeString(firstflag)
+            parcel.writeString(currencyname)
             parcel.writeString(secondflag)
             parcel.writeString(latestVolume)
             parcel.writeString(changeper)

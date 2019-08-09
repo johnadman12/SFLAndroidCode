@@ -21,8 +21,6 @@ class RulesAndWinningActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rules_and_winning)
 
-
-
         imgBtnClose.setOnClickListener {
             onBackPressed()
         }
@@ -35,7 +33,6 @@ class RulesAndWinningActivity : BaseActivity() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recylerViewRule!!.layoutManager = llm
         recylerViewRule!!.adapter = rulesAdapter;
-
 
 
         recylerViewRanking!!.layoutManager=llm1;

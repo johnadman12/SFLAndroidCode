@@ -67,7 +67,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityMarketViewTeam, MarketTeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.MARKETLIST, list)
+                        .putExtra(StockConstant.MARKETLIST, marketSelectedItem)
                         .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
@@ -200,7 +200,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         txtTeamname.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
         ll_sort.visibility = View.GONE
-        marketSelectedItem = list
+        marketSelectedItem!!.addAll(list!!)
         viewTeamAdapter = MarketViewTeamAdapter(
             this, list as ArrayList, object : MarketViewTeamAdapter.OnItemCheckListener {
                 override fun onRemoveIteam(item: MarketList.Crypto) {
@@ -216,6 +216,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
+                        item.cryptoType="1"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
@@ -224,6 +225,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
+                        item.cryptoType="0"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }

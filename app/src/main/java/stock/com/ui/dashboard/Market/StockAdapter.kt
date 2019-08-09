@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.app.ActivityCompat
@@ -29,198 +30,257 @@ class StockAdapter(
     val fragment: StocksFragment,
     val stockListNew: java.util.ArrayList<StockTeamPojo.Stock>
 ) :
-    RecyclerView.Adapter<StockAdapter.FeatureListHolder>(), Filterable {
+    RecyclerView.Adapter<StockAdapter.FeatureListHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StockAdapter.FeatureListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_currency_market, parent, false)
         return FeatureListHolder(view)
-
-    }
-
-    private var searchList: List<StockTeamPojo.Stock>? = null
-    var priceText: String = ""
-
-    init {
-        this.searchList = list;
     }
 
     override fun onBindViewHolder(holder: StockAdapter.FeatureListHolder, position: Int) {
+        val animBlink: Animation
+        animBlink = AnimationUtils.loadAnimation(
+            mContext,
+            R.anim.blink
+        )
 
-        val anim = AlphaAnimation(0.5f, 1.0f)
-        anim.duration = 100 //You can manage the blinking time with this parameter
-        anim.startOffset = 20
-//        anim.repeatCount = Animation.REVERSE
+        holder.itemView.name.setText(stockListNew.get(position).symbol)
+        holder.itemView.tv_company.setText(stockListNew.get(position).companyName)
+        Glide.with(mContext).load(stockListNew.get(position).image).into(holder.itemView.img_market)
 
 
-        holder.itemView.name.setText(stockListNew!!.get(position).symbol)
-        holder.itemView.tv_company.setText(stockListNew!!.get(position).companyName)
-        holder.itemView.tv_latest_price.setText("$" + searchList!!.get(position).latestPrice)
+        try {
+            if (stockListNew.get(position).latestPrice != null)
+                if (stockListNew.get(position).latestPrice!!.toDouble() < 1)
+                    holder.itemView.tv_latest_price.setText(
+                        "$" + String.format(
+                            "%.6f",
+                            stockListNew.get(position).latestPrice!!.toDouble()
+                        )
+                    )
+                else
+                    holder.itemView.tv_latest_price.setText(
+                        "$" + String.format(
+                            "%.2f",
+                            stockListNew.get(position).latestPrice!!.toDouble()
+                        )
+                    )
+        } catch (e: Exception) {
 
-
-        if (!TextUtils.isEmpty(stockListNew.get(position).latestPrice)) {
-            priceText = stockListNew.get(position).latestPrice!!;
-        } else {
-            priceText = "0";
         }
+        var priceText = ""
 
-
-
-        if (list.size == stockListNew.size) {
-            if (!TextUtils.isEmpty(priceText)) {
-                if (!TextUtils.isEmpty(searchList!!.get(position).latestPrice)) {
-                    if (priceText.equals(searchList!!.get(position).latestPrice)) {
-                        holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black))
-                    } else if (priceText.toDouble() > searchList!!.get(position).latestPrice!!.toDouble()) {
-                        val newtimer = object : CountDownTimer(500, 500) {
-                            override fun onTick(millisUntilFinished: Long) {
-                                Log.e("timeerror", millisUntilFinished.toString())
-                                holder.itemView.tv_latest_price.setTextColor(
-                                    ContextCompat.getColor(
-                                        mContext,
-                                        R.color.green
-                                    )
-                                )
-                                holder.itemView.tv_latest_price.animation = anim
+//latest price flickering
+        try {
+            priceText = list.get(position).latestPrice!!;
+            if (list.size == stockListNew.size) {
+                if (!TextUtils.isEmpty(priceText)) {
+                    if (priceText.equals("$" + stockListNew.get(position).latestPrice)) {
+                        holder.itemView.tv_latest_price.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+                    } else if (priceText.toDouble() < stockListNew.get(position).latestPrice!!.toDouble()) {
+                        holder.itemView.llPrice.startAnimation(animBlink);
+                        holder.itemView.tv_latest_price.startAnimation(animBlink);
+                        animBlink.setAnimationListener(object : Animation.AnimationListener {
+                            override fun onAnimationRepeat(p0: Animation?) {
                             }
 
-                            override fun onFinish() {
-                                holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
-                                searchList!!.get(position).latestPrice = stockListNew.get(position).latestPrice
-                                searchList!!.get(position).changePercent = stockListNew.get(position).changePercent
+                            override fun onAnimationEnd(p0: Animation?) {
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.black
                                     )
                                 )
-                            }
-                        }
-                        newtimer.start()
-
-                    } else if (priceText.toDouble() < searchList!!.get(position).latestPrice!!.toDouble()) {
-                        val newtimer = object : CountDownTimer(500, 500) {
-                            override fun onTick(millisUntilFinished: Long) {
-                                holder.itemView.tv_latest_price.setTextColor(
-                                    ContextCompat.getColor(
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
                                         mContext,
-                                        R.color.redcolor
+                                        R.drawable.gray_empty_rect
                                     )
                                 )
-                                holder.itemView.tv_latest_price.animation = anim
                             }
 
-                            override fun onFinish() {
-                                holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
-                                searchList!!.get(position).latestPrice = stockListNew.get(position).latestPrice
-                                searchList!!.get(position).changePercent = stockListNew.get(position).changePercent
+                            override fun onAnimationStart(p0: Animation?) {
+                                try {
+                                    if (stockListNew!!.get(position).latestPrice!!.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f", stockListNew!!.get(position).latestPrice!!.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                stockListNew!!.get(position).latestPrice!!.toDouble()
+                                            )
+                                        )
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.white
+                                        )
+                                    )
+                                    holder.itemView.llPrice.setBackgroundDrawable(
+                                        ContextCompat.getDrawable(
+                                            mContext,
+                                            R.drawable.gray_green_fill
+                                        )
+                                    )
+                                } catch (e: Exception) {
+
+                                }
+                            }
+                        })
+                    } else if (priceText.toDouble() > stockListNew!!.get(position).latestPrice!!.toDouble()) {
+                        holder.itemView.llPrice.startAnimation(animBlink);
+                        holder.itemView.tv_latest_price.startAnimation(animBlink);
+                        animBlink.setAnimationListener(object : Animation.AnimationListener {
+                            override fun onAnimationRepeat(p0: Animation?) {
+
+                            }
+
+                            override fun onAnimationEnd(p0: Animation?) {
                                 holder.itemView.tv_latest_price.setTextColor(
                                     ContextCompat.getColor(
                                         mContext,
                                         R.color.black
                                     )
                                 )
+                                holder.itemView.llPrice.setBackgroundDrawable(
+                                    ContextCompat.getDrawable(
+                                        mContext,
+                                        R.drawable.gray_empty_rect
+                                    )
+                                )
                             }
-                        }
-                        newtimer.start()
+
+                            override fun onAnimationStart(p0: Animation?) {
+                                try {
+                                    if (stockListNew!!.get(position).latestPrice!!.toDouble() < 1)
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.6f", stockListNew!!.get(position).latestPrice!!.toDouble()
+                                            )
+                                        )
+                                    else
+                                        holder.itemView.tv_latest_price.setText(
+                                            "$" + String.format(
+                                                "%.2f",
+                                                stockListNew!!.get(position).latestPrice!!.toDouble()
+                                            )
+                                        )
+                                    holder.itemView.tv_latest_price.setTextColor(
+                                        ContextCompat.getColor(
+                                            mContext,
+                                            R.color.white
+                                        )
+                                    )
+                                    holder.itemView.llPrice.setBackgroundDrawable(
+                                        ContextCompat.getDrawable(
+                                            mContext,
+                                            R.drawable.gray_red_fill
+                                        )
+                                    )
+                                } catch (e: Exception) {
+
+                                }
+                            }
+                        })
+
                     }
+
                 } else {
-                    holder.itemView.tv_latest_price.setText("$" + stockListNew.get(position).latestPrice)
+                    Log.e("sddasdasdad", "-------444444444--")
+                    if (stockListNew!!.get(position).latestPrice!!.toDouble() < 1) {
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.6f",
+                                stockListNew!!.get(position).latestPrice!!.toDouble()
+                            )
+                        )
+                        Log.e("sddasdasdad", "-------55555555--")
+                    } else {
+                        Log.e("sddasdasdad", "-------66666666--")
+                        holder.itemView.tv_latest_price.setText(
+                            "$" + String.format(
+                                "%.2f",
+                                stockListNew.get(position).latestPrice!!.toDouble()
+                            )
+                        )
+                    }
                 }
             }
-        }
-
-        Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.img_market)
-
-
-        holder.itemView.setOnClickListener {
-            var intent = Intent(mContext, ActivityStockDetail::class.java);
-            intent.putExtra(StockConstant.STOCKID, stockListNew.get(position).stockid)
-            intent.putExtra(StockConstant.STOCKLIST, stockListNew)
-            intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
-            intent.putExtra("flag", 2)
-            ActivityCompat.startActivityForResult(mContext as Activity, intent, 411, null);
+        } catch (e: java.lang.Exception) {
         }
 
 
-        if (!TextUtils.isEmpty(stockListNew!!.get(position).changePercent)) {
-            var priceText: Double = (stockListNew!!.get(position).changePercent)!!.toDouble() * 0.01
-            var price = (priceText.toString())
+        try {
+            if (!TextUtils.isEmpty(list.get(position).changePercent)) {
+                var priceText: Double = (list.get(position).changePercent)!!.toDouble() * 0.01
+                var price = (priceText.toString())
 
-            if (stockListNew!!.get(position).changePercent!!.contains("-")) {
-                price = price.substring(0, 1) + "$" + price.substring(4, price.length)
-                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                holder.itemView.tv_change_percentage.setText(price.toString() + " (" + stockListNew!!.get(position).changePercent + " %)")
-            } else {
-                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText(
-                    "$" + price.toString() + " (+" + stockListNew!!.get(
+
+                if (list.get(position).changePercent!!.contains("-")) {
+                    price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+                    holder.itemView.tv_change_percentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.redcolor
+                        )
+                    )
+                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setText(price + " (" + list!!.get(position).changePercent + " %)")
+                    holder.itemView.tv_change_percentage.setText(/*list.get(position).decimalchange +*/ " (" + list!!.get(
                         position
                     ).changePercent + " %)"
-                )
+                    )
+                } else {
+                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                    holder.itemView.tv_change_percentage.setText(/*"$" + list.get(position).decimalchange +*/ " (+" + list!!.get(
+                        position
+                    ).changePercent + " %)"
+                    )
+                }
             }
-        }
-        if (searchList!!.get(position).stock_type.equals("1")) {
-            holder.itemView.llAdd.visibility = View.GONE
-            holder.itemView.img_check.visibility = View.VISIBLE
-            holder.itemView.llwatch.isEnabled = false
-        } else {
-            holder.itemView.llAdd.visibility = View.VISIBLE
-            holder.itemView.img_check.visibility = View.GONE
-        }
 
-        holder.itemView.llwatch.setOnClickListener {
-            fragment.saveToWatchList(searchList!!.get(position).stockid)
-            searchList!!.get(position).stock_type = "1"
-            notifyDataSetChanged()
-        }
+            if (list.get(position).stock_type.equals("1")) {
+                holder.itemView.llAdd.visibility = View.GONE
+                holder.itemView.img_check.visibility = View.VISIBLE
+                holder.itemView.llwatch.isEnabled = false
+            } else {
+                holder.itemView.llAdd.visibility = View.VISIBLE
+                holder.itemView.img_check.visibility = View.GONE
+            }
 
+
+            holder.itemView.setOnClickListener {
+                var intent = Intent(mContext, ActivityStockDetail::class.java);
+                intent.putExtra(StockConstant.STOCKID, stockListNew.get(position).stockid)
+                intent.putExtra(StockConstant.STOCKLIST, stockListNew)
+                intent.putExtra(StockConstant.SELECTEDSTOCK, 0)
+                intent.putExtra("flag", 2)
+                ActivityCompat.startActivityForResult(mContext as Activity, intent, 411, null);
+            }
+            holder.itemView.llwatch.setOnClickListener {
+                fragment.saveToWatchList(list.get(position).stockid)
+                list.get(position).stock_type = "1"
+                holder.itemView.llAdd.visibility = View.GONE
+                holder.itemView.img_check.visibility = View.VISIBLE
+                holder.itemView.llwatch.isEnabled = false
+            }
+
+        } catch (e: java.lang.Exception) {
+
+        }
     }
 
     override fun getItemCount(): Int {
-        // return searchList!!.size
-        return if (searchList == null) 0 else searchList!!.size
+        return stockListNew.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    }
-
-    inner class FeatureListHolder1(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    }
-
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
-                val charString = charSequence.toString()
-                Log.d("dsadadfsfsfsfsa ", charString)
-
-                if (charString.isEmpty()) {
-                    searchList = list
-                    Log.d("dsadada ", charString)
-                } else {
-                    val filteredList = ArrayList<StockTeamPojo.Stock>()
-                    for (row in list) {
-
-                        if (row.symbol!!.toLowerCase().contains(charString.toLowerCase())) {
-                            filteredList.add(row)
-                        } else if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
-                            filteredList.add(row)
-                    }
-                    searchList = filteredList
-                }
-                val filterResults = Filter.FilterResults()
-                filterResults.values = searchList
-                return filterResults
-            }
-
-            override fun publishResults(charSequence: CharSequence, filterResults: Filter.FilterResults) {
-                searchList = filterResults.values as ArrayList<StockTeamPojo.Stock>
-                notifyDataSetChanged()
-            }
-        }
     }
 
 

@@ -46,36 +46,10 @@ class ForexAdapter(
             mContext,
             R.anim.blink
         )
-        Glide.with(mContext).load(forexList.get(position).firstflag).into(holder.itemView.img1)
-        Glide.with(mContext).load(forexList.get(position).secondflag).into(holder.itemView.img2)
-        holder.itemView.ask.setText(forexList.get(position).ask)
-        holder.itemView.ask.setText(forexList.get(position).bid)
+        Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
+        Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
 
-        Log.d("dad_fisrt_image", "---" + oldData.get(position).firstflag);
-        Log.d("dad_fisrt_image", "---" + oldData.get(position).secondflag);
-
-        if (!TextUtils.isEmpty(forexList.get(position).changeper)) {
-            if (forexList.get(position).changeper!!.contains("-")) {
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
-                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setText(
-                    forexList!!.get(position).changeper + "%" + "  (" + forexList!!.get(
-                        position
-                    ).daychange + ")"
-                )
-            } else {
-                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
-                holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                holder.itemView.tv_change_percentage.setText(
-                    forexList!!.get(position).changeper + "%" + "  (" + forexList!!.get(
-                        position
-                    ).daychange + ")"
-                )
-            }
-        }
-
+//askcase
         try {
             if (oldData.get(position).ask.equals(forexList!!.get(position).ask)) {
                 holder.itemView.ask.setText(forexList.get(position).ask)
@@ -209,7 +183,7 @@ class ForexAdapter(
         } catch (ee: Exception) {
         }
 
-
+//bid case
         try {
             if (oldData.get(position).bid.equals(forexList!!.get(position).bid)) {
 
@@ -345,18 +319,58 @@ class ForexAdapter(
         } catch (ee: Exception) {
         }
 
-        if (oldData.get(position).cryptoType.equals("1")) {
-            holder.itemView.llAdd.visibility = View.GONE;
-            holder.itemView.img_check.visibility = View.VISIBLE;
-            holder.itemView.llwatch.isEnabled = false;
-        } else {
-            holder.itemView.llAdd.visibility = View.VISIBLE;
-            holder.itemView.img_check.visibility = View.GONE;
+
+        //dataset
+        try {
+            holder.itemView.ask.setText(forexList.get(position).ask)
+            holder.itemView.ask.setText(forexList.get(position).bid)
+
+            Log.d("dad_fisrt_image", "---" + oldData.get(position).firstflag);
+            Log.d("dad_fisrt_image", "---" + oldData.get(position).secondflag);
+
+            if (!TextUtils.isEmpty(forexList.get(position).changeper)) {
+                if (forexList.get(position).changeper!!.contains("-")) {
+                    holder.itemView.tv_change_percentage.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.redcolor
+                        )
+                    )
+                    holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.redcolor))
+                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setText(
+                        forexList!!.get(position).changeper + "%" + "  (" + forexList!!.get(
+                            position
+                        ).daychange + ")"
+                    )
+                } else {
+                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                    holder.itemView.tv_change.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                    holder.itemView.tv_change_percentage.setText(
+                        forexList!!.get(position).changeper + "%" + "  (" + forexList!!.get(
+                            position
+                        ).daychange + ")"
+                    )
+                }
+            }
+
+
+            if (oldData.get(position).cryptoType.equals("1")) {
+                holder.itemView.llAdd.visibility = View.GONE;
+                holder.itemView.img_check.visibility = View.VISIBLE;
+                holder.itemView.llwatch.isEnabled = false;
+            } else {
+                holder.itemView.llAdd.visibility = View.VISIBLE;
+                holder.itemView.img_check.visibility = View.GONE;
+            }
+            holder.itemView.name.setText(forexList.get(position).symbol)
+            holder.itemView.tv_company.setText("(" + forexList.get(position).name + ")");
+        } catch (e: Exception) {
+
         }
-        holder.itemView.name.setText(forexList.get(position).symbol)
-        /* holder.itemView.bid.setText(forexList.get(position).bid)
-         holder.itemView.ask.setText(forexList.get(position).ask)*/
-        holder.itemView.tv_company.setText("(" + forexList.get(position).name + ")");
+
+
 
 
 
@@ -384,7 +398,7 @@ class ForexAdapter(
     }
 
     override fun getItemCount(): Int {
-        return forexList!!.size
+        return forexList.size
     }
 
     inner class FeatureListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

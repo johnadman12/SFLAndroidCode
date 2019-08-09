@@ -53,17 +53,17 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
 
         if (flagData == 1) {
             if (list != null) {
-                if (list!!.size > 0)
-                    for (i in 0 until list!!.size) {
+//                if (list!!.size > 0)
+                    /*for (i in 0 until list!!.size) {
                         try {
                             if (currencyId.equals(list!!.get(i).currencyid))
                                 position = i
-                            symbol = list!!.get(position).symbol!!
+                            symbol = list!!.get(position).currencyname!!
                         } catch (e: Exception) {
 
                         }
 
-                    }
+                    }*/
             }
         } else {
             ivTeam.visibility = View.GONE
@@ -95,8 +95,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        symbol = response.body()!!.stock!!.get(0).symbol!!
-
+                        symbol = response.body()!!.stock!!.get(0).currencyname!!
                         /* val fragment: ChartFragment = ChartFragment()
                          var nd: Bundle = Bundle()
                          nd.putString("Stockname", symbol)
@@ -167,6 +166,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "")
+                nd.putInt(StockConstant.MARKETID, 5)// fix to show chart
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))

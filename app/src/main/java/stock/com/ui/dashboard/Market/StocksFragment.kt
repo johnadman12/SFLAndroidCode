@@ -55,8 +55,8 @@ class StocksFragment : BaseFragment() {
     var flagHTLSort: Boolean = false
     var flagDHTLSort: Boolean = false
     var llm: LinearLayoutManager? = null
-    var isLastPage: Boolean = false
-    var isLoading: Boolean = false
+    var search: String = ""
+    var flagSearch: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stocks, container, false)
@@ -67,9 +67,11 @@ class StocksFragment : BaseFragment() {
         stockList = ArrayList()
         stockListNew = ArrayList()
         stockListFilter = ArrayList()
+
+
         llm = LinearLayoutManager(context)
-        getExchangeNamelist()
         setStockAdapter()
+        getExchangeNamelist()
 
 
         try {
@@ -96,8 +98,14 @@ class StocksFragment : BaseFragment() {
 
 
         srl_layout.setOnRefreshListener {
-            page++
-            getStocks("1", exchangeId)
+            if (flagSearch) {
+                page++;
+                callApiSearch(search, 1);
+            } else {
+                page++
+                getStocks("1", exchangeId)
+            }
+
         }
 
     }
@@ -141,6 +149,93 @@ class StocksFragment : BaseFragment() {
             }
         })
 
+    }
+
+    private fun callApiSearch(c: CharSequence, firstTime: Int) {
+        Log.d("dsadada", "22222--");
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<StockTeamPojo> =
+            apiService.searchExchange(
+                exchangeId.toString(), c.toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                "Equity",
+                page.toString(),
+                limit.toString()
+            )
+        call.enqueue(object : Callback<StockTeamPojo> {
+            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    // displayToast(response.body()!!.message, "sucess")
+                    d.dismiss()
+                    if (response.body()!!.status == "1") {
+                        if (firstTime == 0) {
+                            stockList!!.clear();
+                            stockListNew!!.clear();
+                        }
+                        stockList!!.addAll(response.body()!!.stock!!)
+                        stockListNew!!.addAll(response.body()!!.stock!!)
+
+                        if (flagAlphaSort) {
+                            val sortedList = stockListNew!!.sortedBy { it.symbol }
+                            stockListNew!!.clear()
+                            stockList!!.clear()
+                            stockListNew!!.addAll(sortedList)
+                            stockList!!.addAll(sortedList)
+
+                        } else if (flagPriceSort) {
+                            val sortedList = stockListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                            stockListNew!!.clear()
+                            stockList!!.clear()
+                            stockList!!.addAll(sortedList)
+                            stockListNew!!.addAll(sortedList)
+
+
+                        } else if (flagDaySort) {
+                            val sortedList = stockListNew!!.sortedBy { it.changePercent?.toDouble() }
+                            stockListNew!!.clear()
+                            stockList!!.clear()
+                            stockList!!.addAll(sortedList)
+                            stockListNew!!.addAll(sortedList)
+
+                        } else if (flagHTLSort) {
+                            val sortedList = stockListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            stockListNew!!.clear()
+                            stockList!!.clear()
+                            stockList!!.addAll(sortedList)
+                            stockListNew!!.addAll(sortedList)
+
+
+                        } else if (flagDHTLSort) {
+                            val sortedList = stockListNew!!.sortedByDescending { it.changePercent?.toDouble() }
+                            stockListNew!!.clear()
+                            stockList!!.clear()
+                            stockList!!.addAll(sortedList)
+                            stockListNew!!.addAll(sortedList)
+
+                        }
+                        if (stockAdapter != null)
+                            stockAdapter!!.notifyDataSetChanged()
+
+
+                    } else if (response.body()!!.status == "2") {
+                        d.dismiss()
+                        appLogout()
+                    }
+                } else {
+                    displayToast(response.body()!!.message, "warning")
+                }
+
+            }
+
+            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                Log.d("serach_error", "---" + t.localizedMessage);
+                d.dismiss()
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
     }
 
     fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
@@ -199,7 +294,7 @@ class StocksFragment : BaseFragment() {
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 exchangeId,
                 getFromPrefsString(StockConstant.USERID)!!.toInt(),
-                sector, page.toString(), limit.toString()
+                sector, page.toString(), "50"
             )
         call.enqueue(object : Callback<StockTeamPojo> {
 
@@ -210,14 +305,17 @@ class StocksFragment : BaseFragment() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
-                            stockList = response.body()!!.stock
-                            stockListNew = response.body()!!.stock
+                            stockList!!.addAll(response.body()!!.stock!!)
+                            stockListNew!!.addAll(response.body()!!.stock!!)
                         } else {
                             stockList!!.clear()
-                            stockList!!.addAll(stockListFilter!!)
-                            stockListNew!!.addAll(stockListFilter!!)
+                            stockListNew!!.clear()
+                            stockList!!.addAll(response.body()!!.stock!!)
+                            stockListNew!!.addAll(response.body()!!.stock!!)
                         }
-                        setStockAdapter()
+                        if (stockAdapter != null)
+                            stockAdapter!!.notifyDataSetChanged()
+//                        setStockAdapter()
                     } else if (response.body()!!.status == "2") {
                         appLogout()
                     }
@@ -267,7 +365,7 @@ class StocksFragment : BaseFragment() {
                         appLogout()
                     }
                 } else {
-//                    displayToast(resources.getString(R.string.something_went_wrong), "error")
+                    displayToast(resources.getString(R.string.something_went_wrong), "error")
                     d.dismiss()
                 }
             }
@@ -275,7 +373,7 @@ class StocksFragment : BaseFragment() {
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
 
                 println(t.toString())
-//                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
             }
         })
@@ -283,14 +381,14 @@ class StocksFragment : BaseFragment() {
 
     @SuppressLint("WrongConstant")
     fun setStockAdapter() {
-        if (rv_stockList != null) {
-            llm!!.orientation = LinearLayoutManager.VERTICAL
-            rv_stockList!!.layoutManager = llm
-            rv_stockList.visibility = View.VISIBLE
-            stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
-            rv_stockList!!.adapter = stockAdapter;
-        } else
-            return
+//        if (rv_stockList != null) {
+        llm!!.orientation = LinearLayoutManager.VERTICAL
+        rv_stockList!!.layoutManager = llm
+        rv_stockList.visibility = View.VISIBLE
+        stockAdapter = StockAdapter(context!!, stockList!!, this, stockListNew!!);
+        rv_stockList!!.adapter = stockAdapter;
+        /*} else
+            return*/
 
     }
 
@@ -334,8 +432,21 @@ class StocksFragment : BaseFragment() {
     }
 
     fun setFilter(c: CharSequence) {
-        /*if (stockAdapter != null)
-            stockAdapter!!.getFilter().filter(c)*/
+        Log.d("dsadada", "sdada--" + c);
+        if (c.toString().length >= 2) {
+            Log.d("dsadada", "111111--");
+            search = c.toString()
+            flagSearch = true
+            page = 0
+            limit = 50
+            callApiSearch(c, 0);
+        } else {
+            page = 0
+            limit = 50
+            flagSearch = false
+            Log.d("dsadada", "sdada--");
+            getStocks("0", exchangeId)
+        }
     }
 
     fun setSorting(type: String) {
@@ -381,6 +492,7 @@ class StocksFragment : BaseFragment() {
             rv_stockList!!.adapter!!.notifyDataSetChanged()
 
         } else if (type.equals("nodata")) {
+            page = 0
             getStocks("1", exchangeId)
         }
 
@@ -389,11 +501,13 @@ class StocksFragment : BaseFragment() {
     fun changePercentFilter(type: String) {
         getExchangeNamelist()
         if (type.equals("0")) {
+            page = 0
             getStocks("0", exchangeId)
-            rv_stockList!!.adapter!!.notifyDataSetChanged()
+//            rv_stockList!!.adapter!!.notifyDataSetChanged()
         } else {
+            page = 0
             getStocks(type, exchangeId)
-            rv_stockList!!.adapter!!.notifyDataSetChanged()
+//            rv_stockList!!.adapter!!.notifyDataSetChanged()
         }
     }
 
@@ -402,8 +516,10 @@ class StocksFragment : BaseFragment() {
         this.sector = sector
         this.exchange = exchange
         this.country = country
+        page = 0
         getStocks("0", exchangeId)
-        rv_stockList!!.adapter!!.notifyDataSetChanged()
+        if (stockAdapter != null)
+            stockAdapter!!.notifyDataSetChanged()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -441,9 +557,9 @@ class StocksFragment : BaseFragment() {
                                 model.sector = jsonObject.getString("sector");
                                 stockListNew!!.add(model)
                                 for (i in 0..stockListNew!!.size) {
-                                    if (model.symbol.equals(stockListNew!!.get(i).slug)) {
+                                    if (model.slug.equals(stockListNew!!.get(i).slug)) {
                                         model.latestPrice = stockListNew!!.get(i).latestPrice;
-//                                        model.companyName = stockListNew!!.get(i).companyName;
+                                        model.changePercent = stockListNew!!.get(i).changePercent;
                                         stockListNew!!.set(i, model)
                                     }
                                 }

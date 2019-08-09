@@ -236,10 +236,16 @@ class CommentsFragment : BaseFragment() {
     }
 
     fun shareIntent() {
-        val shareIntent = Intent()
+        /*val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_TEXT, "");
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))*/
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        val shareBody = getString(R.string.share_unique_code)
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 

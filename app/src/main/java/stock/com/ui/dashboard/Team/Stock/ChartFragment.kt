@@ -39,7 +39,8 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     var type = "application/json"
     var chartToken = "1efc85ca-e723-4546-9f72-cf795e499eaf"
     var symbol: String = ""
-    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug="
+    var url: String = ""
+    var marketid: Int = 0
     private var loadingFinished = true
     private var redirect = false
 
@@ -48,7 +49,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
             R.id.txt_expand -> {
                 startActivity(
                     Intent(activity, StockChartActivity::class.java)
-                        .putExtra(StockConstant.CHART, symbol)
+                        .putExtra(StockConstant.CHART, url)
                 )
             }
 
@@ -68,12 +69,15 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         txt_expand.setOnClickListener(this)
-        if (arguments != null)
+        if (arguments != null) {
             symbol = arguments!!.getString("Stockname")
+            marketid = arguments!!.getInt(StockConstant.MARKETID)
+
+        }
 
         if (symbol != null) {
 //            getChartData(symbol)
-            url = url + symbol
+            url = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug=" + symbol + "&mid=" + marketid
             webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             webview.getSettings().setJavaScriptEnabled(true);
             webview.setBackgroundColor(0x00000000);

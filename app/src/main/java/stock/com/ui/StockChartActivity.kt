@@ -22,8 +22,7 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
     var data: CandlesticChartmarket.Data? = null
     var list: ArrayList<CandlesticChartmarket.Data.Quote>? = null
     val yValsCandleStick = ArrayList<CandleEntry>()
-    var symbol: String = ""
-    var url: String = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug="
+    var url: String = ""
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.back_arrow ->
@@ -42,11 +41,10 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
         back_arrow.setOnClickListener(this)
         if (intent != null)
 //            data = intent.getSerializableExtra(StockConstant.CHART) as CandlesticChartmarket.Data?
-            symbol = intent!!.getStringExtra(StockConstant.CHART)
-        if (symbol != null) {
+            url = intent!!.getStringExtra(StockConstant.CHART)
+        if (url != null) {
             /* list = data!!.quotes
              initView()*/
-            url = url + symbol
             webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             webview.getSettings().setJavaScriptEnabled(true);
             webview.setBackgroundColor(0x00000000);

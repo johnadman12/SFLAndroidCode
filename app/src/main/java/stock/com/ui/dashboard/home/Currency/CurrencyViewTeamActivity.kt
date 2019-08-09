@@ -60,7 +60,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@CurrencyViewTeamActivity, CurrencyPreviewTeamActivity::class.java)
-                        .putExtra(StockConstant.MARKETLIST, list)
+                        .putExtra(StockConstant.MARKETLIST, currencySelectedItem)
                         .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
@@ -149,7 +149,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestId.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), "",marketId.toString()
+                , getFromPrefsString(StockConstant.USERID).toString(), "", marketId.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 
@@ -185,7 +185,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         ll_sort.setOnClickListener(this)
         relFieldView.setOnClickListener(this)
         ll_sort.visibility = View.GONE
-        currencySelectedItem = list
+        currencySelectedItem!!.addAll(list!!)
         viewTeamAdapter = CurrencyViewTeamAdapter(
             this, list as ArrayList, object : CurrencyViewTeamAdapter.OnItemCheckListener {
                 override fun onRemoveIteam(item: CurrencyPojo.Currency) {
@@ -201,6 +201,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: CurrencyPojo.Currency) {
                     for (i in 0 until currencySelectedItem!!.size) {
+                        item.cryptoType = "1"
                         if (currencySelectedItem!!.get(i).currencyid == item.currencyid) {
                             currencySelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
@@ -209,6 +210,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: CurrencyPojo.Currency) {
                     for (i in 0 until currencySelectedItem!!.size) {
+                        item.cryptoType = "0"
                         if (currencySelectedItem!!.get(i).currencyid == item.currencyid) {
                             currencySelectedItem!!.get(i).cryptoType = item.cryptoType
                         }

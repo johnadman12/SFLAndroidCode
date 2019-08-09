@@ -75,7 +75,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityViewTeam, TeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.STOCKLIST, list)
+                        .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
                         .putExtra(StockConstant.TEAMNAME, edtTeamName.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
@@ -185,7 +185,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
         relFieldView.setOnClickListener(this)
 
-        stockSelectedItems = list
+        stockSelectedItems!!.addAll(list!!)
         viewTeamAdapter = ViewTeamAdapter(
             this, list as ArrayList, object : ViewTeamAdapter.OnItemCheckListener {
 
@@ -202,6 +202,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: StockTeamPojo.Stock) {
                     for (i in 0 until stockSelectedItems!!.size) {
+                        item.stock_type = "1"
                         if (stockSelectedItems!!.get(i).stockid == item.stockid) {
                             stockSelectedItems!!.get(i).stock_type = item.stock_type
                         }
@@ -210,6 +211,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: StockTeamPojo.Stock) {
                     for (i in 0 until stockSelectedItems!!.size) {
+                        item.stock_type = "0"
                         if (stockSelectedItems!!.get(i).stockid == item.stockid) {
                             stockSelectedItems!!.get(i).stock_type = item.stock_type
                         }

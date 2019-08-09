@@ -33,6 +33,9 @@ class CurrencyDetail:BasePojo(){
         @SerializedName("hVolume")
         @Expose
         var hVolume: String? = null
+        @SerializedName("currencyname")
+        @Expose
+        var currencyname: String? = null
         @SerializedName("changePercent")
         @Expose
         var changePercent: String? = null

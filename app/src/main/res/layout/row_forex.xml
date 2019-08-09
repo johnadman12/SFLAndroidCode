@@ -134,16 +134,16 @@
                             android:orientation="horizontal">
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:textSize="@dimen/_10ssp"
+                                  android:textSize="@dimen/_11ssp"
                                   android:gravity="top|center"
-                                  android:text="Ask :"
+                                  android:text=" Ask :"
                                   android:id="@+id/tv_ask"
                                   style="@style/TextStyleSemiBold"
                                   android:textColor="@color/black"/>
 
                         <TextView android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
-                                  android:textSize="@dimen/_10ssp"
+                                  android:textSize="@dimen/_11ssp"
                                   android:id="@+id/ask"
                                   android:maxLines="2"
                                   android:padding="@dimen/_1sdp"
@@ -165,16 +165,16 @@
                             android:orientation="horizontal">
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:textSize="@dimen/_10ssp"
+                                  android:textSize="@dimen/_11ssp"
                                   android:gravity="top|center"
-                                  android:text="Bid :"
+                                  android:text=" Bid :"
                                   android:id="@+id/tv_bid"
                                   style="@style/TextStyleSemiBold"
                                   android:textColor="@color/black"/>
 
                         <TextView android:layout_width="match_parent"
                                   android:layout_height="wrap_content"
-                                  android:textSize="@dimen/_10ssp"
+                                  android:textSize="@dimen/_11ssp"
                                   android:id="@+id/bid"
                                   android:maxLines="2"
                                   android:padding="@dimen/_1sdp"

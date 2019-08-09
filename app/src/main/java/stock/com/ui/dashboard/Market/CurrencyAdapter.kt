@@ -62,8 +62,10 @@ class CurrencyAdapter(
             mContext,
             R.anim.blink
         )
+
         holder.itemView.name.setText(cryptoListNew.get(position).symbol)
         holder.itemView.tv_company.setText(cryptoListNew.get(position).name)
+
         try {
             if (cryptoListNew.get(position).latestPrice != null)
                 if (cryptoListNew.get(position).latestPrice!!.toDouble() < 1)
@@ -228,8 +230,8 @@ class CurrencyAdapter(
         }
 
         try {
-            Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
 
+            Glide.with(mContext).load(cryptoListNew.get(position).image).into(holder.itemView.img_market)
             if (!TextUtils.isEmpty(cryptoListNew.get(position).changeper)) {
                 var priceText: Double = (cryptoListNew.get(position).changeper)!!.toDouble() * 0.01
                 var price = (priceText.toString())
