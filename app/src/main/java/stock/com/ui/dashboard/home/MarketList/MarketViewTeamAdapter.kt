@@ -67,6 +67,7 @@ class MarketViewTeamAdapter
 
 
         holder.itemView.llremoveStock.setOnClickListener {
+            mContest.remove(mContest.get(position))
             /*mContest.remove(mContest.get(position))
             notifyDataSetChanged()
             onItemCheckListener.onItemCheck((mContest.size), mContest.get(position))*/

@@ -65,6 +65,7 @@ class CurrencyViewTeamAdapter(
 
 
         holder.itemView.llremoveStock.setOnClickListener {
+            mContest.remove(mContest.get(position))
             onItemCheckListener.onRemoveIteam(mContest.get(position))
             notifyDataSetChanged()
            /* mContest.remove(mContest.get(position))

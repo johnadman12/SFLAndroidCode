@@ -444,7 +444,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         if (currencyAdapter != null)
                             currencyAdapter!!.notifyDataSetChanged();
                         setTeamText(currencySelected!!.size.toString())
-                        page++;
                         d.dismiss()
 
                     } else if (response.body()!!.status == "2") {
@@ -572,7 +571,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
 
                         setTeamText(currencySelected!!.size.toString())
 
-                        page++;
+//                        page++;
 //                        d.dismiss()
 
 

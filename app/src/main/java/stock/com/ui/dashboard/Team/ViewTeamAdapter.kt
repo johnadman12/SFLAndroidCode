@@ -64,8 +64,8 @@ class ViewTeamAdapter(
 
 
         holder.itemView.llremoveStock.setOnClickListener {
-            /* mContest.remove(mContest.get(position))
-             notifyDataSetChanged()*/
+            mContest.remove(mContest.get(position))
+            notifyDataSetChanged()
             onItemCheckListener.onRemoveIteam(mContest.get(position))
             notifyDataSetChanged()
         }

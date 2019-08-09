@@ -58,7 +58,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 rel.setBackgroundResource(R.mipmap.greencircle)
             else
                 rel.setBackgroundResource(R.mipmap.graycircle)
-            tvTotal.setText(totalChange + "%")
+            tvTotal.setText(totalChange)
         }
 
         try {

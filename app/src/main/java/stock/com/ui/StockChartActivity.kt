@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.Team.Stock
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
@@ -121,6 +122,11 @@ class StockChartActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
         return 0.0f
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }
 

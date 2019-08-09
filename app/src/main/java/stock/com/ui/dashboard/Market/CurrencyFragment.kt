@@ -198,7 +198,7 @@ class CurrencyFragment : BaseFragment() {
                         }
                         if (forexAdapter != null)
                             forexAdapter!!.notifyDataSetChanged();
-                        page++;
+//                        page++;
                     } else if (response.body()!!.status == "2") {
                         appLogout();
                     }

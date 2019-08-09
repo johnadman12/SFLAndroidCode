@@ -38,11 +38,15 @@ class LiveScoreActivity : BaseActivity() {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             mid = intent.getIntExtra(StockConstant.MARKETID, 0)
         }
+
+
         getScores()
         srl_layout.setOnRefreshListener {
             flagRefresh = true
             getScores()
         }
+
+
     }
 
     fun getScores() {

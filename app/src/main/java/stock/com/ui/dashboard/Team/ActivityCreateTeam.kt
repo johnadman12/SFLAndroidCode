@@ -39,11 +39,16 @@ import android.view.View.VISIBLE
 import android.widget.TextView
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import io.socket.client.IO
+import io.socket.client.Socket
+import org.json.JSONArray
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
+import stock.com.ui.dashboard.Market.StockAdapter
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.BasePojo
 import stock.com.utils.AppDelegate
+import java.net.URISyntaxException
 import java.util.*
 
 
@@ -74,6 +79,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
     private var flagSearch: Boolean = true;
+    var flagRefresh: Boolean = false
+    private var socket: Socket? = null;
+    var searchText: String = ""
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -97,6 +105,19 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             R.id.imgButtonWizard -> {
                 showJoinContestDialogue()
             }
+
+
+            R.id.imgcross -> {
+                if (!TextUtils.isEmpty(et_search_stock.text.toString())) {
+                    callSearch("")
+                    et_search_stock.setText("")
+                    page = 0
+                    getTeamlist("1");
+                } else
+                    displayToast("no words in search", "warning")
+            }
+
+
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
@@ -204,6 +225,31 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        try {
+            val opts = IO.Options()
+            opts.forceNew = true
+            opts.reconnection = true
+            socket = IO.socket("https://www.dfxchange.com:4000", opts)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        socket!!.on(Socket.EVENT_CONNECT) {
+        }.on("new_stock_message") {
+        }.on(Socket.EVENT_DISCONNECT) {
+            socket!!.connect()
+        }
+
+        socket!!.connect()
+        socket!!.on("new_stock_message") { args ->
+            val jsonArray = args[0] as JSONArray
+            Log.d("socket_data_stock", "---" + jsonArray);
+            Thread(Task(stockTeamAdapter!!, jsonArray)).start()
+        }
+    }
+
     @SuppressLint("WrongConstant")
     private fun initView() {
         stockSelectedItems = ArrayList();
@@ -240,74 +286,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
         }
         setTeamText(stockSelectedItems!!.size.toString())
-        stockTeamAdapter = StockTeamAdapter(
-            this, listOld as ArrayList,
-            list as ArrayList,
-            this@ActivityCreateTeam,
-            object : StockTeamAdapter.OnItemCheckListener {
-                override fun onToggleUncheck(item: StockTeamPojo.Stock) {
-                    for (j in 0 until list!!.size) {
-                        if (item.stockid.equals(list!!.get(j).stockid)) {
-                            item.stock_type = "1";
-                            if (stockSelectedItems!!.size > 0) {
-                                for (i in 0 until stockSelectedItems!!.size)
-                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
-                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
 
-                            } else
-                                list!!.get(j).stock_type = item.stock_type
-                            break;
-                        }
-                    }
-                }
-
-                override fun onToggleCheck(item: StockTeamPojo.Stock) {
-                    for (j in 0 until list!!.size) {
-                        if (item.stockid.equals(list!!.get(j).stockid)) {
-                            item.stock_type = "0";
-                            if (stockSelectedItems!!.size > 0) {
-                                for (i in 0 until stockSelectedItems!!.size)
-                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
-                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
-                            } else
-                                list!!.get(j).stock_type = item.stock_type
-                            break;
-                        }
-                    }
-                }
-
-                override fun onItemClick(item: StockTeamPojo.Stock) {
-                    startActivityForResult(
-                        Intent(
-                            this@ActivityCreateTeam,
-                            ActivityStockDetail::class.java
-                        )
-                            .putExtra(StockConstant.STOCKID, item.stockid)
-                            .putExtra("flag", 1)
-                            .putExtra(StockConstant.STOCKLIST, list)
-                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
-                        , StockConstant.RESULT_CODE_CREATE_TEAM
-                    )
-
-                }
-
-                override fun onItemUncheck(item: StockTeamPojo.Stock) {
-                    for (j in 0 until stockSelectedItems!!.size) {
-                        if (item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
-                            stockSelectedItems!!.removeAt(j);
-                            break;
-                        }
-                    }
-                    setTeamText(stockSelectedItems!!.size.toString())
-                }
-
-                override fun onItemCheck(item: StockTeamPojo.Stock) {
-                    stockSelectedItems?.add(item);
-                    setTeamText(stockSelectedItems!!.size.toString())
-
-                    Log.e("stocklist", stockSelectedItems.toString())
-                }
-            });
+        setAdapter()
+        getTeamlist("0")
 
         et_search_stock.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -322,36 +303,39 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             }
         })
 
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Players!!.layoutManager = llm
-        rv_Players.visibility = View.VISIBLE
-        rv_Players!!.adapter = stockTeamAdapter;
 
-
-        getTeamlist()
-
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        mainHandler = Handler(Looper.getMainLooper())
-        mainHandler.post(object : Runnable {
-            override fun run() {
-                if (flagSearch) {
-                    getTeamlist()
-                }
-                mainHandler.postDelayed(this, 8000)
+        srl_layout.setOnRefreshListener {
+            flagRefresh = true
+            if (!flagSearch) {
+                page++;
+                callApiSearch(searchText)
+            } else {
+                page++;
+                getTeamlist("2");
             }
+        }
 
-        })
     }
 
-    fun getTeamlist() {
-        /*  val d = StockDialog.showLoading(this)
-          d.setCanceledOnTouchOutside(false)
-        */
+    fun callSearch(c: CharSequence) {
+        Log.d("dsadada", "sdada--" + c);
+        if (c.toString().length >= 3) {
+            flagSearch = false;
+            flagRefresh = false;
+            searchText = c.toString()
+            page = 0
+            Log.d("dsadada", "111111--");
+            callApiSearch(c);
+        } else {
+            flagSearch = true;
+            page = 0
+            getTeamlist("1")
+            Log.d("dsadada", "sdada--");
+        }
+    }
+
+
+    fun getTeamlist(flag: String) {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<StockTeamPojo> =
             apiService.getStockList(
@@ -365,6 +349,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 if (response.body() != null) {
+                    if (srl_layout != null)
+                        srl_layout.isRefreshing = false
                     if (response.body()!!.status == "1") {
                         if (flagCloning == 2)
                             llMyTeam.visibility = View.GONE
@@ -374,68 +360,60 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             else if (response.body()!!.myteam.equals("0"))
                                 llMyTeam.visibility = View.GONE
                         }
-                        if (listOld!!.size > 0) {
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
-                            list!!.clear()
-                        } else {
-                            listOld!!.addAll(response.body()!!.stock!!);
+
+                        if (flag.equals("1")) {
+                            list!!.clear();
+                            listOld!!.clear();
                         }
-
-                        list!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        list!!.addAll(response.body()!!.stock!!);
-
+                        list!!.addAll(response.body()!!.stock!!)
+                        listOld!!.addAll(response.body()!!.stock!!)
 
                         //sortingConcept
                         if (flagAlphaSort) {
                             val sortedList = list!!.sortedBy { it.symbol?.toString() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
                         } else if (flagPriceLTH) {
                             val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
 
                         } else if (flagDayLTH) {
                             val sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagPriceHTL) {
                             val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
-
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagDayHTL) {
                             val sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         } else if (flagVolume) {
                             val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
-                            for (obj in sortedList) {
-                                list!!.clear()
-                                list!!.addAll(sortedList)
-//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
-                            }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
                         }
+
 
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
                         }
-//                        rv_Players.adapter!!.notifyDataSetChanged();
+
                         for (i in 0 until list!!.size) {
                             for (j in 0 until stockSelectedItems!!.size) {
                                 if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
@@ -450,79 +428,23 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
-                        rv_Players!!.adapter = stockTeamAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-//                        d.dismiss()
+                        if (stockTeamAdapter != null)
+                            stockTeamAdapter!!.notifyDataSetChanged();
+
                     } else if (response.body()!!.status == "2") {
-//                        d.dismiss()
                         appLogout()
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 println(t.toString())
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
 //                d.dismiss()
-            }
-        })
-    }
-
-    fun getTeamAgainlist() {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
-        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        val call: Call<StockTeamPojo> =
-            apiService.getStockList(
-                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), exchangeId/*.toString()*/,
-                getFromPrefsString(StockConstant.USERID)!!.toInt()/*.toString()*/, "",
-                page.toString(),
-                limit.toString()
-            )
-        call.enqueue(object : Callback<StockTeamPojo> {
-
-            override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
-                d.dismiss()
-                if (response.body() != null) {
-                    if (response.body()!!.status == "1") {
-                        setSectorFilter("")
-                        list!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        list!!.addAll(response.body()!!.stock!!)
-
-                        for (i in 0 until list!!.size) {
-                            list!!.get(i).addedToList = 0
-                        }
-
-                        for (i in 0 until list!!.size) {
-                            for (j in 0 until stockRemovedItems!!.size) {
-                                if (list!!.get(i).stockid == stockRemovedItems!!.get(j).stockid) {
-                                    list!!.get(i).addedToList = 1
-                                }
-                            }
-                        }
-                        rv_Players!!.adapter = stockTeamAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-
-                        stockSelectedItems = stockRemovedItems;
-                        setTeamText(stockSelectedItems!!.size.toString())
-
-                    } else if (response.body()!!.status == "2") {
-                        d.dismiss()
-                        appLogout()
-                    }
-                } else {
-                    d.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
-                println(t.toString())
-                displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
             }
         })
     }
@@ -633,17 +555,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         return stockSelectedItems!!.size.toInt()
     }
 
-    fun callSearch(c: CharSequence) {
-        Log.d("dsadada", "sdada--" + c);
-        if (c.toString().length >= 3) {
-            flagSearch = false;
-            Log.d("dsadada", "111111--");
-            callApiSearch(c);
-        } else {
-            flagSearch = true;
-            Log.d("dsadada", "sdada--");
-        }
-    }
 
     private fun callApiSearch(c: CharSequence) {
         Log.d("dsadada", "22222--");
@@ -658,26 +569,32 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         call.enqueue(object : Callback<StockTeamPojo> {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
-                    // displayToast(response.body()!!.message, "sucess")
-
                     if (response.body()!!.status == "1") {
                         if (response.body()!!.myteam.equals("1"))
                             llMyTeam.visibility = View.VISIBLE
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = View.GONE
 
-                        list!!.clear()
-                        listOld!!.clear()
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
-                        list!!.addAll(response.body()!!.stock!!);
-                        listOld!!.addAll(response.body()!!.stock!!);
+
+                        if (flagRefresh) {
+                            list!!.addAll(response.body()!!.stock!!);
+                            listOld!!.addAll(response.body()!!.stock!!);
+                        } else {
+                            list!!.clear()
+                            listOld!!.clear()
+                            list!!.addAll(response.body()!!.stock!!);
+                            listOld!!.addAll(response.body()!!.stock!!);
+                        }
+
+
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
-//                            listOld!!.get(i).addedToList = 0
 
                         }
-//                        rv_Players.adapter!!.notifyDataSetChanged();
+
                         for (i in 0 until list!!.size) {
                             for (j in 0 until stockSelectedItems!!.size) {
                                 if (list!!.get(i).stockid == stockSelectedItems!!.get(j).stockid) {
@@ -692,6 +609,45 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 }
                             }
                         }
+                        if (flagAlphaSort) {
+                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagPriceLTH) {
+                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+
+                        } else if (flagDayLTH) {
+                            val sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagPriceHTL) {
+                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagDayHTL) {
+                            val sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        } else if (flagVolume) {
+                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                            list!!.clear()
+                            list!!.addAll(sortedList)
+                            listOld!!.clear()
+                            listOld!!.addAll(list!!)
+                        }
                         /*if (flagFilter) {
                             for (i in 0 until list!!.size) {
                                 if (list!!.get(i).changePercent != null)
@@ -705,8 +661,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             if (!TextUtils.isEmpty(getFromPrefsString(StockConstant.ACTIVE_CURRENCY_TYPE))) {
                                 setActiveCurrencyType("")
                             }*/
-                        rv_Players!!.adapter = stockTeamAdapter;
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
+                        if (stockTeamAdapter != null)
+                            stockTeamAdapter!!.notifyDataSetChanged();
                         setTeamText(stockSelectedItems!!.size.toString())
                         d.dismiss()
 
@@ -723,6 +679,8 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
                 Log.d("serach_error", "---" + t.localizedMessage);
                 d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
             }
         })
@@ -766,59 +724,85 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_SORT_CREATE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 flagSort = (data.getStringExtra("flag"))
-                if (data.getStringExtra("flag").equals("Volume")) {
+                if (flagSort.equals("Volume")) {
                     flagVolume = true
                     var sortedList = list!!.sortedByDescending { it.latestVolume!!.toDouble() }
-                    for (obj in sortedList) {
+                    try {
                         list!!.clear()
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
 
                     }
-                } else if (data.getStringExtra("flag").equals("price")) {
+                } else if (flagSort.equals("price")) {
                     flagPriceLTH = true
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
-                    for (obj in sortedList) {
+                    try {
                         list!!.clear()
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
 
                     }
-                } else if (data.getStringExtra("flag").equals("priceHTL")) {
+                } else if (flagSort.equals("priceHTL")) {
                     flagPriceHTL = true
                     var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                    for (obj in sortedList) {
+                    try {
                         list!!.clear()
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
 
                     }
-                } else if (data.getStringExtra("flag").equals("dayLTH")) {
+                } else if (flagSort.equals("dayLTH")) {
                     flagDayLTH = true
                     var sortedList = list!!.sortedBy { it.changePercent?.toDouble() }
-                    for (obj in sortedList) {
+                    try {
                         list!!.clear()
                         list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                    }
-                } else if (data.getStringExtra("flag").equals("dayHTL")) {
-                    flagDayHTL = true
-                    var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
-                    }
-                } else if (data.getStringExtra("flag").equals("Alpha")) {
-                    flagAlphaSort = true
-                    var sortedList = list!!.sortedBy { it.symbol?.toString() }
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
 
                     }
-                } else if (data.getStringExtra("flag").equals("nodata")) {
+                } else if (flagSort.equals("dayHTL")) {
+                    flagDayHTL = true
+                    var sortedList = list!!.sortedByDescending { it.changePercent?.toDouble() }
+                    try {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
+
+                    }
+                } else if (flagSort.equals("Alpha")) {
+                    flagAlphaSort = true
+                    var sortedList = list!!.sortedBy { it.symbol?.toString() }
+                    try {
+                        list!!.clear()
+                        list!!.addAll(sortedList)
+                        listOld!!.clear()
+                        listOld!!.addAll(sortedList)
+                        setAdapter()
+
+                    } catch (e: Exception) {
+
+                    }
+                } else if (flagSort.equals("nodata")) {
                     flagPriceLTH = false
                     flagDayHTL = false
                     flagAlphaSort = false
@@ -826,7 +810,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     flagPriceLTH = false
                     flagPriceHTL = false
                     flagVolume = false
-                    getTeamlist()
+                    getTeamlist("0")
                 }
 
             }
@@ -854,8 +838,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 if (data.getStringExtra("flag").equals("1")) {
+                    if (stockSelectedItems != null)
+                        stockSelectedItems!!.clear()
                     stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
-                    getTeamAgainlist()
+                    stockSelectedItems!!.addAll(stockRemovedItems!!)
+                    page = 0;
+                    getTeamlist("1")
+
                 } else if (data.getStringExtra("flag").equals("2")) {
                     var intent = Intent();
                     setResult(Activity.RESULT_OK, intent);
@@ -869,18 +858,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 var flagreset = data.getStringExtra("resetfilter")
                 if (flagreset.equals("0")) {
                     sector = data.getStringExtra("sectorlist")
-                    getTeamlist()
+                    getTeamlist("0")
                 } else {
                     sector = ""
-                    getTeamlist()
+                    getTeamlist("0")
                 }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mainHandler.removeCallbacksAndMessages(null);
     }
 
 
@@ -932,6 +916,158 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 d.dismiss()
             }
         })
+    }
+
+
+    internal inner class Task(var adapter: StockTeamAdapter, var jsonArray: JSONArray) : Runnable {
+        override fun run() {
+            try {
+                runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        list!!.clear();
+                        listOld!!.addAll(list!!);
+                        for (i in 0..jsonArray.length()) {
+                            var jsonObject = jsonArray.getJSONObject(i);
+                            var model = StockTeamPojo.Stock()
+                            try {
+                                model.stockid = jsonObject!!.getString("currencyid").toInt();
+                                model.changePercent = jsonObject.getString("changePercent");
+                                model.latestVolume = jsonObject.getString("latestVolume");
+                                model.marketopen = jsonObject.getString("marketopen");
+                                model.previousClose = jsonObject.getString("previousClose");
+                                model.latestPrice = jsonObject.getString("latestPrice");
+                                model.stock_type = jsonObject.getString("stock_type");
+                                model.companyName = jsonObject.getString("companyName");
+                                model.symbol = jsonObject.getString("symbol");
+                                model.image = jsonObject.getString("image");
+                                model.sector = jsonObject.getString("sector");
+                                list!!.add(model)
+                                for (i in 0..list!!.size) {
+                                    if (model.slug.equals(list!!.get(i).slug)) {
+                                        model.latestPrice = list!!.get(i).latestPrice;
+                                        model.changePercent = list!!.get(i).changePercent;
+                                        list!!.set(i, model)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                            }
+                        }
+                    } catch (ee: java.lang.Exception) {
+                    }
+                    if (adapter != null)
+                        adapter!!.notifyDataSetChanged();
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
+    }
+
+    @SuppressLint("WrongConstant")
+    fun setAdapter() {
+        stockTeamAdapter = StockTeamAdapter(
+            this, listOld as ArrayList,
+            list as ArrayList,
+            this@ActivityCreateTeam,
+            object : StockTeamAdapter.OnItemCheckListener {
+                override fun onToggleUncheck(item: StockTeamPojo.Stock) {
+                    for (j in 0 until list!!.size) {
+                        if (item.stockid.equals(list!!.get(j).stockid)) {
+                            item.stock_type = "1";
+                            if (stockSelectedItems!!.size > 0) {
+                                for (i in 0 until stockSelectedItems!!.size)
+                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
+                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
+
+                            } else
+                                list!!.get(j).stock_type = item.stock_type
+                            break;
+                        }
+                    }
+                }
+
+                override fun onToggleCheck(item: StockTeamPojo.Stock) {
+                    for (j in 0 until list!!.size) {
+                        if (item.stockid.equals(list!!.get(j).stockid)) {
+                            item.stock_type = "0";
+                            if (stockSelectedItems!!.size > 0) {
+                                for (i in 0 until stockSelectedItems!!.size)
+                                    if (item.stockid.equals(stockSelectedItems!!.get(i).stockid))
+                                        stockSelectedItems!!.get(i).stock_type = item.stock_type
+                            } else
+                                list!!.get(j).stock_type = item.stock_type
+                            break;
+                        }
+                    }
+                }
+
+                override fun onItemClick(item: StockTeamPojo.Stock) {
+                    startActivityForResult(
+                        Intent(
+                            this@ActivityCreateTeam,
+                            ActivityStockDetail::class.java
+                        )
+                            .putExtra(StockConstant.STOCKID, item.stockid)
+                            .putExtra("flag", 1)
+                            .putExtra(StockConstant.STOCKLIST, list)
+                            .putExtra(StockConstant.SELECTEDSTOCK, stockSelectedItems!!.size)
+                        , StockConstant.RESULT_CODE_CREATE_TEAM
+                    )
+
+                }
+
+                override fun onItemUncheck(item: StockTeamPojo.Stock) {
+                    for (j in 0 until stockSelectedItems!!.size) {
+                        if (item.stockid.equals(stockSelectedItems!!.get(j).stockid)) {
+                            stockSelectedItems!!.removeAt(j);
+                            break;
+                        }
+                    }
+                    setTeamText(stockSelectedItems!!.size.toString())
+                }
+
+                override fun onItemCheck(item: StockTeamPojo.Stock) {
+                    stockSelectedItems?.add(item);
+                    setTeamText(stockSelectedItems!!.size.toString())
+
+                    Log.e("stocklist", stockSelectedItems.toString())
+                }
+            });
+
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        rv_Players!!.layoutManager = llm
+        rv_Players.visibility = View.VISIBLE
+        rv_Players!!.adapter = stockTeamAdapter;
+
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
 

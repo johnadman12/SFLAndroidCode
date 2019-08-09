@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_scores.view.*
 import stock.com.R
+import stock.com.networkCall.ApiClient
+import stock.com.networkCall.ApiConstant
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.home.Currency.CurrencyPreviewTeamActivity
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
@@ -36,8 +38,18 @@ class LiveScoreAdapter(
         holder.itemView.tvPercentage.setText(scores.get(position).totalchange_Per + "%")
         holder.itemView.tvRank.setText(scores.get(position).rank)
         holder.itemView.username.setText(scores.get(position).username + " (" + scores.get(position).teamNameCount + ")")
-        Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
+        if (scores.get(position).image.contains(ApiConstant.BASE_URL))
+            Glide.with(mContext).load(scores.get(position).image).into(holder.itemView.iv_user)
+        else
+            Glide.with(mContext).load(
+                StockConstant.IMAG_BASE_PATH
+                        + "user/" + scores.get(
+                    position
+                ).image
+            ).into(holder.itemView.iv_user)
+
 //        if (flag == 0) {
+
         holder.itemView.setOnClickListener {
             if (scores.get(position).stock.size > 0) {
                 mContext.startActivity(

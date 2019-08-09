@@ -69,13 +69,13 @@ class LiveContestActivity : BaseActivity() {
                 startActivity(
                     Intent(this@LiveContestActivity, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, crptoList)
-                        .putExtra(StockConstant.TEAMNAME,teamName)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, totalchange)
                 ) else
                 startActivity(
                     Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockList)
-                        .putExtra(StockConstant.TEAMNAME,teamName)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, totalchange)
                 )
         }
@@ -116,7 +116,7 @@ class LiveContestActivity : BaseActivity() {
             this@LiveContestActivity
             , scores, object : RecycleTeamAdapter.ItemClickListner {
                 override fun onItemClick(item: ContestDetail.Score) {
-                    teamName= item.userteamname
+                    teamName = item.userteamname
                     idTeam = item.teamId
                     tvRank.setText(item.rank)
                     totalchange = item.totalchange_Per
@@ -141,8 +141,6 @@ class LiveContestActivity : BaseActivity() {
     }
 
     fun getContestDetail() {
-//        val d = StockDialog.showLoading(this)
-//        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
@@ -155,8 +153,11 @@ class LiveContestActivity : BaseActivity() {
 //                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        if (response.body()!!.contest.size > 0) {
+                            setTimer(response.body()!!.contest.get(0))
+                            tvcontesttype.setText(response.body()!!.contest.get(0).catname)
+                        }
                         setLiveAdapter(response.body()!!.scores)
-                        tvcontesttype.setText(response.body()!!.contest.get(0).catname)
                         filterTeamList!!.clear();
                         for (i in 0 until response.body()!!.scores.size) {
                             if (response.body()!!.scores.get(i).userid.toString().equals(
@@ -195,8 +196,6 @@ class LiveContestActivity : BaseActivity() {
                                     }
 
                                 }
-                            } else if (response.body()!!.contest.size > 0) {
-                                setTimer(response.body()!!.contest.get(0))
                             }
                         }
                         setLiveTeamAdapter(filterTeamList!!)
@@ -230,6 +229,7 @@ class LiveContestActivity : BaseActivity() {
             thatDay.setTime(date);
             val today = Calendar.getInstance()
             val diff = thatDay.timeInMillis - today.timeInMillis
+
             if (diff.toString().contains("-")) {
                 tvTimeLeft.setText("00H:00M:00S")
             } else {

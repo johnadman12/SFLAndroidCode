@@ -60,7 +60,7 @@ class LiveAdapter(
                 mContext.startActivity(
                     Intent(mContext, LiveScoreActivity::class.java)
                         .putExtra(StockConstant.CONTESTID, contest.get(position).contestId)
-                        .putExtra(StockConstant.MARKETID, contest.get(position).mid)
+                        .putExtra(StockConstant.MARKETID, contest.get(position).mid.toInt())
                 )
             }
         }
@@ -130,11 +130,34 @@ class LiveAdapter(
                 newtimer.start()
             }
         }
+
+
         holder.itemView.setOnClickListener {
-            mContext.startActivity(
-                Intent(mContext, LiveContestActivity::class.java).putExtra("contestid", contest.get(position).contestId)
-                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
+            if (contest.get(position).marketname.equals(
+                    "Cryptocurrencies"
+                )
             )
+                mContext.startActivity(
+                    Intent(mContext, LiveContestActivity::class.java).putExtra(
+                        "contestid", contest.get(position).contestId
+                    )
+                        .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
+                )
+            else if (contest.get(position).marketname.equals(
+                    "currency"
+                )
+            )
+                Intent(mContext, LiveContestActivity::class.java).putExtra(
+                    "contestid",
+                    contest.get(position).contestId
+                )
+                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
+            else
+                Intent(mContext, LiveContestActivity::class.java).putExtra(
+                    "contestid",
+                    contest.get(position).contestId
+                )
+                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid.toInt())
         }
 
     }
@@ -158,7 +181,7 @@ class LiveAdapter(
         var date: Date? = null
         var str: String? = null
 
-        try    {
+        try {
             date = inputFormat.parse(time)
             str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
         } catch (e: ParseException) {

@@ -63,7 +63,8 @@ class ScoresAdapter(
                                 .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
                                 .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
-                        ) else if (!TextUtils.isEmpty(marketName) && marketName.equals("Cryptocurrencies"))
+                        )
+                    else if (!TextUtils.isEmpty(marketName) && marketName.equals("Cryptocurrencies"))
                         mContext.startActivity(
                             Intent(mContext, MarketTeamPreviewActivity::class.java)
                                 .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
@@ -77,7 +78,6 @@ class ScoresAdapter(
                                 .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         )
-                    AppDelegate.showToast(mContext, scores.get(position).currencies.size.toString())
                 } else {
                     AppDelegate.showToast(mContext, "contest not started yet")
                 }
