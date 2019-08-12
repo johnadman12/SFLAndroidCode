@@ -151,6 +151,7 @@ class ViewPagerFeature(
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
                         }
+
                         override fun onFinish() {
                         }
                     }

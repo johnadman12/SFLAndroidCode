@@ -186,7 +186,11 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             }
                         }
                         tvTeamsMy.setText("My Teams (" + listMy!!.size + ")")
-                        setData(response.body()!!.contest.get(0))
+                        try {
+                            setData(response.body()!!.contest.get(0))
+                        } catch (e: java.lang.Exception) {
+
+                        }
                         setScoreAdapter(listScores!!, marketname, diff)
                     }
                 } else {

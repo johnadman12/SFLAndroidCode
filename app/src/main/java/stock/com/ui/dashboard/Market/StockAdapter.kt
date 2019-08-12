@@ -45,7 +45,7 @@ class StockAdapter(
             R.anim.blink
         )
 
-        holder.itemView.name.setText(stockListNew.get(position).symbol)
+        holder.itemView.name.setText(stockListNew.get(position).slug)
         holder.itemView.tv_company.setText(stockListNew.get(position).companyName)
         Glide.with(mContext).load(stockListNew.get(position).image).into(holder.itemView.img_market)
 
@@ -62,7 +62,7 @@ class StockAdapter(
                 else
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
-                            "%.2f",
+                            "%.4f",
                             stockListNew.get(position).latestPrice!!.toDouble()
                         )
                     )
@@ -72,6 +72,7 @@ class StockAdapter(
         var priceText = ""
 
 //latest price flickering
+
         try {
             priceText = list.get(position).latestPrice!!;
             if (list.size == stockListNew.size) {

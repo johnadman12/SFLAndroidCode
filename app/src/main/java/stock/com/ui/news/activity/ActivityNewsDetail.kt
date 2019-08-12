@@ -69,7 +69,6 @@ class ActivityNewsDetail : BaseActivity(), View.OnClickListener {
                 Calendar.getInstance().timeInMillis, DateUtils.MINUTE_IN_MILLIS
             )
         )
-
         tvNewsEditor.setText(news.source.brandName)
 
         if (TextUtils.isEmpty(news.source.imageUrls.large))

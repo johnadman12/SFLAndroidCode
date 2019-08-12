@@ -925,7 +925,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 runOnUiThread(Runnable {
                     // Stuff that updates the UI
                     try {
-                        list!!.clear();
+                        listOld!!.clear();
                         listOld!!.addAll(list!!);
                         for (i in 0..jsonArray.length()) {
                             var jsonObject = jsonArray.getJSONObject(i);
@@ -940,6 +940,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 model.stock_type = jsonObject.getString("stock_type");
                                 model.companyName = jsonObject.getString("companyName");
                                 model.symbol = jsonObject.getString("symbol");
+                                model.slug = jsonObject.getString("slug");
                                 model.image = jsonObject.getString("image");
                                 model.sector = jsonObject.getString("sector");
                                 list!!.add(model)

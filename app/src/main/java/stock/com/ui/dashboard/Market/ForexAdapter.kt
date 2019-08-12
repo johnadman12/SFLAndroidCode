@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.row_forex.view.*
 import stock.com.R
-import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.home.Currency.ActivityCurrencyDetail
 import stock.com.ui.pojo.CurrencyPojo
 import stock.com.utils.AppDelegate

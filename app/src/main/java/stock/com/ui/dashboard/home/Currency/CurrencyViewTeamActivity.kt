@@ -27,7 +27,6 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.Lobby.ActivityAddCash
-import stock.com.ui.dashboard.Team.ActivityMarketDetail
 import stock.com.ui.dashboard.Team.ActivitySortTeam
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.pojo.BasePojo
@@ -221,7 +220,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
                     startActivityForResult(
                         Intent(
                             this@CurrencyViewTeamActivity,
-                            ActivityMarketDetail::class.java
+                            ActivityCurrencyDetail::class.java
                         )
                             .putExtra("cryptoId", item.currencyid)
                             .putExtra("flag", 1)

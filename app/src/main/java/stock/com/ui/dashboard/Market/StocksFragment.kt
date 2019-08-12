@@ -72,11 +72,9 @@ class StocksFragment : BaseFragment() {
         llm = LinearLayoutManager(context)
         setStockAdapter()
         getExchangeNamelist()
-
-
         try {
             val opts = IO.Options()
-            opts.forceNew = true
+            opts.forceNew = false
             opts.reconnection = true
             socket = IO.socket("https://www.dfxchange.com:4000", opts)
         } catch (e: URISyntaxException) {
@@ -103,7 +101,7 @@ class StocksFragment : BaseFragment() {
                 callApiSearch(search, 1);
             } else {
                 page++
-                getStocks("1", exchangeId)
+                getStocks("1", exchangeId, page)
             }
 
         }
@@ -134,7 +132,7 @@ class StocksFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         setStockNameAdapter(response.body()!!.exchange)
                         exchangeId = response.body()!!.exchange.get(0).id
-                        getStocks("1", exchangeId)
+                        getStocks("1", exchangeId, 0)
                     } else {
                         displayToast(resources.getString(R.string.internal_server_error), "error")
                         d.dismiss()
@@ -168,6 +166,8 @@ class StocksFragment : BaseFragment() {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
+                    if (srl_layout != null)
+                        srl_layout.isRefreshing = false
                     // displayToast(response.body()!!.message, "sucess")
                     d.dismiss()
                     if (response.body()!!.status == "1") {
@@ -231,6 +231,8 @@ class StocksFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 Log.d("serach_error", "---" + t.localizedMessage);
                 d.dismiss()
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -285,7 +287,8 @@ class StocksFragment : BaseFragment() {
 
     }
 
-    fun getStocks(flag: String, exchangeId: Int) {
+    fun getStocks(flag: String, exchangeId: Int, page: Int) {
+        this.exchangeId = exchangeId
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -351,6 +354,8 @@ class StocksFragment : BaseFragment() {
             override fun onResponse(call: Call<StockTeamPojo>, response: Response<StockTeamPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
+                    if (srl_layout != null)
+                        srl_layout.isRefreshing = false
                     if (response.body()!!.status == "1") {
                         if (flag.equals("1")) {
                             stockListNew!!.addAll(response.body()!!.stock!!)
@@ -371,7 +376,8 @@ class StocksFragment : BaseFragment() {
             }
 
             override fun onFailure(call: Call<StockTeamPojo>, t: Throwable) {
-
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
@@ -445,7 +451,7 @@ class StocksFragment : BaseFragment() {
             limit = 50
             flagSearch = false
             Log.d("dsadada", "sdada--");
-            getStocks("0", exchangeId)
+            getStocks("0", exchangeId, page)
         }
     }
 
@@ -493,7 +499,7 @@ class StocksFragment : BaseFragment() {
 
         } else if (type.equals("nodata")) {
             page = 0
-            getStocks("1", exchangeId)
+            getStocks("1", exchangeId, page)
         }
 
     }
@@ -502,11 +508,11 @@ class StocksFragment : BaseFragment() {
         getExchangeNamelist()
         if (type.equals("0")) {
             page = 0
-            getStocks("0", exchangeId)
+            getStocks("0", exchangeId, page)
 //            rv_stockList!!.adapter!!.notifyDataSetChanged()
         } else {
             page = 0
-            getStocks(type, exchangeId)
+            getStocks(type, exchangeId, page)
 //            rv_stockList!!.adapter!!.notifyDataSetChanged()
         }
     }
@@ -517,7 +523,7 @@ class StocksFragment : BaseFragment() {
         this.exchange = exchange
         this.country = country
         page = 0
-        getStocks("0", exchangeId)
+        getStocks("0", exchangeId, page)
         if (stockAdapter != null)
             stockAdapter!!.notifyDataSetChanged()
     }
@@ -538,23 +544,17 @@ class StocksFragment : BaseFragment() {
                 activity!!.runOnUiThread(Runnable {
                     // Stuff that updates the UI
                     try {
-                        stockListNew!!.clear();
+                        stockList!!.clear()
                         stockList!!.addAll(stockListNew!!);
                         for (i in 0..jsonArray.length()) {
                             var jsonObject = jsonArray.getJSONObject(i);
                             var model = StockTeamPojo.Stock()
                             try {
-                                model.stockid = jsonObject!!.getString("currencyid").toInt();
                                 model.changePercent = jsonObject.getString("changePercent");
                                 model.latestVolume = jsonObject.getString("latestVolume");
-                                model.marketopen = jsonObject.getString("marketopen");
-                                model.previousClose = jsonObject.getString("previousClose");
                                 model.latestPrice = jsonObject.getString("latestPrice");
-                                model.stock_type = jsonObject.getString("stock_type");
-                                model.companyName = jsonObject.getString("companyName");
                                 model.symbol = jsonObject.getString("symbol");
-                                model.image = jsonObject.getString("image");
-                                model.sector = jsonObject.getString("sector");
+                                model.slug = jsonObject.getString("slug");
                                 stockListNew!!.add(model)
                                 for (i in 0..stockListNew!!.size) {
                                     if (model.slug.equals(stockListNew!!.get(i).slug)) {
@@ -564,6 +564,7 @@ class StocksFragment : BaseFragment() {
                                     }
                                 }
                             } catch (e: Exception) {
+                                Log.d("errroroororor", e.localizedMessage)
                             }
                         }
                     } catch (ee: java.lang.Exception) {

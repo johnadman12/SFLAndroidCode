@@ -18,12 +18,14 @@ import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.Demo
 import stock.com.utils.StockConstant
 import androidx.appcompat.app.AppCompatActivity
+import stock.com.ui.dashboard.home.Currency.ActivityCurrencyDetail
 
 
 class NewsItemAdapter(
     val mContext: Context,
     val users: ArrayList<Demo>,
-    val title: String,val activityHomeSearch: ActivityHomeSearch) :
+    val title: String, val activityHomeSearch: ActivityHomeSearch
+) :
     RecyclerView.Adapter<NewsItemAdapter.FeatureListHolder>() {
 
 
@@ -37,7 +39,7 @@ class NewsItemAdapter(
 
         holder.itemView.setOnClickListener {
             if (title.contentEquals("Contests")) {
-                if(activityHomeSearch!=null)
+                if (activityHomeSearch != null)
                     activityHomeSearch.setIntent(users.get(position).id)
             } else if (title.equals("Stocks", true)) {
                 var intent = Intent(mContext, ActivityStockDetail::class.java);
@@ -54,6 +56,12 @@ class NewsItemAdapter(
                 )
             } else if (title.equals("Cryptocurrency", true)) {
                 var intent = Intent(mContext, ActivityMarketDetail::class.java);
+                intent.putExtra("cryptoId", users.get(position).id.toInt())
+                intent.putExtra("flag", 2)
+                ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);
+
+            } else if (title.equals("Currency", true)) {
+                var intent = Intent(mContext, ActivityCurrencyDetail::class.java);
                 intent.putExtra("cryptoId", users.get(position).id.toInt())
                 intent.putExtra("flag", 2)
                 ActivityCompat.startActivityForResult(mContext as Activity, intent, 410, null);

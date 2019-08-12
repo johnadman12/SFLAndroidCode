@@ -124,11 +124,17 @@
                 android:padding="@dimen/_3sdp"
                 android:tint="@color/white"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:paddingBottom="@dimen/_6sdp"
-            android:id="@+id/recyclerView_watch_list"
+
+    <android.support.library21.custom.SwipeRefreshLayoutBottom
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            tools:listitem="@layout/row_view_watch_list"/>
+            android:id="@+id/srl_layout">
+        <androidx.recyclerview.widget.RecyclerView
+                android:paddingBottom="@dimen/_6sdp"
+                android:id="@+id/recyclerView_watch_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:listitem="@layout/row_view_watch_list"/>
+    </android.support.library21.custom.SwipeRefreshLayoutBottom>
 </LinearLayout>

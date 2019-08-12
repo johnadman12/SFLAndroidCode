@@ -74,7 +74,7 @@ class FinishedAdapter(
             mContext.startActivity(
                 Intent(mContext, LiveScoreActivity::class.java)
                     .putExtra(StockConstant.CONTESTID, contest.get(position).contestId)
-                    .putExtra(StockConstant.MARKETID, contest.get(position).mid)
+                    .putExtra(StockConstant.MARKETID, contest.get(position).mid.toInt())
             )
         }
     }

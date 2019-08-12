@@ -132,7 +132,8 @@ class CryptoCurrencyFragment : BaseFragment() {
             )
         call.enqueue(object : Callback<MarketData> {
             override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
-                d.dismiss()
+                if (d != null)
+                    d.dismiss()
                 if (srl_layout != null)
                     srl_layout.isRefreshing = false
                 if (response.body() != null) {

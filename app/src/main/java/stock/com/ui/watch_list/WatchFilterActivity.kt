@@ -116,7 +116,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
             assetsTypeFilter = getFromPrefsString(StockConstant.ASSETS_WATCHLIST_TYPE);
             marketTypeFilter = getFromPrefsString(StockConstant.MARKET_WATCHLIST_TYPE);
             countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_WATCHLIST_TYPE);
-            if (assetAdapter!=null)
+            if (assetAdapter != null)
                 assetAdapter!!.notifyDataSetChanged()
 
             if (TextUtils.isEmpty(sectorTypeFilter) && TextUtils.isEmpty(assetsTypeFilter) && TextUtils.isEmpty(
@@ -270,7 +270,7 @@ class WatchFilterActivity : BaseActivity(), View.OnClickListener {
                 assetsTypeFilter!!,
                 sectorTypeFilter!!,
                 marketTypeFilter!!,
-                countryTypeFilter!!
+                countryTypeFilter!!, "0", "50"
             )
         call.enqueue(object : Callback<WatchlistPojo> {
             override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {

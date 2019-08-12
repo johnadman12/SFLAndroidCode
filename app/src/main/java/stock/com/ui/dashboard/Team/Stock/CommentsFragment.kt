@@ -24,7 +24,7 @@ import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.ArrayList
+import java.util.*
 
 class CommentsFragment : BaseFragment() {
     var stockId: String = ""
@@ -45,15 +45,19 @@ class CommentsFragment : BaseFragment() {
             getMarketCommentsList()
         } else if (type.equals("stock", true)) {
             getCommentsList()
+        } else if (type.equals("currency", true)) {
+            getMarketCommentsList()
         }
         btnSend.setOnClickListener {
             if (TextUtils.isEmpty(et_comment.text.toString()))
                 displayToast("please enter comment first", "error")
             else {
-                if (type.equals("crypto", true))
-                    postCommentMarket(et_comment.text.toString())
-                else
+                if (type.equals("stock", true))
                     postComment(et_comment.text.toString())
+                else {
+                    postCommentMarket(et_comment.text.toString())
+                }
+
             }
         }
     }
@@ -178,7 +182,7 @@ class CommentsFragment : BaseFragment() {
             apiService.postCommentsMarket(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 stockId.toInt(),
-                "crypto",
+                type,
                 getFromPrefsString(StockConstant.USERID).toString(),
                 textComment
             )
@@ -192,8 +196,8 @@ class CommentsFragment : BaseFragment() {
                         list!!.clear()
                     list!!.addAll(response.body()!!.commentlist)
 //                    list!!.sortByDescending { it.createdAt };
-                    setCommentsAdapter(list!!)
                     et_comment.setText("")
+                    setCommentsAdapter(list!!)
                     AppDelegate.hideKeyBoard(activity!!)
 
                 }
@@ -235,7 +239,7 @@ class CommentsFragment : BaseFragment() {
         })
     }
 
-    fun shareIntent() {
+    fun shareIntent(text: String) {
         /*val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
@@ -243,9 +247,8 @@ class CommentsFragment : BaseFragment() {
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))*/
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        val shareBody = getString(R.string.share_unique_code)
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareBody)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Dfx Sharing comments")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text)
         startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))
     }
 
@@ -262,4 +265,6 @@ class CommentsFragment : BaseFragment() {
         }
         return 0
     }
+
+
 }

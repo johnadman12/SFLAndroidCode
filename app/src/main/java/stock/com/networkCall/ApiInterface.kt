@@ -306,7 +306,8 @@ interface ApiInterface {
         @Field("asset_type") asset_type: String,
         @Field("sector") sector: String,
         @Field("market") market: String,
-        @Field("country_id") country_id: String
+        @Field("country_id") country_id: String,
+        @Field("page") page: String, @Field("limit") limit: String
     ): Call<WatchlistPojo>
 
     @FormUrlEncoded

@@ -326,11 +326,7 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity
-                android:name=".ui.dashboard.Team.ActivityEditTeam"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
 
         <activity
                 android:name=".ui.dashboard.Team.UpcomingContestDetailActivity"
@@ -373,6 +369,12 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+        <activity
+                android:name=".ui.dashboard.home.Currency.ActivityCurrencyDetail"
+                android:configChanges="orientation|keyboardHidden"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
                 android:name=".ui.dashboard.Lobby.ActivityPriceBreak"
                 android:configChanges="orientation|keyboardHidden"
@@ -400,11 +402,6 @@
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
-        <activity
-                android:name=".ui.dashboard.home.MarketList.ActivityMarketEdit"
-                android:configChanges="orientation|keyboardHidden"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity
                 android:name=".ui.dashboard.Lobby.ActivityAddCash"
                 android:configChanges="orientation|keyboardHidden"

@@ -37,7 +37,7 @@ class MarketStockAdapter(
         Glide.with(mContext).load(mContest.get(position).image_url).into(holder.itemView.imgExchange)
 
         holder.itemView.setOnClickListener {
-            stocksFragment.getStocks("1", mContest.get(position).id)
+            stocksFragment.getStocks("0", mContest.get(position).id, 0)
         }
 
 

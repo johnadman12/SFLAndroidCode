@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import com.like.OnLikeListener
 import stock.com.ui.pojo.Comments
 import stock.com.utils.AppDelegate
-import java.util.ArrayList
+import java.util.*
 
 
 class StockCommentsAdapter
@@ -50,7 +50,7 @@ class StockCommentsAdapter
              holder.itemView.star_button.performClick()
          }*/
         holder.itemView.ll_share.setOnClickListener {
-            commentsFragment.shareIntent()
+            commentsFragment.shareIntent(commentlist.get(position).comments)
         }
 
         if (commentlist.get(position).likesstatus.equals("0"))
@@ -91,15 +91,23 @@ class StockCommentsAdapter
 
     fun parseDateToddMMyyyy(time: String): Long {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val outputPattern = "dd MMM HH:mm:ss "
+//        val outputPattern = "dd MMM h:mm a"
+        val inputFormat = SimpleDateFormat(inputPattern)
+        val outputFormat = SimpleDateFormat(outputPattern)
+        var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+        var date: Date? = null
+        var str: String? = null
         var dateInMillis: Long = 0
         try {
-            val date = outputPattern.parse(time)
-            dateInMillis = date.getTime()
-            return dateInMillis
+            date = inputFormat.parse(time)
+            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
+            val date1 = outputFormat.parse(str)
+            dateInMillis = date1.time
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-        return 0
+        return dateInMillis
     }
+
 }

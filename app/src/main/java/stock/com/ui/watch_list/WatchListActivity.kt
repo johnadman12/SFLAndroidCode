@@ -32,19 +32,17 @@ import kotlin.Exception
 
 
 class WatchListActivity : BaseActivity() {
-
-
     private var watchListAdapter: WatchListAdapter_? = null;
     private var list: ArrayList<WatchlistPojo.WatchStock>? = null;
     var flag: String = ""
+    var page: Int = 0
+    var limit: Int = 50
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_watch_list)
-
         list = ArrayList();
         setAdapter();
-
 
         val touchHelper = RecyclerHelper<WatchlistPojo.WatchStock>(
             list!!,
@@ -65,13 +63,15 @@ class WatchListActivity : BaseActivity() {
         itemTouchHelper.attachToRecyclerView(recyclerView_watch_list)
 
 
-
-
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
 
-        getWatchList();
+        srl_layout.setOnRefreshListener {
+            page++;
+            getWatchList(1);
+        }
+        getWatchList(0)
 
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -104,7 +104,7 @@ class WatchListActivity : BaseActivity() {
 
     }
 
-    private fun setAdapter(){
+    private fun setAdapter() {
         watchListAdapter = WatchListAdapter_(applicationContext!!, list as ArrayList, this)
         val llm = LinearLayoutManager(applicationContext)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -117,28 +117,41 @@ class WatchListActivity : BaseActivity() {
         recyclerView_watch_list.adapter!!.notifyDataSetChanged();
     }
 
-    private fun getWatchList() {
+    private fun getWatchList(firstTime: Int) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<WatchlistPojo> =
             apiService.getWatchList(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(), "", "", "", ""
+                getFromPrefsString(StockConstant.USERID).toString(), "", "", "", "",
+                page.toString(),
+                limit.toString()
             )
         call.enqueue(object : Callback<WatchlistPojo> {
             override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
                 d.dismiss()
                 if (response.body() != null) {
+                    if (srl_layout != null)
+                        srl_layout.isRefreshing = false
                     if (response.body()!!.status.equals("1")) {
                         if (response.body()!!.stock!!.size != 0) {
-                            setAssetWatchlistFilter(" ")
-                            setSectorWatchlistFilter(" ")
-                            setCountryWatchlistFilter(" ")
-                            setMarketWatchlistFilter(" ")
-                            //setWatchListAdapter(response.body()!!.stockList!!);
-                            list!!.clear()
-                            list!!.addAll(response.body()!!.stock!!);
+                            try {
+                                setAssetWatchlistFilter(" ")
+                                setSectorWatchlistFilter(" ")
+                                setCountryWatchlistFilter(" ")
+                                setMarketWatchlistFilter(" ")
+                            } catch (e: java.lang.Exception) {
+
+                            }
+                            if (firstTime == 0) {
+                                list!!.clear()
+                            }
+                            if (response.body()!!.stock!!.size > 0) {
+                                list!!.addAll(response.body()!!.stock!!);
+                            } else {
+                                displayToast("no more data", "warning")
+                            }
                             setWatchListAdapter();
                             ll_search.visibility = View.VISIBLE;
                             ll_filter.visibility = View.VISIBLE;
@@ -160,6 +173,8 @@ class WatchListActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
@@ -184,7 +199,7 @@ class WatchListActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         // displayToast("Remove "+""+response.body()!!.message);
-                        getWatchList()
+                        getWatchList(0)
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     } else {
@@ -236,7 +251,7 @@ class WatchListActivity : BaseActivity() {
                     setSectorWatchlistFilter(" ")
                     setCountryWatchlistFilter(" ")
                     setMarketWatchlistFilter(" ")
-                    getWatchList()
+                    getWatchList(0)
                 }
             }
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
@@ -250,7 +265,7 @@ class WatchListActivity : BaseActivity() {
                             // setWatchListAdapter();
                             list!!.addAll(sortedList);
                             //if (watchListAdapter != null)
-                              //  watchListAdapter!!.notifyDataSetChanged()
+                            //  watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
@@ -274,7 +289,7 @@ class WatchListActivity : BaseActivity() {
                             //setWatchListAdapter();
                             list!!.addAll(sortedList);
                             //if (watchListAdapter != null)
-                              //  watchListAdapter!!.notifyDataSetChanged()
+                            //  watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
@@ -283,16 +298,16 @@ class WatchListActivity : BaseActivity() {
                         try {
                             var sortedList = list!!.sortedWith(compareBy({ it.changePercent!!.toDouble() }));
                             list!!.clear();
-                           // setWatchListAdapter();
+                            // setWatchListAdapter();
                             list!!.addAll(sortedList);
-                           // if (watchListAdapter != null)
-                             //   watchListAdapter!!.notifyDataSetChanged()
+                            // if (watchListAdapter != null)
+                            //   watchListAdapter!!.notifyDataSetChanged()
                             setAdapter()
                         } catch (e: Exception) {
 
                         }
                     } else if (flag.equals("nodata")) {
-                        getWatchList()
+                        getWatchList(0)
                         recyclerView_watch_list!!.adapter!!.notifyDataSetChanged();
                     }
                 }

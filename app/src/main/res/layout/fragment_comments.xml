@@ -30,6 +30,7 @@
                 android:layout_weight="1"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_11ssp"
+                android:maxLines="6"
                 android:hint="@string/type_comment_here"
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"
