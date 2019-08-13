@@ -529,7 +529,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener, ResideMenu.OnMen
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         appLogout();
-                        displayToast(response.body()!!.message, "error");
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     } else if (response.body()!!.status.equals("0")) {

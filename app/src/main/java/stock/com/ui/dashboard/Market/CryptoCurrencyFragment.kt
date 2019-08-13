@@ -480,7 +480,8 @@ class CryptoCurrencyFragment : BaseFragment() {
 
             setCryptoCurrencyAdapter();
         } else if (type.equals("nodata")) {
-            getCurrencyAgain("0")
+            setFlag(false, false, false, false, false)
+            getCurrency("0")
         }
     }
 

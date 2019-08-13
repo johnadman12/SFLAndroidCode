@@ -287,6 +287,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     contest.contestSize
         )
 
+        if (tvSprortsLeft.text.toString().equals("0")) {
+            circular_progress.progressBackgroundColor =
+                ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+            ll_Circular.isEnabled = false
+        }
+
         try {
             if (!contest.scheduleStart.equals(" ")) {
                 val inputPattern = "yyyy-MM-dd HH:mm:ss"

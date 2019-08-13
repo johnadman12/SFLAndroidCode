@@ -135,34 +135,30 @@ class WatchListActivity : BaseActivity() {
                     if (srl_layout != null)
                         srl_layout.isRefreshing = false
                     if (response.body()!!.status.equals("1")) {
-                        if (response.body()!!.stock!!.size != 0) {
-                            try {
-                                setAssetWatchlistFilter(" ")
-                                setSectorWatchlistFilter(" ")
-                                setCountryWatchlistFilter(" ")
-                                setMarketWatchlistFilter(" ")
-                            } catch (e: java.lang.Exception) {
+                        try {
+                            setAssetWatchlistFilter(" ")
+                            setSectorWatchlistFilter(" ")
+                            setCountryWatchlistFilter(" ")
+                            setMarketWatchlistFilter(" ")
+                        } catch (e: java.lang.Exception) {
 
-                            }
-                            if (firstTime == 0) {
-                                list!!.clear()
-                            }
-                            if (response.body()!!.stock!!.size > 0) {
-                                list!!.addAll(response.body()!!.stock!!);
-                            } else {
-                                displayToast("no more data", "warning")
-                            }
-                            setWatchListAdapter();
-                            ll_search.visibility = View.VISIBLE;
-                            ll_filter.visibility = View.VISIBLE;
-                            ll_sort.visibility = View.VISIBLE;
-                        } else if (response.body()!!.stock!!.size == 0) {
-                            list!!.clear()
-                            recyclerView_watch_list.adapter!!.notifyDataSetChanged();
-                        } else if (response.body()!!.status.equals("0")) {
-                            displayToast(resources.getString(R.string.no_data), "warning");
-                            finish()
                         }
+                        if (firstTime == 0) {
+                            list!!.clear()
+                        }
+//                        if (response.body()!!.stock!!.size > 0) {
+                        list!!.addAll(response.body()!!.stock!!);
+                        /*} else {
+                            displayToast("no more data", "warning")
+                        }*/
+                        setWatchListAdapter();
+                        ll_search.visibility = View.VISIBLE;
+                        ll_filter.visibility = View.VISIBLE;
+                        ll_sort.visibility = View.VISIBLE;
+
+                        /*  if (response.body()!!.stock!!.size == 0) {
+                              list!!.clear()
+                              setWatchListAdapter();*/
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     }
@@ -184,9 +180,9 @@ class WatchListActivity : BaseActivity() {
     }
 
     fun callApiRemoveWatch(id: String) {
-        Log.d("Remove ", "--" + id);
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+        /*Log.d("Remove ", "--" + id);
+        val d = StockDialog.showLoading(this)*/
+//        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> = apiService.removeWatch(
             getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
@@ -195,7 +191,7 @@ class WatchListActivity : BaseActivity() {
         )
         call.enqueue(object : Callback<BasePojo> {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-                d.dismiss()
+//                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         // displayToast("Remove "+""+response.body()!!.message);
@@ -207,7 +203,7 @@ class WatchListActivity : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
@@ -215,7 +211,7 @@ class WatchListActivity : BaseActivity() {
                 println(t.toString())
                 // Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }

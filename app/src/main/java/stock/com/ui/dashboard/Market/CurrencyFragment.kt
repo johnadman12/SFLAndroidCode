@@ -150,7 +150,6 @@ class CurrencyFragment : BaseFragment() {
                     srl_layout.isRefreshing = false;
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-
                         if (flag.equals("2")) {
                             forexList!!.clear()
                             forexOldList!!.clear()
@@ -280,7 +279,6 @@ class CurrencyFragment : BaseFragment() {
                             var jsonObject = jsonArray.getJSONObject(i);
                             var model = CurrencyPojo.Currency()
                             try {
-                                model.currencyid = jsonObject!!.getString("currencyid").toInt();
                                 model.name = jsonObject!!.getString("name");
                                 model.latestVolume = jsonObject!!.getString("latestVolume");
                                 model.changeper = jsonObject!!.getString("changeper");
@@ -452,7 +450,12 @@ class CurrencyFragment : BaseFragment() {
             forexOldList!!.addAll(sortedList)
             setCurrencyAdapter();
         } else if (type.equals("nodata")) {
-            getCurrency("0")
+            flagAlphaSort = false
+            flagPriceSort = false
+            flagDaySort = false
+            flagHTLSort = false
+            flagDHTLSort = false
+            getCurrency("2")
         }
     }
 

@@ -43,22 +43,27 @@
                                   android:orientation="horizontal">
 
                         <TextView android:id="@+id/tvSymbol"
-                                  android:layout_width="0dp"
+                                  android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:textSize="@dimen/_12ssp"
                                   android:textStyle="bold"
                                   android:layout_marginTop="@dimen/_1sdp"
-                                  android:layout_weight=".6"
                                   style="@style/TextStyleSemiBold"
                                   android:textColor="@color/black"/>
+
+                        <View android:layout_width="1sp"
+                              android:layout_height="@dimen/_10sdp"
+                              android:layout_marginLeft="@dimen/_2sdp"
+                              android:layout_marginRight="@dimen/_2sdp"
+                              android:layout_marginTop="@dimen/_5sdp"
+                              android:background="@color/GrayColor"/>
 
                         <TextView android:id="@+id/tvCompanyName"
                                   android:layout_width="0dp"
                                   android:layout_height="wrap_content"
-                                  android:maxLines="3"
-                                  android:layout_weight=".4"
+                                  android:maxLines="2"
+                                  android:layout_weight="1"
                                   android:gravity="top"
-                                  android:layout_marginLeft="@dimen/_5sdp"
                                   android:textSize="@dimen/_10ssp"
                                   style="@style/TextStyleNormal"
                                   android:textColor="@color/textColorGray"/>

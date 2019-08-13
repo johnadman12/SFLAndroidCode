@@ -45,6 +45,7 @@ class ForexAdapter(
             mContext,
             R.anim.blink
         )
+
         Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
         Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
 

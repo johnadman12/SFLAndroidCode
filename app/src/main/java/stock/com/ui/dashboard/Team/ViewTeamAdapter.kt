@@ -48,6 +48,7 @@ class ViewTeamAdapter(
         holder.itemView.img_graph.visibility = View.GONE
         holder.itemView.llremoveStock.visibility = VISIBLE
         holder.itemView.img_add.visibility = GONE
+        holder.itemView.tv_change_percentage.visibility = View.GONE
         mContest.get(position).addedToList = 1
 
         if (!TextUtils.isEmpty(mContest.get(position).changePercent))

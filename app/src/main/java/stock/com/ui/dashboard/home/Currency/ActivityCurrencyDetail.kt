@@ -327,7 +327,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
             apiService.addCurrencyToWatch(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 currencyId,
-                getFromPrefsString(StockConstant.USERID).toString(), "crypto"
+                getFromPrefsString(StockConstant.USERID).toString(), "currency"
             )
         call.enqueue(object : Callback<BasePojo> {
 

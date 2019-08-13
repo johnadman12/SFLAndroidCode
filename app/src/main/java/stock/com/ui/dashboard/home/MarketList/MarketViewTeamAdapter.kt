@@ -46,6 +46,7 @@ class MarketViewTeamAdapter
         holder.itemView.llVol.visibility = View.GONE
         holder.itemView.llPrice.visibility = View.GONE
         holder.itemView.img_graph.visibility = View.GONE
+        holder.itemView.tv_change_percentage.visibility = View.GONE
         holder.itemView.tvlatestVolume.setText(mContest.get(position).latestVolume)
         Glide.with(mContext).load(mContest.get(position).image).into(holder.itemView.ivsTOCK)
 

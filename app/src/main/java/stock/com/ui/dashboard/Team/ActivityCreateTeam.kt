@@ -578,7 +578,6 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         else if (response.body()!!.myteam.equals("0"))
                             llMyTeam.visibility = View.GONE
 
-
                         if (flagRefresh) {
                             list!!.addAll(response.body()!!.stock!!);
                             listOld!!.addAll(response.body()!!.stock!!);
@@ -931,19 +930,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             var jsonObject = jsonArray.getJSONObject(i);
                             var model = StockTeamPojo.Stock()
                             try {
-                                model.stockid = jsonObject!!.getString("currencyid").toInt();
                                 model.changePercent = jsonObject.getString("changePercent");
-                                model.latestVolume = jsonObject.getString("latestVolume");
-                                model.marketopen = jsonObject.getString("marketopen");
-                                model.previousClose = jsonObject.getString("previousClose");
                                 model.latestPrice = jsonObject.getString("latestPrice");
-                                model.stock_type = jsonObject.getString("stock_type");
-                                model.companyName = jsonObject.getString("companyName");
                                 model.symbol = jsonObject.getString("symbol");
                                 model.slug = jsonObject.getString("slug");
-                                model.image = jsonObject.getString("image");
-                                model.sector = jsonObject.getString("sector");
-                                list!!.add(model)
+//                                list!!.add(model)
                                 for (i in 0..list!!.size) {
                                     if (model.slug.equals(list!!.get(i).slug)) {
                                         model.latestPrice = list!!.get(i).latestPrice;
