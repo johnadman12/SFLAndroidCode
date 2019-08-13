@@ -3,6 +3,7 @@ package stock.com.ui.contest.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -281,17 +282,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         else
             tvMulJoin.visibility = View.VISIBLE
 
-
         tvSprortsLeft.setText(
             contest.contest_teamremaining.toString() + "/" +
                     contest.contestSize
         )
 
-        if (tvSprortsLeft.text.toString().equals("0")) {
-            circular_progress.progressBackgroundColor =
-                ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
-            ll_Circular.isEnabled = false
-        }
+
 
         try {
             if (!contest.scheduleStart.equals(" ")) {
@@ -320,6 +316,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+                            if (contest.contest_teamremaining.toString().equals("0")) {
+                                txtjoin.setText("Full")
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+                                ll_Circular.isEnabled = false
+                            }
                         }
 
                         override fun onFinish() {
@@ -350,6 +352,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                             val hours = diffSec / 3600
 
                             tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                            if (contest.contest_teamremaining.toString().equals("0")) {
+                                txtjoin.setText("Full")
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(this@ContestDetailActivity, R.color.GrayColor)
+                                ll_Circular.isEnabled = false
+                            }
                         }
 
                         override fun onFinish() {

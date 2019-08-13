@@ -57,26 +57,7 @@ class CurrencyFragment : BaseFragment() {
         forexOldList = ArrayList();
         setCurrencyAdapter()
         getCurrency("1")
-        try {
-            val opts = IO.Options()
-            opts.forceNew = true
-            opts.reconnection = true
-            socket = IO.socket("https://www.dfxchange.com:4000", opts)
-        } catch (e: URISyntaxException) {
-            e.printStackTrace()
-        }
-        socket!!.on(Socket.EVENT_CONNECT) {
-        }.on("new_message") {
-        }.on(Socket.EVENT_DISCONNECT) {
-            socket!!.connect()
-        }
 
-        socket!!.connect()
-        socket!!.on("new_message") { args ->
-            val jsonArray = args[0] as JSONArray
-            Log.d("socket_data", "---" + jsonArray);
-            Thread(Task(forexAdapter!!, jsonArray)).start()
-        }
         srl_layout.setOnRefreshListener {
             flagPagination = true
             if (flagSearch) {
@@ -98,10 +79,46 @@ class CurrencyFragment : BaseFragment() {
             flagHTLSort = false
             flagDHTLSort = false
         }
+        try {
+            val opts = IO.Options()
+            opts.forceNew = true
+            opts.reconnection = true
+            socket = IO.socket(StockConstant.SOCKET, opts)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+        socket!!.on(Socket.EVENT_CONNECT) {
+        }.on("new_message") {
+        }.on(Socket.EVENT_DISCONNECT) {
+            socket!!.connect()
+        }
+
+        socket!!.connect()
+        socket!!.on("new_message") { args ->
+            val jsonArray = args[0] as JSONArray
+            Log.d("socket_data", "---" + jsonArray);
+            Thread(Task(forexAdapter!!, jsonArray)).start()
+        }
+
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
+
+    override fun onPause() {
+        super.onPause()
         try {
             socket!!.off()
             socket!!.disconnect()
@@ -122,7 +139,7 @@ class CurrencyFragment : BaseFragment() {
             page = 0
             limit = 50
             callApiSearch(c, 0);
-        } else {
+        } else if (c.toString().length == 0) {
             flag = true;
             page = 0
             limit = 50

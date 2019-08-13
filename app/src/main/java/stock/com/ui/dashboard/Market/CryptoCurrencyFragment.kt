@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_currency.*
+import kotlinx.android.synthetic.main.row_country_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -103,7 +104,7 @@ class CryptoCurrencyFragment : BaseFragment() {
             page = 0
             limit = 50
             callApiSearch(c, 0);
-        } else {
+        } else if (c.toString().length == 0) {
             flag = true;
             flagSearch = false
             Log.d("dsadada", "sdada--");

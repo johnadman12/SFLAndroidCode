@@ -51,6 +51,7 @@ class WatchListAdapter_(
             holder.itemView.imageView.visibility = View.GONE;
             holder.itemView.tv_company_name.setText(searchList!!.get(position).currency_symbol);
             holder.itemView.tv_sector.setText("");
+            searchList!!.get(position).symbol = searchList!!.get(position).currency_symbol
             //holder.itemView.tv_change_percentage.setText(searchList!!.get(position).currency_perchange);
             if (!TextUtils.isEmpty(searchList!!.get(position).currency_perchange)) {
                 if (searchList!!.get(position).currency_perchange!! > 0.toString()) {
@@ -121,9 +122,10 @@ class WatchListAdapter_(
                         if (row.symbol != null) {
                             if (row.symbol!!.toLowerCase().contains(charString.toLowerCase()))
                                 filteredList.add(row)
-                        } else if (row.companyName != null) {
-                            if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
-                                filteredList.add(row)
+                            else if (row.companyName != null) {
+                                if (row.companyName!!.toLowerCase().contains(charString.toLowerCase()))
+                                    filteredList.add(row)
+                            }
                         }
                     }
                     searchList = filteredList

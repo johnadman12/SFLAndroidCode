@@ -26,6 +26,8 @@ object StockConstant {
     val NEWS_ACCESS_TOKEN = "3ff9fe7e393fde1cc21e7bb3f9153431cd2456a10aac18191cc3e9401cf4c5ce"
 
     val CITYFALCON_URL="https://www.cityfalcon.com"
+    val CHART_IQ="https://dfxchange.com/dfxchange/api/controllers/graphs.php?slug="
+    val SOCKET="https://www.dfxchange.com:4000"
 
     val RESULT_CODE_SORT = 102;
     val RESULT_CODE_FILTER = 103;

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -67,10 +68,17 @@ class WatchListActivity : BaseActivity() {
             onBackPressed();
         }
 
+        imgcross.setOnClickListener {
+            if (!TextUtils.isEmpty(et_search.text.toString()))
+                et_search.setText("")
+            getWatchList(0)
+        }
+
         srl_layout.setOnRefreshListener {
             page++;
             getWatchList(1);
         }
+
         getWatchList(0)
 
         et_search.addTextChangedListener(object : TextWatcher {
@@ -118,8 +126,8 @@ class WatchListActivity : BaseActivity() {
     }
 
     private fun getWatchList(firstTime: Int) {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+        /*val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<WatchlistPojo> =
             apiService.getWatchList(
@@ -130,7 +138,7 @@ class WatchListActivity : BaseActivity() {
             )
         call.enqueue(object : Callback<WatchlistPojo> {
             override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
-                d.dismiss()
+//                d.dismiss()
                 if (response.body() != null) {
                     if (srl_layout != null)
                         srl_layout.isRefreshing = false
@@ -145,12 +153,17 @@ class WatchListActivity : BaseActivity() {
                         }
                         if (firstTime == 0) {
                             list!!.clear()
+                            list!!.addAll(response.body()!!.stock!!);
+                        } else if (firstTime == 2) {
+                            list!!.clear()
+                            list!!.addAll(response.body()!!.stock!!);
+                        } else {
+                            if (response.body()!!.stock!!.size > 0) {
+                                list!!.addAll(response.body()!!.stock!!);
+                            } else {
+                                displayToast("no more data", "warning")
+                            }
                         }
-//                        if (response.body()!!.stock!!.size > 0) {
-                        list!!.addAll(response.body()!!.stock!!);
-                        /*} else {
-                            displayToast("no more data", "warning")
-                        }*/
                         setWatchListAdapter();
                         ll_search.visibility = View.VISIBLE;
                         ll_filter.visibility = View.VISIBLE;
@@ -164,7 +177,7 @@ class WatchListActivity : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
@@ -174,15 +187,15 @@ class WatchListActivity : BaseActivity() {
                 println(t.toString())
                 Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }
 
     fun callApiRemoveWatch(id: String) {
-        /*Log.d("Remove ", "--" + id);
-        val d = StockDialog.showLoading(this)*/
-//        d.setCanceledOnTouchOutside(false)
+        Log.d("Remove ", "--" + id);
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<BasePojo> = apiService.removeWatch(
             getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
@@ -191,11 +204,15 @@ class WatchListActivity : BaseActivity() {
         )
         call.enqueue(object : Callback<BasePojo> {
             override fun onResponse(call: Call<BasePojo>, response: Response<BasePojo>) {
-//                d.dismiss()
+                d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status.equals("1")) {
                         // displayToast("Remove "+""+response.body()!!.message);
-                        getWatchList(0)
+                        page = 0
+                        if (!TextUtils.isEmpty(et_search.text.toString()))
+                            et_search.setText("")
+                        getWatchList(2)
+
                     } else if (response.body()!!.status.equals("2")) {
                         appLogout();
                     } else {
@@ -203,7 +220,7 @@ class WatchListActivity : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
-//                    d.dismiss()
+                    d.dismiss()
                 }
             }
 
@@ -211,7 +228,7 @@ class WatchListActivity : BaseActivity() {
                 println(t.toString())
                 // Log.d("WatchList--", "" + t.localizedMessage)
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-//                d.dismiss()
+                d.dismiss()
             }
         })
     }
@@ -250,6 +267,7 @@ class WatchListActivity : BaseActivity() {
                     getWatchList(0)
                 }
             }
+
         } else if (requestCode == StockConstant.RESULT_CODE_SORT_WATCH) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {

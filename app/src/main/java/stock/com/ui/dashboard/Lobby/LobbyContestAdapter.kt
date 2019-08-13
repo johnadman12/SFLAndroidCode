@@ -115,6 +115,12 @@ class LobbyContestAdapter(
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
                         holder.itemView.tvTime.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+                        if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
+                            holder.itemView.txtjoin.setText("Full")
+                            holder.itemView.circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(mContext, R.color.GrayColor)
+                            holder.itemView.isEnabled = false
+                        }
                     }
 
                     override fun onFinish() {
@@ -157,6 +163,12 @@ class LobbyContestAdapter(
                         val hours = diffSec / 3600
 
                         holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
+                            holder.itemView.txtjoin.setText("Full")
+                            holder.itemView.circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(mContext, R.color.GrayColor)
+                            holder.itemView.isEnabled = false
+                        }
                     }
 
                     override fun onFinish() {

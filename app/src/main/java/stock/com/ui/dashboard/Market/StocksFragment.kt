@@ -74,27 +74,6 @@ class StocksFragment : BaseFragment() {
         getExchangeNamelist()
 
 
-        try {
-            val opts = IO.Options()
-            opts.forceNew = false
-            opts.reconnection = true
-            socket = IO.socket("https://www.dfxchange.com:4000", opts)
-        } catch (e: URISyntaxException) {
-            e.printStackTrace()
-        }
-
-        socket!!.on(Socket.EVENT_CONNECT) {
-        }.on("new_stock_message") {
-        }.on(Socket.EVENT_DISCONNECT) {
-            socket!!.connect()
-        }
-
-        socket!!.connect()
-        socket!!.on("new_stock_message") { args ->
-            val jsonArray = args[0] as JSONArray
-            Log.d("socket_data_stock", "---" + jsonArray);
-            Thread(Task(stockAdapter!!, jsonArray)).start()
-        }
 
 
         srl_layout.setOnRefreshListener {
@@ -119,6 +98,29 @@ class StocksFragment : BaseFragment() {
             flagHTLSort = false
             flagDHTLSort = false
         }
+        try {
+            val opts = IO.Options()
+            opts.forceNew = false
+            opts.reconnection = true
+            socket = IO.socket(StockConstant.SOCKET, opts)
+        } catch (e: URISyntaxException) {
+            e.printStackTrace()
+        }
+
+        socket!!.on(Socket.EVENT_CONNECT) {
+        }.on("new_stock_message") {
+        }.on(Socket.EVENT_DISCONNECT) {
+            socket!!.connect()
+        }
+
+        socket!!.connect()
+        socket!!.on("new_stock_message") { args ->
+            val jsonArray = args[0] as JSONArray
+            Log.d("socket_data_stock", "---" + jsonArray);
+            Thread(Task(stockAdapter!!, jsonArray)).start()
+        }
+
+
     }
 
     fun getExchangeNamelist() {
@@ -519,7 +521,7 @@ class StocksFragment : BaseFragment() {
             page = 0
             limit = 50
             callApiSearch(c, 0);
-        } else {
+        } else if (c.toString().length == 0) {
             page = 0
             limit = 50
             flagSearch = false
@@ -642,7 +644,7 @@ class StocksFragment : BaseFragment() {
 
     }
 
-    internal inner class Task(var adapter: StockAdapter, var jsonArray: JSONArray) : Runnable {
+    /*internal inner class Task(var adapter: StockAdapter, var jsonArray: JSONArray) : Runnable {
         override fun run() {
             try {
                 activity!!.runOnUiThread(Runnable {
@@ -655,9 +657,8 @@ class StocksFragment : BaseFragment() {
                             var model = StockTeamPojo.Stock()
                             try {
                                 Log.d("errroroororor", "change")
-
                                 model.changePercent = jsonObject.getString("changePercent");
-                                 model.latestPrice = jsonObject.getString("latestPrice");
+                                model.latestPrice = jsonObject.getString("latestPrice");
                                 model.slug = jsonObject.getString("slug");
 
 //                                stockListNew!!.add(model)
@@ -683,9 +684,52 @@ class StocksFragment : BaseFragment() {
 
             }
         }
+    }*/
+
+    internal inner class Task(var adapter: StockAdapter, var jsonArray: JSONArray) : Runnable {
+        override fun run() {
+            try {
+                activity!!.runOnUiThread(Runnable {
+                    // Stuff that updates the UI
+                    try {
+                        Log.d("errroroororor", "--dadadadasddadasdda")
+                        stockList!!.clear()
+                        stockList!!.addAll(stockListNew!!);
+                        for (i in 0..jsonArray.length()) {
+                            var jsonObject = jsonArray.getJSONObject(i);
+                            var model = StockTeamPojo.Stock()
+                            try {
+                                model.changePercent = jsonObject.getString("changePercent");
+                                model.latestVolume = jsonObject.getString("latestVolume");
+                                model.latestPrice = jsonObject.getString("latestPrice");
+//                                model.symbol = jsonObject.getString("symbol");
+                                model.slug = jsonObject.getString("slug");
+                                //stockListNew!!.add(model)
+                                for (i in 0..stockListNew!!.size) {
+                                    if (model.slug.equals(stockListNew!!.get(i).slug)) {
+                                        model.companyName= stockList!!.get(i).companyName
+                                        model.symbol= stockList!!.get(i).symbol
+                                        stockListNew!!.set(i, model);
+                                    }
+                                }
+                            } catch (e: Exception) {
+
+                            }
+                        }
+                    } catch (ee: java.lang.Exception) {
+                    }
+                    if (adapter != null)
+                        adapter!!.notifyDataSetChanged();
+
+                })
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+
+            }
+        }
     }
 
-    /*override fun onDestroy() {
+    override fun onDestroy() {
         super.onDestroy()
         try {
             socket!!.off()
@@ -695,5 +739,16 @@ class StocksFragment : BaseFragment() {
             e.printStackTrace()
         }
 
-    }*/
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            socket!!.off()
+            socket!!.disconnect()
+            Log.e("Disss", "ok")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

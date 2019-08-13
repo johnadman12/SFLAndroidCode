@@ -45,9 +45,9 @@ class StockAdapter(
             R.anim.blink
         )
 
-        holder.itemView.name.setText(stockListNew.get(position).slug)
-        holder.itemView.tv_company.setText(stockListNew.get(position).companyName)
-        Glide.with(mContext).load(stockListNew.get(position).image).into(holder.itemView.img_market)
+        holder.itemView.name.setText(list.get(position).slug)
+        holder.itemView.tv_company.setText(list.get(position).companyName)
+        Glide.with(mContext).load(list.get(position).image).into(holder.itemView.img_market)
 
 
         try {
@@ -231,14 +231,14 @@ class StockAdapter(
                         )
                     )
                     Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
-                    holder.itemView.tv_change_percentage.setText(price + " (" + list!!.get(position).changePercent + " %)")
+//                    holder.itemView.tv_change_percentage.setText(price + " (" + list!!.get(position).changePercent + " %)")
                     holder.itemView.tv_change_percentage.setText(/*list.get(position).decimalchange +*/ " (" + list!!.get(
                         position
                     ).changePercent + " %)"
                     )
                 } else {
                     Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
-                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+//                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
                     holder.itemView.tv_change_percentage.setText(/*"$" + list.get(position).decimalchange +*/ " (+" + list!!.get(
                         position
                     ).changePercent + " %)"

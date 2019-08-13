@@ -265,7 +265,7 @@ class CurrencyAdapter(
             }
 
 
-            holder.itemView.setOnClickListener {
+            holder.itemView.ll_stock_detial.setOnClickListener {
                 var intent = Intent(mContext, ActivityMarketDetail::class.java);
                 intent.putExtra("cryptoId", cryptoListNew.get(position).cryptocurrencyid)
                 intent.putExtra(StockConstant.CURRENCYID, cryptoListNew)

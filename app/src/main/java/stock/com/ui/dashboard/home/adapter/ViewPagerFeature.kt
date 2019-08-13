@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.home.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -143,6 +144,7 @@ class ViewPagerFeature(
                     newtimer.start()
                 } else if (diff.equals("3600000")) {
                     val newtimer = object : CountDownTimer(diff, 1000) {
+                        @SuppressLint("WrongConstant")
                         override fun onTick(millisUntilFinished: Long) {
                             val cTime = Calendar.getInstance()
                             val diff = thatDay.timeInMillis - cTime.timeInMillis
@@ -150,6 +152,12 @@ class ViewPagerFeature(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+                            if (list.get(position).contest_teamremaining.toString().equals("0")) {
+                                txtjoin.setText("Full")
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(context, R.color.GrayColor)
+                                view.isEnabled = false
+                            }
                         }
 
                         override fun onFinish() {
@@ -191,6 +199,12 @@ class ViewPagerFeature(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                            if (list.get(position).contest_teamremaining.toString().equals("0")) {
+                                txtjoin.setText("Full")
+                                circular_progress.progressBackgroundColor =
+                                    ContextCompat.getColor(context, R.color.GrayColor)
+                                view.isEnabled = false
+                            }
                         }
 
                         override fun onFinish() {
@@ -207,6 +221,7 @@ class ViewPagerFeature(
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(list.get(position).description, context);
         }
+
         view.setOnClickListener {
             if (userid.equals("")) {
                 AppDelegate.showAlertRegister(
@@ -233,6 +248,8 @@ class ViewPagerFeature(
             contestLeft,
             list.get(position).contestSize.toDouble()
         )
+
+
 //        holder.itemView.circular_progress.setMaxProgress(10000.0);
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
 

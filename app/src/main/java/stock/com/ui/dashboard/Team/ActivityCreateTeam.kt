@@ -121,7 +121,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
-                        .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                        .putParcelableArrayListExtra(StockConstant.STOCKLIST, stockSelectedItems)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
@@ -918,31 +918,72 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     }
 
 
+    /* internal inner class Task(var adapter: StockTeamAdapter, var jsonArray: JSONArray) : Runnable {
+         override fun run() {
+             try {
+                 runOnUiThread(Runnable {
+                     // Stuff that updates the UI
+                     try {
+                         listOld!!.clear();
+                         listOld!!.addAll(list!!);
+                         for (i in 0..jsonArray.length()) {
+                             var jsonObject = jsonArray.getJSONObject(i);
+                             var model = StockTeamPojo.Stock()
+                             try {
+                                 model.changePercent = jsonObject.getString("changePercent");
+                                 model.latestPrice = jsonObject.getString("latestPrice");
+                                 model.symbol = jsonObject.getString("symbol");
+                                 model.slug = jsonObject.getString("slug");
+ //                                list!!.add(model)
+                                 for (i in 0..list!!.size) {
+                                     if (model.slug.equals(list!!.get(i).slug)) {
+                                         model.latestPrice = list!!.get(i).latestPrice;
+                                         model.changePercent = list!!.get(i).changePercent;
+                                         list!!.set(i, model)
+                                     }
+                                 }
+                             } catch (e: Exception) {
+                             }
+                         }
+                     } catch (ee: java.lang.Exception) {
+                     }
+                     if (adapter != null)
+                         adapter!!.notifyDataSetChanged();
+
+                 })
+             } catch (e: InterruptedException) {
+                 e.printStackTrace()
+
+             }
+         }
+     }*/
+
     internal inner class Task(var adapter: StockTeamAdapter, var jsonArray: JSONArray) : Runnable {
         override fun run() {
             try {
-                runOnUiThread(Runnable {
+               runOnUiThread(Runnable {
                     // Stuff that updates the UI
                     try {
-                        listOld!!.clear();
+                        Log.d("errroroororor", "--dadadadasddadasdda")
+                        listOld!!.clear()
                         listOld!!.addAll(list!!);
                         for (i in 0..jsonArray.length()) {
                             var jsonObject = jsonArray.getJSONObject(i);
                             var model = StockTeamPojo.Stock()
                             try {
                                 model.changePercent = jsonObject.getString("changePercent");
+                                model.latestVolume = jsonObject.getString("latestVolume");
                                 model.latestPrice = jsonObject.getString("latestPrice");
                                 model.symbol = jsonObject.getString("symbol");
                                 model.slug = jsonObject.getString("slug");
-//                                list!!.add(model)
+                                //stockListNew!!.add(model)
                                 for (i in 0..list!!.size) {
                                     if (model.slug.equals(list!!.get(i).slug)) {
-                                        model.latestPrice = list!!.get(i).latestPrice;
-                                        model.changePercent = list!!.get(i).changePercent;
-                                        list!!.set(i, model)
+                                        list!!.set(i, model);
                                     }
                                 }
                             } catch (e: Exception) {
+
                             }
                         }
                     } catch (ee: java.lang.Exception) {

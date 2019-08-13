@@ -260,7 +260,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                     contest.contestSize
         )
 
-        if (tvSprortsLeft.text.toString().equals("0")) {
+        if (contest.contest_teamremaining.toString().equals("0")) {
             circular_progress.progressBackgroundColor =
                 ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
             ll_Circular.isEnabled = false
@@ -295,6 +295,12 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
                         tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+                        if (contest.contest_teamremaining.toString().equals("0")) {
+                            txtjoin.setText("Full")
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                        }
                     }
 
                     override fun onFinish() {
@@ -325,6 +331,12 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                         val hours = diffSec / 3600
 
                         tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: \n " + seconds.toString() + "S")
+                        if (contest.contest_teamremaining.toString().equals("0")) {
+                            txtjoin.setText("Full")
+                            circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(this@UpcomingContestDetailActivity, R.color.GrayColor)
+                            ll_Circular.isEnabled = false
+                        }
                     }
 
                     override fun onFinish() {

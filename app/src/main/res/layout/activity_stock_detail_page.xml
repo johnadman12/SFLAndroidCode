@@ -285,7 +285,7 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/white"
+                android:background="@color/colorPrimary"
                 android:padding="@dimen/_8sdp"
                 android:id="@+id/ll_data">
             <androidx.appcompat.widget.AppCompatImageButton
@@ -295,13 +295,14 @@
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:clickable="false"
+                    android:tint="@color/white"
                     android:id="@+id/img_btn_data"/>
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/data"
-                    android:textColor="@color/textColorLightBlack"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -317,7 +318,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/ll_chart"
-                android:background="@color/colorPrimary"
+                android:background="@color/white"
                 android:padding="@dimen/_8sdp">
 
             <androidx.appcompat.widget.AppCompatImageButton
@@ -327,7 +328,6 @@
                     android:background="@null"
                     android:scaleType="fitCenter"
                     android:clickable="false"
-                    android:tint="@color/white"
                     android:id="@+id/img_btn_chart"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -335,7 +335,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/chart"
-                    android:textColor="@color/white"
+                    android:textColor="@color/textColorLightBlack"
                     android:textSize="@dimen/_9ssp"
                     android:layout_gravity="center"
                     android:gravity="center"

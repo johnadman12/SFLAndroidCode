@@ -77,7 +77,7 @@ class ChartFragment : BaseFragment(), View.OnClickListener {
 
         if (symbol != null) {
 //            getChartData(symbol)
-            url = "https://dfxchange.com/dfxchange/api/controllers/graph.php?slug=" + symbol + "&mid=" + marketid
+            url = StockConstant.CHART_IQ + symbol + "&mid=" + marketid
             webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             webview.getSettings().setJavaScriptEnabled(true);
             webview.setBackgroundColor(0x00000000);
