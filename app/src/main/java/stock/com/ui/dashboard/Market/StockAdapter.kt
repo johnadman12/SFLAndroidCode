@@ -45,13 +45,14 @@ class StockAdapter(
             R.anim.blink
         )
 
-        holder.itemView.name.setText(list.get(position).slug)
+        holder.itemView.name.setText(list.get(position).symbol)
         holder.itemView.tv_company.setText(list.get(position).companyName)
         Glide.with(mContext).load(list.get(position).image).into(holder.itemView.img_market)
-
+        holder.itemView.tv_latest_price.setText("$0.000")
+        holder.itemView.tv_change_percentage.setText("0.000%")
 
         try {
-            if (stockListNew.get(position).latestPrice != null)
+            if (stockListNew.get(position).latestPrice != null) {
                 if (stockListNew.get(position).latestPrice!!.toDouble() < 1)
                     holder.itemView.tv_latest_price.setText(
                         "$" + String.format(
@@ -66,9 +67,14 @@ class StockAdapter(
                             stockListNew.get(position).latestPrice!!.toDouble()
                         )
                     )
+            } else {
+                holder.itemView.tv_latest_price.setText("0.000")
+            }
         } catch (e: Exception) {
-
+            Log.d("exceoptoopflkvjf", e.message)
         }
+
+
         var priceText = ""
 
 //latest price flickering
@@ -220,7 +226,6 @@ class StockAdapter(
             if (!TextUtils.isEmpty(list.get(position).changePercent)) {
                 var priceText: Double = (list.get(position).changePercent)!!.toDouble() * 0.01
                 var price = (priceText.toString())
-
 
                 if (list.get(position).changePercent!!.contains("-")) {
                     price = price.substring(0, 1) + "$" + price.substring(4, price.length)

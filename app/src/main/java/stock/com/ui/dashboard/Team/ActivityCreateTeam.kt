@@ -979,6 +979,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 //stockListNew!!.add(model)
                                 for (i in 0..list!!.size) {
                                     if (model.slug.equals(list!!.get(i).slug)) {
+                                        model.companyName= list!!.get(i).companyName
+                                        model.addedToList = listOld!!.get(i).addedToList;
+                                        model.symbol= list!!.get(i).symbol
                                         list!!.set(i, model);
                                     }
                                 }

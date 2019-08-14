@@ -16,7 +16,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal">
-        <RelativeLayout
+        <!--<RelativeLayout
                 android:layout_width="@dimen/_38sdp"
                 android:layout_height="@dimen/_70sdp"
                 android:gravity="top"
@@ -35,6 +35,30 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_height="@dimen/_15sdp"
+                    android:src="@mipmap/stocks"/>
+
+        </RelativeLayout>-->
+        <RelativeLayout
+                android:layout_width="@dimen/_38sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:gravity="top"
+                android:padding="@dimen/_3sdp">
+
+            <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/img1"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/cryptoim"/>
+            <ImageView
+                    android:layout_width="@dimen/_20sdp"
+                    android:id="@+id/img2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:src="@mipmap/stocks"/>
 
         </RelativeLayout>

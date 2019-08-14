@@ -60,8 +60,15 @@ class CurrencyTeamAdapter(
             mContext,
             R.anim.blink
         )
-        Glide.with(mContext).load(searchList!!.get(position).firstflag).centerInside().into(holder.itemView.img1)
-        Glide.with(mContext).load(searchList!!.get(position).secondflag).centerInside().into(holder.itemView.img2)
+        try {
+            Glide.with(mContext).load(searchList!!.get(position).firstflag).centerInside().into(holder.itemView.img1)
+            Glide.with(mContext).load(searchList!!.get(position).secondflag).centerInside().into(holder.itemView.img2)
+            holder.itemView.ask.setText("$0.000")
+            holder.itemView.bid.setText("$0.000")
+            holder.itemView.tv_change_percentage.setText("0.000%")
+        } catch (e: Exception) {
+
+        }
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changeper)) {
             if (searchList!!.get(position).changeper!!.contains("-")) {
@@ -404,7 +411,6 @@ class CurrencyTeamAdapter(
         } catch (e: Exception) {
 
         }
-
 
 
     }

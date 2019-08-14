@@ -233,15 +233,16 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     var intent = Intent(this, ActivityCreateTeam::class.java)
                     intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
                     intent.putExtra(StockConstant.CONTESTID, contestid)
-                    intent.putExtra("isCloning", 0)
+                    intent.putExtra("isCloning", 3)
                     startActivityForResult(intent, 405);
+
                 } else if (contest.marketname.equals("Cryptocurrencies")) {
                     var intent = Intent(this@ContestDetailActivity, ActivityMarketTeam::class.java)
                     intent
                         .putExtra(StockConstant.MARKETID, contest.mid)
                         .putExtra(StockConstant.CONTESTID, contestid)
                         .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
-                        .putExtra("isCloning", 0)
+                        .putExtra("isCloning", 3)
                     startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
                 } else if (contest.marketname.equals("Currencies")) {
                     var intent = Intent(this@ContestDetailActivity, ActivityCurrencyTeam::class.java)
@@ -249,7 +250,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         .putExtra(StockConstant.MARKETID, contest.mid)
                         .putExtra(StockConstant.CONTESTID, contestid)
                         .putExtra(StockConstant.CONTESTFEE, contest.entryFees)
-                        .putExtra("isCloning", 0)
+                        .putExtra("isCloning", 3)
                     startActivityForResult(intent, StockConstant.REDIRECT_UPCOMING_MARKET)
                 }
 

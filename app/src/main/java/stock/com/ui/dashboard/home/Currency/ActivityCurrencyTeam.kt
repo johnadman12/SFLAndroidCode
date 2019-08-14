@@ -268,6 +268,8 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             } else {
                 contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
+                if (currencySelected!!.size > 0)
+                    currencySelected!!.clear()
             }
 
         }
@@ -283,7 +285,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                 callSearch(s.toString())
             }
         })
-
 
         setAdapter()
         getCurrencyTeamlist("1")
@@ -502,6 +503,8 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             list!!.clear();
                             listOld!!.clear();
                         }
+
+
                         list!!.addAll(response.body()!!.currency!!)
                         listOld!!.addAll(response.body()!!.currency!!)
 
@@ -565,8 +568,9 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                             listOld!!.addAll(list!!)
                         }
 
-                        if (currencyAdapter != null)
-                            currencyAdapter!!.notifyDataSetChanged();
+                        /* if (currencyAdapter != null)
+                             currencyAdapter!!.notifyDataSetChanged();*/
+                        setAdapter()
 
                         setTeamText(currencySelected!!.size.toString())
 
@@ -926,6 +930,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                     if (model.symbol.equals(list!!.get(i).symbol)) {
                                         Log.d("currency_id", "---" + model.name);
                                         model.firstflag = list!!.get(i).firstflag;
+                                        model.addedToList = listOld!!.get(i).addedToList;
                                         model.secondflag = list!!.get(i).secondflag;
                                         list!!.set(i, model!!)
                                     }

@@ -62,7 +62,7 @@ class StockTeamAdapter(
         fun onItemCheck(item: StockTeamPojo.Stock)
         fun onItemUncheck(item: StockTeamPojo.Stock)
         fun onItemClick(item: StockTeamPojo.Stock)
-        fun onToggleCheck(item:StockTeamPojo.Stock)
+        fun onToggleCheck(item: StockTeamPojo.Stock)
         fun onToggleUncheck(item: StockTeamPojo.Stock)
     }
 
@@ -73,6 +73,19 @@ class StockTeamAdapter(
         val anim = AlphaAnimation(0.1f, 1.0f)
         anim.duration = 50 //You can manage the blinking time with this parameter
         anim.startOffset = 20
+
+
+        try {
+            holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
+            holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
+            Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
+            holder.itemView.tvPercentage.setText("$0.000")
+            holder.itemView.tv_change_percentage.setText("0.000%")
+        } catch (e: Exception) {
+
+        }
+
+
         try {
             if (mContestOld!!.get(position).latestPrice != null)
                 if (mContestOld!!.get(position).latestPrice!!.toDouble() < 1)
@@ -260,12 +273,11 @@ class StockTeamAdapter(
         }
 
 
+        /*  holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
+          holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)*/
 
-        holder.itemView.tvSymbol.setText(searchList!!.get(position).symbol)
-        holder.itemView.tvCompanyName.setText(searchList!!.get(position).companyName)
         holder.itemView.tvPrevClose.setText(searchList!!.get(position).previousClose)
         holder.itemView.tvlatestVolume.setText(searchList!!.get(position).latestVolume)
-        Glide.with(mContext).load(searchList!!.get(position).image).into(holder.itemView.ivsTOCK)
 
 
         if (!TextUtils.isEmpty(searchList!!.get(position).changePercent)) {
