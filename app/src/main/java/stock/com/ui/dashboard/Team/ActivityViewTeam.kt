@@ -8,13 +8,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,21 +83,29 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 ivRight.visibility = VISIBLE
                 ivedit.visibility = GONE
             }
+
+            R.id.txtTeamname -> {
+                edtTeamName.visibility = View.VISIBLE
+                txtTeamname.visibility = View.GONE
+            }
             R.id.ivRight -> {
                 edtTeamName.isEnabled = false
                 ivedit.visibility = VISIBLE
                 ivRight.visibility = GONE
             }
             R.id.ll_save -> {
+                /*if (edtTeamName.isEnabled) {
+                    ed.performClick()
+                }*/
                 if (stockSelectedItems!!.size > 0) {
                     for (i in 0 until stockSelectedItems!!.size) {
                         var postData1 = JsonObject();
                         try {
-                            postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
-                            postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                            postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                            postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
                             postData1.addProperty(
                                 "change_percent",
-                                stockSelectedItems!!.get(i).changePercent.toString()
+                                stockSelectedItems!!.get(i).changePercent
                             );
                             postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                             Log.e("savedlist", postData1.toString())
@@ -157,7 +163,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ids = ArrayList()
         list!!.clear()
         if (intent != null) {
-            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            list = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
@@ -176,6 +182,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         array = JsonArray()
         jsonparams = JsonObject()
         ivedit.setOnClickListener(this)
+        txtTeamname.setOnClickListener(this)
         img_btn_back.setOnClickListener(this)
         btn_Join.setOnClickListener(this)
         ll_save.setOnClickListener(this)
@@ -184,6 +191,25 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ll_sort.visibility = GONE
 
         relFieldView.setOnClickListener(this)
+
+        edtTeamName.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, event: MotionEvent): Boolean {
+                val DRAWABLE_RIGHT = 2
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= edtTeamName.getRight() - edtTeamName.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width()) {
+                        if (TextUtils.isEmpty(edtTeamName.text.toString())) {
+                            displayToast("Please enter team name", "warning")
+                        } else {
+                            edtTeamName.visibility = View.GONE
+                            txtTeamname.visibility = View.VISIBLE
+                            txtTeamname.setText(edtTeamName.text.toString())
+                        }
+                        return true
+                    }
+                }
+                return false
+            }
+        })
 
         stockSelectedItems!!.addAll(list!!)
         viewTeamAdapter = ViewTeamAdapter(
@@ -260,7 +286,6 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             dialogue.dismiss()
             showDialogue()
         }
-
         if (dialogue.isShowing)
             dialogue.dismiss()
         dialogue.show()
@@ -277,9 +302,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 }*/
                 var postData: JsonObject = JsonObject()
                 try {
-                    postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
-                    postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
-                    postData.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent.toString());
+                    postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                    postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
+                    postData.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent);
                     postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
 
                 } catch (e: Exception) {
@@ -287,7 +312,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 }
                 array.add(postData)
             }
-//                    Log.e("savedlist", array.toString())
+                    Log.e("savedlist", array.toString())
 
             if (flagCloning == 1)
                 joinWithThisTeamID()
@@ -341,6 +366,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
 
@@ -397,6 +423,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             jsonparams.addProperty("team_id", teamId)
         }
         jsonparams.addProperty("contest_id", contestId.toString())
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
@@ -445,6 +472,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
@@ -502,7 +530,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         if (requestCode == StockConstant.RESULT_CODE_VIEW_TEAM) {
             if (resultCode == RESULT_OK && data != null) {
                 list!!.clear()
-                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                list!!.addAll(data.getSerializableExtra("list") as java.util.ArrayList<StockTeamPojo.Stock>)
                 rv_team!!.adapter!!.notifyDataSetChanged()
 
             }

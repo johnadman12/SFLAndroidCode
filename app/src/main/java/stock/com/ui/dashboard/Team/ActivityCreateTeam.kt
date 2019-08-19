@@ -54,7 +54,6 @@ import java.util.*
 
 class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     private var stockSelectedItems: ArrayList<StockTeamPojo.Stock>? = null
-    //    private var stockSelectedWizardItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockRemovedItems: ArrayList<StockTeamPojo.Stock>? = null
     private var stockTeamAdapter: StockTeamAdapter? = null;
     private var listOld: ArrayList<StockTeamPojo.Stock>? = null;
@@ -121,7 +120,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             R.id.relFieldView -> {
                 startActivity(
                     Intent(this@ActivityCreateTeam, TeamPreviewActivity::class.java)
-                        .putParcelableArrayListExtra(StockConstant.STOCKLIST, stockSelectedItems)
+                        .putExtra(StockConstant.STOCKLIST, stockSelectedItems)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, "0.0%")
                 )
@@ -151,11 +150,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         for (i in 0 until stockSelectedItems!!.size) {
                             var postData1 = JsonObject();
                             try {
-                                postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid.toString());
-                                postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice.toString());
+                                postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                                postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
                                 postData1.addProperty(
                                     "change_percent",
-                                    stockSelectedItems!!.get(i).changePercent.toString()
+                                    stockSelectedItems!!.get(i).changePercent
                                 );
                                 postData1.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
                                 Log.e("savedlist", postData1.toString())
@@ -270,11 +269,11 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
             if (flagCloning == 1) {
-                stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                stockSelectedItems = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             } else if (flagCloning == 2) {
-                stockSelectedItems = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                stockSelectedItems = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 ll_filter.visibility = GONE
@@ -822,7 +821,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                  } else {*/
 
                 list!!.clear()
-                list!!.addAll(data.getParcelableArrayListExtra("list"))
+                list!!.addAll(data.getSerializableExtra("list")as ArrayList<StockTeamPojo.Stock>)
                 rv_Players!!.adapter!!.notifyDataSetChanged()
                 stockSelectedItems!!.clear();
                 for (i in 0 until list!!.size) {
@@ -839,7 +838,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 if (data.getStringExtra("flag").equals("1")) {
                     if (stockSelectedItems != null)
                         stockSelectedItems!!.clear()
-                    stockRemovedItems = data.getParcelableArrayListExtra("removedlist")
+                    stockRemovedItems = data.getSerializableExtra("removedlist") as ArrayList<StockTeamPojo.Stock>?
                     stockSelectedItems!!.addAll(stockRemovedItems!!)
                     page = 0;
                     getTeamlist("1")

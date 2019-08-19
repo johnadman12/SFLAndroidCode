@@ -340,10 +340,10 @@ class StockTeamAdapter(
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
                 onItemCheckListener.onToggleCheck(searchList!!.get(position))
-//                searchList!!.get(position).cryptoType = "0";
+                searchList!!.get(position).stock_type = "0";
             } else {
                 onItemCheckListener.onToggleUncheck(searchList!!.get(position))
-//                searchList!!.get(position).cryptoType = "1";
+                searchList!!.get(position).stock_type = "1";
 
             }
         }

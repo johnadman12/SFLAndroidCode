@@ -50,7 +50,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             stockId = intent.getIntExtra(StockConstant.STOCKID, 0);
             flagData = intent.getIntExtra("flag", 0);
             if (flagData == 1) {
-                list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+                list = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
                 selectedItems = intent.getIntExtra(StockConstant.SELECTEDSTOCK, 0)
             } /*else {
                 symbol = intent.getStringExtra(StockConstant.SYMBOL)
@@ -138,7 +138,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                     nd.putString("Stockname", symbol)
                 else
                     nd.putString("Stockname", "0")
-                nd.putInt(StockConstant.MARKETID, 0)
+                nd.putInt(StockConstant.MARKETID, 8)
                 setFragment(fragment, nd);
                 setLinearLayoutColor(ll_news, ContextCompat.getColor(this, R.color.white));
                 setLinearLayoutColor(ll_chart, ContextCompat.getColor(this, R.color.colorbutton))

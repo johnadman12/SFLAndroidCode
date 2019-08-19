@@ -126,7 +126,7 @@ class MyTeamAdapter(
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
-                        .putParcelableArrayListExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)

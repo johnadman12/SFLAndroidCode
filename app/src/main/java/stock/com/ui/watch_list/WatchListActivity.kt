@@ -96,6 +96,7 @@ class WatchListActivity : BaseActivity() {
         })
 
         ll_filter.setOnClickListener {
+            et_search.setText("")
             startActivityForResult(
                 Intent(this@WatchListActivity, WatchFilterActivity::class.java),
                 StockConstant.RESULT_CODE_FILTER_WATCH

@@ -91,18 +91,19 @@ class StockCommentsAdapter
 
     fun parseDateToddMMyyyy(time: String): Long {
         val inputPattern = "yyyy-MM-dd HH:mm:ss"
-        val outputPattern = "dd MMM HH:mm:ss "
+//        val outputPattern = "dd MMM HH:mm:ss "
+        val outputPattern: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 //        val outputPattern = "dd MMM h:mm a"
         val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
+//        val outputFormat = SimpleDateFormat(outputPattern)
         var timeZone: String = Calendar.getInstance().getTimeZone().getID();
         var date: Date? = null
         var str: String? = null
         var dateInMillis: Long = 0
         try {
             date = inputFormat.parse(time)
-            str = outputFormat.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
-            val date1 = outputFormat.parse(str)
+            str = outputPattern.format(date.time + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()))
+            val date1 = outputPattern.parse(str)
             dateInMillis = date1.time
         } catch (e: ParseException) {
             e.printStackTrace()

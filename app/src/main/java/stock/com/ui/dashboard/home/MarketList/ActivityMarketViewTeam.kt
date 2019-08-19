@@ -62,6 +62,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.btn_Join -> {
+                if (edtTeamName.isEnabled) {
+                    ivRight.performClick()
+                }
                 showJoinContestDialogue()
             }
             R.id.relFieldView -> {
@@ -87,6 +90,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 txtTeamname.visibility = View.GONE
             }
             R.id.ll_save -> {
+                if (edtTeamName.isEnabled) {
+                    ivRight.performClick()
+                }
                 if (marketSelectedItem!!.size > 0) {
                     for (i in 0 until marketSelectedItem!!.size) {
                         var postData1 = JsonObject();
@@ -216,7 +222,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
-                        item.cryptoType="1"
+                        item.cryptoType = "1"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
@@ -225,7 +231,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
-                        item.cryptoType="0"
+                        item.cryptoType = "0"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }

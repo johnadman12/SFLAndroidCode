@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 import java.util.ArrayList
 
@@ -12,7 +13,7 @@ class StockTeamPojo() : BasePojo() {
     @Expose
     var stock: ArrayList<Stock>? = null
 
-    class Stock() : Parcelable {
+    class Stock() : Serializable {
 
         @SerializedName("stockid")
         @Expose
@@ -58,58 +59,6 @@ class StockTeamPojo() : BasePojo() {
         var addedStock: String? = null
         var addedToList = 1
         var flagAddStockToList: Boolean = false
-
-        constructor(parcel: Parcel) : this() {
-            stockid = parcel.readInt()
-            symbol = parcel.readString()
-            image = parcel.readString()
-            companyName = parcel.readString()
-            previousClose = parcel.readString()
-            latestVolume = parcel.readString()
-            marketopen = parcel.readString()
-            marketclose = parcel.readString()
-            slug = parcel.readString()
-            latestPrice = parcel.readString()
-            changePercent = parcel.readString()
-            stock_type = parcel.readString()
-            sector = parcel.readString()
-            addedStock = parcel.readString()
-            addedToList = parcel.readInt()
-            flagAddStockToList = parcel.readByte() != 0.toByte()
-        }
-
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeInt(stockid)
-            parcel.writeString(symbol)
-            parcel.writeString(image)
-            parcel.writeString(companyName)
-            parcel.writeString(previousClose)
-            parcel.writeString(latestVolume)
-            parcel.writeString(marketopen)
-            parcel.writeString(marketclose)
-            parcel.writeString(latestPrice)
-            parcel.writeString(changePercent)
-            parcel.writeString(stock_type)
-            parcel.writeString(slug)
-            parcel.writeString(sector)
-            parcel.writeString(addedStock)
-            parcel.writeInt(addedToList)
-            parcel.writeByte(if (flagAddStockToList) 1 else 0)
-        }
-
-        override fun describeContents(): Int {
-            return 0
-        }
-
-        companion object CREATOR : Parcelable.Creator<Stock> {
-            override fun createFromParcel(parcel: Parcel): Stock {
-                return Stock(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Stock?> {
-                return arrayOfNulls(size)
-            }
-        }
 
     }
 

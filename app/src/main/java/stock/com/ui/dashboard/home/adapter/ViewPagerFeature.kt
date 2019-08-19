@@ -95,16 +95,18 @@ class ViewPagerFeature(
         else
             tvMulJoin.visibility = VISIBLE
 
-
-        if (list.get(position).marketname.equals("Equity")) {
-            Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
-                .into(ivStock)
-            tvStockName.setText(list.get(position).exchangename)
-        } else {
-            tvStockName.setText(list.get(position).marketname)
-            Glide.with(context).load(R.drawable.ic_business)
-                .into(ivStock)
-        }
+        if (!TextUtils.isEmpty(list.get(position).marketname))
+            if (list.get(position).marketname.equals("Equity")) {
+                if (!TextUtils.isEmpty(list.get(position).exchangeimage))
+                    Glide.with(context).load(AppDelegate.EXCHANGE_URL + list.get(position).exchangeimage.trim())
+                        .into(ivStock)
+                if (!TextUtils.isEmpty(list.get(position).exchangename))
+                    tvStockName.setText(list.get(position).exchangename)
+            } else {
+                tvStockName.setText(list.get(position).marketname)
+                Glide.with(context).load(R.drawable.ic_business)
+                    .into(ivStock)
+            }
 
         var sports: Double =
             (list.get(position).contestSize.toInt() - list.get(position).teamsJoined.toInt()).toDouble()

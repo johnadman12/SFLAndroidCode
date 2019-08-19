@@ -84,18 +84,18 @@ class ViewTeamAdapter(
             holder.itemView.img_add.visibility = VISIBLE
         }
 
-        if (mContest.get(position).stock_type.equals("0"))
+        if (mContest.get(position).stock_type == "0")
             holder.itemView.toggleButton1.isChecked = true
-        else if (mContest.get(position).stock_type.equals("1")) {
+        else if (mContest.get(position).stock_type == "1") {
             holder.itemView.toggleButton1.isChecked = false
         }
 
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
-                mContest.get(position).stock_type = "1";
+//                mContest.get(position).stock_type = "1";
                 onItemCheckListener.onToggleSell(mContest.get(position))
             } else
-                mContest.get(position).stock_type = "0";
+//                mContest.get(position).stock_type = "0";
             onItemCheckListener.onToggleBuy(mContest.get(position))
         }
 

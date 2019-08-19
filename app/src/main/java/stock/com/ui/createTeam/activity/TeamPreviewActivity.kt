@@ -43,13 +43,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         setContentView(R.layout.activity_team_preview)
         list = ArrayList()
         if (intent != null) {
-            list = intent.getParcelableArrayListExtra(StockConstant.STOCKLIST)
+            list = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
             teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             totalChange = intent.getStringExtra(StockConstant.TOTALCHANGE)
         }
 
         if (!TextUtils.isEmpty(totalChange)) {
-            if (totalChange.contains("$"))
+            if (totalChange.contains("%") ||totalChange.contains("$"))
                 totalChange1 = totalChange.substring(0, totalChange.length - 1).toDouble()
             else
                 totalChange1 = totalChange.toDouble()
@@ -81,6 +81,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
         }
     }
+
+//    fun person(block: StockTeamPojo.() -> Unit): StockTeamPojo = StockTeamPojo().apply(block)
 
     private fun setData() {
         if (!TextUtils.isEmpty(list!!.get(0).symbol)) {

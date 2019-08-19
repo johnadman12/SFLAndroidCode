@@ -612,7 +612,6 @@ interface ApiInterface {
         @Header("x-access-token") token: String, @Body stocks: JsonObject
     ): Call<BasePojo>
 
-
     @POST("team/join_team")
     fun joinWithTeamId(
         @Header("x-access-token") token: String, @Body stocks: JsonObject

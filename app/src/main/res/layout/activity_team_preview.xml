@@ -169,6 +169,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="-202(1.16%)"
                                     android:padding="@dimen/_2sdp"
+                                    android:maxEms="10"
+                                    android:ellipsize="end"
                                     style="@style/TextStyleNormal"
                                     android:textColor="@color/textColorBlack"
                                     android:textSize="@dimen/_10ssp"/>
