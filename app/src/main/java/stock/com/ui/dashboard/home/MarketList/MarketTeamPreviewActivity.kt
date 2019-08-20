@@ -5,10 +5,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_team_preview.*
@@ -63,11 +65,10 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
         try {
             initViews()
-
-
         } catch (e: Exception) {
-
+            Log.d("MarketTeam",""+e.localizedMessage);
         }
+
 
     }
 
@@ -81,6 +82,7 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         }
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
+
         }
     }
 

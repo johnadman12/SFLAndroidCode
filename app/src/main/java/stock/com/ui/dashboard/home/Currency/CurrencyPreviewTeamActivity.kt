@@ -3,6 +3,7 @@ package stock.com.ui.dashboard.home.Currency
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_currency_preview.*
@@ -72,6 +73,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
             txt_teamName.setText(teamName)
         }
         iv_info.setOnClickListener {
+
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
         }
     }

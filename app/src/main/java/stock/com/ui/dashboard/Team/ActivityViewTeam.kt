@@ -80,7 +80,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             }
             R.id.ivedit -> {
                 edtTeamName.isEnabled = true
-                ivRight.visibility = VISIBLE
+                ivRight.visibility = GONE
                 ivedit.visibility = GONE
             }
 
@@ -115,7 +115,9 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Log.d("finaldata", array.toString())
                         array.add(postData1)
                     }
+
                     saveTeamList()
+
                 } else {
                     displayToast("please select Stock first", "warning")
                 }
@@ -370,7 +372,10 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
 
+
         Log.e("savedlist", array.toString())
+
+        //ivedit.visibility= VISIBLE;
 
         val call: Call<BasePojo> =
             apiService.saveTeam(
@@ -387,7 +392,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         }, 500)
                         teamId = response.body()!!.team_id
-                        finish()
+                       // finish()
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)

@@ -5,11 +5,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_team_preview.*
@@ -65,6 +67,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             initViews()
 
         } catch (e: Exception) {
+            Log.d("TeamStock",""+e.localizedMessage);
+        }
+
+        iv_info.setOnClickListener {
+            AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
 
         }
     }
@@ -77,9 +84,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             setData()
             txt_teamName.setText(teamName)
         }
-        iv_info.setOnClickListener {
-            AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)
-        }
+
     }
 
 //    fun person(block: StockTeamPojo.() -> Unit): StockTeamPojo = StockTeamPojo().apply(block)

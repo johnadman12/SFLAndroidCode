@@ -325,10 +325,10 @@ class ForexAdapter(
         //dataset
         try {
             holder.itemView.ask.setText(forexList.get(position).ask)
-            holder.itemView.ask.setText(forexList.get(position).bid)
+            holder.itemView.bid.setText(forexList.get(position).bid)
 
-            Log.d("dad_fisrt_image", "---" + oldData.get(position).firstflag);
-            Log.d("dad_fisrt_image", "---" + oldData.get(position).secondflag);
+            Log.d("dad_fisrt_image", "---" + forexList.get(position).ask);
+            Log.d("dad_fisrt_image", "---" + forexList.get(position).bid);
 
             if (!TextUtils.isEmpty(forexList.get(position).changeper)) {
                 if (forexList.get(position).changeper!!.contains("-")) {

@@ -104,7 +104,7 @@ class MyTeamAdapter(
                     Intent(mContext, ActivityMarketTeam::class.java)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
                         .putParcelableArrayListExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
@@ -153,7 +153,8 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        //.putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
@@ -164,7 +165,8 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
                         .putExtra("isCloning", 1)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                       // .putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 )
 
@@ -174,7 +176,8 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                         .putExtra(StockConstant.CONTESTID, contestId)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        //.putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra("isCloning", 1)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
                 )
@@ -187,17 +190,15 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
-                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        //.putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TEAMNAME,  holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else if (myteam.get(position).stock.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                        .putExtra(
-                            StockConstant.TEAMNAME,
-                            teamName
-                        )
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
 //                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
                 )
