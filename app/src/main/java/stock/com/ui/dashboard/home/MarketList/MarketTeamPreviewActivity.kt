@@ -77,8 +77,8 @@ class MarketTeamPreviewActivity : BaseActivity(), View.OnClickListener {
         img_back.setOnClickListener(this)
         img_close.setOnClickListener(this)
         if (list != null) {
-            setData()
             txt_teamName.setText(teamName)
+            setData()
         }
         iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(getString(R.string.totalchangeinfo), this)

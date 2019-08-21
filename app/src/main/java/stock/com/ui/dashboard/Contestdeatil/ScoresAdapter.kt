@@ -57,21 +57,21 @@ class ScoresAdapter(
         holder.itemView.setOnClickListener {
             if (difference > 0) {
                 if (userId == scores.get(position).userid) {
-                    if (!TextUtils.isEmpty(marketName) && marketName.equals("Equity"))
+                    if (!TextUtils.isEmpty(marketName) && marketName.equals("Equity",true))
                         mContext.startActivity(
                             Intent(mContext, TeamPreviewActivity::class.java)
                                 .putExtra(StockConstant.STOCKLIST, scores.get(position).stock)
                                 .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         )
-                    else if (!TextUtils.isEmpty(marketName) && marketName.equals("Cryptocurrencies"))
+                    else if (!TextUtils.isEmpty(marketName) && marketName.equals("Cryptocurrencies",true))
                         mContext.startActivity(
                             Intent(mContext, MarketTeamPreviewActivity::class.java)
                                 .putExtra(StockConstant.MARKETLIST, scores.get(position).crypto)
                                 .putExtra(StockConstant.TEAMNAME, scores.get(position).userteamname)
                                 .putExtra(StockConstant.TOTALCHANGE, scores.get(position).totalchange_Per)
                         )
-                    else if (!TextUtils.isEmpty(marketName) && marketName.equals("Currencies"))
+                    else if (!TextUtils.isEmpty(marketName) && marketName.equals("Currencies",true))
                         mContext.startActivity(
                             Intent(mContext, CurrencyPreviewTeamActivity::class.java)
                                 .putExtra(StockConstant.MARKETLIST, scores.get(position).currencies)

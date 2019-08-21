@@ -205,7 +205,7 @@
                                 android:text=" Change "
                                 android:textSize="@dimen/_10ssp"
                                 android:gravity="top"
-                                android:textColor="@color/green"
+                                android:textColor="@color/textColorGray"
                                 style="@style/TextStyleNormal"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -376,6 +376,7 @@
                                 android:layout_height="wrap_content"
                                 android:text=" Rank "
                                 android:gravity="top"
+                                android:layout_weight=".5"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorGray"
                                 android:layout_gravity="center_vertical"
@@ -386,6 +387,7 @@
                                 android:text=" $2639398 "
                                 android:layout_weight="1"
                                 android:id="@+id/tvRank"
+                                android:gravity="center"
                                 android:textSize="@dimen/_10ssp"
                                 android:textColor="@color/textColorBlack"
                                 style="@style/TextStyleNormal"/>

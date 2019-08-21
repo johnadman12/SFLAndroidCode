@@ -55,6 +55,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     var flagCloning: Int = 0
     var contestFee: String = ""
     var blank: String = ""
+    var teamName: String = ""
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
@@ -170,6 +171,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
+            teamName = intent.getStringExtra(StockConstant.TEAMNAME)
+            contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
 
         }
         StockConstant.ACTIVITIES.add(this)
@@ -193,6 +196,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         ll_sort.visibility = GONE
 
         relFieldView.setOnClickListener(this)
+
+        if (TextUtils.isEmpty(teamName)) {
+            edtTeamName.setText("My Team")
+        } else {
+            edtTeamName.setText(teamName)
+        }
 
         edtTeamName.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -314,7 +323,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 }
                 array.add(postData)
             }
-                    Log.e("savedlist", array.toString())
+            Log.e("savedlist", array.toString())
 
             if (flagCloning == 1)
                 joinWithThisTeamID()
@@ -368,7 +377,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
 
@@ -392,7 +401,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         }, 500)
                         teamId = response.body()!!.team_id
-                       // finish()
+                        // finish()
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
@@ -428,7 +437,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             jsonparams.addProperty("team_id", teamId)
         }
         jsonparams.addProperty("contest_id", contestId.toString())
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
@@ -477,7 +486,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)
@@ -545,31 +554,28 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
                     var sortedList = list!!.sortedBy { it.latestVolume!!.toDouble() }
 
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
-                        /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                         rv_Players!!.adapter!!.notifyDataSetChanged()*/
-                    }
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
+                    /* rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                     rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                 } else if (data.getStringExtra("flag").equals("price")) {
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
-                    }
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
+                    /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                    rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
-                    for (obj in sortedList) {
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
-                        /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
-                        rv_Players!!.adapter!!.notifyDataSetChanged()*/
-                    }
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
+                    /*rv_Players!!.adapter = LobbyContestAdapter(context!!, sortedList)
+                    rv_Players!!.adapter!!.notifyDataSetChanged()*/
+
                 }
             }
         }

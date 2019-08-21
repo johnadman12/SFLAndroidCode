@@ -233,6 +233,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     var intent = Intent(this, ActivityCreateTeam::class.java)
                     intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
                     intent.putExtra(StockConstant.CONTESTID, contestid)
+                    intent.putExtra(StockConstant.CONTESTFEE, contest.entryFees)
                     intent.putExtra("isCloning", 3)
                     startActivityForResult(intent, 405);
 

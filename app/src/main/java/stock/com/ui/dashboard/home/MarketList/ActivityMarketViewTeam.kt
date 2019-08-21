@@ -47,6 +47,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
     var marketId: Int = 0
     var flagCloning: Int = 0
     var contestFee: String = ""
+    var teamName: String = ""
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
 
@@ -62,9 +63,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.btn_Join -> {
-                if (edtTeamName.isEnabled) {
+                /*if (edtTeamName.isEnabled) {
                     ivRight.performClick()
-                }
+                }*/
                 showJoinContestDialogue()
             }
             R.id.relFieldView -> {
@@ -90,9 +91,9 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 txtTeamname.visibility = View.GONE
             }
             R.id.ll_save -> {
-                if (edtTeamName.isEnabled) {
-                    ivRight.performClick()
-                }
+                /* if (edtTeamName.isEnabled) {
+                     ivRight.performClick()
+                 }*/
                 if (marketSelectedItem!!.size > 0) {
                     for (i in 0 until marketSelectedItem!!.size) {
                         var postData1 = JsonObject();
@@ -129,6 +130,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
             contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
+            teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
 
@@ -137,6 +139,12 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         initView()
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
         viewTeamAdapter!!.notifyDataSetChanged()
+
+        if (TextUtils.isEmpty(teamName)) {
+            edtTeamName.setText("My Team")
+        } else {
+            edtTeamName.setText(teamName)
+        }
 
         if (flagCloning == 1)
             getContestDetail()
@@ -376,25 +384,22 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 if (data.getStringExtra("flag").equals("Volume")) {
                     var sortedList = list!!.sortedBy { it.latestVolume!!.toDouble() }
 
-                    for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_team!!.adapter!!.notifyDataSetChanged()
-                    }
+
                 } else if (data.getStringExtra("flag").equals("price")) {
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
-                    for (obj in sortedList) {
-                        list!!.clear()
+                       list!!.clear()
                         list!!.addAll(sortedList)
                         rv_team!!.adapter!!.notifyDataSetChanged()
-                    }
+
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
-                    for (obj in sortedList) {
                         list!!.clear()
                         list!!.addAll(sortedList)
                         rv_team!!.adapter!!.notifyDataSetChanged()
-                    }
+
                 }
             }
         }
@@ -421,7 +426,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("market_id", marketId)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 
@@ -441,10 +446,10 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityMarketViewTeam, response.body()!!.message)
                             teamId = response.body()!!.team_id.toInt()
-                            var intent = Intent();
-                            intent.putExtra("flag", "3")
-                            intent.putExtra(StockConstant.TEAMID, teamId)
-                            setResult(Activity.RESULT_OK, intent);
+                            /* var intent = Intent();
+                             intent.putExtra("flag", "3")
+                             intent.putExtra(StockConstant.TEAMID, teamId)
+                             setResult(Activity.RESULT_OK, intent);*/
                         }, 1000)
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {
@@ -483,7 +488,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("market_id", marketId)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 
@@ -540,7 +545,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
 

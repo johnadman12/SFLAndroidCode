@@ -18,6 +18,8 @@ import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.AssestData
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
+import java.text.DecimalFormat
+import java.util.*
 
 class DataFragment : BaseFragment() {
     var itemId: Int = 0
@@ -35,7 +37,6 @@ class DataFragment : BaseFragment() {
 
         }
         getData(itemId.toString())
-
     }
 
     fun getData(assestId: String) {
@@ -76,10 +77,10 @@ class DataFragment : BaseFragment() {
         tvLow.setText(list.low)
         tvAverage.setText(list.average)
         tvChange.setText(list.change)
-        tvMarketCap.setText(list.marketCap)
-        tvVolume.setText(list.hVolume)
-        tvCirculating.setText(list.circulating)
-        tvmaxSupply.setText(list.maxSupply)
+        tvMarketCap.setText(coolNumberFormat(list.marketCap.toDouble()))
+        tvVolume.setText(coolNumberFormat(list.latestVolume.toDouble()))
+        tvCirculating.setText(coolNumberFormat(list.circulating.toDouble()))
+        tvmaxSupply.setText(coolNumberFormat(list.maxSupply.toDouble()))
         tvRank.setText(list.rank)
         tvCrypto.setText("About " + list.symbol)
         tvAbout.setText(list.cryptodescription)
@@ -114,5 +115,24 @@ class DataFragment : BaseFragment() {
             Glide.with(activity!!).load(list.cryptologo).into(logo)
     }
 
+    /*  fun withSuffix(count: Double): String {
+          if (count < 1000.0) return "" + count
+          val exp: Double = (Math.log(count) / Math.log(1000.0))
+          return String.format(
+              "%.1f %c",
+              count / Math.pow(1000.0, exp),
+              "kMBnTPE"[exp.toInt() - 1]
+          )
+      }*/
 
+    private val SUFFIXES = arrayOf("k", "M", "Bn", "T", "P", "E")//kMBTPE
+
+    fun coolNumberFormat(count: Double): String {
+        if (count < 1000.0)
+            return "" + count
+        val exp = (Math.log(count) / Math.log(1000.0))
+        return String.format(
+            "%.1f %s", count/Math.pow(1000.0,exp), SUFFIXES[exp.toInt() - 1]
+        )
+    }
 }

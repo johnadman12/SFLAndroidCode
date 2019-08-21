@@ -81,13 +81,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     var flagRefresh: Boolean = false
     private var socket: Socket? = null;
     var searchText: String = ""
+    var contestFee: String = ""
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.img_btn_back -> {
                 finish()
             }
             R.id.llMyTeam -> {
-                startActivity(
+                startActivityForResult(
                     Intent(this@ActivityCreateTeam, ActivityMyTeam::class.java)
                         .putExtra(
                             StockConstant.EXCHANGEID,
@@ -99,6 +100,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                             "flagMarket",
                             "exchange"
                         )
+                    , StockConstant.REDIRECT_UPCOMING_MARKET
                 )
             }
             R.id.imgButtonWizard -> {
@@ -182,6 +184,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                     StockConstant.TEAMID,
                                     teamId
                                 ).putExtra(
+                                    StockConstant.CONTESTFEE,
+                                    contestFee
+                                ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
+                                ).putExtra(
                                     "isCloning",
                                     flagCloning
                                 ), StockConstant.RESULT_CODE_VIEW_REMOVE_TEAM
@@ -199,6 +207,12 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 ).putExtra(
                                     StockConstant.TEAMID,
                                     teamId
+                                ).putExtra(
+                                    StockConstant.CONTESTFEE,
+                                    contestFee
+                                ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
                                 ).putExtra(
                                     "isCloning",
                                     flagCloning
@@ -269,11 +283,13 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
             if (flagCloning == 1) {
-                stockSelectedItems = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
+                stockSelectedItems =
+                    intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             } else if (flagCloning == 2) {
-                stockSelectedItems = intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
+                stockSelectedItems =
+                    intent.getSerializableExtra(StockConstant.STOCKLIST) as ArrayList<StockTeamPojo.Stock>?
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
                 ll_filter.visibility = GONE
@@ -281,6 +297,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                 textTeam.setText("Edit Team")
                 relFieldView.visibility = VISIBLE
             } else {
+                contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             }
         }
@@ -821,7 +838,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                  } else {*/
 
                 list!!.clear()
-                list!!.addAll(data.getSerializableExtra("list")as ArrayList<StockTeamPojo.Stock>)
+                list!!.addAll(data.getSerializableExtra("list") as ArrayList<StockTeamPojo.Stock>)
                 rv_Players!!.adapter!!.notifyDataSetChanged()
                 stockSelectedItems!!.clear();
                 for (i in 0 until list!!.size) {
@@ -862,6 +879,14 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                     getTeamlist("0")
                 }
             }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+
+            }
+
         }
     }
 
@@ -960,7 +985,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     internal inner class Task(var adapter: StockTeamAdapter, var jsonArray: JSONArray) : Runnable {
         override fun run() {
             try {
-               runOnUiThread(Runnable {
+                runOnUiThread(Runnable {
                     // Stuff that updates the UI
                     try {
                         Log.d("errroroororor", "--dadadadasddadasdda")
@@ -978,9 +1003,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 //stockListNew!!.add(model)
                                 for (i in 0..list!!.size) {
                                     if (model.slug.equals(list!!.get(i).slug)) {
-                                        model.companyName= list!!.get(i).companyName
+                                        model.companyName = list!!.get(i).companyName
                                         model.addedToList = listOld!!.get(i).addedToList;
-                                        model.symbol= list!!.get(i).symbol
+                                        model.symbol = list!!.get(i).symbol
                                         list!!.set(i, model);
                                     }
                                 }

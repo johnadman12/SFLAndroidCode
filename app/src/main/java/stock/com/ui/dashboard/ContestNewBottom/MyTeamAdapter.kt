@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.ContestNewBottom
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -28,6 +29,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import androidx.constraintlayout.solver.widgets.WidgetContainer.getBounds
+import androidx.core.app.ActivityCompat.startActivityForResult
 
 
 class MyTeamAdapter(
@@ -69,7 +71,7 @@ class MyTeamAdapter(
                         else {
                             holder.itemView.txt_MyTeam.setText(holder.itemView.edt_teamname.text.toString())
                             activityMyTeam.saveTeamName(
-                                myteam.get(position).teamId,
+                                myteam.get(position).teamId.toInt(),
                                 holder.itemView.txt_MyTeam.text.toString()
                             )
                             teamName = myteam.get(position).userteamname
@@ -102,13 +104,12 @@ class MyTeamAdapter(
             if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, ActivityMarketTeam::class.java)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra("isCloning", 2)
                         .putParcelableArrayListExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
-
                 )
 
                 Log.d("Change_per", "--" + myteam!!.get(position).crypto.get(0).changeper);
@@ -117,7 +118,7 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, ActivityCurrencyTeam::class.java)
                         .putParcelableArrayListExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
@@ -127,7 +128,7 @@ class MyTeamAdapter(
                 mContext.startActivity(
                     Intent(mContext, ActivityCreateTeam::class.java)
                         .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
+                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
@@ -138,60 +139,59 @@ class MyTeamAdapter(
 
         holder.itemView.relClone.setOnClickListener {
             if (myteam.get(position).crypto.size > 0)
-                activityMyTeam.makeCloneMarket(myteam.get(position).teamId, myteam.get(position).contestId)
+                activityMyTeam.makeCloneMarket(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
             else if (myteam.get(position).currencies.size > 0) {
-                activityMyTeam.makeCloneMarket(myteam.get(position).teamId, myteam.get(position).contestId)
+                activityMyTeam.makeCloneMarket(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
             } else
-                activityMyTeam.makeClone(myteam.get(position).teamId, myteam.get(position).contestId)
+                activityMyTeam.makeClone(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
 
         }
 
         holder.itemView.setOnClickListener {
+            teamName= holder.itemView.edt_teamname.text.toString()
             if (myteam.get(position).crypto.size > 0) {
-                mContext.startActivity(
-                    Intent(mContext, ActivityMarketTeam::class.java)
-                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                        .putExtra(StockConstant.CONTESTID, contestId)
-                        //.putExtra(StockConstant.TEAMNAME, teamName)
-                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
-                        .putExtra("isCloning", 1)
-                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
-                )
+                var intent = Intent(mContext, ActivityMarketTeam::class.java)
+                intent
+                    .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
+                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
+                    .putExtra(StockConstant.CONTESTID, contestId)
+                    .putExtra(StockConstant.TEAMNAME, teamName)
+                    .putExtra("isCloning", 1)
+                    .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null)
+
+
             } else if (myteam.get(position).currencies.size > 0) {
-                mContext.startActivity(
-                    Intent(mContext, ActivityCurrencyTeam::class.java)
-                        .putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                        .putExtra(StockConstant.CONTESTID, contestId)
-                        .putExtra("isCloning", 1)
-                       // .putExtra(StockConstant.TEAMNAME, teamName)
-                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
-                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
-                )
+                var intent = Intent(mContext, ActivityCurrencyTeam::class.java)
+                intent.putExtra(StockConstant.MARKETLIST, myteam.get(position).currencies)
+                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
+                    .putExtra(StockConstant.CONTESTID, contestId)
+                    .putExtra("isCloning", 1)
+                    .putExtra(StockConstant.TEAMNAME,teamName)
+                    .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
+                startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null)
 
             } else if (myteam.get(position).stock.size > 0) {
-                mContext.startActivity(
-                    Intent(mContext, ActivityCreateTeam::class.java)
-                        .putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
-                        .putExtra(StockConstant.TEAMID, myteam.get(position).teamId)
-                        .putExtra(StockConstant.CONTESTID, contestId)
-                        //.putExtra(StockConstant.TEAMNAME, teamName)
-                        .putExtra(StockConstant.TEAMNAME, holder.itemView.txt_MyTeam.text.toString())
-                        .putExtra("isCloning", 1)
-                        .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
-                )
+                var intent = Intent(mContext, ActivityCreateTeam::class.java)
+                intent.putExtra(StockConstant.STOCKLIST, myteam.get(position).stock)
+                    .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
+                    .putExtra(StockConstant.CONTESTID, contestId)
+                    .putExtra(StockConstant.TEAMNAME, teamName)
+                    .putExtra("isCloning", 1)
+                    .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+                startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null)
             }
 
         }
 
         holder.itemView.relViewTeam.setOnClickListener {
+            teamName= holder.itemView.txt_MyTeam.text.toString()
             if (myteam.get(position).crypto.size > 0) {
                 mContext.startActivity(
                     Intent(mContext, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, myteam.get(position).crypto)
                         //.putExtra(StockConstant.TEAMNAME, teamName)
-                        .putExtra(StockConstant.TEAMNAME,  holder.itemView.txt_MyTeam.text.toString())
+                        .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, myteam.get(position).totalchangePercentage)
                 )
             } else if (myteam.get(position).stock.size > 0) {

@@ -1,6 +1,8 @@
 package stock.com.ui.dashboard.ContestNewBottom
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -281,6 +283,7 @@ class ActivityMyTeam : BaseActivity() {
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("clone", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
 
         val call: Call<BasePojo> =
@@ -318,6 +321,25 @@ class ActivityMyTeam : BaseActivity() {
                 d.dismiss()
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 405) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+            }
+        }
+
     }
 
 }

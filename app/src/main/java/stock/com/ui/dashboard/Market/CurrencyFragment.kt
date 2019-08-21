@@ -1,12 +1,14 @@
 package stock.com.ui.dashboard.Market
 
 import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_currency.*
 import retrofit2.Call
@@ -24,6 +26,7 @@ import stock.com.utils.StockDialog
 import io.socket.client.Socket;
 import io.socket.client.IO;
 import org.json.JSONArray
+import java.lang.ref.WeakReference
 import java.net.URISyntaxException
 
 
@@ -98,9 +101,11 @@ class CurrencyFragment : BaseFragment() {
             val jsonArray = args[0] as JSONArray
             Log.d("socket_data", "---" + jsonArray);
             Thread(Task(forexAdapter!!, jsonArray)).start()
+
+//            InternetTask().execute()
+
+
         }
-
-
     }
 
     override fun onDestroy() {
@@ -483,4 +488,54 @@ class CurrencyFragment : BaseFragment() {
         flagHTLSort = fHTL
         flagDHTLSort = fDHTL
     }
+
+//    @SuppressLint("StaticFieldLeak")
+/*    inner class InternetTask : AsyncTask<JSONArray, Int, Void>() {
+
+        override fun doInBackground(vararg jsonArray: JSONArray): Void? {
+            try {
+                //forexList!!.clear();
+                forexOldList!!.clear();
+                forexOldList!!.addAll(forexList!!);
+                for (i in 0..jsonArray.size) {
+                    var jsonObject = jsonArray.get(i)!!.getJSONObject(i);
+
+                    Log.d("jsonssnd", jsonObject.toString())
+                    var model = CurrencyPojo.Currency()
+                    try {
+                        model.name = jsonObject!!.getString("name");
+                        model.latestVolume = jsonObject!!.getString("latestVolume");
+                        model.changeper = jsonObject!!.getString("changeper");
+                        model.daychange = jsonObject!!.getString("daychange");
+                        model.ask = jsonObject!!.getString("ask");
+                        model.firstflag = jsonObject!!.getString("firstflag");
+                        model.secondflag = jsonObject!!.getString("secondflag");
+                        model.symbol = jsonObject!!.getString("symbol");
+                        model.bid = jsonObject!!.getString("bid");
+
+                        // forexList!!.add(model)
+                        for (i in 0..forexList!!.size) {
+                            if (model.symbol.equals(forexList!!.get(i).symbol)) {
+                                Log.d("currency_id", "---" + model.name);
+                                model.firstflag = forexList!!.get(i).firstflag;
+                                model.secondflag = forexList!!.get(i).secondflag;
+                                forexList!!.set(i, model!!)
+                            }
+                        }
+                    } catch (e: Exception) {
+                    }
+                }
+            } catch (ee: java.lang.Exception) {
+            }
+
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            if (forexAdapter != null)
+                forexAdapter!!.notifyDataSetChanged();
+        }
+
+    }*/
 }

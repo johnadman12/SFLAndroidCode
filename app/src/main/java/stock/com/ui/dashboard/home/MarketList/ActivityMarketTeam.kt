@@ -82,7 +82,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                 finish()
             }
             R.id.llMyTeam -> {
-                startActivity(
+                startActivityForResult(
                     Intent(this@ActivityMarketTeam, ActivityMyTeam::class.java)
                         .putExtra(
                             StockConstant.MARKETID,
@@ -93,7 +93,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         ).putExtra(
                             "flagMarket",
                             "crypto"
-                        )
+                        ), StockConstant.REDIRECT_UPCOMING_MARKET
                 )
             }
             R.id.imgButtonWizard -> {
@@ -178,6 +178,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                     StockConstant.CONTESTFEE,
                                     contestFee
                                 ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
+                                ).putExtra(
                                     "isCloning",
                                     flagCloning
                                 ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
@@ -198,6 +201,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                                 ).putExtra(
                                     StockConstant.CONTESTFEE,
                                     contestFee
+                                ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
                                 ).putExtra(
                                     "isCloning",
                                     flagCloning
@@ -244,6 +250,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
             if (flagCloning == 1) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             } else if (flagCloning == 2) {
                 marketSelectedItems = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
@@ -1114,6 +1121,14 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     flagFilter = true
                     getMarketTeamlist("0")
                 }
+
+            }
+
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
 
             }
 

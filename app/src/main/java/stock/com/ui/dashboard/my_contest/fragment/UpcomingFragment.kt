@@ -80,7 +80,11 @@ class UpcomingFragment : BaseFragment() {
 
             override fun onFailure(call: Call<LobbyContestPojo>, t: Throwable) {
                 println(t.toString())
-                displayToast(resources.getString(R.string.internal_server_error), "error")
+                try {
+                    displayToast(resources.getString(R.string.internal_server_error), "error")
+                } catch (e: Exception) {
+
+                }
                 d.dismiss()
             }
         })

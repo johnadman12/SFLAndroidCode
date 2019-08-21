@@ -45,11 +45,15 @@ class ForexAdapter(
             mContext,
             R.anim.blink
         )
-        Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
-        Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
-        holder.itemView.ask.setText("$0.000")
-        holder.itemView.bid.setText("$0.000")
-        holder.itemView.tv_change_percentage.setText("0.000%")
+        try {
+            Glide.with(mContext).load(oldData.get(position).firstflag).into(holder.itemView.img1)
+            Glide.with(mContext).load(oldData.get(position).secondflag).into(holder.itemView.img2)
+            holder.itemView.ask.setText("$0.000")
+            holder.itemView.bid.setText("$0.000")
+            holder.itemView.tv_change_percentage.setText("0.000%")
+        }catch (e:Exception){
+
+        }
 
 //askcase
         try {
@@ -371,10 +375,6 @@ class ForexAdapter(
         } catch (e: Exception) {
 
         }
-
-
-
-
 
         holder.itemView.llwatch.setOnClickListener {
             if (forexList.get(position).cryptoType.equals("0")) {

@@ -45,6 +45,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
     var marketId: Int = 0
     var flagCloning: Int = 0
     var contestFee: String = ""
+    var teamName: String = ""
     var array: JsonArray = JsonArray()
     var jsonparams: JsonObject = JsonObject()
 
@@ -108,12 +109,20 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
             teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
             contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
+            teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
 
         }
         StockConstant.ACTIVITIES.add(this)
         initView()
+
+        if (TextUtils.isEmpty(teamName)) {
+            edtTeamName.setText("My Team")
+        } else {
+            edtTeamName.setText(teamName)
+        }
+
         Log.e("updatedafterlist", list!!.get(0).addedToList.toString())
         viewTeamAdapter!!.notifyDataSetChanged()
 
@@ -394,7 +403,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)
@@ -455,7 +464,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
@@ -512,7 +521,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
-        jsonparams.addProperty("user_team_name", txtTeamname.text.toString())
+        jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())

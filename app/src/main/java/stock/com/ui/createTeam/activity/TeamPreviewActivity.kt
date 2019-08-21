@@ -8,14 +8,9 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_team_preview.*
-import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.outside_toolbar.*
 import stock.com.AppBase.BaseActivity
 import stock.com.R
@@ -51,7 +46,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         }
 
         if (!TextUtils.isEmpty(totalChange)) {
-            if (totalChange.contains("%") ||totalChange.contains("$"))
+            if (totalChange.contains("%") || totalChange.contains("$"))
                 totalChange1 = totalChange.substring(0, totalChange.length - 1).toDouble()
             else
                 totalChange1 = totalChange.toDouble()
@@ -63,11 +58,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 rel.setBackgroundResource(R.mipmap.graycircle)
             tvTotal.setText(totalChange + "%")
         }
+
         try {
             initViews()
-
         } catch (e: Exception) {
-            Log.d("TeamStock",""+e.localizedMessage);
+            Log.d("TeamStock", "" + e.localizedMessage);
         }
 
         iv_info.setOnClickListener {
@@ -81,13 +76,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         img_back.setOnClickListener(this)
         img_close.setOnClickListener(this)
         if (list != null) {
-            setData()
             txt_teamName.setText(teamName)
+            setData()
+// txt_teamName.setText("gujyu")
         }
 
     }
 
-//    fun person(block: StockTeamPojo.() -> Unit): StockTeamPojo = StockTeamPojo().apply(block)
 
     private fun setData() {
         if (!TextUtils.isEmpty(list!!.get(0).symbol)) {

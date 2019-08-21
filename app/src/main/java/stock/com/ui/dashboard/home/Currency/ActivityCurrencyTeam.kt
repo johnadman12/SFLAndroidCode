@@ -85,7 +85,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     displayToast("no words in search", "warning")
             }
             R.id.llMyTeam -> {
-                startActivity(
+                startActivityForResult(
                     Intent(this@ActivityCurrencyTeam, ActivityMyTeam::class.java)
                         .putExtra(
                             StockConstant.MARKETID,
@@ -96,7 +96,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                         ).putExtra(
                             "flagMarket",
                             "currency"
-                        )
+                        ), StockConstant.REDIRECT_UPCOMING_MARKET
                 )
             }
             R.id.relFieldView -> {
@@ -163,6 +163,9 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                     StockConstant.CONTESTFEE,
                                     contestFee
                                 ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
+                                ).putExtra(
                                     "isCloning",
                                     flagCloning
                                 ), StockConstant.RESULT_CODE_MARKET_REMOVE_TEAM
@@ -183,6 +186,9 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                                 ).putExtra(
                                     StockConstant.CONTESTFEE,
                                     contestFee
+                                ).putExtra(
+                                    StockConstant.TEAMNAME,
+                                    teamName
                                 ).putExtra(
                                     "isCloning",
                                     flagCloning
@@ -256,7 +262,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
             if (flagCloning == 1) {
                 currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamName = intent.getStringExtra(StockConstant.TEAMNAME)
-
+                teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
             } else if (flagCloning == 2) {
                 currencySelected = intent.getParcelableArrayListExtra(StockConstant.MARKETLIST)
                 teamId = intent.getIntExtra(StockConstant.TEAMID, 0)
@@ -805,6 +811,14 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
                     getCurrencyTeamlist("1")
                 }
             }
+        } else if (requestCode == StockConstant.REDIRECT_UPCOMING_MARKET) {
+            if (resultCode == RESULT_OK && data != null) {
+                var intent = Intent();
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+
+            }
+
         }
     }
 
