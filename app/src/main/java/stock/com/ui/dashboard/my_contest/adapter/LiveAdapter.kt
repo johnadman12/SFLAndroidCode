@@ -139,25 +139,32 @@ class LiveAdapter(
             )
                 mContext.startActivity(
                     Intent(mContext, LiveContestActivity::class.java).putExtra(
-                        "contestid", contest.get(position).contestId
+                        StockConstant.CONTESTID, contest.get(position).contestId
                     )
                         .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
                 )
             else if (contest.get(position).marketname.equals(
-                    "currency"
+                    "Currencies"
                 )
             )
-                Intent(mContext, LiveContestActivity::class.java).putExtra(
-                    "contestid",
-                    contest.get(position).contestId
+                mContext.startActivity(
+                    Intent(mContext, LiveContestActivity::class.java).putExtra(
+                        StockConstant.CONTESTID,
+                        contest.get(position).contestId
+                    )
+                        .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
                 )
-                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
-            else
-                Intent(mContext, LiveContestActivity::class.java).putExtra(
-                    "contestid",
-                    contest.get(position).contestId
+            else if (contest.get(position).marketname.equals(
+                    "Equity"
                 )
-                    .putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid.toInt())
+            )
+                mContext.startActivity(
+                    Intent(mContext, LiveContestActivity::class.java).putExtra(
+                        StockConstant.CONTESTID,
+                        contest.get(position).contestId
+                    )
+                        .putExtra(StockConstant.EXCHANGEID, contest.get(position).mid.toInt())
+                )
         }
 
     }

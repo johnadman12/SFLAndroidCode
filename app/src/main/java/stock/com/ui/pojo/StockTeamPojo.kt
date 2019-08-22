@@ -45,12 +45,15 @@ class StockTeamPojo() : BasePojo() {
         @SerializedName("latestPrice")
         @Expose
         var latestPrice: String? = null
+            set(value) {
+                field = value
+            }
         @SerializedName("changePercent")
         @Expose
-        var changePercent: String? = null
+        var changePercent: String? = ""
         @SerializedName("stock_type")
         @Expose
-        var stock_type: String? = null
+        var stock_type: String? = ""
         @SerializedName("sector")
         @Expose
         var sector: String? = null
@@ -59,6 +62,9 @@ class StockTeamPojo() : BasePojo() {
         var addedStock: String? = null
         var addedToList = 1
         var flagAddStockToList: Boolean = false
+
+
+
 
     }
 

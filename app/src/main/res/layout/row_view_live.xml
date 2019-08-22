@@ -275,6 +275,7 @@
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingLeft="@dimen/_5sdp"
+                    android:id="@+id/llnckdnkjd"
                     android:paddingRight="@dimen/_5sdp"
                     android:background="@mipmap/bgcontest_back"
                     android:layout_marginTop="@dimen/_5sdp">

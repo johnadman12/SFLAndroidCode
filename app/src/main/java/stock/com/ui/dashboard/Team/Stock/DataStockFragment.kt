@@ -1,4 +1,4 @@
-package stock.com.ui.dashboard.home.Currency
+package stock.com.ui.dashboard.Team.Stock
 
 import android.os.Bundle
 import android.text.util.Linkify
@@ -20,7 +20,7 @@ import stock.com.ui.pojo.CurrencyDetail
 import stock.com.utils.StockConstant
 import stock.com.utils.StockDialog
 
-class DataCurrencyFragment : BaseFragment() {
+class DataStockFragment : BaseFragment() {
     var itemId: Int = 0
     var type: String = ""
 
@@ -35,12 +35,17 @@ class DataCurrencyFragment : BaseFragment() {
             type = arguments!!.getString(StockConstant.MARKET_TYPE)
 
         }
-        getData(itemId.toString())
+        if (type.equals("Equity")) {
+//            getData(itemId.toString())
+
+        } else {
+
+        }
 
     }
 
 
-    fun getData(assestId: String) {
+   /* fun getData(assestId: String) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -69,7 +74,9 @@ class DataCurrencyFragment : BaseFragment() {
                 d.dismiss()
             }
         })
-    }
+    }*/
+
+
 
 
     private fun setData(list: CurrencyDetail.Stock) {

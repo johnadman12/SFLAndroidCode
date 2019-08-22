@@ -115,12 +115,12 @@ class LobbyContestAdapter(
                         val minutes = diffSec / 60 % 60
                         val hours = diffSec / 3600
                         holder.itemView.tvTime.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
-                        if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
-                            holder.itemView.txtjoin.setText("Full")
-                            holder.itemView.circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(mContext, R.color.GrayColor)
-                            holder.itemView.isEnabled = false
-                        }
+                        /* if (mContest.get(position).contest_teamremaining==0)) {
+                             holder.itemView.txtjoin.setText("Full")
+                             holder.itemView.circular_progress.progressBackgroundColor =
+                                 ContextCompat.getColor(mContext, R.color.GrayColor)
+                             holder.itemView.isEnabled = false
+                         }*/
                     }
 
                     override fun onFinish() {
@@ -163,16 +163,17 @@ class LobbyContestAdapter(
                         val hours = diffSec / 3600
 
                         holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                        if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
-                            holder.itemView.txtjoin.setText("Full")
-                            holder.itemView.circular_progress.progressBackgroundColor =
-                                ContextCompat.getColor(mContext, R.color.GrayColor)
-                            holder.itemView.isEnabled = false
-                        }
+
                     }
 
                     override fun onFinish() {
                     }
+                }
+                if (mContest.get(position).contest_teamremaining == 0) {
+                    holder.itemView.txtjoin.setText("Full")
+                    holder.itemView.circular_progress.progressBackgroundColor =
+                        ContextCompat.getColor(mContext, R.color.GrayColor)
+                    holder.itemView.isEnabled = false
                 }
                 newtimer.start()
             }
@@ -205,7 +206,12 @@ class LobbyContestAdapter(
             var intent = Intent(mContext, ContestDetailActivity::class.java);
             intent.putExtra(StockConstant.CONTESTID, mContest.get(position).contestid.toInt())
             intent.putExtra(StockConstant.EXCHANGEID, mContest.get(position).exchangeid.toInt())
-            ActivityCompat.startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null);
+            ActivityCompat.startActivityForResult(
+                mContext as Activity,
+                intent,
+                StockConstant.REDIRECT_UPCOMING_MARKET,
+                null
+            );
             /* mContext.startActivity(
                  Intent(mContext, ContestDetailActivity::class.java).putExtra(
                      StockConstant.CONTESTID,

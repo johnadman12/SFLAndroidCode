@@ -48,6 +48,11 @@ class StockAdapter(
         holder.itemView.name.setText(list.get(position).symbol)
         holder.itemView.tv_company.setText(list.get(position).companyName)
         Glide.with(mContext).load(list.get(position).image).into(holder.itemView.img_market)
+
+       /* if(TextUtils.isEmpty(list.get(position).latestPrice)){
+            list.get(position).latestPrice("0.000")
+        }
+*/
         holder.itemView.tv_latest_price.setText("$0.000")
         holder.itemView.tv_change_percentage.setText("0.000%")
 
@@ -223,32 +228,36 @@ class StockAdapter(
 
 
         try {
-            if (!TextUtils.isEmpty(list.get(position).changePercent)) {
-                var priceText: Double = (list.get(position).changePercent)!!.toDouble() * 0.01
-                var price = (priceText.toString())
-
-                if (list.get(position).changePercent!!.contains("-")) {
-                    price = price.substring(0, 1) + "$" + price.substring(4, price.length)
-                    holder.itemView.tv_change_percentage.setTextColor(
-                        ContextCompat.getColor(
-                            mContext,
-                            R.color.redcolor
-                        )
-                    )
-                    Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
+            /* if (!TextUtils.isEmpty(list.get(position).changePercent)) {
+                 var priceText: Double = (list.get(position).changePercent)!!.toDouble() * 0.01
+                 var price = (priceText.toString())*/
+            Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
+            if (list.get(position).changePercent!!.contains("-") ) {
+                /*  price = price.substring(0, 1) + "$" + price.substring(4, price.length)
+                  holder.itemView.tv_change_percentage.setTextColor(
+                      ContextCompat.getColor(
+                          mContext,
+                          R.color.redcolor
+                      )
+                  )*/
+                holder.itemView.tv_change_percentage.setTextColor(
+                    ContextCompat.getColor(
+                        mContext,
+                        R.color.redcolor
+                    ))
+                Glide.with(mContext).load(R.drawable.ic_down_arrow).into(holder.itemView.graph)
 //                    holder.itemView.tv_change_percentage.setText(price + " (" + list!!.get(position).changePercent + " %)")
-                    holder.itemView.tv_change_percentage.setText(/*list.get(position).decimalchange +*/ " (" + list!!.get(
-                        position
-                    ).changePercent + " %)"
-                    )
-                } else {
-                    Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
-//                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
-                    holder.itemView.tv_change_percentage.setText(/*"$" + list.get(position).decimalchange +*/ " (+" + list!!.get(
-                        position
-                    ).changePercent + " %)"
-                    )
-                }
+                holder.itemView.tv_change_percentage.setText(/*list.get(position).decimalchange +*/ " (" + list!!.get(
+                    position
+                ).changePercent + " %)"
+                )
+            } else {
+                Glide.with(mContext).load(R.drawable.ic_arrow_up).into(holder.itemView.graph)
+                    holder.itemView.tv_change_percentage.setTextColor(ContextCompat.getColor(mContext, R.color.green))
+                holder.itemView.tv_change_percentage.setText(/*"$" + list.get(position).decimalchange +*/ " (+" + list!!.get(
+                    position
+                ).changePercent + " %)"
+                )
             }
 
             if (list.get(position).stock_type.equals("1")) {

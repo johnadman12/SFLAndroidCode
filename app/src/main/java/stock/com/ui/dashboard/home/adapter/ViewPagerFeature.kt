@@ -154,16 +154,17 @@ class ViewPagerFeature(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
-                            if (list.get(position).contest_teamremaining.toString().equals("0")) {
-                                txtjoin.setText("Full")
-                                circular_progress.progressBackgroundColor =
-                                    ContextCompat.getColor(context, R.color.GrayColor)
-                                view.isEnabled = false
-                            }
+
                         }
 
                         override fun onFinish() {
                         }
+                    }
+                    if (list.get(position).contest_teamremaining.toString().equals("0")) {
+                        txtjoin.setText("Full")
+                        circular_progress.progressBackgroundColor =
+                            ContextCompat.getColor(context, R.color.GrayColor)
+                        view.isEnabled = false
                     }
                     newtimer.start()
 
@@ -201,16 +202,17 @@ class ViewPagerFeature(
                             val minutes = diffSec / 60 % 60
                             val hours = diffSec / 3600
                             tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
-                            if (list.get(position).contest_teamremaining.toString().equals("0")) {
-                                txtjoin.setText("Full")
-                                circular_progress.progressBackgroundColor =
-                                    ContextCompat.getColor(context, R.color.GrayColor)
-                                view.isEnabled = false
-                            }
+
                         }
 
                         override fun onFinish() {
                         }
+                    }
+                    if (list.get(position).contest_teamremaining.toString().equals("0")) {
+                        txtjoin.setText("Full")
+                        circular_progress.progressBackgroundColor =
+                            ContextCompat.getColor(context, R.color.GrayColor)
+                        view.isEnabled = false
                     }
                     newtimer.start()
                 }

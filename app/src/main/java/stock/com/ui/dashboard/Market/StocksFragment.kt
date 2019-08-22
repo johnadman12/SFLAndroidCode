@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.socket.client.IO
 import io.socket.client.Socket
 import kotlinx.android.synthetic.main.fragment_stocks.*
+import kotlinx.android.synthetic.main.row_country_list.*
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,13 +69,9 @@ class StocksFragment : BaseFragment() {
         stockListNew = ArrayList()
         stockListFilter = ArrayList()
 
-
         llm = LinearLayoutManager(context)
         setStockAdapter()
         getExchangeNamelist()
-
-
-
 
         srl_layout.setOnRefreshListener {
             if (flagSearch) {
@@ -92,11 +89,7 @@ class StocksFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         if (!isVisible) {
-            flagAlphaSort = false
-            flagPriceSort = false
-            flagDaySort = false
-            flagHTLSort = false
-            flagDHTLSort = false
+            setFlag(false, false, false, false, false)
         }
         try {
             val opts = IO.Options()
@@ -183,40 +176,60 @@ class StocksFragment : BaseFragment() {
                         stockListNew!!.addAll(response.body()!!.stock!!)
 
                         if (flagAlphaSort) {
-                            val sortedList = stockListNew!!.sortedBy { it.symbol }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockListNew!!.addAll(sortedList)
-                            stockList!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.symbol }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockListNew!!.addAll(sortedList)
+                                stockList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceSort) {
-                            val sortedList = stockListNew!!.sortedBy { it.latestPrice?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagDaySort) {
-                            val sortedList = stockListNew!!.sortedBy { it.changePercent?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.changePercent?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagHTLSort) {
-                            val sortedList = stockListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
 
                         } else if (flagDHTLSort) {
-                            val sortedList = stockListNew!!.sortedByDescending { it.changePercent?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedByDescending { it.changePercent?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         }
                         if (stockAdapter != null)
@@ -319,42 +332,68 @@ class StocksFragment : BaseFragment() {
                             stockList!!.addAll(response.body()!!.stock!!)
                             stockListNew!!.addAll(response.body()!!.stock!!)
                         }
+
+                        for (i in 0 until response.body()!!.stock!!.size) {
+                            if (TextUtils.isEmpty(response.body()!!.stock!!.get(i).changePercent))
+                                response.body()!!.stock!!.get(i).changePercent = "0.000"
+                        }
+
                         //sorting
                         if (flagAlphaSort) {
-                            val sortedList = stockListNew!!.sortedBy { it.symbol }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockListNew!!.addAll(sortedList)
-                            stockList!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.symbol }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockListNew!!.addAll(sortedList)
+                                stockList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceSort) {
-                            val sortedList = stockListNew!!.sortedBy { it.latestPrice?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagDaySort) {
-                            val sortedList = stockListNew!!.sortedBy { it.changePercent?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedBy { it.changePercent?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagHTLSort) {
-                            val sortedList = stockListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
 
                         } else if (flagDHTLSort) {
-                            val sortedList = stockListNew!!.sortedByDescending { it.changePercent?.toDouble() }
-                            stockListNew!!.clear()
-                            stockList!!.clear()
-                            stockList!!.addAll(sortedList)
-                            stockListNew!!.addAll(sortedList)
+                            try {
+                                val sortedList = stockListNew!!.sortedByDescending { it.changePercent?.toDouble() }
+                                stockListNew!!.clear()
+                                stockList!!.clear()
+                                stockList!!.addAll(sortedList)
+                                stockListNew!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         }
                         if (stockAdapter != null)
@@ -532,7 +571,7 @@ class StocksFragment : BaseFragment() {
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
-            flagAlphaSort = true
+            setFlag(true, false, false, false, false)
             try {
                 var sortedList = stockList!!.sortedBy { it.symbol?.toString() }
                 stockList!!.clear()
@@ -546,7 +585,7 @@ class StocksFragment : BaseFragment() {
             }
 
         } else if (type.equals("dayChange")) {
-            flagDaySort = true
+            setFlag(false, false, true, false, false)
             try {
                 var sortedList = stockList!!.sortedBy { it.changePercent?.toDouble() }
                 stockList!!.clear()
@@ -560,7 +599,7 @@ class StocksFragment : BaseFragment() {
             }
 
         } else if (type.equals("price")) {
-            flagPriceSort = true
+            setFlag(false, true, false, false, false)
             try {
                 var sortedList = stockList!!.sortedBy { it.latestPrice?.toDouble() }
                 stockList!!.clear()
@@ -574,7 +613,7 @@ class StocksFragment : BaseFragment() {
             }
 
         } else if (type.equals("HighToLow")) {
-            flagHTLSort = true
+            setFlag(false, false, false, true, false)
             try {
                 val sortedList = stockList!!.sortedByDescending { it.latestPrice?.toDouble() }
                 stockList!!.clear()
@@ -587,7 +626,7 @@ class StocksFragment : BaseFragment() {
 
             }
         } else if (type.equals("DayHighToLow")) {
-            flagDHTLSort = true
+            setFlag(false, false, false, false, true)
             try {
                 val sortedList = stockList!!.sortedByDescending { it.changePercent?.toDouble() }
                 stockList!!.clear()
@@ -602,6 +641,7 @@ class StocksFragment : BaseFragment() {
 
         } else if (type.equals("nodata")) {
 //            page = 0
+            setFlag(false, false, false, false, false)
             flagAlphaSort = false
             flagPriceSort = false
             flagDaySort = false
@@ -707,8 +747,8 @@ class StocksFragment : BaseFragment() {
                                 //stockListNew!!.add(model)
                                 for (i in 0..stockListNew!!.size) {
                                     if (model.slug.equals(stockListNew!!.get(i).slug)) {
-                                        model.companyName= stockList!!.get(i).companyName
-                                        model.symbol= stockList!!.get(i).symbol
+                                        model.companyName = stockList!!.get(i).companyName
+                                        model.symbol = stockList!!.get(i).symbol
                                         stockListNew!!.set(i, model);
                                     }
                                 }
@@ -740,6 +780,15 @@ class StocksFragment : BaseFragment() {
         }
 
     }
+
+    fun setFlag(fAl: Boolean, fP: Boolean, fD: Boolean, fHTL: Boolean, fDHTL: Boolean) {
+        flagAlphaSort = fAl
+        flagPriceSort = fP
+        flagDaySort = fD
+        flagHTLSort = fHTL
+        flagDHTLSort = fDHTL
+    }
+
 
     override fun onPause() {
         super.onPause()

@@ -39,6 +39,7 @@ class LobbyFragment : BaseFragment() {
     var flag: String = ""
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
     var lobbyContestAdapter: LobbyContestAdapter? = null
+    var type: String = "all"
 
     private var dashBoardActivity: DashBoardActivity? = null;
 
@@ -72,8 +73,25 @@ class LobbyFragment : BaseFragment() {
                 StockConstant.RESULT_CODE_SORT
             )
         }
+
+
         rel_crypto.setOnClickListener {
-            startActivity(Intent(activity!!, WebviewActivity::class.java))
+            type = "crypto"
+            getContestlist(type)
+        }
+
+        rel_stock.setOnClickListener {
+            type = "equity"
+            getContestlist(type)
+        }
+
+        rel_forex.setOnClickListener {
+            type = "currency"
+            getContestlist(type)
+        }
+        rel_commodity.setOnClickListener {
+            type = "all"
+            getContestlist(type)
         }
 
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
@@ -83,7 +101,7 @@ class LobbyFragment : BaseFragment() {
             override fun refreshing() {
                 //TODO make api call here
                 Handler().postDelayed({
-                    getContestlist()
+                    getContestlist(type)
                 }, 1500)
             }
         })
@@ -94,7 +112,7 @@ class LobbyFragment : BaseFragment() {
         if (!TextUtils.isEmpty(categoryId)) {
             setFilters(categoryId)
         } else {
-            getContestlist()
+            getContestlist(type)
         }
 
     }
@@ -108,12 +126,14 @@ class LobbyFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_lobby, container, false)
     }
 
-    fun getContestlist() {
+    fun getContestlist(typeFilter: String) {
         val d = StockDialog.showLoading(activity!!)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<LobbyContestPojo> =
-            apiService.getContestList(getFromPrefsString(StockConstant.ACCESSTOKEN).toString())
+            apiService.getContestList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(), typeFilter
+            )
         call.enqueue(object : Callback<LobbyContestPojo> {
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
                 d.dismiss()
@@ -207,7 +227,7 @@ class LobbyFragment : BaseFragment() {
                         recyclerView_contest!!.adapter!!.notifyDataSetChanged()
                     }
                 } else if (data.getStringExtra("flag").equals("nodata")) {
-                    getContestlist()
+                    getContestlist(type)
                 }
             }
         } else if (requestCode == RESULT_CODE_FILTER) {
@@ -233,7 +253,7 @@ class LobbyFragment : BaseFragment() {
 
 
                 } else {
-                    getContestlist()
+                    getContestlist(type)
                 }
                 /*recyclerView_contest!!.adapter = LobbyContestAdapter(context!!, contest!!)
                 recyclerView_contest!!.adapter!!.notifyDataSetChanged();*/

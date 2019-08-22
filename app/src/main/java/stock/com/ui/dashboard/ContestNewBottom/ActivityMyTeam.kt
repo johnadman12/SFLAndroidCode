@@ -93,8 +93,8 @@ class ActivityMyTeam : BaseActivity() {
     }
 
     fun getTeamlist(flagFirstTime: Int) {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+        /*val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MyTeamsPojo> =
             apiService.getMyTeams(
@@ -105,8 +105,9 @@ class ActivityMyTeam : BaseActivity() {
         call.enqueue(object : Callback<MyTeamsPojo> {
 
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
-                d.dismiss()
-                sr2_layout.isRefreshing = false
+//                d.dismiss()
+                if (sr2_layout != null)
+                    sr2_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         if (flagFirstTime == 0) {
@@ -121,22 +122,23 @@ class ActivityMyTeam : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
+                if (sr2_layout != null)
                 sr2_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }
 
     fun getMarketTeamlist(flagFirstTime: Int) {
-        val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)
+       /* val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MyTeamsPojo> =
             apiService.getMyMarketTeams(
@@ -146,7 +148,7 @@ class ActivityMyTeam : BaseActivity() {
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {
-                d.dismiss()
+//                d.dismiss()
                 if (sr2_layout != null)
                     sr2_layout.isRefreshing = false
                 if (response.body() != null) {
@@ -165,7 +167,7 @@ class ActivityMyTeam : BaseActivity() {
                     }
                 } else {
                     displayToast(resources.getString(R.string.something_went_wrong), "error")
-                    d.dismiss()
+//                    d.dismiss()
                 }
             }
 
@@ -173,7 +175,7 @@ class ActivityMyTeam : BaseActivity() {
                 sr2_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
-                d.dismiss()
+//                d.dismiss()
             }
         })
     }

@@ -215,7 +215,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
             R.id.ll_data -> {
                 if (fragment is DataFragment)
                     return;
-                val fragment: DataFragment = DataFragment()
+                val fragment: DataStockFragment = DataStockFragment()
                 var nd: Bundle = Bundle()
                 nd.putInt(StockConstant.MARKETID, stockId)
                 nd.putString(StockConstant.MARKET_TYPE, "Equity")
@@ -292,7 +292,7 @@ class ActivityStockDetail : BaseActivity(), View.OnClickListener {
                         nd.putString("Stockname", symbol)
                         setFragment(fragment, nd);*/
 
-                        val fragment: DataFragment = DataFragment()
+                        val fragment: DataStockFragment = DataStockFragment()
                         var nd: Bundle = Bundle()
                         nd.putInt(StockConstant.MARKETID, stockId)
                         nd.putString(StockConstant.MARKET_TYPE, "Equity")

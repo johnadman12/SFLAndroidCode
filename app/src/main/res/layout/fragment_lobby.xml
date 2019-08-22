@@ -226,6 +226,7 @@
                     <RelativeLayout
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_70sdp"
+                            android:id="@+id/rel_stock"
                             android:layout_marginLeft="@dimen/_8sdp">
                         <stock.com.utils.custom.RoundRectCornerImageView
                                 android:layout_width="match_parent"
@@ -256,6 +257,7 @@
                     <RelativeLayout
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_70sdp"
+                            android:id="@+id/rel_forex"
                             android:layout_marginLeft="@dimen/_8sdp">
                         <stock.com.utils.custom.RoundRectCornerImageView
                                 android:layout_width="match_parent"
@@ -287,6 +289,7 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_70sdp"
                             android:layout_marginRight="@dimen/_5sdp"
+                            android:id="@+id/rel_commodity"
                             android:layout_marginLeft="@dimen/_8sdp">
                         <stock.com.utils.custom.RoundRectCornerImageView
                                 android:layout_width="match_parent"

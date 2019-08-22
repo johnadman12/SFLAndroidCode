@@ -19,10 +19,12 @@ import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
+import stock.com.ui.dashboard.home.Currency.CurrencyPreviewTeamActivity
 import stock.com.ui.dashboard.home.MarketList.MarketTeamPreviewActivity
 import stock.com.ui.live_contest.adapter.LiveContestAdapter
 import stock.com.ui.live_contest.adapter.RecycleTeamAdapter
 import stock.com.ui.pojo.ContestDetail
+import stock.com.ui.pojo.CurrencyPojo
 import stock.com.ui.pojo.MarketList
 import stock.com.ui.pojo.StockTeamPojo
 import stock.com.utils.StockConstant
@@ -36,12 +38,14 @@ class LiveContestActivity : BaseActivity() {
     var exchangeid: Int = 0
     private var stockList: ArrayList<StockTeamPojo.Stock>? = null;
     private var crptoList: ArrayList<MarketList.Crypto>? = null;
+    private var currencyList: ArrayList<CurrencyPojo.Currency>? = null;
     private var filterTeamList: ArrayList<ContestDetail.Score>? = null;
-    var flagCrypto = false;
+
     lateinit var mainHandler: Handler;
     var idTeam: Int = 0
     var totalchange: String = ""
     var teamName: String = ""
+    var type: String = ""
     private var liveAdapter: LiveContestAdapter? = null;
     private var teamAdapter: RecycleTeamAdapter? = null;
 
@@ -53,7 +57,7 @@ class LiveContestActivity : BaseActivity() {
         crptoList = ArrayList()
         filterTeamList = ArrayList()
         if (intent != null) {
-            contestid = intent.getIntExtra("contestid", 0)
+            contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
             exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
         }
 
@@ -65,16 +69,23 @@ class LiveContestActivity : BaseActivity() {
         }
 
         tvViewTeam.setOnClickListener {
-            if (flagCrypto)
+            if (type.equals("crypto"))
                 startActivity(
                     Intent(this@LiveContestActivity, MarketTeamPreviewActivity::class.java)
                         .putExtra(StockConstant.MARKETLIST, crptoList)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, totalchange)
-                ) else
+                ) else if (type.equals("equity"))
                 startActivity(
                     Intent(this@LiveContestActivity, TeamPreviewActivity::class.java)
                         .putExtra(StockConstant.STOCKLIST, stockList)
+                        .putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.TOTALCHANGE, totalchange)
+                )
+            else if (type.equals("currency"))
+                startActivity(
+                    Intent(this@LiveContestActivity, CurrencyPreviewTeamActivity::class.java)
+                        .putExtra(StockConstant.MARKETLIST, currencyList)
                         .putExtra(StockConstant.TEAMNAME, teamName)
                         .putExtra(StockConstant.TOTALCHANGE, totalchange)
                 )
@@ -122,14 +133,18 @@ class LiveContestActivity : BaseActivity() {
                     totalchange = item.totalchange_Per
                     totalChange.setText(item.totalchange_Per + "%")
                     tvRankLable.setText(getString(R.string.rank) + " (" + item.teamNameCount + ")")
-                    if (item.stock.size == 0) {
-                        flagCrypto = true
+                    if (item.crypto.size > 0) {
+                        type = "crypto"
                         crptoList!!.clear()
                         crptoList!!.addAll(item.crypto)
-                    } else {
-                        flagCrypto = false
+                    } else if (item.stock.size > 0) {
+                        type = "equity"
                         stockList!!.clear()
                         stockList!!.addAll(item.stock)
+                    } else if (item.currencies.size > 0) {
+                        type = "currency"
+                        currencyList!!.clear()
+                        currencyList!!.addAll(item.currencies)
                     }
                 }
             }
@@ -181,11 +196,17 @@ class LiveContestActivity : BaseActivity() {
                                         totalchange = filterTeamList!!.get(0).totalchange_Per
                                         stockList!!.clear()
                                         crptoList!!.clear()
-                                        if (filterTeamList!!.get(0).stock.size == 0) {
-                                            flagCrypto = true
+                                        if (filterTeamList!!.get(0).stock.size > 0) {
+                                            type = "equity"
+                                            stockList!!.addAll(filterTeamList!!.get(0).stock)
+                                        } else if (filterTeamList!!.get(0).crypto.size > 0) {
+                                            type = "crypto"
                                             crptoList!!.addAll(filterTeamList!!.get(0).crypto)
-                                        } else
-                                            stockList!!.addAll(filterTeamList!!.get(0).stock)                                ///
+                                        }else if (filterTeamList!!.get(0).currencies.size > 0){
+                                            type = "currency"
+                                            currencyList!!.addAll(filterTeamList!!.get(0).currencies)
+                                        }
+                                        ///
                                     } else {
                                         tvRank.setText(filterTeamList!!.get(0).rank)
                                         totalChange.setText(filterTeamList!!.get(0).totalchange_Per + "%")

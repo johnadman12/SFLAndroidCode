@@ -67,8 +67,13 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.ivedit -> {
                 edtTeamName.isEnabled = true
-                ivRight.visibility = View.VISIBLE
+                ivRight.visibility = View.GONE
                 ivedit.visibility = View.GONE
+            }
+
+            R.id.txtTeamname -> {
+                edtTeamName.visibility = View.VISIBLE
+                txtTeamname.visibility = View.GONE
             }
             R.id.ivRight -> {
                 edtTeamName.isEnabled = false
@@ -185,8 +190,9 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         currencySelectedItem = ArrayList();
         array = JsonArray()
         jsonparams = JsonObject()
-        ivedit.setOnClickListener(this)
         img_btn_back.setOnClickListener(this)
+        ivedit.setOnClickListener(this)
+        txtTeamname.setOnClickListener(this)
         btn_Join.setOnClickListener(this)
         ll_save.setOnClickListener(this)
         ivRight.setOnClickListener(this)

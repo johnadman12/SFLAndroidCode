@@ -205,7 +205,10 @@ interface ApiInterface {
 
     @Headers("content-type: application/x-www-form-urlencoded")
     @GET("contest/GetContestsList")
-    fun getContestList(@Header("x-access-token") token: String): Call<LobbyContestPojo>
+    fun getContestList(
+        @Header("x-access-token") token: String,
+        @Query("type") type: String
+    ): Call<LobbyContestPojo>
 
 
     @Headers("content-type: application/x-www-form-urlencoded")
@@ -308,6 +311,17 @@ interface ApiInterface {
         @Field("market") market: String,
         @Field("country_id") country_id: String,
         @Field("page") page: String, @Field("limit") limit: String
+    ): Call<WatchlistPojo>
+
+    @FormUrlEncoded
+    // @Header("Content-Type: application/x-www-form-urlencoded")
+    @POST("search/watchlist")
+    fun getSearchWatchList(
+        @Header("x-access-token") token: String,
+        @Field("user_id") userid: String,
+        @Field("search") search: String,
+        @Field("page") page: String,
+        @Field("limit") limit: String
     ): Call<WatchlistPojo>
 
     @FormUrlEncoded

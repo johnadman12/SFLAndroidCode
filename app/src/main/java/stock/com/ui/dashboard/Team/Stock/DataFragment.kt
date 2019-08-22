@@ -77,10 +77,14 @@ class DataFragment : BaseFragment() {
         tvLow.setText(list.low)
         tvAverage.setText(list.average)
         tvChange.setText(list.change)
-        tvMarketCap.setText(coolNumberFormat(list.marketCap.toDouble()))
-        tvVolume.setText(coolNumberFormat(list.latestVolume.toDouble()))
-        tvCirculating.setText(coolNumberFormat(list.circulating.toDouble()))
-        tvmaxSupply.setText(coolNumberFormat(list.maxSupply.toDouble()))
+        try {
+            tvMarketCap.setText(coolNumberFormat(list.marketCap.toDouble()))
+            tvVolume.setText(coolNumberFormat(list.latestVolume.toDouble()))
+            tvCirculating.setText(coolNumberFormat(list.circulating.toDouble()))
+            tvmaxSupply.setText(coolNumberFormat(list.maxSupply.toDouble()))
+        } catch (e: Exception) {
+
+        }
         tvRank.setText(list.rank)
         tvCrypto.setText("About " + list.symbol)
         tvAbout.setText(list.cryptodescription)
@@ -132,7 +136,7 @@ class DataFragment : BaseFragment() {
             return "" + count
         val exp = (Math.log(count) / Math.log(1000.0))
         return String.format(
-            "%.1f %s", count/Math.pow(1000.0,exp), SUFFIXES[exp.toInt() - 1]
+            "%.1f %s", count / Math.pow(1000.0, exp), SUFFIXES[exp.toInt() - 1]
         )
     }
 }

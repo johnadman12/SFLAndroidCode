@@ -38,6 +38,8 @@ class WatchListActivity : BaseActivity() {
     var flag: String = ""
     var page: Int = 0
     var limit: Int = 50
+    private var flagSearch: Boolean = false;
+    var searchWatch: String = ""
     @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +77,13 @@ class WatchListActivity : BaseActivity() {
         }
 
         srl_layout.setOnRefreshListener {
-            page++;
-            getWatchList(1);
+            if (flagSearch) {
+                page++
+                callApiSearch(searchWatch)
+            } else {
+                page++;
+                getWatchList(1);
+            }
         }
 
         getWatchList(0)
@@ -90,8 +97,15 @@ class WatchListActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-                watchListAdapter!!.getFilter().filter(s);
+                if (s!!.length >= 2) {
+                    flagSearch = true
+                    searchWatch = s.toString()
+                    callApiSearch(s)
+                } else {
+                    flagSearch = false
+                    searchWatch = ""
+                    getWatchList(0)
+                }
             }
         })
 
@@ -125,6 +139,69 @@ class WatchListActivity : BaseActivity() {
         recyclerView_watch_list.visibility = View.VISIBLE
         recyclerView_watch_list.adapter!!.notifyDataSetChanged();
     }
+
+
+    private fun callApiSearch(c: CharSequence) {
+        val d = StockDialog.showLoading(this)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<WatchlistPojo> =
+            apiService.getSearchWatchList(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
+                c.toString(),
+                page.toString(),
+                limit.toString()
+            )
+        call.enqueue(object : Callback<WatchlistPojo> {
+            override fun onResponse(call: Call<WatchlistPojo>, response: Response<WatchlistPojo>) {
+                d.dismiss()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                if (response.body() != null) {
+                    // displayToast(response.body()!!.message, "sucess")
+                    if (response.body()!!.status == "1") {
+                        if (srl_layout != null)
+                            srl_layout.isRefreshing = false
+                        if (response.body()!!.status.equals("1")) {
+                            try {
+                                setAssetWatchlistFilter(" ")
+                                setSectorWatchlistFilter(" ")
+                                setCountryWatchlistFilter(" ")
+                                setMarketWatchlistFilter(" ")
+                                if (response.body()!!.stock!!.size > 0) {
+                                    list!!.clear()
+                                    list!!.addAll(response.body()!!.stock!!);
+                                }
+                            } catch (e: java.lang.Exception) {
+
+                            }
+                        }
+                        setWatchListAdapter();
+                        d.dismiss()
+
+                    } else if (response.body()!!.status == "2") {
+                        d.dismiss()
+                        appLogout()
+                    }
+                } else if (response.body()!!.status == "2") {
+                    appLogout()
+                } else {
+                    displayToast(response.body()!!.message, "warning")
+                }
+
+            }
+
+            override fun onFailure(call: Call<WatchlistPojo>, t: Throwable) {
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
+                Log.d("serach_error", "---" + t.localizedMessage);
+                d.dismiss()
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
 
     private fun getWatchList(firstTime: Int) {
         /*val d = StockDialog.showLoading(this)

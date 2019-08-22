@@ -76,11 +76,7 @@ class CurrencyFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         if (!isVisible) {
-            flagAlphaSort = false
-            flagPriceSort = false
-            flagDaySort = false
-            flagHTLSort = false
-            flagDHTLSort = false
+            setFlag(false, false, false, false, false)
         }
         try {
             val opts = IO.Options()
@@ -119,7 +115,6 @@ class CurrencyFragment : BaseFragment() {
         }
 
     }
-
 
 
     override fun onPause() {
@@ -180,41 +175,61 @@ class CurrencyFragment : BaseFragment() {
                         forexOldList!!.addAll(response.body()!!.currency!!);
 
                         if (flagAlphaSort) {
-                            val sortedList = forexList!!.sortedBy { it.symbol }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexList!!.addAll(sortedList)
-                            forexOldList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.symbol }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexList!!.addAll(sortedList)
+                                forexOldList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceSort) {
-                            val sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexList!!.addAll(sortedList)
-                            forexOldList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexList!!.addAll(sortedList)
+                                forexOldList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
 
                         } else if (flagDaySort) {
-                            val sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexList!!.addAll(sortedList)
-                            forexOldList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexList!!.addAll(sortedList)
+                                forexOldList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagHTLSort) {
-                            val sortedList = forexList!!.sortedByDescending { it.ask?.toDouble() }
+                            try {
+                                val sortedList = forexList!!.sortedByDescending { it.ask?.toDouble() }
 
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexList!!.addAll(sortedList)
-                            forexOldList!!.addAll(sortedList)
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexList!!.addAll(sortedList)
+                                forexOldList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagDHTLSort) {
-                            val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexList!!.addAll(sortedList)
-                            forexOldList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexList!!.addAll(sortedList)
+                                forexOldList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         }
                         if (forexAdapter != null)
@@ -367,43 +382,59 @@ class CurrencyFragment : BaseFragment() {
                         forexList!!.addAll(response.body()!!.currency!!)
 
                         if (flagAlphaSort) {
-                            val sortedList = forexList!!.sortedBy { it.symbol?.toString() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexOldList!!.addAll(sortedList)
-                            forexList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.symbol?.toString() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexOldList!!.addAll(sortedList)
+                                forexList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceSort) {
-                            val sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexOldList!!.addAll(sortedList)
-                            forexList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexOldList!!.addAll(sortedList)
+                                forexList!!.addAll(sortedList)
+                            } catch (e: Exception) {
 
+                            }
 
                         } else if (flagDaySort) {
-                            val sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexOldList!!.addAll(sortedList)
-                            forexList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexOldList!!.addAll(sortedList)
+                                forexList!!.addAll(sortedList)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagHTLSort) {
-                            val sortedList = forexList!!.sortedByDescending { it.ask?.toDouble() }
+                            try {
+                                val sortedList = forexList!!.sortedByDescending { it.ask?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexOldList!!.addAll(sortedList)
+                                forexList!!.addAll(sortedList)
+                            } catch (e: Exception) {
 
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexOldList!!.addAll(sortedList)
-                            forexList!!.addAll(sortedList)
-
+                            }
 
                         } else if (flagDHTLSort) {
-                            val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
-                            forexList!!.clear()
-                            forexOldList!!.clear()
-                            forexOldList!!.addAll(sortedList)
-                            forexList!!.addAll(sortedList)
+                            try {
+                                val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
+                                forexList!!.clear()
+                                forexOldList!!.clear()
+                                forexOldList!!.addAll(sortedList)
+                                forexList!!.addAll(sortedList)
+                            } catch (e: Exception) {
 
+                            }
                         }
                         if (forexAdapter != null)
                             forexAdapter!!.notifyDataSetChanged()
@@ -431,53 +462,77 @@ class CurrencyFragment : BaseFragment() {
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
-            setFlag(true, false, false, false, false)
-            var sortedList = forexList!!.sortedBy { it.symbol?.toString() }
-            forexList!!.clear()
-            forexList!!.addAll(sortedList)
-            forexOldList!!.clear()
-            forexOldList!!.addAll(sortedList)
-            setCurrencyAdapter();
+            try {
+                setFlag(true, false, false, false, false)
+                var sortedList = forexList!!.sortedBy { it.symbol?.toString() }
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                setCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("dayChange")) {
-            setFlag(false, false, true, false, false)
-            var sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
-            forexList!!.clear()
-            forexList!!.addAll(sortedList)
-            forexOldList!!.clear()
-            forexOldList!!.addAll(sortedList)
-            setCurrencyAdapter();
+            try {
+                setFlag(false, false, true, false, false)
+                var sortedList = forexList!!.sortedBy { it.changeper?.toDouble() }
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                setCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
 
         } else if (type.equals("price")) {
-            setFlag(false, true, false, false, false)
-            var sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
-            forexList!!.clear()
-            forexList!!.addAll(sortedList)
-            forexOldList!!.clear()
-            forexOldList!!.addAll(sortedList)
-            setCurrencyAdapter();
+            try {
+                setFlag(false, true, false, false, false)
+                var sortedList = forexList!!.sortedBy { it.ask?.toDouble() }
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                setCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("HighToLow")) {
-            setFlag(false, false, false, true, false)
-            val sortedList = forexList!!.sortedByDescending { it.ask!!.toDouble() }
-            forexList!!.clear()
-            forexList!!.addAll(sortedList)
-            forexOldList!!.clear()
-            forexOldList!!.addAll(sortedList)
-            setCurrencyAdapter();
+            try {
+                setFlag(false, false, false, true, false)
+                val sortedList = forexList!!.sortedByDescending { it.ask!!.toDouble() }
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                setCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("DayHighToLow")) {
-            setFlag(false, false, false, false, true)
-            val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
-            forexList!!.clear()
-            forexList!!.addAll(sortedList)
-            forexOldList!!.clear()
-            forexOldList!!.addAll(sortedList)
-            setCurrencyAdapter();
+            try {
+                setFlag(false, false, false, false, true)
+                val sortedList = forexList!!.sortedByDescending { it.changeper?.toDouble() }
+                forexList!!.clear()
+                forexList!!.addAll(sortedList)
+                forexOldList!!.clear()
+                forexOldList!!.addAll(sortedList)
+                setCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("nodata")) {
-            flagAlphaSort = false
-            flagPriceSort = false
-            flagDaySort = false
-            flagHTLSort = false
-            flagDHTLSort = false
-            getCurrency("2")
+            try {
+                flagAlphaSort = false
+                flagPriceSort = false
+                flagDaySort = false
+                flagHTLSort = false
+                flagDHTLSort = false
+                getCurrency("2")
+            } catch (e: Exception) {
+
+            }
         }
     }
 

@@ -233,14 +233,18 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
                 }
         }
         circular_progress.setProgressTextAdapter(TIME_TEXT_ADAPTER)
-        if (contest.marketname.equals("Equity")) {
-            Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
-                .into(ivStock)
-            tvStockName.setText(contest.exchangename)
-        } else {
-            tvStockName.setText(contest.marketname)
-            Glide.with(this).load(R.drawable.ic_business)
-                .into(ivStock)
+        try {
+            if (contest.marketname.equals("Equity")) {
+                Glide.with(this).load(AppDelegate.EXCHANGE_URL + contest.exchangeimage.trim())
+                    .into(ivStock)
+                tvStockName.setText(contest.exchangename)
+            } else {
+                tvStockName.setText(contest.marketname)
+                Glide.with(this).load(R.drawable.ic_business)
+                    .into(ivStock)
+            }
+        }catch (e:Exception){
+
         }
 
         iv_info.setOnClickListener {
