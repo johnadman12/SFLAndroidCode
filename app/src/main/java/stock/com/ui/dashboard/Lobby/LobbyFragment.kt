@@ -81,25 +81,41 @@ class LobbyFragment : BaseFragment() {
 
         rel_crypto.setOnClickListener {
             rvExchanges.visibility = View.GONE
+            if (contest != null)
+                contest!!.clear()
+            lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
             type = "crypto"
             getContestlist(type)
+            setContestAdapter()
         }
 
         rel_stock.setOnClickListener {
-            type = "equity"
             getExchangeNamelist()
+            if (contest != null)
+                contest!!.clear()
+            lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
+            type = "equity"
             getContestlist(type)
+            setContestAdapter()
         }
 
         rel_forex.setOnClickListener {
             rvExchanges.visibility = View.GONE
+            if (contest != null)
+                contest!!.clear()
+            lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
             type = "currency"
             getContestlist(type)
+            setContestAdapter()
         }
         rel_commodity.setOnClickListener {
             rvExchanges.visibility = View.GONE
             type = "all"
+            if (contest != null)
+                contest!!.clear()
+            lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
             getContestlist(type)
+            setContestAdapter()
         }
 
         refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
@@ -137,7 +153,7 @@ class LobbyFragment : BaseFragment() {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        rvExchanges.visibility=View.VISIBLE
+                        rvExchanges.visibility = View.VISIBLE
                         setStockNameAdapter(response.body()!!.exchange)
                         exchangeId = response.body()!!.exchange.get(0).id
                     } else {
@@ -166,6 +182,7 @@ class LobbyFragment : BaseFragment() {
                 }
                 contest!!.clear()
                 contest!!.addAll(sorted!!)
+//                lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
                 if (lobbyContestAdapter != null) {
                     lobbyContestAdapter!!.notifyDataSetChanged()
                 }
@@ -187,7 +204,6 @@ class LobbyFragment : BaseFragment() {
         rvExchanges!!.adapter!!.notifyDataSetChanged();
 
     }
-
 
 
     fun autoScrollNews(llm: LinearLayoutManager) {

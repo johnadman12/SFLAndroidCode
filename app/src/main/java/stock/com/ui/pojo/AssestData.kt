@@ -160,7 +160,7 @@ class AssestData : BasePojo() {
         var technicalDocUrl: List<String>? = null
         @SerializedName("Twitter")
         @Expose
-        var twitterUrl: List<Any>? = null
+        var twitterUrl: List<String>? = null
         @SerializedName("Reddit")
         @Expose
         var redditUrl: List<String>? = null

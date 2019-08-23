@@ -74,9 +74,9 @@ class DataCurrencyFragment : BaseFragment() {
 
     private fun setData(list: CurrencyDetail.Stock) {
         tvOpen.setText(list.latestPrice)
-//        tvClose.setText(list.close)
-//        tvHigh.setText(list.high)
-//        tvLow.setText(list.low)
+        tvClose.setText(list.previousClose)
+        tvHigh.setText(list.day_range)
+        tvLow.setText(list.week_range)
 //        tvAverage.setText(list.average)
 //        tvMarketCap.setText(list.marketCap)
 //        tvVolume.setText(list.hVolume)

@@ -18,6 +18,9 @@ class CurrencyDetail:BasePojo(){
         @SerializedName("symbol")
         @Expose
         var symbol: String? = null
+        @SerializedName("ric")
+        @Expose
+        var ric: String? = null
         @SerializedName("firstflag")
         @Expose
         var firstflag: String? = null
@@ -60,6 +63,12 @@ class CurrencyDetail:BasePojo(){
         @SerializedName("stockid")
         @Expose
         var stockid: String? = null
+        @SerializedName("day_range")
+        @Expose
+        var day_range: String? = null
+        @SerializedName("52week_range")
+        @Expose
+        var week_range: String? = null
         @SerializedName("previousClose")
         @Expose
         var previousClose: String? = null

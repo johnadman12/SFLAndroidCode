@@ -612,6 +612,7 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
+        jsonparams.addProperty("user_team_name", teamName)
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("marketdatas", array)

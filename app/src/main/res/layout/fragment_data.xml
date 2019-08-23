@@ -236,7 +236,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Market Status"
+                        android:text="Market Stats"
                         android:textSize="@dimen/_12ssp"
                         android:padding="@dimen/_5sdp"
                         android:textStyle="bold"
@@ -469,6 +469,8 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
+                          android:visibility="gone"
+                          android:id="@+id/ll_website"
                           android:padding="@dimen/_5sdp">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -502,6 +504,8 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
+                          android:visibility="gone"
+                          android:id="@+id/ll_Reddit"
                           android:padding="@dimen/_5sdp">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -535,6 +539,8 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
+                          android:id="@+id/ll_Message"
+                          android:visibility="gone"
                           android:padding="@dimen/_5sdp">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -569,6 +575,8 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
+                          android:id="@+id/ll_Source"
+                          android:visibility="gone"
                           android:padding="@dimen/_5sdp">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -601,6 +609,8 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_marginTop="@dimen/_5sdp"
+                          android:id="@+id/ll_Explorer"
+                          android:visibility="gone"
                           android:padding="@dimen/_5sdp">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -617,6 +627,41 @@
                         android:layout_weight="1"
                         android:gravity="right"
                         android:id="@+id/tvExplorer"
+                        android:linksClickable="true"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textColor="@color/colorPrimary"
+                        android:drawableRight="@mipmap/arrowright"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="@dimen/_1ssp"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:id="@+id/ll_Twitter"
+                          android:visibility="gone"
+                          android:layout_marginTop="@dimen/_5sdp"
+                          android:padding="@dimen/_5sdp">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Twitter"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_gravity="center_vertical"
+                        style="@style/TextStyleNormal"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10ssp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:id="@+id/tvTwitter"
                         android:linksClickable="true"
                         android:textColorLink="@color/colorPrimary"
                         android:textColor="@color/colorPrimary"

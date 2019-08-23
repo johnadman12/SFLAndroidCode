@@ -95,7 +95,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
-                        symbol = response.body()!!.stock!!.get(0).currencyname!!
+                        symbol = response.body()!!.stock!!.get(0).ric!!
                         /* val fragment: ChartFragment = ChartFragment()
                          var nd: Bundle = Bundle()
                          nd.putString("Stockname", symbol)

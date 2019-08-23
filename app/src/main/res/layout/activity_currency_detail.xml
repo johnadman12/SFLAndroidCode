@@ -109,6 +109,7 @@
                                 android:paddingLeft="@dimen/_1sdp"
                                 android:paddingRight="@dimen/_1sdp"
                                 style="@style/TextStyleNormal"
+                                android:visibility="gone"
                                 android:textColor="@color/textColorGray"/>
 
                         <androidx.appcompat.widget.AppCompatTextView

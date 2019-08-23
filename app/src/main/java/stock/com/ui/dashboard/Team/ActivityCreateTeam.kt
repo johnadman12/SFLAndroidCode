@@ -897,6 +897,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("user_team_name", teamName)
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
         jsonparams.add("stocks", array)

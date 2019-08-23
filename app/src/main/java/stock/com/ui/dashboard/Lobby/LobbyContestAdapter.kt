@@ -84,7 +84,8 @@ class LobbyContestAdapter(
 //        holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
 
 
-        try {
+       /* try {
+            holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
             if (!mContest.get(position).scheduleStart.equals(" ")) {
                 val inputPattern = "yyyy-MM-dd HH:mm:ss"
                 val inputFormat = SimpleDateFormat(inputPattern)
@@ -176,21 +177,129 @@ class LobbyContestAdapter(
                         override fun onFinish() {
                         }
                     }
-                    newtimer.start()
                     if (mContest.get(position).contest_teamremaining == 0) {
                         holder.itemView.txtjoin.setText("Full")
                         holder.itemView.circular_progress.progressBackgroundColor =
                             ContextCompat.getColor(mContext, R.color.GrayColor)
                         holder.itemView.isEnabled = false
                     }
+                    newtimer.start()
+
 
                 }
 
             }
         } catch (e: Exception) {
 
-        }
+        }*/
 
+        try {
+            holder.itemView.tvTime.setText(parseDateToddMMyyyy(mContest.get(position).scheduleStart))
+            if (!mContest.get(position).scheduleStart.equals(" ")) {
+                val inputPattern = "yyyy-MM-dd HH:mm:ss"
+                val inputFormat = SimpleDateFormat(inputPattern)
+                var date: Date? = null
+                date = inputFormat.parse(mContest.get(position).scheduleStart)
+                var timeZone: String = Calendar.getInstance().getTimeZone().getID();
+                date = Date(date.getTime() + TimeZone.getTimeZone(timeZone).getOffset(date.getTime()));
+                val thatDay = Calendar.getInstance()
+                thatDay.setTime(date);
+                val today = Calendar.getInstance()
+                val diff = thatDay.timeInMillis - today.timeInMillis
+                if (diff.toString().contains("-")) {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            holder.itemView.circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(mContext, R.color.GrayColor)
+                            holder.itemView.isEnabled = false
+                            holder.itemView.llbgTime.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.circle))
+                            holder.itemView.tvTimeLeft.setText("Contest \nStarted")
+                            holder.itemView.txtjoin.setText("Now \nLive")
+                            holder.itemView.tvHint.visibility = View.GONE
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    newtimer.start()
+
+                } else if (diff.equals("3600000")) {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        @SuppressLint("WrongConstant")
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            val diffSec = diff / 1000
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n " + minutes.toString() + "M: ")
+
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
+                        holder.itemView.txtjoin.setText("Full")
+                        holder.itemView.circular_progress.progressBackgroundColor =
+                            ContextCompat.getColor(mContext, R.color.GrayColor)
+                        holder.itemView.isEnabled = false
+                    }
+                    newtimer.start()
+
+                } else if (diff < 900000) {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            holder.itemView.txtjoin.setTextSize(16.00f)
+                            holder.itemView.txtjoin.setText("Starts \nSoon")
+                            holder.itemView.circular_progress.progressBackgroundColor =
+                                ContextCompat.getColor(mContext, R.color.GrayColor)
+                            holder.itemView.isEnabled = false
+                            holder.itemView.llSportsLeft.visibility = View.INVISIBLE
+//                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            holder.itemView.tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    newtimer.start()
+
+                } else {
+                    val newtimer = object : CountDownTimer(diff, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            val cTime = Calendar.getInstance()
+                            val diff = thatDay.timeInMillis - cTime.timeInMillis
+                            val diffSec = diff / 1000
+                            val seconds = diffSec % 60
+                            val minutes = diffSec / 60 % 60
+                            val hours = diffSec / 3600
+                            holder.itemView. tvTimeLeft.setText(hours.toString() + "H: \n" + minutes.toString() + "M: \n" + seconds.toString() + "S")
+
+                        }
+
+                        override fun onFinish() {
+                        }
+                    }
+                    if (mContest.get(position).contest_teamremaining.toString().equals("0")) {
+                        holder.itemView.txtjoin.setText("Full")
+                        holder.itemView.circular_progress.progressBackgroundColor =
+                            ContextCompat.getColor(mContext, R.color.GrayColor)
+                        holder.itemView.isEnabled = false
+                    }
+                    newtimer.start()
+                }
+            }
+
+        } catch (E: Exception) {
+
+        }
         holder.itemView.iv_info.setOnClickListener {
             AppDelegate.showInfoDialogue(mContest.get(position).description, mContext);
         }

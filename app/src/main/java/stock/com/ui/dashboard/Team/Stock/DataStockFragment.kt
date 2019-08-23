@@ -77,7 +77,7 @@ class DataStockFragment : BaseFragment() {
 
     private fun setData(list: AssestData.Stock) {
         tvOpen.setText(list.latestPrice)
-//        tvClose.setText(list.close)
+        tvClose.setText(list.previousClose)
 //        tvHigh.setText(list.high)
 //        tvLow.setText(list.low)
 //        tvAverage.setText(list.average)

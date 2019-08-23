@@ -60,6 +60,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_10ssp"
                             style="@style/TextStyleNormal"
+                            android:maxLines="5"
                             android:lineSpacingExtra="@dimen/_2sdp"
                             android:text="@string/dummy_text"
                             android:padding="@dimen/_2sdp"
