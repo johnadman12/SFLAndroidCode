@@ -155,6 +155,7 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
     }
 
+
     fun getContestDetail() {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)

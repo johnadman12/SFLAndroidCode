@@ -161,6 +161,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_gravity="center"
+                            android:visibility="gone"
                             android:gravity="center|left">
 
                         <androidx.appcompat.widget.AppCompatImageView

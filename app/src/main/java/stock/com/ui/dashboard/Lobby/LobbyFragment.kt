@@ -26,6 +26,7 @@ import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.dashboard.DashBoardActivity
 import stock.com.ui.dashboard.WebviewActivity
+import stock.com.ui.pojo.ExchangeList
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -38,14 +39,17 @@ class LobbyFragment : BaseFragment() {
     var categoryId: String = ""
     var flag: String = ""
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
+    var sorted: ArrayList<LobbyContestPojo.Contest>? = null;
     var lobbyContestAdapter: LobbyContestAdapter? = null
     var type: String = "all"
+    var exchangeId: Int = 0
 
     private var dashBoardActivity: DashBoardActivity? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contest = ArrayList();
+        sorted = ArrayList();
         dashBoardActivity = activity as DashBoardActivity?
         if (arguments!!.getString("id") != null)
             categoryId = arguments!!.getString("id");
@@ -73,23 +77,27 @@ class LobbyFragment : BaseFragment() {
                 StockConstant.RESULT_CODE_SORT
             )
         }
-
+        rvExchanges.visibility = View.GONE
 
         rel_crypto.setOnClickListener {
+            rvExchanges.visibility = View.GONE
             type = "crypto"
             getContestlist(type)
         }
 
         rel_stock.setOnClickListener {
             type = "equity"
+            getExchangeNamelist()
             getContestlist(type)
         }
 
         rel_forex.setOnClickListener {
+            rvExchanges.visibility = View.GONE
             type = "currency"
             getContestlist(type)
         }
         rel_commodity.setOnClickListener {
+            rvExchanges.visibility = View.GONE
             type = "all"
             getContestlist(type)
         }
@@ -105,6 +113,7 @@ class LobbyFragment : BaseFragment() {
                 }, 1500)
             }
         })
+//        getExchangeNamelist()
         setContestAdapter()
     }
 
@@ -114,6 +123,103 @@ class LobbyFragment : BaseFragment() {
         } else {
             getContestlist(type)
         }
+
+    }
+
+    fun getExchangeNamelist() {
+        val d = StockDialog.showLoading(activity!!)
+        d.setCanceledOnTouchOutside(false)
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<ExchangeList> =
+            apiService.getExchangelist()
+        call.enqueue(object : Callback<ExchangeList> {
+            override fun onResponse(call: Call<ExchangeList>, response: Response<ExchangeList>) {
+                d.dismiss()
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        rvExchanges.visibility=View.VISIBLE
+                        setStockNameAdapter(response.body()!!.exchange)
+                        exchangeId = response.body()!!.exchange.get(0).id
+                    } else {
+                        displayToast(resources.getString(R.string.internal_server_error), "error")
+                        d.dismiss()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ExchangeList>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+                d.dismiss()
+            }
+        })
+
+    }
+
+
+    fun filterData(exchangeId: Int) {
+        if (!TextUtils.isEmpty(exchangeId.toString())) {
+            if (contest!!.size > 0) {
+                for (i in 0 until contest!!.size) {
+                    if (exchangeId == contest!!.get(i).exchangeid.toInt())
+                        sorted!!.add(contest!!.get(i))
+                }
+                contest!!.clear()
+                contest!!.addAll(sorted!!)
+                if (lobbyContestAdapter != null) {
+                    lobbyContestAdapter!!.notifyDataSetChanged()
+                }
+            }
+        }
+
+    }
+
+    fun setStockNameAdapter(exchangeList: List<ExchangeList.Exchange>) {
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.HORIZONTAL
+        rvExchanges!!.layoutManager = llm
+        rvExchanges.visibility = View.VISIBLE
+
+        rvExchanges!!.adapter = LobbyExchangeAdapter(context!!, exchangeList!!, this)
+
+        // call function news
+        autoScrollNews(llm)
+        rvExchanges!!.adapter!!.notifyDataSetChanged();
+
+    }
+
+
+
+    fun autoScrollNews(llm: LinearLayoutManager) {
+        val handler = Handler()
+        val runnable = object : Runnable {
+            var count = 0
+            var flag = true
+            override fun run() {
+                if (rvExchanges == null)
+                    return
+                if (count < rvExchanges!!.adapter!!.getItemCount()) {
+                    if (count == rvExchanges!!.adapter!!.getItemCount() - 1) {
+                        flag = false;
+                    } else
+                        if (count == 0) {
+                            flag = true;
+                        }
+                    if (flag)
+                        count++;
+                    else
+                        count--;
+                    var visibleItemCount = rvExchanges.getChildCount();
+                    var totalItemCount = llm.getItemCount();
+//                    recyclerView_stock_name.smoothScrollToPosition(count);
+                    var dx = count
+                    rvExchanges.scrollBy(count, visibleItemCount + totalItemCount)
+                    handler.postDelayed(this, 300);
+
+                }
+            }
+        }
+        handler.postDelayed(runnable, 0);
 
     }
 
