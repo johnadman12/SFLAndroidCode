@@ -91,9 +91,6 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 txtTeamname.visibility = View.GONE
             }
             R.id.ll_save -> {
-                /* if (edtTeamName.isEnabled) {
-                     ivRight.performClick()
-                 }*/
                 if (marketSelectedItem!!.size > 0) {
                     for (i in 0 until marketSelectedItem!!.size) {
                         var postData1 = JsonObject();
@@ -141,8 +138,10 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
         viewTeamAdapter!!.notifyDataSetChanged()
 
         if (TextUtils.isEmpty(teamName)) {
+            txtTeamname.setText("My Team")
             edtTeamName.setText("My Team")
         } else {
+            txtTeamname.setText(teamName)
             edtTeamName.setText(teamName)
         }
 
@@ -230,17 +229,18 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
-                        item.cryptoType = "1"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
+                            item.cryptoType = "1"
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
+
                     }
                 }
 
                 override fun onToggleSell(item: MarketList.Crypto) {
                     for (i in 0 until marketSelectedItem!!.size) {
-                        item.cryptoType = "0"
                         if (marketSelectedItem!!.get(i).cryptocurrencyid == item.cryptocurrencyid) {
+                            item.cryptoType = "0"
                             marketSelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
                     }
@@ -297,6 +297,8 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
 
     fun joinContest() {
         if (marketSelectedItem!!.size > 0) {
+            if (array.size() > 0)
+                array = JsonArray()
             for (i in 0 until marketSelectedItem!!.size) {
                 var postData: JsonObject = JsonObject()
                 try {
@@ -310,7 +312,7 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 }
                 array.add(postData)
             }
-//                    Log.e("savedlist", array.toString())
+                    Log.e("savedlist", array.toString())
 
             if (flagCloning == 1) {
                 joinWithThisTeamID()
@@ -384,21 +386,21 @@ class ActivityMarketViewTeam : BaseActivity(), View.OnClickListener {
                 if (data.getStringExtra("flag").equals("Volume")) {
                     var sortedList = list!!.sortedBy { it.latestVolume!!.toDouble() }
 
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
 
                 } else if (data.getStringExtra("flag").equals("price")) {
                     var sortedList = list!!.sortedWith(compareBy { it.latestPrice })
-                       list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
 
                 } else if (data.getStringExtra("flag").equals("Alpha")) {
                     var sortedList = list!!.sortedBy { it.symbol?.toString() }
-                        list!!.clear()
-                        list!!.addAll(sortedList)
-                        rv_team!!.adapter!!.notifyDataSetChanged()
+                    list!!.clear()
+                    list!!.addAll(sortedList)
+                    rv_team!!.adapter!!.notifyDataSetChanged()
 
                 }
             }

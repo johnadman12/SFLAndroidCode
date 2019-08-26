@@ -335,7 +335,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
 
     fun callSearch(c: CharSequence) {
         Log.d("dsadada", "sdada--" + c);
-        if (c.toString().length >= 3) {
+        if (c.toString().length >= 2) {
             flagSearch = false;
             flagRefresh = false;
             searchText = c.toString()

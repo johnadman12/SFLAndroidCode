@@ -82,7 +82,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         setStockNameAdapter()
         getFeatureContentlist();
         getTrainingContentlist()
-//        getNewslist()
+        getNewslist()
 
     }
 

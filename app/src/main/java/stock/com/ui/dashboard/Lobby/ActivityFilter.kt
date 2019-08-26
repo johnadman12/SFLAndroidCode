@@ -49,6 +49,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     private var contestTypeFilter: String? = "";
     private var marketTypeFilter: String? = "";
     private var countryTypeFilter: String? = "";
+    private var type: String = "";
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -113,6 +114,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         StockConstant.ACTIVITIES.add(this)
+        if (intent != null)
+            type = intent.getStringExtra(StockConstant.MARKET_TYPE)
         initViews()
         contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
         marketTypeFilter = getFromPrefsString(StockConstant.MARKET_TYPE);
@@ -121,9 +124,9 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     }
 
     fun setFilters() {
-          countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
-          contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
-          marketTypeFilter = getFromPrefsString(StockConstant.MARKET_TYPE);
+        countryTypeFilter = getFromPrefsString(StockConstant.COUNTRY_TYPE);
+        contestTypeFilter = getFromPrefsString(StockConstant.CONTEST_TYPE);
+        marketTypeFilter = getFromPrefsString(StockConstant.MARKET_TYPE);
 
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
@@ -215,7 +218,7 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<FilterPojo> =
-            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString())
+            apiService.getFilterList(getFromPrefsString(StockConstant.USERID).toString(), type)
         call.enqueue(object : Callback<FilterPojo> {
 
             override fun onResponse(call: Call<FilterPojo>, response: Response<FilterPojo>) {

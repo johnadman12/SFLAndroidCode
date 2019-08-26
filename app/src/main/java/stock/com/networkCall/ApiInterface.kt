@@ -232,7 +232,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("contest/get_filter")
-    fun getFilterList(@Field("user_id") user_id: String): Call<FilterPojo>
+    fun getFilterList(
+        @Field("user_id") user_id: String,
+        @Field("market_type") marketType: String
+    ): Call<FilterPojo>
 
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")

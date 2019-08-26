@@ -214,7 +214,7 @@
                                 android:gravity="center"
                                 android:id="@+id/tvChange"
                                 android:textSize="@dimen/_10ssp"
-                                android:textColor="@color/textColorBlack"
+                                android:textColor="@color/redcolor"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_gravity="center_vertical"
                                 style="@style/TextStyleNormal"/>

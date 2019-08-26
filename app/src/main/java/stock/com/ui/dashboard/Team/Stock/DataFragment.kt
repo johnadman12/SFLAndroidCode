@@ -75,16 +75,35 @@ class DataFragment : BaseFragment() {
 
     private fun setData(list: AssestData.Stock) {
         try {
-            tvOpen.setText("$" + formatValue2(list.open.toDouble()))
-            tvClose.setText("$" + formatValue2(list.close.toDouble()))
-            tvHigh.setText("$" + formatValue2(list.high.toDouble()))
-            tvLow.setText("$" + formatValue2(list.low.toDouble()))
-            tvAverage.setText("$" + formatValue2(list.average.toDouble()))
-            tvChange.setText("$" + formatValue2(list.change.toDouble()))
-        }catch (e:Exception){
+            tvOpen.setText("$" + list.open.toDouble())
+            tvClose.setText("$" + list.close.toDouble())
+            tvHigh.setText("$" + list.high.toDouble())
+            tvLow.setText("$" + list.low.toDouble())
+            tvAverage.setText("$" + list.average.toDouble())
+            if (list.changePercent.contains("-"))
+                tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.redcolor))
+            else
+                tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.green))
+            tvChange.setText("$" + list.change.toDouble())
+        } catch (e: Exception) {
         }
 
         try {
+            tvMarketCap.setText("$" + list.marketCap)
+            tvVolume.setText("$" + list.latestVolume)
+            tvCirculating.setText("$" + list.circulating)
+            if (TextUtils.isEmpty(list.maxSupply)) {
+                tvmaxSupply.setText("N/A")
+            } else {
+                tvmaxSupply.setText("$" + list.maxSupply)
+            }
+
+        } catch (e: Exception) {
+            Log.d("excep", e.message)
+
+        }
+
+        /*try {
             tvMarketCap.setText("$" + formatValue(list.marketCap.toDouble()))
             tvVolume.setText("$" + formatValue(list.latestVolume.toDouble()))
             tvCirculating.setText("$" + formatValue(list.circulating.toDouble()))
@@ -95,50 +114,50 @@ class DataFragment : BaseFragment() {
             }
 
         } catch (e: Exception) {
-
-        }
+            Log.d("excep", e.message)
+        }*/
         tvRank.setText(list.rank)
         tvCrypto.setText("About " + list.symbol)
         tvAbout.setText(list.cryptodescription)
 
         if (list.urls != null) {
 
-            if (list.urls!!.websiteUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.websiteUrl!!.get(0))) {
+            if (list.urls!!.websiteUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.websiteUrl!!.get(0))) {
                 ll_website.visibility = View.VISIBLE
                 tvWebsite.setText(list.urls!!.websiteUrl!!.get(0))
                 tvWebsite.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvWebsite, Linkify.WEB_URLS);
             }
 
-            if (list.urls!!.redditUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.redditUrl!!.get(0))) {
+            if (list.urls!!.redditUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.redditUrl!!.get(0))) {
                 ll_Reddit.visibility = View.VISIBLE
                 tvReddit.setText(list.urls!!.redditUrl!!.get(0))
                 tvReddit.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvReddit, Linkify.WEB_URLS);
             }
 
-            if (list.urls!!.messageBoardUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.messageBoardUrl!!.get(0))) {
+            if (list.urls!!.messageBoardUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.messageBoardUrl!!.get(0))) {
                 ll_Message.visibility = View.VISIBLE
                 tvMessageBoard.setText(list.urls!!.messageBoardUrl!!.get(0))
                 tvMessageBoard.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvMessageBoard, Linkify.WEB_URLS);
             }
 
-            if (list.urls!!.sourceCodeUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.sourceCodeUrl!!.get(0))) {
+            if (list.urls!!.sourceCodeUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.sourceCodeUrl!!.get(0))) {
                 ll_Source.visibility = View.VISIBLE
                 tvSourceCode.setText(list.urls!!.sourceCodeUrl!!.get(0))
                 tvSourceCode.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvSourceCode, Linkify.WEB_URLS);
             }
-            if (list.urls!!.explorerUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.explorerUrl!!.get(0))) {
+            if (list.urls!!.explorerUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.explorerUrl!!.get(0))) {
                 ll_Explorer.visibility = View.VISIBLE
                 tvExplorer.setText(list.urls!!.explorerUrl!!.get(0))
                 tvExplorer.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvExplorer, Linkify.WEB_URLS);
             }
-            if (list.urls!!.twitterUrl!!.size > 0 && ! TextUtils.isEmpty(list.urls!!.twitterUrl!!.get(0))) {
+            if (list.urls!!.twitterUrl!!.size > 0 && !TextUtils.isEmpty(list.urls!!.twitterUrl!!.get(0))) {
                 ll_Twitter.visibility = View.VISIBLE
-                tvTwitter.setText(list.urls!!.explorerUrl!!.get(0))
+                tvTwitter.setText(list.urls!!.twitterUrl!!.get(0))
                 tvTwitter.setTextColor(ContextCompat.getColor(activity!!, R.color.colorPrimary))
                 Linkify.addLinks(tvTwitter, Linkify.WEB_URLS);
             }
@@ -172,30 +191,16 @@ class DataFragment : BaseFragment() {
     fun formatValue(value: Double): String {
         var value = value
         val power: Int
-        val suffix = "kmbt"
-        var formattedNumber = ""
-        val formatter = DecimalFormat("#,###.###")
-        power = StrictMath.log10(value).toInt()
-        value = value / Math.pow(10.0, (power / 3 * 3).toDouble())
-        formattedNumber = formatter.format(value)
-        formattedNumber = formattedNumber + SUFFIXES[power / 3]
+        var formattedNumber = "0"
+        if (value > 0) {
+            val formatter = DecimalFormat("#,###.###")
+            power = StrictMath.log10(value).toInt()
+            value = value / Math.pow(10.0, (power / 3 * 3).toDouble())
+            formattedNumber = formatter.format(value)
+            formattedNumber = formattedNumber + " "+SUFFIXES[power / 3]
+        }
         return formattedNumber;
         // return if (formattedNumber.length > 4) formattedNumber.replace("\\.[0-9]+".toRegex(), "") else formattedNumber
     }
-
-    fun formatValue2(value: Double): String {
-        var value = value
-        val power: Int
-        val suffix = "kmbt"
-        var formattedNumber = ""
-        val formatter = DecimalFormat("##.##")
-        power = StrictMath.log10(value).toInt()
-        value = value / Math.pow(10.0, (power / 3 * 3).toDouble())
-        formattedNumber = formatter.format(value)
-        formattedNumber = formattedNumber + SUFFIXES[power / 3]
-        return formattedNumber;
-        //return if (formattedNumber.length > 4) formattedNumber.replace("\\.[0-9]+".toRegex(), "") else formattedNumber
-    }
-
 
 }

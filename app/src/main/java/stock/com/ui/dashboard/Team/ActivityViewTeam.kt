@@ -198,8 +198,10 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         relFieldView.setOnClickListener(this)
 
         if (TextUtils.isEmpty(teamName)) {
+            txtTeamname.setText("My Team")
             edtTeamName.setText("My Team")
         } else {
+            txtTeamname.setText(teamName)
             edtTeamName.setText(teamName)
         }
 
@@ -239,8 +241,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: StockTeamPojo.Stock) {
                     for (i in 0 until stockSelectedItems!!.size) {
-                        item.stock_type = "1"
                         if (stockSelectedItems!!.get(i).stockid == item.stockid) {
+                            item.stock_type = "1"
                             stockSelectedItems!!.get(i).stock_type = item.stock_type
                         }
                     }
@@ -248,8 +250,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: StockTeamPojo.Stock) {
                     for (i in 0 until stockSelectedItems!!.size) {
-                        item.stock_type = "0"
                         if (stockSelectedItems!!.get(i).stockid == item.stockid) {
+                            item.stock_type = "0"
                             stockSelectedItems!!.get(i).stock_type = item.stock_type
                         }
                     }
@@ -311,6 +313,8 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                 } else if (stockSelectedItems!!.get(i).addedStock.equals("no")) {
                     stockSelectedItems!!.get(i).addedStock="1"
                 }*/
+                if (array.size() > 0)
+                    array = JsonArray()
                 var postData: JsonObject = JsonObject()
                 try {
                     postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
@@ -400,7 +404,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                         Handler().postDelayed(Runnable {
                             AppDelegate.showAlert(this@ActivityViewTeam, response.body()!!.message)
                         }, 500)
-                        teamId = response.body()!!.team_id
+                        teamId = response.body()!!.team_id.toInt()
                         // finish()
                     } else if (response.body()!!.status == "0") {
                         Handler().postDelayed(Runnable {

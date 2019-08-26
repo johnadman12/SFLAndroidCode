@@ -390,7 +390,7 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
     fun callSearch(c: CharSequence) {
         Log.d("dsadada", "sdada--" + c);
-        if (c.toString().length >= 3) {
+        if (c.toString().length >= 2) {
             flagSearch = false;
             searchText = c.toString()
             Log.d("dsadada", "111111--");
@@ -579,8 +579,9 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                             list!!.addAll(response.body()!!.crypto!!)
                             listOld!!.addAll(response.body()!!.crypto!!)
                         }
+                        if (rv_Players!!.adapter != null)
+                            rv_Players!!.adapter!!.notifyDataSetChanged();
 
-                        rv_Players!!.adapter!!.notifyDataSetChanged();
                         for (i in 0 until list!!.size) {
                             list!!.get(i).addedToList = 0
 

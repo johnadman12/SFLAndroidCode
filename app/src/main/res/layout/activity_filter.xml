@@ -32,7 +32,8 @@
                       android:layout_gravity="center"
                       android:background="@color/white">
             <LinearLayout
-                    android:id="@+id/llContest" android:layout_width="match_parent"
+                    android:id="@+id/llContest"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                 <androidx.appcompat.widget.AppCompatTextView
@@ -145,10 +146,13 @@
                       android:layout_height="wrap_content"
                       android:padding="@dimen/_10sdp"
                       android:layout_gravity="center"
+                      android:visibility="gone"
+                      android:id="@+id/ll_crypto"
                       android:orientation="vertical"
                       android:background="@color/white">
             <LinearLayout
-                    android:id="@+id/llMarket" android:layout_width="match_parent"
+                    android:id="@+id/llMarket"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                 <androidx.appcompat.widget.AppCompatTextView

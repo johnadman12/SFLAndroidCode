@@ -57,6 +57,7 @@ class LobbyFragment : BaseFragment() {
 
         ll_filter.setOnClickListener {
             val intent = Intent(context, ActivityFilter::class.java)
+            intent.putExtra(StockConstant.MARKET_TYPE, type)
             startActivityForResult(intent, RESULT_CODE_FILTER)
         }
 
@@ -80,6 +81,11 @@ class LobbyFragment : BaseFragment() {
         rvExchanges.visibility = View.GONE
 
         rel_crypto.setOnClickListener {
+            tv_filter.setText("Crypto\nFilter")
+            tv_filter.setTextSize(12.0f)
+            tv_createContest.setTextSize(12.0f)
+            tv_codejoin.setTextSize(12.0f)
+            tv_sort.setTextSize(12.0f)
             rvExchanges.visibility = View.GONE
             if (contest != null)
                 contest!!.clear()
@@ -90,6 +96,11 @@ class LobbyFragment : BaseFragment() {
         }
 
         rel_stock.setOnClickListener {
+            tv_filter.setText("Stock\nFilter")
+            tv_filter.setTextSize(12.0f)
+            tv_createContest.setTextSize(12.0f)
+            tv_codejoin.setTextSize(12.0f)
+            tv_sort.setTextSize(12.0f)
             getExchangeNamelist()
             if (contest != null)
                 contest!!.clear()
@@ -100,6 +111,11 @@ class LobbyFragment : BaseFragment() {
         }
 
         rel_forex.setOnClickListener {
+            tv_filter.setText("Forex\nFilter")
+            tv_filter.setTextSize(12.0f)
+            tv_createContest.setTextSize(12.0f)
+            tv_codejoin.setTextSize(12.0f)
+            tv_sort.setTextSize(12.0f)
             rvExchanges.visibility = View.GONE
             if (contest != null)
                 contest!!.clear()
@@ -109,6 +125,11 @@ class LobbyFragment : BaseFragment() {
             setContestAdapter()
         }
         rel_commodity.setOnClickListener {
+            tv_filter.setText("Commodities\nFilter")
+            tv_filter.setTextSize(10.0f)
+            tv_createContest.setTextSize(10.0f)
+            tv_codejoin.setTextSize(10.0f)
+            tv_sort.setTextSize(10.0f)
             rvExchanges.visibility = View.GONE
             type = "all"
             if (contest != null)

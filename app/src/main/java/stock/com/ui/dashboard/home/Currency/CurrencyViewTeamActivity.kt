@@ -123,8 +123,10 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
         initView()
 
         if (TextUtils.isEmpty(teamName)) {
+            txtTeamname.setText("My Team")
             edtTeamName.setText("My Team")
         } else {
+            txtTeamname.setText(teamName)
             edtTeamName.setText(teamName)
         }
 
@@ -216,8 +218,8 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleBuy(item: CurrencyPojo.Currency) {
                     for (i in 0 until currencySelectedItem!!.size) {
-                        item.cryptoType = "1"
                         if (currencySelectedItem!!.get(i).currencyid == item.currencyid) {
+                            item.cryptoType = "1"
                             currencySelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
                     }
@@ -225,8 +227,8 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
 
                 override fun onToggleSell(item: CurrencyPojo.Currency) {
                     for (i in 0 until currencySelectedItem!!.size) {
-                        item.cryptoType = "0"
                         if (currencySelectedItem!!.get(i).currencyid == item.currencyid) {
+                            item.cryptoType = "0"
                             currencySelectedItem!!.get(i).cryptoType = item.cryptoType
                         }
                     }
@@ -283,6 +285,8 @@ class CurrencyViewTeamActivity : BaseActivity(), View.OnClickListener {
     fun joinContest() {
         if (currencySelectedItem!!.size > 0) {
             for (i in 0 until currencySelectedItem!!.size) {
+                if (array.size() > 0)
+                    array = JsonArray()
                 var postData: JsonObject = JsonObject()
                 try {
                     postData.addProperty("crypto_id", currencySelectedItem!!.get(i).currencyid.toString());
