@@ -138,8 +138,8 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                 contestTypeFilter!!,
                 marketTypeFilter!!,
                 countryTypeFilter!!,
-                tvMin.text.toString(),
-                maxprice
+                tvMin.text.toString().replace("$",""),
+                maxprice.replace("$","")
             )
         call.enqueue(object : Callback<LobbyContestPojo> {
             override fun onResponse(call: Call<LobbyContestPojo>, response: Response<LobbyContestPojo>) {
@@ -227,7 +227,13 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
                     if (response.body()!!.status == "1") {
                         Handler().postDelayed(Runnable {
                         }, 100)
-                        setMarketAdapter(response.body()!!.market)
+                        if (response.body()!!.market!!.size > 0) {
+                            if (type.equals("equity", true)) {
+                                ll_crypto.visibility = VISIBLE
+                                setMarketAdapter(response.body()!!.market)
+                            } else
+                                ll_crypto.visibility = GONE
+                        }
                         setContestAdapter(response.body()!!.category!!)
                         setRangebar(/*response.body()!!.entryFees*/)
                     }
@@ -335,4 +341,6 @@ class ActivityFilter : BaseActivity(), View.OnClickListener {
     override fun onBackPressed() {
         super.onBackPressed()
     }
+
+
 }

@@ -18,7 +18,7 @@ class FilterPojo : BasePojo() {
     @Expose
     var entryFees: List<EntryFee>? = null
 
-    inner class Market {
+   /* inner class Market {
 
         @SerializedName("id")
         @Expose
@@ -33,6 +33,12 @@ class FilterPojo : BasePojo() {
         @Expose
         var imageUrl: String? = null
 
+    } */
+
+    inner class Market {
+        @SerializedName("sector")
+        @Expose
+        var sector: String? = null
     }
 
 

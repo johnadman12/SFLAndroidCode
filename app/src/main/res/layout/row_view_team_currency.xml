@@ -31,7 +31,7 @@
                     android:id="@+id/img2"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
                     android:scaleType="fitXY"
                     android:layout_height="@dimen/_15sdp"
                     android:src="@mipmap/stocks"/>

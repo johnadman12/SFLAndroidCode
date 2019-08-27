@@ -93,6 +93,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         val call: Call<AssestData> =
             apiService.getAssestData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
                 assestId, "crypto"
             )
         call.enqueue(object : Callback<AssestData> {
@@ -313,6 +314,17 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
         tvVol.setText(stock.get(0).hVolume)
         tvlatestPrice.setText(stock.get(0).latestPrice)
         Glide.with(this).load(stock.get(0).image).into(iv_stock_img)
+
+        if (stock.get(0).stock_type.equals("1")) {
+            Glide.with(this).load(R.mipmap.srh_cate_checkbox_select).into(ivWatchlist)
+            ivWatchlist.isEnabled = false
+        } else {
+            Glide.with(this).load(R.mipmap.watchlist).into(ivWatchlist)
+            ivWatchlist.setColorFilter(ContextCompat.getColor(this, R.color.blue), android.graphics.PorterDuff.Mode.MULTIPLY);
+            ivWatchlist.isEnabled = true
+        }
+
+
         if (!TextUtils.isEmpty(stock.get(0).changePercent))
             if (stock.get(0).changePercent.contains("-")) {
                 Glide.with(this).load(R.drawable.ic_down_arrow).into(stockgraph)
@@ -340,6 +352,8 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 d.dismiss()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
+                        Glide.with(this@ActivityMarketDetail).load(R.mipmap.srh_cate_checkbox_select).into(ivWatchlist)
+                        ivWatchlist.isEnabled = false
                         AppDelegate.showAlert(this@ActivityMarketDetail, response.body()!!.message)
                     } else if (response.body()!!.status == "2") {
                         appLogout()

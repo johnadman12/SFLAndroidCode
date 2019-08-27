@@ -46,7 +46,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
     var contestid: Int = 0
     var flag: Boolean = false
     var marketname: String = ""
-    var exchangeid: String = ""
+    var exchangeid: Int = 0
     var diff: Long = 0
     var listScores: MutableList<ContestDetail.Score>? = null
     var listMy: MutableList<ContestDetail.Score>? = null
@@ -97,7 +97,7 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
         listMy = ArrayList()
         if (intent != null) {
             contestid = intent.getIntExtra(StockConstant.CONTESTID, 0)
-            exchangeid = intent.getStringExtra(StockConstant.EXCHANGEID)
+            exchangeid = intent.getIntExtra(StockConstant.EXCHANGEID,0)
         }
         img_btn_back.setOnClickListener(this)
         img_btn_close.setOnClickListener(this)
@@ -210,8 +210,10 @@ class UpcomingContestDetailActivity : BaseActivity(), View.OnClickListener {
             else
                 if (contest.marketname.equals("Equity")) {
                     var intent = Intent(this, ActivityCreateTeam::class.java)
-                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid.toInt())
+                    intent.putExtra(StockConstant.EXCHANGEID, exchangeid)
+                    intent.putExtra(StockConstant.MARKETID, contest.mid)
                     intent.putExtra(StockConstant.CONTESTID, contestid)
+                    intent.putExtra(StockConstant.CONTESTFEE, contest.entryFees)
                     intent.putExtra("isCloning", 0)
                     startActivityForResult(intent, 405);
                 } else if (contest.marketname.equals("Cryptocurrencies")) {

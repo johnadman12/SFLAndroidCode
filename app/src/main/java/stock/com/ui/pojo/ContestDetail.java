@@ -104,7 +104,6 @@ public class ContestDetail extends BasePojo {
     }
 
     public class Score {
-
         @SerializedName("team_id")
         @Expose
         public int teamId;

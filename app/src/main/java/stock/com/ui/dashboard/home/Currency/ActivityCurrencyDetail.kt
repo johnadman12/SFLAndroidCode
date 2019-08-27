@@ -54,16 +54,16 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
         if (flagData == 1) {
             if (list != null) {
 //                if (list!!.size > 0)
-                    /*for (i in 0 until list!!.size) {
-                        try {
-                            if (currencyId.equals(list!!.get(i).currencyid))
-                                position = i
-                            symbol = list!!.get(position).currencyname!!
-                        } catch (e: Exception) {
+                /*for (i in 0 until list!!.size) {
+                    try {
+                        if (currencyId.equals(list!!.get(i).currencyid))
+                            position = i
+                        symbol = list!!.get(position).currencyname!!
+                    } catch (e: Exception) {
 
-                        }
+                    }
 
-                    }*/
+                }*/
             }
         } else {
             ivTeam.visibility = View.GONE
@@ -88,6 +88,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
         val call: Call<CurrencyDetail> =
             apiService.getCurrencyDetail(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
                 assestId, "currency"
             )
         call.enqueue(object : Callback<CurrencyDetail> {
@@ -241,7 +242,7 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
                 img_btn_comments.setColorFilter(ContextCompat.getColor(this, R.color.GrayColor));
             }
             R.id.ll_data -> {
-                if (fragment is DataFragment)
+                if (fragment is DataCurrencyFragment)
                     return;
                 val fragment: DataCurrencyFragment = DataCurrencyFragment()
                 var nd: Bundle = Bundle()
@@ -308,6 +309,16 @@ class ActivityCurrencyDetail : BaseActivity(), View.OnClickListener {
         tvask.setText(stock.get(0).latestPrice)
         Glide.with(this).load(stock.get(0).firstflag).into(img1)
         Glide.with(this).load(stock.get(0).secondflag).into(img2)
+
+        if (stock.get(0).stock_type.equals("1")) {
+            Glide.with(this).load(R.mipmap.srh_cate_checkbox_select).into(ivWatchlist)
+            ivWatchlist.isEnabled = false
+        } else {
+            Glide.with(this).load(R.mipmap.watchlist).into(ivWatchlist)
+            ivWatchlist.setColorFilter(ContextCompat.getColor(this, R.color.blue), android.graphics.PorterDuff.Mode.MULTIPLY);
+            ivWatchlist.isEnabled = true
+        }
+
         if (!TextUtils.isEmpty(stock.get(0).changePercent))
             if (stock.get(0).changePercent!!.contains("-")) {
                 Glide.with(this).load(R.drawable.ic_down_arrow).into(stockgraph)

@@ -140,7 +140,7 @@
                         android:textColor="@color/textColorBlack"
                         android:src="@mipmap/watchlist"
                         android:tint="@color/colorPrimary"
-                        android:layout_height="@dimen/_15sdp"/>
+                        android:layout_height="wrap_content"/>
 
                 <TextView android:layout_width="match_parent"
                           android:layout_height="wrap_content"

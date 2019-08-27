@@ -239,7 +239,6 @@
                             android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_22sdp"
                             app:srcCompat="@mipmap/watchlist"
-                            android:tint="@color/blue"
                             android:padding="@dimen/_5sdp"
                             android:layout_weight="0.1"/>
 

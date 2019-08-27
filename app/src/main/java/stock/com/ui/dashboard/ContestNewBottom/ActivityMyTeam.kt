@@ -32,7 +32,7 @@ class ActivityMyTeam : BaseActivity() {
     var limit: Int = 50
     var jsonparams: JsonObject = JsonObject()
     var marketName: String = ""
-    var flagMarket: Boolean = false
+    var flagMarket: Boolean = true
     var flagRefresh: Boolean = false
     var myTeamAdapter: MyTeamAdapter? = null
     var myTeams: ArrayList<MyTeamsPojo.Myteamss>? = null
@@ -52,8 +52,9 @@ class ActivityMyTeam : BaseActivity() {
             flagMarket = true
             marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         } else {
-            flagMarket = false
+            flagMarket = true
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+            marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
         }
 
         myTeams = ArrayList()
@@ -68,10 +69,10 @@ class ActivityMyTeam : BaseActivity() {
             if (flagMarket) {
                 page++
                 getMarketTeamlist(1)
-            } else {
+            } /*else {
                 page++
                 getTeamlist(1)
-            }
+            }*/
 
         }
 
@@ -86,10 +87,10 @@ class ActivityMyTeam : BaseActivity() {
         if (flagMarket) {
             page = 0
             getMarketTeamlist(0)
-        } else {
+        } /*else {
             page = 0
             getTeamlist(0)
-        }
+        }*/
     }
 
     fun getTeamlist(flagFirstTime: Int) {
@@ -128,7 +129,7 @@ class ActivityMyTeam : BaseActivity() {
 
             override fun onFailure(call: Call<MyTeamsPojo>, t: Throwable) {
                 if (sr2_layout != null)
-                sr2_layout.isRefreshing = false
+                    sr2_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
 //                d.dismiss()
@@ -137,14 +138,16 @@ class ActivityMyTeam : BaseActivity() {
     }
 
     fun getMarketTeamlist(flagFirstTime: Int) {
-       /* val d = StockDialog.showLoading(this)
-        d.setCanceledOnTouchOutside(false)*/
+        /* val d = StockDialog.showLoading(this)
+         d.setCanceledOnTouchOutside(false)*/
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<MyTeamsPojo> =
             apiService.getMyMarketTeams(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID)!!,
-                marketId.toString(), page.toString(), limit.toString()
+                marketId.toString(),
+                exchangeId.toString(), page.toString(), limit.toString()
+
             )
         call.enqueue(object : Callback<MyTeamsPojo> {
             override fun onResponse(call: Call<MyTeamsPojo>, response: Response<MyTeamsPojo>) {

@@ -48,6 +48,7 @@ class DataStockFragment : BaseFragment() {
         val call: Call<AssestData> =
             apiService.getAssestData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
                 assestId, type
             )
         call.enqueue(object : Callback<AssestData> {

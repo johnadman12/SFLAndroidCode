@@ -131,6 +131,7 @@ class MyTeamAdapter(
                         .putExtra(StockConstant.TEAMID, myteam.get(position).teamId.toInt())
                         .putExtra(StockConstant.CONTESTID, myteam.get(position).contestId)
                         .putExtra(StockConstant.TEAMNAME, teamName)
+                        .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                         .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
                         .putExtra("isCloning", 2)
                 )
@@ -143,7 +144,7 @@ class MyTeamAdapter(
             else if (myteam.get(position).currencies.size > 0) {
                 activityMyTeam.makeCloneMarket(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
             } else
-                activityMyTeam.makeClone(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
+                activityMyTeam.makeCloneMarket(myteam.get(position).teamId.toInt(), myteam.get(position).contestId)
 
         }
 
@@ -179,6 +180,7 @@ class MyTeamAdapter(
                     .putExtra(StockConstant.TEAMNAME, teamName)
                     .putExtra("isCloning", 1)
                     .putExtra(StockConstant.EXCHANGEID, myteam.get(position).exchangeid)
+                    .putExtra(StockConstant.MARKETID, myteam.get(position).mid)
                 startActivityForResult(mContext as Activity, intent, StockConstant.REDIRECT_UPCOMING_MARKET, null)
             }
 

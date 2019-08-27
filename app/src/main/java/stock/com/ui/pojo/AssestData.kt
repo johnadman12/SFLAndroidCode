@@ -112,6 +112,9 @@ class AssestData : BasePojo() {
         @SerializedName("low")
         @Expose
         var low: String = ""
+        @SerializedName("stock_type")
+        @Expose
+        var stock_type: String = ""
 
         constructor(parcel: Parcel) : this() {
             cryptocurrencyid = parcel.readString()
@@ -145,6 +148,7 @@ class AssestData : BasePojo() {
             close = parcel.readString()
             high = parcel.readString()
             low = parcel.readString()
+            stock_type = parcel.readString()
         }
 
 

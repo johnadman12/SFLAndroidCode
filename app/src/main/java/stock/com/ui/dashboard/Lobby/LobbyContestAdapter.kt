@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.dialog_information.*
 import kotlinx.android.synthetic.main.row_view_featured_contest.view.*
 import stock.com.R
 import stock.com.ui.contest.activity.ContestDetailActivity
-import stock.com.ui.dashboard.Team.ActivityCreateTeam
 import stock.com.ui.pojo.HomePojo
 import stock.com.ui.pojo.LobbyContestPojo
 import stock.com.ui.pojo.PriceBreak

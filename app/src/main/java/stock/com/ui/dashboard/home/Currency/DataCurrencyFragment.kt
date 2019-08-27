@@ -47,6 +47,7 @@ class DataCurrencyFragment : BaseFragment() {
         val call: Call<CurrencyDetail> =
             apiService.getCurrencyDetail(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
                 assestId, type
             )
         call.enqueue(object : Callback<CurrencyDetail> {

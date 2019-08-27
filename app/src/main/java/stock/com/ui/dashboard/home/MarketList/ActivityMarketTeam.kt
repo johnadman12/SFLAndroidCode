@@ -445,43 +445,67 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
 
                         if (flagAlphaSort) {
-                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceLTH) {
-                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagDayLTH) {
-                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagPriceHTL) {
-                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagDayHTL) {
-                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagVolume) {
-                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         }
 
                         for (i in 0 until list!!.size) {
@@ -587,48 +611,68 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
 
                         }
                         //sortingConcept
-                        try {
-                            if (flagAlphaSort) {
+
+                        if (flagAlphaSort) {
+                            try {
                                 val sortedList = list!!.sortedBy { it.symbol?.toString() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
 
-                            } else if (flagPriceLTH) {
+                            }
+                        } else if (flagPriceLTH) {
+                            try {
                                 val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
 
-                            } else if (flagDayLTH) {
+                            }
+
+                        } else if (flagDayLTH) {
+                            try {
                                 val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
-                            } else if (flagPriceHTL) {
+                            } catch (e: Exception) {
+
+                            }
+                        } else if (flagPriceHTL) {
+                            try {
                                 val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
-                            } else if (flagDayHTL) {
+                            } catch (e: Exception) {
+
+                            }
+                        } else if (flagDayHTL) {
+                            try {
                                 val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
-                            } else if (flagVolume) {
+                            } catch (e: Exception) {
+
+                            }
+                        } else if (flagVolume) {
+                            try {
                                 val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
                                 list!!.clear()
                                 list!!.addAll(sortedList)
                                 listOld!!.clear()
                                 listOld!!.addAll(list!!)
-                            }
-                        } catch (e: java.lang.Exception) {
+                            } catch (e: Exception) {
 
+                            }
                         }
                         //filter
                         try {
@@ -872,43 +916,67 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         }
                         //sortingConcept
                         if (flagAlphaSort) {
-                            val sortedList = list!!.sortedBy { it.symbol?.toString() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.symbol?.toString() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagPriceLTH) {
-                            val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.latestPrice?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
 
                         } else if (flagDayLTH) {
-                            val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedBy { it.changeper?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagPriceHTL) {
-                            val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagDayHTL) {
-                            val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.changeper?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         } else if (flagVolume) {
-                            val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
-                            list!!.clear()
-                            list!!.addAll(sortedList)
-                            listOld!!.clear()
-                            listOld!!.addAll(list!!)
+                            try {
+                                val sortedList = list!!.sortedByDescending { it.latestVolume?.toDouble() }
+                                list!!.clear()
+                                list!!.addAll(sortedList)
+                                listOld!!.clear()
+                                listOld!!.addAll(list!!)
+                            } catch (e: Exception) {
+
+                            }
                         }
                         //filter
                         if (flagFilter) {
@@ -1015,8 +1083,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                     }
                 } else if (data.getStringExtra("flag").equals("priceHTL")) {
                     try {
-
-
                         setFlag(false, false, false, true, false, false)
                         var sortedList = list!!.sortedByDescending { it.latestPrice?.toDouble() }
                         list!!.clear()

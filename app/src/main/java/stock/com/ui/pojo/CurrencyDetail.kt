@@ -84,6 +84,9 @@ class CurrencyDetail:BasePojo(){
         @SerializedName("country_id")
         @Expose
         var countryId: String? = null
+        @SerializedName("stock_type")
+        @Expose
+        var stock_type: String? = null
 
     }
 }

@@ -83,7 +83,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(0).firstflag).placeholder(R.mipmap.cricketer).into(img1)
         Glide.with(this).load(list!!.get(0).secondflag).placeholder(R.mipmap.cricketer).into(img2)
         price1.setText(list!!.get(0).symbol)
-        if (!TextUtils.isEmpty(list!!.get(0).changeper))
+        if (!TextUtils.isEmpty(list!!.get(0).cryptoType))
             if (list!!.get(0).cryptoType.equals("1"))
                 arrow1.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -102,7 +102,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(1).firstflag).placeholder(R.mipmap.cricketer).into(img3)
         Glide.with(this).load(list!!.get(1).secondflag).placeholder(R.mipmap.cricketer).into(img4)
         price2.setText(list!!.get(1).symbol)
-        if (!TextUtils.isEmpty(list!!.get(1).changeper))
+        if (!TextUtils.isEmpty(list!!.get(1).cryptoType))
             if (list!!.get(1).cryptoType.equals("1"))
                 arrow2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -120,7 +120,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(2).firstflag).placeholder(R.mipmap.cricketer).into(img5)
         Glide.with(this).load(list!!.get(2).secondflag).placeholder(R.mipmap.cricketer).into(img6)
         price3.setText(list!!.get(2).symbol)
-        if (!TextUtils.isEmpty(list!!.get(2).changeper))
+        if (!TextUtils.isEmpty(list!!.get(2).cryptoType))
             if (list!!.get(2).cryptoType.equals("1"))
                 arrow3.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -137,7 +137,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(3).firstflag).placeholder(R.mipmap.cricketer).into(img7)
         Glide.with(this).load(list!!.get(3).secondflag).placeholder(R.mipmap.cricketer).into(img8)
         price4.setText(list!!.get(3).symbol)
-        if (!TextUtils.isEmpty(list!!.get(3).changeper))
+        if (!TextUtils.isEmpty(list!!.get(3).cryptoType))
             if (list!!.get(3).cryptoType.equals("1"))
                 arrow4.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -155,7 +155,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(4).firstflag).placeholder(R.mipmap.cricketer).into(img9)
         Glide.with(this).load(list!!.get(4).secondflag).placeholder(R.mipmap.cricketer).into(img10)
         price5.setText(list!!.get(4).symbol)
-        if (!TextUtils.isEmpty(list!!.get(4).changeper))
+        if (!TextUtils.isEmpty(list!!.get(4).cryptoType))
             if (list!!.get(4).cryptoType.equals("1"))
                 arrow5.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -171,7 +171,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(5).firstflag).placeholder(R.mipmap.cricketer).into(img11)
         Glide.with(this).load(list!!.get(5).secondflag).placeholder(R.mipmap.cricketer).into(img12)
         price6.setText(list!!.get(5).symbol)
-        if (!TextUtils.isEmpty(list!!.get(5).changeper))
+        if (!TextUtils.isEmpty(list!!.get(5).cryptoType))
             if (list!!.get(5).cryptoType.equals("1"))
                 arrow6.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -186,7 +186,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(6).firstflag).placeholder(R.mipmap.cricketer).into(img13)
         Glide.with(this).load(list!!.get(6).secondflag).placeholder(R.mipmap.cricketer).into(img14)
         price7.setText(list!!.get(6).symbol)
-        if (!TextUtils.isEmpty(list!!.get(6).changeper))
+        if (!TextUtils.isEmpty(list!!.get(6).cryptoType))
             if (list!!.get(6).cryptoType.equals("1"))
                 arrow7.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -202,7 +202,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(7).firstflag).placeholder(R.mipmap.cricketer).into(img15)
         Glide.with(this).load(list!!.get(7).secondflag).placeholder(R.mipmap.cricketer).into(img16)
         price8.setText(list!!.get(7).symbol)
-        if (!TextUtils.isEmpty(list!!.get(7).changeper))
+        if (!TextUtils.isEmpty(list!!.get(7).cryptoType))
             if (list!!.get(7).cryptoType.equals("1"))
                 arrow8.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -217,7 +217,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(8).firstflag).placeholder(R.mipmap.cricketer).into(img17)
         Glide.with(this).load(list!!.get(8).secondflag).placeholder(R.mipmap.cricketer).into(img18)
         price9.setText(list!!.get(8).symbol)
-        if (!TextUtils.isEmpty(list!!.get(8).changeper))
+        if (!TextUtils.isEmpty(list!!.get(8).cryptoType))
             if (list!!.get(8).cryptoType.equals("1"))
                 arrow9.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -232,7 +232,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(9).firstflag).placeholder(R.mipmap.cricketer).into(img19)
         Glide.with(this).load(list!!.get(9).secondflag).placeholder(R.mipmap.cricketer).into(img20)
         price10.setText(list!!.get(9).symbol)
-        if (!TextUtils.isEmpty(list!!.get(9).changeper))
+        if (!TextUtils.isEmpty(list!!.get(9).cryptoType))
             if (list!!.get(9).cryptoType.equals("1"))
                 arrow10.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -248,7 +248,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(10).firstflag).placeholder(R.mipmap.cricketer).into(img21)
         Glide.with(this).load(list!!.get(10).secondflag).placeholder(R.mipmap.cricketer).into(img22)
         price11.setText(list!!.get(10).symbol)
-        if (!TextUtils.isEmpty(list!!.get(10).changeper))
+        if (!TextUtils.isEmpty(list!!.get(10).cryptoType))
             if (list!!.get(10).cryptoType.equals("1"))
                 arrow11.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {
@@ -264,7 +264,7 @@ class CurrencyPreviewTeamActivity : BaseActivity(), View.OnClickListener {
         Glide.with(this).load(list!!.get(11).firstflag).into(img23)
         Glide.with(this).load(list!!.get(11).secondflag).into(img24)
         price12.setText(list!!.get(11).symbol)
-        if (!TextUtils.isEmpty(list!!.get(11).changeper))
+        if (!TextUtils.isEmpty(list!!.get(11).cryptoType))
             if (list!!.get(11).cryptoType.equals("1"))
                 arrow12.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sell))
             else {

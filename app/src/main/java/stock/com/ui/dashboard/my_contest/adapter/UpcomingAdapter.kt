@@ -123,15 +123,15 @@ class UpcomingAdapter(
         }
 
         holder.itemView.setOnClickListener {
-            if (contest.get(position).marketname.equals("Equity")) {
+            if (contest.get(position).marketname.equals("Equity",true)) {
                 var intent = Intent(mContext, UpcomingContestDetailActivity::class.java);
                 intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid)
-                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).mid)
+                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid)
                 ActivityCompat.startActivityForResult(mContext as Activity, intent, 404, null);
             } else {
                 var intent = Intent(mContext, UpcomingContestDetailActivity::class.java);
                 intent.putExtra(StockConstant.CONTESTID, contest.get(position).contestid)
-                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).mid)
+                intent.putExtra(StockConstant.EXCHANGEID, contest.get(position).exchangeid.toInt())
                 ActivityCompat.startActivityForResult(
                     mContext as Activity,
                     intent,

@@ -94,10 +94,8 @@ class CurrencyViewTeamAdapter(
 
         holder.itemView.toggleButton1.setOnClickListener {
             if (holder.itemView.toggleButton1.isChecked) {
-//                mContest.get(position).cryptoType = "1";
                 onItemCheckListener.onToggleSell(mContest.get(position))
             } else
-//                mContest.get(position).cryptoType = "0";
             onItemCheckListener.onToggleBuy(mContest.get(position))
         }
 

@@ -39,6 +39,7 @@ class ContestListAdapter(
         val currentItem: FilterPojo.Category = mContest.get(position);
         holder.itemView.checkboxContest.setText(mContest.get(position).name)
 
+
         holder.itemView.checkboxContest.setChecked(checkedHolder?.get(position)!!);
         val parts = filter.split(",")
         for (i in 0 until parts.size) {

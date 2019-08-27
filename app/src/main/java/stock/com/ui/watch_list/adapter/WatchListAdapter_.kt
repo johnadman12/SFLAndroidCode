@@ -46,8 +46,9 @@ class WatchListAdapter_(
 
         if (searchList!!.get(position).marketname.equals("Currency")) {
             if (TextUtils.isEmpty(searchList!!.get(position).changePercent))
-                searchList!!.get(position).changePercent = searchList!!.get(position).currency_netchange
+                searchList!!.get(position).changePercent = searchList!!.get(position).currency_perchange
             holder.itemView.rl_double_flag.visibility = View.VISIBLE;
+            holder.itemView.tv_change_percentage.setText(searchList!!.get(position).currency_perchange);
             holder.itemView.imageView.visibility = View.GONE;
             holder.itemView.tv_company_name.setText(searchList!!.get(position).currency_symbol);
             holder.itemView.tv_sector.setText("");

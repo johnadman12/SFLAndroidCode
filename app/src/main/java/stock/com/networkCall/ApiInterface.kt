@@ -244,7 +244,7 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("category_id") categoryId: String,
-        @Field("exchange_id") exchange_id: String,
+        @Field("sector") exchange_id: String,
         @Field("country_id") country_id: String,
         @Field("min_value") min_value: String,
         @Field("max_value") max_value: String
@@ -491,6 +491,7 @@ interface ApiInterface {
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("market_id") marketId: String,
+        @Field("exchange_id") exchange_id: String,
         @Field("page") page: String, @Field("limit") limit: String
     ): Call<MyTeamsPojo>
 
@@ -720,6 +721,7 @@ interface ApiInterface {
     @POST("marketdata/asset_detail")
     fun getAssestData(
         @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
         @Field("asset_id") comments: String,
         @Field("market_type") market_type: String
     ): Call<AssestData>
@@ -728,6 +730,7 @@ interface ApiInterface {
     @POST("marketdata/currency_detail")
     fun getCurrencyDetail(
         @Header("x-access-token") token: String,
+        @Field("user_id") user_id: String,
         @Field("asset_id") comments: String,
         @Field("market_type") market_type: String
     ): Call<CurrencyDetail>

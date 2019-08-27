@@ -49,6 +49,7 @@ class DataFragment : BaseFragment() {
         val call: Call<AssestData> =
             apiService.getAssestData(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
+                getFromPrefsString(StockConstant.USERID).toString(),
                 assestId, type
             )
         call.enqueue(object : Callback<AssestData> {
@@ -75,16 +76,16 @@ class DataFragment : BaseFragment() {
 
     private fun setData(list: AssestData.Stock) {
         try {
-            tvOpen.setText("$" + list.open.toDouble())
-            tvClose.setText("$" + list.close.toDouble())
-            tvHigh.setText("$" + list.high.toDouble())
-            tvLow.setText("$" + list.low.toDouble())
-            tvAverage.setText("$" + list.average.toDouble())
+            tvOpen.setText("$" + list.open)
+            tvClose.setText("$" + list.close)
+            tvHigh.setText("$" + list.high)
+            tvLow.setText("$" + list.low)
+            tvAverage.setText("$" + list.average)
             if (list.changePercent.contains("-"))
                 tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.redcolor))
             else
                 tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.green))
-            tvChange.setText("$" + list.change.toDouble())
+            tvChange.setText("$" + list.change)
         } catch (e: Exception) {
         }
 

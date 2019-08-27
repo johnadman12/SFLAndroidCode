@@ -8,20 +8,23 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.*
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import io.socket.client.IO
+import io.socket.client.Socket
 import kotlinx.android.synthetic.main.activity_create_team.*
-import kotlinx.android.synthetic.main.dialog_join_contest.*
 import kotlinx.android.synthetic.main.dialog_join_wizard.*
-import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.include_back.*
+import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,25 +32,15 @@ import stock.com.AppBase.BaseActivity
 import stock.com.R
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
-import stock.com.ui.pojo.StockTeamPojo
-import stock.com.ui.watch_list.WatchListActivity
-import stock.com.utils.StockConstant
-import stock.com.utils.StockDialog
-import android.text.style.ForegroundColorSpan
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.TextView
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import io.socket.client.IO
-import io.socket.client.Socket
-import org.json.JSONArray
 import stock.com.ui.createTeam.activity.TeamPreviewActivity
 import stock.com.ui.dashboard.ContestNewBottom.ActivityMyTeam
-import stock.com.ui.dashboard.Market.StockAdapter
 import stock.com.ui.dashboard.Team.Stock.ActivityStockDetail
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.StockTeamPojo
+import stock.com.ui.watch_list.WatchListActivity
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
+import stock.com.utils.StockDialog
 import java.net.URISyntaxException
 import java.util.*
 
@@ -152,7 +145,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         for (i in 0 until stockSelectedItems!!.size) {
                             var postData1 = JsonObject();
                             try {
-                                postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                                postData1.addProperty("crypto_id", stockSelectedItems!!.get(i).stockid);
                                 postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
                                 postData1.addProperty(
                                     "change_percent",
@@ -167,7 +160,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                         }
                         saveTeamList()
                     } else {
-                        displayToast("please select Crypto first", "warning")
+                        displayToast("please select Stock first", "warning")
                     }
                 } else {
                     if (flag) {
@@ -177,6 +170,9 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 .putExtra(
                                     StockConstant.EXCHANGEID,
                                     exchangeId
+                                ).putExtra(
+                                    StockConstant.MARKETID,
+                                    marketId
                                 ).putExtra(
                                     StockConstant.CONTESTID,
                                     contestId
@@ -201,6 +197,10 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
                                 .putExtra(
                                     StockConstant.EXCHANGEID,
                                     exchangeId
+                                )
+                                .putExtra(
+                                    StockConstant.MARKETID,
+                                    marketId
                                 ).putExtra(
                                     StockConstant.CONTESTID,
                                     contestId
@@ -225,6 +225,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
     }
 
     var exchangeId: Int = 0
+    var marketId: Int = 0
     var contestId: Int = 0
     var teamId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -280,6 +281,7 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         imgButtonWizard.setOnClickListener(this)
         if (intent != null) {
             exchangeId = intent.getIntExtra(StockConstant.EXCHANGEID, 0)
+            marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
             contestId = intent.getIntExtra(StockConstant.CONTESTID, 0)
             flagCloning = intent.getIntExtra("isCloning", 0)
             if (flagCloning == 1) {
@@ -897,15 +899,16 @@ class ActivityCreateTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_team_name", teamName)
         jsonparams.addProperty("join_var", 0)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
-        jsonparams.add("stocks", array)
+        jsonparams.add("marketdatas", array)
 
         Log.e("savedlist", array.toString())
 
         val call: Call<BasePojo> =
-            apiService.editTeam(
+            apiService.editMarketTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 jsonparams
             )

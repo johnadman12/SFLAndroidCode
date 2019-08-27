@@ -52,6 +52,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
     var exchangeId: Int = 0
     var contestId: Int = 0
     var teamId: Int = 0
+    var marketId: Int = 0
     var flagCloning: Int = 0
     var contestFee: String = ""
     var blank: String = ""
@@ -102,7 +103,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     for (i in 0 until stockSelectedItems!!.size) {
                         var postData1 = JsonObject();
                         try {
-                            postData1.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                            postData1.addProperty("crypto_id", stockSelectedItems!!.get(i).stockid);
                             postData1.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
                             postData1.addProperty(
                                 "change_percent",
@@ -134,7 +135,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val call: Call<ContestDetail> =
             apiService.getContestDetail(
                 contestId.toString()
-                , getFromPrefsString(StockConstant.USERID).toString(), "", exchangeId.toString()
+                , getFromPrefsString(StockConstant.USERID).toString(), "",  exchangeId.toString()
             )
         call.enqueue(object : Callback<ContestDetail> {
 
@@ -173,6 +174,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
             flagCloning = intent.getIntExtra("isCloning", 0)
             teamName = intent.getStringExtra(StockConstant.TEAMNAME)
             contestFee = intent.getStringExtra(StockConstant.CONTESTFEE)
+            marketId = intent.getIntExtra(StockConstant.MARKETID, 0)
 
         }
         StockConstant.ACTIVITIES.add(this)
@@ -317,7 +319,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
                     array = JsonArray()
                 var postData: JsonObject = JsonObject()
                 try {
-                    postData.addProperty("stock_id", stockSelectedItems!!.get(i).stockid);
+                    postData.addProperty("crypto_id", stockSelectedItems!!.get(i).stockid);
                     postData.addProperty("price", stockSelectedItems!!.get(i).latestPrice);
                     postData.addProperty("change_percent", stockSelectedItems!!.get(i).changePercent);
                     postData.addProperty("stock_type", stockSelectedItems!!.get(i).stock_type);
@@ -378,12 +380,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        jsonparams.addProperty("contest_id", contestId.toString())
-        jsonparams.addProperty("team_id", "")
+       jsonparams.addProperty("team_id", "")
         jsonparams.addProperty("join_var", 0)
+        jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
-        jsonparams.add("stocks", array)
+        jsonparams.add("marketdatas", array)
 
 
         Log.e("savedlist", array.toString())
@@ -391,7 +393,7 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         //ivedit.visibility= VISIBLE;
 
         val call: Call<BasePojo> =
-            apiService.saveTeam(
+            apiService.saveMarketTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 jsonparams
             )
@@ -442,11 +444,12 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         }
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
+        jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
-        jsonparams.add("stocks", array)
+        jsonparams.add("marketdatas", array)
         val call: Call<BasePojo> =
-            apiService.saveTeam(
+            apiService.saveMarketTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 jsonparams
             )
@@ -490,12 +493,13 @@ class ActivityViewTeam : BaseActivity(), View.OnClickListener {
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
+        jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_team_name", edtTeamName.text.toString())
         jsonparams.addProperty("join_var", 1)
         jsonparams.addProperty("user_id", getFromPrefsString(StockConstant.USERID).toString())
-        jsonparams.add("stocks", array)
+        jsonparams.add("marketdatas", array)
         val call: Call<BasePojo> =
-            apiService.joinWithTeamId(
+            apiService.saveMarketTeam(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 jsonparams
             )

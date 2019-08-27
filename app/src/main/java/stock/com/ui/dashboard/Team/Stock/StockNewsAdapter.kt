@@ -31,7 +31,7 @@ class StockNewsAdapter(
     }
 
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
-        Glide.with(mContext).load(mContest.get(position).source!!.imageUrls!!.thumb).into(holder.itemView.imageViewNews)
+        Glide.with(mContext).load(mContest.get(position).source!!.imageUrls!!.medium).into(holder.itemView.imageViewNews)
         holder.itemView.tvNewsTitle.setText(mContest.get(position).title)
         holder.itemView.tvNewsAuthor.setText(mContest.get(position).source!!.brandName)
         holder.itemView.tvDescription.setText(mContest.get(position).description)
