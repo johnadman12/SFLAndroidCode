@@ -16,6 +16,10 @@ import com.like.OnLikeListener
 import stock.com.ui.pojo.Comments
 import stock.com.utils.AppDelegate
 import java.util.*
+import stock.com.socialview.src.com.hendraanggrian.appcompat.widget.SocialView
+import kotlin.Unit
+
+
 
 
 class StockCommentsAdapter
@@ -76,6 +80,11 @@ class StockCommentsAdapter
                 notifyDataSetChanged()
 
             }
+        })
+
+        holder.itemView.tv_comments.setOnHashtagClickListener({ socialView, s ->
+            // do something
+
         })
 
     }

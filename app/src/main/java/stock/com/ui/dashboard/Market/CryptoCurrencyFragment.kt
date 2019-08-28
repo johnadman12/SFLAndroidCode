@@ -362,7 +362,48 @@ class CryptoCurrencyFragment : BaseFragment() {
                         }
                         cryptoList!!.addAll(response.body()!!.crypto!!)
                         cryptoListNew!!.addAll(response.body()!!.crypto!!)
+                        if (flagAlphaSort) {
+                            val sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
+                            cryptoListNew!!.clear()
+                            cryptoList!!.clear()
+                            cryptoList!!.addAll(sortedList)
+                            cryptoListNew!!.addAll(sortedList)
 
+                        } else if (flagPriceSort) {
+                            val sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                            cryptoListNew!!.clear()
+                            cryptoList!!.clear()
+                            cryptoList!!.addAll(sortedList)
+                            cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+
+
+                        } else if (flagDaySort) {
+                            val sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
+                            cryptoListNew!!.clear()
+                            cryptoList!!.clear()
+                            cryptoList!!.addAll(sortedList)
+                            cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+
+                        } else if (flagHTLSort) {
+                            val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+
+                            cryptoListNew!!.clear()
+                            cryptoList!!.clear()
+                            cryptoList!!.addAll(sortedList)
+                            cryptoListNew!!.addAll(sortedList)
+//                                    rv_currencyList!!.adapter!!.notifyDataSetChanged()
+
+
+                        } else if (flagDHTLSort) {
+                            val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
+                            cryptoListNew!!.clear()
+                            cryptoList!!.clear()
+                            cryptoList!!.addAll(sortedList)
+                            cryptoListNew!!.addAll(sortedList)
+
+                        }
                         if (cryptoAdapter != null)
                             cryptoAdapter!!.notifyDataSetChanged()
                         /* if (flagPagination)
@@ -429,60 +470,83 @@ class CryptoCurrencyFragment : BaseFragment() {
 
     fun setSorting(type: String) {
         if (type.equals("Alpha")) {
-            setFlag(true, false, false, false, false)
-            var sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
-            cryptoListNew!!.clear()
-            cryptoListNew!!.addAll(sortedList)
-            cryptoList!!.clear()
-            cryptoList!!.addAll(sortedList)
-            // cryptoAdapter!!.notifyDataSetChanged()
+            try {
+                setFlag(true, false, false, false, false)
+                var sortedList = cryptoListNew!!.sortedBy { it.symbol?.toString() }
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                // cryptoAdapter!!.notifyDataSetChanged()
+                setCryptoCurrencyAdapter();
+            } catch (e: Exception) {
 
-            setCryptoCurrencyAdapter();
+            }
 
 
         } else if (type.equals("dayChange")) {
-            setFlag(false, false, true, false, false)
-            var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
-            cryptoListNew!!.clear()
-            cryptoListNew!!.addAll(sortedList)
-            cryptoList!!.clear()
-            cryptoList!!.addAll(sortedList)
-            // cryptoAdapter!!.notifyDataSetChanged()
+            try {
+                setFlag(false, false, true, false, false)
+                var sortedList = cryptoListNew!!.sortedBy { it.changeper?.toDouble() }
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                // cryptoAdapter!!.notifyDataSetChanged()
 
-            setCryptoCurrencyAdapter();
+                setCryptoCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("price")) {
-            setFlag(false, true, false, false, false)
-            var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
-            cryptoListNew!!.clear()
-            cryptoListNew!!.addAll(sortedList)
-            cryptoList!!.clear()
-            cryptoList!!.addAll(sortedList)
-            //cryptoAdapter!!.notifyDataSetChanged()
+            try {
+                setFlag(false, true, false, false, false)
+                var sortedList = cryptoListNew!!.sortedBy { it.latestPrice?.toDouble() }
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                //cryptoAdapter!!.notifyDataSetChanged()
 
-            setCryptoCurrencyAdapter();
+                setCryptoCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("HighToLow")) {
-            setFlag(false, false, false, true, false)
-            val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
-            cryptoListNew!!.clear()
-            cryptoListNew!!.addAll(sortedList)
-            cryptoList!!.clear()
-            cryptoList!!.addAll(sortedList)
-            //cryptoAdapter!!.notifyDataSetChanged()
+            try {
+                setFlag(false, false, false, true, false)
+                val sortedList = cryptoListNew!!.sortedByDescending { it.latestPrice?.toDouble() }
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                //cryptoAdapter!!.notifyDataSetChanged()
 
-            setCryptoCurrencyAdapter();
+                setCryptoCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("DayHighToLow")) {
-            setFlag(false, false, false, false, true)
-            val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
-            cryptoListNew!!.clear()
-            cryptoListNew!!.addAll(sortedList)
-            cryptoList!!.clear()
-            cryptoList!!.addAll(sortedList)
-            // cryptoAdapter!!.notifyDataSetChanged()
+            try {
+                setFlag(false, false, false, false, true)
+                val sortedList = cryptoListNew!!.sortedByDescending { it.changeper?.toDouble() }
+                cryptoListNew!!.clear()
+                cryptoListNew!!.addAll(sortedList)
+                cryptoList!!.clear()
+                cryptoList!!.addAll(sortedList)
+                // cryptoAdapter!!.notifyDataSetChanged()
 
-            setCryptoCurrencyAdapter();
+                setCryptoCurrencyAdapter();
+            } catch (e: Exception) {
+
+            }
         } else if (type.equals("nodata")) {
-            setFlag(false, false, false, false, false)
-            getCurrency("0")
+            try {
+                setFlag(false, false, false, false, false)
+                getCurrency("0")
+            } catch (e: Exception) {
+
+            }
         }
     }
 

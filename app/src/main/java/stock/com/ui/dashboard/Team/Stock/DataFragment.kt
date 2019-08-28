@@ -75,17 +75,23 @@ class DataFragment : BaseFragment() {
     }
 
     private fun setData(list: AssestData.Stock) {
+        var price: String = "0"
         try {
             tvOpen.setText("$" + list.open)
             tvClose.setText("$" + list.close)
             tvHigh.setText("$" + list.high)
             tvLow.setText("$" + list.low)
             tvAverage.setText("$" + list.average)
-            if (list.changePercent.contains("-"))
+            if (list.change.contains("-")) {
+                price = list.change.substring(0, 1) + "$" + list.change.substring(4, list.change.length)
                 tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.redcolor))
-            else
+            } else {
+                price = "$" + list.change
                 tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.green))
-            tvChange.setText("$" + list.change)
+            }
+
+            tvChange.setText(price)
+
         } catch (e: Exception) {
         }
 
@@ -198,7 +204,7 @@ class DataFragment : BaseFragment() {
             power = StrictMath.log10(value).toInt()
             value = value / Math.pow(10.0, (power / 3 * 3).toDouble())
             formattedNumber = formatter.format(value)
-            formattedNumber = formattedNumber + " "+SUFFIXES[power / 3]
+            formattedNumber = formattedNumber + " " + SUFFIXES[power / 3]
         }
         return formattedNumber;
         // return if (formattedNumber.length > 4) formattedNumber.replace("\\.[0-9]+".toRegex(), "") else formattedNumber

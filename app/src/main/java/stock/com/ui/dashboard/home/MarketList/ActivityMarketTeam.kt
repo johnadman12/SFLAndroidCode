@@ -692,6 +692,8 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
                         } catch (e: Exception) {
 
                         }
+
+
                         for (i in 0 until list!!.size) {
                             for (j in 0 until marketSelectedItems!!.size) {
                                 if (list!!.get(i).cryptocurrencyid == marketSelectedItems!!.get(j).cryptocurrencyid) {
@@ -1206,7 +1208,6 @@ class ActivityMarketTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_team_name", teamName)

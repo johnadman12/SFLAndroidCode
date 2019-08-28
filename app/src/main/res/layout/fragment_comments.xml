@@ -22,7 +22,7 @@
             android:visibility="visible"
             android:id="@+id/ll_search"
             android:padding="@dimen/_5sdp">
-        <EditText
+      <!--  <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -35,7 +35,18 @@
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:inputType="textMultiLine"
-                android:id="@+id/et_comment"/>
+                android:id="@+id/et_comment"/>-->
+
+        <com.hendraanggrian.appcompat.widget.SocialEditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/type_comment_here"
+                app:socialFlags="hyperlink"
+                android:layout_weight="1"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                app:hyperlinkColor="@color/green"/>
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnSend"
                 android:layout_width="@dimen/_30sdp"

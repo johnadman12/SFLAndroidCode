@@ -11,6 +11,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +40,6 @@ class LobbyFragment : BaseFragment() {
     var categoryId: String = ""
     var flag: String = ""
     var contest: ArrayList<LobbyContestPojo.Contest>? = null;
-    var sorted: ArrayList<LobbyContestPojo.Contest>? = null;
     var lobbyContestAdapter: LobbyContestAdapter? = null
     var type: String = "all"
     var exchangeId: Int = 0
@@ -49,7 +49,6 @@ class LobbyFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         contest = ArrayList();
-        sorted = ArrayList();
         dashBoardActivity = activity as DashBoardActivity?
         if (arguments!!.getString("id") != null)
             categoryId = arguments!!.getString("id");
@@ -195,18 +194,27 @@ class LobbyFragment : BaseFragment() {
 
 
     fun filterData(exchangeId: Int) {
+
+        // Toast.makeText(activity,""+contest!!.size,Toast.LENGTH_LONG).show();
+        var sorted = ArrayList<LobbyContestPojo.Contest>();
         if (!TextUtils.isEmpty(exchangeId.toString())) {
             if (contest!!.size > 0) {
                 for (i in 0 until contest!!.size) {
-                    if (exchangeId == contest!!.get(i).exchangeid.toInt())
+                    if (exchangeId == contest!!.get(i).exchangeid.toInt()) {
                         sorted!!.add(contest!!.get(i))
+                        Log.d("ExchangeMatchId","----"+contest!!.get(i));
+                    }
                 }
-                contest!!.clear()
-                contest!!.addAll(sorted!!)
-//                lobbyContestAdapter = LobbyContestAdapter(context!!, contest!!)
-                if (lobbyContestAdapter != null) {
-                    lobbyContestAdapter!!.notifyDataSetChanged()
-                }
+
+
+
+                val llm = LinearLayoutManager(context)
+                llm.orientation = LinearLayoutManager.VERTICAL
+                recyclerView_contest!!.layoutManager = llm
+                recyclerView_contest?.itemAnimator = DefaultItemAnimator()
+                lobbyContestAdapter = LobbyContestAdapter(context!!, sorted!!)
+                recyclerView_contest!!.adapter = lobbyContestAdapter
+
             }
         }
 

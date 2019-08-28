@@ -146,6 +146,15 @@ dependencies {
 
     //like animation
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+
+    /*//All Mentions
+    implementation 'com.hendraanggrian.appcompat:socialview:0.25.1'
+    implementation 'com.hendraanggrian.appcompat:socialview-commons:0.24.0'
+*/
+
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     implementation project(':swiperefreshlayoutbottomlib')
     //Socket
     implementation ('io.socket:socket.io-client:1.0.0') {
@@ -153,6 +162,8 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 //    implementation 'com.github.nkzawa:socket.io-client:0.6.0'
+
+    implementation 'com.github.hendraanggrian:socialview:0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

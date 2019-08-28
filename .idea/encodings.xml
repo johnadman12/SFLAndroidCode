@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/hendraanggrian" charset="ISO-8859-9" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview" charset="ISO-8859-9" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview/src/com/hendraanggrian/appcompat/socialview" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview/src/com/hendraanggrian/appcompat/widget/HashtagArrayAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview/src/com/hendraanggrian/appcompat/widget/MentionArrayAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview/src/com/hendraanggrian/appcompat/widget/SocialArrayAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/stock/com/socialview/src/com/hendraanggrian/appcompat/widget/SocialAutoCompleteTextView.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

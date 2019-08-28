@@ -38,25 +38,46 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:textSize="@dimen/_13ssp"
+                                android:layout_marginRight="@dimen/_2sdp"
                                 style="@style/TextStyleSemiBold"
                                 android:text="Sarathomas02"
                                 android:textColor="@color/black"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/comment_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/_10ssp"
-                                android:drawableLeft="@mipmap/timegrey"
-                                android:drawablePadding="@dimen/_5sdp"
-                                android:text="17 hours ago"
-                                android:padding="@dimen/_3sdp"
-                                android:gravity="center"
-                                style="@style/TextStyleNormal"
-                                android:textColor="@color/textColorLightBlack"/>
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="horizontal">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/_12ssp"
+                                    android:drawablePadding="@dimen/_5sdp"
+                                    android:text="INDIA"
+                                    android:padding="@dimen/_3sdp"
+                                    android:gravity="center"
+                                    android:textAllCaps="true"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textColor="@color/green"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/comment_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/_10ssp"
+                                    android:text="- 17 hours ago"
+                                    android:padding="@dimen/_3sdp"
+                                    android:gravity="center"
+                                    style="@style/TextStyleNormal"
+                                    android:textColor="@color/textColorLightBlack"/>
+                        </LinearLayout>
                     </LinearLayout>
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <com.hendraanggrian.appcompat.widget.SocialTextView
                             android:id="@+id/tv_comments"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="#hashtag and @mention."
+                            app:socialFlags="hashtag|mention"
+                            app:hashtagColor="@color/blue"
+                            app:mentionColor="@color/blue"/>
+
+                    <!--<androidx.appcompat.widget.AppCompatTextView android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_10ssp"
                             style="@style/TextStyleNormal"
@@ -64,7 +85,7 @@
                             android:lineSpacingExtra="@dimen/_2sdp"
                             android:text="@string/dummy_text"
                             android:padding="@dimen/_2sdp"
-                            android:textColor="@color/textColorGray"/>
+                            android:textColor="@color/textColorGray"/>-->
 
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="match_parent"
@@ -72,7 +93,7 @@
                             android:textSize="@dimen/_12ssp"
                             style="@style/TextStyleNormal"
                             android:lineSpacingExtra="@dimen/_2sdp"
-                            android:text="#Lorem, #Pretium"
+                            android:visibility="gone"
                             android:padding="@dimen/_2sdp"
                             android:textColor="@color/colorPrimary"/>
 
@@ -87,12 +108,14 @@
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
                           android:visibility="visible"
+
                           android:weightSum="2"
                           android:orientation="horizontal">
                 <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="@dimen/_3sdp"
                         android:gravity="center"
                         android:orientation="horizontal">
                     <LinearLayout
@@ -108,16 +131,18 @@
                                 app:circle_start_color="@android:color/holo_blue_bright"
                                 app:dots_primary_color="@android:color/holo_blue_light"
                                 app:dots_secondary_color="@android:color/holo_blue_dark"
-                                app:icon_size="16dp"
+                                app:icon_size="8dp"
                                 app:like_drawable="@drawable/thumb_on"
                                 app:unlike_drawable="@drawable/thumb_off"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:id="@+id/tv_like"
                                 android:layout_height="wrap_content"
-                                android:textSize="@dimen/_13ssp"
+                                android:textSize="@dimen/_12ssp"
                                 android:text=" 0 Like"
-                                android:layout_marginLeft="@dimen/_2sdp"
+                                android:layout_marginLeft=
+                                        "@dimen/_2sdp"
+                                android:drawablePadding="@dimen/_5sdp"
                                 android:gravity="center"
                                 android:visibility="visible"
                                 android:layout_gravity="center"
@@ -133,6 +158,7 @@
                 <LinearLayout
                         android:id="@+id/ll_share"
                         android:layout_width="0dp"
+                        android:padding="@dimen/_3sdp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
@@ -140,7 +166,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_13ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:drawableLeft="@drawable/ic_share_"
                             android:drawablePadding="@dimen/_5sdp"
                             android:text="Share"

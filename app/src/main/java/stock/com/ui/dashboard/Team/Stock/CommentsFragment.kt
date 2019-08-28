@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,8 @@ import stock.com.constant.Tags.response
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
+import stock.com.ui.pojo.CommentHashTagPojo
+import stock.com.ui.pojo.CommentUserPojo
 import stock.com.ui.pojo.Comments
 import stock.com.utils.AppDelegate
 import stock.com.utils.StockConstant
@@ -26,10 +29,14 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+
 class CommentsFragment : BaseFragment() {
     var stockId: String = ""
     var type: String = ""
     var list: ArrayList<Comments.Commentlist>? = null
+    var users: ArrayList<CommentUserPojo.User>? = null
+    var hasTag: ArrayList<CommentHashTagPojo.Market>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_comments, container, false)
     }
@@ -37,10 +44,13 @@ class CommentsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = ArrayList()
+        users = ArrayList()
+        hasTag = ArrayList()
         if (arguments != null) {
             stockId = arguments!!.getString(StockConstant.STOCKID)
             type = arguments!!.getString(StockConstant.CONTEST_TYPE)
         }
+
         if (type.equals("crypto", true)) {
             getMarketCommentsList()
         } else if (type.equals("stock", true)) {
@@ -48,6 +58,7 @@ class CommentsFragment : BaseFragment() {
         } else if (type.equals("currency", true)) {
             getMarketCommentsList()
         }
+
         btnSend.setOnClickListener {
             if (TextUtils.isEmpty(et_comment.text.toString()))
                 displayToast("please enter comment first", "error")
@@ -57,11 +68,21 @@ class CommentsFragment : BaseFragment() {
                 else {
                     postCommentMarket(et_comment.text.toString())
                 }
-
             }
         }
-    }
 
+
+
+
+
+
+
+
+
+
+    }
+    /* getAllUsers
+     getAllHashTag*/
 
     @SuppressLint("WrongConstant")
     private fun setCommentsAdapter(commentlist: ArrayList<Comments.Commentlist>) {
@@ -235,6 +256,53 @@ class CommentsFragment : BaseFragment() {
                 println(t.toString())
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
                 d.dismiss()
+            }
+        })
+    }
+
+    fun showHasTagUser(search: String) {
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<CommentUserPojo> =
+            apiService.getAllUsers(
+                getFromPrefsString(StockConstant.USERID).toString(),
+                search
+            )
+        call.enqueue(object : Callback<CommentUserPojo> {
+            override fun onResponse(call: Call<CommentUserPojo>, response: Response<CommentUserPojo>) {
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        users!!.clear()
+                        users!!.addAll(response.body()!!.users!!)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CommentUserPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
+            }
+        })
+    }
+
+    fun showHasTag(search: String) {
+        val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
+        val call: Call<CommentHashTagPojo> =
+            apiService.getAllHashTag(
+                search
+            )
+        call.enqueue(object : Callback<CommentHashTagPojo> {
+            override fun onResponse(call: Call<CommentHashTagPojo>, response: Response<CommentHashTagPojo>) {
+                if (response.body() != null) {
+                    if (response.body()!!.status == "1") {
+                        hasTag!!.clear()
+                        hasTag!!.addAll(response.body()!!.market!!)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CommentHashTagPojo>, t: Throwable) {
+                println(t.toString())
+                displayToast(resources.getString(R.string.something_went_wrong), "error")
             }
         })
     }

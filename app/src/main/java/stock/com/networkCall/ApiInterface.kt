@@ -237,6 +237,24 @@ interface ApiInterface {
         @Field("market_type") marketType: String
     ): Call<FilterPojo>
 
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("users/search")
+    fun getAllUsers(
+        @Field("user_id") user_id: String,
+        @Field("search") search: String
+    ): Call<CommentUserPojo>
+
+
+    @FormUrlEncoded
+    @Headers("content-type: application/x-www-form-urlencoded")
+    @POST("search/allmarket")
+    fun getAllHashTag(
+        @Field("search") search: String
+    ): Call<CommentHashTagPojo>
+
+
     @FormUrlEncoded
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("contest/filter_contest")

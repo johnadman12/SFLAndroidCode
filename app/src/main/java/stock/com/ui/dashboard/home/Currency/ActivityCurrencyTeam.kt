@@ -609,7 +609,6 @@ class ActivityCurrencyTeam : BaseActivity(), View.OnClickListener {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
-        jsonparams.addProperty("contest_id", contestId.toString())
         jsonparams.addProperty("team_id", teamId)
         jsonparams.addProperty("market_id", marketId)
         jsonparams.addProperty("user_team_name", teamName)

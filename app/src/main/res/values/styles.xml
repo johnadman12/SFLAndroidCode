@@ -109,4 +109,14 @@
         <item name="thumbTint">@color/white</item>
         <item name="trackTint">@color/green</item>
     </style>
+
+    <style parent="android:Widget.TextView" name="Widget.SocialView">
+
+    <item name="hashtagColor">?colorAccent</item>
+
+    <item name="mentionColor">?colorAccent</item>
+
+    <item name="hyperlinkColor">?colorAccent</item>
+
+</style>
 </resources>
