@@ -70,12 +70,12 @@ class FriendAdapter(
             )
         }
 
-        holder.itemView.setOnClickListener {
+        /*holder.itemView.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ActivityOtherUserProfile::class.java)
                     .putExtra(StockConstant.FRIENDID, list!!.get(position).id)
             )
-        }
+        }*/
 
         holder.itemView.llADD.setOnClickListener {
             if (list!!.get(position).invite_status.equals("remove")) {

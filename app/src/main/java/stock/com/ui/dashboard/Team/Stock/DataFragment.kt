@@ -83,7 +83,7 @@ class DataFragment : BaseFragment() {
             tvLow.setText("$" + list.low)
             tvAverage.setText("$" + list.average)
             if (list.change.contains("-")) {
-                price = list.change.substring(0, 1) + "$" + list.change.substring(4, list.change.length)
+                price = list.change.substring(0, 1) + "$" + list.change.substring(1, list.change.length)
                 tvChange.setTextColor(ContextCompat.getColor(activity!!, R.color.redcolor))
             } else {
                 price = "$" + list.change

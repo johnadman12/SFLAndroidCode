@@ -3,12 +3,10 @@ package stock.com.ui.friends
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_friends.*
 import kotlinx.android.synthetic.main.include_back.*
 import retrofit2.Call
@@ -41,22 +39,17 @@ class FriendsActivity : BaseActivity() {
 
         tv_title.setText(getFromPrefsString(StockConstant.USERNAME));
 
-        refreshD.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
-            override fun completeRefresh() {
-            }
-
-            override fun refreshing() {
-                getFriendsList()
-                //TODO make api call here
-                Handler().postDelayed({
-                }, 5000)
-            }
-        })
+        srl_layout.setOnRefreshListener {
+            page++
+            getFriendsList(1)
+        }
 
         img_btn_back.setOnClickListener {
             onBackPressed();
         }
-        getFriendsList()
+
+        setAdapter()
+        getFriendsList(0)
         et_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -86,7 +79,7 @@ class FriendsActivity : BaseActivity() {
     }
 
 
-    fun getFriendsList() {
+    fun getFriendsList(firstTime: Int) {
         val d = StockDialog.showLoading(this)
         d.setCanceledOnTouchOutside(false)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
@@ -99,13 +92,20 @@ class FriendsActivity : BaseActivity() {
 
             override fun onResponse(call: Call<FriendsList>, response: Response<FriendsList>) {
                 d.dismiss()
-                if (refreshD != null)
-                    refreshD.finishRefreshing()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         tv_request_count.setText(response.body()!!.pending_request.toString())
-                        list = response.body()!!.userData
-                        setAdapter()
+                        if (firstTime == 0) {
+                            list!!.clear()
+                            list!!.addAll(response.body()!!.userData!!)
+                        } else {
+                            list!!.addAll(response.body()!!.userData!!)
+
+                        }
+                      if (friendsAdapter!=null)
+                          friendsAdapter!!.notifyDataSetChanged()
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")
@@ -114,8 +114,8 @@ class FriendsActivity : BaseActivity() {
             }
 
             override fun onFailure(call: Call<FriendsList>, t: Throwable) {
-                if (refreshD != null)
-                    refreshD.finishRefreshing()
+                if (srl_layout != null)
+                    srl_layout.isRefreshing = false
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()
@@ -139,7 +139,7 @@ class FriendsActivity : BaseActivity() {
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         AppDelegate.showAlert(this@FriendsActivity, response.body()!!.message)
-                        getFriendsList()
+                        getFriendsList(0)
                     }
                 } else {
                     displayToast(resources.getString(R.string.internal_server_error), "error")

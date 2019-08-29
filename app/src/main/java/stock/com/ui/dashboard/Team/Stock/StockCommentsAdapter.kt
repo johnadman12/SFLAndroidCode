@@ -1,5 +1,6 @@
 package stock.com.ui.dashboard.Team.Stock
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -16,7 +17,6 @@ import com.like.OnLikeListener
 import stock.com.ui.pojo.Comments
 import stock.com.utils.AppDelegate
 import java.util.*
-import stock.com.socialview.src.com.hendraanggrian.appcompat.widget.SocialView
 import kotlin.Unit
 
 
@@ -35,10 +35,12 @@ class StockCommentsAdapter
         return FeatureListHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeatureListHolder, position: Int) {
         holder.itemView.username.setText(commentlist.get(position).username)
         holder.itemView.tv_comments.setText(commentlist.get(position).comments)
-        holder.itemView.comment_time.setText(
+        holder.itemView.text_country.setText(commentlist.get(position).country_name)
+        holder.itemView.comment_time.setText("- "+
             DateUtils.getRelativeTimeSpanString(
                 parseDateToddMMyyyy(
                     commentlist.get(
@@ -68,7 +70,6 @@ class StockCommentsAdapter
                 commentsFragment.likeComment(commentlist.get(position).stockCommentId)
                 commentlist.get(position).likescount = commentlist.get(position).likescount + 1
                 commentlist.get(position).likesstatus = "1"
-//                holder.itemView.star_button.isLiked = true
                 notifyDataSetChanged()
             }
 
@@ -76,7 +77,6 @@ class StockCommentsAdapter
                 commentsFragment.likeComment(commentlist.get(position).stockCommentId)
                 commentlist.get(position).likescount = commentlist.get(position).likescount - 1
                 commentlist.get(position).likesstatus = "0"
-//                holder.itemView.star_button.isLiked = false
                 notifyDataSetChanged()
 
             }

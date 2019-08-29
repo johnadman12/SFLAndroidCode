@@ -1,4 +1,4 @@
-package stock.com.socialview.src.com.hendraanggrian.appcompat.socialview;
+package stock.com.ui.pojo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

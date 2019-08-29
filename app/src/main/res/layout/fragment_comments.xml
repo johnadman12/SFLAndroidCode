@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -37,7 +37,21 @@
                 android:inputType="textMultiLine"
                 android:id="@+id/et_comment"/>-->
 
-        <com.hendraanggrian.appcompat.widget.SocialEditText
+        <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:completionThreshold="0"
+                android:layout_height="wrap_content"
+                app:socialFlags="hyperlink"
+                android:layout_weight="1"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                app:hyperlinkColor="@color/green"
+                android:hint="@string/type_comment_here"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+      <!--  <com.hendraanggrian.appcompat.widget.SocialEditText
                 android:id="@+id/et_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +60,7 @@
                 android:layout_weight="1"
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"
-                app:hyperlinkColor="@color/green"/>
+                app:hyperlinkColor="@color/green"/>-->
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnSend"
                 android:layout_width="@dimen/_30sdp"

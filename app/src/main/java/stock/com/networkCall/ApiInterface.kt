@@ -242,6 +242,7 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("users/search")
     fun getAllUsers(
+        @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
         @Field("search") search: String
     ): Call<CommentUserPojo>
@@ -251,6 +252,7 @@ interface ApiInterface {
     @Headers("content-type: application/x-www-form-urlencoded")
     @POST("search/allmarket")
     fun getAllHashTag(
+        @Header("x-access-token") token: String,
         @Field("search") search: String
     ): Call<CommentHashTagPojo>
 

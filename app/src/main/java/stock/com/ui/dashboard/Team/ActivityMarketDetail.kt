@@ -331,7 +331,7 @@ class ActivityMarketDetail : BaseActivity(), View.OnClickListener {
                 tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
             } else {
                 Glide.with(this).load(R.drawable.ic_arrow_up).into(stockgraph)
-                tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.colorRed))
+                tvStockPercentage.setTextColor(ContextCompat.getColor(this, R.color.green))
             }
     }
 

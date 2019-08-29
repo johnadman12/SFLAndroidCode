@@ -1,18 +1,13 @@
-package stock.com.socialview.src.com.hendraanggrian.appcompat.widget;
+package stock.com.ui.dashboard.Team.Stock;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * An {@link ArrayAdapter} customized with filter to display items.

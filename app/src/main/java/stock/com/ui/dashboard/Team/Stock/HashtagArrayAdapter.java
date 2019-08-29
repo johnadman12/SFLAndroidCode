@@ -1,23 +1,16 @@
-package stock.com.socialview.src.com.hendraanggrian.appcompat.widget;
+package stock.com.ui.dashboard.Team.Stock;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.PluralsRes;
-
 import stock.com.R;
-import stock.com.socialview.src.com.hendraanggrian.appcompat.socialview.Hashtagable;
+import stock.com.ui.pojo.Hashtagable;
 
-/**
- * Default adapter for displaying hashtag in {@link SocialAutoCompleteTextView}.
- * Note that this adapter is completely optional, any adapter extending
- * {@link android.widget.ArrayAdapter} can be attached to {@link SocialAutoCompleteTextView}.
- */
 public class HashtagArrayAdapter<T extends Hashtagable> extends SocialArrayAdapter<T> {
 
     private final int countPluralRes;
@@ -45,11 +38,11 @@ public class HashtagArrayAdapter<T extends Hashtagable> extends SocialArrayAdapt
         }
         final T item = getItem(position);
         if (item != null) {
-            holder.hashtagView.setText(item.getId());
+            holder.hashtagView.setText(item.getsymbol());
 
-            if (item.getCount() > 0) {
+            if (item.getId() > 0) {
                 holder.countView.setVisibility(View.VISIBLE);
-                final int count = item.getCount();
+                final int count = item.getId();
                 holder.countView.setText(getContext().getResources().getQuantityString(countPluralRes, count, count));
             } else {
                 holder.countView.setVisibility(View.GONE);

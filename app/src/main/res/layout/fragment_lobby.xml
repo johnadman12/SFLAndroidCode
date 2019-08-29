@@ -326,7 +326,14 @@
 
 
             </HorizontalScrollView>
-
+            <com.madapps.liquid.LiquidRefreshLayout
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    app:AniBackColor="@color/colorPrimary"
+                    app:AniForeColor="@color/white"
+                    app:CircleSmaller="6"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content">
 
             <!--  <FrameLayout android:layout_width="match_parent"
                            android:layout_height="match_parent"
@@ -343,14 +350,7 @@
                     android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
-            <com.madapps.liquid.LiquidRefreshLayout
-                    android:id="@+id/refreshLayout"
-                    android:layout_width="match_parent"
-                    app:AniBackColor="@color/colorPrimary"
-                    app:AniForeColor="@color/white"
-                    app:CircleSmaller="6"
-                    android:visibility="visible"
-                    android:layout_height="wrap_content">
+
                 <androidx.recyclerview.widget.RecyclerView
                         android:paddingTop="@dimen/_6sdp"
                         android:id="@+id/recyclerView_contest"
@@ -360,11 +360,12 @@
                         android:visibility="visible"
                 />
 
-
             </com.madapps.liquid.LiquidRefreshLayout>
+
 
             <!--</FrameLayout>-->
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.amar.library.ui.StickyScrollView>

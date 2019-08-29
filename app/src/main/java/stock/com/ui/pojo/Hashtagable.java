@@ -1,4 +1,4 @@
-package stock.com.socialview.src.com.hendraanggrian.appcompat.socialview;
+package stock.com.ui.pojo;
 
 import androidx.annotation.NonNull;
 
@@ -11,10 +11,12 @@ public interface Hashtagable {
      * Unique id of this hashtag.
      */
     @NonNull
-    CharSequence getId();
+    int getId();
 
     /**
      * Optional count, located right to hashtag name.
      */
-    int getCount();
+    String getName();
+    String getsymbol();
+    int getmarketId();
 }

@@ -63,8 +63,6 @@ class ActivityOtherUserProfile : BaseActivity() {
 
             override fun onResponse(call: Call<OtherProfile>, response: Response<OtherProfile>) {
                 d.dismiss()
-                if (refreshD != null)
-                    refreshD.finishRefreshing()
                 if (response.body() != null) {
                     if (response.body()!!.status == "1") {
                         setData(response.body()!!.user)
@@ -76,8 +74,6 @@ class ActivityOtherUserProfile : BaseActivity() {
             }
 
             override fun onFailure(call: Call<OtherProfile>, t: Throwable) {
-                if (refreshD != null)
-                    refreshD.finishRefreshing()
                 println(t.toString())
                 displayToast(resources.getString(R.string.internal_server_error), "error")
                 d.dismiss()

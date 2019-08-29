@@ -48,5 +48,6 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:textAppearance="?textAppearanceSmallPopupMenu" />
+
     </LinearLayout>
 </LinearLayout>

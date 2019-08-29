@@ -16,6 +16,12 @@ public class Comments extends BasePojo {
         @SerializedName("statuscount")
         @Expose
         public int statuscount;
+        @SerializedName("country_id")
+        @Expose
+        public String country_id;
+        @SerializedName("country_name")
+        @Expose
+        public String country_name;
         @SerializedName("likesstatus")
         @Expose
         public String likesstatus;

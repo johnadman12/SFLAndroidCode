@@ -3,11 +3,14 @@ package stock.com.ui.dashboard.Team.Stock
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_comments.*
 import retrofit2.Call
@@ -30,11 +33,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class CommentsFragment : BaseFragment() {
     var stockId: String = ""
     var type: String = ""
     var list: ArrayList<Comments.Commentlist>? = null
+    var mentionAdapter: MentionArrayAdapter<CommentUserPojo.User>? = null
+    var hashTagAdapter: HashtagArrayAdapter<CommentHashTagPojo.Market>? = null
     var users: ArrayList<CommentUserPojo.User>? = null
     var hasTag: ArrayList<CommentHashTagPojo.Market>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,10 +50,14 @@ class CommentsFragment : BaseFragment() {
         list = ArrayList()
         users = ArrayList()
         hasTag = ArrayList()
+        mentionAdapter = MentionArrayAdapter(activity!!)
+        hashTagAdapter = HashtagArrayAdapter(activity!!)
+
         if (arguments != null) {
             stockId = arguments!!.getString(StockConstant.STOCKID)
             type = arguments!!.getString(StockConstant.CONTEST_TYPE)
         }
+
 
         if (type.equals("crypto", true)) {
             getMarketCommentsList()
@@ -71,6 +79,23 @@ class CommentsFragment : BaseFragment() {
             }
         }
 
+      /*  et_comment.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null)
+                    if (s.contains("@")) {
+                        showMentionUser(s.toString())
+                    } else if (s.contains("#")) {
+                        showHasTag(s.toString())
+                    }
+            }
+        })*/
 
 
 
@@ -79,10 +104,15 @@ class CommentsFragment : BaseFragment() {
 
 
 
+        //et_comment.setHashtagEnabled(false)
+        et_comment.setMentionTextChangedListener { view, s ->
+            Log.d("hjhkjhkhkhj00000","---"+s)
+            if (s != null) {
+                showMentionUser(s)
+            }
+        }
 
     }
-    /* getAllUsers
-     getAllHashTag*/
 
     @SuppressLint("WrongConstant")
     private fun setCommentsAdapter(commentlist: ArrayList<Comments.Commentlist>) {
@@ -216,7 +246,6 @@ class CommentsFragment : BaseFragment() {
                     if (list != null)
                         list!!.clear()
                     list!!.addAll(response.body()!!.commentlist)
-//                    list!!.sortByDescending { it.createdAt };
                     et_comment.setText("")
                     setCommentsAdapter(list!!)
                     AppDelegate.hideKeyBoard(activity!!)
@@ -260,10 +289,12 @@ class CommentsFragment : BaseFragment() {
         })
     }
 
-    fun showHasTagUser(search: String) {
+    fun showMentionUser(search: String) {
+        Log.d("MentionUser","---"+search);
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<CommentUserPojo> =
             apiService.getAllUsers(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 getFromPrefsString(StockConstant.USERID).toString(),
                 search
             )
@@ -273,6 +304,10 @@ class CommentsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         users!!.clear()
                         users!!.addAll(response.body()!!.users!!)
+                        mentionAdapter!!.clear();
+                        mentionAdapter!!.addAll(users!!)
+//                        et_comment!!.hashtagAdapter = mentionAdapter;
+                        et_comment!!.mentionAdapter = mentionAdapter;
                     }
                 }
             }
@@ -285,9 +320,12 @@ class CommentsFragment : BaseFragment() {
     }
 
     fun showHasTag(search: String) {
+
+        Log.d("HashTag--","--"+search)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<CommentHashTagPojo> =
             apiService.getAllHashTag(
+                getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
                 search
             )
         call.enqueue(object : Callback<CommentHashTagPojo> {
@@ -296,6 +334,15 @@ class CommentsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         hasTag!!.clear()
                         hasTag!!.addAll(response.body()!!.market!!)
+                        hashTagAdapter!!.clear();
+                        hashTagAdapter!!.addAll(hasTag!!)
+                        et_comment.hashtagAdapter= hashTagAdapter
+
+
+
+
+
+
                     }
                 }
             }
@@ -308,11 +355,6 @@ class CommentsFragment : BaseFragment() {
     }
 
     fun shareIntent(text: String) {
-        /*val shareIntent = Intent()
-        shareIntent.action = Intent.ACTION_SEND
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "");
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.send_to)))*/
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Dfx Sharing comments")

@@ -1,12 +1,7 @@
-package stock.com.socialview.src.com.hendraanggrian.appcompat.widget;
+package stock.com.ui.dashboard.Team.Stock;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Shader;
+import android.graphics.*;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,26 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 import stock.com.R;
-import stock.com.socialview.src.com.hendraanggrian.appcompat.socialview.Mentionable;
 import stock.com.ui.pojo.CommentUserPojo;
 
 import java.io.File;
 
-/**
- * Default adapter for displaying mention in {@link SocialAutoCompleteTextView}.
- * Note that this adapter is completely optional, any adapter extending
- * {@link android.widget.ArrayAdapter} can be attached to {@link SocialAutoCompleteTextView}.
- */
 public class MentionArrayAdapter<T extends CommentUserPojo.User> extends SocialArrayAdapter<T> {
 
     private final int defaultAvatar;
@@ -57,14 +44,17 @@ public class MentionArrayAdapter<T extends CommentUserPojo.User> extends SocialA
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.socialview_layout_mention, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
+
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final T item = getItem(position);
-        if (item != null) {
-            holder.usernameView.setText(item.getUsername());
 
-            final CharSequence displayname = item.getUsername();
+        final T item = getItem(position);
+
+        if (item != null) {
+           holder.usernameView.setText(item.getFirstName());
+
+            final CharSequence displayname = item.getFirstName();
             if (!TextUtils.isEmpty(displayname)) {
                 holder.displaynameView.setText(displayname);
                 holder.displaynameView.setVisibility(View.VISIBLE);
