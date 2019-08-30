@@ -24,6 +24,7 @@ import stock.com.utils.StockDialog
 
 class ActivityOtherUserProfile : BaseActivity() {
     var friendId: String = ""
+    var userName: String = ""
     var flag: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +35,10 @@ class ActivityOtherUserProfile : BaseActivity() {
             onBackPressed();
         }
 
-        if (intent != null)
+        if (intent != null) {
             friendId = intent.getStringExtra(StockConstant.FRIENDID)
+            userName = intent.getStringExtra(StockConstant.USERNAME)
+        }
 
         if (friendId != null)
             getFriendsList()
@@ -57,7 +60,7 @@ class ActivityOtherUserProfile : BaseActivity() {
         val call: Call<OtherProfile> =
             apiService.getOthersProfile(
                 getFromPrefsString(StockConstant.ACCESSTOKEN).toString(),
-                getFromPrefsString(StockConstant.USERID).toString(), friendId
+                getFromPrefsString(StockConstant.USERID).toString(), friendId,userName
             )
         call.enqueue(object : Callback<OtherProfile> {
 

@@ -75,6 +75,7 @@
                             android:layout_height="wrap_content"
                             android:text="#hashtag and @mention."
                             app:socialFlags="hashtag|mention"
+                            android:paddingBottom="@dimen/_2sdp"
                             app:hashtagColor="@color/blue"
                             app:mentionColor="@color/blue"/>
 

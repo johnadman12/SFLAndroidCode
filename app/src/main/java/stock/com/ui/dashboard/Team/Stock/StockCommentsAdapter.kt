@@ -2,6 +2,7 @@ package stock.com.ui.dashboard.Team.Stock
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +15,12 @@ import stock.com.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import com.like.OnLikeListener
+import stock.com.ui.dashboard.profile.ActivityOtherUserProfile
 import stock.com.ui.pojo.Comments
 import stock.com.utils.AppDelegate
+import stock.com.utils.StockConstant
 import java.util.*
 import kotlin.Unit
-
-
 
 
 class StockCommentsAdapter
@@ -40,14 +41,15 @@ class StockCommentsAdapter
         holder.itemView.username.setText(commentlist.get(position).username)
         holder.itemView.tv_comments.setText(commentlist.get(position).comments)
         holder.itemView.text_country.setText(commentlist.get(position).country_name)
-        holder.itemView.comment_time.setText("- "+
-            DateUtils.getRelativeTimeSpanString(
-                parseDateToddMMyyyy(
-                    commentlist.get(
-                        position
-                    ).createdAt
-                )
-            )
+        holder.itemView.comment_time.setText(
+            "- " +
+                    DateUtils.getRelativeTimeSpanString(
+                        parseDateToddMMyyyy(
+                            commentlist.get(
+                                position
+                            ).createdAt
+                        )
+                    )
         )
         holder.itemView.tv_like.setText(commentlist.get(position).likescount.toString() + " Likes")
         Glide.with(mContext).load(commentlist.get(position).profileImage).into(holder.itemView.iv_user)
@@ -82,8 +84,14 @@ class StockCommentsAdapter
             }
         })
 
-        holder.itemView.tv_comments.setOnHashtagClickListener({ socialView, s ->
-            // do something
+        holder.itemView.tv_comments.setOnMentionClickListener({ view, s ->
+          /*  mContext.startActivity(
+                Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
+                    StockConstant.FRIENDID, "0"
+                ).putExtra(
+                    StockConstant.USERNAME, view.text
+                )
+            )*/
 
         })
 

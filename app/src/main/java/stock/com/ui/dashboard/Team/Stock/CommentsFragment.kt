@@ -1,24 +1,33 @@
 package stock.com.ui.dashboard.Team.Stock
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
-import android.text.Editable
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.TextView
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.linkedin.android.spyglass.suggestions.SuggestionsResult
+import com.linkedin.android.spyglass.suggestions.impl.BasicSuggestionsListBuilder
+import com.linkedin.android.spyglass.suggestions.interfaces.Suggestible
+import com.linkedin.android.spyglass.tokenization.QueryToken
+import com.linkedin.android.spyglass.tokenization.interfaces.QueryTokenReceiver
 import kotlinx.android.synthetic.main.fragment_comments.*
+import kotlinx.android.synthetic.main.next_button_dailog.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import stock.com.AppBase.BaseFragment
 import stock.com.R
-import stock.com.constant.Tags.response
 import stock.com.networkCall.ApiClient
 import stock.com.networkCall.ApiInterface
 import stock.com.ui.pojo.BasePojo
@@ -31,14 +40,17 @@ import stock.com.utils.StockDialog
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class CommentsFragment : BaseFragment() {
+class CommentsFragment : BaseFragment(), QueryTokenReceiver {
+
     var stockId: String = ""
     var type: String = ""
+    private var lastPersonSuggestions: SuggestionsResult? = null
+    private var lastHashTagSuggestions: SuggestionsResult? = null
+
     var list: ArrayList<Comments.Commentlist>? = null
-    var mentionAdapter: MentionArrayAdapter<CommentUserPojo.User>? = null
-    var hashTagAdapter: HashtagArrayAdapter<CommentHashTagPojo.Market>? = null
     var users: ArrayList<CommentUserPojo.User>? = null
     var hasTag: ArrayList<CommentHashTagPojo.Market>? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,8 +62,6 @@ class CommentsFragment : BaseFragment() {
         list = ArrayList()
         users = ArrayList()
         hasTag = ArrayList()
-        mentionAdapter = MentionArrayAdapter(activity!!)
-        hashTagAdapter = HashtagArrayAdapter(activity!!)
 
         if (arguments != null) {
             stockId = arguments!!.getString(StockConstant.STOCKID)
@@ -79,38 +89,8 @@ class CommentsFragment : BaseFragment() {
             }
         }
 
-      /*  et_comment.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s != null)
-                    if (s.contains("@")) {
-                        showMentionUser(s.toString())
-                    } else if (s.contains("#")) {
-                        showHasTag(s.toString())
-                    }
-            }
-        })*/
-
-
-
-
-
-
-
-
-        //et_comment.setHashtagEnabled(false)
-        et_comment.setMentionTextChangedListener { view, s ->
-            Log.d("hjhkjhkhkhj00000","---"+s)
-            if (s != null) {
-                showMentionUser(s)
-            }
-        }
+        et_comment.setQueryTokenReceiver(this);
+        et_comment.setSuggestionsListBuilder(CustomSuggestionsListBuilder())
 
     }
 
@@ -224,6 +204,31 @@ class CommentsFragment : BaseFragment() {
         })
     }
 
+    private inner class CustomSuggestionsListBuilder : BasicSuggestionsListBuilder() {
+        @NonNull
+        override fun getView(
+            @NonNull suggestion: Suggestible,
+            @Nullable convertView: View?,
+            parent: ViewGroup,
+            @NonNull context: Context,
+            @NonNull inflater: LayoutInflater,
+            @NonNull resources: Resources
+        ): View {
+
+            val v = super.getView(suggestion, convertView, parent, context, inflater, resources)
+            if (v !is TextView) {
+                return v
+            }
+
+            // Color text depending on the type of mention
+            if (suggestion is CommentUserPojo.User) {
+                v.setTextColor(getResources().getColor(R.color.blue))
+            } else if (suggestion is CommentHashTagPojo.Market) {
+                v.setTextColor(getResources().getColor(R.color.blue))
+            }
+            return v
+        }
+    }
 
     fun postCommentMarket(textComment: String) {
         val d = StockDialog.showLoading(activity!!)
@@ -289,8 +294,9 @@ class CommentsFragment : BaseFragment() {
         })
     }
 
-    fun showMentionUser(search: String) {
-        Log.d("MentionUser","---"+search);
+    fun showMentionUser(search: String): ArrayList<String> {
+        var tempList = ArrayList<String>()
+        Log.d("MentionUser", "---" + search);
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<CommentUserPojo> =
             apiService.getAllUsers(
@@ -304,10 +310,10 @@ class CommentsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         users!!.clear()
                         users!!.addAll(response.body()!!.users!!)
-                        mentionAdapter!!.clear();
-                        mentionAdapter!!.addAll(users!!)
-//                        et_comment!!.hashtagAdapter = mentionAdapter;
-                        et_comment!!.mentionAdapter = mentionAdapter;
+                       /* for (i in 0 until users!!.size) {
+                            tempList!!.add("sdadad")
+                        }*/
+
                     }
                 }
             }
@@ -317,11 +323,14 @@ class CommentsFragment : BaseFragment() {
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
             }
         })
+        return tempList
     }
 
-    fun showHasTag(search: String) {
+    fun showHasTag(search: String): ArrayList<String> {
 
-        Log.d("HashTag--","--"+search)
+        var tempList = ArrayList<String>()
+
+        Log.d("HashTag--", "--" + search)
         val apiService: ApiInterface = ApiClient.getClient()!!.create(ApiInterface::class.java)
         val call: Call<CommentHashTagPojo> =
             apiService.getAllHashTag(
@@ -334,14 +343,6 @@ class CommentsFragment : BaseFragment() {
                     if (response.body()!!.status == "1") {
                         hasTag!!.clear()
                         hasTag!!.addAll(response.body()!!.market!!)
-                        hashTagAdapter!!.clear();
-                        hashTagAdapter!!.addAll(hasTag!!)
-                        et_comment.hashtagAdapter= hashTagAdapter
-
-
-
-
-
 
                     }
                 }
@@ -352,6 +353,8 @@ class CommentsFragment : BaseFragment() {
                 displayToast(resources.getString(R.string.something_went_wrong), "error")
             }
         })
+
+        return tempList;
     }
 
     fun shareIntent(text: String) {
@@ -376,5 +379,25 @@ class CommentsFragment : BaseFragment() {
         return 0
     }
 
+    override fun onQueryReceived(queryToken: QueryToken): MutableList<String> {
+
+        Log.d("sadasdadada", "---" + queryToken.toString());
+        Log.d("sadasdadada", "---" + queryToken.tokenString);
+        var buckets = ArrayList<String>()
+
+        val listener = et_comment
+
+        if (queryToken.tokenString.contains("@")) {
+            buckets = showMentionUser(queryToken.tokenString)
+            lastPersonSuggestions = SuggestionsResult(queryToken, users!!)
+            listener.onReceiveSuggestionsResult(lastPersonSuggestions!!, "")
+        }
+        else if (queryToken.tokenString.contains("#")) {
+            buckets = showHasTag(queryToken.tokenString)
+            lastHashTagSuggestions = SuggestionsResult(queryToken, hasTag!!)
+            listener.onReceiveSuggestionsResult(lastHashTagSuggestions!!, "")
+        }
+        return buckets
+    }
 
 }

@@ -49,6 +49,8 @@ class ScoresAdapter(
                 mContext.startActivity(
                     Intent(mContext, ActivityOtherUserProfile::class.java).putExtra(
                         StockConstant.FRIENDID, scores.get(position).userid.toString()
+                    ).putExtra(
+                        StockConstant.USERNAME, "test"
                     )
                 )
             }

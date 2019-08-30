@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Android\Workspace\Spyglass\spyglass\src\main\res"/><source path="E:\Android\Workspace\Spyglass\build\spyglass\generated\res\rs\debug"/><source path="E:\Android\Workspace\Spyglass\build\spyglass\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Android\Workspace\Spyglass\spyglass\src\main\res"><file name="editor_fragment" path="E:\Android\Workspace\Spyglass\spyglass\src\main\res\layout\editor_fragment.xml" qualifiers="" type="layout"/><file name="editor_view" path="E:\Android\Workspace\Spyglass\spyglass\src\main\res\layout\editor_view.xml" qualifiers="" type="layout"/><file path="E:\Android\Workspace\Spyglass\spyglass\src\main\res\values\attrs.xml" qualifiers=""><attr format="color" name="mentionTextColor"/><attr format="color" name="mentionTextBackgroundColor"/><attr format="color" name="selectedMentionTextColor"/><attr format="color" name="selectedMentionTextBackgroundColor"/><declare-styleable name="MentionsEditText">
+        <attr name="mentionTextColor"/>
+        <attr name="mentionTextBackgroundColor"/>
+        <attr name="selectedMentionTextColor"/>
+        <attr name="selectedMentionTextBackgroundColor"/>
+    </declare-styleable><declare-styleable name="RichEditorView">
+        <attr name="mentionTextColor"/>
+        <attr name="mentionTextBackgroundColor"/>
+        <attr name="selectedMentionTextColor"/>
+        <attr name="selectedMentionTextBackgroundColor"/>
+    </declare-styleable></file></source><source path="E:\Android\Workspace\Spyglass\build\spyglass\generated\res\rs\debug"/><source path="E:\Android\Workspace\Spyglass\build\spyglass\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Android\Workspace\Spyglass\spyglass\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="E:\Android\Workspace\Spyglass\spyglass\src\debug\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="MentionsEditText">
+        <attr name="mentionTextColor"/>
+        <attr name="mentionTextBackgroundColor"/>
+        <attr name="selectedMentionTextColor"/>
+        <attr name="selectedMentionTextBackgroundColor"/>
+    </declare-styleable><declare-styleable name="RichEditorView">
+        <attr name="mentionTextColor"/>
+        <attr name="mentionTextBackgroundColor"/>
+        <attr name="selectedMentionTextColor"/>
+        <attr name="selectedMentionTextBackgroundColor"/>
+    </declare-styleable></configuration></mergedItems></merger>

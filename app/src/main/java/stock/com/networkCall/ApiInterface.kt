@@ -619,7 +619,8 @@ interface ApiInterface {
     fun getOthersProfile(
         @Header("x-access-token") token: String,
         @Field("user_id") user_id: String,
-        @Field("friend_id") friend_id: String
+        @Field("friend_id") friend_id: String,
+        @Field("username") username: String
     ): Call<OtherProfile>
 
     @FormUrlEncoded

@@ -10,57 +10,28 @@
             android:layout_marginBottom="@dimen/_3sdp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:id="@+id/rvComments"
-    />
-
+            android:id="@+id/rvComments"/>
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_100sdp"
             android:orientation="horizontal"
             android:background="@color/white"
             android:visibility="visible"
             android:id="@+id/ll_search"
             android:padding="@dimen/_5sdp">
-      <!--  <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:layout_marginRight="@dimen/_5sdp"
-                android:layout_weight="1"
-                android:padding="@dimen/_8sdp"
-                android:textSize="@dimen/_11ssp"
-                android:maxLines="6"
-                android:hint="@string/type_comment_here"
-                android:textColorHint="@color/black"
-                android:textColor="@color/black"
-                android:inputType="textMultiLine"
-                android:id="@+id/et_comment"/>-->
 
-        <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
-                android:id="@+id/et_comment"
-                android:layout_width="match_parent"
-                android:completionThreshold="0"
-                android:layout_height="wrap_content"
-                app:socialFlags="hyperlink"
-                android:layout_weight="1"
-                android:textColorHint="@color/black"
-                android:textColor="@color/black"
-                app:hyperlinkColor="@color/green"
-                android:hint="@string/type_comment_here"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-
-      <!--  <com.hendraanggrian.appcompat.widget.SocialEditText
+        <com.linkedin.android.spyglass.ui.RichEditorView
                 android:id="@+id/et_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/type_comment_here"
-                app:socialFlags="hyperlink"
                 android:layout_weight="1"
-                android:textColorHint="@color/black"
+                android:layout_gravity="bottom"
+                android:textColorHint="@color/GrayColor"
                 android:textColor="@color/black"
-                app:hyperlinkColor="@color/green"/>-->
+                android:hint="@string/type_comment_here"
+            />
+
         <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btnSend"
                 android:layout_width="@dimen/_30sdp"

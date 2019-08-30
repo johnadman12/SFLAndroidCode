@@ -53,6 +53,7 @@ class NewsItemAdapter(
                 mContext.startActivity(
                     Intent(mContext, ActivityOtherUserProfile::class.java)
                         .putExtra(StockConstant.FRIENDID, users.get(position).id)
+                        .putExtra(StockConstant.USERNAME, "test")
                 )
             } else if (title.equals("Cryptocurrency", true)) {
                 var intent = Intent(mContext, ActivityMarketDetail::class.java);
